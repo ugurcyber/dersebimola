@@ -392,9 +392,16 @@
     return text || q.question || 'Soruyu çöz';
   }
 
-  function readCurrentQuestion() {
+  function readCurrentQuestion(isManual = false) {
+    if (isManual && !state.soundEnabled) {
+      state.soundEnabled = true;
+      StorageManager.saveSettings();
+      updateSoundUI();
+    }
     if (!state.soundEnabled) return;
     if (!state.currentQuestion) return;
+
+    audio.ensureContext();
 
     const btns = [DOM.btnReadAloudP1, DOM.btnReadAloudP2, DOM.btnHudReadQuestion];
     btns.forEach(b => { if (b) b.classList.add('reading-active'); });
@@ -1114,7 +1121,8 @@
           question: raw.q,
           correct: raw.a,
           distractors: raw.d,
-          explanation: raw.exp
+          explanation: raw.exp,
+          audioKey: raw.audioKey || null
         }, g === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Dikkat Avcısı');
       } else if (gameType === 'oddone') {
         const raw = this.generateOddOneQuestion(g);
@@ -1567,41 +1575,41 @@
     // Anasınıfı
     0: [
       { id: 'all', label: '🌟 Tümü' },
-      { id: 'concept', label: '🎨 Renk, Şekil & Kavram' },
-      { id: 'visual', label: '👀 Görsel Dikkat & Farkı Bul' },
-      { id: 'reflex', label: '⚡ Hızlı Refleks & Eğlence' }
+      { id: 'concept', label: '🎨 Renk & Şekil' },
+      { id: 'visual', label: '👀 Görsel Dikkat' },
+      { id: 'reflex', label: '⚡ Neşeli Refleks' }
     ],
     // 1. Sınıf
     1: [
       { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '🧮 Eğlenceli Matematik' },
-      { id: 'reading', label: '📚 Okuma & Kelime Avı' },
-      { id: 'memory', label: '🧠 Hafıza & Görsel Dikkat' },
-      { id: 'reflex', label: '⚡ Ders Dışı Refleks Oyunları' }
+      { id: 'math', label: '🧮 Neşeli Matematik' },
+      { id: 'reading', label: '📚 Kelime Avı' },
+      { id: 'memory', label: '🧠 Süper Hafıza' },
+      { id: 'reflex', label: '⚡ Şimşek Refleks' }
     ],
     // 2. Sınıf
     2: [
       { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '🧮 Eğlenceli Matematik' },
-      { id: 'reading', label: '📚 Okuma & Kelime Avı' },
-      { id: 'memory', label: '🧠 Hafıza & Görsel Dikkat' },
-      { id: 'reflex', label: '⚡ Ders Dışı Refleks Oyunları' }
+      { id: 'math', label: '🧮 2 Basamak Matematik' },
+      { id: 'reading', label: '📚 Sözcük Düellosu' },
+      { id: 'memory', label: '🧠 Süper Hafıza' },
+      { id: 'reflex', label: '⚡ Şimşek Refleks' }
     ],
     // 3. Sınıf
     3: [
       { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '➗ Matematik & 4 İşlem' },
-      { id: 'turkish', label: '📖 Türkçe & Genel Kültür' },
-      { id: 'science', label: '🌍 Fen & Sosyal Kuşağı' },
-      { id: 'brain', label: '🧠 Zeka, Strateji & Refleks' }
+      { id: 'math', label: '➗ Çarpım & 4 İşlem' },
+      { id: 'turkish', label: '📖 Türkçe Avcısı' },
+      { id: 'science', label: '🌍 Fen & Keşif' },
+      { id: 'brain', label: '🧠 Zeka & Refleks' }
     ],
     // 4. Sınıf
     4: [
       { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '➗ Matematik & 4 İşlem' },
-      { id: 'turkish', label: '📖 Türkçe & Genel Kültür' },
-      { id: 'science', label: '🌍 Fen & Sosyal Kuşağı' },
-      { id: 'brain', label: '🧠 Zeka, Strateji & Refleks' }
+      { id: 'math', label: '➗ Hızlı 4 İşlem' },
+      { id: 'turkish', label: '📖 Deyimler & Kültür' },
+      { id: 'science', label: '🌍 Fen & Keşif' },
+      { id: 'brain', label: '🧠 Zeka & Refleks' }
     ]
   };
 
@@ -1620,19 +1628,19 @@
           title: 'Renkler, Şekiller & Sayma',
           icon: '🎨',
           badge: '🎨 Renk & Şekil',
-          featureTag: '⚡ Görsel Keşif',
+          featureTag: '⭐ Görsel Keşif',
           description: 'Meyveleri ve parlayan yıldızları say, doğru cevaba ilk sen dokun! 🍎⭐',
-          tags: ['1-5 Sayma', 'Canlı Renkler', 'Şekil Avı'],
-          btnText: 'Etkinliği Başlat'
+          tags: ['🍎 1-5 Sayma', '🎨 Canlı Renkler', '⭐ Şekil Avı'],
+          btnText: 'Düelloyu Başlat'
         },
         1: {
           title: 'Kafa Kafaya Matematik',
           icon: '🧮',
-          badge: '🌱 Temel Toplama',
+          badge: '🌱 Hızlı Toplama',
           featureTag: '⚡ Hızlı İşlem',
           description: 'Hızlıca topla, ritmik say, puanları roket gibi kap! 🚀',
-          tags: ['Toplama & Çıkarma', 'Ritmik Sayma', 'Eksik Sayı'],
-          btnText: 'Matematik Düellosunu Başlat'
+          tags: ['➕ Toplama & Çıkarma', '🔢 Ritmik Sayma', '🎯 Eksik Sayı'],
+          btnText: 'Düelloyu Başlat'
         },
         2: {
           title: 'Kafa Kafaya Matematik',
@@ -1640,26 +1648,26 @@
           badge: '🚀 2 Basamaklı İşlem',
           featureTag: '⚡ Hızlı İşlem',
           description: 'İki basamaklı çılgın işlemler ve deste-düzine avı! ⚡',
-          tags: ['2 Basamak', 'Deste & Düzine', 'Eldeli Toplama'],
-          btnText: 'Matematik Düellosunu Başlat'
+          tags: ['⚡ 2 Basamak', '📦 Deste & Düzine', '➕ Eldeli Toplama'],
+          btnText: 'Düelloyu Başlat'
         },
         3: {
           title: 'Kafa Kafaya Matematik',
           icon: '🧮',
           badge: '⚡ Çarpım Tablosu',
-          featureTag: '⚡ Hızlı İşlem',
+          featureTag: '🌪️ Fırtına Hesap',
           description: 'Çarpım tablosu fırtınası! Kim daha hızlı hesaplayacak? 🌪️',
-          tags: ['Çarpım Tablosu', 'Hızlı Bölme', 'Basamak Değeri'],
-          btnText: 'Matematik Düellosunu Başlat'
+          tags: ['🌪️ Çarpım Tablosu', '➗ Hızlı Bölme', '📐 Basamak Değeri'],
+          btnText: 'Düelloyu Başlat'
         },
         4: {
           title: 'Kafa Kafaya Matematik',
           icon: '🧮',
           badge: '👑 4 İşlem Ustası',
-          featureTag: '⚡ Hızlı İşlem',
+          featureTag: '👑 Usta Hesap',
           description: '4 işlem fırtınası! Kesirleri ve açıları saliseler içinde fethet! 👑',
-          tags: ['Hızlı 4 İşlem', 'Kesirler', 'Açı Türleri'],
-          btnText: 'Matematik Düellosunu Başlat'
+          tags: ['👑 Hızlı 4 İşlem', '🍕 Kesirler', '📐 Açı Türleri'],
+          btnText: 'Düelloyu Başlat'
         }
       }
     },
@@ -1676,47 +1684,47 @@
         0: {
           title: 'Sevimli Hayvanlar & Doğa',
           icon: '🦁',
-          badge: '🦁 Doğa & Çevre',
-          featureTag: '🔍 Keşif',
+          badge: '🦁 Doğa Kahramanları',
+          featureTag: '🐾 Sevimli Dostlar',
           description: 'Miyavlayan dostlarımız ve doğa kahramanlarıyla tanış! 🐾',
-          tags: ['Hayvan Sesleri', 'Büyük-Küçük', 'Doğa Sevgisi'],
-          btnText: 'Etkinliği Başlat'
+          tags: ['🐾 Hayvan Sesleri', '🐘 Büyük-Küçük', '🌿 Doğa Sevgisi'],
+          btnText: 'Düelloyu Başlat'
         },
         1: {
           title: 'Hızlı Türkçe & Kelime Avı',
           icon: '🦉',
           badge: '🌱 Harf & Hece',
-          featureTag: '🔍 Odaklanma',
+          featureTag: '🔍 Kelime Avı',
           description: 'Zıt kavramları yakala, heceleri jet gibi tamamla! 🦉',
-          tags: ['Zıt Anlam', 'Ünlü Harfler', 'Hece Sayısı'],
-          btnText: 'Türkçe Düellosunu Başlat'
+          tags: ['🔄 Zıt Anlam', '🔤 Ünlü Harfler', '📖 Hece Sayısı'],
+          btnText: 'Düelloyu Başlat'
         },
         2: {
           title: 'Hızlı Türkçe & Sözcük Düellosu',
           icon: '🦉',
           badge: '🚀 Eş ve Zıt Anlam',
-          featureTag: '🔍 Odaklanma',
+          featureTag: '🔍 Sözcük Avı',
           description: 'Eş ve zıt anlamlı sözcük düellosu! Hızlı olan kazanır! 🎯',
-          tags: ['Eş Anlamlılar', 'Zıt Anlamlılar', 'Yazım Kuralları'],
-          btnText: 'Türkçe Düellosunu Başlat'
+          tags: ['✨ Eş Anlamlılar', '🔄 Zıt Anlamlılar', '✏️ Yazım Kuralları'],
+          btnText: 'Düelloyu Başlat'
         },
         3: {
           title: 'Hızlı Türkçe & Bilgi Avcısı',
           icon: '🦉',
           badge: '⚡ Eş Sesli & Bilgi',
-          featureTag: '🔍 Odaklanma',
+          featureTag: '🌟 Keşif Zamanı',
           description: 'Eş sesli kelimeler ve eğlenceli Fen gerçekleri! 🌟',
-          tags: ['Eş Sesli Sözcükler', 'Fen Gerçekleri', 'Noktalama'],
-          btnText: 'Türkçe Düellosunu Başlat'
+          tags: ['🎭 Eş Sesliler', '🌍 Fen Gerçekleri', '✍️ Noktalama'],
+          btnText: 'Düelloyu Başlat'
         },
         4: {
           title: 'Hızlı Türkçe & Genel Kültür',
           icon: '🦉',
           badge: '👑 Deyim & Kültür',
-          featureTag: '🔍 Odaklanma',
+          featureTag: '🏆 Deyim Ustası',
           description: 'Zengin deyimler ve atasözleri labirentinde kelime ustası ol! 🏆',
-          tags: ['Zengin Deyimler', 'Sosyal Bilgiler', 'Atasözleri'],
-          btnText: 'Türkçe Düellosunu Başlat'
+          tags: ['🏆 Zengin Deyimler', '📜 Atasözleri', '🗺️ Sosyal Bilgiler'],
+          btnText: 'Düelloyu Başlat'
         }
       }
     },
@@ -1734,46 +1742,46 @@
           title: 'Farklı Olanı Yakala',
           icon: '👀',
           badge: '👀 Görsel Dikkat',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '👀 Keskin Gözler',
           description: 'Meyve ve hayvanlar arasında saklanan yabancıyı ilk sen bul! 🥑',
-          tags: ['Görsel Dikkat', 'Tatlı Meyveler', 'Hızlı Bul'],
-          btnText: 'Dikkat Düellosunu Başlat'
+          tags: ['🥑 Tatlı Meyveler', '👀 Görsel Dikkat', '⚡ Hızlı Bul'],
+          btnText: 'Düelloyu Başlat'
         },
         1: {
           title: 'Farklı Olanı Yakala',
           icon: '👀',
           badge: '🌱 Gözlem & Odak',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🔍 Dedektif Gözler',
           description: 'Gözünü dört aç! Benzer emojiler arasındaki tek farkı anında yakala! 🔍',
-          tags: ['Benzer Emojiler', 'İnce Farklar', 'Hızlı Gözlem'],
-          btnText: 'Dikkat Düellosunu Başlat'
+          tags: ['🔍 Benzer Emojiler', '🎯 İnce Farklar', '⚡ Hızlı Gözlem'],
+          btnText: 'Düelloyu Başlat'
         },
         2: {
           title: 'Farklı Olanı Yakala',
           icon: '👀',
           badge: '🚀 Gözlem Gücü',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '⚡ Hızlı Tarama',
           description: '9 emoji arasından gizlice saklanan yabancı sembolü avla! ⚡',
-          tags: ['9\'lu Dizi', 'Keskin Gözler', 'Hızlı Tepki'],
-          btnText: 'Dikkat Düellosunu Başlat'
+          tags: ['⚡ 9\'lu Dizi', '👀 Keskin Gözler', '⏱️ Hızlı Tepki'],
+          btnText: 'Düelloyu Başlat'
         },
         3: {
           title: 'Farklı Olanı Yakala',
           icon: '👀',
           badge: '⚡ Görsel Zeka',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🎯 Şahin Bakışı',
           description: 'Birbirine benzeyen geometrik şekillerdeki minik farkı ilk gören puanı kapar! 🎯',
-          tags: ['Detay Avcılığı', 'Görsel Zeka', 'Hızlı Tarama'],
-          btnText: 'Dikkat Düellosunu Başlat'
+          tags: ['🎯 Detay Avcılığı', '🧠 Görsel Zeka', '🔍 Hızlı Tarama'],
+          btnText: 'Düelloyu Başlat'
         },
         4: {
           title: 'Farklı Olanı Yakala',
           icon: '👀',
           badge: '👑 Usta Dedektif',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🕵️ Usta Dedektif',
           description: '12 sembol labirentindeki gizli detayı saliseler içinde yakala! 🕵️',
-          tags: ['Usta Dedektif', 'Saliselik Fark', 'Zorlu Labirent'],
-          btnText: 'Dikkat Düellosunu Başlat'
+          tags: ['🕵️ Usta Dedektif', '⚡ Saliselik Fark', '🧩 Zorlu Labirent'],
+          btnText: 'Düelloyu Başlat'
         }
       }
     },
@@ -1791,46 +1799,46 @@
           title: 'Renk & Şekil Eşleştirme',
           icon: '🎯',
           badge: '🎨 Renk Düellosu',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🎨 Canlı Renkler',
           description: 'Cıvıl cıvıl renkleri tanı, şekilleri doğru eşleştir ve eğlen! 🎨',
-          tags: ['Canlı Renkler', 'Görsel Algı', 'Büyük-Küçük'],
-          btnText: 'Renk Düellosunu Başlat'
+          tags: ['🎨 Canlı Renkler', '👀 Görsel Algı', '🐘 Büyük-Küçük'],
+          btnText: 'Düelloyu Başlat'
         },
         1: {
           title: 'Göz ve Renk Düellosu',
           icon: '🎯',
           badge: '🌱 Renk & Dikkat',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🎯 Hızlı Seçim',
           description: 'Gözlerin mi daha hızlı yoksa aklın mı? Rengine göre bas! 🎯',
-          tags: ['Görsel Eşleştirme', 'Hızlı Seçim', 'Renkler'],
-          btnText: 'Renk Düellosunu Başlat'
+          tags: ['🎯 Renk Eşleştirme', '⚡ Hızlı Seçim', '🌈 Renkler'],
+          btnText: 'Düelloyu Başlat'
         },
         2: {
           title: 'Renk Tuzakları (Stroop)',
           icon: '🎯',
           badge: '🚀 Stroop Testi',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🧠 Beyin Fırtınası',
           description: 'Dikkat tuzak! Renge aldanma, kelimenin gerçek rengini bil! 🧠',
-          tags: ['Renk Yanıltmacası', 'Beyin Jimnastiği', 'Odaklanma'],
-          btnText: 'Stroop Düellosunu Başlat'
+          tags: ['🧠 Renk Tuzağı', '⚡ Beyin Jimnastiği', '🎯 Odaklanma'],
+          btnText: 'Düelloyu Başlat'
         },
         3: {
           title: 'Renk Tuzakları (Stroop)',
           icon: '🎯',
           badge: '⚡ Beyin Jimnastiği',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '⚡ Ters Köşe',
           description: 'Ters köşe kelimeler! Zihnini şaşırtmaya çalışan tuzağı aş! ⚡',
-          tags: ['Ters Köşe', 'Konsantrasyon', 'Görsel Odak'],
-          btnText: 'Stroop Düellosunu Başlat'
+          tags: ['⚡ Ters Köşe', '🎯 Konsantrasyon', '🧠 Görsel Odak'],
+          btnText: 'Düelloyu Başlat'
         },
         4: {
           title: 'Süper Stroop: Renk Tuzakları',
           icon: '🎯',
           badge: '👑 Nöro-Dikkat',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '👑 Nöro-Hız',
           description: 'Usta seviye Stroop düellosu! Şampiyon refleksle ters köşeyi çöz! 👑',
-          tags: ['İleri Stroop', 'Saliselik Karar', 'Zihinsel Çeviklik'],
-          btnText: 'Stroop Düellosunu Başlat'
+          tags: ['👑 İleri Stroop', '⚡ Saliselik Karar', '🧠 Zihinsel Çeviklik'],
+          btnText: 'Düelloyu Başlat'
         }
       }
     },
@@ -1848,46 +1856,46 @@
           title: 'Sevimli Hafıza Düellosu',
           icon: '🧠',
           badge: '🎈 Görsel Hafıza',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🎈 Neşeli Zihin',
           description: 'Ekranda parlayan 3 sevimli nesneyi aklında tut, sırayı bil! 🎈',
-          tags: ['3 Nesne Sırası', 'Görsel Hatırlama', 'Hafıza'],
-          btnText: 'Hafıza Düellosunu Başlat'
+          tags: ['🎈 3 Nesne Sırası', '🧠 Görsel Hatırlama', '⭐ Hafıza'],
+          btnText: 'Düelloyu Başlat'
         },
         1: {
           title: 'Süper Hafıza: Sırayı Hatırla',
           icon: '🧠',
           badge: '🌱 Sıralı Hafıza',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🧠 Zihin Belleği',
           description: 'Sırayı aklına kazı! İlk hangisi çıktı, kim kayboldu? 🧠',
-          tags: ['Sıralama Belleği', 'Görsel Dikkat', 'Hızlı Hatırla'],
-          btnText: 'Hafıza Düellosunu Başlat'
+          tags: ['🧠 Sıralama Belleği', '👀 Görsel Dikkat', '⚡ Hızlı Hatırla'],
+          btnText: 'Düelloyu Başlat'
         },
         2: {
           title: 'Süper Hafıza: Sırayı Hatırla',
           icon: '🧠',
           badge: '🚀 Sıralı Hafıza',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '⚡ Hızlı Hatırla',
           description: 'Sembolleri hızlıca tara! Sorulan sembolü ilk dokunan bulsun! 🚀',
-          tags: ['3-4 Sembol', 'Hızlı Kodlama', 'Zihinsel Canlandırma'],
-          btnText: 'Hafıza Düellosunu Başlat'
+          tags: ['🚀 3-4 Sembol', '⚡ Hızlı Kodlama', '🧠 Canlandırma'],
+          btnText: 'Düelloyu Başlat'
         },
         3: {
           title: 'Süper Hafıza: Sırayı Hatırla',
           icon: '🧠',
           badge: '⚡ Şampiyon Bellek',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '⭐ Şampiyon Bellek',
           description: '4\'lü sembol sırasını zihninde canlandır ve puanı kap! ⭐',
-          tags: ['4\'lü Dizi', 'Detaylı Hatırlama', 'Hızlı Çağırma'],
-          btnText: 'Hafıza Düellosunu Başlat'
+          tags: ['⭐ 4\'lü Dizi', '🧠 Detaylı Hatırlama', '⚡ Hızlı Çağırma'],
+          btnText: 'Düelloyu Başlat'
         },
         4: {
           title: 'Usta Hafıza: Sırayı Hatırla',
           icon: '🧠',
           badge: '👑 Fotoğrafik Hafıza',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '👑 Fotoğrafik Hafıza',
           description: 'Fotoğrafik hafıza meydan okuması! Sıraları bil, tahtanın kralı ol! 👑',
-          tags: ['Fotoğrafik Bellek', 'Sıra Analizi', 'Yüksek Konsantrasyon'],
-          btnText: 'Hafıza Düellosunu Başlat'
+          tags: ['👑 Fotoğrafik Bellek', '🔍 Sıra Analizi', '⚡ Süper Konsantrasyon'],
+          btnText: 'Düelloyu Başlat'
         }
       }
     },
@@ -1905,46 +1913,46 @@
           title: 'Neşeli Refleks & Balon Avı',
           icon: '⚡',
           badge: '🎈 Hızlı Dokun',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '⚡ Hızlı Dokun',
           description: 'Balon belirdiğinde ekrana ilk dokunan ol, kaktüsten kaç! 🎈',
-          tags: ['Koordinasyon', 'Hızlı Tepki', 'Balon Avı'],
-          btnText: 'Refleks Düellosunu Başlat'
+          tags: ['🎈 Balon Avı', '⚡ Hızlı Dokun', '🌵 Kaktüsten Kaç'],
+          btnText: 'Düelloyu Başlat'
         },
         1: {
           title: 'Şimşek Refleks: Hedef Avı',
           icon: '⚡',
           badge: '🌱 Saf Hız',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '⚡ Şimşek Hız',
           description: 'Yıldıza bas (⭐), bombadan kaç (💣)! Yanlış basan kilitlenir! ⚡',
-          tags: ['Yıldız Avı', 'Bombadan Kaç', 'Şimşek Hız'],
-          btnText: 'Refleks Düellosunu Başlat'
+          tags: ['⭐ Yıldız Avı', '💣 Bombadan Kaç', '⚡ Şimşek Hız'],
+          btnText: 'Düelloyu Başlat'
         },
         2: {
           title: 'Şimşek Refleks: Hedef Avı',
           icon: '⚡',
           badge: '🚀 Hızlı Tepki',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🚀 Saliselik Tepki',
           description: 'Saf hız ve konsantrasyon! Hedefi ilk yakalayan puanı kapar! 🚀',
-          tags: ['Saliselik Tepki', 'Kilitlenme Cezası', 'Hızlı Dokunuş'],
-          btnText: 'Refleks Düellosunu Başlat'
+          tags: ['🚀 Saliselik Tepki', '⚡ Hızlı Dokunuş', '🔒 Kilit Cezası'],
+          btnText: 'Düelloyu Başlat'
         },
         3: {
           title: 'Şimşek Refleks: Köstebek & Av',
           icon: '⚡',
           badge: '⚡ Süper Hız',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🎯 Keskin Refleks',
           description: 'Hedef çıktığı an rekor hızla dokun! Sahte bombalara asla basma! ⚡',
-          tags: ['Köstebek Avı', 'Seçici Dikkat', 'Hızlı Refleks'],
-          btnText: 'Refleks Düellosunu Başlat'
+          tags: ['⚡ Köstebek Avı', '🎯 Seçici Dikkat', '⚡ Hızlı Refleks'],
+          btnText: 'Düelloyu Başlat'
         },
         4: {
           title: 'Şimşek Refleks: Köstebek & Av',
           icon: '⚡',
           badge: '👑 Şimşek Hızı',
-          featureTag: '⚡ Ders Dışı',
+          featureTag: '🏆 Zirve Refleks',
           description: 'Tahtanın en hızlısı kim? Saliseler içinde hedefi avla, zaferi kazan! 🏆',
-          tags: ['Zirve Refleks', 'Sıfır Hata', 'Tahta Rekoru'],
-          btnText: 'Refleks Düellosunu Başlat'
+          tags: ['🏆 Zirve Refleks', '⭐ Sıfır Hata', '👑 Tahta Rekoru'],
+          btnText: 'Düelloyu Başlat'
         }
       }
     }
@@ -2018,10 +2026,10 @@
           <h3 class="game-title">${content.title}</h3>
           <p class="game-subtitle">${content.description}</p>
           <div class="game-features-list">
-            ${content.tags.map(t => `<span class="feature-pill">✓ ${t}</span>`).join('')}
+            ${content.tags.map(t => `<span class="feature-pill">${t}</span>`).join('')}
           </div>
           <button class="btn-play-game" data-game-id="${game.id}">
-            ▶ ${content.btnText}
+            🎮 ${content.btnText}
           </button>
         </div>
       `;
@@ -2787,19 +2795,19 @@
     if (DOM.btnHudReadQuestion) {
       DOM.btnHudReadQuestion.addEventListener('pointerdown', e => {
         e.preventDefault();
-        readCurrentQuestion();
+        readCurrentQuestion(true);
       });
     }
     if (DOM.btnReadAloudP1) {
       DOM.btnReadAloudP1.addEventListener('pointerdown', e => {
         e.preventDefault();
-        readCurrentQuestion();
+        readCurrentQuestion(true);
       });
     }
     if (DOM.btnReadAloudP2) {
       DOM.btnReadAloudP2.addEventListener('pointerdown', e => {
         e.preventDefault();
-        readCurrentQuestion();
+        readCurrentQuestion(true);
       });
     }
 
