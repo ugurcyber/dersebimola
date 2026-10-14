@@ -235,6 +235,74 @@
      ========================================================================== */
   const QuestionEngine = {
     // -------------------------------------------------------------
+    // ANASINIFI (OKUL ÖNCESİ - 4-6 YAŞ) ETKİNLİK HAVUZU
+    // -------------------------------------------------------------
+    generateKindergartenMath() {
+      const mode = Math.floor(Math.random() * 2);
+      if (mode === 0) {
+        // Sevimli Nesne / Meyve Sayma (1 - 5 arası dev emojiler)
+        const fruits = [
+          { emoji: '🍎', name: 'Kırmızı Elma' },
+          { emoji: '🍌', name: 'Sarı Muz' },
+          { emoji: '🍓', name: 'Tatlı Çilek' },
+          { emoji: '🍊', name: 'Turuncu Portakal' },
+          { emoji: '⭐', name: 'Parlak Yıldız' },
+          { emoji: '🎈', name: 'Renkli Balon' },
+          { emoji: '🚗', name: 'Sevimli Araba' }
+        ];
+        const chosen = fruits[Math.floor(Math.random() * fruits.length)];
+        const count = Math.floor(Math.random() * 5) + 1; // 1..5
+        const display = Array(count).fill(chosen.emoji).join('  ');
+        
+        const d1 = count === 5 ? '4' : (count + 1).toString();
+        const d2 = count === 1 ? '3' : (count - 1).toString();
+
+        return {
+          question: `${display}\n\nKaç tane ${chosen.name} var?`,
+          correct: `${count} Tane (${chosen.emoji})`,
+          distractors: [
+            `${d1} Tane (${chosen.emoji})`,
+            `${d2} Tane (${chosen.emoji})`
+          ],
+          explanation: `Birlikte sayalım: Tam ${count} tane ${chosen.name} var! Harikasın! 👏`
+        };
+      } else {
+        // Renkler ve Şekiller
+        const shapes = [
+          { q: 'Hangisi KIRMIZI renktir? 🔴', correct: '🔴 Kırmızı Daire', d: ['🔵 Mavi Daire', '🟡 Sarı Daire'], exp: 'Kırmızı, elma ve çileğin rengidir! 🍎' },
+          { q: 'Hangisi SARI renktir? 🟡', correct: '🟡 Sarı Daire', d: ['🟢 Yeşil Daire', '🟣 Mor Daire'], exp: 'Sarı, parlayan Güneş\'in ve muzun rengidir! ☀️' },
+          { q: 'Hangisi MAVİ renktir? 🔵', correct: '🔵 Mavi Daire', d: ['🟠 Turuncu Daire', '🔴 Kırmızı Daire'], exp: 'Mavi, gökyüzünün ve denizlerin rengidir! 🌊' },
+          { q: 'Hangisi YEŞİL renktir? 🟢', correct: '🟢 Yeşil Daire', d: ['🔴 Kırmızı Daire', '🟡 Sarı Daire'], exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿' },
+          { q: 'Hangisi parlayan YILDIZ şeklidir? ⭐', correct: '⭐ Sarı Yıldız', d: ['🔺 Mavi Üçgen', '⬛ Siyah Kare'], exp: 'Gökyüzünde parlayan yıldız tam olarak böyledir! ⭐' },
+          { q: 'Hangisi SEVGİ DOLU KALP şeklidir? 💖', correct: '💖 Pembe Kalp', d: ['🟢 Yeşil Daire', '🔺 Turuncu Üçgen'], exp: 'Kalp sevginin ve kucaklaşmanın sembolüdür! 💖' },
+          { q: 'Hangisi ÜÇGEN şeklidir? (3 köşesi var)', correct: '🔺 Üçgen', d: ['⚪ Daire', '🟩 Kare'], exp: 'Üçgenin tam 3 köşesi vardır! 🔺' },
+          { q: 'Hangisi yuvarlak DAİRE şeklidir? ⭕', correct: '⭕ Daire', d: ['🟩 Kare', '🔺 Üçgen'], exp: 'Daire tıpkı bir top gibi yuvarlaktır! ⚽' }
+        ];
+        const s = shapes[Math.floor(Math.random() * shapes.length)];
+        return {
+          question: s.q,
+          correct: s.correct,
+          distractors: s.d,
+          explanation: s.exp
+        };
+      }
+    },
+
+    grade0AnimalsAndNaturePool: [
+      { q: 'Hangi sevimli hayvan "MİYAV" der? 🐾', a: '🐱 Kedi', d: ['🐶 Köpek', '🐮 İnek'], exp: 'Kediler sevilmeyi çok sever ve "Miyav" derler! 🐱' },
+      { q: 'Hangi sadık dostumuz "HAV HAV" der? 🦴', a: '🐶 Köpek', d: ['🐱 Kedi', '🐥 Civciv'], exp: 'Köpekler kuyruklarını sallayarak "Hav hav" derler! 🐶' },
+      { q: 'Ormanların kralı olan yeleli güçlü hayvan hangisidir?', a: '🦁 Aslan', d: ['🐵 Maymun', '🐰 Tavşan'], exp: 'Aslan güçlü kükremesiyle ormanların kralıdır! 🦁' },
+      { q: 'Havuç yemeyi çok seven, uzun kulaklı zıp zıp hayvan hangisidir? 🥕', a: '🐰 Tavşan', d: ['🐻 Ayı', '🐸 Kurbağa'], exp: 'Tavşanlar zıp zıp zıplar ve çıtır çıtır havuç yer! 🐰' },
+      { q: 'Mavi denizlerde yüzgeçleriyle yüzen sevimli canlı hangisidir? 🌊', a: '🐟 Balık', d: ['🐦 Kuş', '🐱 Kedi'], exp: 'Balıklar suda yüzer ve solungaçlarıyla nefes alır! 🐟' },
+      { q: 'Gökyüzünde kanat çırparak uçan ve "Cik cik" öten hangisidir? 🌳', a: '🐦 Kuş', d: ['🐢 Kaplumbağa', '🐶 Köpek'], exp: 'Kuşlar kanatlarını açıp gökyüzünde süzülür! 🐦' },
+      { q: 'Hangisi ÇOK DAHA BÜYÜKTÜR ve kocaman bir hortumu vardır?', a: '🐘 Koca Fil', d: ['🐭 Küçük Fare', '🐜 Minik Karınca'], exp: 'Fil dünyanın en büyük ve en güçlü kara hayvanıdır! 🐘' },
+      { q: 'Gündüzleri gökyüzümüzü aydınlatan ve ısıtan sıcacık dostumuz hangisidir?', a: '☀️ Parlak Güneş', d: ['🌙 Gece Ayı', '🌧️ Yağmur Bulutu'], exp: 'Güneş her sabah doğar ve dünyamızı ısıtır! ☀️' },
+      { q: 'Bize lezzetli ve sağlıklı taze süt veren sevimli hayvan hangisidir? 🥛', a: '🐮 İnek', d: ['🦁 Aslan', '🐺 Kurt'], exp: 'İnekler "Mööö" der ve bize bembeyaz süt verir! 🥛' },
+      { q: 'Hangisi tatlı, kırmızı ve çok lezzetli bir yaz meyvesidir?', a: '🍓 Çilek', d: ['🧅 Soğan', '🥔 Patates'], exp: 'Çilek minik noktalı, kırmızı çok tatlı bir meyvedir! 🍓' },
+      { q: 'Derelerde "VAK VAK" diyerek neşeyle zıplayan yeşil dostumuz hangisidir?', a: '🐸 Kurbağa', d: ['🦊 Tilki', '🐴 At'], exp: 'Kurbağalar nilüfer yapraklarının üstünde zıplar! 🐸' }
+    ],
+
+    // -------------------------------------------------------------
     // 1. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİ
     // -------------------------------------------------------------
     generateGrade1Math() {
@@ -518,15 +586,17 @@
       const g = parseInt(grade, 10);
       if (gameType === 'math') {
         let raw;
-        if (g === 1) raw = this.generateGrade1Math();
+        if (g === 0) raw = this.generateKindergartenMath();
+        else if (g === 1) raw = this.generateGrade1Math();
         else if (g === 2) raw = this.generateGrade2Math();
         else if (g === 3) raw = this.generateGrade3Math();
         else raw = this.generateGrade4Math();
-        return this.buildQuestionItem(raw, '📐 Matematik Düellosu');
+        return this.buildQuestionItem(raw, g === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu');
       } else {
-        // Türkçe & Dikkat
+        // Türkçe & Dikkat & Doğa
         let pool;
-        if (g === 1) pool = this.grade1TurkishPool;
+        if (g === 0) pool = this.grade0AnimalsAndNaturePool;
+        else if (g === 1) pool = this.grade1TurkishPool;
         else if (g === 2) pool = this.grade2TurkishPool;
         else if (g === 3) pool = this.grade3TurkishSciencePool;
         else pool = this.grade4TurkishSocialPool;
@@ -537,7 +607,7 @@
           correct: raw.a,
           distractors: raw.d,
           explanation: raw.exp
-        }, '📚 Türkçe & Dikkat Avcısı');
+        }, g === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Dikkat Avcısı');
       }
     }
   };
@@ -936,20 +1006,38 @@
   function updateLobbyDescriptions() {
     const mathDesc = document.getElementById('mathGameDesc');
     const trDesc = document.getElementById('turkishGameDesc');
+    const mathTitle = document.querySelector('#btnLaunchMath .game-title');
+    const trTitle = document.querySelector('#btnLaunchTurkish .game-title');
+    const mathIcon = document.querySelector('#btnLaunchMath .game-visual-icon');
+    const trIcon = document.querySelector('#btnLaunchTurkish .game-visual-icon');
     const g = state.currentGrade;
 
-    if (g === 1) {
-      mathDesc.textContent = '1. Sınıf: 20\'ye kadar basit toplama-çıkarma, 2-5-10\'ar ritmik sayma.';
-      trDesc.textContent = '1. Sınıf: Temel zıt kavramlar (büyük-küçük, uzun-kısa), ünlü harf ve dikkat avı.';
-    } else if (g === 2) {
-      mathDesc.textContent = '2. Sınıf: İki basamaklı işlemler, deste ve düzine, 3\'er ve 4\'er ritmik sayma.';
-      trDesc.textContent = '2. Sınıf: Eş anlamlılar (siyah-kara), zıt anlamlılar (taze-bayat) ve yazım kuralları.';
-    } else if (g === 3) {
-      mathDesc.textContent = '3. Sınıf: Çarpım tablosu fırtınası (2x-9x), basit bölme ve basamak değeri düellosu.';
-      trDesc.textContent = '3. Sınıf: Eş sesli kelimeler (yüz, gül), Fen & Hayat Bilgisi doğru-yanlış gerçekleri.';
+    if (g === 0) {
+      if (mathTitle) mathTitle.textContent = "Renkler, Şekiller & Sayma";
+      if (mathIcon) mathIcon.textContent = "🎨";
+      if (trTitle) trTitle.textContent = "Sevimli Hayvanlar & Doğa";
+      if (trIcon) trIcon.textContent = "🦁";
+      if (mathDesc) mathDesc.textContent = "Okul Öncesi: Canlı renkler, parlayan şekiller ve 1-5 arası meyvelerle neşeli görsel sayma oyunu!";
+      if (trDesc) trDesc.textContent = "Okul Öncesi: Sevimli hayvan sesleri, doğa kahramanları ve büyük-küçük kavramları keşfi!";
     } else {
-      mathDesc.textContent = '4. Sınıf: Hızlı 4 işlem, çeyrek ve kesir hesapları, açı türleri (dar, dik, geniş).';
-      trDesc.textContent = '4. Sınıf: Zengin deyimler (etekleri zil çalmak vb.), Sosyal Bilgiler & genel kültür.';
+      if (mathTitle) mathTitle.textContent = "Kafa Kafaya Matematik";
+      if (mathIcon) mathIcon.textContent = "🧮";
+      if (trTitle) trTitle.textContent = "Hızlı Türkçe & Dikkat Avcısı";
+      if (trIcon) trIcon.textContent = "🦉";
+
+      if (g === 1) {
+        mathDesc.textContent = "1. Sınıf: 20'ye kadar basit toplama-çıkarma, 2-5-10'ar ritmik sayma.";
+        trDesc.textContent = "1. Sınıf: Temel zıt kavramlar (büyük-küçük, uzun-kısa), ünlü harf ve dikkat avı.";
+      } else if (g === 2) {
+        mathDesc.textContent = "2. Sınıf: İki basamaklı işlemler, deste ve düzine, 3'er ve 4'er ritmik sayma.";
+        trDesc.textContent = "2. Sınıf: Eş anlamlılar (siyah-kara), zıt anlamlılar (taze-bayat) ve yazım kuralları.";
+      } else if (g === 3) {
+        mathDesc.textContent = "3. Sınıf: Çarpım tablosu fırtınası (2x-9x), basit bölme ve basamak değeri düellosu.";
+        trDesc.textContent = "3. Sınıf: Eş sesli kelimeler (yüz, gül), Fen & Hayat Bilgisi doğru-yanlış gerçekleri.";
+      } else {
+        mathDesc.textContent = "4. Sınıf: Hızlı 4 işlem, çeyrek ve kesir hesapları, açı türleri (dar, dik, geniş).";
+        trDesc.textContent = "4. Sınıf: Zengin deyimler (etekleri zil çalmak vb.), Sosyal Bilgiler & genel kültür.";
+      }
     }
   }
 
@@ -1284,8 +1372,12 @@
     state.questionNumber = 1;
 
     // UI'ları sıfırla
-    DOM.duelGradeBadge.textContent = `${state.currentGrade}. Sınıf`;
-    DOM.duelGameTypeBadge.textContent = gameType === 'math' ? '📐 Matematik' : '📚 Türkçe & Dikkat';
+    DOM.duelGradeBadge.textContent = state.currentGrade === 0 ? '🎈 Anasınıfı' : `${state.currentGrade}. Sınıf`;
+    if (state.currentGrade === 0) {
+      DOM.duelGameTypeBadge.textContent = gameType === 'math' ? '🎨 Renkler & Sayma' : '🦁 Sevimli Hayvanlar';
+    } else {
+      DOM.duelGameTypeBadge.textContent = gameType === 'math' ? '📐 Matematik' : '📚 Türkçe & Dikkat';
+    }
     updatePlayerNamesUI();
     renderScoreTrack();
 

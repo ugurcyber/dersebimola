@@ -488,8 +488,23 @@ html, body {
 
 .grade-cards-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.grade-card.kindergarten-card {
+  border-color: #fbcfe8;
+  background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 50%);
+}
+
+.grade-card.kindergarten-card .grade-card-badge {
+  color: #db2777;
+}
+
+.grade-card.kindergarten-card.active {
+  background: #fdf2f8;
+  border-color: #ec4899;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.35);
 }
 
 .grade-card {

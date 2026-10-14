@@ -7,7 +7,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <title>Derse Bi' Mola | MEB Akıllı Tahta Sınıf Düellosu</title>
   <!-- MEB Fatih Ağı ve ETAP Uyumlu: Sıfır Harici CDN, Sıfır Dış Kaynak -->
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <link rel="stylesheet" href="style.css?v=4.0">
 </head>
 <body>
   <!-- Arka Plan Partikül / Parıltı Efekti -->
@@ -26,7 +26,10 @@
       
       <!-- Sınıf Seviyesi Seçim Butonları (Header) -->
       <nav class="grade-nav" aria-label="Sınıf Seviyesi Seçimi">
-        <button class="grade-chip active" data-grade="1" id="chipGrade1" pointerdown="void(0)">
+        <button class="grade-chip" data-grade="0" id="chipGrade0">
+          <span class="grade-icon">🎈</span> Anasınıfı
+        </button>
+        <button class="grade-chip active" data-grade="1" id="chipGrade1">
           <span class="grade-num">1</span>. Sınıf
         </button>
         <button class="grade-chip" data-grade="2" id="chipGrade2">
@@ -131,6 +134,13 @@
       <section class="grade-selector-section">
         <div class="section-label">Önce Sınıfını Seç:</div>
         <div class="grade-cards-grid">
+          <button class="grade-card kindergarten-card" data-grade="0" id="cardGrade0">
+            <div class="grade-card-badge">Okul Öncesi</div>
+            <div class="grade-card-icon">🎈</div>
+            <div class="grade-card-title">Anasınıfı</div>
+            <div class="grade-card-desc">Renkler, şekiller, sevimli hayvanlar ve meyvelerle sayma</div>
+          </button>
+
           <button class="grade-card active" data-grade="1" id="cardGrade1">
             <div class="grade-card-badge">Temel Seviye</div>
             <div class="grade-card-icon">🌱</div>
@@ -618,6 +628,7 @@
           <div class="form-group">
             <label for="customGrade">Sınıf Seviyesi:</label>
             <select id="customGrade" class="custom-input">
+              <option value="0">Anasınıfı (Okul Öncesi)</option>
               <option value="1">1. Sınıf</option>
               <option value="2">2. Sınıf</option>
               <option value="3">3. Sınıf</option>
