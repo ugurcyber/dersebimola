@@ -115,48 +115,86 @@
       return !!this.ctx;
     }
 
-    // Doğru Cevap: Neşeli, yükselen akor melodisi (C5 -> E5 -> G5 -> C6)
+    // Doğru Cevap: "Ding ding" yerine parlak, neşeli kristal yıldız / marimba parıltısı ("Bling! ✨")
     playCorrect() {
       if (!state.soundEnabled || !this.ensureContext()) return;
-      const notes = [523.25, 659.25, 783.99, 1046.50];
       const now = this.ctx.currentTime;
-      notes.forEach((freq, idx) => {
+
+      // 1. Adım (Hızlı Yükselen Marimba Çıkışı): 0.05s
+      const oscUp = this.ctx.createOscillator();
+      const gainUp = this.ctx.createGain();
+      oscUp.type = 'triangle';
+      oscUp.frequency.setValueAtTime(659.25, now); // E5
+      oscUp.frequency.exponentialRampToValueAtTime(783.99, now + 0.05); // G5
+      gainUp.gain.setValueAtTime(0, now);
+      gainUp.gain.linearRampToValueAtTime(0.22, now + 0.015);
+      gainUp.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      oscUp.connect(gainUp);
+      gainUp.connect(this.ctx.destination);
+      oscUp.start(now);
+      oscUp.stop(now + 0.075);
+
+      // 2. Adım (Zengin Parıltılı Armonik Akor): now + 0.055
+      const chordTime = now + 0.055;
+      const freqs = [
+        { f: 1046.50, vol: 0.28, decay: 0.45 }, // C6 (Ana Kristal Çan)
+        { f: 1318.51, vol: 0.20, decay: 0.38 }, // E6 (Neşeli Majör Üçlü)
+        { f: 1567.98, vol: 0.16, decay: 0.32 }, // G6 (Parlak Beşli)
+        { f: 2093.00, vol: 0.08, decay: 0.22 }  // C7 (Yıldız Parıltısı)
+      ];
+
+      freqs.forEach(item => {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(item.f, chordTime);
 
-        gain.gain.setValueAtTime(0, now + idx * 0.08);
-        gain.gain.linearRampToValueAtTime(0.25, now + idx * 0.08 + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.28);
+        gain.gain.setValueAtTime(0, chordTime);
+        gain.gain.linearRampToValueAtTime(item.vol, chordTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, chordTime + item.decay);
 
         osc.connect(gain);
         gain.connect(this.ctx.destination);
-
-        osc.start(now + idx * 0.08);
-        osc.stop(now + idx * 0.08 + 0.3);
+        osc.start(chordTime);
+        osc.stop(chordTime + item.decay + 0.05);
       });
     }
 
-    // Yanlış Cevap: Tok, uyarıcı bas sesi
+    // Yanlış Cevap: Korkutucu testere sesi yerine sevimli, tok uyarı ("Ops!" thud)
     playWrong() {
       if (!state.soundEnabled || !this.ensureContext()) return;
       const now = this.ctx.currentTime;
+
+      // 1. Tok Bas Vuruşu
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(95, now + 0.22);
 
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(160, now);
-      osc.frequency.exponentialRampToValueAtTime(80, now + 0.35);
-
-      gain.gain.setValueAtTime(0.3, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      gain.gain.setValueAtTime(0.28, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
-
       osc.start(now);
-      osc.stop(now + 0.36);
+      osc.stop(now + 0.25);
+
+      // 2. İkinci Yumuşak Düşüş (Wobble)
+      const osc2 = this.ctx.createOscillator();
+      const gain2 = this.ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(140, now + 0.07);
+      osc2.frequency.exponentialRampToValueAtTime(70, now + 0.25);
+
+      gain2.gain.setValueAtTime(0, now + 0.07);
+      gain2.gain.linearRampToValueAtTime(0.18, now + 0.09);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+      osc2.connect(gain2);
+      gain2.connect(this.ctx.destination);
+      osc2.start(now + 0.07);
+      osc2.stop(now + 0.26);
     }
 
     // Zafer Şampiyonluk Melodisi: Görkemli marş motifi
@@ -191,7 +229,7 @@
       });
     }
 
-    // Kura / Çark Çevirme Tık Sesi
+    // Kura / Çark Çevirme Tık Sesi: Tok ahşap çark tıkı
     playTick() {
       if (!state.soundEnabled || !this.ensureContext()) return;
       const now = this.ctx.currentTime;
@@ -199,37 +237,55 @@
       const gain = this.ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(750, now);
-      osc.frequency.exponentialRampToValueAtTime(250, now + 0.04);
+      osc.frequency.setValueAtTime(1050, now);
+      osc.frequency.exponentialRampToValueAtTime(320, now + 0.03);
 
-      gain.gain.setValueAtTime(0.18, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      gain.gain.setValueAtTime(0.22, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.032);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
       osc.start(now);
-      osc.stop(now + 0.045);
+      osc.stop(now + 0.035);
     }
 
-    // Buton Tıklama Sesi
+    // Buton & Arayüz Tıklama Sesi: Ding ding yerine canlı, tatlı ahşap/balon pop sesi
     playClick() {
       if (!state.soundEnabled || !this.ensureContext()) return;
       const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
+      // İnce doğal pitch varyasyonu (her tık tekdüze mekanik olmasın)
+      const v = 0.96 + Math.random() * 0.08;
 
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(440, now);
+      // 1. Katman: Gövde (Juicy Bubble / Wooden Pop)
+      const oscBody = this.ctx.createOscillator();
+      const gainBody = this.ctx.createGain();
+      oscBody.type = 'sine';
+      oscBody.frequency.setValueAtTime(820 * v, now);
+      oscBody.frequency.exponentialRampToValueAtTime(230 * v, now + 0.042);
 
-      gain.gain.setValueAtTime(0.1, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+      gainBody.gain.setValueAtTime(0.25, now);
+      gainBody.gain.exponentialRampToValueAtTime(0.001, now + 0.055);
 
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
+      oscBody.connect(gainBody);
+      gainBody.connect(this.ctx.destination);
+      oscBody.start(now);
+      oscBody.stop(now + 0.06);
 
-      osc.start(now);
-      osc.stop(now + 0.065);
+      // 2. Katman: Çıtır Parmak Dokunuş Transient'i (Crisp Tap Snap)
+      const oscSnap = this.ctx.createOscillator();
+      const gainSnap = this.ctx.createGain();
+      oscSnap.type = 'triangle';
+      oscSnap.frequency.setValueAtTime(1550 * v, now);
+      oscSnap.frequency.exponentialRampToValueAtTime(420 * v, now + 0.018);
+
+      gainSnap.gain.setValueAtTime(0.14, now);
+      gainSnap.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+
+      oscSnap.connect(gainSnap);
+      gainSnap.connect(this.ctx.destination);
+      oscSnap.start(now);
+      oscSnap.stop(now + 0.024);
     }
 
     // -------------------------------------------------------------
