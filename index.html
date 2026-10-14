@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Derse Bi' Mola | MEB Akıllı Tahta Sınıf Düellosu</title>
+  <!-- MEB Fatih Ağı ve ETAP Uyumlu: Sıfır Harici CDN, Sıfır Dış Kaynak -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Arka Plan Partikül / Parıltı Efekti -->
+  <div class="bg-mesh" aria-hidden="true"></div>
+
+  <!-- Üst Navigasyon & Kontrol Çubuğu -->
+  <header class="app-header" id="appHeader">
+    <div class="header-left">
+      <div class="logo-badge" id="logoBtn" role="button" tabindex="0" title="Ana Menüye Dön">
+        <span class="logo-icon">🎯</span>
+        <div class="logo-text">
+          <span class="logo-title">DERSE Bİ' MOLA</span>
+          <span class="logo-sub">ETAP & Fatih Akıllı Tahta Düellosu</span>
+        </div>
+      </div>
+      
+      <!-- Sınıf Seviyesi Seçim Butonları (Header) -->
+      <nav class="grade-nav" aria-label="Sınıf Seviyesi Seçimi">
+        <button class="grade-chip active" data-grade="1" id="chipGrade1" pointerdown="void(0)">
+          <span class="grade-num">1</span>. Sınıf
+        </button>
+        <button class="grade-chip" data-grade="2" id="chipGrade2">
+          <span class="grade-num">2</span>. Sınıf
+        </button>
+        <button class="grade-chip" data-grade="3" id="chipGrade3">
+          <span class="grade-num">3</span>. Sınıf
+        </button>
+        <button class="grade-chip" data-grade="4" id="chipGrade4">
+          <span class="grade-num">4</span>. Sınıf
+        </button>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <!-- Pro / Freemium Kancaları -->
+      <button class="tool-btn pro-tool-btn" id="btnOpenPicker" title="Sınıf Listesinden Rastgele 2 Öğrenci Seç">
+        <span class="tool-icon">🎲</span>
+        <span class="tool-label">Rastgele 2 Öğrenci Seç</span>
+        <span class="pro-badge">PRO</span>
+      </button>
+
+      <button class="tool-btn pro-tool-btn" id="btnOpenCustomQ" title="Kendi Sorularımı Ekle">
+        <span class="tool-icon">✏️</span>
+        <span class="tool-label">Soru Ekle</span>
+      </button>
+
+      <button class="tool-btn" id="btnOpenLeaderboard" title="Sınıf Ligi Puan Tablosu">
+        <span class="tool-icon">🏆</span>
+        <span class="tool-label">Sınıf Ligi</span>
+      </button>
+
+      <div class="header-divider"></div>
+
+      <!-- Sistem Kontrolleri (Ses & Tam Ekran) -->
+      <button class="icon-tool-btn" id="btnToggleSound" title="Sesi Aç / Kapat" aria-label="Sesi Aç / Kapat">
+        <svg class="svg-icon icon-sound-on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+        <svg class="svg-icon icon-sound-off hide" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+
+      <button class="icon-tool-btn" id="btnToggleFullscreen" title="Tam Ekran Yap" aria-label="Tam Ekran Yap">
+        <svg class="svg-icon icon-fullscreen-enter" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+        </svg>
+        <svg class="svg-icon icon-fullscreen-exit hide" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+        </svg>
+      </button>
+
+      <!-- Öğretmen Girişi / Profil Butonu -->
+      <button class="teacher-auth-btn" id="btnTeacherAuth">
+        <span class="auth-icon" id="authIcon">👨‍🏫</span>
+        <span class="auth-text" id="authBtnText">Öğretmen Girişi</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- 1. GÖRÜNÜM: ANA LOBİ EKRANI (#view-lobby) -->
+  <!-- ============================================== -->
+  <main class="view-container active" id="viewLobby">
+    <div class="lobby-content">
+      
+      <!-- Karşılama ve Hızlı Eşleşme Çubuğu -->
+      <section class="lobby-hero">
+        <div class="hero-tag">
+          <span class="pulse-dot"></span> MEB Fatih Projesi & ETAP Akıllı Tahta Canlı İki Kişilik Sınıf Düellosu
+        </div>
+        <h1 class="hero-title">
+          Dersi <span class="highlight-gradient">Eğlenceli Bir Düelloya</span> Dönüştür!
+        </h1>
+        <p class="hero-desc">
+          İki öğrenci aynı anda akıllı tahtaya dokunarak yarışır, doğru cevabı ilk bulan puanı kapar. 
+          Yanlış basan 1.5 saniye kilitlenir!
+        </p>
+        
+        <!-- Tahtadaki Aktif Yarışmacılar Çubuğu -->
+        <div class="active-contestants-bar">
+          <div class="contestant-tag blue-tag">
+            <span class="team-badge">MAVİ TAKIM</span>
+            <span class="student-name" id="lobbyPlayer1Name">1. Öğrenci (Mavi)</span>
+          </div>
+          <div class="vs-circle">VS</div>
+          <div class="contestant-tag red-tag">
+            <span class="team-badge">KIRMIZI TAKIM</span>
+            <span class="student-name" id="lobbyPlayer2Name">2. Öğrenci (Kırmızı)</span>
+          </div>
+          <button class="quick-draw-btn" id="btnQuickDrawPlayers" title="Rastgele İki Öğrenci Seç">
+            <span>🎲</span> Öğrencileri Değiştir
+          </button>
+        </div>
+      </section>
+
+      <!-- Sınıf Seviyesi Büyük Seçici -->
+      <section class="grade-selector-section">
+        <div class="section-label">Önce Sınıfını Seç:</div>
+        <div class="grade-cards-grid">
+          <button class="grade-card active" data-grade="1" id="cardGrade1">
+            <div class="grade-card-badge">Temel Seviye</div>
+            <div class="grade-card-icon">🌱</div>
+            <div class="grade-card-title">1. Sınıf</div>
+            <div class="grade-card-desc">20'ye kadar toplama, ritmik sayma ve temel zıt kavramlar</div>
+          </button>
+
+          <button class="grade-card" data-grade="2" id="cardGrade2">
+            <div class="grade-card-badge">Gelişme Seviyesi</div>
+            <div class="grade-card-icon">🚀</div>
+            <div class="grade-card-title">2. Sınıf</div>
+            <div class="grade-card-desc">İki basamaklı işlemler, eş ve zıt anlamlı kelimeler</div>
+          </button>
+
+          <button class="grade-card" data-grade="3" id="cardGrade3">
+            <div class="grade-card-badge">İleri Seviye</div>
+            <div class="grade-card-icon">⚡</div>
+            <div class="grade-card-title">3. Sınıf</div>
+            <div class="grade-card-desc">Çarpım tablosu fırtınası, basamak değeri, Hayat Bilgisi & Fen</div>
+          </button>
+
+          <button class="grade-card" data-grade="4" id="cardGrade4">
+            <div class="grade-card-badge">Usta Seviye</div>
+            <div class="grade-card-icon">👑</div>
+            <div class="grade-card-title">4. Sınıf</div>
+            <div class="grade-card-desc">Hızlı 4 işlem, kesirler, deyimler, Sosyal Bilgiler kavramları</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- 2 Temel Oyun Kartı -->
+      <section class="games-section">
+        <div class="section-label">Oynamak İstediğin Düelloyu Seç:</div>
+        <div class="games-grid">
+          
+          <!-- OYUN 1: Kafa Kafaya Matematik & İşlem Düellosu -->
+          <article class="game-card math-theme" id="btnLaunchMath">
+            <div class="game-card-glow"></div>
+            <div class="game-card-content">
+              <div class="game-top-meta">
+                <span class="game-category-tag math-tag">📐 MATEMATİK DÜELLOSU</span>
+                <span class="game-speed-badge">⚡ Hızlı İşlem</span>
+              </div>
+              <div class="game-visual-icon">🧮</div>
+              <h2 class="game-title">Kafa Kafaya Matematik</h2>
+              <p class="game-subtitle" id="mathGameDesc">
+                Rastgele üretilen akılcı işlemlerle zihinden hesaplama hızı ve işlem reflekslerini kapıştırın!
+              </p>
+              <div class="game-features-list">
+                <span class="feature-pill">✓ Sınıf Seviyesine Özel</span>
+                <span class="feature-pill">✓ Çarpım Tablosu & 4 İşlem</span>
+                <span class="feature-pill">✓ Anında Çözüm Notu</span>
+              </div>
+              <button class="btn-play-game" id="btnStartMathGame">
+                <span class="play-icon">▶</span>
+                <span>Matematik Düellosunu Başlat</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- OYUN 2: Hızlı Türkçe & Dikkat Avcısı -->
+          <article class="game-card turkish-theme" id="btnLaunchTurkish">
+            <div class="game-card-glow"></div>
+            <div class="game-card-content">
+              <div class="game-top-meta">
+                <span class="game-category-tag turkish-tag">📚 TÜRKÇE & DİKKAT</span>
+                <span class="game-speed-badge">🔍 Odaklanma</span>
+              </div>
+              <div class="game-visual-icon">🦉</div>
+              <h2 class="game-title">Hızlı Türkçe & Dikkat Avcısı</h2>
+              <p class="game-subtitle" id="turkishGameDesc">
+                Eş-zıt anlamlar, deyimler, kelime dağarcığı ve görsel dikkat sorularıyla kelime şampiyonunu belirleyin!
+              </p>
+              <div class="game-features-list">
+                <span class="feature-pill">✓ Zengin Kelime Havuzu</span>
+                <span class="feature-pill">✓ Deyimler & Kavramlar</span>
+                <span class="feature-pill">✓ Spam Önleme Kilidi</span>
+              </div>
+              <button class="btn-play-game" id="btnStartTurkishGame">
+                <span class="play-icon">▶</span>
+                <span>Türkçe Düellosunu Başlat</span>
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Düello Ayarları ve Hızlı Bilgi -->
+      <section class="duel-settings-bar">
+        <div class="setting-item">
+          <span class="setting-icon">🎯</span>
+          <span class="setting-label">Hedef Puan:</span>
+          <div class="target-score-selector" id="targetScoreSelector">
+            <button class="score-btn" data-score="3">3 Puan</button>
+            <button class="score-btn active" data-score="5">5 Puan (Standart)</button>
+            <button class="score-btn" data-score="7">7 Puan (Uzun)</button>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <span class="setting-icon">💡</span>
+          <span class="setting-label">Her Soruda Pedagojik Çözümü Göster:</span>
+          <label class="switch">
+            <input type="checkbox" id="chkAutoExplanation" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="setting-info-badge">
+          <span>🖐️ <strong>Tahta Kuralı:</strong> İki öğrenci aynı anda parmakla dokunabilir. Yanlış şıkka basanın ekranı 1.5 sn kilitlenir!</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ============================================== -->
+  <!-- 2. GÖRÜNÜM: DÜELLO EKRANI (#view-duel - Split Screen) -->
+  <!-- ============================================== -->
+  <section class="view-container split-screen-view" id="viewDuel">
+    
+    <!-- Düello Üst HUD / Kontrol Barı -->
+    <div class="duel-hud">
+      <button class="hud-btn hud-exit-btn" id="btnExitDuel" title="Düellodan Çık">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"></path>
+        </svg>
+        <span>Lobiye Dön</span>
+      </button>
+
+      <div class="hud-center-meta">
+        <span class="hud-grade-badge" id="duelGradeBadge">2. Sınıf</span>
+        <span class="hud-game-type" id="duelGameTypeBadge">📐 Matematik</span>
+        <span class="hud-round-badge" id="duelRoundBadge">Soru 1</span>
+      </div>
+
+      <div class="hud-actions">
+        <button class="hud-btn" id="btnToggleSolutionNow" title="Şu anki sorunun çözümünü aç">
+          <span>💡</span> <span>Çözümü Göster</span>
+        </button>
+        <button class="hud-btn hud-skip-btn" id="btnSkipQuestion" title="Bu soruyu atla">
+          <span>Sonraki Soru</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 4 15 12 5 20 5 4"></polygon>
+            <line x1="19" y1="5" x2="19" y2="19"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Split-Screen Ana Yarış Alanı -->
+    <div class="split-arena" id="splitArena">
+      
+      <!-- ================= SOL YARI: MAVİ TAKIM (1. ÖĞRENCİ) ================= -->
+      <div class="player-panel blue-player" id="playerPanel1">
+        
+        <!-- Oyuncu Üst Bilgi & Puan Barı -->
+        <div class="player-hud">
+          <div class="player-info">
+            <div class="player-avatar blue-avatar">👦</div>
+            <div class="player-labels">
+              <span class="team-title">MAVİ TAKIM</span>
+              <span class="player-name" id="duelP1Name">Mavi Oyuncu</span>
+            </div>
+          </div>
+          <!-- 5 Yıldızlı Puan Barı -->
+          <div class="player-score-container">
+            <div class="stars-track" id="p1StarsTrack">
+              <span class="star-slot" data-index="0">⭐</span>
+              <span class="star-slot" data-index="1">⭐</span>
+              <span class="star-slot" data-index="2">⭐</span>
+              <span class="star-slot" data-index="3">⭐</span>
+              <span class="star-slot" data-index="4">⭐</span>
+            </div>
+            <div class="score-badge" id="p1ScoreBadge">0 / 5</div>
+          </div>
+        </div>
+
+        <!-- Soru Kartı (Sol Taraf) -->
+        <div class="duel-question-card" id="p1QuestionCard">
+          <div class="question-meta-tag" id="p1QuestionCategory">Soru</div>
+          <div class="question-text" id="p1QuestionText">Hazırlanıyor...</div>
+        </div>
+
+        <!-- 3 Adet Devasa Şık Butonu (Dokunmatik ve Pointerdown Duyarlı) -->
+        <div class="duel-options-grid" id="p1OptionsGrid">
+          <button class="duel-option-btn" id="p1OptA" data-option-index="0">
+            <span class="opt-letter">A</span>
+            <span class="opt-text" id="p1OptTextA">...</span>
+          </button>
+          <button class="duel-option-btn" id="p1OptB" data-option-index="1">
+            <span class="opt-letter">B</span>
+            <span class="opt-text" id="p1OptTextB">...</span>
+          </button>
+          <button class="duel-option-btn" id="p1OptC" data-option-index="2">
+            <span class="opt-letter">C</span>
+            <span class="opt-text" id="p1OptTextC">...</span>
+          </button>
+        </div>
+
+        <!-- Hata Koruması: 1.5 Saniyelik Kilit ve Ceza Sayacı Katmanı -->
+        <div class="penalty-lockout-overlay hide" id="p1LockoutOverlay">
+          <div class="lockout-modal-box">
+            <div class="lockout-icon">⏳</div>
+            <div class="lockout-title">Hatalı Şık!</div>
+            <div class="lockout-desc">1.5 saniye kilitlendin! Sıra rakipte...</div>
+            <div class="penalty-progress-bar">
+              <div class="penalty-progress-fill" id="p1LockProgress"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doğru Cevap Tebrik Katmanı -->
+        <div class="point-won-toast hide" id="p1WinToast">
+          <span class="toast-icon">✨</span>
+          <span class="toast-text">HARİKA! +1 PUAN</span>
+        </div>
+      </div>
+
+      <!-- Ortadaki Neon Bölücü Çizgi ve VS Rozeti -->
+      <div class="arena-divider" aria-hidden="true">
+        <div class="divider-beam"></div>
+        <div class="divider-vs-badge">VS</div>
+        <div class="divider-beam"></div>
+      </div>
+
+      <!-- ================= SAĞ YARI: KIRMIZI TAKIM (2. ÖĞRENCİ) ================= -->
+      <div class="player-panel red-player" id="playerPanel2">
+        
+        <!-- Oyuncu Üst Bilgi & Puan Barı -->
+        <div class="player-hud">
+          <div class="player-info">
+            <div class="player-avatar red-avatar">👧</div>
+            <div class="player-labels">
+              <span class="team-title">KIRMIZI TAKIM</span>
+              <span class="player-name" id="duelP2Name">Kırmızı Oyuncu</span>
+            </div>
+          </div>
+          <!-- 5 Yıldızlı Puan Barı -->
+          <div class="player-score-container">
+            <div class="stars-track" id="p2StarsTrack">
+              <span class="star-slot" data-index="0">⭐</span>
+              <span class="star-slot" data-index="1">⭐</span>
+              <span class="star-slot" data-index="2">⭐</span>
+              <span class="star-slot" data-index="3">⭐</span>
+              <span class="star-slot" data-index="4">⭐</span>
+            </div>
+            <div class="score-badge" id="p2ScoreBadge">0 / 5</div>
+          </div>
+        </div>
+
+        <!-- Soru Kartı (Sağ Taraf - Tamamen Simetrik) -->
+        <div class="duel-question-card" id="p2QuestionCard">
+          <div class="question-meta-tag" id="p2QuestionCategory">Soru</div>
+          <div class="question-text" id="p2QuestionText">Hazırlanıyor...</div>
+        </div>
+
+        <!-- 3 Adet Devasa Şık Butonu (Dokunmatik ve Pointerdown Duyarlı) -->
+        <div class="duel-options-grid" id="p2OptionsGrid">
+          <button class="duel-option-btn" id="p2OptA" data-option-index="0">
+            <span class="opt-letter">A</span>
+            <span class="opt-text" id="p2OptTextA">...</span>
+          </button>
+          <button class="duel-option-btn" id="p2OptB" data-option-index="1">
+            <span class="opt-letter">B</span>
+            <span class="opt-text" id="p2OptTextB">...</span>
+          </button>
+          <button class="duel-option-btn" id="p2OptC" data-option-index="2">
+            <span class="opt-letter">C</span>
+            <span class="opt-text" id="p2OptTextC">...</span>
+          </button>
+        </div>
+
+        <!-- Hata Koruması: 1.5 Saniyelik Kilit ve Ceza Sayacı Katmanı -->
+        <div class="penalty-lockout-overlay hide" id="p2LockoutOverlay">
+          <div class="lockout-modal-box">
+            <div class="lockout-icon">⏳</div>
+            <div class="lockout-title">Hatalı Şık!</div>
+            <div class="lockout-desc">1.5 saniye kilitlendin! Sıra rakipte...</div>
+            <div class="penalty-progress-bar">
+              <div class="penalty-progress-fill" id="p2LockProgress"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doğru Cevap Tebrik Katmanı -->
+        <div class="point-won-toast hide" id="p2WinToast">
+          <span class="toast-icon">✨</span>
+          <span class="toast-text">HARİKA! +1 PUAN</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pedagojik Çözüm Notu Alt / Orta Açılır Bildirimi -->
+    <div class="solution-popup-banner hide" id="solutionPopup">
+      <div class="solution-popup-content">
+        <div class="solution-icon">💡</div>
+        <div class="solution-details">
+          <div class="solution-header">Öğretmen Çözüm Notu:</div>
+          <div class="solution-body" id="solutionText">Burada sorunun açıklaması yer alır.</div>
+        </div>
+        <button class="solution-close-btn" id="btnCloseSolution" title="Kapat ve Devam Et">Tamam ✕</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- 3. GÖRÜNÜM: MAÇ SONU & ZAFER EKRANI (Modal/Overlay) -->
+  <!-- ============================================== -->
+  <div class="victory-overlay hide" id="victoryOverlay">
+    <!-- Konfeti Çizim Alanı -->
+    <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+    <div class="victory-card">
+      <div class="victory-trophy-glow"></div>
+      <div class="trophy-visual">🏆</div>
+      <span class="victory-subtitle">SINIF DÜELLOSU ŞAMPİYONU</span>
+      <h2 class="winner-player-title" id="victoryWinnerTitle">Mavi Takım (Ali) Kazandı!</h2>
+      
+      <!-- Puan Özeti -->
+      <div class="victory-score-box">
+        <div class="score-team blue-winner-box" id="victoryBlueBox">
+          <span class="team-name" id="victoryBlueName">Mavi Takım</span>
+          <span class="score-val" id="victoryBlueScore">5</span>
+        </div>
+        <div class="score-vs">-</div>
+        <div class="score-team red-winner-box" id="victoryRedBox">
+          <span class="team-name" id="victoryRedName">Kırmızı Takım</span>
+          <span class="score-val" id="victoryRedScore">3</span>
+        </div>
+      </div>
+
+      <p class="victory-congrats">
+        Harika bir dikkat ve hız mücadelesi oldu! Kazananı ve yarışan tüm arkadaşlarımızı alkışlayalım! 👏
+      </p>
+
+      <!-- Butonlar -->
+      <div class="victory-actions">
+        <button class="btn-action-primary" id="btnRematchSame">
+          <span class="action-icon">🔄</span>
+          <span>Rövanş Maçı (Aynı Öğrencilerle)</span>
+        </button>
+        <button class="btn-action-secondary" id="btnSelectNewStudents">
+          <span class="action-icon">🎲</span>
+          <span>Yeni Öğrenciler Seç</span>
+        </button>
+        <button class="btn-action-outline" id="btnBackToLobby">
+          <span class="action-icon">🏠</span>
+          <span>Ana Menüye Dön</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODALLER: PRO & FREEMIUM VE ARAÇLAR -->
+  <!-- ============================================== -->
+
+  <!-- MODAL 1: ÖĞRETMEN GİRİŞİ (FREEMIUM KANCASI) -->
+  <div class="modal-backdrop hide" id="modalAuth">
+    <div class="modal-window auth-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalAuth">✕</button>
+      <div class="modal-header">
+        <div class="modal-badge-icon">👨‍🏫</div>
+        <h3 class="modal-title">Öğretmen Hesabına Giriş Yap</h3>
+        <p class="modal-desc">
+          Sınıf listenizi bir kez kaydedip her derste tahtaya kalkacak öğrencileri çarkıfelek ile rastgele seçmek, kendi sorularınızı eklemek için ücretsiz giriş yapın!
+        </p>
+      </div>
+
+      <div class="freemium-perks">
+        <div class="perk-item">
+          <span class="perk-icon">✨</span>
+          <div class="perk-info">
+            <strong>Kalıcı Sınıf Listesi:</strong> Öğrenci adlarını kaydedin, her derste saniyeler içinde kura çekin.
+          </div>
+        </div>
+        <div class="perk-item">
+          <span class="perk-icon">✏️</span>
+          <div class="perk-info">
+            <strong>Kendi Sorularınızı Ekleyin:</strong> Kendi ders işleyişinize uygun özel sorularla sınıfınızı yarıştırın.
+          </div>
+        </div>
+        <div class="perk-item">
+          <span class="perk-icon">📊</span>
+          <div class="perk-info">
+            <strong>Sınıf Ligi Sıralaması:</strong> Kim kaç maç kazandı, sınıfın en dikkatli öğrencileri kimler görün.
+          </div>
+        </div>
+      </div>
+
+      <!-- Simüle Edilmiş Google İle Tek Tıkla Giriş Yap Butonu -->
+      <button class="btn-google-login" id="btnSimulateGoogleLogin">
+        <svg class="google-svg" viewBox="0 0 24 24" width="22" height="22">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <span>Google ile Tek Tıkla Giriş Yap (MEB Uyumlu)</span>
+      </button>
+
+      <div class="auth-security-note">
+        🔒 Şifre gerekmez. Fatih ağı filtrelerine takılmadan cihazınızda (tarayıcı yerel hafızası) güvenle çalışır.
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: SINIF LİSTESİ & ÇARKIFELEK KURA ÇEKME MODALI -->
+  <div class="modal-backdrop hide" id="modalPicker">
+    <div class="modal-window picker-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalPicker">✕</button>
+      <div class="modal-header">
+        <div class="modal-badge-icon">🎲</div>
+        <h3 class="modal-title">Sınıf Listesinden Rastgele 2 Öğrenci Seç</h3>
+        <p class="modal-desc">
+          Tahtaya kalkacak iki yarışmacıyı adil bir şekilde çarkıfelek kurasıyla belirleyin!
+        </p>
+      </div>
+
+      <!-- Kura Çarkı / Slot Animasyon Kutusu -->
+      <div class="picker-stage">
+        <div class="picker-slot blue-slot">
+          <span class="slot-header">MAVİ TAKIM OYUNCUSU</span>
+          <div class="slot-display" id="slotDisplay1">
+            <span class="slot-avatar">👦</span>
+            <span class="slot-name" id="slotName1">Seçim Yapılmadı</span>
+          </div>
+        </div>
+
+        <div class="picker-vs">⚡</div>
+
+        <div class="picker-slot red-slot">
+          <span class="slot-header">KIRMIZI TAKIM OYUNCUSU</span>
+          <div class="slot-display" id="slotDisplay2">
+            <span class="slot-avatar">👧</span>
+            <span class="slot-name" id="slotName2">Seçim Yapılmadı</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="picker-controls">
+        <button class="btn-spin-wheel" id="btnSpinWheel">
+          <span class="spin-icon">🎰</span>
+          <span>Çarkı Çevir & 2 Öğrenci Çek!</span>
+        </button>
+        <button class="btn-use-selected hide" id="btnApplySelectedStudents">
+          <span>🚀 Bu Öğrencilerle Düelloya Başla!</span>
+        </button>
+      </div>
+
+      <!-- Sınıf Listesini Düzenle Açılır Akordeon -->
+      <details class="class-roster-details">
+        <summary class="roster-summary">
+          <span>📋 Sınıf Öğrenci Listesini Düzenle (<span id="rosterCount">24</span> Öğrenci)</span>
+        </summary>
+        <div class="roster-editor-box">
+          <label for="rosterTextarea" class="roster-label">Öğrenci isimlerini her satıra bir isim gelecek şekilde yazınız:</label>
+          <textarea id="rosterTextarea" class="roster-textarea" rows="7" placeholder="Ali&#10;Ayşe&#10;Mehmet..."></textarea>
+          <div class="roster-actions">
+            <button class="btn-save-roster" id="btnSaveRoster">Listeyi Kaydet</button>
+            <button class="btn-reset-roster" id="btnResetRoster">Örnek Listeyi Yükle</button>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- MODAL 3: KENDİ SORULARIMI EKLE (ÖĞRETMEN ÖZEL SORU BANKASI) -->
+  <div class="modal-backdrop hide" id="modalCustomQ">
+    <div class="modal-window custom-q-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalCustomQ">✕</button>
+      <div class="modal-header">
+        <div class="modal-badge-icon">✏️</div>
+        <h3 class="modal-title">Kendi Soru Bankanı Oluştur</h3>
+        <p class="modal-desc">
+          İşlediğiniz konuya özel soruları ekleyin, sınıf düellolarında kendi sorularınız çıksın!
+        </p>
+      </div>
+
+      <form id="formAddQuestion" class="custom-q-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customGrade">Sınıf Seviyesi:</label>
+            <select id="customGrade" class="custom-input">
+              <option value="1">1. Sınıf</option>
+              <option value="2">2. Sınıf</option>
+              <option value="3">3. Sınıf</option>
+              <option value="4">4. Sınıf</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="customCategory">Ders / Alan:</label>
+            <select id="customCategory" class="custom-input">
+              <option value="math">Matematik</option>
+              <option value="turkish">Türkçe & Dikkat</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="customQuestionText">Soru Metni:</label>
+          <input type="text" id="customQuestionText" class="custom-input" placeholder="Örn: 15 sayısının 3 fazlası kaçtır?" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customCorrect" class="text-green">✓ Doğru Cevap:</label>
+            <input type="text" id="customCorrect" class="custom-input border-green" placeholder="Örn: 18" required>
+          </div>
+          <div class="form-group">
+            <label for="customWrong1" class="text-red">✕ Yanıltıcı Şık 1:</label>
+            <input type="text" id="customWrong1" class="custom-input" placeholder="Örn: 17" required>
+          </div>
+          <div class="form-group">
+            <label for="customWrong2" class="text-red">✕ Yanıltıcı Şık 2:</label>
+            <input type="text" id="customWrong2" class="custom-input" placeholder="Örn: 19" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="customExplanation">Pedagojik Çözüm Açıklaması (İsteğe bağlı):</label>
+          <input type="text" id="customExplanation" class="custom-input" placeholder="Örn: 15'e 3 eklediğimizde 18 eder.">
+        </div>
+
+        <button type="submit" class="btn-submit-q">
+          <span>➕ Soruyu Kaydet ve Havuza Ekle</span>
+        </button>
+      </form>
+
+      <!-- Kayıtlı Özel Sorular Listesi -->
+      <div class="saved-questions-section">
+        <div class="saved-q-header">
+          <strong>Eklediğiniz Sorular (<span id="savedQCount">0</span> Soru):</strong>
+        </div>
+        <div class="saved-q-list" id="savedQList">
+          <div class="empty-q-msg">Henüz özel soru eklemediniz. Yukarıdaki formu kullanarak hemen ekleyebilirsiniz.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: SINIF LİGİ PUAN TABLOSU -->
+  <div class="modal-backdrop hide" id="modalLeaderboard">
+    <div class="modal-window leaderboard-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalLeaderboard">✕</button>
+      <div class="modal-header">
+        <div class="modal-badge-icon">🏆</div>
+        <h3 class="modal-title">Sınıf Ligi & Şampiyonlar Tablosu</h3>
+        <p class="modal-desc">
+          Bu sınıfta yapılan düelloların sonuçları ve en çok maç kazanan öğrenciler.
+        </p>
+      </div>
+
+      <div class="leaderboard-table-container">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Sıra</th>
+              <th>Öğrenci Adı</th>
+              <th>Kazanılan Maç</th>
+              <th>Toplam Puan</th>
+              <th>Madalya</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardTbody">
+            <!-- Dinamik doldurulacak -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="leaderboard-footer">
+        <button class="btn-reset-league" id="btnResetLeague">Lig Puanlarını Sıfırla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bildirim Toast'ı -->
+  <div class="toast-notification hide" id="globalToast">
+    <span class="toast-msg" id="toastMsg">Bildirim</span>
+  </div>
+
+  <!-- Uygulama Mantığı (Sıfır Harici Kütüphane) -->
+  <script src="app.js"></script>
+</body>
+</html>
