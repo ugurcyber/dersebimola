@@ -475,6 +475,157 @@
   }
 
   /* ==========================================================================
+     2.5. 3D FLUENT ICON SİSTEMİ & EMOJİ DÖNÜŞTÜRÜCÜ (%100 YEREL & ÇEVRİMDIŞI)
+     ========================================================================== */
+  const EMOJI_TO_3D = {
+    // Sınıf & Lobi & Ana Başlıklar
+    '🎈': 'assets/icons/3d/balloon.png',
+    '🌱': 'assets/icons/3d/seedling.png',
+    '🚀': 'assets/icons/3d/rocket.png',
+    '⚡': 'assets/icons/3d/lightning.png',
+    '👑': 'assets/icons/3d/crown.png',
+    '🎨': 'assets/icons/3d/artist_palette.png',
+    '🧮': 'assets/icons/3d/abacus.png',
+    '🦁': 'assets/icons/3d/lion.png',
+    '🦉': 'assets/icons/3d/owl.png',
+    '👀': 'assets/icons/3d/eyes.png',
+    '🎯': 'assets/icons/3d/bullseye.png',
+    '🧠': 'assets/icons/3d/brain.png',
+    '🌈': 'assets/icons/3d/rainbow.png',
+    '🌟': 'assets/icons/3d/star.png',
+    '⭐': 'assets/icons/3d/star.png',
+    '🏆': 'assets/icons/3d/trophy.png',
+    '🥇': 'assets/icons/3d/medal.png',
+    '💎': 'assets/icons/3d/gem.png',
+    '🔔': 'assets/icons/3d/bell.png',
+    '🎮': 'assets/icons/3d/video_game.png',
+    '🧩': 'assets/icons/3d/puzzle_piece.png',
+    '📚': 'assets/icons/3d/books.png',
+    '📖': 'assets/icons/3d/open_book.png',
+    '🌍': 'assets/icons/3d/globe.png',
+    '✨': 'assets/icons/3d/sparkles.png',
+
+    // Meyve, Yiyecek & Nesneler
+    '🍎': 'assets/icons/3d/apple.png',
+    '🍏': 'assets/icons/3d/apple.png',
+    '🍌': 'assets/icons/3d/banana.png',
+    '🍓': 'assets/icons/3d/strawberry.png',
+    '🍊': 'assets/icons/3d/orange.png',
+    '🍅': 'assets/icons/3d/tomato.png',
+    '🚗': 'assets/icons/3d/car.png',
+    '🚙': 'assets/icons/3d/car.png',
+    '🚕': 'assets/icons/3d/car.png',
+    '🥑': 'assets/icons/3d/avocado.png',
+    '🍐': 'assets/icons/3d/avocado.png',
+    '🍑': 'assets/icons/3d/peach.png',
+    '🍒': 'assets/icons/3d/cherries.png',
+    '🍇': 'assets/icons/3d/grapes.png',
+    '🥕': 'assets/icons/3d/carrot.png',
+    '🍕': 'assets/icons/3d/pizza.png',
+    '🍦': 'assets/icons/3d/ice_cream.png',
+    '🍪': 'assets/icons/3d/cookie.png',
+    '🍩': 'assets/icons/3d/doughnut.png',
+    '🧁': 'assets/icons/3d/cupcake.png',
+    '⚽': 'assets/icons/3d/soccer.png',
+    '🎸': 'assets/icons/3d/guitar.png',
+    '💣': 'assets/icons/3d/bomb.png',
+    '🌵': 'assets/icons/3d/cactus.png',
+    '🧸': 'assets/icons/3d/teddy_bear.png',
+    '✈️': 'assets/icons/3d/airplane.png',
+    '✈': 'assets/icons/3d/airplane.png',
+    '🚲': 'assets/icons/3d/bicycle.png',
+    '⛵': 'assets/icons/3d/sailboat.png',
+    '🚤': 'assets/icons/3d/speedboat.png',
+    '🎁': 'assets/icons/3d/gift.png',
+    '🎉': 'assets/icons/3d/party_popper.png',
+    '💡': 'assets/icons/3d/light_bulb.png',
+    '🔑': 'assets/icons/3d/key.png',
+    '🔒': 'assets/icons/3d/locked.png',
+    '🔓': 'assets/icons/3d/unlocked.png',
+    '💍': 'assets/icons/3d/ring.png',
+    '⏰': 'assets/icons/3d/alarm_clock.png',
+    '⏱️': 'assets/icons/3d/alarm_clock.png',
+    '🕒': 'assets/icons/3d/alarm_clock.png',
+    '🕓': 'assets/icons/3d/alarm_clock.png',
+    '🕔': 'assets/icons/3d/alarm_clock.png',
+    '⏳': 'assets/icons/3d/hourglass.png',
+    '🌸': 'assets/icons/3d/cherry_blossom.png',
+    '🌺': 'assets/icons/3d/hibiscus.png',
+    '🌻': 'assets/icons/3d/sunflower.png',
+    '😀': 'assets/icons/3d/grinning_face.png',
+    '😅': 'assets/icons/3d/grinning_face_sweat.png',
+    '😂': 'assets/icons/3d/joy.png',
+
+    // Hayvanlar & Doğa
+    '🐱': 'assets/icons/3d/cat.png',
+    '🐶': 'assets/icons/3d/dog.png',
+    '🐰': 'assets/icons/3d/rabbit.png',
+    '🐟': 'assets/icons/3d/fish.png',
+    '🐦': 'assets/icons/3d/bird.png',
+    '🐘': 'assets/icons/3d/elephant.png',
+    '☀️': 'assets/icons/3d/sun.png',
+    '☀': 'assets/icons/3d/sun.png',
+    '🌙': 'assets/icons/3d/crescent_moon.png',
+    '🌕': 'assets/icons/3d/full_moon.png',
+    '🌖': 'assets/icons/3d/gibbous_moon.png',
+    '🌗': 'assets/icons/3d/half_moon.png',
+    '🌧️': 'assets/icons/3d/cloud_rain.png',
+    '🌧': 'assets/icons/3d/cloud_rain.png',
+    '🐮': 'assets/icons/3d/cow.png',
+    '🐸': 'assets/icons/3d/frog.png',
+    '🦆': 'assets/icons/3d/duck.png',
+    '🐵': 'assets/icons/3d/monkey.png',
+    '🐻': 'assets/icons/3d/bear.png',
+    '🐥': 'assets/icons/3d/chick.png',
+    '🐭': 'assets/icons/3d/mouse.png',
+    '🐜': 'assets/icons/3d/ant.png',
+    '🐢': 'assets/icons/3d/turtle.png',
+    '🦒': 'assets/icons/3d/giraffe.png',
+    '🦊': 'assets/icons/3d/fox.png',
+    '🐴': 'assets/icons/3d/horse.png',
+    '🐺': 'assets/icons/3d/wolf.png',
+    '🐯': 'assets/icons/3d/tiger.png',
+    '🦋': 'assets/icons/3d/butterfly.png',
+    '🐝': 'assets/icons/3d/honeybee.png',
+    '🐞': 'assets/icons/3d/lady_beetle.png',
+
+    // Renkler & Geometrik Şekiller
+    '🔴': 'assets/icons/3d/red_circle.png',
+    '🔵': 'assets/icons/3d/blue_circle.png',
+    '🟡': 'assets/icons/3d/yellow_circle.png',
+    '🟢': 'assets/icons/3d/green_circle.png',
+    '🟣': 'assets/icons/3d/purple_circle.png',
+    '🟠': 'assets/icons/3d/orange_circle.png',
+    '⚪': 'assets/icons/3d/white_circle.svg',
+    '🔺': 'assets/icons/3d/red_triangle.svg',
+    '🟩': 'assets/icons/3d/green_square.png',
+    '⬛': 'assets/icons/3d/black_square.png',
+    '⭕': 'assets/icons/3d/red_circle.png',
+    '💖': 'assets/icons/3d/heart.png',
+    '❤️': 'assets/icons/3d/heart.png',
+    '🔷': 'assets/icons/3d/blue_circle.png',
+    '🔶': 'assets/icons/3d/orange_circle.png',
+    '🔹': 'assets/icons/3d/blue_circle.png',
+    '🏮': 'assets/icons/3d/balloon.png'
+  };
+
+  const EMOJI_KEYS_SORTED = Object.keys(EMOJI_TO_3D).sort((a, b) => b.length - a.length);
+
+  function replaceEmojisWith3D(str, customClass = 'inline-3d-icon') {
+    if (!str || typeof str !== 'string') return str || '';
+    let result = str;
+    for (let i = 0; i < EMOJI_KEYS_SORTED.length; i++) {
+      const key = EMOJI_KEYS_SORTED[i];
+      if (result.indexOf(key) !== -1) {
+        const iconPath = EMOJI_TO_3D[key];
+        const imgTag = `<img src="${iconPath}" class="${customClass}" alt="" draggable="false">`;
+        result = result.split(key).join(imgTag);
+      }
+    }
+    return result;
+  }
+
+  /* ==========================================================================
      3. DİNAMİK SORU MOTORU (GRADE-BASED QUESTION ENGINE)
      ========================================================================== */
   const QuestionEngine = {
@@ -484,7 +635,7 @@
     generateKindergartenMath() {
       const mode = Math.floor(Math.random() * 2);
       if (mode === 0) {
-        // Sevimli Nesne / Meyve Sayma (1 - 5 arası dev emojiler)
+        // Sevimli Nesne / Meyve Sayma (1 - 5 arası dev 3D simgeler)
         const fruits = [
           { emoji: '🍎', name: 'Kırmızı Elma', audioKey: 'q_sayma_elma' },
           { emoji: '🍌', name: 'Sarı Muz', audioKey: 'q_sayma_muz' },
@@ -501,8 +652,19 @@
         const d1 = count === 5 ? '4' : (count + 1).toString();
         const d2 = count === 1 ? '3' : (count - 1).toString();
 
+        const fruitImg = EMOJI_TO_3D[chosen.emoji] 
+          ? `<img src="${EMOJI_TO_3D[chosen.emoji]}" class="q-3d-fruit" alt="${chosen.name}">` 
+          : chosen.emoji;
+        const displayHtml = `
+          <div class="q-fruit-row">
+            ${Array(count).fill(fruitImg).join('')}
+          </div>
+          <div style="font-size:1.25rem; font-weight:900; margin-top:8px;">Kaç tane ${chosen.name} var?</div>
+        `;
+
         return {
           question: `${display}\n\nKaç tane ${chosen.name} var?`,
+          questionHtml: displayHtml,
           correct: `${count} Tane (${chosen.emoji})`,
           distractors: [
             `${d1} Tane (${chosen.emoji})`,
@@ -872,9 +1034,9 @@
       items[diffIndex] = pair.diff.emoji;
 
       const gridHtml = `
-        <div style="font-size:0.92rem; color:#ea580c; font-weight:800; margin-bottom:4px;">👀 GÖRSEL DİKKAT DÜELLOSU</div>
+        <div style="font-size:0.92rem; color:#ea580c; font-weight:800; margin-bottom:4px; display:inline-flex; align-items:center; gap:6px;">${replaceEmojisWith3D('👀', 'chip-3d-icon')} GÖRSEL DİKKAT DÜELLOSU</div>
         <div class="grid-visual-box" style="grid-template-columns: repeat(${cols}, 1fr); max-width: ${cols === 4 ? '280px' : '220px'};">
-          ${items.map(em => `<span>${em}</span>`).join('')}
+          ${items.map(em => `<span>${replaceEmojisWith3D(em, 'grid-3d-item')}</span>`).join('')}
         </div>
         <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">Bu grupta DİĞERLERİNDEN FARKLI olan hangisidir?</div>
       `;
@@ -899,45 +1061,45 @@
       const g = parseInt(grade, 10);
 
       if (g === 0) {
-        // Anasınıfı: Doğrudan görsel renk & büyüklük tanıma
+        // Anasınıfı: Doğrudan görsel 3D renk & büyüklük tanıma
         const kindergartenStroop = [
           {
-            html: '<div style="font-size:3.5rem; margin:6px auto;">🔴</div><div style="font-weight:900; font-size:1.2rem;">Bu sevimli daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/red_circle.png" class="q-3d-fruit" alt="Kırmızı Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu sevimli daire hangi renktir?</div>',
             correct: '🔴 Kırmızı',
             distractors: ['🔵 Mavi', '🟡 Sarı'],
             exp: 'Kırmızı, elmanın ve uğur böceğinin rengidir! 🍎',
             audioKey: 'q_daire_kirmizi'
           },
           {
-            html: '<div style="font-size:3.5rem; margin:6px auto;">🔵</div><div style="font-weight:900; font-size:1.2rem;">Bu parlak daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/blue_circle.png" class="q-3d-fruit" alt="Mavi Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu parlak daire hangi renktir?</div>',
             correct: '🔵 Mavi',
             distractors: ['🟢 Yeşil', '🔴 Kırmızı'],
             exp: 'Mavi, engin gökyüzünün ve denizlerin rengidir! 🌊',
             audioKey: 'q_daire_mavi'
           },
           {
-            html: '<div style="font-size:3.5rem; margin:6px auto;">🟡</div><div style="font-weight:900; font-size:1.2rem;">Bu sıcacık daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/yellow_circle.png" class="q-3d-fruit" alt="Sarı Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu sıcacık daire hangi renktir?</div>',
             correct: '🟡 Sarı',
             distractors: ['🟣 Mor', '🟠 Turuncu'],
             exp: 'Sarı, parlayan Güneş\'in ve tatlı muzun rengidir! ☀️',
             audioKey: 'q_daire_sari'
           },
           {
-            html: '<div style="font-size:3.5rem; margin:6px auto;">🟢</div><div style="font-weight:900; font-size:1.2rem;">Bu doğa rengi daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/green_circle.png" class="q-3d-fruit" alt="Yeşil Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu doğa rengi daire hangi renktir?</div>',
             correct: '🟢 Yeşil',
             distractors: ['🔴 Kırmızı', '🔵 Mavi'],
             exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿',
             audioKey: 'q_daire_yesil'
           },
           {
-            html: '<div style="font-size:3.2rem; margin:6px auto;">🐘  vs  🐜</div><div style="font-weight:900; font-size:1.2rem;">Hangisi GERÇEKTE çok daha BÜYÜKTÜR?</div>',
+            html: '<div class="q-fruit-row" style="margin:8px auto; gap:24px; align-items:center;"><img src="assets/icons/3d/elephant.png" class="q-3d-fruit" alt="Fil" style="width:84px; height:84px;"> <span style="font-size:1.6rem; font-weight:900; color:#64748b;">vs</span> <img src="assets/icons/3d/ant.png" class="q-3d-fruit" alt="Karınca" style="width:48px; height:48px;"></div><div style="font-weight:900; font-size:1.2rem;">Hangisi GERÇEKTE çok daha BÜYÜKTÜR?</div>',
             correct: '🐘 Fil (Kocaman)',
             distractors: ['🐜 Karınca (Minik)', 'İkisi de Aynı'],
             exp: 'Fil devasa bir canlıdır, karıncadan kat kat büyüktür! 🐘',
             audioKey: 'q_fil_vs_karinca'
           },
           {
-            html: '<div style="font-size:3.2rem; margin:6px auto;">🦒  vs  🐢</div><div style="font-weight:900; font-size:1.2rem;">Hangisi çok daha UZUNDUR?</div>',
+            html: '<div class="q-fruit-row" style="margin:8px auto; gap:24px; align-items:center;"><img src="assets/icons/3d/giraffe.png" class="q-3d-fruit" alt="Zürafa" style="width:84px; height:84px;"> <span style="font-size:1.6rem; font-weight:900; color:#64748b;">vs</span> <img src="assets/icons/3d/turtle.png" class="q-3d-fruit" alt="Kaplumbağa" style="width:52px; height:52px;"></div><div style="font-weight:900; font-size:1.2rem;">Hangisi çok daha UZUNDUR?</div>',
             correct: '🦒 Zürafa (Uzun Boylu)',
             distractors: ['🐢 Kaplumbağa', 'İkisi de Aynı'],
             exp: 'Zürafalar upuzun boyunlarıyla ağaçların en tepesine ulaşır! 🦒',
@@ -1082,9 +1244,9 @@
       }
 
       const memoryHtml = `
-        <div style="font-size:0.92rem; color:#059669; font-weight:800; margin-bottom:4px;">🧠 SÜPER HAFIZA: SIRAYI HATIRLA!</div>
+        <div style="font-size:0.92rem; color:#059669; font-weight:800; margin-bottom:4px; display:inline-flex; align-items:center; gap:6px;">${replaceEmojisWith3D('🧠', 'chip-3d-icon')} SÜPER HAFIZA: SIRAYI HATIRLA!</div>
         <div class="memory-sequence-box">
-          ${sequence.map((item, idx) => `<span><strong>${idx + 1}.</strong> ${item.emoji}</span>`).join('')}
+          ${sequence.map((item, idx) => `<span><strong>${idx + 1}.</strong> ${replaceEmojisWith3D(item.emoji, 'memory-3d-item')}</span>`).join('')}
         </div>
         <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">${questionTitle}</div>
       `;
@@ -1116,13 +1278,13 @@
       const chosen = targets[Math.floor(Math.random() * targets.length)];
 
       const reflexHtml = `
-        <div style="font-size:0.92rem; color:#d97706; font-weight:800; margin-bottom:4px;">⚡ ŞİMŞEK REFLEKS & HEDEF AVI!</div>
+        <div style="font-size:0.92rem; color:#d97706; font-weight:800; margin-bottom:4px; display:inline-flex; align-items:center; gap:6px;">${replaceEmojisWith3D('⚡', 'chip-3d-icon')} ŞİMŞEK REFLEKS & HEDEF AVI!</div>
         <div class="reflex-target-box">
-          <span style="font-size:1.4rem; background:#fee2e2; color:#b91c1c; padding:4px 10px; border-radius:12px; border:2px dashed #ef4444; font-weight:900;">${chosen.hazard} DOKUNMA!</span>
-          <span class="pulse-target" style="font-size:3.6rem; margin:0 8px;">${chosen.target}</span>
-          <span style="font-size:1.4rem; background:#dcfce7; color:#15803d; padding:4px 10px; border-radius:12px; border:2px dashed #22c55e; font-weight:900;">${chosen.target} İLK SEN BAS!</span>
+          <span style="font-size:1.15rem; background:#fee2e2; color:#b91c1c; padding:6px 14px; border-radius:12px; border:2px dashed #ef4444; font-weight:900; display:inline-flex; align-items:center; gap:6px;">${replaceEmojisWith3D(chosen.hazard, 'chip-3d-icon')} DOKUNMA!</span>
+          <span class="pulse-target" style="margin:0 14px; display:inline-flex; align-items:center;">${replaceEmojisWith3D(chosen.target, 'q-3d-fruit')}</span>
+          <span style="font-size:1.15rem; background:#dcfce7; color:#15803d; padding:6px 14px; border-radius:12px; border:2px dashed #22c55e; font-weight:900; display:inline-flex; align-items:center; gap:6px;">${replaceEmojisWith3D(chosen.target, 'chip-3d-icon')} İLK SEN BAS!</span>
         </div>
-        <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">HEDEF: Sadece ${chosen.name} (${chosen.target})! ${chosen.hazardName} (${chosen.hazard}) basma!</div>
+        <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">HEDEF: Sadece ${chosen.name}! Tuzaklara basma!</div>
       `;
 
       return {
@@ -2028,7 +2190,7 @@
 
     DOM.subcategoryTabs.innerHTML = cats.map(c => `
       <button class="subcat-pill ${c.id === state.currentCategory ? 'active' : ''}" data-cat-id="${c.id}">
-        ${c.label}
+        ${replaceEmojisWith3D(c.label, 'chip-3d-icon')}
       </button>
     `).join('');
 
@@ -2075,14 +2237,14 @@
       return `
         <div class="game-card ${game.themeClass}" data-game-id="${game.id}">
           <div class="game-top-meta">
-            <span class="game-category-tag ${game.tagClass}">${content.badge}</span>
-            <span class="game-speed-badge">${content.featureTag}</span>
+            <span class="game-category-tag ${game.tagClass}">${replaceEmojisWith3D(content.badge, 'chip-3d-icon')}</span>
+            <span class="game-speed-badge">${replaceEmojisWith3D(content.featureTag, 'chip-3d-icon')}</span>
           </div>
-          <div class="game-visual-icon">${content.icon}</div>
+          <div class="game-visual-icon">${replaceEmojisWith3D(content.icon, 'game-3d-big-icon')}</div>
           <h3 class="game-title">${content.title}</h3>
           <p class="game-subtitle">${content.description}</p>
           <div class="game-features-list">
-            ${content.tags.map(t => `<span class="feature-pill">${t}</span>`).join('')}
+            ${content.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
           </div>
           <button class="btn-play-game" data-game-id="${game.id}">
             🎮 ${content.btnText}
@@ -2460,7 +2622,7 @@
       3: '⚡ 3. Sınıf',
       4: '👑 4. Sınıf'
     };
-    DOM.duelGradeBadge.textContent = gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`;
+    DOM.duelGradeBadge.innerHTML = replaceEmojisWith3D(gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`, 'chip-3d-icon');
 
     const gameTypeBadges = {
       math: state.currentGrade === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu',
@@ -2470,7 +2632,7 @@
       memory: '🧠 Süper Hafıza',
       reflex: '⚡ Şimşek Refleks'
     };
-    DOM.duelGameTypeBadge.textContent = gameTypeBadges[gameType] || '🎯 Sınıf Düellosu';
+    DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D(gameTypeBadges[gameType] || '🎯 Sınıf Düellosu', 'chip-3d-icon');
     updatePlayerNamesUI();
     renderScoreTrack();
 
@@ -2514,7 +2676,7 @@
     for (let i = 0; i < maxScore; i++) {
       const star = document.createElement('span');
       star.className = `star-slot ${i < currentScore ? 'filled' : ''}`;
-      star.textContent = '⭐';
+      star.innerHTML = `<img src="assets/icons/3d/star.png" style="width:28px; height:28px; object-fit:contain; vertical-align:middle; pointer-events:none;" alt="⭐">`;
       container.appendChild(star);
     }
   }
@@ -2531,18 +2693,18 @@
     state.currentQuestion = QuestionEngine.getNextQuestion(state.currentGrade, state.currentGameType);
 
     // Mavi Tarafına Bas
-    DOM.p1QuestionCategory.textContent = state.currentQuestion.category;
-    DOM.p1QuestionText.innerHTML = state.currentQuestion.questionHtml || state.currentQuestion.question;
-    DOM.p1OptTextA.innerHTML = state.currentQuestion.options[0];
-    DOM.p1OptTextB.innerHTML = state.currentQuestion.options[1];
-    DOM.p1OptTextC.innerHTML = state.currentQuestion.options[2];
+    DOM.p1QuestionCategory.innerHTML = replaceEmojisWith3D(state.currentQuestion.category, 'chip-3d-icon');
+    DOM.p1QuestionText.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
+    DOM.p1OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
+    DOM.p1OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
+    DOM.p1OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
 
     // Kırmızı Tarafına Bas (Tamamen Simetrik)
-    DOM.p2QuestionCategory.textContent = state.currentQuestion.category;
-    DOM.p2QuestionText.innerHTML = state.currentQuestion.questionHtml || state.currentQuestion.question;
-    DOM.p2OptTextA.innerHTML = state.currentQuestion.options[0];
-    DOM.p2OptTextB.innerHTML = state.currentQuestion.options[1];
-    DOM.p2OptTextC.innerHTML = state.currentQuestion.options[2];
+    DOM.p2QuestionCategory.innerHTML = replaceEmojisWith3D(state.currentQuestion.category, 'chip-3d-icon');
+    DOM.p2QuestionText.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
+    DOM.p2OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
+    DOM.p2OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
+    DOM.p2OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
 
     // Buton stillerini sıfırla
     [DOM.p1OptA, DOM.p1OptB, DOM.p1OptC, DOM.p2OptA, DOM.p2OptB, DOM.p2OptC].forEach(btn => {
@@ -2610,7 +2772,7 @@
       renderScoreTrack();
 
       // Pedagojik Çözümü Göster
-      DOM.solutionText.textContent = state.currentQuestion.explanation;
+      DOM.solutionText.innerHTML = replaceEmojisWith3D(state.currentQuestion.explanation, 'inline-3d-icon');
       if (state.showAutoExplanation) {
         DOM.solutionPopup.classList.remove('hide');
       }

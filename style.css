@@ -729,8 +729,8 @@ html, body {
 }
 
 .grade-card-icon {
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -743,6 +743,125 @@ html, body {
 
 .grade-card:hover .grade-card-icon {
   transform: scale(1.15) rotate(6deg);
+}
+
+/* 3D Fluent İkon Sınıfları */
+.grade-card-3d-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.14));
+  pointer-events: none;
+  user-select: none;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.grade-card:hover .grade-card-3d-img {
+  transform: scale(1.18) rotate(5deg);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+}
+
+.chip-3d-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 4px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+.game-3d-big-icon {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.16));
+  pointer-events: none;
+  user-select: none;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.inline-3d-icon,
+.badge-3d-icon,
+.speed-3d-icon,
+.pill-3d-icon,
+.tab-3d-icon,
+.cat-3d-icon,
+.sol-3d-icon {
+  width: 1.35em;
+  height: 1.35em;
+  object-fit: contain;
+  vertical-align: -0.22em;
+  margin: 0 2px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+  display: inline-block;
+}
+
+.opt-3d-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 8px;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.14));
+  display: inline-block;
+}
+
+.q-fruit-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 10px auto;
+  padding: 6px 12px;
+}
+
+.q-3d-fruit {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin: 0 6px;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+  display: inline-block;
+  animation: fruitPopFloat 3.5s ease-in-out infinite;
+}
+
+@keyframes fruitPopFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-6px) scale(1.06); }
+}
+
+.q-3d-item {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin: 0 4px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+  display: inline-block;
+}
+
+.grid-3d-item {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  vertical-align: middle;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.grid-3d-item:hover {
+  transform: scale(1.22);
+}
+
+.memory-3d-item {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  vertical-align: middle;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+  display: inline-block;
 }
 
 .grade-card-title {
@@ -2069,10 +2188,16 @@ input:checked + .slider:before {
 }
 
 .trophy-visual {
-  font-size: 5.5rem;
   line-height: 1;
   margin-bottom: 10px;
   animation: trophyFloat 3s ease-in-out infinite alternate;
+}
+
+.victory-3d-trophy {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(245, 158, 11, 0.45));
 }
 
 @keyframes trophyFloat {
