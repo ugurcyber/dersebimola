@@ -390,6 +390,27 @@ html, body {
   box-shadow: 0 3px 10px rgba(234, 88, 12, 0.35);
 }
 
+.grade-chip[data-grade="0"].active {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  box-shadow: 0 3px 10px rgba(244, 63, 94, 0.35);
+}
+.grade-chip[data-grade="1"].active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.35);
+}
+.grade-chip[data-grade="2"].active {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  box-shadow: 0 3px 10px rgba(14, 165, 233, 0.35);
+}
+.grade-chip[data-grade="3"].active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35);
+}
+.grade-chip[data-grade="4"].active {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.35);
+}
+
 .header-right {
   display: flex;
   align-items: center;
@@ -670,59 +691,58 @@ html, body {
   gap: 12px;
 }
 
-.grade-card.kindergarten-card {
-  border-color: #fbcfe8;
-  background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 50%);
-}
-
-.grade-card.kindergarten-card .grade-card-badge {
-  color: #db2777;
-}
-
-.grade-card.kindergarten-card.active {
-  background: #fdf2f8;
-  border-color: #ec4899;
-  box-shadow: 0 0 20px rgba(236, 72, 153, 0.35);
-}
-
+/* ==========================================================================
+   SINIF KARTLARI (AHENKLİ, ÇOCUK DOSTU PASTEL-CANLI RENKLENDİRME)
+   ========================================================================== */
 .grade-card {
   background: #ffffff;
-  border: 2.5px solid #e2e8f0;
+  border: 2px solid #e2e8f0;
   border-radius: var(--radius-lg);
-  padding: 14px 16px;
+  padding: 16px 16px;
   text-align: left;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   font-family: inherit;
   color: inherit;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
 }
 
 .grade-card:hover {
-  border-color: #cbd5e1;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-}
-
-.grade-card.active {
-  background: #fffbeb;
-  border-color: #f59e0b;
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
 .grade-card-badge {
   font-size: 0.72rem;
   font-weight: 900;
-  color: #d97706;
   text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
 }
 
 .grade-card-icon {
-  font-size: 1.8rem;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
   line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+}
+
+.grade-card:hover .grade-card-icon {
+  transform: scale(1.15) rotate(6deg);
 }
 
 .grade-card-title {
@@ -732,9 +752,109 @@ html, body {
 }
 
 .grade-card-desc {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--text-secondary);
   line-height: 1.35;
+}
+
+/* 0. Sınıf - Anasınıfı (Rose / Mercan) */
+.grade-card[data-grade="0"] {
+  border-color: #fecdd3;
+}
+.grade-card[data-grade="0"] .grade-card-badge {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+.grade-card[data-grade="0"] .grade-card-icon {
+  background: #fff1f2;
+}
+.grade-card[data-grade="0"]:hover {
+  border-color: #fb7185;
+}
+.grade-card[data-grade="0"].active {
+  background: linear-gradient(180deg, #ffffff 0%, #fff1f2 100%);
+  border-color: #f43f5e;
+  box-shadow: 0 10px 24px -2px rgba(244, 63, 94, 0.28);
+}
+
+/* 1. Sınıf (Bal Amber / Güneş Sarısı) */
+.grade-card[data-grade="1"] {
+  border-color: #fde68a;
+}
+.grade-card[data-grade="1"] .grade-card-badge {
+  background: #fef3c7;
+  color: #b45309;
+}
+.grade-card[data-grade="1"] .grade-card-icon {
+  background: #fffbeb;
+}
+.grade-card[data-grade="1"]:hover {
+  border-color: #f59e0b;
+}
+.grade-card[data-grade="1"].active {
+  background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
+  border-color: #f59e0b;
+  box-shadow: 0 10px 24px -2px rgba(245, 158, 11, 0.28);
+}
+
+/* 2. Sınıf (Gökyüzü Mavisi) */
+.grade-card[data-grade="2"] {
+  border-color: #bae6fd;
+}
+.grade-card[data-grade="2"] .grade-card-badge {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+.grade-card[data-grade="2"] .grade-card-icon {
+  background: #f0f9ff;
+}
+.grade-card[data-grade="2"]:hover {
+  border-color: #38bdf8;
+}
+.grade-card[data-grade="2"].active {
+  background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+  border-color: #0284c7;
+  box-shadow: 0 10px 24px -2px rgba(2, 132, 199, 0.28);
+}
+
+/* 3. Sınıf (Taze Nane Zümrütü) */
+.grade-card[data-grade="3"] {
+  border-color: #a7f3d0;
+}
+.grade-card[data-grade="3"] .grade-card-badge {
+  background: #d1fae5;
+  color: #047857;
+}
+.grade-card[data-grade="3"] .grade-card-icon {
+  background: #ecfdf5;
+}
+.grade-card[data-grade="3"]:hover {
+  border-color: #34d399;
+}
+.grade-card[data-grade="3"].active {
+  background: linear-gradient(180deg, #ffffff 0%, #ecfdf5 100%);
+  border-color: #10b981;
+  box-shadow: 0 10px 24px -2px rgba(16, 185, 129, 0.28);
+}
+
+/* 4. Sınıf (Kraliyet Moru) */
+.grade-card[data-grade="4"] {
+  border-color: #ddd6fe;
+}
+.grade-card[data-grade="4"] .grade-card-badge {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+.grade-card[data-grade="4"] .grade-card-icon {
+  background: #f5f3ff;
+}
+.grade-card[data-grade="4"]:hover {
+  border-color: #a78bfa;
+}
+.grade-card[data-grade="4"].active {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
+  border-color: #8b5cf6;
+  box-shadow: 0 10px 24px -2px rgba(139, 92, 246, 0.28);
 }
 
 /* --------------------------------------------------------------------------
@@ -912,9 +1032,48 @@ html, body {
 }
 
 .game-visual-icon {
-  font-size: 2.8rem;
-  margin-bottom: 6px;
+  width: 66px;
+  height: 66px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
   line-height: 1;
+  margin-bottom: 10px;
+  border: 2px solid transparent;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+}
+
+.math-theme .game-visual-icon {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: #bfdbfe;
+}
+.turkish-theme .game-visual-icon {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  border-color: #fbcfe8;
+}
+.oddone-theme .game-visual-icon {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border-color: #fed7aa;
+}
+.stroop-theme .game-visual-icon {
+  background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 100%);
+  border-color: #ddd6fe;
+}
+.memory-theme .game-visual-icon {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #bbf7d0;
+}
+.reflex-theme .game-visual-icon {
+  background: linear-gradient(135deg, #fefce8 0%, #fef08a 100%);
+  border-color: #fde047;
+}
+
+.game-card:hover .game-visual-icon {
+  transform: translateY(-4px) scale(1.1) rotate(4deg);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
 }
 
 .game-title {
@@ -926,7 +1085,7 @@ html, body {
 }
 
 .game-subtitle {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.4;
   margin-bottom: 12px;
@@ -941,14 +1100,20 @@ html, body {
 }
 
 .feature-pill {
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  background: #ffffff;
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: var(--radius-full);
-  color: var(--text-secondary);
   border: 1.5px solid #e2e8f0;
+  transition: all var(--transition-fast);
 }
+
+.math-theme .feature-pill { background: #f0f9ff; color: #0369a1; border-color: #bae6fd; }
+.turkish-theme .feature-pill { background: #fdf2f8; color: #be185d; border-color: #fbcfe8; }
+.oddone-theme .feature-pill { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+.stroop-theme .feature-pill { background: #faf5ff; color: #6d28d9; border-color: #ddd6fe; }
+.memory-theme .feature-pill { background: #f0fdf4; color: #047857; border-color: #bbf7d0; }
+.reflex-theme .feature-pill { background: #fffbeb; color: #b45309; border-color: #fde68a; }
 
 .btn-play-game {
   width: 100%;

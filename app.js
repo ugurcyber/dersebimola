@@ -1621,8 +1621,8 @@
           icon: '🎨',
           badge: '🎨 Renk & Şekil',
           featureTag: '⚡ Görsel Keşif',
-          description: 'Anasınıfı: Sevimli meyvelerle nesne sayma ve rakam tanıma, temel renkler ve geometrik şekiller.',
-          tags: ['1-5 Nesne Sayma', 'Renk Tanıma', 'Temel Şekiller'],
+          description: 'Meyveleri ve parlayan yıldızları say, doğru cevaba ilk sen dokun! 🍎⭐',
+          tags: ['1-5 Sayma', 'Canlı Renkler', 'Şekil Avı'],
           btnText: 'Etkinliği Başlat'
         },
         1: {
@@ -1630,7 +1630,7 @@
           icon: '🧮',
           badge: '🌱 Temel Toplama',
           featureTag: '⚡ Hızlı İşlem',
-          description: '1. Sınıf: 20\'ye kadar basit toplama ve çıkarma, 2-5-10\'ar ritmik sayma ve eksik sayı.',
+          description: 'Hızlıca topla, ritmik say, puanları roket gibi kap! 🚀',
           tags: ['Toplama & Çıkarma', 'Ritmik Sayma', 'Eksik Sayı'],
           btnText: 'Matematik Düellosunu Başlat'
         },
@@ -1639,8 +1639,8 @@
           icon: '🧮',
           badge: '🚀 2 Basamaklı İşlem',
           featureTag: '⚡ Hızlı İşlem',
-          description: '2. Sınıf: İki basamaklı işlemler, deste ve düzine, 3\'er ve 4\'er ritmik sayma, eldeli toplama.',
-          tags: ['İki Basamaklı İşlem', 'Deste & Düzine', 'Ritmik Sayma'],
+          description: 'İki basamaklı çılgın işlemler ve deste-düzine avı! ⚡',
+          tags: ['2 Basamak', 'Deste & Düzine', 'Eldeli Toplama'],
           btnText: 'Matematik Düellosunu Başlat'
         },
         3: {
@@ -1648,8 +1648,8 @@
           icon: '🧮',
           badge: '⚡ Çarpım Tablosu',
           featureTag: '⚡ Hızlı İşlem',
-          description: '3. Sınıf: Çarpım tablosu fırtınası (2x-9x), basit bölme ve basamak değeri hesapları.',
-          tags: ['Çarpım Tablosu', 'Basit Bölme', 'Basamak Değeri'],
+          description: 'Çarpım tablosu fırtınası! Kim daha hızlı hesaplayacak? 🌪️',
+          tags: ['Çarpım Tablosu', 'Hızlı Bölme', 'Basamak Değeri'],
           btnText: 'Matematik Düellosunu Başlat'
         },
         4: {
@@ -1657,7 +1657,7 @@
           icon: '🧮',
           badge: '👑 4 İşlem Ustası',
           featureTag: '⚡ Hızlı İşlem',
-          description: '4. Sınıf: Hızlı 4 işlem, çeyrek ve kesir hesapları, zaman ve açı türleri (dar, dik, geniş).',
+          description: '4 işlem fırtınası! Kesirleri ve açıları saliseler içinde fethet! 👑',
           tags: ['Hızlı 4 İşlem', 'Kesirler', 'Açı Türleri'],
           btnText: 'Matematik Düellosunu Başlat'
         }
@@ -1678,7 +1678,7 @@
           icon: '🦁',
           badge: '🦁 Doğa & Çevre',
           featureTag: '🔍 Keşif',
-          description: 'Anasınıfı: Sevimli hayvan sesleri, doğa kahramanları ve büyük-küçük kavramları keşfi.',
+          description: 'Miyavlayan dostlarımız ve doğa kahramanlarıyla tanış! 🐾',
           tags: ['Hayvan Sesleri', 'Büyük-Küçük', 'Doğa Sevgisi'],
           btnText: 'Etkinliği Başlat'
         },
@@ -1687,8 +1687,8 @@
           icon: '🦉',
           badge: '🌱 Harf & Hece',
           featureTag: '🔍 Odaklanma',
-          description: '1. Sınıf: Temel zıt kavramlar (büyük-küçük, uzun-kısa), ünlü harf ve hece tamamlama.',
-          tags: ['Zıt Kavramlar', 'Ünlü Harfler', 'Hece Sayısı'],
+          description: 'Zıt kavramları yakala, heceleri jet gibi tamamla! 🦉',
+          tags: ['Zıt Anlam', 'Ünlü Harfler', 'Hece Sayısı'],
           btnText: 'Türkçe Düellosunu Başlat'
         },
         2: {
@@ -1696,7 +1696,7 @@
           icon: '🦉',
           badge: '🚀 Eş ve Zıt Anlam',
           featureTag: '🔍 Odaklanma',
-          description: '2. Sınıf: Eş anlamlılar (siyah-kara), zıt anlamlılar (taze-bayat) ve yazım kuralları.',
+          description: 'Eş ve zıt anlamlı sözcük düellosu! Hızlı olan kazanır! 🎯',
           tags: ['Eş Anlamlılar', 'Zıt Anlamlılar', 'Yazım Kuralları'],
           btnText: 'Türkçe Düellosunu Başlat'
         },
@@ -1705,7 +1705,7 @@
           icon: '🦉',
           badge: '⚡ Eş Sesli & Bilgi',
           featureTag: '🔍 Odaklanma',
-          description: '3. Sınıf: Eş sesli kelimeler (yüz, gül), Hayat Bilgisi ve Fen gerçekleri düellosu.',
+          description: 'Eş sesli kelimeler ve eğlenceli Fen gerçekleri! 🌟',
           tags: ['Eş Sesli Sözcükler', 'Fen Gerçekleri', 'Noktalama'],
           btnText: 'Türkçe Düellosunu Başlat'
         },
@@ -1714,7 +1714,7 @@
           icon: '🦉',
           badge: '👑 Deyim & Kültür',
           featureTag: '🔍 Odaklanma',
-          description: '4. Sınıf: Zengin deyimler (etekleri zil çalmak vb.), atasözleri ve Sosyal Bilgiler.',
+          description: 'Zengin deyimler ve atasözleri labirentinde kelime ustası ol! 🏆',
           tags: ['Zengin Deyimler', 'Sosyal Bilgiler', 'Atasözleri'],
           btnText: 'Türkçe Düellosunu Başlat'
         }
@@ -1735,8 +1735,8 @@
           icon: '👀',
           badge: '👀 Görsel Dikkat',
           featureTag: '⚡ Ders Dışı',
-          description: 'Anasınıfı: Birbirinden sevimli meyveler veya hayvanlar arasından farklı olanı ilk sen bul!',
-          tags: ['Görsel Farklılık', 'Meyveler', 'Hızlı Bul'],
+          description: 'Meyve ve hayvanlar arasında saklanan yabancıyı ilk sen bul! 🥑',
+          tags: ['Görsel Dikkat', 'Tatlı Meyveler', 'Hızlı Bul'],
           btnText: 'Dikkat Düellosunu Başlat'
         },
         1: {
@@ -1744,8 +1744,8 @@
           icon: '👀',
           badge: '🌱 Gözlem & Odak',
           featureTag: '⚡ Ders Dışı',
-          description: '1. Sınıf: Benzer emojiler ve semboller arasında saklanan tek farklı olanı anında yakala!',
-          tags: ['Benzer Emojiler', 'İnce Farklar', 'Odaklanma'],
+          description: 'Gözünü dört aç! Benzer emojiler arasındaki tek farkı anında yakala! 🔍',
+          tags: ['Benzer Emojiler', 'İnce Farklar', 'Hızlı Gözlem'],
           btnText: 'Dikkat Düellosunu Başlat'
         },
         2: {
@@ -1753,8 +1753,8 @@
           icon: '👀',
           badge: '🚀 Gözlem Gücü',
           featureTag: '⚡ Ders Dışı',
-          description: '2. Sınıf: Gözlem gücünü konuştur! 9 emoji dizilimi içindeki yabancı sembolü ilk dokunan bulsun.',
-          tags: ['9\'lu Emoji Dizisi', 'Gözlem Yeteneği', 'Hızlı Tepki'],
+          description: '9 emoji arasından gizlice saklanan yabancı sembolü avla! ⚡',
+          tags: ['9\'lu Dizi', 'Keskin Gözler', 'Hızlı Tepki'],
           btnText: 'Dikkat Düellosunu Başlat'
         },
         3: {
@@ -1762,7 +1762,7 @@
           icon: '👀',
           badge: '⚡ Görsel Zeka',
           featureTag: '⚡ Ders Dışı',
-          description: '3. Sınıf: Birbirine çok yakın saatler, şekiller ve geometrik detaylar arasından farkı yakala!',
+          description: 'Birbirine benzeyen geometrik şekillerdeki minik farkı ilk gören puanı kapar! 🎯',
           tags: ['Detay Avcılığı', 'Görsel Zeka', 'Hızlı Tarama'],
           btnText: 'Dikkat Düellosunu Başlat'
         },
@@ -1771,8 +1771,8 @@
           icon: '👀',
           badge: '👑 Usta Dedektif',
           featureTag: '⚡ Ders Dışı',
-          description: '4. Sınıf: 12\'li sembol labirentinde gizlenmiş ince ayrıntıyı saliseler içinde yakala ve puanı kap!',
-          tags: ['Saliselik Fark', 'Usta Gözlem', 'Zorlu Semboller'],
+          description: '12 sembol labirentindeki gizli detayı saliseler içinde yakala! 🕵️',
+          tags: ['Usta Dedektif', 'Saliselik Fark', 'Zorlu Labirent'],
           btnText: 'Dikkat Düellosunu Başlat'
         }
       }
@@ -1792,7 +1792,7 @@
           icon: '🎯',
           badge: '🎨 Renk Düellosu',
           featureTag: '⚡ Ders Dışı',
-          description: 'Anasınıfı: Parlayan canlı renkleri tanı, hangi rengin hangi cisme ait olduğunu ilk sen bil!',
+          description: 'Cıvıl cıvıl renkleri tanı, şekilleri doğru eşleştir ve eğlen! 🎨',
           tags: ['Canlı Renkler', 'Görsel Algı', 'Büyük-Küçük'],
           btnText: 'Renk Düellosunu Başlat'
         },
@@ -1801,7 +1801,7 @@
           icon: '🎯',
           badge: '🌱 Renk & Dikkat',
           featureTag: '⚡ Ders Dışı',
-          description: '1. Sınıf: Gözlerin mi daha hızlı yoksa aklın mı? Renkli şekilleri doğru adlandır!',
+          description: 'Gözlerin mi daha hızlı yoksa aklın mı? Rengine göre bas! 🎯',
           tags: ['Görsel Eşleştirme', 'Hızlı Seçim', 'Renkler'],
           btnText: 'Renk Düellosunu Başlat'
         },
@@ -1810,7 +1810,7 @@
           icon: '🎯',
           badge: '🚀 Stroop Testi',
           featureTag: '⚡ Ders Dışı',
-          description: '2. Sınıf: Mavi renkle yazılmış \'KIRMIZI\' kelimesine aldanma! Yazının gerçek rengini söyle.',
+          description: 'Dikkat tuzak! Renge aldanma, kelimenin gerçek rengini bil! 🧠',
           tags: ['Renk Yanıltmacası', 'Beyin Jimnastiği', 'Odaklanma'],
           btnText: 'Stroop Düellosunu Başlat'
         },
@@ -1819,8 +1819,8 @@
           icon: '🎯',
           badge: '⚡ Beyin Jimnastiği',
           featureTag: '⚡ Ders Dışı',
-          description: '3. Sınıf: Yazı rengi ile kelime anlamı çatışıyor! Beynini şaşırtmaya çalışan tuzağa düşme.',
-          tags: ['Görsel İnhibisyon', 'Ters Köşe', 'Konsantrasyon'],
+          description: 'Ters köşe kelimeler! Zihnini şaşırtmaya çalışan tuzağı aş! ⚡',
+          tags: ['Ters Köşe', 'Konsantrasyon', 'Görsel Odak'],
           btnText: 'Stroop Düellosunu Başlat'
         },
         4: {
@@ -1828,8 +1828,8 @@
           icon: '🎯',
           badge: '👑 Nöro-Dikkat',
           featureTag: '⚡ Ders Dışı',
-          description: '4. Sınıf: Usta seviye Stroop düellosu! Renk ve kelime arasındaki ters köşeyi anında çöz.',
-          tags: ['İleri Düzey Stroop', 'Saliselik Karar', 'Zihinsel Çeviklik'],
+          description: 'Usta seviye Stroop düellosu! Şampiyon refleksle ters köşeyi çöz! 👑',
+          tags: ['İleri Stroop', 'Saliselik Karar', 'Zihinsel Çeviklik'],
           btnText: 'Stroop Düellosunu Başlat'
         }
       }
@@ -1849,8 +1849,8 @@
           icon: '🧠',
           badge: '🎈 Görsel Hafıza',
           featureTag: '⚡ Ders Dışı',
-          description: 'Anasınıfı: Ekranda görünen 3 sevimli nesnenin sırasını aklında tut, sorulanı anında bil!',
-          tags: ['3 Nesne Sırası', 'Kısa Süreli Bellek', 'Görsel Hatırlama'],
+          description: 'Ekranda parlayan 3 sevimli nesneyi aklında tut, sırayı bil! 🎈',
+          tags: ['3 Nesne Sırası', 'Görsel Hatırlama', 'Hafıza'],
           btnText: 'Hafıza Düellosunu Başlat'
         },
         1: {
@@ -1858,8 +1858,8 @@
           icon: '🧠',
           badge: '🌱 Sıralı Hafıza',
           featureTag: '⚡ Ders Dışı',
-          description: '1. Sınıf: Sırayla dizilen sembolleri aklında tut! 2. sırada ne vardı veya ilk hangisi göründü?',
-          tags: ['Sıralama Belleği', 'Görsel Dikkat', 'Çalışma Belleği'],
+          description: 'Sırayı aklına kazı! İlk hangisi çıktı, kim kayboldu? 🧠',
+          tags: ['Sıralama Belleği', 'Görsel Dikkat', 'Hızlı Hatırla'],
           btnText: 'Hafıza Düellosunu Başlat'
         },
         2: {
@@ -1867,8 +1867,8 @@
           icon: '🧠',
           badge: '🚀 Sıralı Hafıza',
           featureTag: '⚡ Ders Dışı',
-          description: '2. Sınıf: Sembol dizilimini hızlıca tara! Sıradaki eksik veya sorulan sembolü ilk dokunan bulsun.',
-          tags: ['3-4 Sembol Sırası', 'Hızlı Kodlama', 'Zihinsel Canlandırma'],
+          description: 'Sembolleri hızlıca tara! Sorulan sembolü ilk dokunan bulsun! 🚀',
+          tags: ['3-4 Sembol', 'Hızlı Kodlama', 'Zihinsel Canlandırma'],
           btnText: 'Hafıza Düellosunu Başlat'
         },
         3: {
@@ -1876,7 +1876,7 @@
           icon: '🧠',
           badge: '⚡ Şampiyon Bellek',
           featureTag: '⚡ Ders Dışı',
-          description: '3. Sınıf: 4 farklı sembolün tam sırasını zihninde canlandır! Hangi sembol bu sırada yoktu?',
+          description: '4\'lü sembol sırasını zihninde canlandır ve puanı kap! ⭐',
           tags: ['4\'lü Dizi', 'Detaylı Hatırlama', 'Hızlı Çağırma'],
           btnText: 'Hafıza Düellosunu Başlat'
         },
@@ -1885,7 +1885,7 @@
           icon: '🧠',
           badge: '👑 Fotoğrafik Hafıza',
           featureTag: '⚡ Ders Dışı',
-          description: '4. Sınıf: Fotoğrafik hafıza meydan okuması! Sıralı nesneleri eksiksiz hatırla ve tahtanın kralı ol.',
+          description: 'Fotoğrafik hafıza meydan okuması! Sıraları bil, tahtanın kralı ol! 👑',
           tags: ['Fotoğrafik Bellek', 'Sıra Analizi', 'Yüksek Konsantrasyon'],
           btnText: 'Hafıza Düellosunu Başlat'
         }
@@ -1906,8 +1906,8 @@
           icon: '⚡',
           badge: '🎈 Hızlı Dokun',
           featureTag: '⚡ Ders Dışı',
-          description: 'Anasınıfı: Hedef meyve veya balon belirdiğinde ekrana ilk dokunan ol, dikenli kaktüsten kaç!',
-          tags: ['El-Göz Koordinasyonu', 'Hızlı Tepki', 'Eğlence'],
+          description: 'Balon belirdiğinde ekrana ilk dokunan ol, kaktüsten kaç! 🎈',
+          tags: ['Koordinasyon', 'Hızlı Tepki', 'Balon Avı'],
           btnText: 'Refleks Düellosunu Başlat'
         },
         1: {
@@ -1915,8 +1915,8 @@
           icon: '⚡',
           badge: '🌱 Saf Hız',
           featureTag: '⚡ Ders Dışı',
-          description: '1. Sınıf: Sadece YILDIZ (⭐) çıktığında bas! Bombaya (💣) basan 1.5 saniye kilitlenir!',
-          tags: ['Hedef Avı', 'Bomba Tuzağı', 'Saf Refleks'],
+          description: 'Yıldıza bas (⭐), bombadan kaç (💣)! Yanlış basan kilitlenir! ⚡',
+          tags: ['Yıldız Avı', 'Bombadan Kaç', 'Şimşek Hız'],
           btnText: 'Refleks Düellosunu Başlat'
         },
         2: {
@@ -1924,7 +1924,7 @@
           icon: '⚡',
           badge: '🚀 Hızlı Tepki',
           featureTag: '⚡ Ders Dışı',
-          description: '2. Sınıf: Ders bilgisi gerekmez, saf hız ve dikkat! Doğru hedefe ilk dokunan puanı kapar.',
+          description: 'Saf hız ve konsantrasyon! Hedefi ilk yakalayan puanı kapar! 🚀',
           tags: ['Saliselik Tepki', 'Kilitlenme Cezası', 'Hızlı Dokunuş'],
           btnText: 'Refleks Düellosunu Başlat'
         },
@@ -1933,7 +1933,7 @@
           icon: '⚡',
           badge: '⚡ Süper Hız',
           featureTag: '⚡ Ders Dışı',
-          description: '3. Sınıf: Hedef çıktığı anda rekor hızla dokun! Sahte sembollere ve bombalara asla basma.',
+          description: 'Hedef çıktığı an rekor hızla dokun! Sahte bombalara asla basma! ⚡',
           tags: ['Köstebek Avı', 'Seçici Dikkat', 'Hızlı Refleks'],
           btnText: 'Refleks Düellosunu Başlat'
         },
@@ -1942,7 +1942,7 @@
           icon: '⚡',
           badge: '👑 Şimşek Hızı',
           featureTag: '⚡ Ders Dışı',
-          description: '4. Sınıf: Akıllı tahtanın en hızlısı kim? Saliseler içinde hedefi avla, bombadan kaç, zaferi kazan!',
+          description: 'Tahtanın en hızlısı kim? Saliseler içinde hedefi avla, zaferi kazan! 🏆',
           tags: ['Zirve Refleks', 'Sıfır Hata', 'Tahta Rekoru'],
           btnText: 'Refleks Düellosunu Başlat'
         }
