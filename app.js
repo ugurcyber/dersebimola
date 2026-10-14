@@ -29,6 +29,7 @@
     targetScore: 5,
     showAutoExplanation: true,
     soundEnabled: true,
+    announcerEnabled: true, // Öğretmen Kontrolü: Edge-TTS Sunucu & Zafer Sesleri
 
     // Yarışmacı Öğrenci Bilgileri
     player1: {
@@ -229,6 +230,28 @@
       osc.start(now);
       osc.stop(now + 0.065);
     }
+
+    // -------------------------------------------------------------
+    // Edge-TTS Sunucu & Zafer Seslendirmeleri
+    // -------------------------------------------------------------
+    playAnnouncer(name) {
+      if (!state.soundEnabled || !state.announcerEnabled) return;
+      try {
+        const audio = new Audio(`sounds/${name}.mp3`);
+        audio.volume = 0.95;
+        audio.play().catch(() => {});
+      } catch (err) {
+        console.warn('Ses dosyası oynatılamadı:', err);
+      }
+    }
+
+    playAnnouncerStart() { this.playAnnouncer('announcer_start'); }
+    playAnnouncerBluePoint() { this.playAnnouncer('announcer_blue_point'); }
+    playAnnouncerRedPoint() { this.playAnnouncer('announcer_red_point'); }
+    playAnnouncerBlueWin() { this.playAnnouncer('announcer_blue_win'); }
+    playAnnouncerRedWin() { this.playAnnouncer('announcer_red_win'); }
+    playAnnouncerLockout() { this.playAnnouncer('announcer_lockout'); }
+    playAnnouncerBomb() { this.playAnnouncer('announcer_bomb'); }
   }
 
   const audio = new SoundEngine();
@@ -1059,6 +1082,7 @@
           const parsed = JSON.parse(settings);
           if (parsed.targetScore) state.targetScore = parsed.targetScore;
           if (parsed.soundEnabled !== undefined) state.soundEnabled = parsed.soundEnabled;
+          if (parsed.announcerEnabled !== undefined) state.announcerEnabled = parsed.announcerEnabled;
           if (parsed.showAutoExplanation !== undefined) state.showAutoExplanation = parsed.showAutoExplanation;
         }
       } catch (e) {
@@ -1083,6 +1107,7 @@
         localStorage.setItem(this.KEYS.SETTINGS, JSON.stringify({
           targetScore: state.targetScore,
           soundEnabled: state.soundEnabled,
+          announcerEnabled: state.announcerEnabled,
           showAutoExplanation: state.showAutoExplanation
         }));
       } catch (e) {}
@@ -1127,6 +1152,7 @@
     gamesGrid: document.getElementById('gamesGrid'),
     targetScoreBtns: document.querySelectorAll('.score-btn'),
     chkAutoExplanation: document.getElementById('chkAutoExplanation'),
+    chkAnnouncerVoice: document.getElementById('chkAnnouncerVoice'),
 
     // Düello HUD
     btnExitDuel: document.getElementById('btnExitDuel'),
@@ -1135,6 +1161,9 @@
     duelRoundBadge: document.getElementById('duelRoundBadge'),
     btnToggleSolutionNow: document.getElementById('btnToggleSolutionNow'),
     btnSkipQuestion: document.getElementById('btnSkipQuestion'),
+    btnToggleAnnouncerDuel: document.getElementById('btnToggleAnnouncerDuel'),
+    announcerHudIcon: document.getElementById('announcerHudIcon'),
+    announcerHudText: document.getElementById('announcerHudText'),
 
     // Düello: Oyuncu 1 (Mavi)
     p1Panel: document.getElementById('playerPanel1'),
@@ -1311,6 +1340,29 @@
     } else {
       DOM.iconSoundOn.classList.add('hide');
       DOM.iconSoundOff.classList.remove('hide');
+    }
+  }
+
+  function updateAnnouncerUI() {
+    if (DOM.chkAnnouncerVoice) {
+      DOM.chkAnnouncerVoice.checked = state.announcerEnabled;
+    }
+    if (DOM.btnToggleAnnouncerDuel) {
+      DOM.btnToggleAnnouncerDuel.classList.toggle('announcer-muted', !state.announcerEnabled);
+      if (DOM.announcerHudIcon) DOM.announcerHudIcon.textContent = state.announcerEnabled ? '🎙️' : '🔇';
+      if (DOM.announcerHudText) DOM.announcerHudText.textContent = state.announcerEnabled ? 'Sunucu: Açık' : 'Sunucu: Kapalı';
+    }
+  }
+
+  function toggleAnnouncerVoice() {
+    state.announcerEnabled = !state.announcerEnabled;
+    StorageManager.saveSettings();
+    updateAnnouncerUI();
+    audio.playClick();
+    if (state.announcerEnabled) {
+      showToast('🎙️ Sunucu seslendirmesi açıldı');
+    } else {
+      showToast('🔇 Sunucu seslendirmesi kapatıldı');
     }
   }
 
@@ -2172,6 +2224,8 @@
     state.currentView = 'duel';
 
     audio.playCorrect();
+    audio.playAnnouncerStart();
+    updateAnnouncerUI();
     loadNextQuestion();
   }
 
@@ -2270,11 +2324,17 @@
         DOM.p1Panel.classList.add('winner-glow');
         DOM.p1WinToast.classList.remove('hide');
         highlightCorrectOption(DOM.p1OptionsGrid, optionIndex);
+        if (state.player1.score < state.targetScore) {
+          setTimeout(() => audio.playAnnouncerBluePoint(), 180);
+        }
       } else {
         state.player2.score += 1;
         DOM.p2Panel.classList.add('winner-glow');
         DOM.p2WinToast.classList.remove('hide');
         highlightCorrectOption(DOM.p2OptionsGrid, optionIndex);
+        if (state.player2.score < state.targetScore) {
+          setTimeout(() => audio.playAnnouncerRedPoint(), 180);
+        }
       }
 
       renderScoreTrack();
@@ -2331,6 +2391,14 @@
     if (isP1) state.player1.isLocked = true;
     else state.player2.isLocked = true;
 
+    // Sesli uyarı: Bomba mı yoksa standart kilitlenme mi?
+    const chosenOpt = (state.currentQuestion && state.currentQuestion.options) ? state.currentQuestion.options[optionIndex] : '';
+    if (chosenOpt && chosenOpt.includes('BOMBA')) {
+      audio.playAnnouncerBomb();
+    } else {
+      audio.playAnnouncerLockout();
+    }
+
     // Overlay'i aç ve süre çubuğunu doldur/boşalt
     lockOverlay.classList.remove('hide');
     lockProgress.style.transition = 'none';
@@ -2378,8 +2446,15 @@
 
     DOM.victoryOverlay.classList.remove('hide');
 
-    // Zafer Müziği ve Konfeti Patlat
+    // Zafer Müziği, Sunucu Anonsu ve Konfeti Patlat
     audio.playVictory();
+    setTimeout(() => {
+      if (isP1) {
+        audio.playAnnouncerBlueWin();
+      } else {
+        audio.playAnnouncerRedWin();
+      }
+    }, 350);
     confetti.burst();
 
     // Sınıf ligine kaydet
@@ -2475,6 +2550,23 @@
       StorageManager.saveSettings();
     });
 
+    // Sunucu Sesi Switch'i (Lobi)
+    if (DOM.chkAnnouncerVoice) {
+      DOM.chkAnnouncerVoice.addEventListener('change', () => {
+        state.announcerEnabled = DOM.chkAnnouncerVoice.checked;
+        StorageManager.saveSettings();
+        updateAnnouncerUI();
+        audio.playClick();
+      });
+    }
+
+    // Düello İçi Anlık Sunucu Sesi Butonu (HUD)
+    if (DOM.btnToggleAnnouncerDuel) {
+      DOM.btnToggleAnnouncerDuel.addEventListener('pointerdown', () => {
+        toggleAnnouncerVoice();
+      });
+    }
+
     // Düello Kontrolleri
     DOM.btnExitDuel.addEventListener('pointerdown', exitDuel);
     DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
@@ -2530,6 +2622,7 @@
   function init() {
     StorageManager.loadAll();
     updateSoundUI();
+    updateAnnouncerUI();
     updateTeacherAuthUI();
     updatePlayerNamesUI();
     renderSubcategories();

@@ -1015,6 +1015,12 @@ input:checked + .slider:before {
   color: #dc2626;
 }
 
+.hud-btn.announcer-muted {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
 .hud-center-meta {
   display: flex;
   align-items: center;
