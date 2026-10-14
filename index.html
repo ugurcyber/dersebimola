@@ -171,61 +171,22 @@
         </div>
       </section>
 
-      <!-- 2 Temel Oyun Kartı -->
+      <!-- Dinamik Alt Kategori Sekmeleri -->
+      <section class="subcategory-section" id="subcategorySection">
+        <div class="section-label">Kategori Seç:</div>
+        <div class="subcategory-tabs" id="subcategoryTabs">
+          <!-- Sınıfa göre dinamik üretilen hap sekmeler -->
+        </div>
+      </section>
+
+      <!-- Dinamik Oyun Kartları Grid'i -->
       <section class="games-section">
-        <div class="section-label">Oynamak İstediğin Düelloyu Seç:</div>
-        <div class="games-grid">
-          
-          <!-- OYUN 1: Kafa Kafaya Matematik & İşlem Düellosu -->
-          <article class="game-card math-theme" id="btnLaunchMath">
-            <div class="game-card-glow"></div>
-            <div class="game-card-content">
-              <div class="game-top-meta">
-                <span class="game-category-tag math-tag">📐 MATEMATİK DÜELLOSU</span>
-                <span class="game-speed-badge">⚡ Hızlı İşlem</span>
-              </div>
-              <div class="game-visual-icon">🧮</div>
-              <h2 class="game-title">Kafa Kafaya Matematik</h2>
-              <p class="game-subtitle" id="mathGameDesc">
-                Rastgele üretilen akılcı işlemlerle zihinden hesaplama hızı ve işlem reflekslerini kapıştırın!
-              </p>
-              <div class="game-features-list">
-                <span class="feature-pill">✓ Sınıf Seviyesine Özel</span>
-                <span class="feature-pill">✓ Çarpım Tablosu & 4 İşlem</span>
-                <span class="feature-pill">✓ Anında Çözüm Notu</span>
-              </div>
-              <button class="btn-play-game" id="btnStartMathGame">
-                <span class="play-icon">▶</span>
-                <span>Matematik Düellosunu Başlat</span>
-              </button>
-            </div>
-          </article>
-
-          <!-- OYUN 2: Hızlı Türkçe & Dikkat Avcısı -->
-          <article class="game-card turkish-theme" id="btnLaunchTurkish">
-            <div class="game-card-glow"></div>
-            <div class="game-card-content">
-              <div class="game-top-meta">
-                <span class="game-category-tag turkish-tag">📚 TÜRKÇE & DİKKAT</span>
-                <span class="game-speed-badge">🔍 Odaklanma</span>
-              </div>
-              <div class="game-visual-icon">🦉</div>
-              <h2 class="game-title">Hızlı Türkçe & Dikkat Avcısı</h2>
-              <p class="game-subtitle" id="turkishGameDesc">
-                Eş-zıt anlamlar, deyimler, kelime dağarcığı ve görsel dikkat sorularıyla kelime şampiyonunu belirleyin!
-              </p>
-              <div class="game-features-list">
-                <span class="feature-pill">✓ Zengin Kelime Havuzu</span>
-                <span class="feature-pill">✓ Deyimler & Kavramlar</span>
-                <span class="feature-pill">✓ Spam Önleme Kilidi</span>
-              </div>
-              <button class="btn-play-game" id="btnStartTurkishGame">
-                <span class="play-icon">▶</span>
-                <span>Türkçe Düellosunu Başlat</span>
-              </button>
-            </div>
-          </article>
-
+        <div class="games-section-header">
+          <div class="section-label">Oynamak İstediğin Düelloyu Seç:</div>
+          <span class="games-count-badge" id="gamesCountBadge">6 Oyun Mevcut</span>
+        </div>
+        <div class="games-grid" id="gamesGrid">
+          <!-- Seçilen sınıfa ve alt kategoriye göre dinamik doldurulacak -->
         </div>
       </section>
 
@@ -727,6 +688,6 @@
   </div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane) -->
-  <script src="app.js"></script>
+  <script src="app.js?v=4.0"></script>
 </body>
 </html>

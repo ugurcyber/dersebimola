@@ -16,10 +16,13 @@
     // Aktif Görünüm: 'lobby' | 'duel'
     currentView: 'lobby',
 
-    // Sınıf Seviyesi: 1, 2, 3 veya 4
+    // Sınıf Seviyesi: 0 (Anasınıfı), 1, 2, 3 veya 4
     currentGrade: 1,
 
-    // Aktif Oyun Türü: 'math' | 'turkish'
+    // Aktif Kategori Filtresi: 'all' veya sınıfa özel kategori id'si
+    currentCategory: 'all',
+
+    // Aktif Oyun Türü: 'math' | 'turkish' | 'oddone' | 'stroop' | 'memory' | 'reflex'
     currentGameType: 'math',
 
     // Düello Ayarları
@@ -559,10 +562,324 @@
       }
       return {
         question: qData.question,
+        questionHtml: qData.questionHtml || qData.question.replace(/\n/g, '<br>'),
         options: options,
         correct: qData.correct,
         explanation: qData.explanation,
         category: category
+      };
+    },
+
+    // -------------------------------------------------------------
+    // DERS DIŞI 1: FARKLI OLANI YAKALA (GÖRSEL DİKKAT DÜELLOSU)
+    // -------------------------------------------------------------
+    generateOddOneQuestion(grade) {
+      const g = parseInt(grade, 10);
+      let pairPool;
+      let totalCount;
+      let cols;
+
+      if (g === 0) {
+        // Anasınıfı: 3x3 (9 eleman), çok bariz ve sevimli zıtlıklar
+        totalCount = 9;
+        cols = 3;
+        pairPool = [
+          { base: { emoji: '🍎', name: 'Elma' }, diff: { emoji: '🍅', name: 'Domates' }, extra: { emoji: '🍌', name: 'Muz' } },
+          { base: { emoji: '🐶', name: 'Köpek' }, diff: { emoji: '🐱', name: 'Kedi' }, extra: { emoji: '🐰', name: 'Tavşan' } },
+          { base: { emoji: '🚗', name: 'Araba' }, diff: { emoji: '✈️', name: 'Uçak' }, extra: { emoji: '🚲', name: 'Bisiklet' } },
+          { base: { emoji: '☀️', name: 'Güneş' }, diff: { emoji: '🌙', name: 'Hilal' }, extra: { emoji: '⭐', name: 'Yıldız' } },
+          { base: { emoji: '🎈', name: 'Balon' }, diff: { emoji: '🎁', name: 'Hediye' }, extra: { emoji: '🎉', name: 'Kutlama' } },
+          { base: { emoji: '🍓', name: 'Çilek' }, diff: { emoji: '🍒', name: 'Kiraz' }, extra: { emoji: '🍇', name: 'Üzüm' } },
+          { base: { emoji: '🐸', name: 'Kurbağa' }, diff: { emoji: '🦆', name: 'Ördek' }, extra: { emoji: '🐟', name: 'Balık' } }
+        ];
+      } else if (g === 1 || g === 2) {
+        // 1. ve 2. Sınıf: 3x3 (9 eleman), görsel benzerliği yüksek emojiler
+        totalCount = 9;
+        cols = 3;
+        pairPool = [
+          { base: { emoji: '😀', name: 'Gülümseyen' }, diff: { emoji: '😅', name: 'Terleyen' }, extra: { emoji: '😂', name: 'Gülen' } },
+          { base: { emoji: '🐱', name: 'Kedi' }, diff: { emoji: '🐯', name: 'Kaplan' }, extra: { emoji: '🦁', name: 'Aslan' } },
+          { base: { emoji: '🚗', name: 'Kırmızı Araba' }, diff: { emoji: '🚙', name: 'Mavi Araba' }, extra: { emoji: '🚕', name: 'Taksi' } },
+          { base: { emoji: '🌸', name: 'Pembe Çiçek' }, diff: { emoji: '🌺', name: 'Kırmızı Çiçek' }, extra: { emoji: '🌻', name: 'Ayçiçeği' } },
+          { base: { emoji: '🍪', name: 'Kurabiye' }, diff: { emoji: '🍩', name: 'Donut' }, extra: { emoji: '🧁', name: 'Kek' } },
+          { base: { emoji: '🍐', name: 'Armut' }, diff: { emoji: '🥑', name: 'Avokado' }, extra: { emoji: '🍏', name: 'Yeşil Elma' } },
+          { base: { emoji: '🌕', name: 'Dolunay' }, diff: { emoji: '🌖', name: 'Şişkin Ay' }, extra: { emoji: '🌗', name: 'Yarım Ay' } },
+          { base: { emoji: '🦋', name: 'Kelebek' }, diff: { emoji: '🐝', name: 'Arı' }, extra: { emoji: '🐞', name: 'Uğur Böceği' } }
+        ];
+      } else {
+        // 3. ve 4. Sınıf: 3x4 (12 eleman), dikkat gerektiren zorlu semboller
+        totalCount = 12;
+        cols = 4;
+        pairPool = [
+          { base: { emoji: '🕒', name: 'Saat 3:00' }, diff: { emoji: '🕓', name: 'Saat 4:00' }, extra: { emoji: '🕔', name: 'Saat 5:00' } },
+          { base: { emoji: '⛵', name: 'Yelkenli' }, diff: { emoji: '🚤', name: 'Sürat Teknesi' }, extra: { emoji: '🛳️', name: 'Gemi' } },
+          { base: { emoji: '🎈', name: 'Kırmızı Balon' }, diff: { emoji: '🏮', name: 'Kırmızı Fener' }, extra: { emoji: '💡', name: 'Lamba' } },
+          { base: { emoji: '🔷', name: 'Mavi Elmas' }, diff: { emoji: '🔶', name: 'Turuncu Elmas' }, extra: { emoji: '🔹', name: 'Küçük Elmas' } },
+          { base: { emoji: '🔒', name: 'Kilitli' }, diff: { emoji: '🔓', name: 'Açık Kilit' }, extra: { emoji: '🔑', name: 'Anahtar' } },
+          { base: { emoji: '⏰', name: 'Çalar Saat' }, diff: { emoji: '⏱️', name: 'Kronometre' }, extra: { emoji: '⏳', name: 'Kum Saati' } },
+          { base: { emoji: '🍎', name: 'Kırmızı Elma' }, diff: { emoji: '🍏', name: 'Yeşil Elma' }, extra: { emoji: '🍑', name: 'Şeftali' } },
+          { base: { emoji: '💎', name: 'Pırlanta' }, diff: { emoji: '💍', name: 'Yüzük' }, extra: { emoji: '👑', name: 'Taç' } }
+        ];
+      }
+
+      const pair = pairPool[Math.floor(Math.random() * pairPool.length)];
+      const items = Array(totalCount).fill(pair.base.emoji);
+      const diffIndex = Math.floor(Math.random() * totalCount);
+      items[diffIndex] = pair.diff.emoji;
+
+      const gridHtml = `
+        <div style="font-size:0.92rem; color:#ea580c; font-weight:800; margin-bottom:4px;">👀 GÖRSEL DİKKAT DÜELLOSU</div>
+        <div class="grid-visual-box" style="grid-template-columns: repeat(${cols}, 1fr); max-width: ${cols === 4 ? '280px' : '220px'};">
+          ${items.map(em => `<span>${em}</span>`).join('')}
+        </div>
+        <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">Bu grupta DİĞERLERİNDEN FARKLI olan hangisidir?</div>
+      `;
+
+      return {
+        question: `Farklı olanı yakala: ${pair.diff.emoji}`,
+        questionHtml: gridHtml,
+        correct: `${pair.diff.emoji} ${pair.diff.name}`,
+        distractors: [
+          `${pair.base.emoji} ${pair.base.name}`,
+          `${pair.extra.emoji} ${pair.extra.name}`
+        ],
+        explanation: `Süper dikkat! Grupta saklanan farklı sembol ${pair.diff.emoji} (${pair.diff.name}) idi! 👏🎯`
+      };
+    },
+
+    // -------------------------------------------------------------
+    // DERS DIŞI 2: RENK TUZAKLARI (STROOP DİKKAT TESTİ)
+    // -------------------------------------------------------------
+    generateStroopQuestion(grade) {
+      const g = parseInt(grade, 10);
+
+      if (g === 0) {
+        // Anasınıfı: Doğrudan görsel renk & büyüklük tanıma
+        const kindergartenStroop = [
+          {
+            html: '<div style="font-size:3.5rem; margin:6px auto;">🔴</div><div style="font-weight:900; font-size:1.2rem;">Bu sevimli daire hangi renktir?</div>',
+            correct: '🔴 Kırmızı',
+            distractors: ['🔵 Mavi', '🟡 Sarı'],
+            exp: 'Kırmızı, elmanın ve uğur böceğinin rengidir! 🍎'
+          },
+          {
+            html: '<div style="font-size:3.5rem; margin:6px auto;">🔵</div><div style="font-weight:900; font-size:1.2rem;">Bu parlak daire hangi renktir?</div>',
+            correct: '🔵 Mavi',
+            distractors: ['🟢 Yeşil', '🔴 Kırmızı'],
+            exp: 'Mavi, engin gökyüzünün ve denizlerin rengidir! 🌊'
+          },
+          {
+            html: '<div style="font-size:3.5rem; margin:6px auto;">🟡</div><div style="font-weight:900; font-size:1.2rem;">Bu sıcacık daire hangi renktir?</div>',
+            correct: '🟡 Sarı',
+            distractors: ['🟣 Mor', '🟠 Turuncu'],
+            exp: 'Sarı, parlayan Güneş\'in ve tatlı muzun rengidir! ☀️'
+          },
+          {
+            html: '<div style="font-size:3.5rem; margin:6px auto;">🟢</div><div style="font-weight:900; font-size:1.2rem;">Bu doğa rengi daire hangi renktir?</div>',
+            correct: '🟢 Yeşil',
+            distractors: ['🔴 Kırmızı', '🔵 Mavi'],
+            exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿'
+          },
+          {
+            html: '<div style="font-size:3.2rem; margin:6px auto;">🐘  vs  🐜</div><div style="font-weight:900; font-size:1.2rem;">Hangisi GERÇEKTE çok daha BÜYÜKTÜR?</div>',
+            correct: '🐘 Fil (Kocaman)',
+            distractors: ['🐜 Karınca (Minik)', 'İkisi de Aynı'],
+            exp: 'Fil devasa bir canlıdır, karıncadan kat kat büyüktür! 🐘'
+          },
+          {
+            html: '<div style="font-size:3.2rem; margin:6px auto;">🦒  vs  🐢</div><div style="font-weight:900; font-size:1.2rem;">Hangisi çok daha UZUNDUR?</div>',
+            correct: '🦒 Zürafa (Uzun Boylu)',
+            distractors: ['🐢 Kaplumbağa', 'İkisi de Aynı'],
+            exp: 'Zürafalar upuzun boyunlarıyla ağaçların en tepesine ulaşır! 🦒'
+          }
+        ];
+        const chosen = kindergartenStroop[Math.floor(Math.random() * kindergartenStroop.length)];
+        return {
+          question: 'Renk ve Kavram Düellosu',
+          questionHtml: chosen.html,
+          correct: chosen.correct,
+          distractors: chosen.distractors,
+          explanation: chosen.exp
+        };
+      }
+
+      // 1, 2, 3 ve 4. Sınıflar: Stroop Yanıltmaca Testi
+      const colors = [
+        { text: 'KIRMIZI', colorHex: '#dc2626', name: 'Kırmızı' },
+        { text: 'MAVİ', colorHex: '#2563eb', name: 'Mavi' },
+        { text: 'YEŞİL', colorHex: '#16a34a', name: 'Yeşil' },
+        { text: 'SARI', colorHex: '#ca8a04', name: 'Sarı' },
+        { text: 'MOR', colorHex: '#9333ea', name: 'Mor' },
+        { text: 'TURUNCU', colorHex: '#ea580c', name: 'Turuncu' }
+      ];
+
+      // Kelime ve Mürekkep rengini farklı seç (Çatışma / Conflict)
+      const textIndex = Math.floor(Math.random() * colors.length);
+      let inkIndex = Math.floor(Math.random() * colors.length);
+      while (inkIndex === textIndex) {
+        inkIndex = Math.floor(Math.random() * colors.length);
+      }
+
+      const textItem = colors[textIndex];
+      const inkItem = colors[inkIndex];
+
+      // Üçüncü şık için başka bir renk seç
+      const remainingColors = colors.filter((_, idx) => idx !== textIndex && idx !== inkIndex);
+      const thirdColor = remainingColors[Math.floor(Math.random() * remainingColors.length)];
+
+      const mode = Math.random() < 0.65 ? 'ask_color' : 'ask_word';
+
+      if (mode === 'ask_color') {
+        // "Yazının RENGİ nedir? (Ne yazdığına aldanma!)"
+        const stroopHtml = `
+          <div style="font-size:0.92rem; color:#dc2626; font-weight:800; margin-bottom:4px;">⚠️ DİKKAT TUZAĞI: STROOP ETKİSİ!</div>
+          <div class="stroop-word" style="color: ${inkItem.colorHex};">${textItem.text}</div>
+          <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">Bu kelimenin RENGİ nedir? (Ne yazdığına aldanma!)</div>
+        `;
+        return {
+          question: `Yazının rengi nedir? (${textItem.text})`,
+          questionHtml: stroopHtml,
+          correct: inkItem.name,
+          distractors: [textItem.name, thirdColor.name],
+          explanation: `Harika konsantrasyon! Kelimede '${textItem.text}' yazıyordu ama yazı rengi ${inkItem.name} idi! 🧠🎯`
+        };
+      } else {
+        // "Burada NE YAZIYOR? (Rengine aldanma!)"
+        const stroopHtml = `
+          <div style="font-size:0.92rem; color:#7c3aed; font-weight:800; margin-bottom:4px;">🧠 BEYİN JİMNASTİĞİ: HIZLI ODAK!</div>
+          <div class="stroop-word" style="color: ${inkItem.colorHex};">${textItem.text}</div>
+          <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">Burada NE YAZIYOR? (Yazı rengine aldanma!)</div>
+        `;
+        return {
+          question: `Burada ne yazıyor?`,
+          questionHtml: stroopHtml,
+          correct: textItem.name,
+          distractors: [inkItem.name, thirdColor.name],
+          explanation: `Gözün yanılmadı! Mürekkep ${inkItem.name} olsa da kelime '${textItem.text}' idi! 👏`
+        };
+      }
+    },
+
+    // -------------------------------------------------------------
+    // DERS DIŞI 3: SÜPER HAFIZA (SIRAYI HATIRLA)
+    // -------------------------------------------------------------
+    generateMemorySequenceQuestion(grade) {
+      const g = parseInt(grade, 10);
+      const iconPool = [
+        { emoji: '🐶', name: 'Köpek' },
+        { emoji: '🐱', name: 'Kedi' },
+        { emoji: '🚀', name: 'Roket' },
+        { emoji: '🚗', name: 'Araba' },
+        { emoji: '🍌', name: 'Muz' },
+        { emoji: '🍎', name: 'Elma' },
+        { emoji: '⭐', name: 'Yıldız' },
+        { emoji: '🎈', name: 'Balon' },
+        { emoji: '⚽', name: 'Futbol Topu' },
+        { emoji: '🍦', name: 'Dondurma' },
+        { emoji: '🦁', name: 'Aslan' },
+        { emoji: '💎', name: 'Elmas' },
+        { emoji: '🎸', name: 'Gitar' },
+        { emoji: '🍕', name: 'Pizza' },
+        { emoji: '🏆', name: 'Kupa' }
+      ];
+
+      // Karıştırıp seç
+      const shuffled = [...iconPool].sort(() => 0.5 - Math.random());
+      const seqLength = (g === 0 || g === 1) ? 3 : 4;
+      const sequence = shuffled.slice(0, seqLength);
+      const unchosen = shuffled[seqLength];
+
+      const modes = ['ask_second', 'ask_first', 'ask_last', 'ask_not_in_seq'];
+      const chosenMode = modes[Math.floor(Math.random() * modes.length)];
+
+      let questionTitle = '';
+      let correct = '';
+      let distractors = [];
+
+      if (chosenMode === 'ask_second') {
+        questionTitle = 'Bu seride 2. (İKİNCİ) sırada hangi sembol vardı?';
+        correct = `2. ${sequence[1].emoji} ${sequence[1].name}`;
+        distractors = [
+          `1. ${sequence[0].emoji} ${sequence[0].name}`,
+          `3. ${sequence[2].emoji} ${sequence[2].name}`
+        ];
+      } else if (chosenMode === 'ask_first') {
+        questionTitle = 'Bu seride İLK (1.) sırada hangi sembol vardı?';
+        correct = `1. ${sequence[0].emoji} ${sequence[0].name}`;
+        distractors = [
+          `2. ${sequence[1].emoji} ${sequence[1].name}`,
+          `3. ${sequence[2].emoji} ${sequence[2].name}`
+        ];
+      } else if (chosenMode === 'ask_last') {
+        const lastIdx = seqLength - 1;
+        questionTitle = `Bu seride EN SON (${seqLength}.) sırada hangisi vardı?`;
+        correct = `${seqLength}. ${sequence[lastIdx].emoji} ${sequence[lastIdx].name}`;
+        distractors = [
+          `1. ${sequence[0].emoji} ${sequence[0].name}`,
+          `2. ${sequence[1].emoji} ${sequence[1].name}`
+        ];
+      } else {
+        questionTitle = 'Aşağıdakilerden hangisi bu sırada HİÇ YOKTU?';
+        correct = `${unchosen.emoji} ${unchosen.name} (Yoktu)`;
+        distractors = [
+          `${sequence[0].emoji} ${sequence[0].name}`,
+          `${sequence[1].emoji} ${sequence[1].name}`
+        ];
+      }
+
+      const memoryHtml = `
+        <div style="font-size:0.92rem; color:#059669; font-weight:800; margin-bottom:4px;">🧠 SÜPER HAFIZA: SIRAYI HATIRLA!</div>
+        <div class="memory-sequence-box">
+          ${sequence.map((item, idx) => `<span><strong>${idx + 1}.</strong> ${item.emoji}</span>`).join('')}
+        </div>
+        <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">${questionTitle}</div>
+      `;
+
+      const expSeq = sequence.map((s, i) => `${i + 1}. ${s.emoji}`).join('  ➔  ');
+      return {
+        question: questionTitle,
+        questionHtml: memoryHtml,
+        correct: correct,
+        distractors: distractors,
+        explanation: `Süper hafıza! Sıralama: [ ${expSeq} ] şeklindeydi! Harikasın! 🧠✨`
+      };
+    },
+
+    // -------------------------------------------------------------
+    // DERS DIŞI 4: ŞİMŞEK REFLEKS (KÖSTEBEK / HEDEF AVI)
+    // -------------------------------------------------------------
+    generateSpeedReflexQuestion(grade) {
+      const g = parseInt(grade, 10);
+      const targets = [
+        { target: '⭐', name: 'YILDIZ', hazard: '💣', hazardName: 'BOMBA', distract: '💎', distractName: 'Elmas' },
+        { target: '🎯', name: 'HEDEF', hazard: '💣', hazardName: 'BOMBA', distract: '⚡', distractName: 'Şimşek' },
+        { target: '🚀', name: 'ROKET', hazard: '💣', hazardName: 'BOMBA', distract: '🛸', distractName: 'UFO' },
+        { target: '🏆', name: 'KUPA', hazard: '💣', hazardName: 'BOMBA', distract: '🥇', distractName: 'Madalya' },
+        { target: '🔔', name: 'ÇAN', hazard: '💣', hazardName: 'BOMBA', distract: '⏰', distractName: 'Saat' },
+        { target: '🎈', name: 'BALON', hazard: '🌵', hazardName: 'KAKTÜS', distract: '🧸', distractName: 'Ayıcık' }
+      ];
+
+      const chosen = targets[Math.floor(Math.random() * targets.length)];
+
+      const reflexHtml = `
+        <div style="font-size:0.92rem; color:#d97706; font-weight:800; margin-bottom:4px;">⚡ ŞİMŞEK REFLEKS & HEDEF AVI!</div>
+        <div class="reflex-target-box">
+          <span style="font-size:1.4rem; background:#fee2e2; color:#b91c1c; padding:4px 10px; border-radius:12px; border:2px dashed #ef4444; font-weight:900;">${chosen.hazard} DOKUNMA!</span>
+          <span class="pulse-target" style="font-size:3.6rem; margin:0 8px;">${chosen.target}</span>
+          <span style="font-size:1.4rem; background:#dcfce7; color:#15803d; padding:4px 10px; border-radius:12px; border:2px dashed #22c55e; font-weight:900;">${chosen.target} İLK SEN BAS!</span>
+        </div>
+        <div style="font-size:1.15rem; font-weight:900; margin-top:6px;">HEDEF: Sadece ${chosen.name} (${chosen.target})! ${chosen.hazardName} (${chosen.hazard}) basma!</div>
+      `;
+
+      return {
+        question: `Hedefe bas: ${chosen.target}`,
+        questionHtml: reflexHtml,
+        correct: `${chosen.target} ${chosen.name} (HEDEF!)`,
+        distractors: [
+          `${chosen.hazard} ${chosen.hazardName} (BOMBA!)`,
+          `${chosen.distract} ${chosen.distractName}`
+        ],
+        explanation: `Şimşek refleks! Hedefi (${chosen.target}) tam zamanında yakaladın ve tuzaktan (${chosen.hazard}) kaçındın! ⚡🏆`
       };
     },
 
@@ -592,7 +909,7 @@
         else if (g === 3) raw = this.generateGrade3Math();
         else raw = this.generateGrade4Math();
         return this.buildQuestionItem(raw, g === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu');
-      } else {
+      } else if (gameType === 'turkish') {
         // Türkçe & Dikkat & Doğa
         let pool;
         if (g === 0) pool = this.grade0AnimalsAndNaturePool;
@@ -608,6 +925,21 @@
           distractors: raw.d,
           explanation: raw.exp
         }, g === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Dikkat Avcısı');
+      } else if (gameType === 'oddone') {
+        const raw = this.generateOddOneQuestion(g);
+        return this.buildQuestionItem(raw, '👀 Farklı Olanı Yakala');
+      } else if (gameType === 'stroop') {
+        const raw = this.generateStroopQuestion(g);
+        return this.buildQuestionItem(raw, '🎯 Renk Tuzakları (Stroop)');
+      } else if (gameType === 'memory') {
+        const raw = this.generateMemorySequenceQuestion(g);
+        return this.buildQuestionItem(raw, '🧠 Süper Hafıza');
+      } else if (gameType === 'reflex') {
+        const raw = this.generateSpeedReflexQuestion(g);
+        return this.buildQuestionItem(raw, '⚡ Şimşek Refleks');
+      } else {
+        const raw = this.generateGrade1Math();
+        return this.buildQuestionItem(raw, '📐 Matematik Düellosu');
       }
     }
   };
@@ -789,10 +1121,10 @@
     lobbyP1Name: document.getElementById('lobbyPlayer1Name'),
     lobbyP2Name: document.getElementById('lobbyPlayer2Name'),
     btnQuickDraw: document.getElementById('btnQuickDrawPlayers'),
-    btnStartMath: document.getElementById('btnStartMathGame'),
-    btnStartTurkish: document.getElementById('btnStartTurkishGame'),
-    btnLaunchMathCard: document.getElementById('btnLaunchMath'),
-    btnLaunchTurkishCard: document.getElementById('btnLaunchTurkish'),
+    subcategorySection: document.getElementById('subcategorySection'),
+    subcategoryTabs: document.getElementById('subcategoryTabs'),
+    gamesCountBadge: document.getElementById('gamesCountBadge'),
+    gamesGrid: document.getElementById('gamesGrid'),
     targetScoreBtns: document.querySelectorAll('.score-btn'),
     chkAutoExplanation: document.getElementById('chkAutoExplanation'),
 
@@ -812,6 +1144,7 @@
     p1QuestionCard: document.getElementById('p1QuestionCard'),
     p1QuestionCategory: document.getElementById('p1QuestionCategory'),
     p1QuestionText: document.getElementById('p1QuestionText'),
+    p1OptionsGrid: document.getElementById('p1OptionsGrid'),
     p1OptA: document.getElementById('p1OptA'),
     p1OptB: document.getElementById('p1OptB'),
     p1OptC: document.getElementById('p1OptC'),
@@ -830,6 +1163,7 @@
     p2QuestionCard: document.getElementById('p2QuestionCard'),
     p2QuestionCategory: document.getElementById('p2QuestionCategory'),
     p2QuestionText: document.getElementById('p2QuestionText'),
+    p2OptionsGrid: document.getElementById('p2OptionsGrid'),
     p2OptA: document.getElementById('p2OptA'),
     p2OptB: document.getElementById('p2OptB'),
     p2OptC: document.getElementById('p2OptC'),
@@ -981,13 +1315,489 @@
   }
 
   /* ==========================================================================
-     9. SINIF VE OYUN SEÇİMİ
+     9. SINIF, ALT KATEGORİ VE OYUN KATALOĞU (DİNAMİK LOBİ SİSTEMİ)
      ========================================================================== */
+
+  // 1. Her Sınıf Seviyesine Özel Alt Kategori Sekmeleri (Pills/Tabs)
+  const SUBCATEGORIES_CONFIG = {
+    // Anasınıfı
+    0: [
+      { id: 'all', label: '🌟 Tümü' },
+      { id: 'concept', label: '🎨 Renk, Şekil & Kavram' },
+      { id: 'visual', label: '👀 Görsel Dikkat & Farkı Bul' },
+      { id: 'reflex', label: '⚡ Hızlı Refleks & Eğlence' }
+    ],
+    // 1. Sınıf
+    1: [
+      { id: 'all', label: '🌟 Tümü' },
+      { id: 'math', label: '🧮 Eğlenceli Matematik' },
+      { id: 'reading', label: '📚 Okuma & Kelime Avı' },
+      { id: 'memory', label: '🧠 Hafıza & Görsel Dikkat' },
+      { id: 'reflex', label: '⚡ Ders Dışı Refleks Oyunları' }
+    ],
+    // 2. Sınıf
+    2: [
+      { id: 'all', label: '🌟 Tümü' },
+      { id: 'math', label: '🧮 Eğlenceli Matematik' },
+      { id: 'reading', label: '📚 Okuma & Kelime Avı' },
+      { id: 'memory', label: '🧠 Hafıza & Görsel Dikkat' },
+      { id: 'reflex', label: '⚡ Ders Dışı Refleks Oyunları' }
+    ],
+    // 3. Sınıf
+    3: [
+      { id: 'all', label: '🌟 Tümü' },
+      { id: 'math', label: '➗ Matematik & 4 İşlem' },
+      { id: 'turkish', label: '📖 Türkçe & Genel Kültür' },
+      { id: 'science', label: '🌍 Fen & Sosyal Kuşağı' },
+      { id: 'brain', label: '🧠 Zeka, Strateji & Refleks' }
+    ],
+    // 4. Sınıf
+    4: [
+      { id: 'all', label: '🌟 Tümü' },
+      { id: 'math', label: '➗ Matematik & 4 İşlem' },
+      { id: 'turkish', label: '📖 Türkçe & Genel Kültür' },
+      { id: 'science', label: '🌍 Fen & Sosyal Kuşağı' },
+      { id: 'brain', label: '🧠 Zeka, Strateji & Refleks' }
+    ]
+  };
+
+  // 2. Zengin Oyun Kataloğu (6 Oyun x 5 Sınıf Düzeyi = %100 Dinamik)
+  const GAMES_CATALOG = [
+    {
+      id: 'math',
+      themeClass: 'math-theme',
+      tagClass: 'math-tag',
+      categoryMapping: (grade) => {
+        if (grade === 0) return ['all', 'concept'];
+        return ['all', 'math'];
+      },
+      gradeContent: {
+        0: {
+          title: 'Renkler, Şekiller & Sayma',
+          icon: '🎨',
+          badge: '🎨 Renk & Şekil',
+          featureTag: '⚡ Görsel Keşif',
+          description: 'Anasınıfı: Sevimli meyvelerle nesne sayma ve rakam tanıma, temel renkler ve geometrik şekiller.',
+          tags: ['1-5 Nesne Sayma', 'Renk Tanıma', 'Temel Şekiller'],
+          btnText: 'Etkinliği Başlat'
+        },
+        1: {
+          title: 'Kafa Kafaya Matematik',
+          icon: '🧮',
+          badge: '🌱 Temel Toplama',
+          featureTag: '⚡ Hızlı İşlem',
+          description: '1. Sınıf: 20\'ye kadar basit toplama ve çıkarma, 2-5-10\'ar ritmik sayma ve eksik sayı.',
+          tags: ['Toplama & Çıkarma', 'Ritmik Sayma', 'Eksik Sayı'],
+          btnText: 'Matematik Düellosunu Başlat'
+        },
+        2: {
+          title: 'Kafa Kafaya Matematik',
+          icon: '🧮',
+          badge: '🚀 2 Basamaklı İşlem',
+          featureTag: '⚡ Hızlı İşlem',
+          description: '2. Sınıf: İki basamaklı işlemler, deste ve düzine, 3\'er ve 4\'er ritmik sayma, eldeli toplama.',
+          tags: ['İki Basamaklı İşlem', 'Deste & Düzine', 'Ritmik Sayma'],
+          btnText: 'Matematik Düellosunu Başlat'
+        },
+        3: {
+          title: 'Kafa Kafaya Matematik',
+          icon: '🧮',
+          badge: '⚡ Çarpım Tablosu',
+          featureTag: '⚡ Hızlı İşlem',
+          description: '3. Sınıf: Çarpım tablosu fırtınası (2x-9x), basit bölme ve basamak değeri hesapları.',
+          tags: ['Çarpım Tablosu', 'Basit Bölme', 'Basamak Değeri'],
+          btnText: 'Matematik Düellosunu Başlat'
+        },
+        4: {
+          title: 'Kafa Kafaya Matematik',
+          icon: '🧮',
+          badge: '👑 4 İşlem Ustası',
+          featureTag: '⚡ Hızlı İşlem',
+          description: '4. Sınıf: Hızlı 4 işlem, çeyrek ve kesir hesapları, zaman ve açı türleri (dar, dik, geniş).',
+          tags: ['Hızlı 4 İşlem', 'Kesirler', 'Açı Türleri'],
+          btnText: 'Matematik Düellosunu Başlat'
+        }
+      }
+    },
+    {
+      id: 'turkish',
+      themeClass: 'turkish-theme',
+      tagClass: 'turkish-tag',
+      categoryMapping: (grade) => {
+        if (grade === 0) return ['all', 'visual'];
+        if (grade === 1 || grade === 2) return ['all', 'reading'];
+        return ['all', 'turkish', 'science'];
+      },
+      gradeContent: {
+        0: {
+          title: 'Sevimli Hayvanlar & Doğa',
+          icon: '🦁',
+          badge: '🦁 Doğa & Çevre',
+          featureTag: '🔍 Keşif',
+          description: 'Anasınıfı: Sevimli hayvan sesleri, doğa kahramanları ve büyük-küçük kavramları keşfi.',
+          tags: ['Hayvan Sesleri', 'Büyük-Küçük', 'Doğa Sevgisi'],
+          btnText: 'Etkinliği Başlat'
+        },
+        1: {
+          title: 'Hızlı Türkçe & Kelime Avı',
+          icon: '🦉',
+          badge: '🌱 Harf & Hece',
+          featureTag: '🔍 Odaklanma',
+          description: '1. Sınıf: Temel zıt kavramlar (büyük-küçük, uzun-kısa), ünlü harf ve hece tamamlama.',
+          tags: ['Zıt Kavramlar', 'Ünlü Harfler', 'Hece Sayısı'],
+          btnText: 'Türkçe Düellosunu Başlat'
+        },
+        2: {
+          title: 'Hızlı Türkçe & Sözcük Düellosu',
+          icon: '🦉',
+          badge: '🚀 Eş ve Zıt Anlam',
+          featureTag: '🔍 Odaklanma',
+          description: '2. Sınıf: Eş anlamlılar (siyah-kara), zıt anlamlılar (taze-bayat) ve yazım kuralları.',
+          tags: ['Eş Anlamlılar', 'Zıt Anlamlılar', 'Yazım Kuralları'],
+          btnText: 'Türkçe Düellosunu Başlat'
+        },
+        3: {
+          title: 'Hızlı Türkçe & Bilgi Avcısı',
+          icon: '🦉',
+          badge: '⚡ Eş Sesli & Bilgi',
+          featureTag: '🔍 Odaklanma',
+          description: '3. Sınıf: Eş sesli kelimeler (yüz, gül), Hayat Bilgisi ve Fen gerçekleri düellosu.',
+          tags: ['Eş Sesli Sözcükler', 'Fen Gerçekleri', 'Noktalama'],
+          btnText: 'Türkçe Düellosunu Başlat'
+        },
+        4: {
+          title: 'Hızlı Türkçe & Genel Kültür',
+          icon: '🦉',
+          badge: '👑 Deyim & Kültür',
+          featureTag: '🔍 Odaklanma',
+          description: '4. Sınıf: Zengin deyimler (etekleri zil çalmak vb.), atasözleri ve Sosyal Bilgiler.',
+          tags: ['Zengin Deyimler', 'Sosyal Bilgiler', 'Atasözleri'],
+          btnText: 'Türkçe Düellosunu Başlat'
+        }
+      }
+    },
+    {
+      id: 'oddone',
+      themeClass: 'oddone-theme',
+      tagClass: 'oddone-tag',
+      categoryMapping: (grade) => {
+        if (grade === 0) return ['all', 'visual'];
+        if (grade === 1 || grade === 2) return ['all', 'memory'];
+        return ['all', 'brain'];
+      },
+      gradeContent: {
+        0: {
+          title: 'Farklı Olanı Yakala',
+          icon: '👀',
+          badge: '👀 Görsel Dikkat',
+          featureTag: '⚡ Ders Dışı',
+          description: 'Anasınıfı: Birbirinden sevimli meyveler veya hayvanlar arasından farklı olanı ilk sen bul!',
+          tags: ['Görsel Farklılık', 'Meyveler', 'Hızlı Bul'],
+          btnText: 'Dikkat Düellosunu Başlat'
+        },
+        1: {
+          title: 'Farklı Olanı Yakala',
+          icon: '👀',
+          badge: '🌱 Gözlem & Odak',
+          featureTag: '⚡ Ders Dışı',
+          description: '1. Sınıf: Benzer emojiler ve semboller arasında saklanan tek farklı olanı anında yakala!',
+          tags: ['Benzer Emojiler', 'İnce Farklar', 'Odaklanma'],
+          btnText: 'Dikkat Düellosunu Başlat'
+        },
+        2: {
+          title: 'Farklı Olanı Yakala',
+          icon: '👀',
+          badge: '🚀 Gözlem Gücü',
+          featureTag: '⚡ Ders Dışı',
+          description: '2. Sınıf: Gözlem gücünü konuştur! 9 emoji dizilimi içindeki yabancı sembolü ilk dokunan bulsun.',
+          tags: ['9\'lu Emoji Dizisi', 'Gözlem Yeteneği', 'Hızlı Tepki'],
+          btnText: 'Dikkat Düellosunu Başlat'
+        },
+        3: {
+          title: 'Farklı Olanı Yakala',
+          icon: '👀',
+          badge: '⚡ Görsel Zeka',
+          featureTag: '⚡ Ders Dışı',
+          description: '3. Sınıf: Birbirine çok yakın saatler, şekiller ve geometrik detaylar arasından farkı yakala!',
+          tags: ['Detay Avcılığı', 'Görsel Zeka', 'Hızlı Tarama'],
+          btnText: 'Dikkat Düellosunu Başlat'
+        },
+        4: {
+          title: 'Farklı Olanı Yakala',
+          icon: '👀',
+          badge: '👑 Usta Dedektif',
+          featureTag: '⚡ Ders Dışı',
+          description: '4. Sınıf: 12\'li sembol labirentinde gizlenmiş ince ayrıntıyı saliseler içinde yakala ve puanı kap!',
+          tags: ['Saliselik Fark', 'Usta Gözlem', 'Zorlu Semboller'],
+          btnText: 'Dikkat Düellosunu Başlat'
+        }
+      }
+    },
+    {
+      id: 'stroop',
+      themeClass: 'stroop-theme',
+      tagClass: 'stroop-tag',
+      categoryMapping: (grade) => {
+        if (grade === 0) return ['all', 'concept'];
+        if (grade === 1 || grade === 2) return ['all', 'reflex'];
+        return ['all', 'brain'];
+      },
+      gradeContent: {
+        0: {
+          title: 'Renk & Şekil Eşleştirme',
+          icon: '🎯',
+          badge: '🎨 Renk Düellosu',
+          featureTag: '⚡ Ders Dışı',
+          description: 'Anasınıfı: Parlayan canlı renkleri tanı, hangi rengin hangi cisme ait olduğunu ilk sen bil!',
+          tags: ['Canlı Renkler', 'Görsel Algı', 'Büyük-Küçük'],
+          btnText: 'Renk Düellosunu Başlat'
+        },
+        1: {
+          title: 'Göz ve Renk Düellosu',
+          icon: '🎯',
+          badge: '🌱 Renk & Dikkat',
+          featureTag: '⚡ Ders Dışı',
+          description: '1. Sınıf: Gözlerin mi daha hızlı yoksa aklın mı? Renkli şekilleri doğru adlandır!',
+          tags: ['Görsel Eşleştirme', 'Hızlı Seçim', 'Renkler'],
+          btnText: 'Renk Düellosunu Başlat'
+        },
+        2: {
+          title: 'Renk Tuzakları (Stroop)',
+          icon: '🎯',
+          badge: '🚀 Stroop Testi',
+          featureTag: '⚡ Ders Dışı',
+          description: '2. Sınıf: Mavi renkle yazılmış \'KIRMIZI\' kelimesine aldanma! Yazının gerçek rengini söyle.',
+          tags: ['Renk Yanıltmacası', 'Beyin Jimnastiği', 'Odaklanma'],
+          btnText: 'Stroop Düellosunu Başlat'
+        },
+        3: {
+          title: 'Renk Tuzakları (Stroop)',
+          icon: '🎯',
+          badge: '⚡ Beyin Jimnastiği',
+          featureTag: '⚡ Ders Dışı',
+          description: '3. Sınıf: Yazı rengi ile kelime anlamı çatışıyor! Beynini şaşırtmaya çalışan tuzağa düşme.',
+          tags: ['Görsel İnhibisyon', 'Ters Köşe', 'Konsantrasyon'],
+          btnText: 'Stroop Düellosunu Başlat'
+        },
+        4: {
+          title: 'Süper Stroop: Renk Tuzakları',
+          icon: '🎯',
+          badge: '👑 Nöro-Dikkat',
+          featureTag: '⚡ Ders Dışı',
+          description: '4. Sınıf: Usta seviye Stroop düellosu! Renk ve kelime arasındaki ters köşeyi anında çöz.',
+          tags: ['İleri Düzey Stroop', 'Saliselik Karar', 'Zihinsel Çeviklik'],
+          btnText: 'Stroop Düellosunu Başlat'
+        }
+      }
+    },
+    {
+      id: 'memory',
+      themeClass: 'memory-theme',
+      tagClass: 'memory-tag',
+      categoryMapping: (grade) => {
+        if (grade === 0) return ['all', 'reflex'];
+        if (grade === 1 || grade === 2) return ['all', 'memory'];
+        return ['all', 'brain'];
+      },
+      gradeContent: {
+        0: {
+          title: 'Sevimli Hafıza Düellosu',
+          icon: '🧠',
+          badge: '🎈 Görsel Hafıza',
+          featureTag: '⚡ Ders Dışı',
+          description: 'Anasınıfı: Ekranda görünen 3 sevimli nesnenin sırasını aklında tut, sorulanı anında bil!',
+          tags: ['3 Nesne Sırası', 'Kısa Süreli Bellek', 'Görsel Hatırlama'],
+          btnText: 'Hafıza Düellosunu Başlat'
+        },
+        1: {
+          title: 'Süper Hafıza: Sırayı Hatırla',
+          icon: '🧠',
+          badge: '🌱 Sıralı Hafıza',
+          featureTag: '⚡ Ders Dışı',
+          description: '1. Sınıf: Sırayla dizilen sembolleri aklında tut! 2. sırada ne vardı veya ilk hangisi göründü?',
+          tags: ['Sıralama Belleği', 'Görsel Dikkat', 'Çalışma Belleği'],
+          btnText: 'Hafıza Düellosunu Başlat'
+        },
+        2: {
+          title: 'Süper Hafıza: Sırayı Hatırla',
+          icon: '🧠',
+          badge: '🚀 Sıralı Hafıza',
+          featureTag: '⚡ Ders Dışı',
+          description: '2. Sınıf: Sembol dizilimini hızlıca tara! Sıradaki eksik veya sorulan sembolü ilk dokunan bulsun.',
+          tags: ['3-4 Sembol Sırası', 'Hızlı Kodlama', 'Zihinsel Canlandırma'],
+          btnText: 'Hafıza Düellosunu Başlat'
+        },
+        3: {
+          title: 'Süper Hafıza: Sırayı Hatırla',
+          icon: '🧠',
+          badge: '⚡ Şampiyon Bellek',
+          featureTag: '⚡ Ders Dışı',
+          description: '3. Sınıf: 4 farklı sembolün tam sırasını zihninde canlandır! Hangi sembol bu sırada yoktu?',
+          tags: ['4\'lü Dizi', 'Detaylı Hatırlama', 'Hızlı Çağırma'],
+          btnText: 'Hafıza Düellosunu Başlat'
+        },
+        4: {
+          title: 'Usta Hafıza: Sırayı Hatırla',
+          icon: '🧠',
+          badge: '👑 Fotoğrafik Hafıza',
+          featureTag: '⚡ Ders Dışı',
+          description: '4. Sınıf: Fotoğrafik hafıza meydan okuması! Sıralı nesneleri eksiksiz hatırla ve tahtanın kralı ol.',
+          tags: ['Fotoğrafik Bellek', 'Sıra Analizi', 'Yüksek Konsantrasyon'],
+          btnText: 'Hafıza Düellosunu Başlat'
+        }
+      }
+    },
+    {
+      id: 'reflex',
+      themeClass: 'reflex-theme',
+      tagClass: 'reflex-tag',
+      categoryMapping: (grade) => {
+        if (grade === 0) return ['all', 'reflex'];
+        if (grade === 1 || grade === 2) return ['all', 'reflex'];
+        return ['all', 'brain'];
+      },
+      gradeContent: {
+        0: {
+          title: 'Neşeli Refleks & Balon Avı',
+          icon: '⚡',
+          badge: '🎈 Hızlı Dokun',
+          featureTag: '⚡ Ders Dışı',
+          description: 'Anasınıfı: Hedef meyve veya balon belirdiğinde ekrana ilk dokunan ol, dikenli kaktüsten kaç!',
+          tags: ['El-Göz Koordinasyonu', 'Hızlı Tepki', 'Eğlence'],
+          btnText: 'Refleks Düellosunu Başlat'
+        },
+        1: {
+          title: 'Şimşek Refleks: Hedef Avı',
+          icon: '⚡',
+          badge: '🌱 Saf Hız',
+          featureTag: '⚡ Ders Dışı',
+          description: '1. Sınıf: Sadece YILDIZ (⭐) çıktığında bas! Bombaya (💣) basan 1.5 saniye kilitlenir!',
+          tags: ['Hedef Avı', 'Bomba Tuzağı', 'Saf Refleks'],
+          btnText: 'Refleks Düellosunu Başlat'
+        },
+        2: {
+          title: 'Şimşek Refleks: Hedef Avı',
+          icon: '⚡',
+          badge: '🚀 Hızlı Tepki',
+          featureTag: '⚡ Ders Dışı',
+          description: '2. Sınıf: Ders bilgisi gerekmez, saf hız ve dikkat! Doğru hedefe ilk dokunan puanı kapar.',
+          tags: ['Saliselik Tepki', 'Kilitlenme Cezası', 'Hızlı Dokunuş'],
+          btnText: 'Refleks Düellosunu Başlat'
+        },
+        3: {
+          title: 'Şimşek Refleks: Köstebek & Av',
+          icon: '⚡',
+          badge: '⚡ Süper Hız',
+          featureTag: '⚡ Ders Dışı',
+          description: '3. Sınıf: Hedef çıktığı anda rekor hızla dokun! Sahte sembollere ve bombalara asla basma.',
+          tags: ['Köstebek Avı', 'Seçici Dikkat', 'Hızlı Refleks'],
+          btnText: 'Refleks Düellosunu Başlat'
+        },
+        4: {
+          title: 'Şimşek Refleks: Köstebek & Av',
+          icon: '⚡',
+          badge: '👑 Şimşek Hızı',
+          featureTag: '⚡ Ders Dışı',
+          description: '4. Sınıf: Akıllı tahtanın en hızlısı kim? Saliseler içinde hedefi avla, bombadan kaç, zaferi kazan!',
+          tags: ['Zirve Refleks', 'Sıfır Hata', 'Tahta Rekoru'],
+          btnText: 'Refleks Düellosunu Başlat'
+        }
+      }
+    }
+  ];
+
+  // Alt Kategori Sekmelerini (Pills/Tabs) Üret
+  function renderSubcategories() {
+    if (!DOM.subcategoryTabs) return;
+    const g = state.currentGrade;
+    const cats = SUBCATEGORIES_CONFIG[g] || SUBCATEGORIES_CONFIG[1];
+
+    // Aktif kategori bu sınıfta yoksa 'all' yap
+    const exists = cats.some(c => c.id === state.currentCategory);
+    if (!exists) {
+      state.currentCategory = 'all';
+    }
+
+    DOM.subcategoryTabs.innerHTML = cats.map(c => `
+      <button class="subcat-pill ${c.id === state.currentCategory ? 'active' : ''}" data-cat-id="${c.id}">
+        ${c.label}
+      </button>
+    `).join('');
+
+    // Sekme Tıklama Dinleyicileri
+    DOM.subcategoryTabs.querySelectorAll('.subcat-pill').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const catId = btn.getAttribute('data-cat-id');
+        if (state.currentCategory === catId) return;
+
+        state.currentCategory = catId;
+        audio.playClick();
+
+        DOM.subcategoryTabs.querySelectorAll('.subcat-pill').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-cat-id') === state.currentCategory);
+        });
+
+        renderGameCards();
+      });
+    });
+  }
+
+  // Dinamik Oyun Kartlarını (Grid) Üret
+  function renderGameCards() {
+    if (!DOM.gamesGrid) return;
+    const g = state.currentGrade;
+    const currentCat = state.currentCategory;
+
+    // Filtreleme
+    const filtered = GAMES_CATALOG.filter(game => {
+      const cats = game.categoryMapping(g);
+      if (currentCat === 'all') return true;
+      return cats.includes(currentCat);
+    });
+
+    // Sayaç Rozetini Güncelle
+    if (DOM.gamesCountBadge) {
+      DOM.gamesCountBadge.textContent = `${filtered.length} Oyun Gösteriliyor`;
+    }
+
+    // Kart HTML'lerini oluştur
+    DOM.gamesGrid.innerHTML = filtered.map(game => {
+      const content = game.gradeContent[g] || game.gradeContent[1];
+      return `
+        <div class="game-card ${game.themeClass}" data-game-id="${game.id}">
+          <div class="game-top-meta">
+            <span class="game-category-tag ${game.tagClass}">${content.badge}</span>
+            <span class="game-speed-badge">${content.featureTag}</span>
+          </div>
+          <div class="game-visual-icon">${content.icon}</div>
+          <h3 class="game-title">${content.title}</h3>
+          <p class="game-subtitle">${content.description}</p>
+          <div class="game-features-list">
+            ${content.tags.map(t => `<span class="feature-pill">✓ ${t}</span>`).join('')}
+          </div>
+          <button class="btn-play-game" data-game-id="${game.id}">
+            ▶ ${content.btnText}
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    // Kartlara ve Butonlara Tıklama / Dokunma Dinleyicisi
+    DOM.gamesGrid.querySelectorAll('.game-card').forEach(card => {
+      card.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const gameId = card.getAttribute('data-game-id');
+        startDuel(gameId);
+      });
+    });
+  }
+
   function setGrade(gradeNumber) {
     state.currentGrade = parseInt(gradeNumber, 10);
     audio.playClick();
 
-    // Çip butonları güncelle
+    // Çip butonları güncelle (Header)
     DOM.gradeChips.forEach(chip => {
       const g = parseInt(chip.getAttribute('data-grade'), 10);
       chip.classList.toggle('active', g === state.currentGrade);
@@ -999,46 +1809,9 @@
       card.classList.toggle('active', g === state.currentGrade);
     });
 
-    // Lobi oyun açıklamalarını güncelle
-    updateLobbyDescriptions();
-  }
-
-  function updateLobbyDescriptions() {
-    const mathDesc = document.getElementById('mathGameDesc');
-    const trDesc = document.getElementById('turkishGameDesc');
-    const mathTitle = document.querySelector('#btnLaunchMath .game-title');
-    const trTitle = document.querySelector('#btnLaunchTurkish .game-title');
-    const mathIcon = document.querySelector('#btnLaunchMath .game-visual-icon');
-    const trIcon = document.querySelector('#btnLaunchTurkish .game-visual-icon');
-    const g = state.currentGrade;
-
-    if (g === 0) {
-      if (mathTitle) mathTitle.textContent = "Renkler, Şekiller & Sayma";
-      if (mathIcon) mathIcon.textContent = "🎨";
-      if (trTitle) trTitle.textContent = "Sevimli Hayvanlar & Doğa";
-      if (trIcon) trIcon.textContent = "🦁";
-      if (mathDesc) mathDesc.textContent = "Okul Öncesi: Canlı renkler, parlayan şekiller ve 1-5 arası meyvelerle neşeli görsel sayma oyunu!";
-      if (trDesc) trDesc.textContent = "Okul Öncesi: Sevimli hayvan sesleri, doğa kahramanları ve büyük-küçük kavramları keşfi!";
-    } else {
-      if (mathTitle) mathTitle.textContent = "Kafa Kafaya Matematik";
-      if (mathIcon) mathIcon.textContent = "🧮";
-      if (trTitle) trTitle.textContent = "Hızlı Türkçe & Dikkat Avcısı";
-      if (trIcon) trIcon.textContent = "🦉";
-
-      if (g === 1) {
-        mathDesc.textContent = "1. Sınıf: 20'ye kadar basit toplama-çıkarma, 2-5-10'ar ritmik sayma.";
-        trDesc.textContent = "1. Sınıf: Temel zıt kavramlar (büyük-küçük, uzun-kısa), ünlü harf ve dikkat avı.";
-      } else if (g === 2) {
-        mathDesc.textContent = "2. Sınıf: İki basamaklı işlemler, deste ve düzine, 3'er ve 4'er ritmik sayma.";
-        trDesc.textContent = "2. Sınıf: Eş anlamlılar (siyah-kara), zıt anlamlılar (taze-bayat) ve yazım kuralları.";
-      } else if (g === 3) {
-        mathDesc.textContent = "3. Sınıf: Çarpım tablosu fırtınası (2x-9x), basit bölme ve basamak değeri düellosu.";
-        trDesc.textContent = "3. Sınıf: Eş sesli kelimeler (yüz, gül), Fen & Hayat Bilgisi doğru-yanlış gerçekleri.";
-      } else {
-        mathDesc.textContent = "4. Sınıf: Hızlı 4 işlem, çeyrek ve kesir hesapları, açı türleri (dar, dik, geniş).";
-        trDesc.textContent = "4. Sınıf: Zengin deyimler (etekleri zil çalmak vb.), Sosyal Bilgiler & genel kültür.";
-      }
-    }
+    // Dinamik alt kategorileri ve oyun kartlarını sınıfa göre baştan üret
+    renderSubcategories();
+    renderGameCards();
   }
 
   /* ==========================================================================
@@ -1372,12 +2145,24 @@
     state.questionNumber = 1;
 
     // UI'ları sıfırla
-    DOM.duelGradeBadge.textContent = state.currentGrade === 0 ? '🎈 Anasınıfı' : `${state.currentGrade}. Sınıf`;
-    if (state.currentGrade === 0) {
-      DOM.duelGameTypeBadge.textContent = gameType === 'math' ? '🎨 Renkler & Sayma' : '🦁 Sevimli Hayvanlar';
-    } else {
-      DOM.duelGameTypeBadge.textContent = gameType === 'math' ? '📐 Matematik' : '📚 Türkçe & Dikkat';
-    }
+    const gradeLabels = {
+      0: '🎈 Anasınıfı',
+      1: '🌱 1. Sınıf',
+      2: '🚀 2. Sınıf',
+      3: '⚡ 3. Sınıf',
+      4: '👑 4. Sınıf'
+    };
+    DOM.duelGradeBadge.textContent = gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`;
+
+    const gameTypeBadges = {
+      math: state.currentGrade === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu',
+      turkish: state.currentGrade === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Dikkat',
+      oddone: '👀 Farklı Olanı Yakala',
+      stroop: '🎯 Renk Tuzakları (Stroop)',
+      memory: '🧠 Süper Hafıza',
+      reflex: '⚡ Şimşek Refleks'
+    };
+    DOM.duelGameTypeBadge.textContent = gameTypeBadges[gameType] || '🎯 Sınıf Düellosu';
     updatePlayerNamesUI();
     renderScoreTrack();
 
@@ -1435,17 +2220,17 @@
 
     // Mavi Tarafına Bas
     DOM.p1QuestionCategory.textContent = state.currentQuestion.category;
-    DOM.p1QuestionText.textContent = state.currentQuestion.question;
-    DOM.p1OptTextA.textContent = state.currentQuestion.options[0];
-    DOM.p1OptTextB.textContent = state.currentQuestion.options[1];
-    DOM.p1OptTextC.textContent = state.currentQuestion.options[2];
+    DOM.p1QuestionText.innerHTML = state.currentQuestion.questionHtml || state.currentQuestion.question;
+    DOM.p1OptTextA.innerHTML = state.currentQuestion.options[0];
+    DOM.p1OptTextB.innerHTML = state.currentQuestion.options[1];
+    DOM.p1OptTextC.innerHTML = state.currentQuestion.options[2];
 
     // Kırmızı Tarafına Bas (Tamamen Simetrik)
     DOM.p2QuestionCategory.textContent = state.currentQuestion.category;
-    DOM.p2QuestionText.textContent = state.currentQuestion.question;
-    DOM.p2OptTextA.textContent = state.currentQuestion.options[0];
-    DOM.p2OptTextB.textContent = state.currentQuestion.options[1];
-    DOM.p2OptTextC.textContent = state.currentQuestion.options[2];
+    DOM.p2QuestionText.innerHTML = state.currentQuestion.questionHtml || state.currentQuestion.question;
+    DOM.p2OptTextA.innerHTML = state.currentQuestion.options[0];
+    DOM.p2OptTextB.innerHTML = state.currentQuestion.options[1];
+    DOM.p2OptTextC.innerHTML = state.currentQuestion.options[2];
 
     // Buton stillerini sıfırla
     [DOM.p1OptA, DOM.p1OptB, DOM.p1OptC, DOM.p2OptA, DOM.p2OptB, DOM.p2OptC].forEach(btn => {
@@ -1690,23 +2475,6 @@
       StorageManager.saveSettings();
     });
 
-    // Oyun Başlatma Butonları
-    DOM.btnStartMath.addEventListener('pointerdown', (e) => {
-      e.stopPropagation();
-      startDuel('math');
-    });
-    DOM.btnLaunchMathCard.addEventListener('pointerdown', () => {
-      startDuel('math');
-    });
-
-    DOM.btnStartTurkish.addEventListener('pointerdown', (e) => {
-      e.stopPropagation();
-      startDuel('turkish');
-    });
-    DOM.btnLaunchTurkishCard.addEventListener('pointerdown', () => {
-      startDuel('turkish');
-    });
-
     // Düello Kontrolleri
     DOM.btnExitDuel.addEventListener('pointerdown', exitDuel);
     DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
@@ -1764,7 +2532,8 @@
     updateSoundUI();
     updateTeacherAuthUI();
     updatePlayerNamesUI();
-    updateLobbyDescriptions();
+    renderSubcategories();
+    renderGameCards();
 
     // Kayıtlı ayarları UI'a yansıt
     DOM.chkAutoExplanation.checked = state.showAutoExplanation;
