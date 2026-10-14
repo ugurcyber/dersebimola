@@ -1432,6 +1432,55 @@ input:checked + .slider:before {
   word-break: break-word;
 }
 
+.question-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.btn-read-question {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  color: #15803d;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 5px 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.12);
+  touch-action: manipulation;
+  font-family: inherit;
+  margin-left: auto;
+}
+
+.btn-read-question:hover {
+  background: #dcfce7;
+  border-color: #4ade80;
+  transform: translateY(-1px);
+}
+
+.btn-read-question:active {
+  transform: scale(0.96);
+}
+
+.btn-read-question.reading-active {
+  background: #fef08a;
+  border-color: #f59e0b;
+  color: #b45309;
+  animation: pulseRead 0.8s infinite alternate;
+}
+
+@keyframes pulseRead {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  100% { transform: scale(1.06); box-shadow: 0 0 14px 4px rgba(245, 158, 11, 0.45); }
+}
+
 /* 3 Adet Devasa Şık Butonu */
 .duel-options-grid {
   display: flex;

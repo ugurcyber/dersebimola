@@ -30,6 +30,7 @@
     showAutoExplanation: true,
     soundEnabled: true,
     announcerEnabled: true, // Öğretmen Kontrolü: Edge-TTS Sunucu & Zafer Sesleri
+    autoReadQuestion: true, // Soru Sesli Okuma (Edge-TTS & TTS)
 
     // Yarışmacı Öğrenci Bilgileri
     player1: {
@@ -252,9 +253,163 @@
     playAnnouncerRedWin() { this.playAnnouncer('announcer_red_win'); }
     playAnnouncerLockout() { this.playAnnouncer('announcer_lockout'); }
     playAnnouncerBomb() { this.playAnnouncer('announcer_bomb'); }
+
+    // -------------------------------------------------------------
+    // Soru Sesli Okuma (Edge-TTS MP3 & Web Speech API)
+    // -------------------------------------------------------------
+    playQuestionFile(key, onEnded) {
+      if (!state.soundEnabled) {
+        if (onEnded) onEnded();
+        return;
+      }
+      this.stopQuestionAudio();
+      try {
+        const a = new Audio(`sounds/q/${key}.mp3`);
+        this.currentAudio = a;
+        a.volume = 1.0;
+        let finished = false;
+        const finish = () => {
+          if (!finished) {
+            finished = true;
+            this.currentAudio = null;
+            if (onEnded) onEnded();
+          }
+        };
+        a.onended = finish;
+        a.onerror = () => {
+          if (state.currentQuestion) {
+            this.speakTurkishText(getSpokenTextForQuestion(state.currentQuestion), finish);
+          } else {
+            finish();
+          }
+        };
+        const p = a.play();
+        if (p !== undefined) {
+          p.catch(() => {
+            if (state.currentQuestion) {
+              this.speakTurkishText(getSpokenTextForQuestion(state.currentQuestion), finish);
+            } else {
+              finish();
+            }
+          });
+        }
+      } catch (err) {
+        console.warn('Soru sesi oynatma hatası:', err);
+        if (onEnded) onEnded();
+      }
+    }
+
+    speakTurkishText(text, onEnded) {
+      if (!state.soundEnabled) {
+        if (onEnded) onEnded();
+        return;
+      }
+      this.stopQuestionAudio();
+      if (!('speechSynthesis' in window)) {
+        if (onEnded) onEnded();
+        return;
+      }
+      try {
+        window.speechSynthesis.cancel();
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'tr-TR';
+        u.rate = 0.95;
+        u.pitch = 1.05;
+
+        // Varsa Türkçe sesi seç
+        const voices = window.speechSynthesis.getVoices();
+        const trVoice = voices.find(v => v.lang === 'tr-TR' || (v.lang && v.lang.toLowerCase().startsWith('tr')));
+        if (trVoice) {
+          u.voice = trVoice;
+        }
+
+        let done = false;
+        const finish = () => {
+          if (!done) {
+            done = true;
+            if (onEnded) onEnded();
+          }
+        };
+        u.onend = finish;
+        u.onerror = finish;
+        window.speechSynthesis.speak(u);
+      } catch (e) {
+        if (onEnded) onEnded();
+      }
+    }
+
+    stopQuestionAudio() {
+      if (this.currentAudio) {
+        try {
+          this.currentAudio.pause();
+          this.currentAudio.currentTime = 0;
+        } catch(e) {}
+        this.currentAudio = null;
+      }
+      if ('speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+        } catch(e) {}
+      }
+    }
   }
 
   const audio = new SoundEngine();
+
+  // -------------------------------------------------------------
+  // Soru Sesli Okuma Yardımcıları (Edge-TTS & Web Speech)
+  // -------------------------------------------------------------
+  function getSpokenTextForQuestion(q) {
+    if (!q) return '';
+    let text = q.question || '';
+    if (!text && q.questionHtml) {
+      text = q.questionHtml;
+    }
+
+    // HTML etiketlerini ve içeriğini temizle
+    text = text.replace(/<[^>]*>/g, ' ');
+
+    // Matematik sembollerini akıcı Türkçeye çevir
+    if (text.includes('+') && text.includes('=')) {
+      text = text.replace(/(\d+)\s*\+\s*(\d+)\s*=\s*\?/, '$1 artı $2 kaç eder?');
+    } else if (text.includes('-') && text.includes('=')) {
+      text = text.replace(/(\d+)\s*-\s*(\d+)\s*=\s*\?/, '$1 eksi $2 kaç eder?');
+    } else if (text.includes('×') && text.includes('=')) {
+      text = text.replace(/(\d+)\s*×\s*(\d+)\s*=\s*\?/, '$1 kere $2 kaç eder?');
+    } else if (text.includes('÷') && text.includes('=')) {
+      text = text.replace(/(\d+)\s*÷\s*(\d+)\s*=\s*\?/, '$1 bölü $2 kaç eder?');
+    } else if (text.includes(' - ') && text.includes('?')) {
+      text = text.replace(/\s*-\s*\?/g, '... Sıradaki sayı kaçtır?').replace(/\s*-\s*/g, ', ');
+    }
+
+    // Emojileri temizle
+    text = text.replace(/[\u{1F300}-\u{1FAFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').trim();
+    // Fazla boşlukları düzelt
+    text = text.replace(/\s+/g, ' ');
+    return text || q.question || 'Soruyu çöz';
+  }
+
+  function readCurrentQuestion() {
+    if (!state.soundEnabled) return;
+    if (!state.currentQuestion) return;
+
+    const btns = [DOM.btnReadAloudP1, DOM.btnReadAloudP2, DOM.btnHudReadQuestion];
+    btns.forEach(b => { if (b) b.classList.add('reading-active'); });
+
+    const finish = () => {
+      btns.forEach(b => { if (b) b.classList.remove('reading-active'); });
+    };
+
+    if (state.currentQuestion.audioKey) {
+      audio.playQuestionFile(state.currentQuestion.audioKey, finish);
+    } else {
+      const spoken = getSpokenTextForQuestion(state.currentQuestion);
+      audio.speakTurkishText(spoken, finish);
+    }
+  }
 
   /* ==========================================================================
      3. DİNAMİK SORU MOTORU (GRADE-BASED QUESTION ENGINE)
@@ -268,13 +423,13 @@
       if (mode === 0) {
         // Sevimli Nesne / Meyve Sayma (1 - 5 arası dev emojiler)
         const fruits = [
-          { emoji: '🍎', name: 'Kırmızı Elma' },
-          { emoji: '🍌', name: 'Sarı Muz' },
-          { emoji: '🍓', name: 'Tatlı Çilek' },
-          { emoji: '🍊', name: 'Turuncu Portakal' },
-          { emoji: '⭐', name: 'Parlak Yıldız' },
-          { emoji: '🎈', name: 'Renkli Balon' },
-          { emoji: '🚗', name: 'Sevimli Araba' }
+          { emoji: '🍎', name: 'Kırmızı Elma', audioKey: 'q_sayma_elma' },
+          { emoji: '🍌', name: 'Sarı Muz', audioKey: 'q_sayma_muz' },
+          { emoji: '🍓', name: 'Tatlı Çilek', audioKey: 'q_sayma_cilek' },
+          { emoji: '🍊', name: 'Turuncu Portakal', audioKey: 'q_sayma_portakal' },
+          { emoji: '⭐', name: 'Parlak Yıldız', audioKey: 'q_sayma_yildiz' },
+          { emoji: '🎈', name: 'Renkli Balon', audioKey: 'q_sayma_balon' },
+          { emoji: '🚗', name: 'Sevimli Araba', audioKey: 'q_sayma_araba' }
         ];
         const chosen = fruits[Math.floor(Math.random() * fruits.length)];
         const count = Math.floor(Math.random() * 5) + 1; // 1..5
@@ -290,42 +445,44 @@
             `${d1} Tane (${chosen.emoji})`,
             `${d2} Tane (${chosen.emoji})`
           ],
-          explanation: `Birlikte sayalım: Tam ${count} tane ${chosen.name} var! Harikasın! 👏`
+          explanation: `Birlikte sayalım: Tam ${count} tane ${chosen.name} var! Harikasın! 👏`,
+          audioKey: chosen.audioKey
         };
       } else {
         // Renkler ve Şekiller
         const shapes = [
-          { q: 'Hangisi KIRMIZI renktir? 🔴', correct: '🔴 Kırmızı Daire', d: ['🔵 Mavi Daire', '🟡 Sarı Daire'], exp: 'Kırmızı, elma ve çileğin rengidir! 🍎' },
-          { q: 'Hangisi SARI renktir? 🟡', correct: '🟡 Sarı Daire', d: ['🟢 Yeşil Daire', '🟣 Mor Daire'], exp: 'Sarı, parlayan Güneş\'in ve muzun rengidir! ☀️' },
-          { q: 'Hangisi MAVİ renktir? 🔵', correct: '🔵 Mavi Daire', d: ['🟠 Turuncu Daire', '🔴 Kırmızı Daire'], exp: 'Mavi, gökyüzünün ve denizlerin rengidir! 🌊' },
-          { q: 'Hangisi YEŞİL renktir? 🟢', correct: '🟢 Yeşil Daire', d: ['🔴 Kırmızı Daire', '🟡 Sarı Daire'], exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿' },
-          { q: 'Hangisi parlayan YILDIZ şeklidir? ⭐', correct: '⭐ Sarı Yıldız', d: ['🔺 Mavi Üçgen', '⬛ Siyah Kare'], exp: 'Gökyüzünde parlayan yıldız tam olarak böyledir! ⭐' },
-          { q: 'Hangisi SEVGİ DOLU KALP şeklidir? 💖', correct: '💖 Pembe Kalp', d: ['🟢 Yeşil Daire', '🔺 Turuncu Üçgen'], exp: 'Kalp sevginin ve kucaklaşmanın sembolüdür! 💖' },
-          { q: 'Hangisi ÜÇGEN şeklidir? (3 köşesi var)', correct: '🔺 Üçgen', d: ['⚪ Daire', '🟩 Kare'], exp: 'Üçgenin tam 3 köşesi vardır! 🔺' },
-          { q: 'Hangisi yuvarlak DAİRE şeklidir? ⭕', correct: '⭕ Daire', d: ['🟩 Kare', '🔺 Üçgen'], exp: 'Daire tıpkı bir top gibi yuvarlaktır! ⚽' }
+          { q: 'Hangisi KIRMIZI renktir? 🔴', correct: '🔴 Kırmızı Daire', d: ['🔵 Mavi Daire', '🟡 Sarı Daire'], exp: 'Kırmızı, elma ve çileğin rengidir! 🍎', audioKey: 'q_renk_kirmizi' },
+          { q: 'Hangisi SARI renktir? 🟡', correct: '🟡 Sarı Daire', d: ['🟢 Yeşil Daire', '🟣 Mor Daire'], exp: 'Sarı, parlayan Güneş\'in ve muzun rengidir! ☀️', audioKey: 'q_renk_sari' },
+          { q: 'Hangisi MAVİ renktir? 🔵', correct: '🔵 Mavi Daire', d: ['🟠 Turuncu Daire', '🔴 Kırmızı Daire'], exp: 'Mavi, gökyüzünün ve denizlerin rengidir! 🌊', audioKey: 'q_renk_mavi' },
+          { q: 'Hangisi YEŞİL renktir? 🟢', correct: '🟢 Yeşil Daire', d: ['🔴 Kırmızı Daire', '🟡 Sarı Daire'], exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿', audioKey: 'q_renk_yesil' },
+          { q: 'Hangisi parlayan YILDIZ şeklidir? ⭐', correct: '⭐ Sarı Yıldız', d: ['🔺 Mavi Üçgen', '⬛ Siyah Kare'], exp: 'Gökyüzünde parlayan yıldız tam olarak böyledir! ⭐', audioKey: 'q_sekil_yildiz' },
+          { q: 'Hangisi SEVGİ DOLU KALP şeklidir? 💖', correct: '💖 Pembe Kalp', d: ['🟢 Yeşil Daire', '🔺 Turuncu Üçgen'], exp: 'Kalp sevginin ve kucaklaşmanın sembolüdür! 💖', audioKey: 'q_sekil_kalp' },
+          { q: 'Hangisi ÜÇGEN şeklidir? (3 köşesi var)', correct: '🔺 Üçgen', d: ['⚪ Daire', '🟩 Kare'], exp: 'Üçgenin tam 3 köşesi vardır! 🔺', audioKey: 'q_sekil_ucgen' },
+          { q: 'Hangisi yuvarlak DAİRE şeklidir? ⭕', correct: '⭕ Daire', d: ['🟩 Kare', '🔺 Üçgen'], exp: 'Daire tıpkı bir top gibi yuvarlaktır! ⚽', audioKey: 'q_sekil_daire' }
         ];
         const s = shapes[Math.floor(Math.random() * shapes.length)];
         return {
           question: s.q,
           correct: s.correct,
           distractors: s.d,
-          explanation: s.exp
+          explanation: s.exp,
+          audioKey: s.audioKey
         };
       }
     },
 
     grade0AnimalsAndNaturePool: [
-      { q: 'Hangi sevimli hayvan "MİYAV" der? 🐾', a: '🐱 Kedi', d: ['🐶 Köpek', '🐮 İnek'], exp: 'Kediler sevilmeyi çok sever ve "Miyav" derler! 🐱' },
-      { q: 'Hangi sadık dostumuz "HAV HAV" der? 🦴', a: '🐶 Köpek', d: ['🐱 Kedi', '🐥 Civciv'], exp: 'Köpekler kuyruklarını sallayarak "Hav hav" derler! 🐶' },
-      { q: 'Ormanların kralı olan yeleli güçlü hayvan hangisidir?', a: '🦁 Aslan', d: ['🐵 Maymun', '🐰 Tavşan'], exp: 'Aslan güçlü kükremesiyle ormanların kralıdır! 🦁' },
-      { q: 'Havuç yemeyi çok seven, uzun kulaklı zıp zıp hayvan hangisidir? 🥕', a: '🐰 Tavşan', d: ['🐻 Ayı', '🐸 Kurbağa'], exp: 'Tavşanlar zıp zıp zıplar ve çıtır çıtır havuç yer! 🐰' },
-      { q: 'Mavi denizlerde yüzgeçleriyle yüzen sevimli canlı hangisidir? 🌊', a: '🐟 Balık', d: ['🐦 Kuş', '🐱 Kedi'], exp: 'Balıklar suda yüzer ve solungaçlarıyla nefes alır! 🐟' },
-      { q: 'Gökyüzünde kanat çırparak uçan ve "Cik cik" öten hangisidir? 🌳', a: '🐦 Kuş', d: ['🐢 Kaplumbağa', '🐶 Köpek'], exp: 'Kuşlar kanatlarını açıp gökyüzünde süzülür! 🐦' },
-      { q: 'Hangisi ÇOK DAHA BÜYÜKTÜR ve kocaman bir hortumu vardır?', a: '🐘 Koca Fil', d: ['🐭 Küçük Fare', '🐜 Minik Karınca'], exp: 'Fil dünyanın en büyük ve en güçlü kara hayvanıdır! 🐘' },
-      { q: 'Gündüzleri gökyüzümüzü aydınlatan ve ısıtan sıcacık dostumuz hangisidir?', a: '☀️ Parlak Güneş', d: ['🌙 Gece Ayı', '🌧️ Yağmur Bulutu'], exp: 'Güneş her sabah doğar ve dünyamızı ısıtır! ☀️' },
-      { q: 'Bize lezzetli ve sağlıklı taze süt veren sevimli hayvan hangisidir? 🥛', a: '🐮 İnek', d: ['🦁 Aslan', '🐺 Kurt'], exp: 'İnekler "Mööö" der ve bize bembeyaz süt verir! 🥛' },
-      { q: 'Hangisi tatlı, kırmızı ve çok lezzetli bir yaz meyvesidir?', a: '🍓 Çilek', d: ['🧅 Soğan', '🥔 Patates'], exp: 'Çilek minik noktalı, kırmızı çok tatlı bir meyvedir! 🍓' },
-      { q: 'Derelerde "VAK VAK" diyerek neşeyle zıplayan yeşil dostumuz hangisidir?', a: '🐸 Kurbağa', d: ['🦊 Tilki', '🐴 At'], exp: 'Kurbağalar nilüfer yapraklarının üstünde zıplar! 🐸' }
+      { q: 'Hangi sevimli hayvan "MİYAV" der? 🐾', a: '🐱 Kedi', d: ['🐶 Köpek', '🐮 İnek'], exp: 'Kediler sevilmeyi çok sever ve "Miyav" derler! 🐱', audioKey: 'q_kedi' },
+      { q: 'Hangi sadık dostumuz "HAV HAV" der? 🦴', a: '🐶 Köpek', d: ['🐱 Kedi', '🐥 Civciv'], exp: 'Köpekler kuyruklarını sallayarak "Hav hav" derler! 🐶', audioKey: 'q_kopek' },
+      { q: 'Ormanların kralı olan yeleli güçlü hayvan hangisidir?', a: '🦁 Aslan', d: ['🐵 Maymun', '🐰 Tavşan'], exp: 'Aslan güçlü kükremesiyle ormanların kralıdır! 🦁', audioKey: 'q_aslan' },
+      { q: 'Havuç yemeyi çok seven, uzun kulaklı zıp zıp hayvan hangisidir? 🥕', a: '🐰 Tavşan', d: ['🐻 Ayı', '🐸 Kurbağa'], exp: 'Tavşanlar zıp zıp zıplar ve çıtır çıtır havuç yer! 🐰', audioKey: 'q_tavsan' },
+      { q: 'Mavi denizlerde yüzgeçleriyle yüzen sevimli canlı hangisidir? 🌊', a: '🐟 Balık', d: ['🐦 Kuş', '🐱 Kedi'], exp: 'Balıklar suda yüzer ve solungaçlarıyla nefes alır! 🐟', audioKey: 'q_balik' },
+      { q: 'Gökyüzünde kanat çırparak uçan ve "Cik cik" öten hangisidir? 🌳', a: '🐦 Kuş', d: ['🐢 Kaplumbağa', '🐶 Köpek'], exp: 'Kuşlar kanatlarını açıp gökyüzünde süzülür! 🐦', audioKey: 'q_kus' },
+      { q: 'Hangisi ÇOK DAHA BÜYÜKTÜR ve kocaman bir hortumu vardır?', a: '🐘 Koca Fil', d: ['🐭 Küçük Fare', '🐜 Minik Karınca'], exp: 'Fil dünyanın en büyük ve en güçlü kara hayvanıdır! 🐘', audioKey: 'q_fil' },
+      { q: 'Gündüzleri gökyüzümüzü aydınlatan ve ısıtan sıcacık dostumuz hangisidir?', a: '☀️ Parlak Güneş', d: ['🌙 Gece Ayı', '🌧️ Yağmur Bulutu'], exp: 'Güneş her sabah doğar ve dünyamızı ısıtır! ☀️', audioKey: 'q_gunes' },
+      { q: 'Bize lezzetli ve sağlıklı taze süt veren sevimli hayvan hangisidir? 🥛', a: '🐮 İnek', d: ['🦁 Aslan', '🐺 Kurt'], exp: 'İnekler "Mööö" der ve bize bembeyaz süt verir! 🥛', audioKey: 'q_inek' },
+      { q: 'Hangisi tatlı, kırmızı ve çok lezzetli bir yaz meyvesidir?', a: '🍓 Çilek', d: ['🧅 Soğan', '🥔 Patates'], exp: 'Çilek minik noktalı, kırmızı çok tatlı bir meyvedir! 🍓', audioKey: 'q_cilek' },
+      { q: 'Derelerde "VAK VAK" diyerek neşeyle zıplayan yeşil dostumuz hangisidir?', a: '🐸 Kurbağa', d: ['🦊 Tilki', '🐴 At'], exp: 'Kurbağalar nilüfer yapraklarının üstünde zıplar! 🐸', audioKey: 'q_kurbaga' }
     ],
 
     // -------------------------------------------------------------
@@ -379,18 +536,18 @@
     },
 
     grade1TurkishPool: [
-      { q: '"Büyük" kelimesinin zıt anlamlısı nedir?', a: 'Küçük', d: ['İri', 'Geniş'], exp: 'Büyük ve Küçük birbirinin tam karşıtı olan zıt kavramlardır.' },
-      { q: '"Uzun" kelimesinin zıt anlamlısı nedir?', a: 'Kısa', d: ['İnce', 'Düz'], exp: 'Uzun boyun zıttı kısa boydur.' },
-      { q: '"Sıcak" kelimesinin zıt anlamlısı nedir?', a: 'Soğuk', d: ['Ilık', 'Buz'], exp: 'Sıcak havanın zıttı soğuk havadır.' },
-      { q: '"Hızlı" kelimesinin zıt anlamlısı nedir?', a: 'Yavaş', d: ['Durgun', 'Sakin'], exp: 'Tavşan hızlıdır, kaplumbağa ise yavaştır.' },
-      { q: '"Açık" kelimesinin zıt anlamlısı nedir?', a: 'Kapalı', d: ['Koyu', 'Kilitli'], exp: 'Açık kapının karşıtı kapalı kapıdır.' },
-      { q: '"Dolu" kelimesinin zıt anlamlısı nedir?', a: 'Boş', d: ['Yarım', 'Temiz'], exp: 'Dolu bardağın karşıtı boş bardaktır.' },
-      { q: '"Gece" kelimesinin zıt anlamlısı nedir?', a: 'Gündüz', d: ['Akşam', 'Sabah'], exp: 'Güneş battığında gece, doğduğunda gündüz olur.' },
-      { q: '"Ağır" kelimesinin zıt anlamlısı nedir?', a: 'Hafif', d: ['Küçük', 'Yumuşak'], exp: 'Fil ağırdır, kuş tüyü ise hafiftir.' },
-      { q: '"Ön" kelimesinin zıt anlamlısı nedir?', a: 'Arka', d: ['Yan', 'Üst'], exp: 'Ön tarafın zıttı arka taraftır.' },
-      { q: 'Hangisi bir sesli (ünlü) harftir?', a: 'A', d: ['B', 'K'], exp: 'Alfabemizdeki ünlü harfler: A, E, I, İ, O, Ö, U, Ü.' },
-      { q: '"KALEM" kelimesi kaç harflidir?', a: '5', d: ['4', '6'], exp: 'K-A-L-E-M kelimesi 5 harften oluşur.' },
-      { q: 'Hangi hayvan havada uçar?', a: 'Kuş', d: ['Kedi', 'Balık'], exp: 'Kuşların kanatları vardır ve uçabilirler.' }
+      { q: '"Büyük" kelimesinin zıt anlamlısı nedir?', a: 'Küçük', d: ['İri', 'Geniş'], exp: 'Büyük ve Küçük birbirinin tam karşıtı olan zıt kavramlardır.', audioKey: 'q_zit_buyuk' },
+      { q: '"Uzun" kelimesinin zıt anlamlısı nedir?', a: 'Kısa', d: ['İnce', 'Düz'], exp: 'Uzun boyun zıttı kısa boydur.', audioKey: 'q_zit_uzun' },
+      { q: '"Sıcak" kelimesinin zıt anlamlısı nedir?', a: 'Soğuk', d: ['Ilık', 'Buz'], exp: 'Sıcak havanın zıttı soğuk havadır.', audioKey: 'q_zit_sicak' },
+      { q: '"Hızlı" kelimesinin zıt anlamlısı nedir?', a: 'Yavaş', d: ['Durgun', 'Sakin'], exp: 'Tavşan hızlıdır, kaplumbağa ise yavaştır.', audioKey: 'q_zit_hizli' },
+      { q: '"Açık" kelimesinin zıt anlamlısı nedir?', a: 'Kapalı', d: ['Koyu', 'Kilitli'], exp: 'Açık kapının karşıtı kapalı kapıdır.', audioKey: 'q_zit_acik' },
+      { q: '"Dolu" kelimesinin zıt anlamlısı nedir?', a: 'Boş', d: ['Yarım', 'Temiz'], exp: 'Dolu bardağın karşıtı boş bardaktır.', audioKey: 'q_zit_dolu' },
+      { q: '"Gece" kelimesinin zıt anlamlısı nedir?', a: 'Gündüz', d: ['Akşam', 'Sabah'], exp: 'Güneş battığında gece, doğduğunda gündüz olur.', audioKey: 'q_zit_gece' },
+      { q: '"Ağır" kelimesinin zıt anlamlısı nedir?', a: 'Hafif', d: ['Küçük', 'Yumuşak'], exp: 'Fil ağırdır, kuş tüyü ise hafiftir.', audioKey: 'q_zit_agir' },
+      { q: '"Ön" kelimesinin zıt anlamlısı nedir?', a: 'Arka', d: ['Yan', 'Üst'], exp: 'Ön tarafın zıttı arka taraftır.', audioKey: 'q_zit_on' },
+      { q: 'Hangisi bir sesli (ünlü) harftir?', a: 'A', d: ['B', 'K'], exp: 'Alfabemizdeki ünlü harfler: A, E, I, İ, O, Ö, U, Ü.', audioKey: 'q_harf_sesli' },
+      { q: '"KALEM" kelimesi kaç harflidir?', a: '5', d: ['4', '6'], exp: 'K-A-L-E-M kelimesi 5 harften oluşur.', audioKey: 'q_harf_kalem' },
+      { q: 'Hangi hayvan havada uçar?', a: 'Kuş', d: ['Kedi', 'Balık'], exp: 'Kuşların kanatları vardır ve uçabilirler.', audioKey: 'q_kus_ucan' }
     ],
 
     // -------------------------------------------------------------
@@ -589,7 +746,8 @@
         options: options,
         correct: qData.correct,
         explanation: qData.explanation,
-        category: category
+        category: category,
+        audioKey: qData.audioKey || null
       };
     },
 
@@ -666,7 +824,8 @@
           `${pair.base.emoji} ${pair.base.name}`,
           `${pair.extra.emoji} ${pair.extra.name}`
         ],
-        explanation: `Süper dikkat! Grupta saklanan farklı sembol ${pair.diff.emoji} (${pair.diff.name}) idi! 👏🎯`
+        explanation: `Süper dikkat! Grupta saklanan farklı sembol ${pair.diff.emoji} (${pair.diff.name}) idi! 👏🎯`,
+        audioKey: 'q_farkli_olan'
       };
     },
 
@@ -683,37 +842,43 @@
             html: '<div style="font-size:3.5rem; margin:6px auto;">🔴</div><div style="font-weight:900; font-size:1.2rem;">Bu sevimli daire hangi renktir?</div>',
             correct: '🔴 Kırmızı',
             distractors: ['🔵 Mavi', '🟡 Sarı'],
-            exp: 'Kırmızı, elmanın ve uğur böceğinin rengidir! 🍎'
+            exp: 'Kırmızı, elmanın ve uğur böceğinin rengidir! 🍎',
+            audioKey: 'q_daire_kirmizi'
           },
           {
             html: '<div style="font-size:3.5rem; margin:6px auto;">🔵</div><div style="font-weight:900; font-size:1.2rem;">Bu parlak daire hangi renktir?</div>',
             correct: '🔵 Mavi',
             distractors: ['🟢 Yeşil', '🔴 Kırmızı'],
-            exp: 'Mavi, engin gökyüzünün ve denizlerin rengidir! 🌊'
+            exp: 'Mavi, engin gökyüzünün ve denizlerin rengidir! 🌊',
+            audioKey: 'q_daire_mavi'
           },
           {
             html: '<div style="font-size:3.5rem; margin:6px auto;">🟡</div><div style="font-weight:900; font-size:1.2rem;">Bu sıcacık daire hangi renktir?</div>',
             correct: '🟡 Sarı',
             distractors: ['🟣 Mor', '🟠 Turuncu'],
-            exp: 'Sarı, parlayan Güneş\'in ve tatlı muzun rengidir! ☀️'
+            exp: 'Sarı, parlayan Güneş\'in ve tatlı muzun rengidir! ☀️',
+            audioKey: 'q_daire_sari'
           },
           {
             html: '<div style="font-size:3.5rem; margin:6px auto;">🟢</div><div style="font-weight:900; font-size:1.2rem;">Bu doğa rengi daire hangi renktir?</div>',
             correct: '🟢 Yeşil',
             distractors: ['🔴 Kırmızı', '🔵 Mavi'],
-            exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿'
+            exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿',
+            audioKey: 'q_daire_yesil'
           },
           {
             html: '<div style="font-size:3.2rem; margin:6px auto;">🐘  vs  🐜</div><div style="font-weight:900; font-size:1.2rem;">Hangisi GERÇEKTE çok daha BÜYÜKTÜR?</div>',
             correct: '🐘 Fil (Kocaman)',
             distractors: ['🐜 Karınca (Minik)', 'İkisi de Aynı'],
-            exp: 'Fil devasa bir canlıdır, karıncadan kat kat büyüktür! 🐘'
+            exp: 'Fil devasa bir canlıdır, karıncadan kat kat büyüktür! 🐘',
+            audioKey: 'q_fil_vs_karinca'
           },
           {
             html: '<div style="font-size:3.2rem; margin:6px auto;">🦒  vs  🐢</div><div style="font-weight:900; font-size:1.2rem;">Hangisi çok daha UZUNDUR?</div>',
             correct: '🦒 Zürafa (Uzun Boylu)',
             distractors: ['🐢 Kaplumbağa', 'İkisi de Aynı'],
-            exp: 'Zürafalar upuzun boyunlarıyla ağaçların en tepesine ulaşır! 🦒'
+            exp: 'Zürafalar upuzun boyunlarıyla ağaçların en tepesine ulaşır! 🦒',
+            audioKey: 'q_zurafa_vs_kaplumbaga'
           }
         ];
         const chosen = kindergartenStroop[Math.floor(Math.random() * kindergartenStroop.length)];
@@ -722,7 +887,8 @@
           questionHtml: chosen.html,
           correct: chosen.correct,
           distractors: chosen.distractors,
-          explanation: chosen.exp
+          explanation: chosen.exp,
+          audioKey: chosen.audioKey
         };
       }
 
@@ -764,7 +930,8 @@
           questionHtml: stroopHtml,
           correct: inkItem.name,
           distractors: [textItem.name, thirdColor.name],
-          explanation: `Harika konsantrasyon! Kelimede '${textItem.text}' yazıyordu ama yazı rengi ${inkItem.name} idi! 🧠🎯`
+          explanation: `Harika konsantrasyon! Kelimede '${textItem.text}' yazıyordu ama yazı rengi ${inkItem.name} idi! 🧠🎯`,
+          audioKey: 'q_stroop_genel'
         };
       } else {
         // "Burada NE YAZIYOR? (Rengine aldanma!)"
@@ -778,7 +945,8 @@
           questionHtml: stroopHtml,
           correct: textItem.name,
           distractors: [inkItem.name, thirdColor.name],
-          explanation: `Gözün yanılmadı! Mürekkep ${inkItem.name} olsa da kelime '${textItem.text}' idi! 👏`
+          explanation: `Gözün yanılmadı! Mürekkep ${inkItem.name} olsa da kelime '${textItem.text}' idi! 👏`,
+          audioKey: 'q_stroop_genel'
         };
       }
     },
@@ -1083,6 +1251,7 @@
           if (parsed.targetScore) state.targetScore = parsed.targetScore;
           if (parsed.soundEnabled !== undefined) state.soundEnabled = parsed.soundEnabled;
           if (parsed.announcerEnabled !== undefined) state.announcerEnabled = parsed.announcerEnabled;
+          if (parsed.autoReadQuestion !== undefined) state.autoReadQuestion = parsed.autoReadQuestion;
           if (parsed.showAutoExplanation !== undefined) state.showAutoExplanation = parsed.showAutoExplanation;
         }
       } catch (e) {
@@ -1108,6 +1277,7 @@
           targetScore: state.targetScore,
           soundEnabled: state.soundEnabled,
           announcerEnabled: state.announcerEnabled,
+          autoReadQuestion: state.autoReadQuestion,
           showAutoExplanation: state.showAutoExplanation
         }));
       } catch (e) {}
@@ -1153,12 +1323,14 @@
     targetScoreBtns: document.querySelectorAll('.score-btn'),
     chkAutoExplanation: document.getElementById('chkAutoExplanation'),
     chkAnnouncerVoice: document.getElementById('chkAnnouncerVoice'),
+    chkAutoReadQuestion: document.getElementById('chkAutoReadQuestion'),
 
     // Düello HUD
     btnExitDuel: document.getElementById('btnExitDuel'),
     duelGradeBadge: document.getElementById('duelGradeBadge'),
     duelGameTypeBadge: document.getElementById('duelGameTypeBadge'),
     duelRoundBadge: document.getElementById('duelRoundBadge'),
+    btnHudReadQuestion: document.getElementById('btnHudReadQuestion'),
     btnToggleSolutionNow: document.getElementById('btnToggleSolutionNow'),
     btnSkipQuestion: document.getElementById('btnSkipQuestion'),
     btnToggleAnnouncerDuel: document.getElementById('btnToggleAnnouncerDuel'),
@@ -1173,6 +1345,7 @@
     p1QuestionCard: document.getElementById('p1QuestionCard'),
     p1QuestionCategory: document.getElementById('p1QuestionCategory'),
     p1QuestionText: document.getElementById('p1QuestionText'),
+    btnReadAloudP1: document.getElementById('btnReadAloudP1'),
     p1OptionsGrid: document.getElementById('p1OptionsGrid'),
     p1OptA: document.getElementById('p1OptA'),
     p1OptB: document.getElementById('p1OptB'),
@@ -1192,6 +1365,7 @@
     p2QuestionCard: document.getElementById('p2QuestionCard'),
     p2QuestionCategory: document.getElementById('p2QuestionCategory'),
     p2QuestionText: document.getElementById('p2QuestionText'),
+    btnReadAloudP2: document.getElementById('btnReadAloudP2'),
     p2OptionsGrid: document.getElementById('p2OptionsGrid'),
     p2OptA: document.getElementById('p2OptA'),
     p2OptB: document.getElementById('p2OptB'),
@@ -1363,6 +1537,24 @@
       showToast('🎙️ Sunucu seslendirmesi açıldı');
     } else {
       showToast('🔇 Sunucu seslendirmesi kapatıldı');
+    }
+  }
+
+  function updateAutoReadUI() {
+    if (DOM.chkAutoReadQuestion) {
+      DOM.chkAutoReadQuestion.checked = state.autoReadQuestion;
+    }
+  }
+
+  function toggleAutoReadQuestion() {
+    state.autoReadQuestion = !state.autoReadQuestion;
+    StorageManager.saveSettings();
+    updateAutoReadUI();
+    audio.playClick();
+    if (state.autoReadQuestion) {
+      showToast('🔊 Soru sesli okuma açıldı');
+    } else {
+      showToast('🔇 Soru sesli okuma kapatıldı');
     }
   }
 
@@ -2231,6 +2423,7 @@
 
   function exitDuel() {
     if (confirm('Düelloyu sonlandırıp lobiye dönmek istiyor musunuz?')) {
+      audio.stopQuestionAudio();
       clearAllLockouts();
       DOM.solutionPopup.classList.add('hide');
       DOM.victoryOverlay.classList.add('hide');
@@ -2264,6 +2457,7 @@
 
   function loadNextQuestion() {
     clearAllLockouts();
+    audio.stopQuestionAudio();
     DOM.solutionPopup.classList.add('hide');
     state.isQuestionAnswered = false;
 
@@ -2296,6 +2490,16 @@
     DOM.p2Panel.classList.remove('winner-glow');
     DOM.p1WinToast.classList.add('hide');
     DOM.p2WinToast.classList.add('hide');
+
+    // Otomatik Soru Sesli Okuma (Edge-TTS Stüdyo & Web Speech)
+    if (state.autoReadQuestion && state.soundEnabled) {
+      const readDelay = (state.questionNumber === 1 && state.announcerEnabled) ? 1900 : 400;
+      setTimeout(() => {
+        if (state.currentView === 'duel' && !state.isQuestionAnswered) {
+          readCurrentQuestion();
+        }
+      }, readDelay);
+    }
   }
 
   /* ==========================================================================
@@ -2307,6 +2511,8 @@
     // Ceza kilidi aktifse engelle
     if (playerNum === 1 && state.player1.isLocked) return;
     if (playerNum === 2 && state.player2.isLocked) return;
+
+    audio.stopQuestionAudio();
 
     const chosenText = state.currentQuestion.options[optionIndex];
     const isCorrect = (chosenText === state.currentQuestion.correct);
@@ -2567,6 +2773,36 @@
       });
     }
 
+    // Soru Sesli Okuma Switch'i (Lobi)
+    if (DOM.chkAutoReadQuestion) {
+      DOM.chkAutoReadQuestion.addEventListener('change', () => {
+        state.autoReadQuestion = DOM.chkAutoReadQuestion.checked;
+        StorageManager.saveSettings();
+        updateAutoReadUI();
+        audio.playClick();
+      });
+    }
+
+    // Düello İçi Soru Sesli Okuma Butonları (HUD & Her İki Oyuncu Kartı)
+    if (DOM.btnHudReadQuestion) {
+      DOM.btnHudReadQuestion.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        readCurrentQuestion();
+      });
+    }
+    if (DOM.btnReadAloudP1) {
+      DOM.btnReadAloudP1.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        readCurrentQuestion();
+      });
+    }
+    if (DOM.btnReadAloudP2) {
+      DOM.btnReadAloudP2.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        readCurrentQuestion();
+      });
+    }
+
     // Düello Kontrolleri
     DOM.btnExitDuel.addEventListener('pointerdown', exitDuel);
     DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
@@ -2623,6 +2859,7 @@
     StorageManager.loadAll();
     updateSoundUI();
     updateAnnouncerUI();
+    updateAutoReadUI();
     updateTeacherAuthUI();
     updatePlayerNamesUI();
     renderSubcategories();
@@ -2630,6 +2867,9 @@
 
     // Kayıtlı ayarları UI'a yansıt
     DOM.chkAutoExplanation.checked = state.showAutoExplanation;
+    if (DOM.chkAutoReadQuestion) {
+      DOM.chkAutoReadQuestion.checked = state.autoReadQuestion;
+    }
     DOM.targetScoreBtns.forEach(btn => {
       const s = parseInt(btn.getAttribute('data-score'), 10);
       btn.classList.toggle('active', s === state.targetScore);

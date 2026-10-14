@@ -324,6 +324,15 @@
           </label>
         </div>
 
+        <div class="setting-item">
+          <span class="setting-icon">🔊</span>
+          <span class="setting-label">Soru Sesli Okuma (Edge-TTS):</span>
+          <label class="switch">
+            <input type="checkbox" id="chkAutoReadQuestion" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
         <div class="setting-info-badge">
           <span>🖐️ <strong>Tahta Kuralı:</strong> İki öğrenci aynı anda parmakla dokunabilir. Yanlış şıkka basanın ekranı 1.5 sn kilitlenir!</span>
         </div>
@@ -353,6 +362,9 @@
       </div>
 
       <div class="hud-actions">
+        <button class="hud-btn" id="btnHudReadQuestion" title="Soruyu Sesli Oku">
+          <span>🔊</span> <span>Soruyu Oku</span>
+        </button>
         <button class="hud-btn" id="btnToggleAnnouncerDuel" title="Sunucu Seslendirmesini Aç / Kapat">
           <span id="announcerHudIcon">🎙️</span>
           <span id="announcerHudText">Sunucu: Açık</span>
@@ -400,7 +412,13 @@
 
         <!-- Soru Kartı (Sol Taraf) -->
         <div class="duel-question-card" id="p1QuestionCard">
-          <div class="question-meta-tag" id="p1QuestionCategory">Soru</div>
+          <div class="question-header-row">
+            <div class="question-meta-tag" id="p1QuestionCategory">Soru</div>
+            <button class="btn-read-question" id="btnReadAloudP1" type="button" title="Soruyu Sesli Dinle">
+              <span class="read-icon">🔊</span>
+              <span class="read-text">Dinle</span>
+            </button>
+          </div>
           <div class="question-text" id="p1QuestionText">Hazırlanıyor...</div>
         </div>
 
@@ -473,7 +491,13 @@
 
         <!-- Soru Kartı (Sağ Taraf - Tamamen Simetrik) -->
         <div class="duel-question-card" id="p2QuestionCard">
-          <div class="question-meta-tag" id="p2QuestionCategory">Soru</div>
+          <div class="question-header-row">
+            <div class="question-meta-tag" id="p2QuestionCategory">Soru</div>
+            <button class="btn-read-question" id="btnReadAloudP2" type="button" title="Soruyu Sesli Dinle">
+              <span class="read-icon">🔊</span>
+              <span class="read-text">Dinle</span>
+            </button>
+          </div>
           <div class="question-text" id="p2QuestionText">Hazırlanıyor...</div>
         </div>
 
