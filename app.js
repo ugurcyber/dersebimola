@@ -19,7 +19,10 @@
     // Sınıf Seviyesi: 0 (Anasınıfı), 1, 2, 3 veya 4
     currentGrade: 1,
 
-    // Aktif Kategori Filtresi: 'all' veya sınıfa özel kategori id'si
+    // Aktif Seçili Ders: null (tüm dersler listesi açık) veya ders id'si ('math', 'firstreading', vb.)
+    currentSubject: null,
+
+    // Aktif Kategori / Konu Filtresi: 'all' veya derse özel konu id'si
     currentCategory: 'all',
 
     // Aktif Oyun Türü: 'math' | 'turkish' | 'oddone' | 'stroop' | 'memory' | 'reflex'
@@ -1036,6 +1039,90 @@
       { q: 'Kurtuluş Savaşı\'nda Doğu Cephesi komutanımız kimdir?', a: 'Kazım Karabekir', d: ['İsmet İnönü', 'Fevzi Çakmak'], exp: 'Doğu Cephesi kahramanımız ve yetimlerin babası Kazım Karabekir Paşa\'dır.' }
     ],
 
+    // -------------------------------------------------------------
+    // 1. SINIF: İLK OKUMA YAZMA HAVUZU
+    // -------------------------------------------------------------
+    firstReadingPool: [
+      { q: '"🍎 Elma" sözcüğünün ilk harfi / sesi hangisidir?', a: 'E', d: ['A', 'M'], exp: 'Elma sözcüğü "E" sesiyle başlar: E-l-m-a. 🍎' },
+      { q: '"🚗 Araba" sözcüğünün ilk harfi / sesi hangisidir?', a: 'A', d: ['O', 'B'], exp: 'Araba sözcüğü "A" harfiyle başlar: A-r-a-b-a. 🚗' },
+      { q: '"K - A - L - E - M" sesleri birleşince hangi kelime oluşur?', a: 'Kalem', d: ['Kelam', 'Kitap'], exp: 'K-A-L-E-M harfleri bir araya geldiğinde "Kalem" kelimesini oluşturur. ✏️' },
+      { q: '"🐱 Kedi" kelimesi kaç heceden oluşur?', a: '2 Hece (Ke - di)', d: ['1 Hece', '3 Hece'], exp: 'Ke-di kelimesinde 2 ünlü harf (e, i) vardır ve 2 heceden oluşur. 🐱' },
+      { q: '"Okul" sözcüğünün ilk hecesi hangisidir?', a: 'O', d: ['Ok', 'Kul'], exp: 'Okul sözcüğü "O - kul" şeklinde hecelerine ayrılır. İlk hecesi "O"dur. 🏫' },
+      { q: 'Hangisi BÜYÜK "M" harfidir?', a: 'M', d: ['n', 'u'], exp: 'M harfi büyük yazıldığında "M" şeklinde yazılır.' },
+      { q: 'Küçük "d" harfinin BÜYÜK hali hangisidir?', a: 'D', d: ['B', 'P'], exp: 'Küçük "d" harfinin büyük yazılışı "D"dir.' },
+      { q: '"A - N - N - E" harfleri birleşince ne okunur?', a: 'Anne', d: ['Nine', 'Nane'], exp: 'A-N-N-E harfleri birleştiğinde canımız "Anne"miz olur. ❤️' },
+      { q: '"Balık" kelimesinde kaç tane "A" harfi vardır?', a: '1 Tane', d: ['2 Tane', 'Hiç Yok'], exp: 'B-A-L-I-K sözcüğünde 1 tane "A" harfi vardır. 🐟' },
+      { q: 'Hangisi bir sesli (ünlü) harftir?', a: 'A', d: ['K', 'T'], exp: 'Türkçemizde a, e, ı, i, o, ö, u, ü sesli (ünlü) harflerdir.' },
+      { q: '"🌟 Yıldız" kelimesinin son harfi nedir?', a: 'Z', d: ['Y', 'S'], exp: 'Yıldız sözcüğünün son sesi "Z" harfidir. ⭐' },
+      { q: '"K - İ - T - A - P" harfleri birleştiğinde ne oluşur?', a: 'Kitap', d: ['Kip', 'Katip'], exp: 'K-İ-T-A-P harfleri birleşince "Kitap" okunur. 📚' }
+    ],
+
+    // -------------------------------------------------------------
+    // 1., 2. & 3. SINIF: HAYAT BİLGİSİ HAVUZU
+    // -------------------------------------------------------------
+    lifeSciencePool: [
+      { q: 'Yemeklerden önce ve sonra sağlığımız için ne yapmalıyız?', a: 'Ellerimizi sabunla yıkamalıyız 🧼', d: ['Hemen uyumalıyız', 'Oyun oynamalıyız'], exp: 'Mikroplardan korunmak için yemekten önce ve sonra eller mutlaka sabunla yıkanmalıdır. 🧼', grade: 1 },
+      { q: 'Sınıfta öğretmenimizden veya arkadaşımızdan söz isterken ne yaparız?', a: 'Parmak kaldırırız ✋', d: ['Bağırarak konuşuruz', 'Ayağa kalkıp gezeriz'], exp: 'Sınıf kuralı olarak söz hakkı almak için nezaketle parmak kaldırırız. ✋', grade: 1 },
+      { q: 'Trafikte karşıdan karşıya geçerken nereden geçmeliyiz?', a: 'Yaya geçidinden 🚶‍♂️', d: ['Arabaların arasından', 'Yolun ortasından'], exp: 'Can güvenliğimiz için yaya geçidi, alt veya üst geçitleri kullanmalıyız. 🚦', grade: 1 },
+      { q: 'Türkiye Cumhuriyeti\'nin kurucusu ve ilk Cumhurbaşkanı kimdir?', a: 'Mustafa Kemal Atatürk 🇹🇷', d: ['Fatih Sultan Mehmet', 'Mehmet Akif Ersoy'], exp: 'Cumhuriyetimizin kurucusu ulu önder Gazi Mustafa Kemal Atatürk\'tür. 🇹🇷', grade: 1 },
+      { q: 'Sağlıklı büyümek ve gelişmek için sabahları ne yapmalıyız?', a: 'Dengeli kahvaltı yapmalıyız 🥚', d: ['Sadece şeker yemeliyiz', 'Hiçbir şey yememeliyiz'], exp: 'Güne zinde başlamak için yumurta, süt, peynir içeren kahvaltı çok önemlidir. 🍳', grade: 1 },
+      { q: 'Acil bir sağlık yardımı veya ambulans gerektiğinde hangi numara aranır?', a: '112 Acil Çağrı 🚑', d: ['155', '110'], exp: 'Ülkemizde tüm acil durumlar tek bir numarada, 112 Acil Çağrı Merkezi\'nde birleştirilmiştir. 🚑', grade: 2 },
+      { q: 'Evimizde ve okulumuzda elektrik ve suyu boşa harcamamaya ne denir?', a: 'Tasarruf 💡', d: ['İsraf', 'Tüketim'], exp: 'Kaynaklarımızı bilinçli ve gerektiği kadar kullanmaya tasarruf denir. 💡', grade: 2 },
+      { q: 'Kullanılmış kağıt, cam ve plastikleri çöpe değil nereye atmalıyız?', a: 'Geri Dönüşüm Kutusuna ♻️', d: ['Sokağa', 'Denize'], exp: 'Doğayı korumak ve ağaçları kurtarmak için geri dönüşüm kutularını kullanırız. ♻️', grade: 2 },
+      { q: 'Şanlı bayrağımızın üzerindeki beyaz semboller nelerdir?', a: 'Hilal (Ay) ve Yıldız 🌙⭐', d: ['Güneş ve Bulut', 'Kartal ve Yıldız'], exp: 'Al bayrağımızın üzerinde bembeyaz bir hilal (ay) ve beş köşeli yıldız yer alır. 🇹🇷', grade: 2 },
+      { q: 'Deprem sarsıntısı başladığında güvenli bir yerde hangi hareketi yaparız?', a: 'Çök - Kapan - Tutun 🛡️', d: ['Koşarak balkona çıkmak', 'Asansöre binmek'], exp: 'Deprem anında sağlam bir eşyanın yanında Çök-Kapan-Tutun pozisyonu hayat kurtarır. 🛡️', grade: 3 },
+      { q: 'İlçemizi yöneten en yetkili mülki idare amiri kimdir?', a: 'Kaymakam 🏛️', d: ['Muhtar', 'Belediye Zabıtası'], exp: 'İlçelerde devleti temsil eden ve ilçeyi yöneten en yetkili amir Kaymakamdır. 🏛️', grade: 3 },
+      { q: 'Pusula ibresinin renkli ucu daima hangi yönü gösterir?', a: 'Kuzey 🧭', d: ['Güney', 'Doğu'], exp: 'Pusula ibresi dünyanın manyetik alanı sayesinde daima Kuzeyi gösterir. 🧭', grade: 3 }
+    ],
+
+    // -------------------------------------------------------------
+    // 3. & 4. SINIF: FEN BİLİMLERİ HAVUZU
+    // -------------------------------------------------------------
+    sciencePool: [
+      { q: 'Dünyamızın uzaydan çekilen fotoğraflarına göre şekli neye benzer?', a: 'Küreye (Geoit) 🌍', d: ['Düz bir tepsiye', 'Küp şekline'], exp: 'Dünyamız kutuplardan hafif basık, ekvatordan şişkin küre (geoit) biçimindedir. 🌍', grade: 3 },
+      { q: 'Çevremizdeki sesleri algılamamızı sağlayan duyu organımız hangisidir?', a: 'Kulak 👂', d: ['Göz', 'Burun'], exp: 'İşitme duyusu organımız kulaktır. 👂', grade: 3 },
+      { q: 'Mıknatıs aşağıdaki maddelerden hangisini ÇEKER?', a: 'Demir çiviyi 🧲', d: ['Plastik cetveli', 'Tahta kaşığı'], exp: 'Mıknatıslar demir, nikel ve kobalt gibi maddeleri güçlü bir şekilde çeker. 🧲', grade: 3 },
+      { q: 'Hareketsiz bir topu durduğu yerden hareket ettirmek için ne uygularız?', a: 'İtme kuvveti ⚽', d: ['Çekme kuvveti', 'Durdurma kuvveti'], exp: 'Topa ayağımızla vurduğumuzda itme kuvveti uygularız. ⚽', grade: 3 },
+      { q: 'Işık olmadan göremeyiz. Dünyamızın en büyük doğal ışık kaynağı nedir?', a: 'Güneş ☀️', d: ['Ay', 'Ampul'], exp: 'Güneş hem doğal ışık hem de ısı kaynağımızdır. (Ay sadece Güneş ışığını yansıtır). ☀️', grade: 3 },
+      { q: 'Vücudumuza gereken enerjiyi sağlayan temel besin grubu hangisidir?', a: 'Karbonhidratlar (Ekmek, Makarna) 🍞', d: ['Vitaminler', 'Mineraller'], exp: 'Karbonhidratlar vücudumuzun öncelikli enerji deposudur. 🍞⚡', grade: 4 },
+      { q: 'Yaralarımızın iyileşmesini, büyüme ve gelişmemizi sağlayan besin hangisidir?', a: 'Proteinler (Et, Süt, Yumurta) 🥩', d: ['Yağlar', 'Şekerler'], exp: 'Proteinler vücudumuzun yapıcı ve onarıcı besin maddeleridir. 🥛🍳', grade: 4 },
+      { q: 'Suyun ısı kaybederek katı (buz) hale geçmesine ne ad verilir?', a: 'Donma ❄️', d: ['Erime', 'Buharlaşma'], exp: 'Sıvı su sıfır derecenin altına soğuduğunda donarak buza dönüşür. 🧊', grade: 4 },
+      { q: 'Basit bir elektrik devresinde elektrik akımını açıp kapatmaya yarayan eleman nedir?', a: 'Anahtar 💡', d: ['Pil', 'Bağlantı kablosu'], exp: 'Anahtar devreyi açarak veya kapatıp akımı kontrol eder. 💡', grade: 4 },
+      { q: 'Dünya\'nın kendi ekseni etrafında 1 tam tur dönmesiyle ne oluşur?', a: 'Gece ve Gündüz (24 Saat) ⏳', d: ['Mevsimler (1 Yıl)', 'Gelgit Olayı'], exp: 'Dünya\'nın kendi etrafında dönmesi 24 saat sürer ve 1 gün, yani gece-gündüz oluşur. 🌍', grade: 4 },
+      { q: 'Aşağıdakilerden hangisi saf bir maddedir?', a: 'Saf Su 💧', d: ['Limonata', 'Salata'], exp: 'Saf su içinde başka madde barındırmayan tek cins maddedir; limonata ise karışımdır. 💧', grade: 4 }
+    ],
+
+    // -------------------------------------------------------------
+    // 4. SINIF: SOSYAL BİLGİLER HAVUZU
+    // -------------------------------------------------------------
+    socialPool: [
+      { q: 'Her Türkiye Cumhuriyeti vatandaşının sahip olduğu 11 haneli resmi belge nedir?', a: 'T.C. Kimlik Kartı 🪪', d: ['Öğrenci Karnesi', 'Kütüphane Kartı'], exp: 'T.C. Kimlik Kartı her vatandaşa özel eşsiz 11 haneli kimlik numarası taşır. 🪪', grade: 4 },
+      { q: 'Güneş\'in doğduğu yöne sağ kolumuzu uzatırsak, önümüz hangi yönü gösterir?', a: 'Kuzey 🧭', d: ['Güney', 'Batı'], exp: 'Sağ kol doğu, sol kol batı, önümüz kuzey, arkamız ise güneydir. 🧭', grade: 4 },
+      { q: 'Kurtuluş Savaşı\'nda cepheye kağnısıyla mermi taşırken şehit olan kahraman Türk kadını kimdir?', a: 'Şerife Bacı 🇹🇷', d: ['Sabiha Gökçen', 'Halide Edip'], exp: 'Şerife Bacı ve nice kahraman kadınımız Milli Mücadele\'nin unutulmaz simgeleridir. 🇹🇷', grade: 4 },
+      { q: 'Hangisi kültürümüze ait geleneksel bir zeka ve strateji oyunudur?', a: 'Mangala 🎯', d: ['Bilgisayar Oyunu', 'Bowling'], exp: 'Mangala Türk tarihinin en köklü zeka ve strateji oyunlarındandır. 🎯', grade: 4 },
+      { q: 'Bilinçli bir tüketici olarak bir ürün satın aldığımızda mutlaka ne istemeliyiz?', a: 'Fiş veya Fatura 🧾', d: ['Hediye Paketi', 'Poşet'], exp: 'Fiş ve fatura alışverişin yasal belgesidir, vergi gelirini ve tüketici hakkını korur. 🧾', grade: 4 },
+      { q: 'T.S.E. (Türk Standartları Enstitüsü) damgası bir ürün üzerinde neyi gösterir?', a: 'Ürünün kaliteli ve güvenli olduğunu 🛡️', d: ['Ürünün bedava olduğunu', 'Yurt dışından geldiğini'], exp: 'TSE damgası ürünün Türk standartlarına uygun ve güvenli olduğunu belgeler. 🛡️', grade: 4 },
+      { q: 'Ülkemizin başkenti neresidir?', a: 'Ankara 🏛️', d: ['İstanbul', 'İzmir'], exp: 'Türkiye Cumhuriyeti\'nin başkenti Ankara\'dır. 🏛️', grade: 4 },
+      { q: 'Bireylerin kendilerini başkalarının yerine koyarak anlamasına ne denir?', a: 'Empati 🤝', d: ['Bencillik', 'Kıskançlık'], exp: 'Empati, karşımızdaki kişinin duygu ve düşüncelerini anlayabilme becerisidir. 🤝', grade: 4 }
+    ],
+
+    // -------------------------------------------------------------
+    // 2., 3. & 4. SINIF: İNGİLİZCE (ENGLISH) HAVUZU
+    // -------------------------------------------------------------
+    englishPool: [
+      { q: '"Kırmızı" renginin İngilizcesi nedir? 🔴', a: 'Red', d: ['Blue', 'Yellow'], exp: 'Kırmızı = Red, Mavi = Blue, Sarı = Yellow. 🔴', grade: 2 },
+      { q: '"Hello! How are you?" sorusuna en kibar ve doğru cevap hangisidir?', a: "I'm fine, thank you! 😊", d: ["Goodbye!", "My name is Ali."], exp: '"Nasılsın?" sorusuna "İyiyim, teşekkür ederim" (I\'m fine, thank you) denir. 😊', grade: 2 },
+      { q: '"One, two, three, ...?" Sıradaki sayı hangisidir? 🔢', a: 'Four (4)', d: ['Five (5)', 'Six (6)'], exp: '1: One, 2: Two, 3: Three, 4: Four! 🔢', grade: 2 },
+      { q: '"Cat" İngilizce hangi sevimli dostumuzdur? 🐾', a: 'Kedi 🐱', d: ['Köpek 🐶', 'Kuş 🐦'], exp: 'Cat = Kedi, Dog = Köpek, Bird = Kuş. 🐱', grade: 2 },
+      { q: 'Sabahları birine İngilizce nasıl "Günaydın" deriz?', a: 'Good morning! ☀️', d: ['Good night!', 'Good evening!'], exp: 'Good morning = Günaydın! Good night = İyi geceler! ☀️', grade: 2 },
+      { q: '"Pencil" hangi okul eşyamızdır? ✏️', a: 'Kurşun Kalem', d: ['Silgi', 'Okul Çantası'], exp: 'Pencil = Kurşun Kalem, Eraser = Silgi, Bag = Çanta. ✏️', grade: 3 },
+      { q: '"Book" sözcüğünün Türkçe anlamı nedir? 📚', a: 'Kitap', d: ['Defter', 'Masa'], exp: 'Book = Kitap, Notebook = Defter, Desk = Sıra/Masa. 📚', grade: 3 },
+      { q: '"Family" ailemizi anlatır. "Mother" kimdir? 👩', a: 'Anne', d: ['Baba', 'Kız Kardeş'], exp: 'Mother = Anne, Father = Baba, Sister = Kız Kardeş. 👩❤️', grade: 3 },
+      { q: '"What time is it?" sorusu ne anlama gelir? ⏰', a: 'Saat kaç?', d: ['Adın ne?', 'Kaç yaşındasın?'], exp: '"What time is it?" saat sormak için kullanılır. ⏰', grade: 4 },
+      { q: '"Teacher" mesleği Türkçe ne demektir? 👨‍🏫', a: 'Öğretmen', d: ['Doktor', 'Polis'], exp: 'Teacher = Öğretmen, Doctor = Doktor, Police = Polis. 👨‍🏫', grade: 4 },
+      { q: '"Where are you from?" sorusuna Türkiye\'den biri nasıl cevap verir? 🇹🇷', a: "I am from Turkey 🇹🇷", d: ["I am 10 years old", "I like apples"], exp: '"Nerelisin?" sorusuna "I am from Turkey" (Türkiyeliyim) denir. 🇹🇷', grade: 4 }
+    ],
+
     // Şıkları rastgele karıştırarak A, B, C formatında sun
     buildQuestionItem(qData, category) {
       const options = [qData.correct, ...qData.distractors];
@@ -1404,6 +1491,15 @@
         else if (g === 3) raw = this.generateGrade3Math();
         else raw = this.generateGrade4Math();
         return this.buildQuestionItem(raw, g === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu');
+      } else if (gameType === 'firstreading') {
+        const raw = this.firstReadingPool[Math.floor(Math.random() * this.firstReadingPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          audioKey: raw.audioKey || null
+        }, '🔤 İlk Okuma & Ses Avcısı');
       } else if (gameType === 'turkish') {
         // Türkçe & Dikkat & Doğa
         let pool;
@@ -1420,7 +1516,49 @@
           distractors: raw.d,
           explanation: raw.exp,
           audioKey: raw.audioKey || null
-        }, g === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Dikkat Avcısı');
+        }, g === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Kelime Avcısı');
+      } else if (gameType === 'lifescience') {
+        let filtered = this.lifeSciencePool.filter(item => !item.grade || item.grade <= g);
+        if (filtered.length === 0) filtered = this.lifeSciencePool;
+        const raw = filtered[Math.floor(Math.random() * filtered.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          audioKey: raw.audioKey || null
+        }, '🌱 Hayat Bilgisi');
+      } else if (gameType === 'science') {
+        let filtered = this.sciencePool.filter(item => !item.grade || item.grade === g || item.grade <= g);
+        if (filtered.length === 0) filtered = this.sciencePool;
+        const raw = filtered[Math.floor(Math.random() * filtered.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          audioKey: raw.audioKey || null
+        }, '🔬 Fen Bilimleri');
+      } else if (gameType === 'social') {
+        const raw = this.socialPool[Math.floor(Math.random() * this.socialPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          audioKey: raw.audioKey || null
+        }, '🗺️ Sosyal Bilgiler');
+      } else if (gameType === 'english') {
+        let filtered = this.englishPool.filter(item => !item.grade || item.grade === g || item.grade <= g);
+        if (filtered.length === 0) filtered = this.englishPool;
+        const raw = filtered[Math.floor(Math.random() * filtered.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          audioKey: raw.audioKey || null
+        }, '🇬🇧 English Word Battle');
       } else if (gameType === 'oddone') {
         const raw = this.generateOddOneQuestion(g);
         return this.buildQuestionItem(raw, '👀 Farklı Olanı Yakala');
@@ -1635,7 +1773,16 @@
     quickDrawBtnText: document.getElementById('quickDrawBtnText'),
     splitArena: document.querySelector('.split-arena'),
 
-    // Lobi Elemanları
+    // Lobi Elemanları: 1. Kademe (Dersler) & 2. Kademe (Oyunlar)
+    subjectsSection: document.getElementById('subjectsSection'),
+    subjectsGradeTitle: document.getElementById('subjectsGradeTitle'),
+    subjectsCountBadge: document.getElementById('subjectsCountBadge'),
+    subjectsGrid: document.getElementById('subjectsGrid'),
+    gamesSection: document.getElementById('gamesSection'),
+    btnBackToSubjects: document.getElementById('btnBackToSubjects'),
+    currentSubjectIcon: document.getElementById('currentSubjectIcon'),
+    currentSubjectTitle: document.getElementById('currentSubjectTitle'),
+    currentSubjectGrade: document.getElementById('currentSubjectGrade'),
     lobbyP1Name: document.getElementById('lobbyPlayer1Name'),
     lobbyP2Name: document.getElementById('lobbyPlayer2Name'),
     btnQuickDraw: document.getElementById('btnQuickDrawPlayers'),
@@ -2011,412 +2158,1304 @@
   }
 
   /* ==========================================================================
-     9. SINIF, ALT KATEGORİ VE OYUN KATALOĞU (DİNAMİK LOBİ SİSTEMİ)
+     9. SINIF -> DERS -> KONU HİYERARŞİK MÜFREDAT YAPISI (DİNAMİK LOBİ SİSTEMİ)
      ========================================================================== */
 
-  // 1. Her Sınıf Seviyesine Özel Alt Kategori Sekmeleri (Pills/Tabs)
-  const SUBCATEGORIES_CONFIG = {
-    // Anasınıfı
+  const GRADE_SUBJECTS_CONFIG = {
+    // -------------------------------------------------------------
+    // ANASINIFI (0): Renk & Şekil, Sayma & Kavram, Hayvanlar & Doğa, Akıl Oyunları
+    // -------------------------------------------------------------
     0: [
-      { id: 'all', label: '🌟 Tümü' },
-      { id: 'concept', label: '🎨 Renk & Şekil' },
-      { id: 'visual', label: '👀 Görsel Dikkat' },
-      { id: 'reflex', label: '⚡ Neşeli Refleks' }
+      {
+        id: 'kinder_math',
+        name: 'Renkler & Sayma',
+        icon: '🎨',
+        colorTheme: 'theme-math',
+        tagline: 'Temel Kavramlar',
+        description: 'Meyve sayma, canlı renkler ve geometrik şekilleri keşfet! 🍎⭐',
+        badge: 'Okul Öncesi',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'counting', label: '🍎 1-5 Sayma' },
+          { id: 'colors', label: '🎨 Canlı Renkler' }
+        ],
+        games: [
+          {
+            id: 'math',
+            active: true,
+            title: 'Renkler, Şekiller & Sayma',
+            icon: '🎨',
+            badge: '🎨 Renk & Şekil',
+            featureTag: '⭐ Görsel Keşif',
+            description: 'Meyveleri ve parlayan yıldızları say, doğru cevaba ilk sen dokun! 🍎⭐',
+            tags: ['🍎 1-5 Sayma', '🎨 Canlı Renkler', '⭐ Şekil Avı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'counting'
+          },
+          {
+            id: 'shapes_prep',
+            active: false,
+            title: 'Geometrik Şekiller Dünyası',
+            icon: '🔺',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Üçgen, kare ve daireleri eşleştirme etkinlikleri pek yakında! 📐',
+            tags: ['🔺 Üçgen', '🟩 Kare', '⭕ Daire'],
+            btnText: 'Yakında',
+            topic: 'colors'
+          }
+        ]
+      },
+      {
+        id: 'kinder_nature',
+        name: 'Hayvanlar & Doğa',
+        icon: '🦁',
+        colorTheme: 'theme-turkish',
+        tagline: 'Çevre & Canlılar',
+        description: 'Sevimli hayvan sesleri, doğa sevgisi ve neşeli dostlarımız! 🐾',
+        badge: 'Doğa Kahramanları',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'animals', label: '🐾 Hayvanlar' },
+          { id: 'nature', label: '🌿 Doğa' }
+        ],
+        games: [
+          {
+            id: 'turkish',
+            active: true,
+            title: 'Sevimli Hayvanlar & Doğa',
+            icon: '🦁',
+            badge: '🦁 Doğa Kahramanları',
+            featureTag: '🐾 Sevimli Dostlar',
+            description: 'Miyavlayan dostlarımız ve doğa kahramanlarıyla tanış! 🐾',
+            tags: ['🐾 Hayvan Sesleri', '🐘 Büyük-Küçük', '🌿 Doğa Sevgisi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'animals'
+          },
+          {
+            id: 'nature_plants',
+            active: false,
+            title: 'Bitkiler & Çiçekler',
+            icon: '🌻',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Çiçekleri sulama ve mevsimleri tanıma oyunları hazırlanıyor! 🌸',
+            tags: ['🌻 Çiçekler', '🌧️ Mevsimler', '🌳 Ağaçlar'],
+            btnText: 'Yakında',
+            topic: 'nature'
+          }
+        ]
+      },
+      {
+        id: 'kinder_brain',
+        name: 'Akıl ve Zeka Oyunları',
+        icon: '🧠',
+        colorTheme: 'theme-brain',
+        tagline: 'Dikkat & Refleks',
+        description: 'Gözlem yeteneği, hızlı fark etme ve sevimli hafıza kartları! 👀⚡',
+        badge: 'Minik Zekalar',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'attention', label: '👀 Görsel Dikkat' },
+          { id: 'memory', label: '🧠 Hafıza' }
+        ],
+        games: [
+          {
+            id: 'oddone',
+            active: true,
+            title: 'Farklı Olanı Yakala',
+            icon: '👀',
+            badge: '👀 Görsel Dikkat',
+            featureTag: '👀 Keskin Gözler',
+            description: 'Meyve ve hayvanlar arasında saklanan yabancıyı ilk sen bul! 🥑',
+            tags: ['🥑 Tatlı Meyveler', '👀 Görsel Dikkat', '⚡ Hızlı Bul'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'attention'
+          },
+          {
+            id: 'memory',
+            active: true,
+            title: 'Sevimli Hafıza Düellosu',
+            icon: '🧠',
+            badge: '🎈 Görsel Hafıza',
+            featureTag: '🎈 Neşeli Zihin',
+            description: 'Ekranda parlayan 3 sevimli nesneyi aklında tut, sırayı bil! 🎈',
+            tags: ['🎈 3 Nesne Sırası', '🧠 Görsel Hatırlama', '⭐ Hafıza'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'memory'
+          }
+        ]
+      }
     ],
-    // 1. Sınıf
+
+    // -------------------------------------------------------------
+    // 1. SINIF: İlk Okuma Yazma, Matematik, Türkçe, Hayat Bilgisi, Akıl ve Zeka Oyunları
+    // -------------------------------------------------------------
     1: [
-      { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '🧮 Neşeli Matematik' },
-      { id: 'reading', label: '📚 Kelime Avı' },
-      { id: 'memory', label: '🧠 Süper Hafıza' },
-      { id: 'reflex', label: '⚡ Şimşek Refleks' }
+      {
+        id: 'firstreading',
+        name: 'İlk Okuma Yazma',
+        icon: '🔤',
+        colorTheme: 'theme-firstreading',
+        tagline: 'Harfler & Sesler',
+        description: 'Harfleri tanı, heceleri birleştir ve okuma şampiyonu ol! 📖✨',
+        badge: '1. Sınıf Temeli',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'letters', label: '🔤 Harf & Ses' },
+          { id: 'syllables', label: '📖 Hece & Kelime' },
+          { id: 'sentences', label: '✍️ Cümle Kurma' }
+        ],
+        games: [
+          {
+            id: 'firstreading',
+            active: true,
+            title: 'İlk Okuma & Ses Avcısı',
+            icon: '🔤',
+            badge: '🌱 Harf & Hece',
+            featureTag: '⚡ Hızlı Ses',
+            description: 'Harfleri yakala, heceleri jet gibi tamamla ve oku! 🎯',
+            tags: ['🔤 Harf Sesleri', '📖 Hece Kurma', '🌟 Sözcük Oluşturma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'letters'
+          },
+          {
+            id: 'syllable_puzzle',
+            active: false,
+            title: 'Hece Treni Yapbozu',
+            icon: '🚂',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Tren vagonlarındaki heceleri doğru dizip kelime oluşturma oyunu! 🚂',
+            tags: ['🚂 Hece Treni', '🧩 Yapboz', '✨ Hızlı Okuma'],
+            btnText: 'Yakında',
+            topic: 'syllables'
+          },
+          {
+            id: 'read_speed',
+            active: false,
+            title: 'Hızlı Cümle Yıldızı',
+            icon: '⭐',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Anlamlı cümleler kurma ve akıcı okuma meydan okuması! 🌟',
+            tags: ['✍️ Anlamlı Cümle', '📖 Akıcı Okuma', '🏆 Yıldız Puan'],
+            btnText: 'Yakında',
+            topic: 'sentences'
+          }
+        ]
+      },
+      {
+        id: 'math',
+        name: 'Matematik',
+        icon: '🧮',
+        colorTheme: 'theme-math',
+        tagline: 'Sayılar & İşlemler',
+        description: '20\'ye kadar toplama, çıkarma ve neşeli ritmik sayma! ➕➖',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'addition', label: '➕ Toplama' },
+          { id: 'subtraction', label: '➖ Çıkarma' },
+          { id: 'rhythmic', label: '🔢 Ritmik Sayma' }
+        ],
+        games: [
+          {
+            id: 'math',
+            active: true,
+            title: 'Kafa Kafaya Matematik',
+            icon: '🧮',
+            badge: '🌱 Hızlı Toplama',
+            featureTag: '⚡ Hızlı İşlem',
+            description: 'Hızlıca topla, ritmik say, puanları roket gibi kap! 🚀',
+            tags: ['➕ Toplama & Çıkarma', '🔢 Ritmik Sayma', '🎯 Eksik Sayı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'addition'
+          },
+          {
+            id: 'math_clock',
+            active: false,
+            title: 'Saatleri Öğreniyorum',
+            icon: '⏰',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Tam ve yarım saatleri akıllı tahtada eşleştirme oyunu! ⏰',
+            tags: ['⏰ Tam Saat', '⏳ Yarım Saat', '🌞 Zaman'],
+            btnText: 'Yakında',
+            topic: 'rhythmic'
+          },
+          {
+            id: 'math_money',
+            active: false,
+            title: 'Paralarımız & Alışveriş',
+            icon: '🪙',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Kuruş ve liralarla eğlenceli bakkal alışverişi pratiği! 🛍️',
+            tags: ['🪙 Kuruş & Lira', '🛍️ Bakkal Amca', '💰 Para Sayma'],
+            btnText: 'Yakında',
+            topic: 'addition'
+          }
+        ]
+      },
+      {
+        id: 'turkish',
+        name: 'Türkçe',
+        icon: '📚',
+        colorTheme: 'theme-turkish',
+        tagline: 'Sözcükler & Anlam',
+        description: 'Zıt kavramlar, kelime bilgisi ve okuduğunu anlama! 🦉📖',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'antonyms', label: '🔄 Zıt Anlam' },
+          { id: 'vocabulary', label: '📖 Kelime Bilgisi' }
+        ],
+        games: [
+          {
+            id: 'turkish',
+            active: true,
+            title: 'Hızlı Türkçe & Kelime Avı',
+            icon: '🦉',
+            badge: '🌱 Harf & Hece',
+            featureTag: '🔍 Kelime Avı',
+            description: 'Zıt kavramları yakala, heceleri jet gibi tamamla! 🦉',
+            tags: ['🔄 Zıt Anlam', '🔤 Ünlü Harfler', '📖 Hece Sayısı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'antonyms'
+          },
+          {
+            id: 'word_detective',
+            active: false,
+            title: 'Kelime Dedektifi',
+            icon: '🔍',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Görsellere uygun doğru sözcüğü en hızlı seçen kazanır! 🕵️',
+            tags: ['🔍 Dedektif', '🖼️ Görsel Eşleme', '📚 Kelime Dağarcığı'],
+            btnText: 'Yakında',
+            topic: 'vocabulary'
+          }
+        ]
+      },
+      {
+        id: 'lifescience',
+        name: 'Hayat Bilgisi',
+        icon: '🌱',
+        colorTheme: 'theme-lifescience',
+        tagline: 'Okulumuz & Sağlığımız',
+        description: 'Okul kuralları, temizlik, trafik güvenliği ve Atatürk sevgisi! 🇹🇷🧼',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'school', label: '🏫 Okul Heyecanım' },
+          { id: 'health', label: '🧼 Sağlıklı Yaşam' },
+          { id: 'safe_life', label: '🚦 Güvenli Hayat' }
+        ],
+        games: [
+          {
+            id: 'lifescience',
+            active: true,
+            title: 'Hayat Bilgisi Bilgi Yarışı',
+            icon: '🌱',
+            badge: '🌱 Günlük Yaşam',
+            featureTag: '⭐ Yaşam Becerisi',
+            description: 'Okulda, evde ve trafikte doğru davranışları en hızlı sen bil! 🏫🚦',
+            tags: ['🏫 Okul Kuralları', '🧼 Kişisel Bakım', '🚦 Trafik Bilgisi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'school'
+          },
+          {
+            id: 'traffic_hero',
+            active: false,
+            title: 'Minik Trafik Kahramanı',
+            icon: '🚦',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Trafik ışıkları ve yaya geçidi simülasyonu pek yakında! 🚶‍♂️',
+            tags: ['🚦 Işıklar', '🚶‍♂️ Yaya Geçidi', '🛑 Emniyet'],
+            btnText: 'Yakında',
+            topic: 'safe_life'
+          }
+        ]
+      },
+      {
+        id: 'brain',
+        name: 'Akıl ve Zeka Oyunları',
+        icon: '🧠',
+        colorTheme: 'theme-brain',
+        tagline: 'Görsel Dikkat & Hız',
+        description: 'Fark bulma, renk tuzakları, süper hafıza ve şimşek refleks! ⚡🎯',
+        badge: 'Dikkat Gelişimi',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'oddone', label: '👀 Fark Bulma' },
+          { id: 'stroop', label: '🎯 Renk Tuzağı' },
+          { id: 'memory', label: '🧠 Hafıza' },
+          { id: 'reflex', label: '⚡ Hızlı Refleks' }
+        ],
+        games: [
+          {
+            id: 'oddone',
+            active: true,
+            title: 'Farklı Olanı Yakala',
+            icon: '👀',
+            badge: '🌱 Gözlem & Odak',
+            featureTag: '🔍 Dedektif Gözler',
+            description: 'Gözünü dört aç! Benzer emojiler arasındaki tek farkı anında yakala! 🔍',
+            tags: ['🔍 Benzer Emojiler', '🎯 İnce Farklar', '⚡ Hızlı Gözlem'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'oddone'
+          },
+          {
+            id: 'stroop',
+            active: true,
+            title: 'Göz ve Renk Düellosu',
+            icon: '🎯',
+            badge: '🌱 Renk & Dikkat',
+            featureTag: '🎯 Hızlı Seçim',
+            description: 'Gözlerin mi daha hızlı yoksa aklın mı? Rengine göre bas! 🎯',
+            tags: ['🎯 Renk Eşleştirme', '⚡ Hızlı Seçim', '🌈 Renkler'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'stroop'
+          },
+          {
+            id: 'memory',
+            active: true,
+            title: 'Süper Hafıza: Sırayı Hatırla',
+            icon: '🧠',
+            badge: '🌱 Sıralı Hafıza',
+            featureTag: '🧠 Zihin Belleği',
+            description: 'Sırayı aklına kazı! İlk hangisi çıktı, kim kayboldu? 🧠',
+            tags: ['🧠 Sıralama Belleği', '👀 Görsel Dikkat', '⚡ Hızlı Hatırla'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'memory'
+          },
+          {
+            id: 'reflex',
+            active: true,
+            title: 'Şimşek Refleks: Hedef Avı',
+            icon: '⚡',
+            badge: '🌱 Saf Hız',
+            featureTag: '⚡ Şimşek Hız',
+            description: 'Yıldıza bas (⭐), bombadan kaç (💣)! Yanlış basan kilitlenir! ⚡',
+            tags: ['⭐ Yıldız Avı', '💣 Bombadan Kaç', '⚡ Şimşek Hız'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          }
+        ]
+      }
     ],
-    // 2. Sınıf
+
+    // -------------------------------------------------------------
+    // 2. SINIF: Matematik, Türkçe, Hayat Bilgisi, İngilizce, Akıl ve Zeka Oyunları
+    // -------------------------------------------------------------
     2: [
-      { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '🧮 2 Basamak Matematik' },
-      { id: 'reading', label: '📚 Sözcük Düellosu' },
-      { id: 'memory', label: '🧠 Süper Hafıza' },
-      { id: 'reflex', label: '⚡ Şimşek Refleks' }
+      {
+        id: 'math',
+        name: 'Matematik',
+        icon: '🧮',
+        colorTheme: 'theme-math',
+        tagline: 'İki Basamaklı İşlemler',
+        description: 'Eldeli toplama, onluk bozarak çıkarma, deste ve düzine! 📦⚡',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'two_digits', label: '⚡ 2 Basamak' },
+          { id: 'deste_duzine', label: '📦 Deste & Düzine' },
+          { id: 'multiplication_intro', label: '✖️ Çarpmaya Giriş' }
+        ],
+        games: [
+          {
+            id: 'math',
+            active: true,
+            title: 'Kafa Kafaya Matematik',
+            icon: '🧮',
+            badge: '🚀 2 Basamaklı İşlem',
+            featureTag: '⚡ Hızlı İşlem',
+            description: 'İki basamaklı çılgın işlemler ve deste-düzine avı! ⚡',
+            tags: ['⚡ 2 Basamak', '📦 Deste & Düzine', '➕ Eldeli Toplama'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'two_digits'
+          },
+          {
+            id: 'fraction_intro',
+            active: false,
+            title: 'Yarım & Çeyrek Pizzalar',
+            icon: '🍕',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Bütün, yarım ve çeyrek pizza dilimlerini eşleştirme oyunu! 🍕',
+            tags: ['🍕 Kesirler', '🌗 Bütün-Yarım', '📐 Görsel Geometri'],
+            btnText: 'Yakında',
+            topic: 'multiplication_intro'
+          }
+        ]
+      },
+      {
+        id: 'turkish',
+        name: 'Türkçe',
+        icon: '📚',
+        colorTheme: 'theme-turkish',
+        tagline: 'Eş & Zıt Anlamlılar',
+        description: 'Zengin kelime hazinesi, eş anlamlı sözcükler ve noktalama işaretleri! ✍️',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'synonyms', label: '✨ Eş Anlamlılar' },
+          { id: 'antonyms', label: '🔄 Zıt Anlamlılar' },
+          { id: 'punctuation', label: '✍️ Noktalama' }
+        ],
+        games: [
+          {
+            id: 'turkish',
+            active: true,
+            title: 'Hızlı Türkçe & Sözcük Düellosu',
+            icon: '🦉',
+            badge: '🚀 Eş ve Zıt Anlam',
+            featureTag: '🔍 Sözcük Avı',
+            description: 'Eş ve zıt anlamlı sözcük düellosu! Hızlı olan kazanır! 🎯',
+            tags: ['✨ Eş Anlamlılar', '🔄 Zıt Anlamlılar', '✏️ Yazım Kuralları'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'synonyms'
+          },
+          {
+            id: 'punctuation_run',
+            active: false,
+            title: 'Noktalama İşaretleri Parkuru',
+            icon: '❓',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Nokta, virgül, soru ve ünlem işaretini doğru yere yerleştir! ❓',
+            tags: ['❓ Soru İşareti', '❗ Ünlem', '✍️ Noktalama'],
+            btnText: 'Yakında',
+            topic: 'punctuation'
+          }
+        ]
+      },
+      {
+        id: 'lifescience',
+        name: 'Hayat Bilgisi',
+        icon: '🌱',
+        colorTheme: 'theme-lifescience',
+        tagline: 'Ailemiz & Çevremiz',
+        description: 'Akrabalık ilişkileri, tasarruf, geri dönüşüm ve doğayı koruma! ♻️🏡',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'family', label: '🏡 Evimizde Hayat' },
+          { id: 'saving', label: '💡 Tasarruf & Çevre' },
+          { id: 'country', label: '🇹🇷 Ülkemizi Tanıyalım' }
+        ],
+        games: [
+          {
+            id: 'lifescience',
+            active: true,
+            title: 'Hayat Bilgisi Bilgi Yarışı',
+            icon: '🌱',
+            badge: '🚀 Bilinçli Yaşam',
+            featureTag: '💡 Bilinçli Çocuk',
+            description: 'Tasarruf kurallarını bil, doğayı koru ve bayrağımızı tanı! 🇹🇷♻️',
+            tags: ['💡 Enerji Tasarrufu', '♻️ Geri Dönüşüm', '🇹🇷 Milli Değerler'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'saving'
+          },
+          {
+            id: 'recycle_hero',
+            active: false,
+            title: 'Geri Dönüşüm Ustası',
+            icon: '♻️',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Kağıt, cam ve plastik çöpleri doğru kutulara fırlatma oyunu! ♻️',
+            tags: ['♻️ Geri Dönüşüm', '🌍 Temiz Dünya', '📦 Ayrıştırma'],
+            btnText: 'Yakında',
+            topic: 'saving'
+          }
+        ]
+      },
+      {
+        id: 'english',
+        name: 'İngilizce',
+        icon: '🇬🇧',
+        colorTheme: 'theme-english',
+        tagline: 'Words & Greetings',
+        description: 'Renkler, sayılar, selamlaşmalar ve sevimli hayvanlar! 🌈🐶',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 All' },
+          { id: 'greetings', label: '👋 Greetings' },
+          { id: 'colors_num', label: '🎨 Colors & Numbers' },
+          { id: 'animals_en', label: '🐾 Animals' }
+        ],
+        games: [
+          {
+            id: 'english',
+            active: true,
+            title: 'English Word Battle',
+            icon: '🇬🇧',
+            badge: '🚀 Fun English',
+            featureTag: '⭐ Speed Words',
+            description: 'Renkleri, sayıları ve selamlaşmaları hızlıca İngilizce bil! 🇬🇧',
+            tags: ['🎨 Colors', '🔢 Numbers 1-10', '👋 Hello & Goodbye'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'colors_num'
+          },
+          {
+            id: 'body_parts_en',
+            active: false,
+            title: 'Body Parts & Feelings',
+            icon: '👀',
+            badge: 'Yakında',
+            featureTag: '🔒 Coming Soon',
+            description: 'Göz, kulak, burun ve duyguları İngilizce eşleştirme macerası! 😊',
+            tags: ['👀 Eyes & Nose', '😊 Happy / Sad', '🎵 Fun Song'],
+            btnText: 'Yakında',
+            topic: 'greetings'
+          }
+        ]
+      },
+      {
+        id: 'brain',
+        name: 'Akıl ve Zeka Oyunları',
+        icon: '🧠',
+        colorTheme: 'theme-brain',
+        tagline: 'Zeka & Nöro-Dikkat',
+        description: 'Stroop renk tuzakları, 9\'lu sembol tarama ve foto-hafıza! ⚡🎯',
+        badge: 'Zeka Düelloları',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'oddone', label: '👀 Fark Bulma' },
+          { id: 'stroop', label: '🎯 Stroop Testi' },
+          { id: 'memory', label: '🧠 Süper Hafıza' },
+          { id: 'reflex', label: '⚡ Şimşek Refleks' }
+        ],
+        games: [
+          {
+            id: 'oddone',
+            active: true,
+            title: 'Farklı Olanı Yakala',
+            icon: '👀',
+            badge: '🚀 Gözlem Gücü',
+            featureTag: '⚡ Hızlı Tarama',
+            description: '9 emoji arasından gizlice saklanan yabancı sembolü avla! ⚡',
+            tags: ['⚡ 9\'lu Dizi', '👀 Keskin Gözler', '⏱️ Hızlı Tepki'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'oddone'
+          },
+          {
+            id: 'stroop',
+            active: true,
+            title: 'Renk Tuzakları (Stroop)',
+            icon: '🎯',
+            badge: '🚀 Stroop Testi',
+            featureTag: '🧠 Beyin Fırtınası',
+            description: 'Dikkat tuzak! Renge aldanma, kelimenin gerçek rengini bil! 🧠',
+            tags: ['🧠 Renk Tuzağı', '⚡ Beyin Jimnastiği', '🎯 Odaklanma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'stroop'
+          },
+          {
+            id: 'memory',
+            active: true,
+            title: 'Süper Hafıza: Sırayı Hatırla',
+            icon: '🧠',
+            badge: '🚀 Sıralı Hafıza',
+            featureTag: '⚡ Hızlı Hatırla',
+            description: 'Sembolleri hızlıca tara! Sorulan sembolü ilk dokunan bulsun! 🚀',
+            tags: ['🚀 3-4 Sembol', '⚡ Hızlı Kodlama', '🧠 Canlandırma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'memory'
+          },
+          {
+            id: 'reflex',
+            active: true,
+            title: 'Şimşek Refleks: Hedef Avı',
+            icon: '⚡',
+            badge: '🚀 Hızlı Tepki',
+            featureTag: '🚀 Saliselik Tepki',
+            description: 'Saf hız ve konsantrasyon! Hedefi ilk yakalayan puanı kapar! 🚀',
+            tags: ['🚀 Saliselik Tepki', '⚡ Hızlı Dokunuş', '🔒 Kilit Cezası'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          }
+        ]
+      }
     ],
-    // 3. Sınıf
+
+    // -------------------------------------------------------------
+    // 3. SINIF: Matematik, Türkçe, Hayat Bilgisi, Fen Bilimleri, İngilizce, Akıl ve Zeka Oyunları
+    // -------------------------------------------------------------
     3: [
-      { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '➗ Çarpım & 4 İşlem' },
-      { id: 'turkish', label: '📖 Türkçe Avcısı' },
-      { id: 'science', label: '🌍 Fen & Keşif' },
-      { id: 'brain', label: '🧠 Zeka & Refleks' }
+      {
+        id: 'math',
+        name: 'Matematik',
+        icon: '🧮',
+        colorTheme: 'theme-math',
+        tagline: 'Çarpım Tablosu & Bölme',
+        description: 'Çarpım tablosu fırtınası, zihinden bölme ve basamak değerleri! 🌪️➗',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'mult_table', label: '🌪️ Çarpım Tablosu' },
+          { id: 'division', label: '➗ Hızlı Bölme' },
+          { id: 'place_value', label: '📐 Basamak Değeri' }
+        ],
+        games: [
+          {
+            id: 'math',
+            active: true,
+            title: 'Kafa Kafaya Matematik',
+            icon: '🧮',
+            badge: '⚡ Çarpım Tablosu',
+            featureTag: '🌪️ Fırtına Hesap',
+            description: 'Çarpım tablosu fırtınası! Kim daha hızlı hesaplayacak? 🌪️',
+            tags: ['🌪️ Çarpım Tablosu', '➗ Hızlı Bölme', '📐 Basamak Değeri'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'mult_table'
+          },
+          {
+            id: 'geometry_shapes',
+            active: false,
+            title: 'Geometrik Cisimler & Köşeler',
+            icon: '🧊',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Küp, prizma ve silindirin yüzey ve köşelerini keşfetme modu! 🧊',
+            tags: ['🧊 Küp & Prizma', '📐 Yüz ve Köşe', '🎯 Uzamsal'],
+            btnText: 'Yakında',
+            topic: 'place_value'
+          }
+        ]
+      },
+      {
+        id: 'turkish',
+        name: 'Türkçe',
+        icon: '📚',
+        colorTheme: 'theme-turkish',
+        tagline: 'Eş Sesli & Deyimler',
+        description: 'Eş sesli sözcükler, 5N1K paragraf analizi ve zengin Türkçe! 🎭📖',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'homonyms', label: '🎭 Eş Sesliler' },
+          { id: 'idioms_3', label: '📜 Deyimler' },
+          { id: 'grammar_3', label: '✍️ Dil Bilgisi' }
+        ],
+        games: [
+          {
+            id: 'turkish',
+            active: true,
+            title: 'Hızlı Türkçe & Bilgi Avcısı',
+            icon: '🦉',
+            badge: '⚡ Eş Sesli & Bilgi',
+            featureTag: '🌟 Keşif Zamanı',
+            description: 'Eş sesli kelimeler ve eğlenceli Türkçe meydan okuması! 🌟',
+            tags: ['🎭 Eş Sesliler', '📜 Deyimler', '✍️ Noktalama'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'homonyms'
+          },
+          {
+            id: '5n1k_challenge',
+            active: false,
+            title: '5N 1K Olay Yeri İnceleme',
+            icon: '🕵️',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Kısa hikayedeki Kim, Ne, Nerede, Ne Zaman sorularını çözme! 📖',
+            tags: ['🕵️ 5N 1K', '📖 Okuduğunu Anlama', '🔍 Kanıt Bul'],
+            btnText: 'Yakında',
+            topic: 'grammar_3'
+          }
+        ]
+      },
+      {
+        id: 'lifescience',
+        name: 'Hayat Bilgisi',
+        icon: '🌱',
+        colorTheme: 'theme-lifescience',
+        tagline: 'Yönetim & Doğa Olayları',
+        description: 'Yerel yönetimler, afet bilinci, harita bilgisi ve Atatürk ilkeleri! 🏛️🇹🇷',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'disaster', label: '🛡️ Afet Bilinci' },
+          { id: 'administration', label: '🏛️ Yönetim Birimleri' },
+          { id: 'ataturk', label: '🇹🇷 Cumhuriyetimiz' }
+        ],
+        games: [
+          {
+            id: 'lifescience',
+            active: true,
+            title: 'Hayat Bilgisi Bilgi Yarışı',
+            icon: '🌱',
+            badge: '⚡ Afet & Toplum',
+            featureTag: '🏛️ Vatandaşlık',
+            description: 'Afetlerde doğru davranışlar, mahalle yönetimi ve cumhuriyet! 🏛️🛡️',
+            tags: ['🛡️ Deprem Bilinci', '🏛️ Muhtar & Kaymakam', '🇹🇷 Atatürk İlkeleri'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'disaster'
+          },
+          {
+            id: 'compass_map',
+            active: false,
+            title: 'Harita & Yön Bulucu',
+            icon: '🧭',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Ana yönler, kutup yıldızı ve karınca yuvalarıyla yön bulma oyunu! 🧭',
+            tags: ['🧭 Pusula', '⭐ Kutup Yıldızı', '🗺️ Kroki'],
+            btnText: 'Yakında',
+            topic: 'administration'
+          }
+        ]
+      },
+      {
+        id: 'science',
+        name: 'Fen Bilimleri',
+        icon: '🔬',
+        colorTheme: 'theme-science',
+        tagline: 'Dünya & Duyu Organları',
+        description: 'Dünyamızın katmanları, duyu organlarımız, kuvvet ve hareket! 🌍🧲',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'earth_layers', label: '🌍 Dünyamızın Yapısı' },
+          { id: 'senses', label: '👂 Duyu Organları' },
+          { id: 'forces_3', label: '🧲 Kuvvet & Hareket' }
+        ],
+        games: [
+          {
+            id: 'science',
+            active: true,
+            title: 'Fen Bilimleri Laboratuvarı',
+            icon: '🔬',
+            badge: '⚡ Fen & Doğa',
+            featureTag: '🌍 Bilim Kaşifi',
+            description: 'Dünyanın şekli, 5 duyu organı ve mıknatısın gizemlerini çöz! 🌍🧲',
+            tags: ['🌍 Dünyanın Şekli', '👂 5 Duyu Organı', '🧲 İtme & Çekme'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'earth_layers'
+          },
+          {
+            id: 'magnet_arena',
+            active: false,
+            title: 'Mıknatıs & Madde Arenası',
+            icon: '🧲',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Mıknatısın çektiği ve çekmediği maddeleri sınıflandırma! 🧲',
+            tags: ['🧲 N & S Kutupları', '📎 Demir & Nikel', '🔬 Madde'],
+            btnText: 'Yakında',
+            topic: 'forces_3'
+          }
+        ]
+      },
+      {
+        id: 'english',
+        name: 'İngilizce',
+        icon: '🇬🇧',
+        colorTheme: 'theme-english',
+        tagline: 'Classroom & Family',
+        description: 'Sınıf eşyaları, aile bireyleri, sayılar ve oyuncaklar! 🎒👨‍👩‍👧',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 All' },
+          { id: 'classroom', label: '🎒 Classroom Objects' },
+          { id: 'family_en', label: '👨‍👩‍👧 Family' },
+          { id: 'toys', label: '🧸 Toys & Games' }
+        ],
+        games: [
+          {
+            id: 'english',
+            active: true,
+            title: 'English Word Battle',
+            icon: '🇬🇧',
+            badge: '⚡ Classroom Battle',
+            featureTag: '🎒 School Words',
+            description: 'Sınıf araç gereçleri ve aile üyelerini İngilizce hızla bil! 🇬🇧',
+            tags: ['🎒 Classroom', '👨‍👩‍👧 Family Members', '🔢 Numbers 1-20'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'classroom'
+          },
+          {
+            id: 'fruit_vegetable_en',
+            active: false,
+            title: 'Yummy Fruits & Foods',
+            icon: '🍎',
+            badge: 'Yakında',
+            featureTag: '🔒 Coming Soon',
+            description: 'Meyve ve yemek sipariş etme İngilizce kelime oyunu! 🍓',
+            tags: ['🍎 I like apples', '🍌 Bananas', '🥛 Milk'],
+            btnText: 'Yakında',
+            topic: 'toys'
+          }
+        ]
+      },
+      {
+        id: 'brain',
+        name: 'Akıl ve Zeka Oyunları',
+        icon: '🧠',
+        colorTheme: 'theme-brain',
+        tagline: 'Algı & Foto-Hafıza',
+        description: 'Geometrik fark avcılığı, ters köşe Stroop ve şimşek köstebek! 🎯⚡',
+        badge: 'Zeka Ligi',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'oddone', label: '👀 Detay Avı' },
+          { id: 'stroop', label: '🎯 Stroop' },
+          { id: 'memory', label: '🧠 4\'lü Dizi' },
+          { id: 'reflex', label: '⚡ Şimşek Hız' }
+        ],
+        games: [
+          {
+            id: 'oddone',
+            active: true,
+            title: 'Farklı Olanı Yakala',
+            icon: '👀',
+            badge: '⚡ Görsel Zeka',
+            featureTag: '🎯 Şahin Bakışı',
+            description: 'Birbirine benzeyen geometrik şekillerdeki minik farkı ilk gören puanı kapar! 🎯',
+            tags: ['🎯 Detay Avcılığı', '🧠 Görsel Zeka', '🔍 Hızlı Tarama'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'oddone'
+          },
+          {
+            id: 'stroop',
+            active: true,
+            title: 'Renk Tuzakları (Stroop)',
+            icon: '🎯',
+            badge: '⚡ Beyin Jimnastiği',
+            featureTag: '⚡ Ters Köşe',
+            description: 'Ters köşe kelimeler! Zihnini şaşırtmaya çalışan tuzağı aş! ⚡',
+            tags: ['⚡ Ters Köşe', '🎯 Konsantrasyon', '🧠 Görsel Odak'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'stroop'
+          },
+          {
+            id: 'memory',
+            active: true,
+            title: 'Süper Hafıza: Sırayı Hatırla',
+            icon: '🧠',
+            badge: '⚡ Şampiyon Bellek',
+            featureTag: '⭐ Şampiyon Bellek',
+            description: '4\'lü sembol sırasını zihninde canlandır ve puanı kap! ⭐',
+            tags: ['⭐ 4\'lü Dizi', '🧠 Detaylı Hatırlama', '⚡ Hızlı Çağırma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'memory'
+          },
+          {
+            id: 'reflex',
+            active: true,
+            title: 'Şimşek Refleks: Köstebek & Av',
+            icon: '⚡',
+            badge: '⚡ Süper Hız',
+            featureTag: '🎯 Keskin Refleks',
+            description: 'Hedef çıktığı an rekor hızla dokun! Sahte bombalara asla basma! ⚡',
+            tags: ['⚡ Köstebek Avı', '🎯 Seçici Dikkat', '⚡ Hızlı Refleks'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          }
+        ]
+      }
     ],
-    // 4. Sınıf
+
+    // -------------------------------------------------------------
+    // 4. SINIF: Matematik, Türkçe, Fen Bilimleri, Sosyal Bilgiler, İngilizce, Akıl ve Zeka Oyunları
+    // -------------------------------------------------------------
     4: [
-      { id: 'all', label: '🌟 Tümü' },
-      { id: 'math', label: '➗ Hızlı 4 İşlem' },
-      { id: 'turkish', label: '📖 Deyimler & Kültür' },
-      { id: 'science', label: '🌍 Fen & Keşif' },
-      { id: 'brain', label: '🧠 Zeka & Refleks' }
+      {
+        id: 'math',
+        name: 'Matematik',
+        icon: '🧮',
+        colorTheme: 'theme-math',
+        tagline: '4 İşlem & Kesirler',
+        description: 'Dört basamaklı sayılar, kesirler, açılar ve problem çözme ustalığı! 👑🍕',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'four_operations', label: '👑 Hızlı 4 İşlem' },
+          { id: 'fractions', label: '🍕 Kesirler' },
+          { id: 'angles', label: '📐 Açılar' }
+        ],
+        games: [
+          {
+            id: 'math',
+            active: true,
+            title: 'Kafa Kafaya Matematik',
+            icon: '🧮',
+            badge: '👑 4 İşlem Ustası',
+            featureTag: '👑 Usta Hesap',
+            description: '4 işlem fırtınası! Kesirleri ve açıları saliseler içinde fethet! 👑',
+            tags: ['👑 Hızlı 4 İşlem', '🍕 Kesirler', '📐 Açı Türleri'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'four_operations'
+          },
+          {
+            id: 'angle_protractor',
+            active: false,
+            title: 'İletki & Açı Avcısı',
+            icon: '📐',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Dar, dik ve geniş açıları doğru tahmin etme meydan okuması! 📐',
+            tags: ['📐 Dar Açı', '📏 90 Derece Dik', '📐 Geniş Açı'],
+            btnText: 'Yakında',
+            topic: 'angles'
+          }
+        ]
+      },
+      {
+        id: 'turkish',
+        name: 'Türkçe',
+        icon: '📚',
+        colorTheme: 'theme-turkish',
+        tagline: 'Deyimler & Atasözleri',
+        description: 'Zengin deyimler, atasözleri, mecaz anlam ve dil bilgisi şampiyonası! 🏆📜',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'idioms_4', label: '🏆 Zengin Deyimler' },
+          { id: 'proverbs', label: '📜 Atasözleri' },
+          { id: 'figurative', label: '🎭 Gerçek & Mecaz' }
+        ],
+        games: [
+          {
+            id: 'turkish',
+            active: true,
+            title: 'Hızlı Türkçe & Genel Kültür',
+            icon: '🦉',
+            badge: '👑 Deyim & Kültür',
+            featureTag: '🏆 Deyim Ustası',
+            description: 'Zengin deyimler ve atasözleri labirentinde kelime ustası ol! 🏆',
+            tags: ['🏆 Zengin Deyimler', '📜 Atasözleri', '🗺️ Genel Kültür'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'idioms_4'
+          },
+          {
+            id: 'proverb_puzzle',
+            active: false,
+            title: 'Atasözü Yapboz Arenası',
+            icon: '📜',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'İki parçaya ayrılmış atasözlerini en hızlı şekilde birleştir! 📜',
+            tags: ['📜 Atasözü', '🧩 Hızlı Eşleme', '💡 Anlam'],
+            btnText: 'Yakında',
+            topic: 'proverbs'
+          }
+        ]
+      },
+      {
+        id: 'science',
+        name: 'Fen Bilimleri',
+        icon: '🔬',
+        colorTheme: 'theme-science',
+        tagline: 'Maddenin Halleri & Elektrik',
+        description: 'Yer kabuğu, besinlerimiz, saf madde-karışım ve basit elektrik devreleri! ⚡🍎',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'nutrition', label: '🍎 Besinlerimiz' },
+          { id: 'matter_states', label: '🧊 Maddenin Halleri' },
+          { id: 'circuits', label: '💡 Elektrik Devreleri' }
+        ],
+        games: [
+          {
+            id: 'science',
+            active: true,
+            title: 'Fen Bilimleri Laboratuvarı',
+            icon: '🔬',
+            badge: '👑 Bilim Ustası',
+            featureTag: '⚡ Doğa & Madde',
+            description: 'Karbonhidratlar, elektrik devreleri ve erime-donma olayları! 🔬⚡',
+            tags: ['🍎 Besin Grupları', '🧊 Katı-Sıvı-Gaz', '💡 Basit Devre'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'nutrition'
+          },
+          {
+            id: 'circuit_builder',
+            active: false,
+            title: 'Ampulü Yak: Basit Devre',
+            icon: '💡',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: 'Pil, anahtar ve ampulü bağlayıp devreyi tamamlama simülasyonu! 💡',
+            tags: ['🔋 Pil & Anahtar', '💡 Işık Veren Ampul', '⚡ Elektrik'],
+            btnText: 'Yakında',
+            topic: 'circuits'
+          }
+        ]
+      },
+      {
+        id: 'social',
+        name: 'Sosyal Bilgiler',
+        icon: '🗺️',
+        colorTheme: 'theme-social',
+        tagline: 'Tarih, Kültür & Üretim',
+        description: 'Kimlik kartımız, Milli Mücadele, yönler ve bilinçli tüketici hakları! 🪪🧭',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'identity', label: '🪪 Birey & Toplum' },
+          { id: 'history_heritage', label: '🇹🇷 Kültür & Tarih' },
+          { id: 'economy', label: '🛒 Üretim & Tüketim' }
+        ],
+        games: [
+          {
+            id: 'social',
+            active: true,
+            title: 'Sosyal Bilgiler Keşif Düellosu',
+            icon: '🗺️',
+            badge: '👑 Keşif & Tarih',
+            featureTag: '🇹🇷 Milli Kültür',
+            description: 'T.C. Kimlik kartı, pusula yönleri ve Milli Mücadele kahramanları! 🇹🇷🧭',
+            tags: ['🪪 Kimlik Kartı', '🧭 Pusula Yönleri', '🇹🇷 Milli Mücadele'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'identity'
+          },
+          {
+            id: 'turkey_map_game',
+            active: false,
+            title: 'Türkiye Şehirler Haritası',
+            icon: '📍',
+            badge: 'Yakında',
+            featureTag: '🔒 Hazırlanıyor',
+            description: '81 ilimizi haritada yerleştirme ve bölgeleri tanıma oyunu! 🗺️',
+            tags: ['📍 81 İl', '🌊 Bölgelerimiz', '🏛️ Tarihi Eserler'],
+            btnText: 'Yakında',
+            topic: 'history_heritage'
+          }
+        ]
+      },
+      {
+        id: 'english',
+        name: 'İngilizce',
+        icon: '🇬🇧',
+        colorTheme: 'theme-english',
+        tagline: 'Time, Jobs & Countries',
+        description: 'Meslekler, saatler, ülkeler, milletler ve serbest zaman aktiviteleri! ⏰👮',
+        badge: 'MEB Müfredatı',
+        topics: [
+          { id: 'all', label: '🌟 All' },
+          { id: 'time_en', label: '⏰ Telling Time' },
+          { id: 'jobs_en', label: '👮 Occupations' },
+          { id: 'nations', label: '🌍 Countries & Flags' }
+        ],
+        games: [
+          {
+            id: 'english',
+            active: true,
+            title: 'English Word Battle',
+            icon: '🇬🇧',
+            badge: '👑 Master English',
+            featureTag: '⭐ Pro English',
+            description: 'Meslekleri, ülkeleri ve saatleri en hızlı İngilizce yanıtla! 🇬🇧',
+            tags: ['👮 Jobs & Work', '⏰ What time is it?', '🌍 Flags & Nations'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'jobs_en'
+          },
+          {
+            id: 'weather_seasons_en',
+            active: false,
+            title: 'Weather & Clothes',
+            icon: '⛅',
+            badge: 'Yakında',
+            featureTag: '🔒 Coming Soon',
+            description: 'Hava durumuna göre giysi seçme ve mevsimleri eşleştirme oyunu! 🧥',
+            tags: ['☀️ Sunny & Rainy', '🧥 Jacket & Boots', '🍂 Autumn'],
+            btnText: 'Yakında',
+            topic: 'time_en'
+          }
+        ]
+      },
+      {
+        id: 'brain',
+        name: 'Akıl ve Zeka Oyunları',
+        icon: '🧠',
+        colorTheme: 'theme-brain',
+        tagline: 'Usta Düzey Zeka & Refleks',
+        description: '12 sembol dedektifliği, usta Stroop, foto-bellek ve zirve refleks! 👑⚡',
+        badge: 'Şampiyonlar Ligi',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'oddone', label: '🕵️ Usta Dedektif' },
+          { id: 'stroop', label: '👑 Nöro-Hız' },
+          { id: 'memory', label: '🧠 Foto-Bellek' },
+          { id: 'reflex', label: '⚡ Zirve Refleks' }
+        ],
+        games: [
+          {
+            id: 'oddone',
+            active: true,
+            title: 'Farklı Olanı Yakala',
+            icon: '👀',
+            badge: '👑 Usta Dedektif',
+            featureTag: '🕵️ Usta Dedektif',
+            description: '12 sembol labirentindeki gizli detayı saliseler içinde yakala! 🕵️',
+            tags: ['🕵️ Usta Dedektif', '⚡ Saliselik Fark', '🧩 Zorlu Labirent'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'oddone'
+          },
+          {
+            id: 'stroop',
+            active: true,
+            title: 'Süper Stroop: Renk Tuzakları',
+            icon: '🎯',
+            badge: '👑 Nöro-Dikkat',
+            featureTag: '👑 Nöro-Hız',
+            description: 'Usta seviye Stroop düellosu! Şampiyon refleksle ters köşeyi çöz! 👑',
+            tags: ['👑 İleri Stroop', '⚡ Saliselik Karar', '🧠 Zihinsel Çeviklik'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'stroop'
+          },
+          {
+            id: 'memory',
+            active: true,
+            title: 'Usta Hafıza: Sırayı Hatırla',
+            icon: '🧠',
+            badge: '👑 Fotoğrafik Hafıza',
+            featureTag: '👑 Fotoğrafik Hafıza',
+            description: 'Fotoğrafik hafıza meydan okuması! Sıraları bil, tahtanın kralı ol! 👑',
+            tags: ['👑 Fotoğrafik Bellek', '🔍 Sıra Analizi', '⚡ Süper Konsantrasyon'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'memory'
+          },
+          {
+            id: 'reflex',
+            active: true,
+            title: 'Şimşek Refleks: Köstebek & Av',
+            icon: '⚡',
+            badge: '👑 Şimşek Hızı',
+            featureTag: '🏆 Zirve Refleks',
+            description: 'Tahtanın en hızlısı kim? Saliseler içinde hedefi avla, zaferi kazan! 🏆',
+            tags: ['🏆 Zirve Refleks', '⭐ Sıfır Hata', '👑 Tahta Rekoru'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          }
+        ]
+      }
     ]
   };
 
-  // 2. Zengin Oyun Kataloğu (6 Oyun x 5 Sınıf Düzeyi = %100 Dinamik)
-  const GAMES_CATALOG = [
-    {
-      id: 'math',
-      themeClass: 'math-theme',
-      tagClass: 'math-tag',
-      categoryMapping: (grade) => {
-        if (grade === 0) return ['all', 'concept'];
-        return ['all', 'math'];
-      },
-      gradeContent: {
-        0: {
-          title: 'Renkler, Şekiller & Sayma',
-          icon: '🎨',
-          badge: '🎨 Renk & Şekil',
-          featureTag: '⭐ Görsel Keşif',
-          description: 'Meyveleri ve parlayan yıldızları say, doğru cevaba ilk sen dokun! 🍎⭐',
-          tags: ['🍎 1-5 Sayma', '🎨 Canlı Renkler', '⭐ Şekil Avı'],
-          btnText: 'Düelloyu Başlat'
-        },
-        1: {
-          title: 'Kafa Kafaya Matematik',
-          icon: '🧮',
-          badge: '🌱 Hızlı Toplama',
-          featureTag: '⚡ Hızlı İşlem',
-          description: 'Hızlıca topla, ritmik say, puanları roket gibi kap! 🚀',
-          tags: ['➕ Toplama & Çıkarma', '🔢 Ritmik Sayma', '🎯 Eksik Sayı'],
-          btnText: 'Düelloyu Başlat'
-        },
-        2: {
-          title: 'Kafa Kafaya Matematik',
-          icon: '🧮',
-          badge: '🚀 2 Basamaklı İşlem',
-          featureTag: '⚡ Hızlı İşlem',
-          description: 'İki basamaklı çılgın işlemler ve deste-düzine avı! ⚡',
-          tags: ['⚡ 2 Basamak', '📦 Deste & Düzine', '➕ Eldeli Toplama'],
-          btnText: 'Düelloyu Başlat'
-        },
-        3: {
-          title: 'Kafa Kafaya Matematik',
-          icon: '🧮',
-          badge: '⚡ Çarpım Tablosu',
-          featureTag: '🌪️ Fırtına Hesap',
-          description: 'Çarpım tablosu fırtınası! Kim daha hızlı hesaplayacak? 🌪️',
-          tags: ['🌪️ Çarpım Tablosu', '➗ Hızlı Bölme', '📐 Basamak Değeri'],
-          btnText: 'Düelloyu Başlat'
-        },
-        4: {
-          title: 'Kafa Kafaya Matematik',
-          icon: '🧮',
-          badge: '👑 4 İşlem Ustası',
-          featureTag: '👑 Usta Hesap',
-          description: '4 işlem fırtınası! Kesirleri ve açıları saliseler içinde fethet! 👑',
-          tags: ['👑 Hızlı 4 İşlem', '🍕 Kesirler', '📐 Açı Türleri'],
-          btnText: 'Düelloyu Başlat'
-        }
-      }
-    },
-    {
-      id: 'turkish',
-      themeClass: 'turkish-theme',
-      tagClass: 'turkish-tag',
-      categoryMapping: (grade) => {
-        if (grade === 0) return ['all', 'visual'];
-        if (grade === 1 || grade === 2) return ['all', 'reading'];
-        return ['all', 'turkish', 'science'];
-      },
-      gradeContent: {
-        0: {
-          title: 'Sevimli Hayvanlar & Doğa',
-          icon: '🦁',
-          badge: '🦁 Doğa Kahramanları',
-          featureTag: '🐾 Sevimli Dostlar',
-          description: 'Miyavlayan dostlarımız ve doğa kahramanlarıyla tanış! 🐾',
-          tags: ['🐾 Hayvan Sesleri', '🐘 Büyük-Küçük', '🌿 Doğa Sevgisi'],
-          btnText: 'Düelloyu Başlat'
-        },
-        1: {
-          title: 'Hızlı Türkçe & Kelime Avı',
-          icon: '🦉',
-          badge: '🌱 Harf & Hece',
-          featureTag: '🔍 Kelime Avı',
-          description: 'Zıt kavramları yakala, heceleri jet gibi tamamla! 🦉',
-          tags: ['🔄 Zıt Anlam', '🔤 Ünlü Harfler', '📖 Hece Sayısı'],
-          btnText: 'Düelloyu Başlat'
-        },
-        2: {
-          title: 'Hızlı Türkçe & Sözcük Düellosu',
-          icon: '🦉',
-          badge: '🚀 Eş ve Zıt Anlam',
-          featureTag: '🔍 Sözcük Avı',
-          description: 'Eş ve zıt anlamlı sözcük düellosu! Hızlı olan kazanır! 🎯',
-          tags: ['✨ Eş Anlamlılar', '🔄 Zıt Anlamlılar', '✏️ Yazım Kuralları'],
-          btnText: 'Düelloyu Başlat'
-        },
-        3: {
-          title: 'Hızlı Türkçe & Bilgi Avcısı',
-          icon: '🦉',
-          badge: '⚡ Eş Sesli & Bilgi',
-          featureTag: '🌟 Keşif Zamanı',
-          description: 'Eş sesli kelimeler ve eğlenceli Fen gerçekleri! 🌟',
-          tags: ['🎭 Eş Sesliler', '🌍 Fen Gerçekleri', '✍️ Noktalama'],
-          btnText: 'Düelloyu Başlat'
-        },
-        4: {
-          title: 'Hızlı Türkçe & Genel Kültür',
-          icon: '🦉',
-          badge: '👑 Deyim & Kültür',
-          featureTag: '🏆 Deyim Ustası',
-          description: 'Zengin deyimler ve atasözleri labirentinde kelime ustası ol! 🏆',
-          tags: ['🏆 Zengin Deyimler', '📜 Atasözleri', '🗺️ Sosyal Bilgiler'],
-          btnText: 'Düelloyu Başlat'
-        }
-      }
-    },
-    {
-      id: 'oddone',
-      themeClass: 'oddone-theme',
-      tagClass: 'oddone-tag',
-      categoryMapping: (grade) => {
-        if (grade === 0) return ['all', 'visual'];
-        if (grade === 1 || grade === 2) return ['all', 'memory'];
-        return ['all', 'brain'];
-      },
-      gradeContent: {
-        0: {
-          title: 'Farklı Olanı Yakala',
-          icon: '👀',
-          badge: '👀 Görsel Dikkat',
-          featureTag: '👀 Keskin Gözler',
-          description: 'Meyve ve hayvanlar arasında saklanan yabancıyı ilk sen bul! 🥑',
-          tags: ['🥑 Tatlı Meyveler', '👀 Görsel Dikkat', '⚡ Hızlı Bul'],
-          btnText: 'Düelloyu Başlat'
-        },
-        1: {
-          title: 'Farklı Olanı Yakala',
-          icon: '👀',
-          badge: '🌱 Gözlem & Odak',
-          featureTag: '🔍 Dedektif Gözler',
-          description: 'Gözünü dört aç! Benzer emojiler arasındaki tek farkı anında yakala! 🔍',
-          tags: ['🔍 Benzer Emojiler', '🎯 İnce Farklar', '⚡ Hızlı Gözlem'],
-          btnText: 'Düelloyu Başlat'
-        },
-        2: {
-          title: 'Farklı Olanı Yakala',
-          icon: '👀',
-          badge: '🚀 Gözlem Gücü',
-          featureTag: '⚡ Hızlı Tarama',
-          description: '9 emoji arasından gizlice saklanan yabancı sembolü avla! ⚡',
-          tags: ['⚡ 9\'lu Dizi', '👀 Keskin Gözler', '⏱️ Hızlı Tepki'],
-          btnText: 'Düelloyu Başlat'
-        },
-        3: {
-          title: 'Farklı Olanı Yakala',
-          icon: '👀',
-          badge: '⚡ Görsel Zeka',
-          featureTag: '🎯 Şahin Bakışı',
-          description: 'Birbirine benzeyen geometrik şekillerdeki minik farkı ilk gören puanı kapar! 🎯',
-          tags: ['🎯 Detay Avcılığı', '🧠 Görsel Zeka', '🔍 Hızlı Tarama'],
-          btnText: 'Düelloyu Başlat'
-        },
-        4: {
-          title: 'Farklı Olanı Yakala',
-          icon: '👀',
-          badge: '👑 Usta Dedektif',
-          featureTag: '🕵️ Usta Dedektif',
-          description: '12 sembol labirentindeki gizli detayı saliseler içinde yakala! 🕵️',
-          tags: ['🕵️ Usta Dedektif', '⚡ Saliselik Fark', '🧩 Zorlu Labirent'],
-          btnText: 'Düelloyu Başlat'
-        }
-      }
-    },
-    {
-      id: 'stroop',
-      themeClass: 'stroop-theme',
-      tagClass: 'stroop-tag',
-      categoryMapping: (grade) => {
-        if (grade === 0) return ['all', 'concept'];
-        if (grade === 1 || grade === 2) return ['all', 'reflex'];
-        return ['all', 'brain'];
-      },
-      gradeContent: {
-        0: {
-          title: 'Renk & Şekil Eşleştirme',
-          icon: '🎯',
-          badge: '🎨 Renk Düellosu',
-          featureTag: '🎨 Canlı Renkler',
-          description: 'Cıvıl cıvıl renkleri tanı, şekilleri doğru eşleştir ve eğlen! 🎨',
-          tags: ['🎨 Canlı Renkler', '👀 Görsel Algı', '🐘 Büyük-Küçük'],
-          btnText: 'Düelloyu Başlat'
-        },
-        1: {
-          title: 'Göz ve Renk Düellosu',
-          icon: '🎯',
-          badge: '🌱 Renk & Dikkat',
-          featureTag: '🎯 Hızlı Seçim',
-          description: 'Gözlerin mi daha hızlı yoksa aklın mı? Rengine göre bas! 🎯',
-          tags: ['🎯 Renk Eşleştirme', '⚡ Hızlı Seçim', '🌈 Renkler'],
-          btnText: 'Düelloyu Başlat'
-        },
-        2: {
-          title: 'Renk Tuzakları (Stroop)',
-          icon: '🎯',
-          badge: '🚀 Stroop Testi',
-          featureTag: '🧠 Beyin Fırtınası',
-          description: 'Dikkat tuzak! Renge aldanma, kelimenin gerçek rengini bil! 🧠',
-          tags: ['🧠 Renk Tuzağı', '⚡ Beyin Jimnastiği', '🎯 Odaklanma'],
-          btnText: 'Düelloyu Başlat'
-        },
-        3: {
-          title: 'Renk Tuzakları (Stroop)',
-          icon: '🎯',
-          badge: '⚡ Beyin Jimnastiği',
-          featureTag: '⚡ Ters Köşe',
-          description: 'Ters köşe kelimeler! Zihnini şaşırtmaya çalışan tuzağı aş! ⚡',
-          tags: ['⚡ Ters Köşe', '🎯 Konsantrasyon', '🧠 Görsel Odak'],
-          btnText: 'Düelloyu Başlat'
-        },
-        4: {
-          title: 'Süper Stroop: Renk Tuzakları',
-          icon: '🎯',
-          badge: '👑 Nöro-Dikkat',
-          featureTag: '👑 Nöro-Hız',
-          description: 'Usta seviye Stroop düellosu! Şampiyon refleksle ters köşeyi çöz! 👑',
-          tags: ['👑 İleri Stroop', '⚡ Saliselik Karar', '🧠 Zihinsel Çeviklik'],
-          btnText: 'Düelloyu Başlat'
-        }
-      }
-    },
-    {
-      id: 'memory',
-      themeClass: 'memory-theme',
-      tagClass: 'memory-tag',
-      categoryMapping: (grade) => {
-        if (grade === 0) return ['all', 'reflex'];
-        if (grade === 1 || grade === 2) return ['all', 'memory'];
-        return ['all', 'brain'];
-      },
-      gradeContent: {
-        0: {
-          title: 'Sevimli Hafıza Düellosu',
-          icon: '🧠',
-          badge: '🎈 Görsel Hafıza',
-          featureTag: '🎈 Neşeli Zihin',
-          description: 'Ekranda parlayan 3 sevimli nesneyi aklında tut, sırayı bil! 🎈',
-          tags: ['🎈 3 Nesne Sırası', '🧠 Görsel Hatırlama', '⭐ Hafıza'],
-          btnText: 'Düelloyu Başlat'
-        },
-        1: {
-          title: 'Süper Hafıza: Sırayı Hatırla',
-          icon: '🧠',
-          badge: '🌱 Sıralı Hafıza',
-          featureTag: '🧠 Zihin Belleği',
-          description: 'Sırayı aklına kazı! İlk hangisi çıktı, kim kayboldu? 🧠',
-          tags: ['🧠 Sıralama Belleği', '👀 Görsel Dikkat', '⚡ Hızlı Hatırla'],
-          btnText: 'Düelloyu Başlat'
-        },
-        2: {
-          title: 'Süper Hafıza: Sırayı Hatırla',
-          icon: '🧠',
-          badge: '🚀 Sıralı Hafıza',
-          featureTag: '⚡ Hızlı Hatırla',
-          description: 'Sembolleri hızlıca tara! Sorulan sembolü ilk dokunan bulsun! 🚀',
-          tags: ['🚀 3-4 Sembol', '⚡ Hızlı Kodlama', '🧠 Canlandırma'],
-          btnText: 'Düelloyu Başlat'
-        },
-        3: {
-          title: 'Süper Hafıza: Sırayı Hatırla',
-          icon: '🧠',
-          badge: '⚡ Şampiyon Bellek',
-          featureTag: '⭐ Şampiyon Bellek',
-          description: '4\'lü sembol sırasını zihninde canlandır ve puanı kap! ⭐',
-          tags: ['⭐ 4\'lü Dizi', '🧠 Detaylı Hatırlama', '⚡ Hızlı Çağırma'],
-          btnText: 'Düelloyu Başlat'
-        },
-        4: {
-          title: 'Usta Hafıza: Sırayı Hatırla',
-          icon: '🧠',
-          badge: '👑 Fotoğrafik Hafıza',
-          featureTag: '👑 Fotoğrafik Hafıza',
-          description: 'Fotoğrafik hafıza meydan okuması! Sıraları bil, tahtanın kralı ol! 👑',
-          tags: ['👑 Fotoğrafik Bellek', '🔍 Sıra Analizi', '⚡ Süper Konsantrasyon'],
-          btnText: 'Düelloyu Başlat'
-        }
-      }
-    },
-    {
-      id: 'reflex',
-      themeClass: 'reflex-theme',
-      tagClass: 'reflex-tag',
-      categoryMapping: (grade) => {
-        if (grade === 0) return ['all', 'reflex'];
-        if (grade === 1 || grade === 2) return ['all', 'reflex'];
-        return ['all', 'brain'];
-      },
-      gradeContent: {
-        0: {
-          title: 'Neşeli Refleks & Balon Avı',
-          icon: '⚡',
-          badge: '🎈 Hızlı Dokun',
-          featureTag: '⚡ Hızlı Dokun',
-          description: 'Balon belirdiğinde ekrana ilk dokunan ol, kaktüsten kaç! 🎈',
-          tags: ['🎈 Balon Avı', '⚡ Hızlı Dokun', '🌵 Kaktüsten Kaç'],
-          btnText: 'Düelloyu Başlat'
-        },
-        1: {
-          title: 'Şimşek Refleks: Hedef Avı',
-          icon: '⚡',
-          badge: '🌱 Saf Hız',
-          featureTag: '⚡ Şimşek Hız',
-          description: 'Yıldıza bas (⭐), bombadan kaç (💣)! Yanlış basan kilitlenir! ⚡',
-          tags: ['⭐ Yıldız Avı', '💣 Bombadan Kaç', '⚡ Şimşek Hız'],
-          btnText: 'Düelloyu Başlat'
-        },
-        2: {
-          title: 'Şimşek Refleks: Hedef Avı',
-          icon: '⚡',
-          badge: '🚀 Hızlı Tepki',
-          featureTag: '🚀 Saliselik Tepki',
-          description: 'Saf hız ve konsantrasyon! Hedefi ilk yakalayan puanı kapar! 🚀',
-          tags: ['🚀 Saliselik Tepki', '⚡ Hızlı Dokunuş', '🔒 Kilit Cezası'],
-          btnText: 'Düelloyu Başlat'
-        },
-        3: {
-          title: 'Şimşek Refleks: Köstebek & Av',
-          icon: '⚡',
-          badge: '⚡ Süper Hız',
-          featureTag: '🎯 Keskin Refleks',
-          description: 'Hedef çıktığı an rekor hızla dokun! Sahte bombalara asla basma! ⚡',
-          tags: ['⚡ Köstebek Avı', '🎯 Seçici Dikkat', '⚡ Hızlı Refleks'],
-          btnText: 'Düelloyu Başlat'
-        },
-        4: {
-          title: 'Şimşek Refleks: Köstebek & Av',
-          icon: '⚡',
-          badge: '👑 Şimşek Hızı',
-          featureTag: '🏆 Zirve Refleks',
-          description: 'Tahtanın en hızlısı kim? Saliseler içinde hedefi avla, zaferi kazan! 🏆',
-          tags: ['🏆 Zirve Refleks', '⭐ Sıfır Hata', '👑 Tahta Rekoru'],
-          btnText: 'Düelloyu Başlat'
-        }
-      }
+  // -------------------------------------------------------------
+  // 1. KADEME: DERS SEÇİM KARTLARINI (GRID) ÜRET
+  // -------------------------------------------------------------
+  function renderSubjects() {
+    if (!DOM.subjectsGrid) return;
+    const g = state.currentGrade;
+    const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
+
+    const gradeNames = {
+      0: 'Anasınıfı',
+      1: '1. Sınıf',
+      2: '2. Sınıf',
+      3: '3. Sınıf',
+      4: '4. Sınıf'
+    };
+    if (DOM.subjectsGradeTitle) {
+      DOM.subjectsGradeTitle.textContent = `${gradeNames[g] || g + '. Sınıf'} Dersleri`;
     }
-  ];
+    if (DOM.subjectsCountBadge) {
+      DOM.subjectsCountBadge.textContent = `${subjects.length} Ders Mevcut`;
+    }
+
+    DOM.subjectsGrid.innerHTML = subjects.map(subject => {
+      const activeGamesCount = subject.games.filter(gm => gm.active).length;
+      return `
+        <div class="subject-card ${subject.colorTheme}" data-subject-id="${subject.id}" role="button" tabindex="0">
+          <div class="subject-card-top">
+            <span class="subject-badge">${replaceEmojisWith3D(subject.badge, 'chip-3d-icon')}</span>
+            <span class="subject-games-count">${activeGamesCount} Pratik Aktif</span>
+          </div>
+          <div class="subject-icon-wrap">
+            <span class="subject-icon">${replaceEmojisWith3D(subject.icon, 'game-3d-big-icon')}</span>
+          </div>
+          <h3 class="subject-title">${subject.name}</h3>
+          <span class="subject-tagline">${subject.tagline}</span>
+          <p class="subject-desc">${subject.description}</p>
+          <div class="subject-card-footer">
+            <span class="btn-open-subject">Dersi Aç ➔</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Ders Kartlarına Tıklama Dinleyicisi
+    DOM.subjectsGrid.querySelectorAll('.subject-card').forEach(card => {
+      card.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const subjectId = card.getAttribute('data-subject-id');
+        selectSubject(subjectId);
+      });
+    });
+  }
+
+  // Ders Seçildiğinde 2. Kademeye (Oyunlar & Konular) Geç
+  function selectSubject(subjectId) {
+    const g = state.currentGrade;
+    const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
+    const subject = subjects.find(s => s.id === subjectId) || subjects[0];
+
+    state.currentSubject = subject.id;
+    state.currentCategory = 'all';
+
+    // UI Geçişi: Dersler gizlenir, oyunlar açılır
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+    if (DOM.gamesSection) {
+      DOM.gamesSection.classList.remove('hide');
+      DOM.gamesSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Ders Başlığını ve İkonunu Doldur
+    if (DOM.currentSubjectIcon) {
+      DOM.currentSubjectIcon.innerHTML = replaceEmojisWith3D(subject.icon, 'chip-3d-icon');
+    }
+    if (DOM.currentSubjectTitle) {
+      DOM.currentSubjectTitle.textContent = subject.name;
+    }
+    if (DOM.currentSubjectGrade) {
+      const gradeNames = { 0: 'Anasınıfı', 1: '1. Sınıf', 2: '2. Sınıf', 3: '3. Sınıf', 4: '4. Sınıf' };
+      DOM.currentSubjectGrade.textContent = `${gradeNames[g] || g + '. Sınıf'} Konu & Pratik Havuzu`;
+    }
+
+    audio.playClick();
+    renderSubcategories();
+    renderGameCards();
+  }
+
+  // "← Tüm Dersler" Butonuna Basıldığında 1. Kademeye Dönüş
+  function returnToSubjectsList() {
+    state.currentSubject = null;
+    state.currentCategory = 'all';
+
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.remove('hide');
+
+    renderSubjects();
+    audio.playClick();
+  }
 
   // Alt Kategori Sekmelerini (Pills/Tabs) Üret
   function renderSubcategories() {
     if (!DOM.subcategoryTabs) return;
     const g = state.currentGrade;
-    const cats = SUBCATEGORIES_CONFIG[g] || SUBCATEGORIES_CONFIG[1];
+    const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
+    const subject = subjects.find(s => s.id === state.currentSubject) || subjects[0];
 
-    // Aktif kategori bu sınıfta yoksa 'all' yap
-    const exists = cats.some(c => c.id === state.currentCategory);
+    if (!subject) return;
+
+    const topics = subject.topics || [{ id: 'all', label: '🌟 Tümü' }];
+
+    // Aktif kategori bu derste yoksa 'all' yap
+    const exists = topics.some(t => t.id === state.currentCategory);
     if (!exists) {
       state.currentCategory = 'all';
     }
 
-    DOM.subcategoryTabs.innerHTML = cats.map(c => `
-      <button class="subcat-pill ${c.id === state.currentCategory ? 'active' : ''}" data-cat-id="${c.id}">
-        ${replaceEmojisWith3D(c.label, 'chip-3d-icon')}
+    DOM.subcategoryTabs.innerHTML = topics.map(t => `
+      <button class="subcat-pill ${t.id === state.currentCategory ? 'active' : ''}" data-cat-id="${t.id}">
+        ${replaceEmojisWith3D(t.label, 'chip-3d-icon')}
       </button>
     `).join('');
 
@@ -2439,48 +3478,74 @@
     });
   }
 
-  // Dinamik Oyun Kartlarını (Grid) Üret
+  // Dinamik Oyun & Konu Kartlarını (Grid) Üret
   function renderGameCards() {
     if (!DOM.gamesGrid) return;
     const g = state.currentGrade;
+    const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
+    const subject = subjects.find(s => s.id === state.currentSubject) || subjects[0];
+
+    if (!subject) return;
+
     const currentCat = state.currentCategory;
+    const allGames = subject.games || [];
 
     // Filtreleme
-    const filtered = GAMES_CATALOG.filter(game => {
-      const cats = game.categoryMapping(g);
+    const filtered = allGames.filter(game => {
       if (currentCat === 'all') return true;
-      return cats.includes(currentCat);
+      return game.topic === currentCat;
     });
 
     // Sayaç Rozetini Güncelle
     if (DOM.gamesCountBadge) {
-      DOM.gamesCountBadge.textContent = `${filtered.length} Oyun Gösteriliyor`;
+      const activeCount = filtered.filter(x => x.active).length;
+      DOM.gamesCountBadge.textContent = `${activeCount} Aktif Pratik (${filtered.length} Konu)`;
     }
 
     // Kart HTML'lerini oluştur
     DOM.gamesGrid.innerHTML = filtered.map(game => {
-      const content = game.gradeContent[g] || game.gradeContent[1];
-      return `
-        <div class="game-card ${game.themeClass}" data-game-id="${game.id}">
-          <div class="game-top-meta">
-            <span class="game-category-tag ${game.tagClass}">${replaceEmojisWith3D(content.badge, 'chip-3d-icon')}</span>
-            <span class="game-speed-badge">${replaceEmojisWith3D(content.featureTag, 'chip-3d-icon')}</span>
+      if (game.active) {
+        return `
+          <div class="game-card ${subject.colorTheme || 'theme-math'}" data-game-id="${game.id}">
+            <div class="game-top-meta">
+              <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
+              <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+            </div>
+            <div class="game-visual-icon">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
+            <h3 class="game-title">${game.title}</h3>
+            <p class="game-subtitle">${game.description}</p>
+            <div class="game-features-list">
+              ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
+            </div>
+            <button class="btn-play-game" data-game-id="${game.id}">
+              🎮 ${state.gameMode === 'solo' ? 'Pratiğe Başla' : game.btnText}
+            </button>
           </div>
-          <div class="game-visual-icon">${replaceEmojisWith3D(content.icon, 'game-3d-big-icon')}</div>
-          <h3 class="game-title">${content.title}</h3>
-          <p class="game-subtitle">${content.description}</p>
-          <div class="game-features-list">
-            ${content.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
+        `;
+      } else {
+        // Yakında / Hazırlanıyor Kartı
+        return `
+          <div class="game-card game-card-upcoming" data-game-id="${game.id}">
+            <div class="game-top-meta">
+              <span class="game-category-tag tag-upcoming">🔒 ${game.badge || 'Hazırlanıyor'}</span>
+              <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+            </div>
+            <div class="game-visual-icon" style="filter: grayscale(0.5); opacity:0.85;">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
+            <h3 class="game-title">${game.title}</h3>
+            <p class="game-subtitle">${game.description}</p>
+            <div class="game-features-list">
+              ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
+            </div>
+            <button class="btn-play-game btn-upcoming" disabled>
+              🔒 Yakında Aktif
+            </button>
           </div>
-          <button class="btn-play-game" data-game-id="${game.id}">
-            🎮 ${state.gameMode === 'solo' ? 'Pratiğe Başla' : content.btnText}
-          </button>
-        </div>
-      `;
+        `;
+      }
     }).join('');
 
-    // Kartlara ve Butonlara Tıklama / Dokunma Dinleyicisi
-    DOM.gamesGrid.querySelectorAll('.game-card').forEach(card => {
+    // Aktif kartlara tıklama dinleyicisi
+    DOM.gamesGrid.querySelectorAll('.game-card:not(.game-card-upcoming)').forEach(card => {
       card.addEventListener('pointerdown', (e) => {
         e.preventDefault();
         const gameId = card.getAttribute('data-game-id');
@@ -2526,6 +3591,8 @@
 
   function setGrade(gradeNumber) {
     state.currentGrade = parseInt(gradeNumber, 10);
+    state.currentSubject = null;
+    state.currentCategory = 'all';
     audio.playClick();
 
     // Çip butonları güncelle (Header)
@@ -2534,15 +3601,17 @@
       chip.classList.toggle('active', g === state.currentGrade);
     });
 
-    // Lobi kartlarını güncelle
+    // Lobi kartlarını güncelle (varsa)
     DOM.gradeCards.forEach(card => {
       const g = parseInt(card.getAttribute('data-grade'), 10);
       card.classList.toggle('active', g === state.currentGrade);
     });
 
-    // Dinamik alt kategorileri ve oyun kartlarını sınıfa göre baştan üret
-    renderSubcategories();
-    renderGameCards();
+    // 1. Kademeye (Dersler Listesi) dön
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.remove('hide');
+
+    renderSubjects();
   }
 
   /* ==========================================================================
@@ -2913,7 +3982,12 @@
 
     const gameTypeBadges = {
       math: state.currentGrade === 0 ? '🎨 Renkler & Sayma' : (isSolo ? '📐 Matematik Pratiği' : '📐 Matematik Düellosu'),
-      turkish: state.currentGrade === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Dikkat',
+      turkish: state.currentGrade === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Kelime Avcısı',
+      firstreading: '🔤 İlk Okuma & Ses Avcısı',
+      lifescience: '🌱 Hayat Bilgisi Düellosu',
+      science: '🔬 Fen Bilimleri Laboratuvarı',
+      social: '🗺️ Sosyal Bilgiler Keşfi',
+      english: '🇬🇧 English Word Battle',
       oddone: '👀 Farklı Olanı Yakala',
       stroop: '🎯 Renk Tuzakları (Stroop)',
       memory: '🧠 Süper Hafıza',
@@ -3006,7 +4080,16 @@
     // Arayüz ve Moli'yi güncelle
     renderScoreTrack();
     updateGameModeUI();
-    renderGameCards();
+    if (state.currentSubject) {
+      if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+      if (DOM.gamesSection) DOM.gamesSection.classList.remove('hide');
+      renderSubcategories();
+      renderGameCards();
+    } else {
+      if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+      if (DOM.subjectsSection) DOM.subjectsSection.classList.remove('hide');
+      renderSubjects();
+    }
     changeMoliExpression('lobby');
     audio.playClick();
   }
@@ -3536,6 +4619,14 @@
       });
     }
 
+    // Ders Listesine Geri Dönüş Butonu (1. Kademeye Dönüş)
+    if (DOM.btnBackToSubjects) {
+      DOM.btnBackToSubjects.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        returnToSubjectsList();
+      });
+    }
+
     // Zafer Ekranı Butonları
     DOM.btnRematchSame.addEventListener('pointerdown', handleRematchSame);
     DOM.btnSelectNewStudents.addEventListener('pointerdown', handleSelectNewStudentsFromVictory);
@@ -3553,8 +4644,7 @@
     updateTeacherAuthUI();
     updateGameModeUI();
     updatePlayerNamesUI();
-    renderSubcategories();
-    renderGameCards();
+    renderSubjects();
     changeMoliExpression('lobby');
 
     // Kayıtlı ayarları UI'a yansıt
@@ -3575,6 +4665,9 @@
   window.changeMoliExpression = changeMoliExpression;
   window.returnToLobby = returnToLobby;
   window.exitDuel = exitDuel;
+  window.selectSubject = selectSubject;
+  window.returnToSubjectsList = returnToSubjectsList;
+  window.renderSubjects = renderSubjects;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {

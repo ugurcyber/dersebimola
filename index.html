@@ -262,22 +262,52 @@
       </section>
 
 
-      <!-- Dinamik Alt Kategori Sekmeleri -->
-      <section class="subcategory-section" id="subcategorySection">
-        <div class="section-label">Kategori Seç:</div>
-        <div class="subcategory-tabs" id="subcategoryTabs">
-          <!-- Sınıfa göre dinamik üretilen hap sekmeler -->
+      <!-- ============================================== -->
+      <!-- 1. KADEME: DERS SEÇİM EKRANI (SUBJECTS GRID) -->
+      <!-- ============================================== -->
+      <section class="subjects-section" id="subjectsSection">
+        <div class="subjects-section-header">
+          <div class="section-title-wrap">
+            <span class="section-pill-badge">📚 DERSİNİ SEÇ</span>
+            <h2 class="section-title" id="subjectsGradeTitle">1. Sınıf Dersleri</h2>
+            <p class="section-desc">Eğlenceli düelloya veya pratiğe başlamak için bir ders seç:</p>
+          </div>
+          <span class="subjects-count-badge" id="subjectsCountBadge">5 Ders Mevcut</span>
+        </div>
+        <div class="subjects-grid" id="subjectsGrid">
+          <!-- Sınıfa göre dinamik üretilen ders kartları (İlk Okuma, Matematik, Türkçe vb.) -->
         </div>
       </section>
 
-      <!-- Dinamik Oyun Kartları Grid'i -->
-      <section class="games-section">
-        <div class="games-section-header">
-          <div class="section-label">Oynamak İstediğin Düelloyu Seç:</div>
-          <span class="games-count-badge" id="gamesCountBadge">6 Oyun Mevcut</span>
+      <!-- ============================================== -->
+      <!-- 2. KADEME: DERS İÇİ OYUNLAR & KONULAR (GAMES VIEW) -->
+      <!-- ============================================== -->
+      <section class="games-section hide" id="gamesSection">
+        <!-- Ders Başlık & Geri Dönüş Barı -->
+        <div class="subject-header-nav">
+          <button class="btn-back-to-subjects" id="btnBackToSubjects" title="Ders Listesine Dön">
+            <span>←</span> Tüm Dersler
+          </button>
+          <div class="current-subject-badge-wrap">
+            <span class="current-subject-icon" id="currentSubjectIcon">🧮</span>
+            <div class="current-subject-text-group">
+              <h2 class="current-subject-title" id="currentSubjectTitle">Matematik</h2>
+              <span class="current-subject-grade" id="currentSubjectGrade">1. Sınıf Konu & Pratik Havuzu</span>
+            </div>
+          </div>
+          <span class="games-count-badge" id="gamesCountBadge">1 Pratik Aktif</span>
         </div>
+
+        <!-- Dinamik Konu / Kategori Filtre Sekmeleri -->
+        <div class="subcategory-section" id="subcategorySection">
+          <div class="subcategory-tabs" id="subcategoryTabs">
+            <!-- Derse göre dinamik konu filtre hapları -->
+          </div>
+        </div>
+
+        <!-- Oyun & Konu Kartları Grid'i -->
         <div class="games-grid" id="gamesGrid">
-          <!-- Seçilen sınıfa ve alt kategoriye göre dinamik doldurulacak -->
+          <!-- Seçilen derse göre aktif oyunlar ve yakında rozetli konular -->
         </div>
       </section>
 
