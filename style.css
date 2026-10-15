@@ -3817,3 +3817,72 @@ input:checked + .slider:before {
   }
 }
 
+/* ==========================================================================
+   İNGİLİZCE PRATİK & KELİME EŞLEŞTİRME MODÜLÜ STİLLERİ
+   ========================================================================== */
+.english-card-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(238, 242, 255, 0.96) 0%, rgba(224, 231, 255, 0.96) 100%);
+  border: 2px solid #818cf8;
+  border-radius: 18px;
+  padding: 10px 24px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.15);
+  width: 90%;
+  max-width: 420px;
+  animation: enWordPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes enWordPop {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.en-flag-pill {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #4338ca;
+  background: #ffffff;
+  border: 1px solid #c7d2fe;
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.en-big-word {
+  font-size: 2.35rem;
+  font-weight: 900;
+  color: #312e81;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.en-audio-hint {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #6366f1;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.en-question-subtext {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+

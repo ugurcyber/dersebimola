@@ -361,7 +361,7 @@
       }
     }
 
-    speakTurkishText(text, onEnded) {
+    speakText(text, lang = 'tr', onEnded) {
       if (!state.soundEnabled) {
         if (onEnded) onEnded();
         return;
@@ -369,23 +369,35 @@
       // 3) Yeni bir ses çalmadan önce devam eden önceki Audio veya konuşmayı mutlaka durdur
       this.stopQuestionAudio();
 
-      // 1) Metni okumadan önce tüm emojileri sil ve matematik işaretlerini Türkçe kelimelere çevir
+      // 1) Metni okumadan önce tüm emojileri sil ve dile göre metni optimize et
       let cleanText = (text || '').toString()
         .replace(/\p{Extended_Pictographic}/gu, '')
         .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F2FF}\u{1F680}-\u{1F6FF}]/gu, '')
-        .replace(/[\uFE00-\uFE0F]/g, '')
-        .replace(/\+/g, ' artı ')
-        .replace(/[-−–—]/g, ' eksi ')
-        .replace(/[*×]/g, ' kere ')
-        .replace(/(\d)\s*[xX]\s*(\d)/g, '$1 kere $2')
-        .replace(/(^|\s)[xX](\s|$)/g, '$1 kere $2')
-        .replace(/[xX]/g, ' kere ')
-        .replace(/[\/÷]/g, ' bölü ')
-        .replace(/=/g, ' eşittir ')
-        .replace(/\b(kaç eder|kaçtır)\s*\?/gi, '$1')
-        .replace(/\?/g, ' kaçtır ')
-        .replace(/\s+/g, ' ')
-        .trim();
+        .replace(/[\uFE00-\uFE0F]/g, '');
+
+      const isEn = (lang === 'en' || lang.startsWith('en'));
+
+      if (isEn) {
+        cleanText = cleanText
+          .replace(/[-−–—]/g, ' ')
+          .replace(/[?!.,;:"'()]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      } else {
+        cleanText = cleanText
+          .replace(/\+/g, ' artı ')
+          .replace(/[-−–—]/g, ' eksi ')
+          .replace(/[*×]/g, ' kere ')
+          .replace(/(\d)\s*[xX]\s*(\d)/g, '$1 kere $2')
+          .replace(/(^|\s)[xX](\s|$)/g, '$1 kere $2')
+          .replace(/[xX]/g, ' kere ')
+          .replace(/[\/÷]/g, ' bölü ')
+          .replace(/=/g, ' eşittir ')
+          .replace(/\b(kaç eder|kaçtır)\s*\?/gi, '$1')
+          .replace(/\?/g, ' kaçtır ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
 
       if (!cleanText) {
         if (onEnded) onEnded();
@@ -401,19 +413,29 @@
         }
       };
 
-      // 2) Eğer cihazda kaliteli yerel Türkçe ses yoksa (veya Linux/Pardus ise) Google TTS kullan
+      const ttsLang = isEn ? 'en' : 'tr';
+      const synthLang = isEn ? 'en-US' : 'tr-TR';
+
+      // 2) Eğer cihazda kaliteli yerel ses yoksa (veya Linux/Pardus ise) Google TTS kullan
       const ua = (navigator.userAgent || '').toLowerCase();
       const platform = (navigator.platform || '').toLowerCase();
       const isLinuxOrPardus = /linux|pardus|x11/i.test(ua) || /linux/i.test(platform);
 
-      let trVoice = null;
+      let matchedVoice = null;
       if ('speechSynthesis' in window) {
         try {
           const voices = window.speechSynthesis.getVoices() || [];
-          trVoice = voices.find(v => 
-            (v.lang && (v.lang === 'tr-TR' || v.lang.toLowerCase().startsWith('tr'))) ||
-            (v.name && (v.name.toLowerCase().includes('turkish') || v.name.toLowerCase().includes('türkçe')))
-          );
+          if (isEn) {
+            matchedVoice = voices.find(v => 
+              (v.lang && (v.lang === 'en-US' || v.lang === 'en-GB' || v.lang.toLowerCase().startsWith('en'))) ||
+              (v.name && (v.name.toLowerCase().includes('english') || v.name.toLowerCase().includes('google us') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('zira')))
+            );
+          } else {
+            matchedVoice = voices.find(v => 
+              (v.lang && (v.lang === 'tr-TR' || v.lang.toLowerCase().startsWith('tr'))) ||
+              (v.name && (v.name.toLowerCase().includes('turkish') || v.name.toLowerCase().includes('türkçe')))
+            );
+          }
         } catch(e) {}
       }
 
@@ -428,12 +450,12 @@
             window.speechSynthesis.resume();
           }
           const u = new SpeechSynthesisUtterance(cleanText);
-          u.lang = 'tr-TR';
-          u.rate = 0.95;
-          u.pitch = 1.05;
+          u.lang = synthLang;
+          u.rate = isEn ? 0.90 : 0.95;
+          u.pitch = isEn ? 1.0 : 1.05;
 
-          if (trVoice) {
-            u.voice = trVoice;
+          if (matchedVoice) {
+            u.voice = matchedVoice;
           }
 
           u.onend = finish;
@@ -446,14 +468,13 @@
 
       const playWithGoogleTts = () => {
         try {
-          const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
+          const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
           const audioEl = new Audio(googleUrl);
           this.currentAudio = audioEl;
           audioEl.volume = 1.0;
 
           audioEl.onended = finish;
           audioEl.onerror = () => {
-            // Google TTS bağlantı hatasında çevrimdışı yedek olarak speechSynthesis dene
             this.currentAudio = null;
             playWithSpeechSynthesis();
           };
@@ -470,11 +491,19 @@
         }
       };
 
-      if (isLinuxOrPardus || !trVoice) {
+      if (isLinuxOrPardus || !matchedVoice) {
         playWithGoogleTts();
       } else {
         playWithSpeechSynthesis();
       }
+    }
+
+    speakTurkishText(text, onEnded) {
+      this.speakText(text, 'tr', onEnded);
+    }
+
+    speakEnglishText(text, onEnded) {
+      this.speakText(text, 'en', onEnded);
     }
 
     stopQuestionAudio() {
@@ -548,8 +577,17 @@
       btns.forEach(b => { if (b) b.classList.remove('reading-active'); });
     };
 
+    const isEnglish = (
+      state.currentGameType === 'english' ||
+      (typeof state.currentGameType === 'string' && state.currentGameType.startsWith('english_')) ||
+      (state.currentQuestion && (state.currentQuestion.lang === 'en' || !!state.currentQuestion.englishWord))
+    );
+
     if (state.currentQuestion.audioKey) {
       audio.playQuestionFile(state.currentQuestion.audioKey, finish);
+    } else if (isEnglish) {
+      const enWord = state.currentQuestion.englishWord || state.currentQuestion.spokenText || getSpokenTextForQuestion(state.currentQuestion);
+      audio.speakEnglishText(enWord, finish);
     } else {
       const spoken = getSpokenTextForQuestion(state.currentQuestion);
       audio.speakTurkishText(spoken, finish);
@@ -1107,20 +1145,90 @@
     ],
 
     // -------------------------------------------------------------
-    // 2., 3. & 4. SINIF: İNGİLİZCE (ENGLISH) HAVUZU
+    // İLKOKUL İNGİLİZCE (ENGLISH) HAVUZLARI & KELİME EŞLEŞTİRME
     // -------------------------------------------------------------
+    // 1) Renkler (Colors)
+    englishColorsPool: [
+      { englishWord: 'Red', q: 'İngilizce "Red" hangi renktir? 🔴', a: 'Kırmızı 🔴', d: ['Mavi 🔵', 'Sarı 🟡'], exp: 'Red = Kırmızı demektir. 🔴' },
+      { englishWord: 'Blue', q: 'İngilizce "Blue" hangi renktir? 🔵', a: 'Mavi 🔵', d: ['Yeşil 🟢', 'Kırmızı 🔴'], exp: 'Blue = Mavi demektir. 🔵' },
+      { englishWord: 'Yellow', q: 'İngilizce "Yellow" hangi renktir? 🟡', a: 'Sarı 🟡', d: ['Mor 🟣', 'Turuncu 🟠'], exp: 'Yellow = Sarı demektir. 🟡' },
+      { englishWord: 'Green', q: 'İngilizce "Green" hangi renktir? 🟢', a: 'Yeşil 🟢', d: ['Mavi 🔵', 'Siyah ⚫'], exp: 'Green = Yeşil demektir. 🟢' },
+      { englishWord: 'Orange', q: 'İngilizce "Orange" hangi renktir? 🟠', a: 'Turuncu 🟠', d: ['Sarı 🟡', 'Pembe 🌸'], exp: 'Orange = Turuncu demektir (aynı zamanda portakal). 🟠' },
+      { englishWord: 'Purple', q: 'İngilizce "Purple" hangi renktir? 🟣', a: 'Mor 🟣', d: ['Kırmızı 🔴', 'Kahverengi 🟤'], exp: 'Purple = Mor demektir. 🟣' },
+      { englishWord: 'Pink', q: 'İngilizce "Pink" hangi renktir? 🌸', a: 'Pembe 🌸', d: ['Beyaz ⚪', 'Mavi 🔵'], exp: 'Pink = Pembe demektir. 🌸' },
+      { englishWord: 'Black', q: 'İngilizce "Black" hangi renktir? ⚫', a: 'Siyah ⚫', d: ['Gri 🔘', 'Beyaz ⚪'], exp: 'Black = Siyah demektir. ⚫' },
+      { englishWord: 'White', q: 'İngilizce "White" hangi renktir? ⚪', a: 'Beyaz ⚪', d: ['Sarı 🟡', 'Kırmızı 🔴'], exp: 'White = Beyaz demektir. ⚪' },
+      { englishWord: 'Brown', q: 'İngilizce "Brown" hangi renktir? 🟤', a: 'Kahverengi 🟤', d: ['Siyah ⚫', 'Yeşil 🟢'], exp: 'Brown = Kahverengi demektir. 🟤' },
+      { englishWord: 'Red', q: '"Kırmızı" 🔴 renginin İngilizce karşılığı hangisidir?', a: 'Red 🔴', d: ['Blue 🔵', 'Green 🟢'], exp: 'Kırmızı rengi İngilizce "Red" demektir. 🔴' },
+      { englishWord: 'Green', q: '"Yeşil" 🟢 renginin İngilizce karşılığı hangisidir?', a: 'Green 🟢', d: ['Yellow 🟡', 'Purple 🟣'], exp: 'Yeşil rengi İngilizce "Green" demektir. 🟢' },
+      { englishWord: 'Blue', q: '"Mavi" 🔵 renginin İngilizce karşılığı hangisidir?', a: 'Blue 🔵', d: ['Black ⚫', 'Pink 🌸'], exp: 'Mavi rengi İngilizce "Blue" demektir. 🔵' }
+    ],
+
+    // 2) Hayvanlar (Animals)
+    englishAnimalsPool: [
+      { englishWord: 'Cat', q: 'İngilizce "Cat" hangi sevimli dostumuzdur? 🐱', a: 'Kedi 🐱', d: ['Köpek 🐶', 'Kuş 🐦'], exp: 'Cat = Kedi demektir. 🐱' },
+      { englishWord: 'Dog', q: 'İngilizce "Dog" hangi sadık dostumuzdur? 🐶', a: 'Köpek 🐶', d: ['Kedi 🐱', 'Tavşan 🐰'], exp: 'Dog = Köpek demektir. 🐶' },
+      { englishWord: 'Bird', q: 'İngilizce "Bird" gökyüzündeki hangi hayvandır? 🐦', a: 'Kuş 🐦', d: ['Balık 🐟', 'Kelebek 🦋'], exp: 'Bird = Kuş demektir. 🐦' },
+      { englishWord: 'Fish', q: 'İngilizce "Fish" suda yüzen hangi canlıdır? 🐟', a: 'Balık 🐟', d: ['Kurbağa 🐸', 'Kaplumbağa 🐢'], exp: 'Fish = Balık demektir. 🐟' },
+      { englishWord: 'Lion', q: 'İngilizce "Lion" ormanların kralı hangi hayvandır? 🦁', a: 'Aslan 🦁', d: ['Kaplan 🐯', 'Ayı 🐻'], exp: 'Lion = Aslan demektir. 🦁' },
+      { englishWord: 'Elephant', q: 'İngilizce "Elephant" hortumlu dev dostumuz kimdir? 🐘', a: 'Fil 🐘', d: ['Zürafa 🦒', 'Ayı 🐻'], exp: 'Elephant = Fil demektir. 🐘' },
+      { englishWord: 'Monkey', q: 'İngilizce "Monkey" muz seven sevimli hayvan kimdir? 🐵', a: 'Maymun 🐵', d: ['Sincap 🐿️', 'Panda 🐼'], exp: 'Monkey = Maymun demektir. 🐵' },
+      { englishWord: 'Rabbit', q: 'İngilizce "Rabbit" havuç seven zıp zıp hayvan kimdir? 🐰', a: 'Tavşan 🐰', d: ['Köpek 🐶', 'Fare 🐭'], exp: 'Rabbit = Tavşan demektir. 🐰' },
+      { englishWord: 'Bear', q: 'İngilizce "Bear" bal seven orman dostumuz kimdir? 🐻', a: 'Ayı 🐻', d: ['Kurt 🐺', 'Aslan 🦁'], exp: 'Bear = Ayı demektir. 🐻' },
+      { englishWord: 'Horse', q: 'İngilizce "Horse" hızlı koşan asil hayvan hangisidir? 🐴', a: 'At 🐴', d: ['İnek 🐮', 'Koyun 🐑'], exp: 'Horse = At demektir. 🐴' },
+      { englishWord: 'Duck', q: 'İngilizce "Duck" vak vak sesli sevimli hayvan kimdir? 🦆', a: 'Ördek 🦆', d: ['Tavuk 🐔', 'Kaz 🦢'], exp: 'Duck = Ördek demektir. 🦆' },
+      { englishWord: 'Cow', q: 'İngilizce "Cow" bize süt veren çiftlik dostumuz kimdir? 🐮', a: 'İnek 🐮', d: ['Koyun 🐑', 'Keçi 🐐'], exp: 'Cow = İnek demektir. 🐮' },
+      { englishWord: 'Lion', q: '"Aslan" 🦁 hayvanının İngilizce adı hangisidir?', a: 'Lion 🦁', d: ['Bear 🐻', 'Tiger 🐯'], exp: 'Aslan İngilizce "Lion" demektir. 🦁' },
+      { englishWord: 'Rabbit', q: '"Tavşan" 🐰 hayvanının İngilizce adı hangisidir?', a: 'Rabbit 🐰', d: ['Duck 🦆', 'Dog 🐶'], exp: 'Tavşan İngilizce "Rabbit" demektir. 🐰' }
+    ],
+
+    // 3) Sayılar (Numbers)
+    englishNumbersPool: [
+      { englishWord: 'One', q: 'İngilizce "One" hangi sayıdır? 1️⃣', a: '1 (Bir) 1️⃣', d: ['2 (İki) 2️⃣', '3 (Üç) 3️⃣'], exp: 'One = 1 (Bir) demektir. 1️⃣' },
+      { englishWord: 'Two', q: 'İngilizce "Two" hangi sayıdır? 2️⃣', a: '2 (İki) 2️⃣', d: ['3 (Üç) 3️⃣', '1 (Bir) 1️⃣'], exp: 'Two = 2 (İki) demektir. 2️⃣' },
+      { englishWord: 'Three', q: 'İngilizce "Three" hangi sayıdır? 3️⃣', a: '3 (Üç) 3️⃣', d: ['4 (Dört) 4️⃣', '2 (İki) 2️⃣'], exp: 'Three = 3 (Üç) demektir. 3️⃣' },
+      { englishWord: 'Four', q: 'İngilizce "Four" hangi sayıdır? 4️⃣', a: '4 (Dört) 4️⃣', d: ['5 (Beş) 5️⃣', '3 (Üç) 3️⃣'], exp: 'Four = 4 (Dört) demektir. 4️⃣' },
+      { englishWord: 'Five', q: 'İngilizce "Five" hangi sayıdır? 5️⃣', a: '5 (Beş) 5️⃣', d: ['6 (Altı) 6️⃣', '4 (Dört) 4️⃣'], exp: 'Five = 5 (Beş) demektir. 5️⃣' },
+      { englishWord: 'Six', q: 'İngilizce "Six" hangi sayıdır? 6️⃣', a: '6 (Altı) 6️⃣', d: ['7 (Yedi) 7️⃣', '8 (Sekiz) 8️⃣'], exp: 'Six = 6 (Altı) demektir. 6️⃣' },
+      { englishWord: 'Seven', q: 'İngilizce "Seven" hangi sayıdır? 7️⃣', a: '7 (Yedi) 7️⃣', d: ['6 (Altı) 6️⃣', '9 (Dokuz) 9️⃣'], exp: 'Seven = 7 (Yedi) demektir. 7️⃣' },
+      { englishWord: 'Eight', q: 'İngilizce "Eight" hangi sayıdır? 8️⃣', a: '8 (Sekiz) 8️⃣', d: ['7 (Yedi) 7️⃣', '10 (On) 🔟'], exp: 'Eight = 8 (Sekiz) demektir. 8️⃣' },
+      { englishWord: 'Nine', q: 'İngilizce "Nine" hangi sayıdır? 9️⃣', a: '9 (Dokuz) 9️⃣', d: ['6 (Altı) 6️⃣', '8 (Sekiz) 8️⃣'], exp: 'Nine = 9 (Dokuz) demektir. 9️⃣' },
+      { englishWord: 'Ten', q: 'İngilizce "Ten" hangi sayıdır? 🔟', a: '10 (On) 🔟', d: ['9 (Dokuz) 9️⃣', '11 (On Bir) 🔢'], exp: 'Ten = 10 (On) demektir. 🔟' },
+      { englishWord: 'Twelve', q: 'İngilizce "Twelve" hangi sayıdır? 🔢', a: '12 (On İki) 🔢', d: ['11 (On Bir) 🔢', '20 (Yirmi) 🔢'], exp: 'Twelve = 12 (On İki) demektir. 🔢' },
+      { englishWord: 'Twenty', q: 'İngilizce "Twenty" hangi sayıdır? 🔢', a: '20 (Yirmi) 🔢', d: ['12 (On İki) 🔢', '10 (On) 🔟'], exp: 'Twenty = 20 (Yirmi) demektir. 🔢' },
+      { englishWord: 'Five', q: '"5" (Beş) 5️⃣ sayısının İngilizce okunuşu hangisidir?', a: 'Five 5️⃣', d: ['Four 4️⃣', 'Six 6️⃣'], exp: '5 sayısı İngilizce "Five" olarak okunur. 5️⃣' },
+      { englishWord: 'Eight', q: '"8" (Sekiz) 8️⃣ sayısının İngilizce okunuşu hangisidir?', a: 'Eight 8️⃣', d: ['Seven 7️⃣', 'Nine 9️⃣'], exp: '8 sayısı İngilizce "Eight" olarak okunur. 8️⃣' }
+    ],
+
+    // 4) Günlük İfadeler (Greetings & Daily Expressions)
+    englishGreetingsPool: [
+      { englishWord: 'Hello', q: 'İngilizce "Hello" ne anlama gelir? 👋', a: 'Merhaba 👋', d: ['Güle güle 👋', 'Teşekkürler 🙏'], exp: 'Hello = Merhaba / Selam demektir. 👋' },
+      { englishWord: 'Good morning', q: 'İngilizce "Good morning" ne anlama gelir? ☀️', a: 'Günaydın ☀️', d: ['İyi geceler 🌙', 'İyi akşamlar 🌆'], exp: 'Good morning = Günaydın demektir. ☀️' },
+      { englishWord: 'Good night', q: 'İngilizce "Good night" ne anlama gelir? 🌙', a: 'İyi geceler 🌙', d: ['Günaydın ☀️', 'Tünaydın 🌤️'], exp: 'Good night = İyi geceler demektir. 🌙' },
+      { englishWord: 'Goodbye', q: 'İngilizce "Goodbye" ne anlama gelir? 👋', a: 'Hoşça kal / Güle güle 👋', d: ['Hoş geldin 🌟', 'Nasılsın? 😊'], exp: 'Goodbye = Hoşça kal, güle güle demektir. 👋' },
+      { englishWord: 'Thank you', q: 'İngilizce "Thank you" ne anlama gelir? 🙏', a: 'Teşekkür ederim 🙏', d: ['Lütfen ✨', 'Özür dilerim 🥺'], exp: 'Thank you = Teşekkür ederim demektir. 🙏' },
+      { englishWord: 'How are you?', q: 'İngilizce "How are you?" ne sormaktadır? 😊', a: 'Nasılsın? 😊', d: ['Adın ne? ❓', 'Kaç yaşındasın? 🎂'], exp: '"How are you?" sorusu "Nasılsın?" anlamına gelir. 😊' },
+      { englishWord: 'I am fine', q: '"How are you?" (Nasılsın) sorusuna İngilizce nasıl "İyiyim" denir? 👍', a: 'I am fine, thank you! 👍', d: ['Goodbye! 👋', 'My name is Ali. 👦'], exp: '"I am fine, thank you" = İyiyim, teşekkürler demektir. 👍' },
+      { englishWord: 'Nice to meet you', q: 'İngilizce "Nice to meet you" ne anlama gelir? 🤝', a: 'Tanıştığıma memnun oldum 🤝', d: ['Görüşürüz 👋', 'Nerede oturuyorsun? 🏠'], exp: 'Nice to meet you = Tanıştığıma memnun oldum demektir. 🤝' },
+      { englishWord: 'Please', q: 'İngilizce kibarca bir şey isterken "Please" ne demektir? ✨', a: 'Lütfen ✨', d: ['Pardon ✋', 'Tamam 👍'], exp: 'Please = Lütfen anlamına gelen sihirli kelimedir. ✨' },
+      { englishWord: 'Welcome', q: 'Kapıda veya girişte yazan "Welcome" ne demektir? 🌟', a: 'Hoş geldiniz 🌟', d: ['Güle güle 👋', 'Görüşmek üzere 👋'], exp: 'Welcome = Hoş geldiniz demektir. 🌟' },
+      { englishWord: 'See you', q: 'Ayrılırken söylenen "See you later" ne demektir? 👋', a: 'Sonra görüşmek üzere 👋', d: ['Hoş geldiniz 🌟', 'Günaydın ☀️'], exp: 'See you later = Sonra görüşmek üzere demektir. 👋' },
+      { englishWord: 'Good morning', q: 'Sabah arkadaşımıza İngilizce nasıl "Günaydın" deriz? ☀️', a: 'Good morning! ☀️', d: ['Good evening! 🌆', 'Good night! 🌙'], exp: 'Sabahları "Good morning!" (Günaydın) denir. ☀️' }
+    ],
+
+    // Genel İngilizce Karma Havuz (2., 3. ve 4. Sınıf Genel)
     englishPool: [
-      { q: '"Kırmızı" renginin İngilizcesi nedir? 🔴', a: 'Red', d: ['Blue', 'Yellow'], exp: 'Kırmızı = Red, Mavi = Blue, Sarı = Yellow. 🔴', grade: 2 },
-      { q: '"Hello! How are you?" sorusuna en kibar ve doğru cevap hangisidir?', a: "I'm fine, thank you! 😊", d: ["Goodbye!", "My name is Ali."], exp: '"Nasılsın?" sorusuna "İyiyim, teşekkür ederim" (I\'m fine, thank you) denir. 😊', grade: 2 },
-      { q: '"One, two, three, ...?" Sıradaki sayı hangisidir? 🔢', a: 'Four (4)', d: ['Five (5)', 'Six (6)'], exp: '1: One, 2: Two, 3: Three, 4: Four! 🔢', grade: 2 },
-      { q: '"Cat" İngilizce hangi sevimli dostumuzdur? 🐾', a: 'Kedi 🐱', d: ['Köpek 🐶', 'Kuş 🐦'], exp: 'Cat = Kedi, Dog = Köpek, Bird = Kuş. 🐱', grade: 2 },
-      { q: 'Sabahları birine İngilizce nasıl "Günaydın" deriz?', a: 'Good morning! ☀️', d: ['Good night!', 'Good evening!'], exp: 'Good morning = Günaydın! Good night = İyi geceler! ☀️', grade: 2 },
-      { q: '"Pencil" hangi okul eşyamızdır? ✏️', a: 'Kurşun Kalem', d: ['Silgi', 'Okul Çantası'], exp: 'Pencil = Kurşun Kalem, Eraser = Silgi, Bag = Çanta. ✏️', grade: 3 },
-      { q: '"Book" sözcüğünün Türkçe anlamı nedir? 📚', a: 'Kitap', d: ['Defter', 'Masa'], exp: 'Book = Kitap, Notebook = Defter, Desk = Sıra/Masa. 📚', grade: 3 },
-      { q: '"Family" ailemizi anlatır. "Mother" kimdir? 👩', a: 'Anne', d: ['Baba', 'Kız Kardeş'], exp: 'Mother = Anne, Father = Baba, Sister = Kız Kardeş. 👩❤️', grade: 3 },
-      { q: '"What time is it?" sorusu ne anlama gelir? ⏰', a: 'Saat kaç?', d: ['Adın ne?', 'Kaç yaşındasın?'], exp: '"What time is it?" saat sormak için kullanılır. ⏰', grade: 4 },
-      { q: '"Teacher" mesleği Türkçe ne demektir? 👨‍🏫', a: 'Öğretmen', d: ['Doktor', 'Polis'], exp: 'Teacher = Öğretmen, Doctor = Doktor, Police = Polis. 👨‍🏫', grade: 4 },
-      { q: '"Where are you from?" sorusuna Türkiye\'den biri nasıl cevap verir? 🇹🇷', a: "I am from Turkey 🇹🇷", d: ["I am 10 years old", "I like apples"], exp: '"Nerelisin?" sorusuna "I am from Turkey" (Türkiyeliyim) denir. 🇹🇷', grade: 4 }
+      { englishWord: 'Red', q: '"Kırmızı" renginin İngilizcesi nedir? 🔴', a: 'Red 🔴', d: ['Blue 🔵', 'Yellow 🟡'], exp: 'Kırmızı = Red, Mavi = Blue, Sarı = Yellow. 🔴', grade: 2 },
+      { englishWord: 'Hello', q: '"Hello! How are you?" sorusuna en kibar ve doğru cevap hangisidir?', a: "I'm fine, thank you! 😊", d: ["Goodbye!", "My name is Ali."], exp: '"Nasılsın?" sorusuna "İyiyim, teşekkür ederim" (I\'m fine, thank you) denir. 😊', grade: 2 },
+      { englishWord: 'Four', q: '"One, two, three, ...?" Sıradaki sayı hangisidir? 🔢', a: 'Four (4) 4️⃣', d: ['Five (5) 5️⃣', 'Six (6) 6️⃣'], exp: '1: One, 2: Two, 3: Three, 4: Four! 🔢', grade: 2 },
+      { englishWord: 'Cat', q: '"Cat" İngilizce hangi sevimli dostumuzdur? 🐾', a: 'Kedi 🐱', d: ['Köpek 🐶', 'Kuş 🐦'], exp: 'Cat = Kedi, Dog = Köpek, Bird = Kuş. 🐱', grade: 2 },
+      { englishWord: 'Good morning', q: 'Sabahları birine İngilizce nasıl "Günaydın" deriz? ☀️', a: 'Good morning! ☀️', d: ['Good night! 🌙', 'Good evening! 🌆'], exp: 'Good morning = Günaydın! Good night = İyi geceler! ☀️', grade: 2 },
+      { englishWord: 'Pencil', q: '"Pencil" hangi okul eşyamızdır? ✏️', a: 'Kurşun Kalem ✏️', d: ['Silgi 🧼', 'Okul Çantası 🎒'], exp: 'Pencil = Kurşun Kalem, Eraser = Silgi, Bag = Çanta. ✏️', grade: 3 },
+      { englishWord: 'Book', q: '"Book" sözcüğünün Türkçe anlamı nedir? 📚', a: 'Kitap 📚', d: ['Defter 📓', 'Masa 🪑'], exp: 'Book = Kitap, Notebook = Defter, Desk = Sıra/Masa. 📚', grade: 3 },
+      { englishWord: 'Mother', q: '"Family" ailemizi anlatır. "Mother" kimdir? 👩', a: 'Anne 👩', d: ['Baba 👨', 'Kız Kardeş 👧'], exp: 'Mother = Anne, Father = Baba, Sister = Kız Kardeş. 👩❤️', grade: 3 },
+      { englishWord: 'What time is it?', q: '"What time is it?" sorusu ne anlama gelir? ⏰', a: 'Saat kaç? ⏰', d: ['Adın ne? ❓', 'Kaç yaşındasın? 🎂'], exp: '"What time is it?" saat sormak için kullanılır. ⏰', grade: 4 },
+      { englishWord: 'Teacher', q: '"Teacher" mesleği Türkçe ne demektir? 👨‍🏫', a: 'Öğretmen 👨‍🏫', d: ['Doktor 👩‍⚕️', 'Polis 👮'], exp: 'Teacher = Öğretmen, Doctor = Doktor, Police = Polis. 👨‍🏫', grade: 4 },
+      { englishWord: 'Turkey', q: '"Where are you from?" sorusuna Türkiye\'den biri nasıl cevap verir? 🇹🇷', a: "I am from Turkey 🇹🇷", d: ["I am 10 years old", "I like apples"], exp: '"Nerelisin?" sorusuna "I am from Turkey" (Türkiyeliyim) denir. 🇹🇷', grade: 4 }
     ],
 
     // Şıkları rastgele karıştırarak A, B, C formatında sun
@@ -1131,14 +1239,30 @@
         const j = Math.floor(Math.random() * (i + 1));
         [options[i], options[j]] = [options[j], options[i]];
       }
+
+      let questionHtml = qData.questionHtml;
+      if (!questionHtml && qData.englishWord) {
+        questionHtml = `
+          <div class="english-card-badge">
+            <span class="en-flag-pill">🇬🇧 LISTEN & MATCH</span>
+            <span class="en-big-word">${replaceEmojisWith3D(qData.englishWord, 'inline-3d-icon')}</span>
+            <span class="en-audio-hint">🔊 Doğru telaffuzu dinle</span>
+          </div>
+          <div class="en-question-subtext">${replaceEmojisWith3D(qData.question, 'q-3d-item')}</div>
+        `;
+      }
+
       return {
         question: qData.question,
-        questionHtml: qData.questionHtml || qData.question.replace(/\n/g, '<br>'),
+        questionHtml: questionHtml || (qData.question ? qData.question.replace(/\n/g, '<br>') : ''),
         options: options,
         correct: qData.correct,
         explanation: qData.explanation,
         category: category,
-        audioKey: qData.audioKey || null
+        audioKey: qData.audioKey || null,
+        englishWord: qData.englishWord || null,
+        lang: qData.lang || (qData.englishWord ? 'en' : 'tr'),
+        spokenText: qData.spokenText || qData.englishWord || null
       };
     },
 
@@ -1548,16 +1672,62 @@
           explanation: raw.exp,
           audioKey: raw.audioKey || null
         }, '🗺️ Sosyal Bilgiler');
-      } else if (gameType === 'english') {
-        let filtered = this.englishPool.filter(item => !item.grade || item.grade === g || item.grade <= g);
-        if (filtered.length === 0) filtered = this.englishPool;
-        const raw = filtered[Math.floor(Math.random() * filtered.length)];
+      } else if (gameType === 'english_colors') {
+        const raw = this.englishColorsPool[Math.floor(Math.random() * this.englishColorsPool.length)];
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
           distractors: raw.d,
           explanation: raw.exp,
-          audioKey: raw.audioKey || null
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '🎨 Renkler (Colors Matching)');
+      } else if (gameType === 'english_animals') {
+        const raw = this.englishAnimalsPool[Math.floor(Math.random() * this.englishAnimalsPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '🐾 Hayvanlar (Animals Matching)');
+      } else if (gameType === 'english_numbers') {
+        const raw = this.englishNumbersPool[Math.floor(Math.random() * this.englishNumbersPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '🔢 Sayılar (Numbers Matching)');
+      } else if (gameType === 'english_greetings') {
+        const raw = this.englishGreetingsPool[Math.floor(Math.random() * this.englishGreetingsPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '👋 Günlük İfadeler (Greetings)');
+      } else if (gameType === 'english') {
+        const allPools = [
+          ...this.englishColorsPool,
+          ...this.englishAnimalsPool,
+          ...this.englishNumbersPool,
+          ...this.englishGreetingsPool,
+          ...this.englishPool
+        ];
+        const raw = allPools[Math.floor(Math.random() * allPools.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
         }, '🇬🇧 English Word Battle');
       } else if (gameType === 'oddone') {
         const raw = this.generateOddOneQuestion(g);
@@ -1973,20 +2143,32 @@
         autoResetDelay = 3500;
         break;
 
-      case 'correct':
-        text = customText || 'Harikasın, süpersin! ⭐';
+      case 'correct': {
+        const isEnglishGame = (
+          state.currentGameType === 'english' ||
+          (typeof state.currentGameType === 'string' && state.currentGameType.startsWith('english_')) ||
+          (state.currentQuestion && (state.currentQuestion.lang === 'en' || !!state.currentQuestion.englishWord))
+        );
+        text = customText || (isEnglishGame ? 'Awesome! / Harikasın ⭐' : 'Harikasın, süpersin! ⭐');
         bubbleClass = 'state-correct';
         animClass = 'anim-bounce';
         autoResetDelay = 3200;
         break;
+      }
 
       case 'wrong':
-      case 'lockout':
-        text = customText || 'Dikkat et, biraz yavaş ol! ⏳';
+      case 'lockout': {
+        const isEnWrong = (
+          state.currentGameType === 'english' ||
+          (typeof state.currentGameType === 'string' && state.currentGameType.startsWith('english_')) ||
+          (state.currentQuestion && (state.currentQuestion.lang === 'en' || !!state.currentQuestion.englishWord))
+        );
+        text = customText || (isEnWrong ? 'Try again! Dikkat et! ⏳' : 'Dikkat et, biraz yavaş ol! ⏳');
         bubbleClass = 'state-wrong';
         animClass = 'anim-wobble';
         autoResetDelay = 3000;
         break;
+      }
 
       case 'victory':
         text = customText || (state.gameMode === 'solo' ? 'Tebrikler, görevi tamamladın! 🎯' : 'Tebrikler, harika bir maç oldu! 🏆');
@@ -2679,39 +2861,76 @@
         name: 'İngilizce',
         icon: '🇬🇧',
         colorTheme: 'theme-english',
-        tagline: 'Words & Greetings',
-        description: 'Renkler, sayılar, selamlaşmalar ve sevimli hayvanlar! 🌈🐶',
+        tagline: 'Colors, Animals & Words',
+        description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',
         badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 All' },
-          { id: 'greetings', label: '👋 Greetings' },
-          { id: 'colors_num', label: '🎨 Colors & Numbers' },
-          { id: 'animals_en', label: '🐾 Animals' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'colors', label: '🎨 Renkler (Colors)' },
+          { id: 'animals', label: '🐾 Hayvanlar (Animals)' },
+          { id: 'numbers', label: '🔢 Sayılar (Numbers)' },
+          { id: 'greetings', label: '👋 Günlük İfadeler (Greetings)' }
         ],
         games: [
           {
-            id: 'english',
+            id: 'english_colors',
             active: true,
-            title: 'English Word Battle',
-            icon: '🇬🇧',
-            badge: '🚀 Fun English',
-            featureTag: '⭐ Speed Words',
-            description: 'Renkleri, sayıları ve selamlaşmaları hızlıca İngilizce bil! 🇬🇧',
-            tags: ['🎨 Colors', '🔢 Numbers 1-10', '👋 Hello & Goodbye'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'colors_num'
+            title: 'Renkler (Colors Matching)',
+            icon: '🎨',
+            badge: '🌈 Colors',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Red, blue, green gibi renkleri İngilizce dinle ve Türkçe karşılığıyla eşleştir! 🎨',
+            tags: ['🎨 Colors', '🖼️ Renk Eşleştirme', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'colors'
           },
           {
-            id: 'body_parts_en',
-            active: false,
-            title: 'Body Parts & Feelings',
-            icon: '👀',
-            badge: 'Yakında',
-            featureTag: '🔒 Coming Soon',
-            description: 'Göz, kulak, burun ve duyguları İngilizce eşleştirme macerası! 😊',
-            tags: ['👀 Eyes & Nose', '😊 Happy / Sad', '🎵 Fun Song'],
-            btnText: 'Yakında',
+            id: 'english_animals',
+            active: true,
+            title: 'Hayvanlar (Animals Matching)',
+            icon: '🐾',
+            badge: '🦁 Animals',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Cat, dog, lion gibi sevimli dostlarımızın İngilizce telaffuzunu dinle ve doğru eşleştir! 🐾',
+            tags: ['🐾 Animals', '🐶 Sevimli Dostlar', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'animals'
+          },
+          {
+            id: 'english_numbers',
+            active: true,
+            title: 'Sayılar (Numbers Matching)',
+            icon: '🔢',
+            badge: '🔢 Numbers',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'One, two, three... İngilizce sayıları dinle ve doğru rakamlarla eşleştir! 🔢',
+            tags: ['🔢 Numbers 1-20', '🎯 Hızlı Sayma', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'numbers'
+          },
+          {
+            id: 'english_greetings',
+            active: true,
+            title: 'Günlük İfadeler (Greetings)',
+            icon: '👋',
+            badge: '👋 Greetings',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Hello, good morning, thank you gibi günlük nezaket ve konuşma ifadeleri! 👋',
+            tags: ['👋 Greetings', '☀️ Günaydın & Selam', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
             topic: 'greetings'
+          },
+          {
+            id: 'english',
+            active: true,
+            title: 'English Word Battle (Karma)',
+            icon: '🇬🇧',
+            badge: '🚀 Tüm Konular',
+            featureTag: '⚡ Hızlı Kelime',
+            description: 'Renkler, hayvanlar, sayılar ve ifadelerden karma İngilizce düellosu! 🚀',
+            tags: ['🇬🇧 Karma Pratik', '⚡ Çift Dilli Eşleme', '🔊 Otomatik Telaffuz'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -2956,39 +3175,76 @@
         name: 'İngilizce',
         icon: '🇬🇧',
         colorTheme: 'theme-english',
-        tagline: 'Classroom & Family',
-        description: 'Sınıf eşyaları, aile bireyleri, sayılar ve oyuncaklar! 🎒👨‍👩‍👧',
+        tagline: 'Colors, Animals & Words',
+        description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',
         badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 All' },
-          { id: 'classroom', label: '🎒 Classroom Objects' },
-          { id: 'family_en', label: '👨‍👩‍👧 Family' },
-          { id: 'toys', label: '🧸 Toys & Games' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'colors', label: '🎨 Renkler (Colors)' },
+          { id: 'animals', label: '🐾 Hayvanlar (Animals)' },
+          { id: 'numbers', label: '🔢 Sayılar (Numbers)' },
+          { id: 'greetings', label: '👋 Günlük İfadeler (Greetings)' }
         ],
         games: [
           {
-            id: 'english',
+            id: 'english_colors',
             active: true,
-            title: 'English Word Battle',
-            icon: '🇬🇧',
-            badge: '⚡ Classroom Battle',
-            featureTag: '🎒 School Words',
-            description: 'Sınıf araç gereçleri ve aile üyelerini İngilizce hızla bil! 🇬🇧',
-            tags: ['🎒 Classroom', '👨‍👩‍👧 Family Members', '🔢 Numbers 1-20'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'classroom'
+            title: 'Renkler (Colors Matching)',
+            icon: '🎨',
+            badge: '🌈 Colors',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Red, blue, green gibi renkleri İngilizce dinle ve Türkçe karşılığıyla eşleştir! 🎨',
+            tags: ['🎨 Colors', '🖼️ Renk Eşleştirme', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'colors'
           },
           {
-            id: 'fruit_vegetable_en',
-            active: false,
-            title: 'Yummy Fruits & Foods',
-            icon: '🍎',
-            badge: 'Yakında',
-            featureTag: '🔒 Coming Soon',
-            description: 'Meyve ve yemek sipariş etme İngilizce kelime oyunu! 🍓',
-            tags: ['🍎 I like apples', '🍌 Bananas', '🥛 Milk'],
-            btnText: 'Yakında',
-            topic: 'toys'
+            id: 'english_animals',
+            active: true,
+            title: 'Hayvanlar (Animals Matching)',
+            icon: '🐾',
+            badge: '🦁 Animals',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Cat, dog, lion gibi sevimli dostlarımızın İngilizce telaffuzunu dinle ve doğru eşleştir! 🐾',
+            tags: ['🐾 Animals', '🐶 Sevimli Dostlar', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'animals'
+          },
+          {
+            id: 'english_numbers',
+            active: true,
+            title: 'Sayılar (Numbers Matching)',
+            icon: '🔢',
+            badge: '🔢 Numbers',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'One, two, three... İngilizce sayıları dinle ve doğru rakamlarla eşleştir! 🔢',
+            tags: ['🔢 Numbers 1-20', '🎯 Hızlı Sayma', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'numbers'
+          },
+          {
+            id: 'english_greetings',
+            active: true,
+            title: 'Günlük İfadeler (Greetings)',
+            icon: '👋',
+            badge: '👋 Greetings',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Hello, good morning, thank you gibi günlük nezaket ve konuşma ifadeleri! 👋',
+            tags: ['👋 Greetings', '☀️ Günaydın & Selam', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'greetings'
+          },
+          {
+            id: 'english',
+            active: true,
+            title: 'English Word Battle (Karma)',
+            icon: '🇬🇧',
+            badge: '⚡ Sınıf Düellosu',
+            featureTag: '⚡ Hızlı Kelime',
+            description: 'Renkler, hayvanlar, sayılar ve ifadelerden karma İngilizce düellosu! 🚀',
+            tags: ['🇬🇧 Karma Pratik', '⚡ Çift Dilli Eşleme', '🔊 Otomatik Telaffuz'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -3233,39 +3489,76 @@
         name: 'İngilizce',
         icon: '🇬🇧',
         colorTheme: 'theme-english',
-        tagline: 'Time, Jobs & Countries',
-        description: 'Meslekler, saatler, ülkeler, milletler ve serbest zaman aktiviteleri! ⏰👮',
+        tagline: 'Colors, Animals & Words',
+        description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',
         badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 All' },
-          { id: 'time_en', label: '⏰ Telling Time' },
-          { id: 'jobs_en', label: '👮 Occupations' },
-          { id: 'nations', label: '🌍 Countries & Flags' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'colors', label: '🎨 Renkler (Colors)' },
+          { id: 'animals', label: '🐾 Hayvanlar (Animals)' },
+          { id: 'numbers', label: '🔢 Sayılar (Numbers)' },
+          { id: 'greetings', label: '👋 Günlük İfadeler (Greetings)' }
         ],
         games: [
           {
-            id: 'english',
+            id: 'english_colors',
             active: true,
-            title: 'English Word Battle',
-            icon: '🇬🇧',
-            badge: '👑 Master English',
-            featureTag: '⭐ Pro English',
-            description: 'Meslekleri, ülkeleri ve saatleri en hızlı İngilizce yanıtla! 🇬🇧',
-            tags: ['👮 Jobs & Work', '⏰ What time is it?', '🌍 Flags & Nations'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'jobs_en'
+            title: 'Renkler (Colors Matching)',
+            icon: '🎨',
+            badge: '🌈 Colors',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Red, blue, green gibi renkleri İngilizce dinle ve Türkçe karşılığıyla eşleştir! 🎨',
+            tags: ['🎨 Colors', '🖼️ Renk Eşleştirme', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'colors'
           },
           {
-            id: 'weather_seasons_en',
-            active: false,
-            title: 'Weather & Clothes',
-            icon: '⛅',
-            badge: 'Yakında',
-            featureTag: '🔒 Coming Soon',
-            description: 'Hava durumuna göre giysi seçme ve mevsimleri eşleştirme oyunu! 🧥',
-            tags: ['☀️ Sunny & Rainy', '🧥 Jacket & Boots', '🍂 Autumn'],
-            btnText: 'Yakında',
-            topic: 'time_en'
+            id: 'english_animals',
+            active: true,
+            title: 'Hayvanlar (Animals Matching)',
+            icon: '🐾',
+            badge: '🦁 Animals',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Cat, dog, lion gibi sevimli dostlarımızın İngilizce telaffuzunu dinle ve doğru eşleştir! 🐾',
+            tags: ['🐾 Animals', '🐶 Sevimli Dostlar', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'animals'
+          },
+          {
+            id: 'english_numbers',
+            active: true,
+            title: 'Sayılar (Numbers Matching)',
+            icon: '🔢',
+            badge: '🔢 Numbers',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'One, two, three... İngilizce sayıları dinle ve doğru rakamlarla eşleştir! 🔢',
+            tags: ['🔢 Numbers 1-20', '🎯 Hızlı Sayma', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'numbers'
+          },
+          {
+            id: 'english_greetings',
+            active: true,
+            title: 'Günlük İfadeler (Greetings)',
+            icon: '👋',
+            badge: '👋 Greetings',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Hello, good morning, thank you gibi günlük nezaket ve konuşma ifadeleri! 👋',
+            tags: ['👋 Greetings', '☀️ Günaydın & Selam', '🔊 Doğru Telaffuz'],
+            btnText: 'Eşleştirmeyi Başlat',
+            topic: 'greetings'
+          },
+          {
+            id: 'english',
+            active: true,
+            title: 'English Word Battle (Karma)',
+            icon: '🇬🇧',
+            badge: '👑 Şampiyonluk',
+            featureTag: '⚡ Hızlı Kelime',
+            description: 'Renkler, hayvanlar, sayılar ve ifadelerden karma İngilizce düellosu! 🚀',
+            tags: ['🇬🇧 Karma Pratik', '⚡ Çift Dilli Eşleme', '🔊 Otomatik Telaffuz'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -3988,6 +4281,10 @@
       science: '🔬 Fen Bilimleri Laboratuvarı',
       social: '🗺️ Sosyal Bilgiler Keşfi',
       english: '🇬🇧 English Word Battle',
+      english_colors: '🎨 Renkler (Colors Matching)',
+      english_animals: '🐾 Hayvanlar (Animals Matching)',
+      english_numbers: '🔢 Sayılar (Numbers Matching)',
+      english_greetings: '👋 Günlük İfadeler (Greetings)',
       oddone: '👀 Farklı Olanı Yakala',
       stroop: '🎯 Renk Tuzakları (Stroop)',
       memory: '🧠 Süper Hafıza',
