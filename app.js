@@ -1601,6 +1601,10 @@
     victoryOverlay: document.getElementById('victoryOverlay'),
 
     // Header & Butonlar
+    moliWidget: document.getElementById('moliWidget'),
+    moliImg: document.getElementById('moliImg'),
+    moliSpeechBubble: document.getElementById('moliSpeechBubble'),
+    moliBubbleText: document.getElementById('moliBubbleText'),
     logoBtn: document.getElementById('logoBtn'),
     gradeChips: document.querySelectorAll('.grade-chip'),
     gradeCards: document.querySelectorAll('.grade-card'),
@@ -1771,6 +1775,120 @@
   function openModal(modalEl) {
     audio.playClick();
     modalEl.classList.remove('hide');
+  }
+
+  /* ==========================================================================
+     7.5. SEVİMLİ MASKOT MOLİ MOTORU & KONUŞMA BALONU REAKSİYONLARI
+     ========================================================================== */
+  const MOLI_QUOTES = [
+    'Ben Moli! Eğlenmeye hazır mısın? 🤖',
+    'Soruları dikkatle oku, hızlı dokun! ⚡',
+    'Her gün biraz pratik seni şampiyon yapar! 🌟',
+    'Matematik ve Türkçe seninle çok eğlenceli! 📚',
+    'Hata yapmaktan korkma, tekrar dene! 💪',
+    'Yıldız antenim senin için parlıyor! ✨',
+    'Dersi eğlenceli bir oyuna dönüştür! 🎮'
+  ];
+
+  let moliResetTimer = null;
+
+  function changeMoliExpression(stateKey, customText = '') {
+    if (!DOM.moliWidget || !DOM.moliBubbleText) return;
+
+    if (moliResetTimer) {
+      clearTimeout(moliResetTimer);
+      moliResetTimer = null;
+    }
+
+    let text = '';
+    let bubbleClass = '';
+    let animClass = '';
+    let autoResetDelay = 0;
+
+    switch (stateKey) {
+      case 'lobby':
+      case 'welcome':
+        text = customText || 'Hadi eğlenceye başlayalım! 🚀';
+        bubbleClass = 'state-lobby';
+        animClass = 'anim-wave';
+        break;
+
+      case 'start':
+        text = customText || (state.gameMode === 'solo' ? 'Pratik başladı! Başarılar! 🎯' : 'Düello başladı! Başarılar! ⚡');
+        bubbleClass = 'state-start';
+        animClass = 'anim-bounce';
+        autoResetDelay = 3500;
+        break;
+
+      case 'correct':
+        text = customText || 'Harikasın, süpersin! ⭐';
+        bubbleClass = 'state-correct';
+        animClass = 'anim-bounce';
+        autoResetDelay = 3200;
+        break;
+
+      case 'wrong':
+      case 'lockout':
+        text = customText || 'Dikkat et, biraz yavaş ol! ⏳';
+        bubbleClass = 'state-wrong';
+        animClass = 'anim-wobble';
+        autoResetDelay = 3000;
+        break;
+
+      case 'victory':
+        text = customText || (state.gameMode === 'solo' ? 'Tebrikler, görevi tamamladın! 🎯' : 'Tebrikler, harika bir maç oldu! 🏆');
+        bubbleClass = 'state-victory';
+        animClass = 'anim-bounce';
+        break;
+
+      case 'custom':
+        text = customText || 'Hadi eğlenceye başlayalım! 🚀';
+        bubbleClass = 'state-lobby';
+        animClass = 'anim-bounce';
+        autoResetDelay = 4000;
+        break;
+
+      default:
+        text = customText || 'Hadi eğlenceye başlayalım! 🚀';
+        bubbleClass = 'state-lobby';
+        animClass = 'anim-wave';
+    }
+
+    DOM.moliBubbleText.textContent = text;
+
+    if (DOM.moliSpeechBubble) {
+      DOM.moliSpeechBubble.className = `moli-speech-bubble ${bubbleClass} bubble-pop`;
+      setTimeout(() => {
+        if (DOM.moliSpeechBubble) {
+          DOM.moliSpeechBubble.classList.remove('bubble-pop');
+        }
+      }, 400);
+    }
+
+    if (DOM.moliImg) {
+      DOM.moliImg.classList.remove('anim-bounce', 'anim-wobble', 'anim-wave');
+      void DOM.moliImg.offsetWidth;
+      if (animClass) {
+        DOM.moliImg.classList.add(animClass);
+      }
+    }
+
+    if (autoResetDelay > 0 && state.currentView === 'duel') {
+      moliResetTimer = setTimeout(() => {
+        if (state.currentView === 'duel' && !state.isQuestionAnswered) {
+          DOM.moliBubbleText.textContent = 'Soruyu çöz, puanı kap! ⚡';
+          if (DOM.moliSpeechBubble) {
+            DOM.moliSpeechBubble.className = 'moli-speech-bubble state-lobby';
+          }
+        }
+      }, autoResetDelay);
+    }
+  }
+
+  function handleMoliClick() {
+    audio.playClick();
+    const quote = MOLI_QUOTES[Math.floor(Math.random() * MOLI_QUOTES.length)];
+    changeMoliExpression('custom', quote);
   }
 
   function closeModal(modalEl) {
@@ -2795,6 +2913,7 @@
       audio.playAnnouncerStart();
     }
     updateAnnouncerUI();
+    changeMoliExpression('start');
     loadNextQuestion();
   }
 
@@ -2813,6 +2932,7 @@
       DOM.viewLobby.classList.add('active');
       state.currentView = 'lobby';
       audio.playClick();
+      changeMoliExpression('lobby');
     }
   }
 
@@ -2906,6 +3026,7 @@
       // -------------------------------------------------------------
       state.isQuestionAnswered = true;
       audio.playCorrect();
+      changeMoliExpression('correct');
 
       // Puanı artır
       if (playerNum === 1) {
@@ -2982,6 +3103,8 @@
 
     if (isP1) state.player1.isLocked = true;
     else state.player2.isLocked = true;
+
+    changeMoliExpression('wrong');
 
     // Sesli uyarı: Bomba mı yoksa standart kilitlenme mi?
     const chosenOpt = (state.currentQuestion && state.currentQuestion.options) ? state.currentQuestion.options[optionIndex] : '';
@@ -3079,6 +3202,7 @@
 
     // Zafer Müziği, Sunucu Anonsu ve Konfeti Patlat
     audio.playVictory();
+    changeMoliExpression('victory');
     if (!isSolo) {
       setTimeout(() => {
         if (isP1) {
@@ -3111,6 +3235,7 @@
     DOM.viewDuel.classList.remove('active');
     DOM.viewLobby.classList.add('active');
     state.currentView = 'lobby';
+    changeMoliExpression('lobby');
     openPickerModal();
   }
 
@@ -3121,6 +3246,7 @@
     DOM.viewDuel.classList.remove('active');
     DOM.viewLobby.classList.add('active');
     state.currentView = 'lobby';
+    changeMoliExpression('lobby');
   }
 
   /* ==========================================================================
@@ -3287,6 +3413,14 @@
       });
     }
 
+    // Sevimli Maskot Moli Dokunma / Tıklama
+    if (DOM.moliWidget) {
+      DOM.moliWidget.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        handleMoliClick();
+      });
+    }
+
     // Zafer Ekranı Butonları
     DOM.btnRematchSame.addEventListener('pointerdown', handleRematchSame);
     DOM.btnSelectNewStudents.addEventListener('pointerdown', handleSelectNewStudentsFromVictory);
@@ -3306,6 +3440,7 @@
     updatePlayerNamesUI();
     renderSubcategories();
     renderGameCards();
+    changeMoliExpression('lobby');
 
     // Kayıtlı ayarları UI'a yansıt
     DOM.chkAutoExplanation.checked = state.showAutoExplanation;
@@ -3320,6 +3455,9 @@
     setupEventListeners();
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
   }
+
+  // Dışarıdan erişim için changeMoliExpression fonksiyonunu globalde tanımla
+  window.changeMoliExpression = changeMoliExpression;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {

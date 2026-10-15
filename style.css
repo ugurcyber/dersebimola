@@ -304,6 +304,186 @@ html, body {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
 }
 
+/* ==========================================================================
+   SEVİMLİ MASKOT: MOLİ ROBOT & KONUŞMA BALONU
+   ========================================================================== */
+.moli-header-widget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  padding: 0 4px;
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.moli-header-widget:hover {
+  transform: translateY(-2px);
+}
+
+.moli-avatar-wrap {
+  position: relative;
+  width: 74px;
+  height: 68px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.moli-character-img {
+  width: 72px;
+  height: auto;
+  max-height: 76px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(234, 88, 12, 0.28));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: moliFloat 4s ease-in-out infinite;
+}
+
+.moli-antenna-glow {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(254, 240, 138, 0.95) 0%, rgba(245, 158, 11, 0) 70%);
+  pointer-events: none;
+  animation: starAura 2.2s infinite ease-in-out;
+}
+
+@keyframes moliFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes starAura {
+  0%, 100% { transform: translateX(-50%) scale(0.9); opacity: 0.6; }
+  50% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+}
+
+.moli-character-img.anim-bounce {
+  animation: moliBounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.moli-character-img.anim-wobble {
+  animation: moliWobble 0.6s ease-in-out !important;
+}
+
+.moli-character-img.anim-wave {
+  animation: moliWave 0.7s ease-in-out !important;
+}
+
+@keyframes moliBounce {
+  0%, 100% { transform: scale(1) translateY(0); }
+  35% { transform: scale(1.15) translateY(-10px); }
+  65% { transform: scale(0.92) translateY(2px); }
+  85% { transform: scale(1.04) translateY(-3px); }
+}
+
+@keyframes moliWobble {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-8deg) translateX(-3px); }
+  40% { transform: rotate(7deg) translateX(3px); }
+  60% { transform: rotate(-5deg); }
+  80% { transform: rotate(3deg); }
+}
+
+@keyframes moliWave {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.08) rotate(4deg); }
+  75% { transform: scale(1.08) rotate(-4deg); }
+}
+
+/* Konuşma Balonu */
+.moli-speech-bubble {
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #fdba74;
+  border-radius: 16px;
+  padding: 6px 14px;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.12);
+  display: flex;
+  align-items: center;
+  max-width: 220px;
+  transition: all var(--transition-fast);
+}
+
+.moli-bubble-text {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.moli-bubble-arrow {
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-left: 2px solid #fdba74;
+  border-bottom: 2px solid #fdba74;
+}
+
+.moli-speech-bubble.bubble-pop {
+  animation: bubblePop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bubblePop {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Balon Durum Stilleri */
+.moli-speech-bubble.state-correct {
+  background: #f0fdf4;
+  border-color: #86efac;
+  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.18);
+}
+.moli-speech-bubble.state-correct .moli-bubble-text {
+  color: #15803d;
+}
+.moli-speech-bubble.state-correct .moli-bubble-arrow {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.moli-speech-bubble.state-wrong {
+  background: #fff7ed;
+  border-color: #fdba74;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.2);
+}
+.moli-speech-bubble.state-wrong .moli-bubble-text {
+  color: #c2410c;
+}
+.moli-speech-bubble.state-wrong .moli-bubble-arrow {
+  background: #fff7ed;
+  border-color: #fdba74;
+}
+
+.moli-speech-bubble.state-victory {
+  background: #faf5ff;
+  border-color: #d8b4fe;
+  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.22);
+}
+.moli-speech-bubble.state-victory .moli-bubble-text {
+  color: #7e22ce;
+}
+.moli-speech-bubble.state-victory .moli-bubble-arrow {
+  background: #faf5ff;
+  border-color: #d8b4fe;
+}
+
 .header-left {
   display: flex;
   align-items: center;
@@ -3004,6 +3184,25 @@ input:checked + .slider:before {
     align-items: center;
     gap: 8px;
     width: 100%;
+  }
+
+  .moli-header-widget {
+    margin-bottom: 2px;
+  }
+  .moli-avatar-wrap {
+    width: 60px;
+    height: 58px;
+  }
+  .moli-character-img {
+    width: 58px;
+    max-height: 64px;
+  }
+  .moli-speech-bubble {
+    max-width: 190px;
+    padding: 4px 10px;
+  }
+  .moli-bubble-text {
+    font-size: 0.76rem;
   }
 
   .logo-badge {
