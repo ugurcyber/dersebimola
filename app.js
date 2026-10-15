@@ -25,6 +25,9 @@
     // Aktif Oyun Türü: 'math' | 'turkish' | 'oddone' | 'stroop' | 'memory' | 'reflex'
     currentGameType: 'math',
 
+    // Oyun Modu: 'duel' (👥 İki Kişilik Düello - Varsayılan) | 'solo' (👤 Tek Kişilik Pratik)
+    gameMode: 'duel',
+
     // Düello Ayarları
     targetScore: 5,
     showAutoExplanation: true,
@@ -360,46 +363,122 @@
         if (onEnded) onEnded();
         return;
       }
+      // 3) Yeni bir ses çalmadan önce devam eden önceki Audio veya konuşmayı mutlaka durdur
       this.stopQuestionAudio();
-      if (!('speechSynthesis' in window)) {
+
+      // 1) Metni okumadan önce tüm emojileri sil ve matematik işaretlerini Türkçe kelimelere çevir
+      let cleanText = (text || '').toString()
+        .replace(/\p{Extended_Pictographic}/gu, '')
+        .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F2FF}\u{1F680}-\u{1F6FF}]/gu, '')
+        .replace(/[\uFE00-\uFE0F]/g, '')
+        .replace(/\+/g, ' artı ')
+        .replace(/[-−–—]/g, ' eksi ')
+        .replace(/[*×]/g, ' kere ')
+        .replace(/(\d)\s*[xX]\s*(\d)/g, '$1 kere $2')
+        .replace(/(^|\s)[xX](\s|$)/g, '$1 kere $2')
+        .replace(/[xX]/g, ' kere ')
+        .replace(/[\/÷]/g, ' bölü ')
+        .replace(/=/g, ' eşittir ')
+        .replace(/\b(kaç eder|kaçtır)\s*\?/gi, '$1')
+        .replace(/\?/g, ' kaçtır ')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+      if (!cleanText) {
         if (onEnded) onEnded();
         return;
       }
-      try {
-        window.speechSynthesis.cancel();
-        if (window.speechSynthesis.paused) {
-          window.speechSynthesis.resume();
-        }
-        const u = new SpeechSynthesisUtterance(text);
-        u.lang = 'tr-TR';
-        u.rate = 0.95;
-        u.pitch = 1.05;
 
-        // Varsa Türkçe sesi seç
-        const voices = window.speechSynthesis.getVoices();
-        const trVoice = voices.find(v => v.lang === 'tr-TR' || (v.lang && v.lang.toLowerCase().startsWith('tr')));
-        if (trVoice) {
-          u.voice = trVoice;
+      let done = false;
+      const finish = () => {
+        if (!done) {
+          done = true;
+          this.currentAudio = null;
+          if (onEnded) onEnded();
         }
+      };
 
-        let done = false;
-        const finish = () => {
-          if (!done) {
-            done = true;
-            if (onEnded) onEnded();
+      // 2) Eğer cihazda kaliteli yerel Türkçe ses yoksa (veya Linux/Pardus ise) Google TTS kullan
+      const ua = (navigator.userAgent || '').toLowerCase();
+      const platform = (navigator.platform || '').toLowerCase();
+      const isLinuxOrPardus = /linux|pardus|x11/i.test(ua) || /linux/i.test(platform);
+
+      let trVoice = null;
+      if ('speechSynthesis' in window) {
+        try {
+          const voices = window.speechSynthesis.getVoices() || [];
+          trVoice = voices.find(v => 
+            (v.lang && (v.lang === 'tr-TR' || v.lang.toLowerCase().startsWith('tr'))) ||
+            (v.name && (v.name.toLowerCase().includes('turkish') || v.name.toLowerCase().includes('türkçe')))
+          );
+        } catch(e) {}
+      }
+
+      const playWithSpeechSynthesis = () => {
+        if (!('speechSynthesis' in window)) {
+          finish();
+          return;
+        }
+        try {
+          window.speechSynthesis.cancel();
+          if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
           }
-        };
-        u.onend = finish;
-        u.onerror = finish;
-        window.speechSynthesis.speak(u);
-      } catch (e) {
-        if (onEnded) onEnded();
+          const u = new SpeechSynthesisUtterance(cleanText);
+          u.lang = 'tr-TR';
+          u.rate = 0.95;
+          u.pitch = 1.05;
+
+          if (trVoice) {
+            u.voice = trVoice;
+          }
+
+          u.onend = finish;
+          u.onerror = finish;
+          window.speechSynthesis.speak(u);
+        } catch (e) {
+          finish();
+        }
+      };
+
+      const playWithGoogleTts = () => {
+        try {
+          const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
+          const audioEl = new Audio(googleUrl);
+          this.currentAudio = audioEl;
+          audioEl.volume = 1.0;
+
+          audioEl.onended = finish;
+          audioEl.onerror = () => {
+            // Google TTS bağlantı hatasında çevrimdışı yedek olarak speechSynthesis dene
+            this.currentAudio = null;
+            playWithSpeechSynthesis();
+          };
+
+          const p = audioEl.play();
+          if (p !== undefined) {
+            p.catch(() => {
+              this.currentAudio = null;
+              playWithSpeechSynthesis();
+            });
+          }
+        } catch (err) {
+          playWithSpeechSynthesis();
+        }
+      };
+
+      if (isLinuxOrPardus || !trVoice) {
+        playWithGoogleTts();
+      } else {
+        playWithSpeechSynthesis();
       }
     }
 
     stopQuestionAudio() {
       if (this.currentAudio) {
         try {
+          this.currentAudio.onended = null;
+          this.currentAudio.onerror = null;
           this.currentAudio.pause();
           this.currentAudio.currentTime = 0;
         } catch(e) {}
@@ -1475,6 +1554,7 @@
         if (settings) {
           const parsed = JSON.parse(settings);
           if (parsed.targetScore) state.targetScore = parsed.targetScore;
+          if (parsed.gameMode) state.gameMode = parsed.gameMode;
           if (parsed.soundEnabled !== undefined) state.soundEnabled = parsed.soundEnabled;
           if (parsed.announcerEnabled !== undefined) state.announcerEnabled = parsed.announcerEnabled;
           if (parsed.autoReadQuestion !== undefined) state.autoReadQuestion = parsed.autoReadQuestion;
@@ -1501,6 +1581,7 @@
       try {
         localStorage.setItem(this.KEYS.SETTINGS, JSON.stringify({
           targetScore: state.targetScore,
+          gameMode: state.gameMode,
           soundEnabled: state.soundEnabled,
           announcerEnabled: state.announcerEnabled,
           autoReadQuestion: state.autoReadQuestion,
@@ -1538,6 +1619,18 @@
     btnOpenCustomQ: document.getElementById('btnOpenCustomQ'),
     btnOpenLeaderboard: document.getElementById('btnOpenLeaderboard'),
 
+    // Oyun Modu Seçici (Düello vs Tek Kişilik Pratik)
+    modeSwitchContainer: document.getElementById('modeSwitchContainer'),
+    btnModeDuel: document.getElementById('btnModeDuel'),
+    btnModeSolo: document.getElementById('btnModeSolo'),
+    activeContestantsBar: document.getElementById('activeContestantsBar'),
+    contestantTagP1: document.getElementById('contestantTagP1'),
+    contestantTagP2: document.getElementById('contestantTagP2'),
+    teamBadgeP1: document.getElementById('teamBadgeP1'),
+    vsCircle: document.getElementById('vsCircle'),
+    quickDrawBtnText: document.getElementById('quickDrawBtnText'),
+    splitArena: document.querySelector('.split-arena'),
+
     // Lobi Elemanları
     lobbyP1Name: document.getElementById('lobbyPlayer1Name'),
     lobbyP2Name: document.getElementById('lobbyPlayer2Name'),
@@ -1565,6 +1658,8 @@
 
     // Düello: Oyuncu 1 (Mavi)
     p1Panel: document.getElementById('playerPanel1'),
+    duelP1Avatar: document.getElementById('duelP1Avatar'),
+    duelP1TeamTitle: document.getElementById('duelP1TeamTitle'),
     duelP1Name: document.getElementById('duelP1Name'),
     p1ScoreBadge: document.getElementById('p1ScoreBadge'),
     p1StarsTrack: document.getElementById('p1StarsTrack'),
@@ -1580,6 +1675,7 @@
     p1OptTextB: document.getElementById('p1OptTextB'),
     p1OptTextC: document.getElementById('p1OptTextC'),
     p1LockOverlay: document.getElementById('p1LockoutOverlay'),
+    p1LockoutDesc: document.getElementById('p1LockoutDesc'),
     p1LockProgress: document.getElementById('p1LockProgress'),
     p1WinToast: document.getElementById('p1WinToast'),
 
@@ -1610,8 +1706,14 @@
 
     // Zafer Ekranı
     victoryWinnerTitle: document.getElementById('victoryWinnerTitle'),
+    victorySubtitle: document.getElementById('victorySubtitle'),
+    victoryCongrats: document.getElementById('victoryCongrats'),
+    victoryScoreBox: document.getElementById('victoryScoreBox'),
+    victoryBlueBox: document.getElementById('victoryBlueBox'),
     victoryBlueName: document.getElementById('victoryBlueName'),
     victoryBlueScore: document.getElementById('victoryBlueScore'),
+    victoryScoreVs: document.getElementById('victoryScoreVs'),
+    victoryRedBox: document.getElementById('victoryRedBox'),
     victoryRedName: document.getElementById('victoryRedName'),
     victoryRedScore: document.getElementById('victoryRedScore'),
     btnRematchSame: document.getElementById('btnRematchSame'),
@@ -2247,7 +2349,7 @@
             ${content.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
           </div>
           <button class="btn-play-game" data-game-id="${game.id}">
-            🎮 ${content.btnText}
+            🎮 ${state.gameMode === 'solo' ? 'Pratiğe Başla' : content.btnText}
           </button>
         </div>
       `;
@@ -2261,6 +2363,41 @@
         startDuel(gameId);
       });
     });
+  }
+
+  // Oyun Modu Değiştirme (İki Kişilik Düello & Tek Kişilik Pratik)
+  function setGameMode(mode) {
+    if (state.gameMode === mode) return;
+    state.gameMode = mode;
+    StorageManager.saveSettings();
+    audio.playClick();
+    updateGameModeUI();
+    renderGameCards();
+  }
+
+  function updateGameModeUI() {
+    const isSolo = (state.gameMode === 'solo');
+
+    if (DOM.btnModeDuel) DOM.btnModeDuel.classList.toggle('active', !isSolo);
+    if (DOM.btnModeSolo) DOM.btnModeSolo.classList.toggle('active', isSolo);
+
+    if (isSolo) {
+      if (DOM.vsCircle) DOM.vsCircle.style.display = 'none';
+      if (DOM.contestantTagP2) DOM.contestantTagP2.style.display = 'none';
+      if (DOM.teamBadgeP1) DOM.teamBadgeP1.textContent = 'ÖĞRENCİ';
+      if (DOM.quickDrawBtnText) DOM.quickDrawBtnText.textContent = 'Öğrenciyi Değiştir';
+      if (DOM.duelP1TeamTitle) DOM.duelP1TeamTitle.textContent = 'BİREYSEL PRATİK';
+      if (DOM.duelP1Avatar) DOM.duelP1Avatar.textContent = '🎓';
+      if (DOM.p1LockoutDesc) DOM.p1LockoutDesc.textContent = '1.5 saniye kilitlendin! Tekrar dene...';
+    } else {
+      if (DOM.vsCircle) DOM.vsCircle.style.display = '';
+      if (DOM.contestantTagP2) DOM.contestantTagP2.style.display = '';
+      if (DOM.teamBadgeP1) DOM.teamBadgeP1.textContent = 'MAVİ TAKIM';
+      if (DOM.quickDrawBtnText) DOM.quickDrawBtnText.textContent = 'Öğrencileri Değiştir';
+      if (DOM.duelP1TeamTitle) DOM.duelP1TeamTitle.textContent = 'MAVİ TAKIM';
+      if (DOM.duelP1Avatar) DOM.duelP1Avatar.textContent = '👦';
+      if (DOM.p1LockoutDesc) DOM.p1LockoutDesc.textContent = '1.5 saniye kilitlendin! Sıra rakipte...';
+    }
   }
 
   function setGrade(gradeNumber) {
@@ -2604,7 +2741,7 @@
   }
 
   /* ==========================================================================
-     14. DÜELLO OYUN AKIŞI & MEKANİĞİ
+     14. DÜELLO & TEK KİŞİLİK PRATİK OYUN AKIŞI & MEKANİĞİ
      ========================================================================== */
   function startDuel(gameType) {
     state.currentGameType = gameType;
@@ -2613,6 +2750,17 @@
     state.player1.isLocked = false;
     state.player2.isLocked = false;
     state.questionNumber = 1;
+
+    const isSolo = (state.gameMode === 'solo');
+
+    // Split arena solo modunu uygula / kaldır
+    if (DOM.splitArena) {
+      if (isSolo) {
+        DOM.splitArena.classList.add('solo-mode');
+      } else {
+        DOM.splitArena.classList.remove('solo-mode');
+      }
+    }
 
     // UI'ları sıfırla
     const gradeLabels = {
@@ -2625,14 +2773,15 @@
     DOM.duelGradeBadge.innerHTML = replaceEmojisWith3D(gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`, 'chip-3d-icon');
 
     const gameTypeBadges = {
-      math: state.currentGrade === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu',
+      math: state.currentGrade === 0 ? '🎨 Renkler & Sayma' : (isSolo ? '📐 Matematik Pratiği' : '📐 Matematik Düellosu'),
       turkish: state.currentGrade === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Dikkat',
       oddone: '👀 Farklı Olanı Yakala',
       stroop: '🎯 Renk Tuzakları (Stroop)',
       memory: '🧠 Süper Hafıza',
       reflex: '⚡ Şimşek Refleks'
     };
-    DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D(gameTypeBadges[gameType] || '🎯 Sınıf Düellosu', 'chip-3d-icon');
+    DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D(gameTypeBadges[gameType] || (isSolo ? '🎯 Bireysel Pratik' : '🎯 Sınıf Düellosu'), 'chip-3d-icon');
+    updateGameModeUI();
     updatePlayerNamesUI();
     renderScoreTrack();
 
@@ -2642,13 +2791,18 @@
     state.currentView = 'duel';
 
     audio.playCorrect();
-    audio.playAnnouncerStart();
+    if (!isSolo) {
+      audio.playAnnouncerStart();
+    }
     updateAnnouncerUI();
     loadNextQuestion();
   }
 
   function exitDuel() {
-    if (confirm('Düelloyu sonlandırıp lobiye dönmek istiyor musunuz?')) {
+    const exitMsg = (state.gameMode === 'solo')
+      ? 'Pratiği sonlandırıp lobiye dönmek istiyor musunuz?'
+      : 'Düelloyu sonlandırıp lobiye dönmek istiyor musunuz?';
+    if (confirm(exitMsg)) {
       audio.stopQuestionAudio();
       clearAllLockouts();
       DOM.solutionPopup.classList.add('hide');
@@ -2734,6 +2888,9 @@
   function handleAnswer(playerNum, optionIndex) {
     if (state.isQuestionAnswered) return;
 
+    // Tek kişilik modda sadece 1. oyuncu (öğrenci) cevap verebilir
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+
     // Ceza kilidi aktifse engelle
     if (playerNum === 1 && state.player1.isLocked) return;
     if (playerNum === 2 && state.player2.isLocked) return;
@@ -2756,7 +2913,7 @@
         DOM.p1Panel.classList.add('winner-glow');
         DOM.p1WinToast.classList.remove('hide');
         highlightCorrectOption(DOM.p1OptionsGrid, optionIndex);
-        if (state.player1.score < state.targetScore) {
+        if (state.gameMode !== 'solo' && state.player1.score < state.targetScore) {
           setTimeout(() => audio.playAnnouncerBluePoint(), 180);
         }
       } else {
@@ -2777,7 +2934,7 @@
         DOM.solutionPopup.classList.remove('hide');
       }
 
-      // 5 puana ulaşıldı mı kontrol et
+      // Hedef puana ulaşıldı mı kontrol et
       if (state.player1.score >= state.targetScore || state.player2.score >= state.targetScore) {
         setTimeout(() => {
           triggerVictory(playerNum === 1 ? state.player1 : state.player2);
@@ -2818,6 +2975,9 @@
     const buttons = gridEl.querySelectorAll('.duel-option-btn');
     if (buttons[optionIndex]) {
       buttons[optionIndex].classList.add('btn-wrong');
+      if (state.gameMode === 'solo') {
+        buttons[optionIndex].disabled = true;
+      }
     }
 
     if (isP1) state.player1.isLocked = true;
@@ -2868,30 +3028,73 @@
     clearAllLockouts();
     DOM.solutionPopup.classList.add('hide');
 
+    const isSolo = (state.gameMode === 'solo');
     const isP1 = (winner === state.player1);
-    DOM.victoryWinnerTitle.textContent = `${winner.name} (${isP1 ? 'Mavi Takım' : 'Kırmızı Takım'}) Kazandı!`;
 
-    DOM.victoryBlueName.textContent = state.player1.name;
-    DOM.victoryBlueScore.textContent = state.player1.score;
-    DOM.victoryRedName.textContent = state.player2.name;
-    DOM.victoryRedScore.textContent = state.player2.score;
+    if (isSolo) {
+      if (DOM.victorySubtitle) DOM.victorySubtitle.textContent = 'BİREYSEL PRATİK GÖREVİ';
+      DOM.victoryWinnerTitle.textContent = 'Tebrikler, Görevi Tamamladın! 🎯';
+
+      DOM.victoryBlueName.textContent = state.player1.name;
+      DOM.victoryBlueScore.textContent = `${state.player1.score} ⭐`;
+
+      if (DOM.victoryScoreVs) DOM.victoryScoreVs.style.display = 'none';
+      if (DOM.victoryRedBox) DOM.victoryRedBox.style.display = 'none';
+
+      if (DOM.victoryCongrats) {
+        DOM.victoryCongrats.textContent = 'Harika bir odaklanma ve başarı! Bütün soruları tamamladın! 👏';
+      }
+
+      if (DOM.btnRematchSame) {
+        DOM.btnRematchSame.innerHTML = '<span>🔄</span> Tekrar Pratik Yap';
+      }
+      if (DOM.btnSelectNewStudents) {
+        DOM.btnSelectNewStudents.innerHTML = '<span>👤</span> Öğrenciyi Değiştir';
+      }
+    } else {
+      if (DOM.victorySubtitle) DOM.victorySubtitle.textContent = 'SINIF DÜELLOSU ŞAMPİYONU';
+      DOM.victoryWinnerTitle.textContent = `${winner.name} (${isP1 ? 'Mavi Takım' : 'Kırmızı Takım'}) Kazandı!`;
+
+      DOM.victoryBlueName.textContent = state.player1.name;
+      DOM.victoryBlueScore.textContent = state.player1.score;
+      DOM.victoryRedName.textContent = state.player2.name;
+      DOM.victoryRedScore.textContent = state.player2.score;
+
+      if (DOM.victoryScoreVs) DOM.victoryScoreVs.style.display = '';
+      if (DOM.victoryRedBox) DOM.victoryRedBox.style.display = '';
+
+      if (DOM.victoryCongrats) {
+        DOM.victoryCongrats.textContent = 'Harika bir dikkat ve hız mücadelesi oldu! Kazananı ve yarışan tüm arkadaşlarımızı alkışlayalım! 👏';
+      }
+
+      if (DOM.btnRematchSame) {
+        DOM.btnRematchSame.innerHTML = '<span>🔄</span> Aynı Oyuncularla Rövanş';
+      }
+      if (DOM.btnSelectNewStudents) {
+        DOM.btnSelectNewStudents.innerHTML = '<span>👥</span> Yeni Yarışmacılar Seç';
+      }
+    }
 
     DOM.victoryOverlay.classList.remove('hide');
 
     // Zafer Müziği, Sunucu Anonsu ve Konfeti Patlat
     audio.playVictory();
-    setTimeout(() => {
-      if (isP1) {
-        audio.playAnnouncerBlueWin();
-      } else {
-        audio.playAnnouncerRedWin();
-      }
-    }, 350);
+    if (!isSolo) {
+      setTimeout(() => {
+        if (isP1) {
+          audio.playAnnouncerBlueWin();
+        } else {
+          audio.playAnnouncerRedWin();
+        }
+      }, 350);
+    }
     confetti.burst();
 
-    // Sınıf ligine kaydet
-    const loser = isP1 ? state.player2 : state.player1;
-    recordDuelWinner(winner.name, loser.name, winner.score, loser.score);
+    // Sınıf ligine kaydet (yalnızca düelloda)
+    if (!isSolo) {
+      const loser = isP1 ? state.player2 : state.player1;
+      recordDuelWinner(winner.name, loser.name, winner.score, loser.score);
+    }
   }
 
   function handleRematchSame() {
@@ -3072,6 +3275,18 @@
     // Özel Soru Formu
     DOM.formAddQuestion.addEventListener('submit', handleAddCustomQuestion);
 
+    // Oyun Modu Seçimi (İki Kişilik Düello vs Tek Kişilik Pratik)
+    if (DOM.btnModeDuel) {
+      DOM.btnModeDuel.addEventListener('pointerdown', () => {
+        setGameMode('duel');
+      });
+    }
+    if (DOM.btnModeSolo) {
+      DOM.btnModeSolo.addEventListener('pointerdown', () => {
+        setGameMode('solo');
+      });
+    }
+
     // Zafer Ekranı Butonları
     DOM.btnRematchSame.addEventListener('pointerdown', handleRematchSame);
     DOM.btnSelectNewStudents.addEventListener('pointerdown', handleSelectNewStudentsFromVictory);
@@ -3087,6 +3302,7 @@
     updateAnnouncerUI();
     updateAutoReadUI();
     updateTeacherAuthUI();
+    updateGameModeUI();
     updatePlayerNamesUI();
     renderSubcategories();
     renderGameCards();

@@ -10,7 +10,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Derse Bi' Mola | MEB Akıllı Tahta Sınıf Düellosu</title>
   <!-- MEB Fatih Ağı ve ETAP Uyumlu: Sıfır Harici CDN, Sıfır Dış Kaynak -->
-  <link rel="stylesheet" href="style.css?v=5.5.0">
+  <link rel="stylesheet" href="style.css?v=5.5.1">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -220,63 +220,35 @@
           Yanlış basan 1.5 saniye kilitlenir!
         </p>
         
+        <!-- Oyun Modu Seçici (Düello vs Tek Kişilik Pratik) -->
+        <div class="mode-switch-container" id="modeSwitchContainer">
+          <button class="mode-switch-btn active" id="btnModeDuel" data-mode="duel">
+            <span class="mode-icon">👥</span>
+            <span>İki Kişilik Düello</span>
+          </button>
+          <button class="mode-switch-btn" id="btnModeSolo" data-mode="solo">
+            <span class="mode-icon">👤</span>
+            <span>Tek Kişilik Pratik</span>
+          </button>
+        </div>
+
         <!-- Tahtadaki Aktif Yarışmacılar Çubuğu -->
-        <div class="active-contestants-bar">
-          <div class="contestant-tag blue-tag">
-            <span class="team-badge">MAVİ TAKIM</span>
+        <div class="active-contestants-bar" id="activeContestantsBar">
+          <div class="contestant-tag blue-tag" id="contestantTagP1">
+            <span class="team-badge" id="teamBadgeP1">MAVİ TAKIM</span>
             <span class="student-name" id="lobbyPlayer1Name">1. Öğrenci (Mavi)</span>
           </div>
-          <div class="vs-circle">VS</div>
-          <div class="contestant-tag red-tag">
-            <span class="team-badge">KIRMIZI TAKIM</span>
+          <div class="vs-circle" id="vsCircle">VS</div>
+          <div class="contestant-tag red-tag" id="contestantTagP2">
+            <span class="team-badge" id="teamBadgeP2">KIRMIZI TAKIM</span>
             <span class="student-name" id="lobbyPlayer2Name">2. Öğrenci (Kırmızı)</span>
           </div>
-          <button class="quick-draw-btn" id="btnQuickDrawPlayers" title="Rastgele İki Öğrenci Seç">
-            <span>🎲</span> Öğrencileri Değiştir
+          <button class="quick-draw-btn" id="btnQuickDrawPlayers" title="Rastgele Öğrenci Seç">
+            <span>🎲</span> <span id="quickDrawBtnText">Öğrencileri Değiştir</span>
           </button>
         </div>
       </section>
 
-      <!-- Sınıf Seviyesi Büyük Seçici -->
-      <section class="grade-selector-section">
-        <div class="section-label">Önce Sınıfını Seç:</div>
-        <div class="grade-cards-grid">
-          <button class="grade-card kindergarten-card" data-grade="0" id="cardGrade0">
-            <div class="grade-card-badge">Okul Öncesi</div>
-            <div class="grade-card-icon"><img src="assets/icons/3d/balloon.png" class="grade-card-3d-img" alt="Anasınıfı"></div>
-            <div class="grade-card-title">Anasınıfı</div>
-            <div class="grade-card-desc">Renkler, şekiller & neşeli hayvanlar</div>
-          </button>
-
-          <button class="grade-card active" data-grade="1" id="cardGrade1">
-            <div class="grade-card-badge">Temel Seviye</div>
-            <div class="grade-card-icon"><img src="assets/icons/3d/seedling.png" class="grade-card-3d-img" alt="1. Sınıf"></div>
-            <div class="grade-card-title">1. Sınıf</div>
-            <div class="grade-card-desc">Toplama, ritmik sayma & ilk kelimeler</div>
-          </button>
-
-          <button class="grade-card" data-grade="2" id="cardGrade2">
-            <div class="grade-card-badge">Gelişme Seviyesi</div>
-            <div class="grade-card-icon"><img src="assets/icons/3d/rocket.png" class="grade-card-3d-img" alt="2. Sınıf"></div>
-            <div class="grade-card-title">2. Sınıf</div>
-            <div class="grade-card-desc">Hızlı işlemler & zıt anlamlı sözcükler</div>
-          </button>
-
-          <button class="grade-card" data-grade="3" id="cardGrade3">
-            <div class="grade-card-badge">İleri Seviye</div>
-            <div class="grade-card-icon"><img src="assets/icons/3d/lightning.png" class="grade-card-3d-img" alt="3. Sınıf"></div>
-            <div class="grade-card-title">3. Sınıf</div>
-            <div class="grade-card-desc">Çarpım fırtınası & Fen keşifleri</div>
-          </button>
-
-          <button class="grade-card" data-grade="4" id="cardGrade4">
-            <div class="grade-card-badge">Usta Seviye</div>
-            <div class="grade-card-icon"><img src="assets/icons/3d/crown.png" class="grade-card-3d-img" alt="4. Sınıf"></div>
-            <div class="grade-card-title">4. Sınıf</div>
-            <div class="grade-card-desc">Hızlı 4 işlem, deyimler & şampiyonluk</div>
-          </button>
-        </div>
-      </section>
 
       <!-- Dinamik Alt Kategori Sekmeleri -->
       <section class="subcategory-section" id="subcategorySection">
@@ -394,9 +366,9 @@
         <!-- Oyuncu Üst Bilgi & Puan Barı -->
         <div class="player-hud">
           <div class="player-info">
-            <div class="player-avatar blue-avatar">👦</div>
+            <div class="player-avatar blue-avatar" id="duelP1Avatar">👦</div>
             <div class="player-labels">
-              <span class="team-title">MAVİ TAKIM</span>
+              <span class="team-title" id="duelP1TeamTitle">MAVİ TAKIM</span>
               <span class="player-name" id="duelP1Name">Mavi Oyuncu</span>
             </div>
           </div>
@@ -446,7 +418,7 @@
           <div class="lockout-modal-box">
             <div class="lockout-icon">⏳</div>
             <div class="lockout-title">Hatalı Şık!</div>
-            <div class="lockout-desc">1.5 saniye kilitlendin! Sıra rakipte...</div>
+            <div class="lockout-desc" id="p1LockoutDesc">1.5 saniye kilitlendin! Sıra rakipte...</div>
             <div class="penalty-progress-bar">
               <div class="penalty-progress-fill" id="p1LockProgress"></div>
             </div>
@@ -564,23 +536,23 @@
     <div class="victory-card">
       <div class="victory-trophy-glow"></div>
       <div class="trophy-visual"><img src="assets/icons/3d/trophy.png" class="victory-3d-trophy" alt="🏆"></div>
-      <span class="victory-subtitle">SINIF DÜELLOSU ŞAMPİYONU</span>
+      <span class="victory-subtitle" id="victorySubtitle">SINIF DÜELLOSU ŞAMPİYONU</span>
       <h2 class="winner-player-title" id="victoryWinnerTitle">Mavi Takım (Ali) Kazandı!</h2>
       
       <!-- Puan Özeti -->
-      <div class="victory-score-box">
+      <div class="victory-score-box" id="victoryScoreBox">
         <div class="score-team blue-winner-box" id="victoryBlueBox">
           <span class="team-name" id="victoryBlueName">Mavi Takım</span>
           <span class="score-val" id="victoryBlueScore">5</span>
         </div>
-        <div class="score-vs">-</div>
+        <div class="score-vs" id="victoryScoreVs">-</div>
         <div class="score-team red-winner-box" id="victoryRedBox">
           <span class="team-name" id="victoryRedName">Kırmızı Takım</span>
           <span class="score-val" id="victoryRedScore">3</span>
         </div>
       </div>
 
-      <p class="victory-congrats">
+      <p class="victory-congrats" id="victoryCongrats">
         Harika bir dikkat ve hız mücadelesi oldu! Kazananı ve yarışan tüm arkadaşlarımızı alkışlayalım! 👏
       </p>
 
