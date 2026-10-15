@@ -10,7 +10,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Derse Bi' Mola | MEB Akıllı Tahta Sınıf Düellosu</title>
   <!-- MEB Fatih Ağı ve ETAP Uyumlu: Sıfır Harici CDN, Sıfır Dış Kaynak -->
-  <link rel="stylesheet" href="style.css?v=5.6.0">
+  <link rel="stylesheet" href="style.css?v=5.6.1">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -21,23 +21,18 @@
   <!-- Üst Navigasyon & Kontrol Çubuğu -->
   <header class="app-header" id="appHeader">
     <div class="header-left">
-      <!-- Sevimli Robot Maskot Moli & Konuşma Balonu -->
-      <div class="moli-header-widget" id="moliWidget" role="button" tabindex="0" title="Ben Moli! Bana tıkla!">
-        <div class="moli-avatar-wrap">
+      <!-- Moli Maskot & Derse Bi' Mola Birleşik Logo -->
+      <div class="logo-badge" id="logoBtn" role="button" tabindex="0" title="Derse Bi' Mola - Ana Menü">
+        <div class="moli-avatar-wrap" id="moliWidget">
           <div class="moli-antenna-glow"></div>
           <img src="assets/mascot/moli.png" class="moli-character-img" id="moliImg" alt="Sevimli Robot Moli">
         </div>
-        <div class="moli-speech-bubble" id="moliSpeechBubble">
-          <span class="moli-bubble-text" id="moliBubbleText">Hadi eğlenceye başlayalım! 🚀</span>
-          <span class="moli-bubble-arrow"></span>
-        </div>
-      </div>
-
-      <div class="logo-badge" id="logoBtn" role="button" tabindex="0" title="Ana Menüye Dön">
-        <span class="logo-icon"><img src="assets/icons/3d/bullseye.png" class="chip-3d-icon" style="width:30px; height:30px; vertical-align:middle;" alt="🎯"></span>
         <div class="logo-text">
           <span class="logo-title">DERSE Bİ' MOLA</span>
           <span class="logo-sub">ETAP & Fatih Akıllı Tahta Düellosu</span>
+        </div>
+        <div class="moli-speech-bubble" id="moliSpeechBubble" style="display: none !important;" aria-hidden="true">
+          <span class="moli-bubble-text" id="moliBubbleText"></span>
         </div>
       </div>
       
@@ -765,6 +760,6 @@
   </div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane) -->
-  <script src="app.js?v=5.6.0"></script>
+  <script src="app.js?v=5.6.1"></script>
 </body>
 </html>

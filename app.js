@@ -2221,9 +2221,15 @@
   }
 
   function handleMoliClick() {
-    audio.playClick();
-    const quote = MOLI_QUOTES[Math.floor(Math.random() * MOLI_QUOTES.length)];
-    changeMoliExpression('custom', quote);
+    if (state.currentView === 'duel') {
+      exitDuel();
+      return;
+    }
+    if (DOM.moliImg) {
+      DOM.moliImg.classList.remove('anim-bounce', 'anim-wobble', 'anim-wave');
+      void DOM.moliImg.offsetWidth;
+      DOM.moliImg.classList.add('anim-bounce');
+    }
   }
 
   function closeModal(modalEl) {
@@ -4736,13 +4742,17 @@
     // -------------------------------------------------------------
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    // Header Kontrolleri
-    DOM.logoBtn.addEventListener('pointerdown', () => {
-      audio.playClick();
-      if (state.currentView === 'duel') {
-        exitDuel();
-      }
-    });
+    // Header Kontrolleri (Moli & Derse Bi' Mola Birleşik Logo)
+    if (DOM.logoBtn) {
+      DOM.logoBtn.addEventListener('pointerdown', () => {
+        audio.playClick();
+        if (state.currentView === 'duel') {
+          exitDuel();
+        } else {
+          handleMoliClick();
+        }
+      });
+    }
 
     DOM.btnToggleFullscreen.addEventListener('pointerdown', toggleFullscreen);
     DOM.btnToggleSound.addEventListener('pointerdown', toggleSound);
@@ -4911,8 +4921,13 @@
     // Sevimli Maskot Moli Dokunma / Tıklama
     if (DOM.moliWidget) {
       DOM.moliWidget.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        handleMoliClick();
+        e.stopPropagation();
+        audio.playClick();
+        if (state.currentView === 'duel') {
+          exitDuel();
+        } else {
+          handleMoliClick();
+        }
       });
     }
 

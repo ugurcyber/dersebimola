@@ -314,20 +314,20 @@ html, body {
 
 .moli-avatar-wrap {
   position: relative;
-  width: 74px;
-  height: 68px;
+  width: 56px;
+  height: 52px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
 .moli-character-img {
-  width: 72px;
+  width: 52px;
   height: auto;
-  max-height: 76px;
+  max-height: 52px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(234, 88, 12, 0.28));
+  filter: drop-shadow(0 3px 8px rgba(234, 88, 12, 0.32));
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation: moliFloat 4s ease-in-out infinite;
 }
@@ -337,8 +337,8 @@ html, body {
   top: 0px;
   left: 50%;
   transform: translateX(-50%);
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(254, 240, 138, 0.95) 0%, rgba(245, 158, 11, 0) 70%);
   pointer-events: none;
@@ -388,18 +388,9 @@ html, body {
   75% { transform: scale(1.08) rotate(-4deg); }
 }
 
-/* Konuşma Balonu */
+/* Konuşma Balonu (Kullanıcı İsteğiyle Gizlendi) */
 .moli-speech-bubble {
-  position: relative;
-  background: #ffffff;
-  border: 2px solid #fdba74;
-  border-radius: 16px;
-  padding: 6px 14px;
-  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.12);
-  display: flex;
-  align-items: center;
-  max-width: 220px;
-  transition: all var(--transition-fast);
+  display: none !important;
 }
 
 .moli-bubble-text {
@@ -483,28 +474,39 @@ html, body {
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  padding: 6px 12px;
-  border-radius: var(--radius-md);
-  transition: transform var(--transition-fast), background var(--transition-fast);
+  padding: 4px 14px 4px 6px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .logo-badge:hover {
-  background: #f8fafc;
+  background: #ffffff;
+  border-color: rgba(249, 115, 22, 0.35);
   transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.12);
+}
+
+.logo-badge:active {
+  transform: translateY(0);
 }
 
 .logo-icon {
-  font-size: 2.2rem;
-  line-height: 1;
+  display: none;
 }
 
 .logo-text {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .logo-title {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 900;
   letter-spacing: -0.01em;
   background: linear-gradient(135deg, #d97706 0%, #db2777 50%, #7c3aed 100%);
@@ -512,12 +514,15 @@ html, body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .logo-sub {
   font-size: 0.74rem;
   font-weight: 800;
   color: var(--text-muted);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 /* Sınıf Seviyesi Seçim Çipleri */
@@ -3599,27 +3604,23 @@ input:checked + .slider:before {
     width: 100%;
   }
 
-  .moli-header-widget {
-    margin-bottom: 2px;
+  .logo-badge {
+    padding: 3px 10px 3px 4px;
+    gap: 8px;
   }
   .moli-avatar-wrap {
-    width: 60px;
-    height: 58px;
+    width: 44px;
+    height: 42px;
   }
   .moli-character-img {
-    width: 58px;
-    max-height: 64px;
+    width: 40px;
+    max-height: 42px;
   }
-  .moli-speech-bubble {
-    max-width: 190px;
-    padding: 4px 10px;
+  .logo-title {
+    font-size: 1.15rem;
   }
-  .moli-bubble-text {
-    font-size: 0.76rem;
-  }
-
-  .logo-badge {
-    padding: 4px 8px;
+  .logo-sub {
+    font-size: 0.68rem;
   }
 
   .grade-nav {
