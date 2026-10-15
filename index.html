@@ -10,7 +10,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Derse Bi' Mola | MEB Akıllı Tahta Sınıf Düellosu</title>
   <!-- MEB Fatih Ağı ve ETAP Uyumlu: Sıfır Harici CDN, Sıfır Dış Kaynak -->
-  <link rel="stylesheet" href="style.css?v=5.6.1">
+  <link rel="stylesheet" href="style.css?v=5.7.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -18,141 +18,171 @@
   <!-- ============================================================== -->
   <div class="bg-mesh" aria-hidden="true"></div>
 
-  <!-- Üst Navigasyon & Kontrol Çubuğu -->
-  <header class="app-header" id="appHeader">
-    <div class="header-left">
-      <!-- Moli Maskot & Derse Bi' Mola Birleşik Logo -->
-      <div class="logo-badge" id="logoBtn" role="button" tabindex="0" title="Derse Bi' Mola - Ana Menü">
-        <div class="moli-avatar-wrap" id="moliWidget">
-          <div class="moli-antenna-glow"></div>
-          <img src="assets/mascot/moli.png" class="moli-character-img" id="moliImg" alt="Sevimli Robot Moli">
+  <!-- ============================================================== -->
+  <!-- EDTECH SAAS MİMARİSİ: SOL SABİT MENÜ + FERAH SAĞ SAHNE         -->
+  <!-- ============================================================== -->
+  <div class="app-layout">
+
+    <!-- 1) SOL SABİT MENÜ (SIDEBAR - 260px, GECE MAVİSİ #1E1B4B) -->
+    <aside class="app-sidebar" id="appSidebar">
+      <!-- Moli Maskot, Logo & Konuşma Balonu -->
+      <div class="sidebar-header">
+        <div class="sidebar-brand-card" id="logoBtn" role="button" tabindex="0" title="Derse Bi' Mola - Ana Menü">
+          <div class="sidebar-moli-wrap" id="moliWidget">
+            <div class="moli-avatar-wrap">
+              <div class="moli-antenna-glow"></div>
+              <img src="assets/mascot/moli.png" class="moli-character-img" id="moliImg" alt="Sevimli Robot Moli">
+            </div>
+          </div>
+          <div class="sidebar-brand-info">
+            <span class="sidebar-brand-title">DERSE Bİ' MOLA</span>
+            <span class="sidebar-brand-sub">ETAP & Akıllı Tahta</span>
+          </div>
         </div>
-        <div class="logo-text">
-          <span class="logo-title">DERSE Bİ' MOLA</span>
-          <span class="logo-sub">ETAP & Fatih Akıllı Tahta Düellosu</span>
-        </div>
-        <div class="moli-speech-bubble" id="moliSpeechBubble" style="display: none !important;" aria-hidden="true">
-          <span class="moli-bubble-text" id="moliBubbleText"></span>
+
+        <!-- Moli Konuşma Balonu -->
+        <div class="moli-speech-bubble" id="moliSpeechBubble">
+          <span class="moli-bubble-text" id="moliBubbleText">Hadi eğlenceye başlayalım! 🚀</span>
+          <span class="moli-bubble-arrow"></span>
         </div>
       </div>
+
+      <!-- Sınıf Seviyeleri (Dikey, Geniş ve Kolay Basılan Butonlar) -->
+      <div class="sidebar-nav-wrap">
+        <div class="sidebar-nav-title">SINIF SEVİYESİ</div>
+        <nav class="grade-nav sidebar-grade-nav" aria-label="Sınıf Seviyesi Seçimi">
+          <button class="grade-chip" data-grade="0" id="chipGrade0">
+            <img src="assets/icons/3d/balloon.png" class="chip-3d-icon" alt="0">
+            <span class="grade-chip-name">Anasınıfı</span>
+          </button>
+          <button class="grade-chip active" data-grade="1" id="chipGrade1">
+            <span class="grade-num-badge">1</span>
+            <span class="grade-chip-name">1. Sınıf</span>
+          </button>
+          <button class="grade-chip" data-grade="2" id="chipGrade2">
+            <span class="grade-num-badge">2</span>
+            <span class="grade-chip-name">2. Sınıf</span>
+          </button>
+          <button class="grade-chip" data-grade="3" id="chipGrade3">
+            <span class="grade-num-badge">3</span>
+            <span class="grade-chip-name">3. Sınıf</span>
+          </button>
+          <button class="grade-chip" data-grade="4" id="chipGrade4">
+            <span class="grade-num-badge">4</span>
+            <span class="grade-chip-name">4. Sınıf</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Sol Menünün Alt Kısmı: Öğretmen Araçları -->
+      <div class="sidebar-footer">
+        <div class="sidebar-nav-title">ÖĞRETMEN VE ARAÇLAR</div>
+        <div class="sidebar-tools-list">
+          <button class="sidebar-tool-btn" id="btnOpenLeaderboard" title="Sınıf Ligi Puan Tablosu">
+            <span class="tool-icon"><img src="assets/icons/3d/trophy.png" class="chip-3d-icon" alt="🏆"></span>
+            <span class="tool-label">Sınıf Ligi</span>
+          </button>
+          <button class="sidebar-tool-btn" id="btnOpenCustomQ" title="Kendi Sorularımı Ekle">
+            <span class="tool-icon">✏️</span>
+            <span class="tool-label">Soru Ekle</span>
+          </button>
+          <button class="teacher-auth-btn sidebar-teacher-btn" id="btnTeacherAuth" title="Öğretmen Girişi / Profil">
+            <span class="auth-icon" id="authIcon">👨‍🏫</span>
+            <span class="auth-text" id="authBtnText">Öğretmenim</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 2) SAĞDAKİ FERAH ANA SAHNE (MAIN WRAPPER - #F8FAFC) -->
+    <div class="app-main-wrapper">
       
-      <!-- Sınıf Seviyesi Seçim Butonları (Header) -->
-      <nav class="grade-nav" aria-label="Sınıf Seviyesi Seçimi">
-        <button class="grade-chip" data-grade="0" id="chipGrade0">
-          <img src="assets/icons/3d/balloon.png" class="chip-3d-icon" alt="0"> Anasınıfı
-        </button>
-        <button class="grade-chip active" data-grade="1" id="chipGrade1">
-          <span class="grade-num">1</span>. Sınıf
-        </button>
-        <button class="grade-chip" data-grade="2" id="chipGrade2">
-          <span class="grade-num">2</span>. Sınıf
-        </button>
-        <button class="grade-chip" data-grade="3" id="chipGrade3">
-          <span class="grade-num">3</span>. Sınıf
-        </button>
-        <button class="grade-chip" data-grade="4" id="chipGrade4">
-          <span class="grade-num">4</span>. Sınıf
-        </button>
-      </nav>
-    </div>
-
-    <div class="header-right">
-      <!-- Pro / Freemium Kancaları -->
-      <button class="tool-btn pro-tool-btn" id="btnOpenPicker" title="Sınıf Listesinden Rastgele 2 Öğrenci Seç">
-        <span class="tool-icon">🎲</span>
-        <span class="tool-label">Rastgele 2 Öğrenci Seç</span>
-        <span class="pro-badge">PRO</span>
-      </button>
-
-      <button class="tool-btn pro-tool-btn" id="btnOpenCustomQ" title="Kendi Sorularımı Ekle">
-        <span class="tool-icon">✏️</span>
-        <span class="tool-label">Soru Ekle</span>
-      </button>
-
-      <button class="tool-btn" id="btnOpenLeaderboard" title="Sınıf Ligi Puan Tablosu">
-        <span class="tool-icon"><img src="assets/icons/3d/trophy.png" class="chip-3d-icon" alt="🏆"></span>
-        <span class="tool-label">Sınıf Ligi</span>
-      </button>
-
-      <div class="header-divider"></div>
-
-      <!-- Sistem Kontrolleri (Ses & Tam Ekran) -->
-      <button class="icon-tool-btn" id="btnToggleSound" title="Sesi Aç / Kapat" aria-label="Sesi Aç / Kapat">
-        <svg class="svg-icon icon-sound-on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        </svg>
-        <svg class="svg-icon icon-sound-off hide" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <line x1="23" y1="9" x2="17" y2="15"></line>
-          <line x1="17" y1="9" x2="23" y2="15"></line>
-        </svg>
-      </button>
-
-      <button class="icon-tool-btn" id="btnToggleFullscreen" title="Tam Ekran Yap" aria-label="Tam Ekran Yap">
-        <svg class="svg-icon icon-fullscreen-enter" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-        </svg>
-        <svg class="svg-icon icon-fullscreen-exit hide" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
-        </svg>
-      </button>
-
-      <!-- Öğretmen Girişi / Profil Butonu -->
-      <button class="teacher-auth-btn" id="btnTeacherAuth">
-        <span class="auth-icon" id="authIcon">👨‍🏫</span>
-        <span class="auth-text" id="authBtnText">Öğretmen Girişi</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- ============================================== -->
-  <!-- 1. GÖRÜNÜM: ANA LOBİ EKRANI (#view-lobby) -->
-  <!-- ============================================== -->
-  <main class="view-container active" id="viewLobby">
-    <div class="lobby-content">
-      
-      <!-- Karşılama ve Hızlı Eşleşme Çubuğu -->
-      <section class="lobby-hero">
-        <div class="hero-tag">
-          <span class="pulse-dot"></span> MEB Fatih Projesi & ETAP Akıllı Tahta Canlı İki Kişilik Sınıf Düellosu
-        </div>
-        <h1 class="hero-title">
-          Dersi <span class="highlight-gradient">Eğlenceli Bir Düelloya</span> Dönüştür!
-        </h1>
-        <p class="hero-desc">
-          İki öğrenci aynı anda akıllı tahtaya dokunarak yarışır, doğru cevabı ilk bulan puanı kapar. 
-          Yanlış basan 1.5 saniye kilitlenir!
-        </p>
-        
-        <!-- Oyun Modu Seçici (Düello vs Tek Kişilik Pratik) -->
-        <div class="mode-switch-container" id="modeSwitchContainer">
-          <button class="mode-switch-btn active" id="btnModeDuel" data-mode="duel">
-            <span class="mode-icon">👥</span>
-            <span>İki Kişilik Düello</span>
-          </button>
-          <button class="mode-switch-btn" id="btnModeSolo" data-mode="solo">
-            <span class="mode-icon">👤</span>
-            <span>Tek Kişilik Pratik</span>
-          </button>
+      <!-- FERAH ÜST BAR (TOPBAR) -->
+      <header class="app-topbar" id="appHeader">
+        <div class="topbar-left">
+          <span class="topbar-tag">
+            <span class="pulse-dot"></span> MEB Akıllı Tahta & ETAP
+          </span>
         </div>
 
-        <!-- Tahtadaki Aktif Yarışmacılar Çubuğu -->
-        <div class="active-contestants-bar" id="activeContestantsBar">
-          <div class="contestant-tag blue-tag" id="contestantTagP1">
-            <span class="team-badge" id="teamBadgeP1">MAVİ TAKIM</span>
-            <span class="student-name" id="lobbyPlayer1Name">1. Öğrenci (Mavi)</span>
+        <!-- Üst Bar Ortası: Mod Seçici (👥 Düello vs 👤 Pratik) -->
+        <div class="topbar-center">
+          <div class="mode-switch-container" id="modeSwitchContainer">
+            <button class="mode-switch-btn active" id="btnModeDuel" data-mode="duel">
+              <span class="mode-icon">👥</span>
+              <span>İki Kişilik Düello</span>
+            </button>
+            <button class="mode-switch-btn" id="btnModeSolo" data-mode="solo">
+              <span class="mode-icon">👤</span>
+              <span>Tek Kişilik Pratik</span>
+            </button>
           </div>
-          <div class="vs-circle" id="vsCircle">VS</div>
-          <div class="contestant-tag red-tag" id="contestantTagP2">
-            <span class="team-badge" id="teamBadgeP2">KIRMIZI TAKIM</span>
-            <span class="student-name" id="lobbyPlayer2Name">2. Öğrenci (Kırmızı)</span>
-          </div>
-          <button class="quick-draw-btn" id="btnQuickDrawPlayers" title="Rastgele Öğrenci Seç">
-            <span>🎲</span> <span id="quickDrawBtnText">Öğrencileri Değiştir</span>
+        </div>
+
+        <!-- Üst Bar Sağ Köşe: Rastgele 2 Öğrenci, Ses, Tam Ekran -->
+        <div class="topbar-right">
+          <button class="topbar-picker-btn" id="btnOpenPicker" title="Sınıf Listesinden Rastgele 2 Öğrenci Seç">
+            <span class="tool-icon">🎲</span>
+            <span class="tool-label">2 Öğrenci Seç</span>
+            <span class="pro-badge">PRO</span>
+          </button>
+
+          <div class="topbar-divider"></div>
+
+          <!-- Sistem Kontrolleri (Ses & Tam Ekran) -->
+          <button class="icon-tool-btn" id="btnToggleSound" title="Sesi Aç / Kapat" aria-label="Sesi Aç / Kapat">
+            <svg class="svg-icon icon-sound-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg class="svg-icon icon-sound-off hide" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+
+          <button class="icon-tool-btn" id="btnToggleFullscreen" title="Tam Ekran Yap" aria-label="Tam Ekran Yap">
+            <svg class="svg-icon icon-fullscreen-enter" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+            </svg>
+            <svg class="svg-icon icon-fullscreen-exit hide" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+            </svg>
           </button>
         </div>
-      </section>
+      </header>
+
+      <!-- 1. GÖRÜNÜM: ANA LOBİ EKRANI (#viewLobby) -->
+      <main class="view-container active" id="viewLobby">
+        <div class="lobby-content">
+          
+          <!-- Karşılama ve Hızlı Eşleşme Çubuğu -->
+          <section class="lobby-hero">
+            <h1 class="hero-title">
+              Dersi <span class="highlight-gradient">Eğlenceli Bir Düelloya</span> Dönüştür!
+            </h1>
+            <p class="hero-desc">
+              İki öğrenci aynı anda akıllı tahtaya dokunarak yarışır, doğru cevabı ilk bulan puanı kapar. 
+              Yanlış basan 1.5 saniye kilitlenir!
+            </p>
+
+            <!-- Tahtadaki Aktif Yarışmacılar Çubuğu -->
+            <div class="active-contestants-bar" id="activeContestantsBar">
+              <div class="contestant-tag blue-tag" id="contestantTagP1">
+                <span class="team-badge" id="teamBadgeP1">MAVİ TAKIM</span>
+                <span class="student-name" id="lobbyPlayer1Name">1. Öğrenci (Mavi)</span>
+              </div>
+              <div class="vs-circle" id="vsCircle">VS</div>
+              <div class="contestant-tag red-tag" id="contestantTagP2">
+                <span class="team-badge" id="teamBadgeP2">KIRMIZI TAKIM</span>
+                <span class="student-name" id="lobbyPlayer2Name">2. Öğrenci (Kırmızı)</span>
+              </div>
+              <button class="quick-draw-btn" id="btnQuickDrawPlayers" title="Rastgele Öğrenci Seç">
+                <span>🎲</span> <span id="quickDrawBtnText">Öğrencileri Değiştir</span>
+              </button>
+            </div>
+          </section>
 
 
       <!-- ============================================== -->
@@ -460,6 +490,8 @@
       </div>
     </div>
   </section>
+  </div> <!-- /.app-main-wrapper -->
+  </div> <!-- /.app-layout -->
 
   <!-- ============================================== -->
   <!-- 3. GÖRÜNÜM: MAÇ SONU & ZAFER EKRANI (Modal/Overlay) -->
@@ -760,6 +792,6 @@
   </div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane) -->
-  <script src="app.js?v=5.6.1"></script>
+  <script src="app.js?v=5.7.0"></script>
 </body>
 </html>

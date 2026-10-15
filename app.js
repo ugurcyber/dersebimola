@@ -658,6 +658,9 @@
     '🚤': 'assets/icons/3d/speedboat.png',
     '🎁': 'assets/icons/3d/gift.png',
     '🎉': 'assets/icons/3d/party_popper.png',
+    '🌍': 'assets/icons/3d/globe.png',
+    '🌎': 'assets/icons/3d/globe.png',
+    '🌏': 'assets/icons/3d/globe.png',
     '💡': 'assets/icons/3d/light_bulb.png',
     '🔑': 'assets/icons/3d/key.png',
     '🔒': 'assets/icons/3d/locked.png',
@@ -2865,7 +2868,7 @@
       {
         id: 'english',
         name: 'İngilizce',
-        icon: '🇬🇧',
+        icon: '🌍',
         colorTheme: 'theme-english',
         tagline: 'Colors, Animals & Words',
         description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',
@@ -3179,7 +3182,7 @@
       {
         id: 'english',
         name: 'İngilizce',
-        icon: '🇬🇧',
+        icon: '🌍',
         colorTheme: 'theme-english',
         tagline: 'Colors, Animals & Words',
         description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',
@@ -3493,7 +3496,7 @@
       {
         id: 'english',
         name: 'İngilizce',
-        icon: '🇬🇧',
+        icon: '🌍',
         colorTheme: 'theme-english',
         tagline: 'Colors, Animals & Words',
         description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',

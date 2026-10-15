@@ -274,48 +274,84 @@ html, body {
   display: none !important;
 }
 
-/* --------------------------------------------------------------------------
-   3. ÜST NAVİGASYON & KONTROL ÇUBUĞU (APP-HEADER)
-   -------------------------------------------------------------------------- */
-.app-header {
-  height: 72px;
-  width: 100vw;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 2px solid rgba(226, 232, 240, 0.85);
+/* ==========================================================================
+   3. EDTECH SAAS MİMARİSİ: SOL SABİT MENÜ (SIDEBAR) & FERAH ÜST BAR (TOPBAR)
+   ========================================================================== */
+
+/* Ana Panel Taşıyıcı Izgarası */
+.app-layout {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  z-index: 50;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  width: 100vw;
+  min-height: 100vh;
+  background: #F8FAFC;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* ==========================================================================
-   SEVİMLİ MASKOT: MOLİ ROBOT & KONUŞMA BALONU
-   ========================================================================== */
-.moli-header-widget {
+/* --------------------------------------------------------------------------
+   1) SOL SABİT MENÜ (SIDEBAR - Genişlik: 260px, Gece Mavisi #1E1B4B)
+   -------------------------------------------------------------------------- */
+.app-sidebar {
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
+  background: #1E1B4B; /* Derin ve kurumsal Gece Mavisi / İndigo */
+  color: #ffffff;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.14);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Sidebar Üst Bölüm: Moli & Logo & Konuşma Balonu */
+.sidebar-header {
+  padding: 18px 14px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-brand-card {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
-  position: relative;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   user-select: none;
   -webkit-user-select: none;
-  padding: 0 4px;
-  transition: transform var(--transition-fast);
-  flex-shrink: 0;
+}
+.sidebar-brand-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 107, 0, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+.sidebar-brand-card:active {
+  transform: translateY(0);
 }
 
-.moli-header-widget:hover {
-  transform: translateY(-2px);
+.sidebar-moli-wrap {
+  position: relative;
+  flex-shrink: 0;
 }
 
 .moli-avatar-wrap {
   position: relative;
-  width: 56px;
-  height: 52px;
+  width: 50px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -323,11 +359,11 @@ html, body {
 }
 
 .moli-character-img {
-  width: 52px;
+  width: 48px;
   height: auto;
-  max-height: 52px;
+  max-height: 48px;
   object-fit: contain;
-  filter: drop-shadow(0 3px 8px rgba(234, 88, 12, 0.32));
+  filter: drop-shadow(0 3px 8px rgba(234, 88, 12, 0.35));
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   animation: moliFloat 4s ease-in-out infinite;
 }
@@ -337,8 +373,8 @@ html, body {
   top: 0px;
   left: 50%;
   transform: translateX(-50%);
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(254, 240, 138, 0.95) 0%, rgba(245, 158, 11, 0) 70%);
   pointer-events: none;
@@ -347,7 +383,7 @@ html, body {
 
 @keyframes moliFloat {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  50% { transform: translateY(-3px); }
 }
 
 @keyframes starAura {
@@ -358,22 +394,19 @@ html, body {
 .moli-character-img.anim-bounce {
   animation: moliBounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
-
 .moli-character-img.anim-wobble {
   animation: moliWobble 0.6s ease-in-out !important;
 }
-
 .moli-character-img.anim-wave {
   animation: moliWave 0.7s ease-in-out !important;
 }
 
 @keyframes moliBounce {
   0%, 100% { transform: scale(1) translateY(0); }
-  35% { transform: scale(1.15) translateY(-10px); }
+  35% { transform: scale(1.15) translateY(-8px); }
   65% { transform: scale(0.92) translateY(2px); }
-  85% { transform: scale(1.04) translateY(-3px); }
+  85% { transform: scale(1.04) translateY(-2px); }
 }
-
 @keyframes moliWobble {
   0%, 100% { transform: rotate(0); }
   20% { transform: rotate(-8deg) translateX(-3px); }
@@ -381,287 +414,339 @@ html, body {
   60% { transform: rotate(-5deg); }
   80% { transform: rotate(3deg); }
 }
-
 @keyframes moliWave {
   0%, 100% { transform: scale(1); }
   25% { transform: scale(1.08) rotate(4deg); }
   75% { transform: scale(1.08) rotate(-4deg); }
 }
 
-/* Konuşma Balonu (Kullanıcı İsteğiyle Gizlendi) */
+.sidebar-brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand-title {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #ff8533 0%, #f43f5e 50%, #a855f7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.sidebar-brand-sub {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.65);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Sevimli Moli Konuşma Balonu (Sidebar İçi) */
 .moli-speech-bubble {
-  display: none !important;
+  position: relative;
+  background: #ffffff;
+  border: 1.5px solid #fdba74;
+  border-radius: 12px;
+  padding: 6px 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all var(--transition-fast);
 }
 
 .moli-bubble-text {
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 800;
   color: #0f172a;
   line-height: 1.25;
-  white-space: normal;
 }
 
 .moli-bubble-arrow {
   position: absolute;
-  left: -7px;
-  top: 50%;
-  transform: translateY(-50%) rotate(45deg);
-  width: 12px;
-  height: 12px;
+  top: -6px;
+  left: 24px;
+  width: 10px;
+  height: 10px;
   background: #ffffff;
-  border-left: 2px solid #fdba74;
-  border-bottom: 2px solid #fdba74;
+  border-left: 1.5px solid #fdba74;
+  border-top: 1.5px solid #fdba74;
+  transform: rotate(45deg);
 }
 
 .moli-speech-bubble.bubble-pop {
   animation: bubblePop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 @keyframes bubblePop {
   0% { transform: scale(0.85); opacity: 0.6; }
-  60% { transform: scale(1.06); opacity: 1; }
+  60% { transform: scale(1.05); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* Balon Durum Stilleri */
 .moli-speech-bubble.state-correct {
   background: #f0fdf4;
   border-color: #86efac;
-  box-shadow: 0 4px 14px rgba(34, 197, 94, 0.18);
 }
-.moli-speech-bubble.state-correct .moli-bubble-text {
-  color: #15803d;
-}
-.moli-speech-bubble.state-correct .moli-bubble-arrow {
-  background: #f0fdf4;
-  border-color: #86efac;
-}
+.moli-speech-bubble.state-correct .moli-bubble-text { color: #15803d; }
+.moli-speech-bubble.state-correct .moli-bubble-arrow { background: #f0fdf4; border-color: #86efac; }
 
 .moli-speech-bubble.state-wrong {
   background: #fff7ed;
   border-color: #fdba74;
-  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.2);
 }
-.moli-speech-bubble.state-wrong .moli-bubble-text {
-  color: #c2410c;
-}
-.moli-speech-bubble.state-wrong .moli-bubble-arrow {
-  background: #fff7ed;
-  border-color: #fdba74;
-}
+.moli-speech-bubble.state-wrong .moli-bubble-text { color: #c2410c; }
+.moli-speech-bubble.state-wrong .moli-bubble-arrow { background: #fff7ed; border-color: #fdba74; }
 
-.moli-speech-bubble.state-victory {
-  background: #faf5ff;
-  border-color: #d8b4fe;
-  box-shadow: 0 4px 16px rgba(168, 85, 247, 0.22);
-}
-.moli-speech-bubble.state-victory .moli-bubble-text {
-  color: #7e22ce;
-}
-.moli-speech-bubble.state-victory .moli-bubble-arrow {
-  background: #faf5ff;
-  border-color: #d8b4fe;
-}
-
-.header-left {
+/* Sınıflar (Dikey, Geniş & Kolay Dokunmatik Butonlar) */
+.sidebar-nav-wrap {
+  padding: 16px 14px;
+  flex: 1;
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;
 }
 
-.logo-badge {
+.sidebar-nav-title {
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(203, 213, 225, 0.55);
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.sidebar-grade-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.sidebar-grade-nav .grade-chip {
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  font-weight: 800;
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 0 16px;
   cursor: pointer;
-  padding: 4px 14px 4px 6px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left;
   user-select: none;
   -webkit-user-select: none;
 }
 
-.logo-badge:hover {
-  background: #ffffff;
-  border-color: rgba(249, 115, 22, 0.35);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.12);
+.sidebar-grade-nav .grade-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(4px);
 }
 
-.logo-badge:active {
+/* Aktif Seçilen Sınıf: Moli'nin Canlı Turuncusu (#FF6B00) ile Parlar */
+.sidebar-grade-nav .grade-chip.active {
+  background: linear-gradient(135deg, #ff6b00 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+  border: 1.5px solid #ff9248 !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  transform: translateX(5px) scale(1.02);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.grade-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.sidebar-grade-nav .grade-chip.active .grade-num-badge {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.grade-chip-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* Sol Menünün Alt Kısmı: Öğretmen Araçları */
+.sidebar-footer {
+  padding: 16px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-tools-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-tool-btn {
+  width: 100%;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  font-size: 0.88rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.sidebar-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateX(3px);
+}
+
+.sidebar-teacher-btn {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+  border: 1.5px solid #6366f1;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+.sidebar-teacher-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
+  filter: brightness(1.1);
+}
+.sidebar-teacher-btn:active {
   transform: translateY(0);
 }
 
-.logo-icon {
-  display: none;
-}
-
-.logo-text {
+/* --------------------------------------------------------------------------
+   2) SAĞDAKİ FERAH ANA SAHNE (MAIN WRAPPER - #F8FAFC)
+   -------------------------------------------------------------------------- */
+.app-main-wrapper {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+  background: #F8FAFC; /* Göz yormayan, akıllı tahtada parlamayan ferah zemin */
 }
 
-.logo-title {
-  font-size: 1.4rem;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  background: linear-gradient(135deg, #d97706 0%, #db2777 50%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1.1;
-  white-space: nowrap;
-}
-
-.logo-sub {
-  font-size: 0.74rem;
-  font-weight: 800;
-  color: var(--text-muted);
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-}
-
-/* Sınıf Seviyesi Seçim Çipleri */
-/* Sınıf Seviyesi Seçim Çipleri (Modern Cam Efektli & Yüksek Kontrast) */
-.grade-nav {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.72);
+/* FERAH ÜST BAR (TOPBAR) */
+.app-topbar {
+  height: 68px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 4px;
-  border-radius: var(--radius-full);
-  border: 1.5px solid rgba(203, 213, 225, 0.85);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  border-bottom: 1.5px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 
-.grade-chip {
-  background: transparent;
-  border: 1px solid transparent;
-  color: #334155;
-  font-size: 0.92rem;
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid #e2e8f0;
+  letter-spacing: 0.01em;
+}
+
+.topbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-picker-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1.5px solid #93c5fd;
+  color: #1d4ed8;
+  font-size: 0.85rem;
   font-weight: 800;
   padding: 6px 14px;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
   font-family: inherit;
 }
-
-.grade-chip:hover {
-  color: #0f172a;
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(203, 213, 225, 0.8);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+.topbar-picker-btn:hover {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+.topbar-picker-btn:active {
+  transform: translateY(0);
 }
 
-.grade-chip.active {
-  background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%) !important;
-  color: #ffffff !important;
-  font-weight: 900;
-  border-color: #1d4ed8 !important;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  transform: translateY(-1px) scale(1.03);
-}
-
-.grade-chip[data-grade="0"].active {
-  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
-  border-color: #be123c !important;
-  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.4) !important;
-}
-
-/* 1. Sınıf: Açık fonda net okunan Moli Turuncusu */
-.grade-chip[data-grade="1"] {
-  color: #0f172a;
-  font-weight: 800;
-}
-.grade-chip[data-grade="1"].active {
-  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
-  border-color: #9a3412 !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-}
-
-.grade-chip[data-grade="2"].active {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
-  border-color: #075985 !important;
-  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4) !important;
-}
-.grade-chip[data-grade="3"].active {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  border-color: #065f46 !important;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4) !important;
-}
-.grade-chip[data-grade="4"].active {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
-  border-color: #5b21b6 !important;
-  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4) !important;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.header-divider {
+.topbar-divider {
   width: 1.5px;
-  height: 28px;
+  height: 24px;
   background: #e2e8f0;
   margin: 0 4px;
-}
-
-/* Araç Butonları */
-.tool-btn {
-  background: #ffffff;
-  border: 1.5px solid #cbd5e1;
-  color: var(--text-primary);
-  font-size: 0.85rem;
-  font-weight: 800;
-  padding: 8px 14px;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all var(--transition-fast);
-  font-family: inherit;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-}
-
-.tool-btn:hover {
-  background: #f8fafc;
-  border-color: #94a3b8;
-  transform: translateY(-1px);
-}
-
-.pro-tool-btn {
-  border-color: #f59e0b;
-  background: #fffbeb;
-  color: #b45309;
-}
-
-.pro-tool-btn:hover {
-  background: #fef3c7;
-}
-
-.pro-badge {
-  background: #f59e0b;
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 900;
-  padding: 2px 6px;
-  border-radius: 4px;
 }
 
 .icon-tool-btn {
@@ -684,31 +769,23 @@ html, body {
   border-color: #94a3b8;
 }
 
-.teacher-auth-btn {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  border: none;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 800;
-  padding: 8px 16px;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
-  font-family: inherit;
-}
-
-.teacher-auth-btn:hover {
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
-  transform: translateY(-1px);
-}
-
 .teacher-auth-btn.logged-in {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
   box-shadow: 0 3px 10px rgba(5, 150, 105, 0.3);
+}
+
+/* Düello Başladığında Tam Ekran Görünüm (Sol Menü ve Üst Barı Gizle) */
+body:has(#viewDuel.active) .app-sidebar,
+body:has(#viewDuel.active) .app-topbar {
+  display: none !important;
+}
+#viewDuel.active {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1000 !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -1352,35 +1429,86 @@ html, body {
 
 .subject-card {
   position: relative;
-  background: #ffffff;
-  border: 1.5px solid rgba(226, 232, 240, 0.9);
-  border-radius: 16px;
-  padding: 12px 16px;
+  border-radius: 20px !important;
+  padding: 16px 18px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 185px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-height: 200px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .subject-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(99, 102, 241, 0.4);
-  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.09), 0 4px 10px rgba(0, 0, 0, 0.03);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
 }
 
-/* Ders Temaları Sol Vurgu Çizgileri */
-.subject-card.theme-firstreading { border-left: 5px solid #f97316; }
-.subject-card.theme-math { border-left: 5px solid #2563eb; }
-.subject-card.theme-turkish { border-left: 5px solid #ea580c; }
-.subject-card.theme-lifescience { border-left: 5px solid #10b981; }
-.subject-card.theme-science { border-left: 5px solid #06b6d4; }
-.subject-card.theme-social { border-left: 5px solid #f59e0b; }
-.subject-card.theme-english { border-left: 5px solid #8b5cf6; }
-.subject-card.theme-brain { border-left: 5px solid #6366f1; }
+.subject-card:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px !important;
+}
+
+/* Canlı 3D Tematik Ders Kartları (Border-Bottom 5px solid + Tematik Gradyan) */
+.subject-card.theme-firstreading {
+  border: 2px solid #fed7aa;
+  border-bottom: 5px solid #f97316 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%);
+}
+.subject-card.theme-firstreading:hover { border-color: #fb923c; }
+
+.subject-card.theme-math {
+  border: 2px solid #bfdbfe;
+  border-bottom: 5px solid #2563eb !important;
+  background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+}
+.subject-card.theme-math:hover { border-color: #3b82f6; }
+
+.subject-card.theme-turkish {
+  border: 2px solid #fed7aa;
+  border-bottom: 5px solid #ea580c !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fff7ed 100%);
+}
+.subject-card.theme-turkish:hover { border-color: #f97316; }
+
+.subject-card.theme-lifescience {
+  border: 2px solid #a7f3d0;
+  border-bottom: 5px solid #10b981 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #ecfdf5 100%);
+}
+.subject-card.theme-lifescience:hover { border-color: #34d399; }
+
+.subject-card.theme-science {
+  border: 2px solid #a5f3fc;
+  border-bottom: 5px solid #06b6d4 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #ecfeff 100%);
+}
+.subject-card.theme-science:hover { border-color: #22d3ee; }
+
+.subject-card.theme-social {
+  border: 2px solid #fde68a;
+  border-bottom: 5px solid #f59e0b !important;
+  background: linear-gradient(180deg, #ffffff 0%, #fffbeb 100%);
+}
+.subject-card.theme-social:hover { border-color: #fbbf24; }
+
+.subject-card.theme-english {
+  border: 2px solid #ddd6fe;
+  border-bottom: 5px solid #8b5cf6 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
+}
+.subject-card.theme-english:hover { border-color: #a78bfa; }
+
+.subject-card.theme-brain {
+  border: 2px solid #c7d2fe;
+  border-bottom: 5px solid #6366f1 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
+}
+.subject-card.theme-brain:hover { border-color: #818cf8; }
 
 .subject-card-top {
   display: flex;
@@ -1410,32 +1538,32 @@ html, body {
   font-size: 0.72rem;
   font-weight: 800;
   color: #64748b;
-  background: #f8fafc;
+  background: rgba(255, 255, 255, 0.85);
   padding: 2px 8px;
   border-radius: var(--radius-full);
-  border: 1px solid #f1f5f9;
+  border: 1px solid rgba(226, 232, 240, 0.9);
 }
 
 .subject-icon-wrap,
 .subject-visual-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   line-height: 1;
-  margin-bottom: 5px;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  margin-bottom: 6px;
+  background: #ffffff;
+  border: 1.5px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .subject-card:hover .subject-icon-wrap,
 .subject-card:hover .subject-visual-icon {
-  transform: translateY(-2px) scale(1.08) rotate(4deg);
+  transform: translateY(-3px) scale(1.1) rotate(4deg);
 }
 
 .subject-title {
@@ -3586,79 +3714,94 @@ input:checked + .slider:before {
     min-height: 100vh;
   }
 
-  .app-header {
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .app-sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
     height: auto !important;
-    min-height: auto !important;
-    padding: 10px 14px;
-    flex-direction: column;
+    position: relative !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2);
+  }
+
+  .sidebar-header {
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    position: relative;
-    width: 100%;
+    padding: 12px 16px;
   }
 
-  .header-left {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
+  .sidebar-speech-bubble {
+    display: none !important;
   }
 
-  .logo-badge {
-    padding: 3px 10px 3px 4px;
-    gap: 8px;
-  }
-  .moli-avatar-wrap {
-    width: 44px;
-    height: 42px;
-  }
-  .moli-character-img {
-    width: 40px;
-    max-height: 42px;
-  }
-  .logo-title {
-    font-size: 1.15rem;
-  }
-  .logo-sub {
-    font-size: 0.68rem;
+  .sidebar-nav-wrap {
+    padding: 2px 14px 10px 14px;
   }
 
-  .grade-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-    width: 100%;
-    max-width: 100%;
-    border-radius: var(--radius-lg);
-    padding: 6px;
-  }
-
-  .grade-chip {
-    font-size: 0.84rem;
-    padding: 6px 12px;
-  }
-
-  .header-right {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .header-divider {
+  .sidebar-nav-title {
     display: none;
   }
 
-  .tool-btn {
-    padding: 6px 12px;
-    font-size: 0.8rem;
+  .sidebar-grade-nav {
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding: 4px 0 8px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
 
-  .teacher-auth-btn {
-    padding: 6px 14px;
-    font-size: 0.82rem;
+  .sidebar-grade-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar-grade-nav .grade-chip {
+    width: auto !important;
+    flex-shrink: 0;
+    height: 42px;
+    padding: 0 14px;
+  }
+
+  .sidebar-footer {
+    padding: 10px 14px;
+  }
+
+  .sidebar-tools-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sidebar-tool-btn, .sidebar-teacher-btn {
+    width: auto;
+    flex: 1;
+    min-width: 110px;
+    white-space: nowrap;
+  }
+
+  .app-topbar {
+    height: auto !important;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .topbar-left {
+    display: none;
+  }
+
+  .topbar-center {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .topbar-right {
+    margin-left: auto;
   }
 
   .view-container {
