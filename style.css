@@ -77,7 +77,8 @@ html, body {
   min-height: 100vh;
   overflow: hidden; /* Asla kaydırma çubuğu çıkmamalı */
   font-family: var(--font-family);
-  background: #f0f4fc;
+  background: #f1f5f9;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0eefe 30%, #eef2ff 70%, #e0e7ff 100%);
   color: var(--text-primary);
   line-height: 1.4;
   touch-action: manipulation;
@@ -85,47 +86,33 @@ html, body {
 
 /* ==========================================================================
    ÇOCUKLAR VE AKILLI TAHTA İÇİN MODERN EDTECH & GAMING ARKA PLAN
-   Göz yormayan, zarif yumuşak mavi-indigo tonlarında gradyan ve soft desen
+   Göz yormayan, zarif yumuşak mavi-indigo tonlarında gradyan
    ========================================================================== */
 .bg-mesh {
   position: fixed;
   inset: 0;
-  z-index: 0; /* Arka plan z-index: 0 (içerik z-index: 10 altında) */
+  z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: linear-gradient(145deg, #f1f5fd 0%, #e9f1fe 35%, #edf3fc 70%, #e2ecfd 100%);
-}
-
-/* 1. Katman: Akıllı Tahtalarda Parlamayan & Gözü Yormayan Modern Yumuşak Gradyan Aura */
-.bg-pastel-aura {
-  position: absolute;
-  inset: 0;
   background: 
-    radial-gradient(circle at 10% 12%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 90% 10%, rgba(99, 102, 241, 0.10) 0%, transparent 48%),
-    radial-gradient(circle at 12% 88%, rgba(14, 165, 233, 0.10) 0%, transparent 45%),
-    radial-gradient(circle at 90% 88%, rgba(37, 99, 235, 0.08) 0%, transparent 48%),
-    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.75) 0%, transparent 70%);
-  pointer-events: none;
+    radial-gradient(circle at 10% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 90% 12%, rgba(99, 102, 241, 0.10) 0%, transparent 42%),
+    radial-gradient(circle at 15% 85%, rgba(14, 165, 233, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(37, 99, 235, 0.09) 0%, transparent 45%),
+    linear-gradient(150deg, #f0f6ff 0%, #e6effd 45%, #edf2fe 80%, #e2eaf9 100%);
 }
 
-/* 2. Katman: Modern Dijital Izgara / Minimalist Dot-Matrix Deseni */
+/* Soluk pastel desenleri ve dikkat dağıtıcı öğeleri kaldır */
+.bg-pastel-aura {
+  display: none !important;
+}
+
 .bg-doodle-grid {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(100, 116, 139, 0.15) 1.2px, transparent 1.2px);
-  background-size: 26px 26px;
-  opacity: 0.65;
-  pointer-events: none;
+  display: none !important;
 }
 
-/* 3. Katman: Vektörel Sevimli Yüzen Figürler */
 .bg-floating-items {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
+  display: none !important;
 }
 
 .bg-float-elem {
@@ -534,73 +521,86 @@ html, body {
 }
 
 /* Sınıf Seviyesi Seçim Çipleri */
+/* Sınıf Seviyesi Seçim Çipleri (Modern Cam Efektli & Yüksek Kontrast) */
 .grade-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: #f1f5f9;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 4px;
   border-radius: var(--radius-full);
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid rgba(203, 213, 225, 0.85);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
 .grade-chip {
   background: transparent;
-  border: none;
-  color: #1e293b;
+  border: 1px solid transparent;
+  color: #334155;
   font-size: 0.92rem;
   font-weight: 800;
   padding: 6px 14px;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   font-family: inherit;
 }
 
 .grade-chip:hover {
   color: #0f172a;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(203, 213, 225, 0.8);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .grade-chip.active {
-  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 60%, #3b82f6 100%) !important;
   color: #ffffff !important;
   font-weight: 900;
-  box-shadow: 0 3px 10px rgba(234, 88, 12, 0.35);
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px) scale(1.03);
 }
 
 .grade-chip[data-grade="0"].active {
-  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
-  box-shadow: 0 3px 10px rgba(244, 63, 94, 0.35);
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+  border-color: #be123c !important;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.4) !important;
 }
 
-/* 1. Sınıf: Açık fonda net okunması için yüksek kontrastlı zengin koyu kehribar zemin & beyaz kalın yazı */
+/* 1. Sınıf: Açık fonda net okunan Moli Turuncusu */
 .grade-chip[data-grade="1"] {
   color: #0f172a;
   font-weight: 800;
 }
 .grade-chip[data-grade="1"].active {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  border-color: #9a3412 !important;
   color: #ffffff !important;
-  box-shadow: 0 3px 10px rgba(180, 83, 9, 0.4);
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .grade-chip[data-grade="2"].active {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  box-shadow: 0 3px 10px rgba(14, 165, 233, 0.35);
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  border-color: #075985 !important;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.4) !important;
 }
 .grade-chip[data-grade="3"].active {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  border-color: #065f46 !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4) !important;
 }
 .grade-chip[data-grade="4"].active {
-  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.35);
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  border-color: #5b21b6 !important;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4) !important;
 }
 
 .header-right {
@@ -1595,14 +1595,14 @@ html, body {
 }
 
 .subcat-pill {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1.5px solid rgba(203, 213, 225, 0.85);
-  color: #334155;
-  font-size: 0.84rem;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1.5px solid rgba(203, 213, 225, 0.85) !important;
+  color: #334155 !important;
+  font-size: 0.86rem;
   font-weight: 800;
-  padding: 5px 14px;
+  padding: 6px 15px;
   border-radius: var(--radius-full);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -1614,20 +1614,21 @@ html, body {
 }
 
 .subcat-pill:hover {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: #60a5fa;
-  color: #0f172a;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: #60a5fa !important;
+  color: #1e3a8a !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(37, 99, 235, 0.12);
 }
 
 .subcat-pill.active {
-  background: linear-gradient(135deg, #1e40af 0%, #2563eb 55%, #3b82f6 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #2563eb 55%, #3b82f6 100%) !important;
   color: #ffffff !important;
-  border-color: #1d4ed8;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.38), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-  transform: translateY(-1px) scale(1.03);
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-1px) scale(1.04);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  font-weight: 900;
 }
 
 /* --------------------------------------------------------------------------
@@ -1677,8 +1678,8 @@ html, body {
 .game-card {
   position: relative;
   background: #ffffff !important;
-  border: 1.5px solid rgba(226, 232, 240, 0.9);
-  border-radius: 16px;
+  border: 1.5px solid rgba(226, 232, 240, 0.85) !important;
+  border-radius: 16px !important;
   padding: 12px 16px;
   overflow: hidden;
   cursor: pointer;
@@ -1686,35 +1687,25 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
   min-height: 185px;
 }
 
 .game-card:hover {
-  border-color: rgba(148, 163, 184, 0.85);
+  border-color: rgba(99, 102, 241, 0.35) !important;
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.09), 0 4px 10px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.09), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
 }
 
-/* 6 Farklı Oyun Teması - Sitenin Ana Renkleriyle (Moli Turuncu & Koyu Mavi) Uyumlu Vurgular */
-.game-card.math-theme {
-  border-left: 5px solid #2563eb;
-}
-.game-card.turkish-theme {
-  border-left: 5px solid #ea580c;
-}
-.game-card.oddone-theme {
-  border-left: 5px solid #f97316;
-}
-.game-card.stroop-theme {
-  border-left: 5px solid #4f46e5;
-}
-.game-card.memory-theme {
-  border-left: 5px solid #059669;
-}
-.game-card.reflex-theme {
-  border-left: 5px solid #d97706;
-}
+/* Farklı Oyun Temaları - Moli Turuncu & Koyu Mavi Uyumlu Sol Vurgular */
+.game-card.theme-math, .game-card.math-theme { border-left: 5px solid #2563eb !important; }
+.game-card.theme-turkish, .game-card.turkish-theme { border-left: 5px solid #ea580c !important; }
+.game-card.theme-firstreading { border-left: 5px solid #f97316 !important; }
+.game-card.theme-lifescience { border-left: 5px solid #10b981 !important; }
+.game-card.theme-science { border-left: 5px solid #06b6d4 !important; }
+.game-card.theme-social { border-left: 5px solid #f59e0b !important; }
+.game-card.theme-english, .game-card.english-theme { border-left: 5px solid #6366f1 !important; }
+.game-card.theme-brain, .game-card.brain-theme, .game-card.oddone-theme, .game-card.stroop-theme, .game-card.memory-theme, .game-card.reflex-theme { border-left: 5px solid #8b5cf6 !important; }
 
 .game-top-meta {
   display: flex;
@@ -1869,60 +1860,72 @@ html, body {
 /* "Pratiğe Başla" / "Düelloyu Başlat" Butonları: Gradientli, Dokunma Hissi Veren Modern Oyun Butonu */
 .btn-play-game {
   width: 100%;
-  padding: 9px 16px;
+  padding: 10px 18px;
   border-radius: 13px;
-  font-size: 0.94rem;
+  font-size: 0.96rem;
   font-weight: 900;
-  color: #ffffff;
+  color: #ffffff !important;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   font-family: inherit;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.02em;
   position: relative;
   overflow: hidden;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  /* Varsayılan canlı gradient (Koyu Mavi / Elektrik Mavisi) */
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
-.math-theme .btn-play-game { 
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
-  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+/* Konu ve Oyunlara Özel Canlı Gradientler */
+.theme-math .btn-play-game, .math-theme .btn-play-game, [data-game-id="math"] .btn-play-game { 
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important; 
+  box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
 }
-.turkish-theme .btn-play-game { 
-  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); 
-  box-shadow: 0 4px 14px rgba(194, 65, 12, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+.theme-turkish .btn-play-game, .turkish-theme .btn-play-game, [data-game-id="turkish"] .btn-play-game { 
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important; 
+  box-shadow: 0 4px 14px rgba(194, 65, 12, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
 }
-.oddone-theme .btn-play-game { 
-  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%); 
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+.theme-firstreading .btn-play-game, [data-game-id="firstreading"] .btn-play-game { 
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important; 
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
 }
-.stroop-theme .btn-play-game { 
-  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%); 
-  box-shadow: 0 4px 14px rgba(67, 56, 202, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+.theme-english .btn-play-game, .english-theme .btn-play-game, [data-game-id^="english"] .btn-play-game { 
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important; 
+  box-shadow: 0 4px 14px rgba(67, 56, 202, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
 }
-.memory-theme .btn-play-game { 
-  background: linear-gradient(135deg, #10b981 0%, #047857 100%); 
-  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+.theme-lifescience .btn-play-game, [data-game-id="lifescience"] .btn-play-game { 
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%) !important; 
+  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
 }
-.reflex-theme .btn-play-game { 
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); 
-  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+.theme-science .btn-play-game, [data-game-id="science"] .btn-play-game { 
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important; 
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+}
+.theme-social .btn-play-game, [data-game-id="social"] .btn-play-game { 
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important; 
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+}
+.theme-brain .btn-play-game, .brain-theme .btn-play-game, [data-game-id="oddone"] .btn-play-game, [data-game-id="stroop"] .btn-play-game, [data-game-id="memory"] .btn-play-game, [data-game-id="reflex"] .btn-play-game { 
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%) !important; 
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
 }
 
 .btn-play-game:hover {
-  transform: translateY(-2px) scale(1.025);
-  filter: brightness(1.08);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  transform: translateY(-2px) scale(1.03) !important;
+  filter: brightness(1.08) !important;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.45) !important;
 }
 
 .btn-play-game:active {
-  transform: translateY(1px) scale(0.98);
-  filter: brightness(0.96);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(1px) scale(0.98) !important;
+  filter: brightness(0.96) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
 }
 
 
