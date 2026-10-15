@@ -1725,6 +1725,12 @@
     btnBackToLobby: document.getElementById('btnBackToLobby'),
 
     // Modaller
+    modalConfirmExit: document.getElementById('modalConfirmExit'),
+    exitConfirmTitle: document.getElementById('exitConfirmTitle'),
+    exitConfirmDesc: document.getElementById('exitConfirmDesc'),
+    btnConfirmExitYes: document.getElementById('btnConfirmExitYes'),
+    btnConfirmExitNo: document.getElementById('btnConfirmExitNo'),
+
     modalAuth: document.getElementById('modalAuth'),
     btnSimulateGoogleLogin: document.getElementById('btnSimulateGoogleLogin'),
 
@@ -2861,6 +2867,21 @@
   /* ==========================================================================
      14. DÜELLO & TEK KİŞİLİK PRATİK OYUN AKIŞI & MEKANİĞİ
      ========================================================================== */
+  // Düello / Pratik Zamanlayıcı Takipçisi (Temiz Çıkış Güvencesi)
+  let duelTimers = [];
+  function setDuelTimeout(fn, delay) {
+    const t = setTimeout(() => {
+      duelTimers = duelTimers.filter(id => id !== t);
+      fn();
+    }, delay);
+    duelTimers.push(t);
+    return t;
+  }
+  function clearAllDuelTimers() {
+    duelTimers.forEach(t => clearTimeout(t));
+    duelTimers = [];
+  }
+
   function startDuel(gameType) {
     state.currentGameType = gameType;
     state.player1.score = 0;
@@ -2903,9 +2924,12 @@
     updatePlayerNamesUI();
     renderScoreTrack();
 
-    // Lobi -> Düello Görünümüne Geçiş
+    // Lobi -> Düello Görünümüne Geçiş (Kesin ve zorunlu ekran geçişi)
     DOM.viewLobby.classList.remove('active');
+    DOM.viewLobby.style.display = 'none';
+
     DOM.viewDuel.classList.add('active');
+    DOM.viewDuel.style.display = 'flex';
     state.currentView = 'duel';
 
     audio.playCorrect();
@@ -2917,22 +2941,108 @@
     loadNextQuestion();
   }
 
-  function exitDuel() {
+  /**
+   * Lobiye Kesin ve Güvenli Dönüş (Tüm state, ses ve sayaçları sıfırlar)
+   */
+  function returnToLobby() {
+    // 1) Sesleri ve konuşmayı anında tamamen durdur
+    audio.stopQuestionAudio();
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch (e) {}
+    }
+
+    // 2) Bütün aktif düello zamanlayıcılarını ve kilitlerini temizle
+    clearAllDuelTimers();
+    clearAllLockouts();
+    if (moliResetTimer) {
+      clearTimeout(moliResetTimer);
+      moliResetTimer = null;
+    }
+    if (spinTimer) {
+      clearTimeout(spinTimer);
+      spinTimer = null;
+    }
+
+    // 3) Açık olabilecek tüm modal/popup, bildirim ve efektleri kapat
+    if (DOM.modalConfirmExit) DOM.modalConfirmExit.classList.add('hide');
+    if (DOM.solutionPopup) DOM.solutionPopup.classList.add('hide');
+    if (DOM.victoryOverlay) DOM.victoryOverlay.classList.add('hide');
+    if (DOM.p1WinToast) DOM.p1WinToast.classList.add('hide');
+    if (DOM.p2WinToast) DOM.p2WinToast.classList.add('hide');
+    confetti.stop();
+
+    // Şık butonlarındaki aktif ve kilitli durumları temizle
+    document.querySelectorAll('.duel-option-btn').forEach(btn => {
+      btn.classList.remove('btn-correct', 'btn-wrong');
+      btn.disabled = false;
+    });
+
+    // 4) EKRAN GEÇİŞİNİ KESİN VE ZORUNLU KIL (display: none / flex)
+    DOM.viewDuel.classList.remove('active');
+    DOM.viewDuel.style.display = 'none';
+
+    DOM.viewLobby.classList.add('active');
+    DOM.viewLobby.style.display = 'flex';
+    DOM.viewLobby.scrollTop = 0;
+    window.scrollTo(0, 0);
+
+    // 5) STATE SIFIRLAMA
+    state.currentView = 'lobby';
+    state.isQuestionAnswered = false;
+    state.currentQuestion = null;
+    state.questionNumber = 1;
+    state.player1.score = 0;
+    state.player2.score = 0;
+    state.player1.isLocked = false;
+    state.player2.isLocked = false;
+
+    // Solo mod artıklarını temizle
+    if (DOM.splitArena) {
+      DOM.splitArena.classList.remove('solo-mode');
+    }
+
+    // Arayüz ve Moli'yi güncelle
+    renderScoreTrack();
+    updateGameModeUI();
+    renderGameCards();
+    changeMoliExpression('lobby');
+    audio.playClick();
+  }
+
+  /**
+   * Oyundan Çıkış Kontrolü (Mobilde confirm() engeline takılmadan modal ile güvenli çıkış)
+   */
+  function exitDuel(force = false) {
+    if (force === true) {
+      returnToLobby();
+      return;
+    }
+
+    // Güvenli in-app onay modalı (standart confirm() engeline takılmaz)
+    if (DOM.modalConfirmExit) {
+      const isSolo = (state.gameMode === 'solo');
+      if (DOM.exitConfirmTitle) {
+        DOM.exitConfirmTitle.textContent = isSolo 
+          ? 'Pratiği Sonlandırmak İstiyor musunuz?' 
+          : 'Düelloyu Sonlandırmak İstiyor musunuz?';
+      }
+      if (DOM.exitConfirmDesc) {
+        DOM.exitConfirmDesc.textContent = isSolo
+          ? 'Mevcut pratik sonlandırılacak ve ana lobiye döneceksiniz.'
+          : 'Mevcut düello maçı sonlandırılacak ve ana menüye döneceksiniz.';
+      }
+      openModal(DOM.modalConfirmExit);
+      return;
+    }
+
+    // Standart confirm yedek mekanizması
     const exitMsg = (state.gameMode === 'solo')
       ? 'Pratiği sonlandırıp lobiye dönmek istiyor musunuz?'
       : 'Düelloyu sonlandırıp lobiye dönmek istiyor musunuz?';
-    if (confirm(exitMsg)) {
-      audio.stopQuestionAudio();
-      clearAllLockouts();
-      DOM.solutionPopup.classList.add('hide');
-      DOM.victoryOverlay.classList.add('hide');
-      confetti.stop();
-
-      DOM.viewDuel.classList.remove('active');
-      DOM.viewLobby.classList.add('active');
-      state.currentView = 'lobby';
-      audio.playClick();
-      changeMoliExpression('lobby');
+    if (window.confirm(exitMsg)) {
+      returnToLobby();
     }
   }
 
@@ -2994,7 +3104,7 @@
     // Otomatik Soru Sesli Okuma (Edge-TTS Stüdyo & Web Speech)
     if (state.autoReadQuestion && state.soundEnabled) {
       const readDelay = (state.questionNumber === 1 && state.announcerEnabled) ? 1900 : 400;
-      setTimeout(() => {
+      setDuelTimeout(() => {
         if (state.currentView === 'duel' && !state.isQuestionAnswered) {
           readCurrentQuestion();
         }
@@ -3035,7 +3145,7 @@
         DOM.p1WinToast.classList.remove('hide');
         highlightCorrectOption(DOM.p1OptionsGrid, optionIndex);
         if (state.gameMode !== 'solo' && state.player1.score < state.targetScore) {
-          setTimeout(() => audio.playAnnouncerBluePoint(), 180);
+          setDuelTimeout(() => audio.playAnnouncerBluePoint(), 180);
         }
       } else {
         state.player2.score += 1;
@@ -3043,7 +3153,7 @@
         DOM.p2WinToast.classList.remove('hide');
         highlightCorrectOption(DOM.p2OptionsGrid, optionIndex);
         if (state.player2.score < state.targetScore) {
-          setTimeout(() => audio.playAnnouncerRedPoint(), 180);
+          setDuelTimeout(() => audio.playAnnouncerRedPoint(), 180);
         }
       }
 
@@ -3057,13 +3167,13 @@
 
       // Hedef puana ulaşıldı mı kontrol et
       if (state.player1.score >= state.targetScore || state.player2.score >= state.targetScore) {
-        setTimeout(() => {
+        setDuelTimeout(() => {
           triggerVictory(playerNum === 1 ? state.player1 : state.player2);
         }, 1200);
       } else {
         // Sonraki soruya geçiş (2.2 saniye sonra)
         state.questionNumber += 1;
-        setTimeout(() => {
+        setDuelTimeout(() => {
           if (state.currentView === 'duel') {
             loadNextQuestion();
           }
@@ -3204,7 +3314,7 @@
     audio.playVictory();
     changeMoliExpression('victory');
     if (!isSolo) {
-      setTimeout(() => {
+      setDuelTimeout(() => {
         if (isP1) {
           audio.playAnnouncerBlueWin();
         } else {
@@ -3229,24 +3339,12 @@
   }
 
   function handleSelectNewStudentsFromVictory() {
-    audio.playClick();
-    DOM.victoryOverlay.classList.add('hide');
-    confetti.stop();
-    DOM.viewDuel.classList.remove('active');
-    DOM.viewLobby.classList.add('active');
-    state.currentView = 'lobby';
-    changeMoliExpression('lobby');
+    returnToLobby();
     openPickerModal();
   }
 
   function handleBackToLobby() {
-    audio.playClick();
-    DOM.victoryOverlay.classList.add('hide');
-    confetti.stop();
-    DOM.viewDuel.classList.remove('active');
-    DOM.viewLobby.classList.add('active');
-    state.currentView = 'lobby';
-    changeMoliExpression('lobby');
+    returnToLobby();
   }
 
   /* ==========================================================================
@@ -3359,7 +3457,10 @@
     }
 
     // Düello Kontrolleri
-    DOM.btnExitDuel.addEventListener('pointerdown', exitDuel);
+    DOM.btnExitDuel.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      exitDuel();
+    });
     DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
       audio.playClick();
       state.questionNumber += 1;
@@ -3378,6 +3479,20 @@
       audio.playClick();
       DOM.solutionPopup.classList.add('hide');
     });
+
+    // Modal Çıkış Onayı Dinleyicileri (Mobilde anında ve takılmasız çıkış)
+    if (DOM.btnConfirmExitYes) {
+      DOM.btnConfirmExitYes.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        returnToLobby();
+      });
+    }
+    if (DOM.btnConfirmExitNo) {
+      DOM.btnConfirmExitNo.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        closeModal(DOM.modalConfirmExit);
+      });
+    }
 
     // -------------------------------------------------------------
     // Akıllı Tahta Multi-Touch Şık Butonları (Pointerdown)
@@ -3456,8 +3571,10 @@
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
   }
 
-  // Dışarıdan erişim için changeMoliExpression fonksiyonunu globalde tanımla
+  // Dışarıdan ve konsoldan erişim için fonksiyonları globalde tanımla
   window.changeMoliExpression = changeMoliExpression;
+  window.returnToLobby = returnToLobby;
+  window.exitDuel = exitDuel;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {

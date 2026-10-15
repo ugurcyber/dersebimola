@@ -2732,6 +2732,64 @@ input:checked + .slider:before {
   line-height: 1.45;
 }
 
+/* Çıkış Onay Modalı */
+.exit-modal-window {
+  max-width: 440px;
+  text-align: center;
+  padding: 28px 24px 24px;
+}
+
+.exit-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.btn-exit-confirm-yes {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #ffffff;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 12px 22px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+  transition: all var(--transition-fast);
+}
+
+.btn-exit-confirm-yes:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+}
+
+.btn-exit-confirm-no {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 12px 22px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+
+.btn-exit-confirm-no:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
 /* Auth Modalı İçeriği */
 .freemium-perks {
   display: flex;
