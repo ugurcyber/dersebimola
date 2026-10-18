@@ -5048,4 +5048,227 @@ input:checked + .slider:before {
   }
 }
 
+/* ==========================================================================
+   21. WHATSAPP & WEB SHARE SİSTEMİ (PAYLAŞIM & ÖDEV GÖNDERME)
+   ========================================================================== */
+
+/* Sol Menü Paylaş Butonu */
+.btn-sidebar-share {
+  background: rgba(37, 211, 102, 0.1) !important;
+  border: 1.5px solid rgba(37, 211, 102, 0.35) !important;
+  color: #0E7043 !important;
+}
+
+.btn-sidebar-share:hover {
+  background: #25D366 !important;
+  color: #FFFFFF !important;
+  border-color: #25D366 !important;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35) !important;
+}
+
+/* Üst Bar Paylaş Butonu */
+.btn-topbar-share {
+  background: rgba(37, 211, 102, 0.12) !important;
+  border: 1.5px solid rgba(37, 211, 102, 0.35) !important;
+  color: #0E7043 !important;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-topbar-share:hover {
+  background: #25D366 !important;
+  color: #FFFFFF !important;
+  border-color: #25D366 !important;
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+}
+
+/* Kart Köşe Paylaş Butonları (Ders & Oyun Kartları) */
+.card-top-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-share-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(37, 211, 102, 0.4);
+  background: rgba(255, 255, 255, 0.9);
+  color: #0E7043;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  padding: 0;
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-share-btn:hover {
+  background: #25D366;
+  color: #FFFFFF;
+  border-color: #25D366;
+  transform: scale(1.15) rotate(8deg);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+.card-share-btn:active {
+  transform: scale(0.95);
+}
+
+/* Zafer Ekranı Paylaşım Butonları */
+.victory-share-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.btn-action-whatsapp {
+  flex: 1.2;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16px;
+  padding: 13px 18px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-action-whatsapp:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.45);
+}
+
+.btn-action-whatsapp:active {
+  transform: scale(0.98);
+}
+
+.btn-action-copy-link {
+  flex: 0.9;
+  background: #FFFFFF;
+  color: #334155;
+  border: 2px solid #CBD5E1;
+  border-radius: 16px;
+  padding: 13px 16px;
+  font-size: 0.98rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-action-copy-link:hover {
+  border-color: #3B82F6;
+  background: #EFF6FF;
+  color: #2563EB;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(59, 130, 246, 0.18);
+}
+
+.btn-action-copy-link:active {
+  transform: scale(0.98);
+}
+
+/* Şık Moli Paylaşım Toast Bildirimi */
+.share-toast-notification {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2.5px solid #10B981;
+  box-shadow: 0 16px 36px rgba(16, 185, 129, 0.25), 0 6px 16px rgba(0, 0, 0, 0.12);
+  border-radius: 24px;
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 999999;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  max-width: 90vw;
+}
+
+.share-toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toast-moli-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B00 0%, #FFB020 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
+  flex-shrink: 0;
+  animation: toastMoliBounce 2s ease-in-out infinite alternate;
+}
+
+@keyframes toastMoliBounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+.toast-moli-avatar {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toast-content .toast-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #065F46;
+}
+
+.toast-content .toast-desc {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+@media (max-width: 640px) {
+  .victory-share-row {
+    flex-direction: column;
+  }
+}
+
+
 

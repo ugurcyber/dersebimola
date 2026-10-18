@@ -2522,7 +2522,15 @@
 
     // Global Toast
     globalToast: document.getElementById('globalToast'),
-    toastMsg: document.getElementById('toastMsg')
+    toastMsg: document.getElementById('toastMsg'),
+
+    // Paylaşım & WhatsApp Araçları
+    btnSidebarShare: document.getElementById('btnSidebarShare'),
+    btnTopbarShare: document.getElementById('btnTopbarShare'),
+    btnShareVictoryWhatsApp: document.getElementById('btnShareVictoryWhatsApp'),
+    btnCopyVictoryLink: document.getElementById('btnCopyVictoryLink'),
+    shareToast: document.getElementById('shareToast'),
+    shareToastDesc: document.getElementById('shareToastDesc')
   };
 
   const confetti = new ConfettiCanon('confettiCanvas');
@@ -2541,6 +2549,141 @@
   function openModal(modalEl) {
     audio.playClick();
     modalEl.classList.remove('hide');
+  }
+
+  // -------------------------------------------------------------
+  // Panoya Kopyalama Yardımcısı (Tüm Tarayıcılar ve Akıllı Tahtalar)
+  // -------------------------------------------------------------
+  function copyTextToClipboard(textToCopy) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(textToCopy);
+    }
+    return new Promise((resolve, reject) => {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = textToCopy;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '0';
+        textArea.setAttribute('readonly', '');
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        if (successful) resolve();
+        else reject(new Error('Kopyalama başarısız'));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  // -------------------------------------------------------------
+  // Şık Moli Paylaşım Toast Bildirimi
+  // -------------------------------------------------------------
+  let shareToastTimer = null;
+  function showShareToast(message) {
+    if (DOM.shareToastDesc) {
+      DOM.shareToastDesc.textContent = message || "Bağlantı kopyalandı! WhatsApp veya istediğiniz yere yapıştırabilirsiniz ✅";
+    }
+    if (DOM.shareToast) {
+      DOM.shareToast.classList.remove('hide');
+      void DOM.shareToast.offsetWidth; // Reflow tetikle
+      DOM.shareToast.classList.add('show');
+      if (shareToastTimer) clearTimeout(shareToastTimer);
+      shareToastTimer = setTimeout(() => {
+        DOM.shareToast.classList.remove('show');
+        setTimeout(() => {
+          if (!DOM.shareToast.classList.contains('show')) {
+            DOM.shareToast.classList.add('hide');
+          }
+        }, 350);
+      }, 4500);
+    }
+  }
+
+  // -------------------------------------------------------------
+  // Mobil & Masaüstü Paylaşım Motoru (Web Share API & WhatsApp)
+  // -------------------------------------------------------------
+  function shareContent({ title = "Derse Bi' Mola", text = "", url = "https://dersebimola.com", directWhatsApp = false } = {}) {
+    audio.playClick();
+    const shareText = text || `🎯 Derse Bi' Mola - İlkokul ve Okul Öncesi Eğitici Oyun & Düello Platformu! Hemen tıkla ve sınıfla oyna: ${url}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+
+    if (directWhatsApp) {
+      window.open(whatsappUrl, '_blank');
+      return;
+    }
+
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+
+    if (isMobile && navigator.share) {
+      navigator.share({
+        title: title,
+        text: shareText,
+        url: url
+      }).catch(err => {
+        if (err && err.name !== 'AbortError') {
+          window.open(whatsappUrl, '_blank');
+        }
+      });
+    } else {
+      // Bilgisayar veya Akıllı Tahta: Panoya kopyala ve şık bildirim göster
+      copyTextToClipboard(shareText).then(() => {
+        audio.playPop();
+        showShareToast("Bağlantı kopyalandı! WhatsApp veya istediğiniz yere yapıştırabilirsiniz ✅");
+      }).catch(() => {
+        window.open(whatsappUrl, '_blank');
+      });
+    }
+  }
+
+  function shareActivity(activityName) {
+    const text = `🎯 Derse Bi' Mola'da harika bir ${activityName} etkinliği var! Hemen tıkla ve pratiğe başla: https://dersebimola.com`;
+    shareContent({
+      title: `${activityName} - Derse Bi' Mola`,
+      text: text,
+      url: 'https://dersebimola.com',
+      directWhatsApp: false
+    });
+  }
+
+  function getCurrentGameTitle() {
+    const g = state.currentGrade;
+    const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
+    if (subjects) {
+      for (const s of subjects) {
+        if (s.games) {
+          const gm = s.games.find(x => x.id === state.currentGameType);
+          if (gm) return gm.title;
+        }
+      }
+    }
+    const fallbackTitles = {
+      math: 'Matematik',
+      turkish: 'Türkçe & Kelime Avcısı',
+      firstreading: 'İlk Okuma & Ses Avcısı',
+      firstreading_balloon: 'Ses & Harf Balonları',
+      syllable_builder: 'Hece Birleştirme Atölyesi',
+      word_catch: 'Hızlı Kelime Yakala',
+      color_balloon: 'Renk Balonları',
+      count_tap: 'Sayma Pratiği',
+      shadow_match: 'Gölge Eşleştirme',
+      lifescience: 'Hayat Bilgisi',
+      science: 'Fen Bilimleri',
+      social: 'Sosyal Bilgiler',
+      english: 'İngilizce',
+      english_colors: 'İngilizce Renkler',
+      english_animals: 'İngilizce Hayvanlar',
+      english_numbers: 'İngilizce Sayılar',
+      english_greetings: 'İngilizce Selamlaşma',
+      oddone: 'Farklı Olanı Yakala',
+      stroop: 'Renk Tuzakları (Stroop)',
+      memory: 'Süper Hafıza',
+      reflex: 'Şimşek Refleks'
+    };
+    return fallbackTitles[state.currentGameType] || 'Eğitici Oyun';
   }
 
   /* ==========================================================================
@@ -4133,7 +4276,10 @@
         <div class="subject-card ${subject.colorTheme}" data-subject-id="${subject.id}" role="button" tabindex="0">
           <div class="subject-card-top">
             <span class="subject-badge">${replaceEmojisWith3D(subject.badge, 'chip-3d-icon')}</span>
-            <span class="subject-games-count">${activeGamesCount} Pratik Aktif</span>
+            <div class="card-top-right-actions">
+              <span class="subject-games-count">${activeGamesCount} Pratik Aktif</span>
+              <button class="card-share-btn" data-share-title="${escapeHtml(subject.name)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş">📲</button>
+            </div>
           </div>
           <div class="subject-icon-wrap">
             <span class="subject-icon">${replaceEmojisWith3D(subject.icon, 'game-3d-big-icon')}</span>
@@ -4147,6 +4293,20 @@
         </div>
       `;
     }).join('');
+
+    // Paylaşım Butonu Dinleyicileri (Kart Tıklamasını Engeller)
+    DOM.subjectsGrid.querySelectorAll('.card-share-btn').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const title = btn.getAttribute('data-share-title') || 'Ders';
+        shareActivity(title);
+      });
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    });
 
     // Ders Kartlarına Tıklama Dinleyicisi
     DOM.subjectsGrid.querySelectorAll('.subject-card').forEach(card => {
@@ -4280,7 +4440,10 @@
           <div class="game-card ${subject.colorTheme || 'theme-math'}" data-game-id="${game.id}">
             <div class="game-top-meta">
               <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
-              <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+              <div class="card-top-right-actions">
+                <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+                <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş">📲</button>
+              </div>
             </div>
             <div class="game-visual-icon">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
             <h3 class="game-title">${game.title}</h3>
@@ -4314,6 +4477,20 @@
         `;
       }
     }).join('');
+
+    // Paylaşım Butonu Dinleyicileri (Kart Tıklamasını Engeller)
+    DOM.gamesGrid.querySelectorAll('.card-share-btn').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const title = btn.getAttribute('data-share-title') || 'Oyun';
+        shareActivity(title);
+      });
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    });
 
     // Aktif kartlara tıklama dinleyicisi
     DOM.gamesGrid.querySelectorAll('.game-card:not(.game-card-upcoming)').forEach(card => {
@@ -5610,6 +5787,45 @@
       const loser = isP1 ? state.player2 : state.player1;
       recordDuelWinner(winner.name, loser.name, winner.score, loser.score);
     }
+
+    // Zafer Skoru Paylaşım Bilgilerini Sakla
+    lastVictoryScore = isSolo ? state.player1.score : (winner ? winner.score : state.player1.score);
+    lastVictoryGameTitle = getCurrentGameTitle();
+  }
+
+  // Zafer Skoru Paylaşım Yardımcıları
+  let lastVictoryScore = 5;
+  let lastVictoryGameTitle = 'Matematik';
+
+  function getVictoryShareMessage() {
+    const title = lastVictoryGameTitle || getCurrentGameTitle();
+    const score = lastVictoryScore || 5;
+    return `🏆 Derse Bi' Mola'da ${title} düellosunda ${score} puan topladım! Sen de dene: https://dersebimola.com`;
+  }
+
+  function handleShareVictoryWhatsApp() {
+    const text = getVictoryShareMessage();
+    shareContent({
+      title: "Derse Bi' Mola Zafer Skoru",
+      text: text,
+      url: 'https://dersebimola.com',
+      directWhatsApp: true
+    });
+  }
+
+  function handleCopyVictoryLink() {
+    const text = getVictoryShareMessage();
+    copyTextToClipboard(text).then(() => {
+      audio.playPop();
+      showShareToast("🏆 Zafer skoru kopyalandı! WhatsApp veya istediğiniz yere yapıştırabilirsiniz ✅");
+    }).catch(() => {
+      shareContent({
+        title: "Derse Bi' Mola Zafer Skoru",
+        text: text,
+        url: 'https://dersebimola.com',
+        directWhatsApp: true
+      });
+    });
   }
 
   function handleRematchSame() {
@@ -5890,6 +6106,64 @@
     DOM.btnRematchSame.addEventListener('pointerdown', handleRematchSame);
     DOM.btnSelectNewStudents.addEventListener('pointerdown', handleSelectNewStudentsFromVictory);
     DOM.btnBackToLobby.addEventListener('pointerdown', handleBackToLobby);
+    if (DOM.btnShareVictoryWhatsApp) {
+      DOM.btnShareVictoryWhatsApp.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleShareVictoryWhatsApp();
+      });
+      DOM.btnShareVictoryWhatsApp.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    }
+    if (DOM.btnCopyVictoryLink) {
+      DOM.btnCopyVictoryLink.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleCopyVictoryLink();
+      });
+      DOM.btnCopyVictoryLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    }
+
+    // Üst Bar ve Sol Menü Paylaş Butonları
+    const handleGeneralShare = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      shareContent({
+        title: "Derse Bi' Mola",
+        text: "🎯 Derse Bi' Mola - İlkokul ve Okul Öncesi Eğitici Oyun & Düello Platformu! Hemen tıkla ve sınıfla oyna: https://dersebimola.com",
+        url: "https://dersebimola.com",
+        directWhatsApp: false
+      });
+    };
+    if (DOM.btnSidebarShare) {
+      DOM.btnSidebarShare.addEventListener('pointerdown', handleGeneralShare);
+      DOM.btnSidebarShare.addEventListener('click', (e) => e.preventDefault());
+    }
+    if (DOM.btnTopbarShare) {
+      DOM.btnTopbarShare.addEventListener('pointerdown', handleGeneralShare);
+      DOM.btnTopbarShare.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    // Ana Sayfa Vitrini Popüler Oyun Kartlarındaki Paylaş Butonları
+    document.querySelectorAll('.home-popular-card .card-share-btn').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const title = btn.getAttribute('data-share-title') || 'Oyun';
+        shareActivity(title);
+      });
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    });
   }
 
   /* ==========================================================================
@@ -5929,6 +6203,9 @@
   window.renderSubjects = renderSubjects;
   window.openHomePage = openHomePage;
   window.setGrade = setGrade;
+  window.shareContent = shareContent;
+  window.shareActivity = shareActivity;
+  window.showShareToast = showShareToast;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {
