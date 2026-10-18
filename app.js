@@ -87,6 +87,9 @@
   class SoundEngine {
     constructor() {
       this.ctx = null;
+      this.currentAudio = null;
+      this.currentAnnouncerAudio = null;
+      this.ttsTimeout = null;
       this.initOnFirstTouch = this.initOnFirstTouch.bind(this);
       window.addEventListener('pointerdown', this.initOnFirstTouch, { once: true });
       window.addEventListener('keydown', this.initOnFirstTouch, { once: true });
@@ -300,9 +303,29 @@
     playAnnouncer(name) {
       if (!state.soundEnabled || !state.announcerEnabled) return;
       try {
-        const audio = new Audio(`sounds/${name}.mp3`);
-        audio.volume = 0.95;
-        audio.play().catch(() => {});
+        if (this.currentAnnouncerAudio) {
+          try {
+            this.currentAnnouncerAudio.onended = null;
+            this.currentAnnouncerAudio.onerror = null;
+            this.currentAnnouncerAudio.pause();
+            this.currentAnnouncerAudio.currentTime = 0;
+          } catch (e) {}
+          this.currentAnnouncerAudio = null;
+        }
+        const audioEl = new Audio(`sounds/${name}.mp3`);
+        this.currentAnnouncerAudio = audioEl;
+        audioEl.volume = 0.95;
+        audioEl.onended = () => {
+          if (this.currentAnnouncerAudio === audioEl) {
+            this.currentAnnouncerAudio = null;
+          }
+        };
+        audioEl.onerror = () => {
+          if (this.currentAnnouncerAudio === audioEl) {
+            this.currentAnnouncerAudio = null;
+          }
+        };
+        audioEl.play().catch(() => {});
       } catch (err) {
         console.warn('Ses dosyası oynatılamadı:', err);
       }
@@ -317,7 +340,7 @@
     playAnnouncerBomb() { this.playAnnouncer('announcer_bomb'); }
 
     // -------------------------------------------------------------
-    // Soru Sesli Okuma (Edge-TTS MP3 & Web Speech API)
+    // Soru Sesli Okuma (Önceden Üretilmiş MP3 veya Online Doğal TTS)
     // -------------------------------------------------------------
     playQuestionFile(key, onEnded) {
       if (!state.soundEnabled) {
@@ -366,10 +389,10 @@
         if (onEnded) onEnded();
         return;
       }
-      // 3) Yeni bir ses çalmadan önce devam eden önceki Audio veya konuşmayı mutlaka durdur
+      // Devam eden önceki ses veya konuşmayı mutlaka durdur
       this.stopQuestionAudio();
 
-      // 1) Metni okumadan önce tüm emojileri sil ve dile göre metni optimize et
+      // 1) Emojileri temizle ve matematik sembollerini metne çevir
       let cleanText = (text || '').toString()
         .replace(/\p{Extended_Pictographic}/gu, '')
         .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F2FF}\u{1F680}-\u{1F6FF}]/gu, '')
@@ -384,13 +407,14 @@
           .replace(/\s+/g, ' ')
           .trim();
       } else {
+        // Matematik sembollerini doğal Türkçe metne dönüştür:
+        // + -> "artı", - -> "eksi", x veya * -> "çarpı", / veya ÷ -> "bölü", = -> "eşittir"
         cleanText = cleanText
           .replace(/\+/g, ' artı ')
           .replace(/[-−–—]/g, ' eksi ')
-          .replace(/[*×]/g, ' kere ')
-          .replace(/(\d)\s*[xX]\s*(\d)/g, '$1 kere $2')
-          .replace(/(^|\s)[xX](\s|$)/g, '$1 kere $2')
-          .replace(/[xX]/g, ' kere ')
+          .replace(/(\d+)\s*[*×xX]\s*(\d+)/g, '$1 çarpı $2')
+          .replace(/(^|\s)[*×xX](\s|$)/g, '$1 çarpı $2')
+          .replace(/[*×]/g, ' çarpı ')
           .replace(/[\/÷]/g, ' bölü ')
           .replace(/=/g, ' eşittir ')
           .replace(/\b(kaç eder|kaçtır)\s*\?/gi, '$1')
@@ -408,6 +432,10 @@
       const finish = () => {
         if (!done) {
           done = true;
+          if (this.ttsTimeout) {
+            clearTimeout(this.ttsTimeout);
+            this.ttsTimeout = null;
+          }
           this.currentAudio = null;
           if (onEnded) onEnded();
         }
@@ -416,30 +444,13 @@
       const ttsLang = isEn ? 'en' : 'tr';
       const synthLang = isEn ? 'en-US' : 'tr-TR';
 
-      // 2) Eğer cihazda kaliteli yerel ses yoksa (veya Linux/Pardus ise) Google TTS kullan
-      const ua = (navigator.userAgent || '').toLowerCase();
-      const platform = (navigator.platform || '').toLowerCase();
-      const isLinuxOrPardus = /linux|pardus|x11/i.test(ua) || /linux/i.test(platform);
-
-      let matchedVoice = null;
-      if ('speechSynthesis' in window) {
-        try {
-          const voices = window.speechSynthesis.getVoices() || [];
-          if (isEn) {
-            matchedVoice = voices.find(v => 
-              (v.lang && (v.lang === 'en-US' || v.lang === 'en-GB' || v.lang.toLowerCase().startsWith('en'))) ||
-              (v.name && (v.name.toLowerCase().includes('english') || v.name.toLowerCase().includes('google us') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('zira')))
-            );
-          } else {
-            matchedVoice = voices.find(v => 
-              (v.lang && (v.lang === 'tr-TR' || v.lang.toLowerCase().startsWith('tr'))) ||
-              (v.name && (v.name.toLowerCase().includes('turkish') || v.name.toLowerCase().includes('türkçe')))
-            );
-          }
-        } catch(e) {}
-      }
-
+      // -------------------------------------------------------------
+      // YEDEK SES MOTORU: Web Speech API (speechSynthesis)
+      // MEB Pardus ve Linux akıllı tahtalarda Almanca veya bozuk sesleri
+      // engellemek için STRICT tr-TR zorlaması ve ses filtresi uygulanır
+      // -------------------------------------------------------------
       const playWithSpeechSynthesis = () => {
+        if (done) return;
         if (!('speechSynthesis' in window)) {
           finish();
           return;
@@ -449,13 +460,33 @@
           if (window.speechSynthesis.paused) {
             window.speechSynthesis.resume();
           }
+
           const u = new SpeechSynthesisUtterance(cleanText);
           u.lang = synthLang;
           u.rate = isEn ? 0.90 : 0.95;
           u.pitch = isEn ? 1.0 : 1.05;
 
+          const voices = window.speechSynthesis.getVoices() || [];
+          let matchedVoice = null;
+
+          if (isEn) {
+            matchedVoice = voices.find(v => 
+              (v.lang && (v.lang === 'en-US' || v.lang === 'en-GB' || v.lang.toLowerCase().startsWith('en'))) ||
+              (v.name && (v.name.toLowerCase().includes('english') || v.name.toLowerCase().includes('google us') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('zira')))
+            );
+          } else {
+            // SADECE Türkçe sesleri ara ve eşle (Almanca 'de' veya İngilizce 'en' sesleri KESİNLİKLE seçilmez)
+            matchedVoice = voices.find(v => 
+              (v.lang && (v.lang === 'tr-TR' || v.lang.toLowerCase().startsWith('tr') || v.lang === 'tr')) ||
+              (v.name && (v.name.toLowerCase().includes('turkish') || v.name.toLowerCase().includes('türkçe') || v.name.toLowerCase().includes('yelda') || v.name.toLowerCase().includes('tolga')))
+            );
+          }
+
           if (matchedVoice) {
             u.voice = matchedVoice;
+          } else {
+            // Sistemde Türkçe ses tanımlı değilse yabancı ses atama, sadece lang zorlaması yap
+            u.lang = synthLang;
           }
 
           u.onend = finish;
@@ -466,6 +497,29 @@
         }
       };
 
+      // -------------------------------------------------------------
+      // BİRİNCİL SES MOTORU: Online Doğal Türkçe TTS (Google TTS Ses Akışı)
+      // MEB Pardus akıllı tahta dahil tüm cihazlarda kusursuz doğal Türkçe
+      // -------------------------------------------------------------
+      let fallbackTriggered = false;
+      const triggerFallback = () => {
+        if (fallbackTriggered || done) return;
+        fallbackTriggered = true;
+        if (this.ttsTimeout) {
+          clearTimeout(this.ttsTimeout);
+          this.ttsTimeout = null;
+        }
+        if (this.currentAudio) {
+          try {
+            this.currentAudio.onended = null;
+            this.currentAudio.onerror = null;
+            this.currentAudio.pause();
+          } catch (e) {}
+          this.currentAudio = null;
+        }
+        playWithSpeechSynthesis();
+      };
+
       const playWithGoogleTts = () => {
         try {
           const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
@@ -473,29 +527,43 @@
           this.currentAudio = audioEl;
           audioEl.volume = 1.0;
 
-          audioEl.onended = finish;
+          // Ağ engeli veya bağlantı kopukluğunda takılı kalmayı önleyen güvenlik zamanlayıcısı
+          this.ttsTimeout = setTimeout(() => {
+            triggerFallback();
+          }, 3500);
+
+          audioEl.onplaying = () => {
+            if (this.ttsTimeout) {
+              clearTimeout(this.ttsTimeout);
+              this.ttsTimeout = null;
+            }
+          };
+
+          audioEl.onended = () => {
+            if (this.ttsTimeout) {
+              clearTimeout(this.ttsTimeout);
+              this.ttsTimeout = null;
+            }
+            finish();
+          };
+
           audioEl.onerror = () => {
-            this.currentAudio = null;
-            playWithSpeechSynthesis();
+            triggerFallback();
           };
 
           const p = audioEl.play();
           if (p !== undefined) {
             p.catch(() => {
-              this.currentAudio = null;
-              playWithSpeechSynthesis();
+              triggerFallback();
             });
           }
         } catch (err) {
-          playWithSpeechSynthesis();
+          triggerFallback();
         }
       };
 
-      if (isLinuxOrPardus || !matchedVoice) {
-        playWithGoogleTts();
-      } else {
-        playWithSpeechSynthesis();
-      }
+      // Birincil olarak doğal online TTS çalıştırılır
+      playWithGoogleTts();
     }
 
     speakTurkishText(text, onEnded) {
@@ -507,20 +575,38 @@
     }
 
     stopQuestionAudio() {
+      if (this.ttsTimeout) {
+        clearTimeout(this.ttsTimeout);
+        this.ttsTimeout = null;
+      }
       if (this.currentAudio) {
         try {
           this.currentAudio.onended = null;
           this.currentAudio.onerror = null;
+          this.currentAudio.onplaying = null;
           this.currentAudio.pause();
           this.currentAudio.currentTime = 0;
-        } catch(e) {}
+        } catch (e) {}
         this.currentAudio = null;
+      }
+      if (this.currentAnnouncerAudio) {
+        try {
+          this.currentAnnouncerAudio.onended = null;
+          this.currentAnnouncerAudio.onerror = null;
+          this.currentAnnouncerAudio.pause();
+          this.currentAnnouncerAudio.currentTime = 0;
+        } catch (e) {}
+        this.currentAnnouncerAudio = null;
       }
       if ('speechSynthesis' in window) {
         try {
           window.speechSynthesis.cancel();
-        } catch(e) {}
+        } catch (e) {}
       }
+    }
+
+    stopAllAudio() {
+      this.stopQuestionAudio();
     }
   }
 
@@ -540,16 +626,16 @@
     text = text.replace(/<[^>]*>/g, ' ');
 
     // Matematik sembollerini akıcı Türkçeye çevir
-    if (text.includes('+') && text.includes('=')) {
-      text = text.replace(/(\d+)\s*\+\s*(\d+)\s*=\s*\?/, '$1 artı $2 kaç eder?');
-    } else if (text.includes('-') && text.includes('=')) {
-      text = text.replace(/(\d+)\s*-\s*(\d+)\s*=\s*\?/, '$1 eksi $2 kaç eder?');
-    } else if (text.includes('×') && text.includes('=')) {
-      text = text.replace(/(\d+)\s*×\s*(\d+)\s*=\s*\?/, '$1 kere $2 kaç eder?');
-    } else if (text.includes('÷') && text.includes('=')) {
-      text = text.replace(/(\d+)\s*÷\s*(\d+)\s*=\s*\?/, '$1 bölü $2 kaç eder?');
-    } else if (text.includes(' - ') && text.includes('?')) {
-      text = text.replace(/\s*-\s*\?/g, '... Sıradaki sayı kaçtır?').replace(/\s*-\s*/g, ', ');
+    // Önce 4 işlem denklemlerini kontrol et (içinde '=' ve '?' varsa)
+    if (text.includes('=')) {
+      text = text
+        .replace(/(\d+)\s*\+\s*(\d+)\s*=\s*\?/g, '$1 artı $2 kaç eder?')
+        .replace(/(\d+)\s*[-−–]\s*(\d+)\s*=\s*\?/g, '$1 eksi $2 kaç eder?')
+        .replace(/(\d+)\s*[*×xX]\s*(\d+)\s*=\s*\?/g, '$1 çarpı $2 kaç eder?')
+        .replace(/(\d+)\s*[\/÷]\s*(\d+)\s*=\s*\?/g, '$1 bölü $2 kaç eder?');
+    } else if (/^\s*\d+\s*[-−–]\s*\d+\s*[-−–]/.test(text) || (text.includes(' - ') && text.includes('?'))) {
+      // Ritmik sayma (örn: 2 - 4 - 6 - ?)
+      text = text.replace(/\s*[-−–]\s*\?/g, '... Sıradaki sayı kaçtır?').replace(/\s*[-−–]\s*/g, ', ');
     }
 
     // Emojileri temizle
@@ -4322,18 +4408,22 @@
   }
 
   /**
-   * Lobiye Kesin ve Güvenli Dönüş (Tüm state, ses ve sayaçları sıfırlar)
+   * Lobiye Kesin ve Güvenli Dönüş (Tüm state, ses ve sayaçları anında sıfırlar)
    */
   function returnToLobby() {
     // 1) Sesleri ve konuşmayı anında tamamen durdur
-    audio.stopQuestionAudio();
+    audio.stopAllAudio();
     if ('speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
       } catch (e) {}
     }
 
-    // 2) Bütün aktif düello zamanlayıcılarını ve kilitlerini temizle
+    // Okuma butonlarının aktif görsel durumunu temizle
+    const readBtns = [DOM.btnReadAloudP1, DOM.btnReadAloudP2, DOM.btnHudReadQuestion];
+    readBtns.forEach(b => { if (b) b.classList.remove('reading-active'); });
+
+    // 2) Bütün aktif zamanlayıcıları (clearTimeout, clearInterval) ve kilitleri temizle
     clearAllDuelTimers();
     clearAllLockouts();
     if (moliResetTimer) {
@@ -4401,38 +4491,10 @@
   }
 
   /**
-   * Oyundan Çıkış Kontrolü (Mobilde confirm() engeline takılmadan modal ile güvenli çıkış)
+   * Oyundan Çıkış: Onay penceresi (confirm / modal) olmadan doğrudan anında lobiye döner
    */
-  function exitDuel(force = false) {
-    if (force === true) {
-      returnToLobby();
-      return;
-    }
-
-    // Güvenli in-app onay modalı (standart confirm() engeline takılmaz)
-    if (DOM.modalConfirmExit) {
-      const isSolo = (state.gameMode === 'solo');
-      if (DOM.exitConfirmTitle) {
-        DOM.exitConfirmTitle.textContent = isSolo 
-          ? 'Pratiği Sonlandırmak İstiyor musunuz?' 
-          : 'Düelloyu Sonlandırmak İstiyor musunuz?';
-      }
-      if (DOM.exitConfirmDesc) {
-        DOM.exitConfirmDesc.textContent = isSolo
-          ? 'Mevcut pratik sonlandırılacak ve ana lobiye döneceksiniz.'
-          : 'Mevcut düello maçı sonlandırılacak ve ana menüye döneceksiniz.';
-      }
-      openModal(DOM.modalConfirmExit);
-      return;
-    }
-
-    // Standart confirm yedek mekanizması
-    const exitMsg = (state.gameMode === 'solo')
-      ? 'Pratiği sonlandırıp lobiye dönmek istiyor musunuz?'
-      : 'Düelloyu sonlandırıp lobiye dönmek istiyor musunuz?';
-    if (window.confirm(exitMsg)) {
-      returnToLobby();
-    }
+  function exitDuel() {
+    returnToLobby();
   }
 
   function renderScoreTrack() {
@@ -4849,11 +4911,16 @@
       });
     }
 
-    // Düello Kontrolleri
-    DOM.btnExitDuel.addEventListener('pointerdown', (e) => {
-      e.preventDefault();
-      exitDuel();
-    });
+    // Düello Kontrolleri: Çıkış butonuna basıldığı an beklemeden ve onay sormadan anında lobiye dön
+    const handleExitAction = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      returnToLobby();
+    };
+    DOM.btnExitDuel.addEventListener('pointerdown', handleExitAction);
+    DOM.btnExitDuel.addEventListener('click', handleExitAction);
     DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
       audio.playClick();
       state.questionNumber += 1;
