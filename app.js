@@ -209,6 +209,44 @@
       osc2.stop(now + 0.26);
     }
 
+    // Balon Patlatma Sesi: Tok ve çıtır ahşap/balon patlama vuruşu ("Pop! 🎈💥")
+    playPop() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(850, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.08);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.09);
+      } catch (e) {}
+    }
+
+    // Hece & Küp Yerleştirme Sesi: Kristal tık ("Snap! 🧱")
+    playSnap() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(540, now);
+        osc.frequency.exponentialRampToValueAtTime(1080, now + 0.06);
+        gain.gain.setValueAtTime(0.28, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      } catch (e) {}
+    }
+
     // Zafer Şampiyonluk Melodisi: Görkemli marş motifi
     playVictory() {
       if (!state.soundEnabled || !this.ensureContext()) return;
@@ -620,6 +658,7 @@
   // -------------------------------------------------------------
   function getSpokenTextForQuestion(q) {
     if (!q) return '';
+    if (q.spokenText) return q.spokenText;
     let text = q.question || '';
     if (!text && q.questionHtml) {
       text = q.questionHtml;
@@ -841,6 +880,286 @@
      3. DİNAMİK SORU MOTORU (GRADE-BASED QUESTION ENGINE)
      ========================================================================== */
   const QuestionEngine = {
+    // -------------------------------------------------------------
+    // ANASINIFI & 1. SINIF: ÇOKTAN SEÇMELİ OLMAYAN İNTERAKTİF MOTORLAR
+    // -------------------------------------------------------------
+
+    // 1) 🎈 BALON PATLATMA MOTORU (Ses & Harf Balonları ve Renk Balonları)
+    generateBalloonQuestion(grade, gameType) {
+      if (gameType === 'color_balloon' || grade === 0) {
+        const colorPool = [
+          { name: 'Kırmızı', colorClass: 'balloon-color-red', emoji: '🔴', prompt: '🎈 KIRMIZI balonu patlat! 🔴' },
+          { name: 'Mavi', colorClass: 'balloon-color-blue', emoji: '🔵', prompt: '🎈 MAVİ balonu patlat! 🔵' },
+          { name: 'Sarı', colorClass: 'balloon-color-yellow', emoji: '🟡', prompt: '🎈 SARI balonu patlat! 🟡' },
+          { name: 'Yeşil', colorClass: 'balloon-color-green', emoji: '🟢', prompt: '🎈 YEŞİL balonu patlat! 🟢' },
+          { name: 'Turuncu', colorClass: 'balloon-color-orange', emoji: '🟠', prompt: '🎈 TURUNCU balonu patlat! 🟠' },
+          { name: 'Mor', colorClass: 'balloon-color-purple', emoji: '🟣', prompt: '🎈 MOR balonu patlat! 🟣' },
+          { name: 'Pembe', colorClass: 'balloon-color-pink', emoji: '🌸', prompt: '🎈 PEMBE balonu patlat! 🌸' }
+        ];
+        const target = colorPool[Math.floor(Math.random() * colorPool.length)];
+        const otherColors = colorPool.filter(c => c.name !== target.name);
+        const shuffledOthers = [...otherColors].sort(() => 0.5 - Math.random()).slice(0, 3);
+        const balloons = [
+          { text: target.name, colorClass: target.colorClass, isTarget: true, emoji: target.emoji },
+          ...shuffledOthers.map(o => ({ text: o.name, colorClass: o.colorClass, isTarget: false, emoji: o.emoji }))
+        ].sort(() => 0.5 - Math.random());
+
+        return {
+          type: 'balloon',
+          question: target.prompt,
+          spokenText: target.name + ' balonu patlat',
+          correct: target.name,
+          explanation: `Harika refleks! ${target.name} balonu tam zamanında patlattın! 🎈💥`,
+          interactiveData: { balloons }
+        };
+      } else {
+        // 1. Sınıf: MEB Ses Grupları (ANETİL / ELAKİN)
+        const subMode = Math.floor(Math.random() * 3);
+        if (subMode === 0) {
+          // Doğrudan Harf Sesi
+          const letterPool = [
+            { letter: 'A', spoken: 'A harfi olan balonu patlat' },
+            { letter: 'E', spoken: 'E harfi olan balonu patlat' },
+            { letter: 'L', spoken: 'L sesini patlat' },
+            { letter: 'K', spoken: 'K sesini patlat' },
+            { letter: 'İ', spoken: 'İ harfini patlat' },
+            { letter: 'N', spoken: 'N sesini patlat' },
+            { letter: 'O', spoken: 'O harfini patlat' },
+            { letter: 'M', spoken: 'M sesini patlat' },
+            { letter: 'U', spoken: 'U harfini patlat' },
+            { letter: 'T', spoken: 'T sesini patlat' }
+          ];
+          const allLetters = ['A', 'E', 'L', 'K', 'İ', 'N', 'O', 'M', 'U', 'T', 'B', 'S'];
+          const chosen = letterPool[Math.floor(Math.random() * letterPool.length)];
+          const distractors = allLetters.filter(l => l !== chosen.letter).sort(() => 0.5 - Math.random()).slice(0, 3);
+          const colorClasses = ['balloon-color-red', 'balloon-color-blue', 'balloon-color-green', 'balloon-color-yellow', 'balloon-color-purple'];
+
+          const balloons = [
+            { text: chosen.letter, isTarget: true },
+            ...distractors.map(d => ({ text: d, isTarget: false }))
+          ].sort(() => 0.5 - Math.random()).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
+
+          return {
+            type: 'balloon',
+            question: `🎈 "${chosen.letter}" harfi olan balonu patlat!`,
+            spokenText: chosen.spoken,
+            correct: chosen.letter,
+            explanation: `Tebrikler! "${chosen.letter}" harfini doğru buldun ve balonu patlattın! 🎈👏`,
+            interactiveData: { balloons }
+          };
+        } else if (subMode === 1) {
+          // İçinde O Ses Geçen Görsel
+          const soundQuestions = [
+            { sound: 'E', prompt: 'İçinde "E" sesi olan balonu patlat! 🍎', spoken: 'İçinde E sesi olan balonu patlat', target: '🍎 Elma', d: ['🚗 Araba', '🐟 Balık', '🦁 Aslan'] },
+            { sound: 'A', prompt: 'İçinde "A" sesi olan balonu patlat! 🚗', spoken: 'İçinde A sesi olan balonu patlat', target: '🚗 Araba', d: ['🥛 Süt', '🐶 Köpek', '🍋 Limon'] },
+            { sound: 'K', prompt: 'İçinde "K" sesi olan balonu patlat! 🐱', spoken: 'İçinde K sesi olan balonu patlat', target: '🐱 Kedi', d: ['🦁 Aslan', '🐦 Kuş', '🐘 Fil'] },
+            { sound: 'S', prompt: 'İçinde "S" sesi olan balonu patlat! 🥛', spoken: 'İçinde S sesi olan balonu patlat', target: '🥛 Süt', d: ['🍎 Elma', '🍇 Üzüm', '🍊 Portakal'] },
+            { sound: 'M', prompt: 'İçinde "M" sesi olan balonu patlat! 🍌', spoken: 'İçinde M sesi olan balonu patlat', target: '🍌 Muz', d: ['🥕 Havuç', '🐟 Balık', '🚗 Araba'] }
+          ];
+          const chosen = soundQuestions[Math.floor(Math.random() * soundQuestions.length)];
+          const colorClasses = ['balloon-color-blue', 'balloon-color-orange', 'balloon-color-green', 'balloon-color-pink'];
+          const balloons = [
+            { text: chosen.target, isTarget: true },
+            ...chosen.d.map(item => ({ text: item, isTarget: false }))
+          ].sort(() => 0.5 - Math.random()).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
+
+          return {
+            type: 'balloon',
+            question: `🎈 ${chosen.prompt}`,
+            spokenText: chosen.spoken,
+            correct: chosen.target,
+            explanation: `Harika! ${chosen.target} sözcüğünde "${chosen.sound}" sesi vardır! 🎈⭐`,
+            interactiveData: { balloons }
+          };
+        } else {
+          // Hece Balonları
+          const syllableItems = [
+            { target: 'EL', d: ['LE', 'AL', 'LA'], spoken: 'EL hecesini patlat' },
+            { target: 'AL', d: ['LA', 'EL', 'OL'], spoken: 'AL hecesini patlat' },
+            { target: 'AT', d: ['TA', 'ET', 'OT'], spoken: 'AT hecesini patlat' },
+            { target: 'AN', d: ['NA', 'EN', 'ON'], spoken: 'AN hecesini patlat' },
+            { target: 'ET', d: ['TE', 'AT', 'İT'], spoken: 'ET hecesini patlat' },
+            { target: 'LA', d: ['AL', 'LE', 'LI'], spoken: 'LA hecesini patlat' }
+          ];
+          const chosen = syllableItems[Math.floor(Math.random() * syllableItems.length)];
+          const colorClasses = ['balloon-color-purple', 'balloon-color-yellow', 'balloon-color-red', 'balloon-color-green'];
+          const balloons = [
+            { text: chosen.target, isTarget: true },
+            ...chosen.d.map(item => ({ text: item, isTarget: false }))
+          ].sort(() => 0.5 - Math.random()).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
+
+          return {
+            type: 'balloon',
+            question: `🎈 "${chosen.target}" hecesi olan balonu patlat!`,
+            spokenText: chosen.spoken,
+            correct: chosen.target,
+            explanation: `Süpersin! "${chosen.target}" hecesini jet hızında patlattın! 🎈💥`,
+            interactiveData: { balloons }
+          };
+        }
+      }
+    },
+
+    // 2) 🧩 GÖRSEL & GÖLGE EŞLEŞTİRME MOTORU (SHADOW MATCH)
+    generateShadowMatchQuestion(grade) {
+      const pool = [
+        { name: 'Aslan', emoji: '🦁' },
+        { name: 'Koca Fil', emoji: '🐘' },
+        { name: 'Zıp Tavşan', emoji: '🐰' },
+        { name: 'Sevimli Kedi', emoji: '🐱' },
+        { name: 'Sadık Köpek', emoji: '🐶' },
+        { name: 'Kırmızı Araba', emoji: '🚗' },
+        { name: 'Hızlı Uçak', emoji: '✈️' },
+        { name: 'Tatlı Elma', emoji: '🍎' },
+        { name: 'Rengarenk Kelebek', emoji: '🦋' },
+        { name: 'Yüzen Balık', emoji: '🐟' }
+      ];
+      const target = pool[Math.floor(Math.random() * pool.length)];
+      const distractors = pool.filter(p => p.name !== target.name).sort(() => 0.5 - Math.random()).slice(0, 2);
+
+      const cards = [
+        { name: target.name, emoji: target.emoji, isTarget: true },
+        ...distractors.map(d => ({ name: d.name, emoji: d.emoji, isTarget: false }))
+      ].sort(() => 0.5 - Math.random());
+
+      const targetImg = EMOJI_TO_3D[target.emoji]
+        ? `<img src="${EMOJI_TO_3D[target.emoji]}" class="q-3d-fruit" alt="${target.name}">`
+        : `<span style="font-size:3.5rem;">${target.emoji}</span>`;
+
+      return {
+        type: 'shadow_match',
+        question: `Bu sevimli dostumuzun GÖLGESİNİ bul!`,
+        questionHtml: `
+          <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+            <div>${targetImg}</div>
+            <div style="font-size:1.35rem; font-weight:900;">${target.name} dostumuzun GÖLGESİ hangisidir?</div>
+          </div>
+        `,
+        spokenText: `${target.name} dostumuzun gölgesini bul`,
+        correct: target.name,
+        explanation: `Harika gözlem! ${target.name} dostumuzun gölgesini doğru buldun! ${target.emoji}👏`,
+        interactiveData: { target, cards }
+      };
+    },
+
+    // 3) 🔤 HECE VE KELİME İNŞAATI MOTORU (DOKUN & BİRLEŞTİR)
+    generateSyllableBuilderQuestion() {
+      const items = [
+        { word: 'EL', parts: ['E', 'L'], distractors: ['A'], icon: '✋' },
+        { word: 'AL', parts: ['A', 'L'], distractors: ['E'], icon: '🔴' },
+        { word: 'AT', parts: ['A', 'T'], distractors: ['İ'], icon: '🐴' },
+        { word: 'ET', parts: ['E', 'T'], distractors: ['L'], icon: '🥩' },
+        { word: 'ANA', parts: ['A', 'NA'], distractors: ['LA'], icon: '👩' },
+        { word: 'ALA', parts: ['A', 'LA'], distractors: ['NA'], icon: '🎨' },
+        { word: 'ALİ', parts: ['A', 'Lİ'], distractors: ['Tİ'], icon: '👦' },
+        { word: 'ANNE', parts: ['AN', 'NE'], distractors: ['TE'], icon: '❤️' },
+        { word: 'ELMA', parts: ['EL', 'MA'], distractors: ['LE'], icon: '🍎' },
+        { word: 'NANE', parts: ['NA', 'NE'], distractors: ['LA'], icon: '🌿' },
+        { word: 'KALE', parts: ['KA', 'LE'], distractors: ['EL'], icon: '🏰' },
+        { word: 'KEDİ', parts: ['KE', 'Dİ'], distractors: ['Lİ'], icon: '🐱' },
+        { word: 'OKUL', parts: ['O', 'KUL'], distractors: ['KOL'], icon: '🏫' },
+        { word: 'KİTAP', parts: ['Kİ', 'TAP'], distractors: ['KAP'], icon: '📚' },
+        { word: 'SÜT', parts: ['S', 'Ü', 'T'], distractors: ['M'], icon: '🥛' },
+        { word: 'LİMON', parts: ['Lİ', 'MON'], distractors: ['MAN'], icon: '🍋' },
+        { word: 'BALIK', parts: ['BA', 'LIK'], distractors: ['LAK'], icon: '🐟' },
+        { word: 'KALEM', parts: ['KA', 'LEM'], distractors: ['LİM'], icon: '✏️' }
+      ];
+
+      const chosen = items[Math.floor(Math.random() * items.length)];
+      const allCubes = [
+        ...chosen.parts.map(p => ({ text: p, isRequired: true })),
+        ...chosen.distractors.map(d => ({ text: d, isRequired: false }))
+      ].sort(() => 0.5 - Math.random());
+
+      const iconImg = EMOJI_TO_3D[chosen.icon]
+        ? `<img src="${EMOJI_TO_3D[chosen.icon]}" class="q-3d-fruit" alt="${chosen.word}">`
+        : `<span style="font-size:3rem;">${chosen.icon}</span>`;
+
+      return {
+        type: 'syllable_builder',
+        question: `Küp parçalarına sırayla dokunarak "${chosen.word}" kelimesini oluştur!`,
+        questionHtml: `
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <div>${iconImg}</div>
+            <div style="font-size:1.35rem; font-weight:900;">Küp parçalarına dokunarak <strong>"${chosen.word}"</strong> kelimesini oluştur:</div>
+          </div>
+        `,
+        spokenText: `${chosen.word} kelimesini oluştur`,
+        correct: chosen.word,
+        explanation: `Muhteşem! Parçaları birleştirip "${chosen.word}" kelimesini tamamladın ve okudun! ${chosen.icon}👏`,
+        interactiveData: {
+          word: chosen.word,
+          parts: chosen.parts,
+          icon: chosen.icon,
+          cubes: allCubes
+        }
+      };
+    },
+
+    // 4) 🔢 KAÇ TANE VAR? (DOKUNARAK SAYMA MOTORU)
+    generateCountTapQuestion() {
+      const items = [
+        { name: 'Kırmızı Elma', emoji: '🍎' },
+        { name: 'Sevimli Tavşan', emoji: '🐰' },
+        { name: 'Parlak Yıldız', emoji: '⭐' },
+        { name: 'Miyavlayan Kedi', emoji: '🐱' },
+        { name: 'Renkli Balon', emoji: '🎈' },
+        { name: 'Hızlı Araba', emoji: '🚗' },
+        { name: 'Tatlı Çilek', emoji: '🍓' }
+      ];
+      const item = items[Math.floor(Math.random() * items.length)];
+      const count = Math.floor(Math.random() * 5) + 1; // 1..5
+
+      return {
+        type: 'count_tap',
+        question: `Ekranda kaç tane ${item.name} var? Dokunarak say! ${item.emoji}`,
+        spokenText: `Kaç tane ${item.name} var? Dokunarak say`,
+        correct: count.toString(),
+        explanation: `Tebrikler! Birlikte saydık: Tam ${count} tane ${item.name} var! ${item.emoji}👏`,
+        interactiveData: { count, item }
+      };
+    },
+
+    // 5) ⭐ HIZLI KELİME YAKALA (WORD CATCH)
+    generateWordCatchQuestion() {
+      const pool = [
+        { visual: '🍎', name: 'Elma', q: 'Bu lezzetli meyvenin İLK HARFİ hangisidir? 🍎', a: 'E', d: ['A', 'M'], exp: 'Elma "E" harfi ile başlar! 🍎' },
+        { visual: '🐴', name: 'At', q: 'Bu rüzgar gibi koşan dostumuzun adı nedir? 🐴', a: 'AT', d: ['OT', 'ET'], exp: 'Rüzgar gibi koşan dostumuz AT! 🐴' },
+        { visual: '🥛', name: 'Süt', q: 'Bembeyaz sağlıklı içeceğin İLK SESİ nedir? 🥛', a: 'S', d: ['K', 'B'], exp: 'Süt "S" sesiyle başlar: S-ü-t! 🥛' },
+        { visual: '🍋', name: 'Limon', q: 'Sarı ekşi meyvenin İLK SESİ nedir? 🍋', a: 'L', d: ['N', 'T'], exp: 'Limon "L" sesiyle başlar: L-i-m-o-n! 🍋' },
+        { visual: '🐱', name: 'Kedi', q: 'Miyav diyen sevimli dostumuzun adı nedir? 🐱', a: 'KEDİ', d: ['KÖPEK', 'KUŞ'], exp: 'Miyav diyen dostumuz KEDİ! 🐱' },
+        { visual: '🚗', name: 'Araba', q: 'Düt düt diye korna çalan taşıtın İLK SESİ nedir? 🚗', a: 'A', d: ['O', 'E'], exp: 'Araba "A" harfiyle başlar: A-r-a-b-a! 🚗' },
+        { visual: '🐟', name: 'Balık', q: 'Mavi sularda yüzen sevimli canlının İLK HARFİ nedir? 🐟', a: 'B', d: ['D', 'P'], exp: 'Balık "B" harfiyle başlar: B-a-l-ı-k! 🐟' },
+        { visual: '☀️', name: 'Güneş', q: 'Dünyamızı ısıtan sıcacık dostumuzun İLK SESİ nedir? ☀️', a: 'G', d: ['S', 'M'], exp: 'Güneş "G" harfiyle başlar! ☀️' }
+      ];
+
+      const item = pool[Math.floor(Math.random() * pool.length)];
+      const options = [
+        { text: item.a, isTarget: true },
+        { text: item.d[0], isTarget: false },
+        { text: item.d[1], isTarget: false }
+      ].sort(() => 0.5 - Math.random());
+
+      const visualImg = EMOJI_TO_3D[item.visual]
+        ? `<img src="${EMOJI_TO_3D[item.visual]}" class="q-3d-fruit" alt="${item.name}">`
+        : `<span style="font-size:3rem;">${item.visual}</span>`;
+
+      return {
+        type: 'word_catch',
+        question: item.q,
+        questionHtml: `
+          <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
+            <div>${visualImg}</div>
+            <div style="font-size:1.35rem; font-weight:900;">${item.q}</div>
+          </div>
+        `,
+        spokenText: item.q,
+        correct: item.a,
+        explanation: item.exp,
+        interactiveData: { options }
+      };
+    },
+
     // -------------------------------------------------------------
     // ANASINIFI (OKUL ÖNCESİ - 4-6 YAŞ) ETKİNLİK HAVUZU
     // -------------------------------------------------------------
@@ -1354,7 +1673,9 @@
         audioKey: qData.audioKey || null,
         englishWord: qData.englishWord || null,
         lang: qData.lang || (qData.englishWord ? 'en' : 'tr'),
-        spokenText: qData.spokenText || qData.englishWord || null
+        spokenText: qData.spokenText || qData.englishWord || null,
+        type: qData.type || 'standard',
+        interactiveData: qData.interactiveData || null
       };
     },
 
@@ -1699,7 +2020,30 @@
 
       // 2. Yerleşik Dinamik Motor
       const g = parseInt(grade, 10);
-      if (gameType === 'math') {
+      if (gameType === 'color_balloon') {
+        const raw = this.generateBalloonQuestion(0, 'color_balloon');
+        return this.buildQuestionItem(raw, '🎈 Renk Balonlarını Patlat');
+      } else if (gameType === 'firstreading_balloon') {
+        const raw = this.generateBalloonQuestion(1, 'firstreading_balloon');
+        return this.buildQuestionItem(raw, '🎈 Ses & Harf Balonları');
+      } else if (gameType === 'syllable_builder') {
+        const raw = this.generateSyllableBuilderQuestion();
+        return this.buildQuestionItem(raw, '🔤 Hece Birleştirme Atölyesi');
+      } else if (gameType === 'word_catch') {
+        const raw = this.generateWordCatchQuestion();
+        return this.buildQuestionItem(raw, '⭐ Hızlı Kelime Yakala');
+      } else if (gameType === 'shadow_match') {
+        const raw = this.generateShadowMatchQuestion(g);
+        return this.buildQuestionItem(raw, '🧩 Gölgesini Bul');
+      } else if (gameType === 'count_tap') {
+        const raw = this.generateCountTapQuestion();
+        return this.buildQuestionItem(raw, '🔢 Kaç Tane Var? Dokun & Say');
+      } else if (gameType === 'firstreading') {
+        // İlk Okuma Yazma karma rotasyon
+        const subEngines = ['firstreading_balloon', 'syllable_builder', 'word_catch'];
+        const chosen = subEngines[Math.floor(Math.random() * subEngines.length)];
+        return this.getNextQuestion(1, chosen);
+      } else if (gameType === 'math') {
         let raw;
         if (g === 0) raw = this.generateKindergartenMath();
         else if (g === 1) raw = this.generateGrade1Math();
@@ -2086,6 +2430,7 @@
     p1QuestionText: document.getElementById('p1QuestionText'),
     btnReadAloudP1: document.getElementById('btnReadAloudP1'),
     p1OptionsGrid: document.getElementById('p1OptionsGrid'),
+    p1InteractiveZone: document.getElementById('p1InteractiveZone'),
     p1OptA: document.getElementById('p1OptA'),
     p1OptB: document.getElementById('p1OptB'),
     p1OptC: document.getElementById('p1OptC'),
@@ -2107,6 +2452,7 @@
     p2QuestionText: document.getElementById('p2QuestionText'),
     btnReadAloudP2: document.getElementById('btnReadAloudP2'),
     p2OptionsGrid: document.getElementById('p2OptionsGrid'),
+    p2InteractiveZone: document.getElementById('p2InteractiveZone'),
     p2OptA: document.getElementById('p2OptA'),
     p2OptB: document.getElementById('p2OptB'),
     p2OptC: document.getElementById('p2OptC'),
@@ -2461,33 +2807,45 @@
         badge: 'Okul Öncesi',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'counting', label: '🍎 1-5 Sayma' },
-          { id: 'colors', label: '🎨 Canlı Renkler' }
+          { id: 'colors', label: '🎈 Renk Balonları' },
+          { id: 'counting', label: '🔢 Dokun & Say' }
         ],
         games: [
           {
+            id: 'color_balloon',
+            active: true,
+            title: 'Renk Balonlarını Patlat',
+            icon: '🎈',
+            badge: '🎈 Balon Patlatma',
+            featureTag: '⭐ Şıksız & Canlı',
+            description: 'Söylenen renkteki uçan balonu yakala ve güm diye patlat! 🎈💥',
+            tags: ['🎈 Uçan Balonlar', '🎨 Canlı Renkler', '💥 Patlatma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'colors'
+          },
+          {
+            id: 'count_tap',
+            active: true,
+            title: 'Kaç Tane Var? Dokun & Say',
+            icon: '🔢',
+            badge: '🍎 Dokunmatik Sayma',
+            featureTag: '🐾 Sevimli Sayma',
+            description: 'Ekranda zıplayan nesnelere dokunarak say, doğru sayıyı bul! 🍎',
+            tags: ['🍎 Dokunarak Say', '🔢 1-5 Sayılar', '✨ Sesli Yönerge'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'counting'
+          },
+          {
             id: 'math',
             active: true,
-            title: 'Renkler, Şekiller & Sayma',
+            title: 'Kafa Kafaya Renkler & Şekiller',
             icon: '🎨',
             badge: '🎨 Renk & Şekil',
             featureTag: '⭐ Görsel Keşif',
             description: 'Meyveleri ve parlayan yıldızları say, doğru cevaba ilk sen dokun! 🍎⭐',
             tags: ['🍎 1-5 Sayma', '🎨 Canlı Renkler', '⭐ Şekil Avı'],
             btnText: 'Düelloyu Başlat',
-            topic: 'counting'
-          },
-          {
-            id: 'shapes_prep',
-            active: false,
-            title: 'Geometrik Şekiller Dünyası',
-            icon: '🔺',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Üçgen, kare ve daireleri eşleştirme etkinlikleri pek yakında! 📐',
-            tags: ['🔺 Üçgen', '🟩 Kare', '⭕ Daire'],
-            btnText: 'Yakında',
-            topic: 'colors'
+            topic: 'all'
           }
         ]
       },
@@ -2501,10 +2859,23 @@
         badge: 'Doğa Kahramanları',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
+          { id: 'shadows', label: '🧩 Gölgesini Bul' },
           { id: 'animals', label: '🐾 Hayvanlar' },
           { id: 'nature', label: '🌿 Doğa' }
         ],
         games: [
+          {
+            id: 'shadow_match',
+            active: true,
+            title: 'Gölgesini Bul (Görsel Eşleştirme)',
+            icon: '🧩',
+            badge: '🧩 Gölge Kartları',
+            featureTag: '👀 Keskin Gözler',
+            description: 'Sevimli hayvan ve meyvelerin gizemli gölgesini bul, dokunup rengini aç! 🦁',
+            tags: ['🧩 Gölge Eşleştir', '🦁 Sevimli Hayvanlar', '⚡ Hızlı Bul'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'shadows'
+          },
           {
             id: 'turkish',
             active: true,
@@ -2516,18 +2887,6 @@
             tags: ['🐾 Hayvan Sesleri', '🐘 Büyük-Küçük', '🌿 Doğa Sevgisi'],
             btnText: 'Düelloyu Başlat',
             topic: 'animals'
-          },
-          {
-            id: 'nature_plants',
-            active: false,
-            title: 'Bitkiler & Çiçekler',
-            icon: '🌻',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Çiçekleri sulama ve mevsimleri tanıma oyunları hazırlanıyor! 🌸',
-            tags: ['🌻 Çiçekler', '🌧️ Mevsimler', '🌳 Ağaçlar'],
-            btnText: 'Yakında',
-            topic: 'nature'
           }
         ]
       },
@@ -2587,46 +2946,58 @@
         badge: '1. Sınıf Temeli',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'letters', label: '🔤 Harf & Ses' },
-          { id: 'syllables', label: '📖 Hece & Kelime' },
-          { id: 'sentences', label: '✍️ Cümle Kurma' }
+          { id: 'letters', label: '🎈 Ses & Harf Balonları' },
+          { id: 'syllables', label: '🔤 Hece Birleştirme' },
+          { id: 'sentences', label: '⭐ Hızlı Kelime Yakala' }
         ],
         games: [
           {
-            id: 'firstreading',
+            id: 'firstreading_balloon',
             active: true,
-            title: 'İlk Okuma & Ses Avcısı',
-            icon: '🔤',
-            badge: '🌱 Harf & Hece',
-            featureTag: '⚡ Hızlı Ses',
-            description: 'Harfleri yakala, heceleri jet gibi tamamla ve oku! 🎯',
-            tags: ['🔤 Harf Sesleri', '📖 Hece Kurma', '🌟 Sözcük Oluşturma'],
+            title: 'Ses ve Harf Avcısı (Balon Patlatma)',
+            icon: '🎈',
+            badge: '🎈 Balon Patlatma',
+            featureTag: '⚡ MEB Ses Grupları',
+            description: 'Söylenen harfi veya içinde o ses geçen görseli uçan balonların içinden patlat! 🎈💥',
+            tags: ['🔤 ANETİL / ELAKİN', '🎈 Uçan Balonlar', '💥 Hızlı Patlat'],
             btnText: 'Düelloyu Başlat',
             topic: 'letters'
           },
           {
-            id: 'syllable_puzzle',
-            active: false,
-            title: 'Hece Treni Yapbozu',
-            icon: '🚂',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Tren vagonlarındaki heceleri doğru dizip kelime oluşturma oyunu! 🚂',
-            tags: ['🚂 Hece Treni', '🧩 Yapboz', '✨ Hızlı Okuma'],
-            btnText: 'Yakında',
+            id: 'syllable_builder',
+            active: true,
+            title: 'Hece Birleştirme Atölyesi',
+            icon: '🔤',
+            badge: '🧩 Dokun & Birleştir',
+            featureTag: '🧱 Renkli Küpler',
+            description: 'Renkli küplere sırayla dokunarak ("E + L = EL", "A + N + A = ANA") anlamlı kelimeleri oluştur! 🧱',
+            tags: ['📖 Açık & Kapalı Hece', '🧱 Küp Birleştir', '🔊 Sesli Okuma'],
+            btnText: 'Düelloyu Başlat',
             topic: 'syllables'
           },
           {
-            id: 'read_speed',
-            active: false,
-            title: 'Hızlı Cümle Yıldızı',
+            id: 'word_catch',
+            active: true,
+            title: 'Hızlı Kelime Yakala',
             icon: '⭐',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Anlamlı cümleler kurma ve akıcı okuma meydan okuması! 🌟',
-            tags: ['✍️ Anlamlı Cümle', '📖 Akıcı Okuma', '🏆 Yıldız Puan'],
-            btnText: 'Yakında',
+            badge: '⭐ Parlayan Yıldızlar',
+            featureTag: '🎯 Görsel Algı',
+            description: 'Ekranda beliren görselin (🍎 Elma, 🐴 At, 🥛 Süt) baş harfini parlayan yıldızlardan yakala! ⭐',
+            tags: ['🍎 Görsel Tanıma', '⭐ Yıldız Avı', '⚡ Hızlı Tepki'],
+            btnText: 'Düelloyu Başlat',
             topic: 'sentences'
+          },
+          {
+            id: 'firstreading',
+            active: true,
+            title: 'İlk Okuma & Ses Avcısı (Karma Düello)',
+            icon: '🔤',
+            badge: '🌱 Karma Pratik',
+            featureTag: '🏆 Süper Düello',
+            description: 'Balon patlatma, hece birleştirme ve kelime avından oluşan süper karma düello! 🎯',
+            tags: ['🔤 Harf Sesleri', '📖 Hece Kurma', '🌟 Sözcük Oluşturma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -4411,6 +4782,12 @@
       math: state.currentGrade === 0 ? '🎨 Renkler & Sayma' : (isSolo ? '📐 Matematik Pratiği' : '📐 Matematik Düellosu'),
       turkish: state.currentGrade === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Kelime Avcısı',
       firstreading: '🔤 İlk Okuma & Ses Avcısı',
+      firstreading_balloon: '🎈 Ses & Harf Balonları',
+      syllable_builder: '🔤 Hece Birleştirme Atölyesi',
+      word_catch: '⭐ Hızlı Kelime Yakala',
+      color_balloon: '🎈 Renk Balonlarını Patlat',
+      count_tap: '🔢 Kaç Tane Var? Dokun & Say',
+      shadow_match: '🧩 Gölgesini Bul',
       lifescience: '🌱 Hayat Bilgisi Düellosu',
       science: '🔬 Fen Bilimleri Laboratuvarı',
       social: '🗺️ Sosyal Bilgiler Keşfi',
@@ -4487,6 +4864,20 @@
       btn.classList.remove('btn-correct', 'btn-wrong');
       btn.disabled = false;
     });
+
+    // İnteraktif oyun alanlarını sıfırla
+    if (DOM.p1InteractiveZone) {
+      DOM.p1InteractiveZone.innerHTML = '';
+      DOM.p1InteractiveZone.classList.add('hide');
+    }
+    if (DOM.p2InteractiveZone) {
+      DOM.p2InteractiveZone.innerHTML = '';
+      DOM.p2InteractiveZone.classList.add('hide');
+    }
+    if (DOM.p1OptionsGrid) DOM.p1OptionsGrid.classList.remove('hide');
+    if (DOM.p2OptionsGrid) DOM.p2OptionsGrid.classList.remove('hide');
+    p1SyllableProgress = [];
+    p2SyllableProgress = [];
 
     // 4) EKRAN GEÇİŞİNİ KESİN VE ZORUNLU KIL (display: none / flex)
     DOM.viewDuel.classList.remove('active');
@@ -4573,22 +4964,49 @@
     // Mavi Tarafına Bas
     DOM.p1QuestionCategory.innerHTML = replaceEmojisWith3D(state.currentQuestion.category, 'chip-3d-icon');
     DOM.p1QuestionText.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
-    DOM.p1OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
-    DOM.p1OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
-    DOM.p1OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
 
     // Kırmızı Tarafına Bas (Tamamen Simetrik)
     DOM.p2QuestionCategory.innerHTML = replaceEmojisWith3D(state.currentQuestion.category, 'chip-3d-icon');
     DOM.p2QuestionText.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
-    DOM.p2OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
-    DOM.p2OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
-    DOM.p2OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
 
-    // Buton stillerini sıfırla
-    [DOM.p1OptA, DOM.p1OptB, DOM.p1OptC, DOM.p2OptA, DOM.p2OptB, DOM.p2OptC].forEach(btn => {
-      btn.className = 'duel-option-btn';
-      btn.disabled = false;
-    });
+    // İnteraktif mod mu yoksa standart şıklar mı?
+    if (state.currentQuestion.type && state.currentQuestion.type !== 'standard') {
+      if (DOM.p1OptionsGrid) DOM.p1OptionsGrid.classList.add('hide');
+      if (DOM.p2OptionsGrid) DOM.p2OptionsGrid.classList.add('hide');
+      if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.classList.remove('hide');
+      if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.classList.remove('hide');
+
+      renderInteractiveQuestion(state.currentQuestion);
+    } else {
+      if (DOM.p1InteractiveZone) {
+        DOM.p1InteractiveZone.innerHTML = '';
+        DOM.p1InteractiveZone.classList.add('hide');
+      }
+      if (DOM.p2InteractiveZone) {
+        DOM.p2InteractiveZone.innerHTML = '';
+        DOM.p2InteractiveZone.classList.add('hide');
+      }
+      if (DOM.p1OptionsGrid) DOM.p1OptionsGrid.classList.remove('hide');
+      if (DOM.p2OptionsGrid) DOM.p2OptionsGrid.classList.remove('hide');
+
+      if (state.currentQuestion.options && state.currentQuestion.options.length >= 3) {
+        DOM.p1OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
+        DOM.p1OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
+        DOM.p1OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
+
+        DOM.p2OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
+        DOM.p2OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
+        DOM.p2OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
+      }
+
+      // Buton stillerini sıfırla
+      [DOM.p1OptA, DOM.p1OptB, DOM.p1OptC, DOM.p2OptA, DOM.p2OptB, DOM.p2OptC].forEach(btn => {
+        if (btn) {
+          btn.className = 'duel-option-btn';
+          btn.disabled = false;
+        }
+      });
+    }
 
     DOM.p1Panel.classList.remove('winner-glow');
     DOM.p2Panel.classList.remove('winner-glow');
@@ -4625,65 +5043,67 @@
     const isCorrect = (chosenText === state.currentQuestion.correct);
 
     if (isCorrect) {
-      // -------------------------------------------------------------
-      // DOĞRU CEVAP MEKANİĞİ
-      // -------------------------------------------------------------
-      state.isQuestionAnswered = true;
-      audio.playCorrect();
-      changeMoliExpression('correct');
-
-      // Puanı artır
-      if (playerNum === 1) {
-        state.player1.score += 1;
-        DOM.p1Panel.classList.add('winner-glow');
-        DOM.p1WinToast.classList.remove('hide');
-        highlightCorrectOption(DOM.p1OptionsGrid, optionIndex);
-        if (state.gameMode !== 'solo' && state.player1.score < state.targetScore) {
-          setDuelTimeout(() => audio.playAnnouncerBluePoint(), 180);
-        }
-      } else {
-        state.player2.score += 1;
-        DOM.p2Panel.classList.add('winner-glow');
-        DOM.p2WinToast.classList.remove('hide');
-        highlightCorrectOption(DOM.p2OptionsGrid, optionIndex);
-        if (state.player2.score < state.targetScore) {
-          setDuelTimeout(() => audio.playAnnouncerRedPoint(), 180);
-        }
-      }
-
-      renderScoreTrack();
-
-      // Pedagojik Çözümü Göster
-      DOM.solutionText.innerHTML = replaceEmojisWith3D(state.currentQuestion.explanation, 'inline-3d-icon');
-      if (state.showAutoExplanation) {
-        DOM.solutionPopup.classList.remove('hide');
-      }
-
-      // Hedef puana ulaşıldı mı kontrol et
-      if (state.player1.score >= state.targetScore || state.player2.score >= state.targetScore) {
-        setDuelTimeout(() => {
-          triggerVictory(playerNum === 1 ? state.player1 : state.player2);
-        }, 1200);
-      } else {
-        // Sonraki soruya geçiş (2.2 saniye sonra)
-        state.questionNumber += 1;
-        setDuelTimeout(() => {
-          if (state.currentView === 'duel') {
-            loadNextQuestion();
-          }
-        }, 2200);
-      }
-
+      awardPointAndProgress(playerNum, optionIndex);
     } else {
-      // -------------------------------------------------------------
-      // YANLIŞ CEVAP: 1.5 SANİYELİK KİLİT VE CEZA OVERLAY'I
-      // -------------------------------------------------------------
       audio.playWrong();
       applyLockout(playerNum, optionIndex);
     }
   }
 
+  function awardPointAndProgress(playerNum, optionIndex = null) {
+    state.isQuestionAnswered = true;
+    audio.playCorrect();
+    changeMoliExpression('correct');
+
+    // Puanı artır
+    if (playerNum === 1) {
+      state.player1.score += 1;
+      DOM.p1Panel.classList.add('winner-glow');
+      DOM.p1WinToast.classList.remove('hide');
+      if (optionIndex !== null && optionIndex !== undefined) {
+        highlightCorrectOption(DOM.p1OptionsGrid, optionIndex);
+      }
+      if (state.gameMode !== 'solo' && state.player1.score < state.targetScore) {
+        setDuelTimeout(() => audio.playAnnouncerBluePoint(), 180);
+      }
+    } else {
+      state.player2.score += 1;
+      DOM.p2Panel.classList.add('winner-glow');
+      DOM.p2WinToast.classList.remove('hide');
+      if (optionIndex !== null && optionIndex !== undefined) {
+        highlightCorrectOption(DOM.p2OptionsGrid, optionIndex);
+      }
+      if (state.player2.score < state.targetScore) {
+        setDuelTimeout(() => audio.playAnnouncerRedPoint(), 180);
+      }
+    }
+
+    renderScoreTrack();
+
+    // Pedagojik Çözümü Göster
+    DOM.solutionText.innerHTML = replaceEmojisWith3D(state.currentQuestion.explanation, 'inline-3d-icon');
+    if (state.showAutoExplanation) {
+      DOM.solutionPopup.classList.remove('hide');
+    }
+
+    // Hedef puana ulaşıldı mı kontrol et
+    if (state.player1.score >= state.targetScore || state.player2.score >= state.targetScore) {
+      setDuelTimeout(() => {
+        triggerVictory(playerNum === 1 ? state.player1 : state.player2);
+      }, 1200);
+    } else {
+      // Sonraki soruya geçiş (2.2 saniye sonra)
+      state.questionNumber += 1;
+      setDuelTimeout(() => {
+        if (state.currentView === 'duel') {
+          loadNextQuestion();
+        }
+      }, 2200);
+    }
+  }
+
   function highlightCorrectOption(gridEl, index) {
+    if (!gridEl) return;
     const buttons = gridEl.querySelectorAll('.duel-option-btn');
     if (buttons[index]) {
       buttons[index].classList.add('btn-correct');
@@ -4697,11 +5117,13 @@
     const gridEl = isP1 ? DOM.p1OptionsGrid : DOM.p2OptionsGrid;
 
     // Yanlış basılan butonu kızart
-    const buttons = gridEl.querySelectorAll('.duel-option-btn');
-    if (buttons[optionIndex]) {
-      buttons[optionIndex].classList.add('btn-wrong');
-      if (state.gameMode === 'solo') {
-        buttons[optionIndex].disabled = true;
+    if (gridEl && optionIndex !== null && optionIndex !== undefined) {
+      const buttons = gridEl.querySelectorAll('.duel-option-btn');
+      if (buttons && buttons[optionIndex]) {
+        buttons[optionIndex].classList.add('btn-wrong');
+        if (state.gameMode === 'solo') {
+          buttons[optionIndex].disabled = true;
+        }
       }
     }
 
@@ -4711,7 +5133,9 @@
     changeMoliExpression('wrong');
 
     // Sesli uyarı: Bomba mı yoksa standart kilitlenme mi?
-    const chosenOpt = (state.currentQuestion && state.currentQuestion.options) ? state.currentQuestion.options[optionIndex] : '';
+    const chosenOpt = (state.currentQuestion && state.currentQuestion.options && optionIndex !== null && optionIndex !== undefined)
+      ? state.currentQuestion.options[optionIndex]
+      : '';
     if (chosenOpt && chosenOpt.includes('BOMBA')) {
       audio.playAnnouncerBomb();
     } else {
@@ -4737,6 +5161,369 @@
 
     if (isP1) state.player1.lockTimer = timer;
     else state.player2.lockTimer = timer;
+  }
+
+  /* ==========================================================================
+     15.5. İNTERAKTİF MOTOR RENDER VE ETKİLEŞİM YÖNETİCİSİ
+     ========================================================================== */
+  let p1SyllableProgress = [];
+  let p2SyllableProgress = [];
+
+  function renderInteractiveQuestion(q) {
+    if (!q || !q.interactiveData) return;
+
+    if (q.type === 'balloon') {
+      renderBalloonArena(q.interactiveData);
+    } else if (q.type === 'shadow_match') {
+      renderShadowMatchArena(q.interactiveData);
+    } else if (q.type === 'syllable_builder') {
+      renderSyllableBuilderArena(q.interactiveData);
+    } else if (q.type === 'count_tap') {
+      renderCountTapArena(q.interactiveData);
+    } else if (q.type === 'word_catch') {
+      renderWordCatchArena(q.interactiveData);
+    }
+  }
+
+  // 1) 🎈 BALON PATLATMA SAHNESİ
+  function renderBalloonArena(data) {
+    const createBalloonsHtml = (playerNum) => {
+      return `
+        <div class="balloon-sky-grid">
+          ${data.balloons.map((b, idx) => `
+            <div class="balloon-item ${b.colorClass || 'balloon-color-red'}" 
+                 data-balloon-idx="${idx}" 
+                 data-player="${playerNum}"
+                 role="button" tabindex="0">
+              <span class="balloon-text">${replaceEmojisWith3D(b.text, 'q-3d-fruit')}</span>
+              <div class="balloon-knot"></div>
+              <div class="balloon-string"></div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    };
+
+    DOM.p1InteractiveZone.innerHTML = createBalloonsHtml(1);
+    DOM.p2InteractiveZone.innerHTML = createBalloonsHtml(2);
+
+    DOM.p1InteractiveZone.querySelectorAll('.balloon-item').forEach(el => {
+      el.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const idx = parseInt(el.getAttribute('data-balloon-idx'), 10);
+        handleBalloonTap(1, idx, el);
+      });
+    });
+
+    DOM.p2InteractiveZone.querySelectorAll('.balloon-item').forEach(el => {
+      el.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const idx = parseInt(el.getAttribute('data-balloon-idx'), 10);
+        handleBalloonTap(2, idx, el);
+      });
+    });
+  }
+
+  function handleBalloonTap(playerNum, idx, el) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    const balloon = state.currentQuestion.interactiveData.balloons[idx];
+    if (!balloon) return;
+
+    if (balloon.isTarget) {
+      audio.playPop();
+      el.classList.add('balloon-popping');
+
+      // Diğer taraftaki balonu da patlat
+      const otherZone = playerNum === 1 ? DOM.p2InteractiveZone : DOM.p1InteractiveZone;
+      const otherEl = otherZone.querySelector(`.balloon-item[data-balloon-idx="${idx}"]`);
+      if (otherEl) otherEl.classList.add('balloon-popping');
+
+      awardPointAndProgress(playerNum);
+    } else {
+      audio.playWrong();
+      el.classList.add('balloon-wrong');
+      setTimeout(() => el.classList.remove('balloon-wrong'), 500);
+      applyLockout(playerNum, null);
+    }
+  }
+
+  // 2) 🧩 GÖRSEL & GÖLGE EŞLEŞTİRME SAHNESİ
+  function renderShadowMatchArena(data) {
+    const createCardsHtml = (playerNum) => {
+      return `
+        <div class="shadow-match-grid">
+          ${data.cards.map((c, idx) => `
+            <div class="shadow-card" data-card-idx="${idx}" data-player="${playerNum}" role="button" tabindex="0">
+              ${EMOJI_TO_3D[c.emoji] 
+                ? `<img src="${EMOJI_TO_3D[c.emoji]}" class="shadow-silhouette" alt="${c.name}">` 
+                : `<span class="shadow-text-fallback">${c.emoji}</span>`
+              }
+              <span class="shadow-card-tag">Gölge</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    };
+
+    DOM.p1InteractiveZone.innerHTML = createCardsHtml(1);
+    DOM.p2InteractiveZone.innerHTML = createCardsHtml(2);
+
+    DOM.p1InteractiveZone.querySelectorAll('.shadow-card').forEach(el => {
+      el.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const idx = parseInt(el.getAttribute('data-card-idx'), 10);
+        handleShadowCardTap(1, idx, el);
+      });
+    });
+
+    DOM.p2InteractiveZone.querySelectorAll('.shadow-card').forEach(el => {
+      el.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const idx = parseInt(el.getAttribute('data-card-idx'), 10);
+        handleShadowCardTap(2, idx, el);
+      });
+    });
+  }
+
+  function handleShadowCardTap(playerNum, idx, el) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    const card = state.currentQuestion.interactiveData.cards[idx];
+    if (!card) return;
+
+    if (card.isTarget) {
+      el.classList.add('revealed');
+      const tag = el.querySelector('.shadow-card-tag');
+      if (tag) tag.textContent = 'Doğru! ' + card.name;
+
+      const otherZone = playerNum === 1 ? DOM.p2InteractiveZone : DOM.p1InteractiveZone;
+      const otherEl = otherZone.querySelector(`.shadow-card[data-card-idx="${idx}"]`);
+      if (otherEl) {
+        otherEl.classList.add('revealed');
+        const otherTag = otherEl.querySelector('.shadow-card-tag');
+        if (otherTag) otherTag.textContent = 'Doğru! ' + card.name;
+      }
+
+      awardPointAndProgress(playerNum);
+    } else {
+      audio.playWrong();
+      el.classList.add('balloon-wrong');
+      setTimeout(() => el.classList.remove('balloon-wrong'), 500);
+      applyLockout(playerNum, null);
+    }
+  }
+
+  // 3) 🔤 HECE & KELİME İNŞAATI SAHNESİ
+  function renderSyllableBuilderArena(data) {
+    p1SyllableProgress = [];
+    p2SyllableProgress = [];
+
+    const createBuilderHtml = (playerNum) => {
+      return `
+        <div class="syllable-builder-container">
+          <div class="word-slot-row">
+            ${data.parts.map((p, i) => `
+              <div class="word-slot" data-slot-idx="${i}">?</div>
+            `).join('')}
+          </div>
+          <div class="cubes-pool-row">
+            ${data.cubes.map((c, i) => `
+              <button class="syllable-cube cube-color-${i % 5}" data-cube-idx="${i}" data-cube-text="${c.text}">
+                ${c.text}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    DOM.p1InteractiveZone.innerHTML = createBuilderHtml(1);
+    DOM.p2InteractiveZone.innerHTML = createBuilderHtml(2);
+
+    DOM.p1InteractiveZone.querySelectorAll('.syllable-cube').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        handleSyllableCubeTap(1, btn);
+      });
+    });
+
+    DOM.p2InteractiveZone.querySelectorAll('.syllable-cube').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        handleSyllableCubeTap(2, btn);
+      });
+    });
+  }
+
+  function handleSyllableCubeTap(playerNum, btn) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    const data = state.currentQuestion.interactiveData;
+    const progress = playerNum === 1 ? p1SyllableProgress : p2SyllableProgress;
+    const cubeText = btn.getAttribute('data-cube-text');
+    const expectedPart = data.parts[progress.length];
+
+    if (cubeText === expectedPart) {
+      audio.playSnap();
+      progress.push(cubeText);
+      btn.classList.add('used');
+
+      const zone = playerNum === 1 ? DOM.p1InteractiveZone : DOM.p2InteractiveZone;
+      const slot = zone.querySelector(`.word-slot[data-slot-idx="${progress.length - 1}"]`);
+      if (slot) {
+        slot.textContent = cubeText;
+        slot.classList.add('filled');
+      }
+
+      // Kelime tamamlandı mı?
+      if (progress.length === data.parts.length) {
+        zone.querySelectorAll('.word-slot').forEach(s => s.classList.add('word-complete'));
+
+        if (state.announcerEnabled && 'speechSynthesis' in window) {
+          try {
+            const u = new SpeechSynthesisUtterance(data.word);
+            u.lang = 'tr-TR';
+            window.speechSynthesis.speak(u);
+          } catch (e) {}
+        }
+
+        awardPointAndProgress(playerNum);
+      }
+    } else {
+      audio.playWrong();
+      btn.classList.add('cube-wrong');
+      setTimeout(() => btn.classList.remove('cube-wrong'), 400);
+      applyLockout(playerNum, null);
+    }
+  }
+
+  // 4) 🔢 KAÇ TANE VAR? DOKUNARAK SAYMA SAHNESİ
+  function renderCountTapArena(data) {
+    const itemImg = EMOJI_TO_3D[data.item.emoji]
+      ? `<img src="${EMOJI_TO_3D[data.item.emoji]}" class="q-3d-fruit" alt="${data.item.name}">`
+      : `<span class="count-fallback-icon">${data.item.emoji}</span>`;
+
+    const createCountHtml = (playerNum) => {
+      return `
+        <div class="count-tap-container">
+          <div class="count-objects-row">
+            ${Array(data.count).fill(0).map((_, i) => `
+              <div class="count-item-badge" data-item-idx="${i}" role="button" tabindex="0">
+                ${itemImg}
+              </div>
+            `).join('')}
+          </div>
+          <div class="count-number-btns">
+            ${[1, 2, 3, 4, 5].map(n => `
+              <button class="count-num-btn" data-num="${n}" data-player="${playerNum}">
+                ${n}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    DOM.p1InteractiveZone.innerHTML = createCountHtml(1);
+    DOM.p2InteractiveZone.innerHTML = createCountHtml(2);
+
+    [DOM.p1InteractiveZone, DOM.p2InteractiveZone].forEach((zone, pIdx) => {
+      let tapCounter = 0;
+      zone.querySelectorAll('.count-item-badge').forEach((el) => {
+        el.addEventListener('pointerdown', () => {
+          audio.playClick();
+          tapCounter++;
+          el.classList.add('tapped');
+          if (!el.querySelector('.count-item-num')) {
+            const badge = document.createElement('span');
+            badge.className = 'count-item-num';
+            badge.textContent = tapCounter;
+            el.appendChild(badge);
+          }
+        });
+      });
+
+      zone.querySelectorAll('.count-num-btn').forEach(btn => {
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          const pNum = pIdx + 1;
+          if (state.isQuestionAnswered) return;
+          if (state.gameMode === 'solo' && pNum !== 1) return;
+          if (pNum === 1 && state.player1.isLocked) return;
+          if (pNum === 2 && state.player2.isLocked) return;
+
+          const chosenNum = parseInt(btn.getAttribute('data-num'), 10);
+          if (chosenNum === data.count) {
+            btn.style.background = '#10B981';
+            btn.style.color = '#FFF';
+            btn.style.borderColor = '#059669';
+            awardPointAndProgress(pNum);
+          } else {
+            audio.playWrong();
+            btn.classList.add('balloon-wrong');
+            setTimeout(() => btn.classList.remove('balloon-wrong'), 500);
+            applyLockout(pNum, null);
+          }
+        });
+      });
+    });
+  }
+
+  // 5) ⭐ HIZLI KELİME YAKALA SAHNESİ
+  function renderWordCatchArena(data) {
+    const createStarsHtml = (playerNum) => {
+      return `
+        <div class="word-catch-container">
+          ${data.options.map((opt, idx) => `
+            <button class="star-card-btn" data-opt-idx="${idx}" data-player="${playerNum}">
+              <span class="star-card-icon">⭐</span>
+              <span class="star-card-label">${replaceEmojisWith3D(opt.text, 'inline-3d-icon')}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+    };
+
+    DOM.p1InteractiveZone.innerHTML = createStarsHtml(1);
+    DOM.p2InteractiveZone.innerHTML = createStarsHtml(2);
+
+    [DOM.p1InteractiveZone, DOM.p2InteractiveZone].forEach((zone, pIdx) => {
+      zone.querySelectorAll('.star-card-btn').forEach(btn => {
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          const pNum = pIdx + 1;
+          if (state.isQuestionAnswered) return;
+          if (state.gameMode === 'solo' && pNum !== 1) return;
+          if (pNum === 1 && state.player1.isLocked) return;
+          if (pNum === 2 && state.player2.isLocked) return;
+
+          const idx = parseInt(btn.getAttribute('data-opt-idx'), 10);
+          const opt = data.options[idx];
+          if (opt && opt.isTarget) {
+            btn.style.background = '#10B981';
+            btn.style.color = '#FFF';
+            btn.style.borderColor = '#059669';
+            btn.querySelector('.star-card-label').style.color = '#FFF';
+            awardPointAndProgress(pNum);
+          } else {
+            audio.playWrong();
+            btn.classList.add('balloon-wrong');
+            setTimeout(() => btn.classList.remove('balloon-wrong'), 500);
+            applyLockout(pNum, null);
+          }
+        });
+      });
+    });
   }
 
   function clearAllLockouts() {
