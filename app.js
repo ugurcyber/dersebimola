@@ -16,6 +16,9 @@
     // Aktif Görünüm: 'lobby' | 'duel'
     currentView: 'lobby',
 
+    // Aktif Lobi Bölümü: 'home' (Karşılama Vitrini) | 'subjects' (Dersler) | 'games' (Oyunlar)
+    currentSection: 'home',
+
     // Sınıf Seviyesi: 0 (Anasınıfı), 1, 2, 3 veya 4
     currentGrade: 1,
 
@@ -2003,6 +2006,7 @@
     moliSpeechBubble: document.getElementById('moliSpeechBubble'),
     moliBubbleText: document.getElementById('moliBubbleText'),
     logoBtn: document.getElementById('logoBtn'),
+    btnNavHome: document.getElementById('btnNavHome'),
     gradeChips: document.querySelectorAll('.grade-chip'),
     gradeCards: document.querySelectorAll('.grade-card'),
     btnToggleSound: document.getElementById('btnToggleSound'),
@@ -2032,7 +2036,11 @@
     quickDrawBtnText: document.getElementById('quickDrawBtnText'),
     splitArena: document.querySelector('.split-arena'),
 
-    // Lobi Elemanları: 1. Kademe (Dersler) & 2. Kademe (Oyunlar)
+    // Lobi Elemanları: 0. Kademe (Ana Sayfa Vitrini), 1. Kademe (Dersler) & 2. Kademe (Oyunlar)
+    homeShowcaseSection: document.getElementById('homeShowcaseSection'),
+    homeGradeCards: document.querySelectorAll('.home-grade-card'),
+    homePopularCards: document.querySelectorAll('.home-popular-card'),
+    btnBackToHome: document.getElementById('btnBackToHome'),
     subjectsSection: document.getElementById('subjectsSection'),
     subjectsGradeTitle: document.getElementById('subjectsGradeTitle'),
     subjectsCountBadge: document.getElementById('subjectsCountBadge'),
@@ -3785,10 +3793,12 @@
     const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
     const subject = subjects.find(s => s.id === subjectId) || subjects[0];
 
+    state.currentSection = 'games';
     state.currentSubject = subject.id;
     state.currentCategory = 'all';
 
-    // UI Geçişi: Dersler gizlenir, oyunlar açılır
+    // UI Geçişi: Ana sayfa ve dersler gizlenir, oyunlar açılır
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
     if (DOM.gamesSection) {
       DOM.gamesSection.classList.remove('hide');
@@ -3814,9 +3824,11 @@
 
   // "← Tüm Dersler" Butonuna Basıldığında 1. Kademeye Dönüş
   function returnToSubjectsList() {
+    state.currentSection = 'subjects';
     state.currentSubject = null;
     state.currentCategory = 'all';
 
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.remove('hide');
 
@@ -3977,13 +3989,39 @@
     }
   }
 
+  /**
+   * Ana Sayfa (Karşılama Vitrini) Ekranını Açar
+   */
+  function openHomePage() {
+    state.currentSection = 'home';
+    state.currentSubject = null;
+    state.currentCategory = 'all';
+
+    // Sol panelde "🏠 Ana Sayfa" aktif, sınıflar pasif
+    if (DOM.btnNavHome) DOM.btnNavHome.classList.add('active');
+    DOM.gradeChips.forEach(chip => chip.classList.remove('active'));
+    DOM.gradeCards.forEach(card => card.classList.remove('active'));
+
+    // Bölümleri yönet: Ana Sayfa Vitrini açık, diğerleri gizli
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.remove('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+
+    // Moli lobi ifadesi
+    changeMoliExpression('lobby');
+  }
+
   function setGrade(gradeNumber) {
     state.currentGrade = parseInt(gradeNumber, 10);
     state.currentSubject = null;
     state.currentCategory = 'all';
+    state.currentSection = 'subjects';
     audio.playClick();
 
-    // Çip butonları güncelle (Header)
+    // Sol panelde "🏠 Ana Sayfa" butonunun aktifliğini kaldır
+    if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
+
+    // Çip butonları güncelle (Sidebar / Header)
     DOM.gradeChips.forEach(chip => {
       const g = parseInt(chip.getAttribute('data-grade'), 10);
       chip.classList.toggle('active', g === state.currentGrade);
@@ -3995,7 +4033,8 @@
       card.classList.toggle('active', g === state.currentGrade);
     });
 
-    // 1. Kademeye (Dersler Listesi) dön
+    // Ana Sayfa Vitrini gizle, 1. Kademeyi (Dersler Listesi) göster
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.remove('hide');
 
@@ -4477,14 +4516,18 @@
     renderScoreTrack();
     updateGameModeUI();
     if (state.currentSubject) {
+      if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
       if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
       if (DOM.gamesSection) DOM.gamesSection.classList.remove('hide');
       renderSubcategories();
       renderGameCards();
-    } else {
+    } else if (state.currentSection === 'subjects') {
+      if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
       if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
       if (DOM.subjectsSection) DOM.subjectsSection.classList.remove('hide');
       renderSubjects();
+    } else {
+      openHomePage();
     }
     changeMoliExpression('lobby');
     audio.playClick();
@@ -4813,6 +4856,8 @@
         audio.playClick();
         if (state.currentView === 'duel') {
           exitDuel();
+        } else if (state.currentSection !== 'home') {
+          openHomePage();
         } else {
           handleMoliClick();
         }
@@ -4824,25 +4869,70 @@
     DOM.btnTeacherAuth.addEventListener('pointerdown', handleAuthClick);
     DOM.btnSimulateGoogleLogin.addEventListener('pointerdown', simulateGoogleLogin);
 
+    // Sol Panel "🏠 Ana Sayfa" Butonu
+    if (DOM.btnNavHome) {
+      DOM.btnNavHome.addEventListener('pointerdown', () => {
+        audio.playClick();
+        openHomePage();
+      });
+    }
+
+    // Dersler Ekranındaki "← Ana Sayfa" Butonu
+    if (DOM.btnBackToHome) {
+      DOM.btnBackToHome.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        openHomePage();
+      });
+    }
+
     // Pro Butonlar
     DOM.btnOpenPicker.addEventListener('pointerdown', openPickerModal);
     DOM.btnOpenCustomQ.addEventListener('pointerdown', openCustomQModal);
     DOM.btnOpenLeaderboard.addEventListener('pointerdown', openLeaderboardModal);
     DOM.btnResetLeague.addEventListener('pointerdown', resetLeagueScores);
 
-    // Sınıf Çipleri (Header)
+    // Sınıf Çipleri (Header & Sidebar)
     DOM.gradeChips.forEach(chip => {
       chip.addEventListener('pointerdown', () => {
         setGrade(chip.getAttribute('data-grade'));
       });
     });
 
-    // Sınıf Kartları (Lobi)
+    // Sınıf Kartları (Lobi ve Vitrin)
     DOM.gradeCards.forEach(card => {
       card.addEventListener('pointerdown', () => {
         setGrade(card.getAttribute('data-grade'));
       });
     });
+
+    // Ana Sayfa Vitrini: Dev Sınıf Kartları (🎈 Anasınıfı, 1., 2., 3., 4. Sınıf)
+    if (DOM.homeGradeCards) {
+      DOM.homeGradeCards.forEach(card => {
+        card.addEventListener('pointerdown', () => {
+          const g = card.getAttribute('data-grade');
+          if (g !== null && g !== undefined) {
+            setGrade(g);
+          }
+        });
+      });
+    }
+
+    // Ana Sayfa Vitrini: Hızlı Başlat Oyun Kartları (🔥 Sınıfların Favori Düelloları)
+    if (DOM.homePopularCards) {
+      DOM.homePopularCards.forEach(card => {
+        card.addEventListener('pointerdown', () => {
+          const quickGame = card.getAttribute('data-quick-game');
+          if (quickGame) {
+            if (quickGame === 'firstreading' && state.currentGrade > 1) {
+              state.currentGrade = 1;
+            }
+            audio.playClick();
+            startDuel(quickGame);
+          }
+        });
+      });
+    }
 
     // Lobi Hızlı Öğrenci Değiştir
     DOM.btnQuickDraw.addEventListener('pointerdown', openPickerModal);
@@ -5027,7 +5117,7 @@
     updateGameModeUI();
     updatePlayerNamesUI();
     renderSubjects();
-    changeMoliExpression('lobby');
+    openHomePage(); // Varsayılan olarak Ana Sayfa Vitrini ile başla!
 
     // Kayıtlı ayarları UI'a yansıt
     DOM.chkAutoExplanation.checked = state.showAutoExplanation;
@@ -5050,6 +5140,8 @@
   window.selectSubject = selectSubject;
   window.returnToSubjectsList = returnToSubjectsList;
   window.renderSubjects = renderSubjects;
+  window.openHomePage = openHomePage;
+  window.setGrade = setGrade;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {

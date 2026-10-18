@@ -51,26 +51,35 @@
 
       <!-- Sınıf Seviyeleri (Dikey, Geniş ve Kolay Basılan Butonlar) -->
       <div class="sidebar-nav-wrap">
-        <div class="sidebar-nav-title">SINIF SEVİYESİ</div>
-        <nav class="grade-nav sidebar-grade-nav" aria-label="Sınıf Seviyesi Seçimi">
+        <div class="sidebar-nav-title">MENÜ</div>
+        <nav class="grade-nav sidebar-grade-nav" aria-label="Ana Menü ve Sınıf Seviyesi Seçimi">
+          <!-- 🏠 ANA SAYFA BUTONU -->
+          <button class="sidebar-home-btn active" id="btnNavHome" title="Ana Sayfa Vitrini">
+            <span class="grade-icon-box home-icon-box">🏠</span>
+            <span class="grade-chip-name">Ana Sayfa</span>
+          </button>
+
+          <div class="sidebar-nav-divider"></div>
+          <div class="sidebar-nav-title">SINIFLAR</div>
+
           <button class="grade-chip" data-grade="0" id="chipGrade0">
-            <img src="assets/icons/3d/balloon.png" class="chip-3d-icon" alt="0">
+            <span class="grade-icon-box grade-icon-0"><img src="assets/icons/3d/balloon.png" class="chip-3d-icon" alt="🎈"></span>
             <span class="grade-chip-name">Anasınıfı</span>
           </button>
-          <button class="grade-chip active" data-grade="1" id="chipGrade1">
-            <span class="grade-num-badge">1</span>
+          <button class="grade-chip" data-grade="1" id="chipGrade1">
+            <span class="grade-icon-box grade-icon-1"><img src="assets/icons/3d/seedling.png" class="chip-3d-icon" alt="🌱"></span>
             <span class="grade-chip-name">1. Sınıf</span>
           </button>
           <button class="grade-chip" data-grade="2" id="chipGrade2">
-            <span class="grade-num-badge">2</span>
+            <span class="grade-icon-box grade-icon-2"><img src="assets/icons/3d/rocket.png" class="chip-3d-icon" alt="🚀"></span>
             <span class="grade-chip-name">2. Sınıf</span>
           </button>
           <button class="grade-chip" data-grade="3" id="chipGrade3">
-            <span class="grade-num-badge">3</span>
+            <span class="grade-icon-box grade-icon-3"><img src="assets/icons/3d/lightning.png" class="chip-3d-icon" alt="⚡"></span>
             <span class="grade-chip-name">3. Sınıf</span>
           </button>
           <button class="grade-chip" data-grade="4" id="chipGrade4">
-            <span class="grade-num-badge">4</span>
+            <span class="grade-icon-box grade-icon-4"><img src="assets/icons/3d/trophy.png" class="chip-3d-icon" alt="🏆"></span>
             <span class="grade-chip-name">4. Sınıf</span>
           </button>
         </nav>
@@ -159,18 +168,42 @@
       <main class="view-container active" id="viewLobby">
         <div class="lobby-content">
           
-          <!-- Karşılama ve Hızlı Eşleşme Çubuğu -->
-          <section class="lobby-hero">
-            <h1 class="hero-title">
-              Dersi <span class="highlight-gradient">Eğlenceli Bir Düelloya</span> Dönüştür!
-            </h1>
-            <p class="hero-desc">
-              İki öğrenci aynı anda akıllı tahtaya dokunarak yarışır, doğru cevabı ilk bulan puanı kapar. 
-              Yanlış basan 1.5 saniye kilitlenir!
-            </p>
+          <!-- ============================================== -->
+          <!-- 0. KADEME: YENİ ANA SAYFA (KARŞILAMA VİTRİNİ)    -->
+          <!-- ============================================== -->
+          <section class="home-showcase-section" id="homeShowcaseSection">
+            <!-- 1. KARŞILAMA BANNER'I (HERO) -->
+            <div class="home-hero-card">
+              <div class="home-hero-content">
+                <div class="home-hero-badge">
+                  <span class="hero-badge-icon">👋</span>
+                  <span>Moli Seni Bekliyor!</span>
+                </div>
+                <h1 class="home-hero-title">
+                  Derse Bi' Mola'ya <span class="highlight-gradient">Hoş Geldin!</span>
+                </h1>
+                <p class="home-hero-subtitle">
+                  Sınıfını seç, akıllı tahtada veya telefonda eğlenceli düelloyu hemen başlat!
+                </p>
+                <div class="home-hero-pills">
+                  <span class="hero-pill"><span class="pill-dot"></span> 📺 MEB Akıllı Tahta & ETAP Uyumlu</span>
+                  <span class="hero-pill">⚡ Çift Dokunuşlu Hızlı Düello</span>
+                  <span class="hero-pill">🎯 0-4. Sınıf MEB Müfredatı</span>
+                </div>
+              </div>
+              <div class="home-hero-mascot-wrap">
+                <div class="home-moli-card">
+                  <div class="home-moli-aura"></div>
+                  <img src="assets/mascot/moli.png" class="home-moli-img" alt="Sevimli Robot Moli">
+                  <div class="home-moli-tag">
+                    <span class="tag-wave">👋</span> Merhaba Şampiyon!
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- Tahtadaki Aktif Yarışmacılar Çubuğu -->
-            <div class="active-contestants-bar" id="activeContestantsBar">
+            <div class="active-contestants-bar home-contestants-bar" id="activeContestantsBar">
               <div class="contestant-tag blue-tag" id="contestantTagP1">
                 <span class="team-badge" id="teamBadgeP1">MAVİ TAKIM</span>
                 <span class="student-name" id="lobbyPlayer1Name">1. Öğrenci (Mavi)</span>
@@ -184,25 +217,191 @@
                 <span>🎲</span> <span id="quickDrawBtnText">Öğrencileri Değiştir</span>
               </button>
             </div>
+
+            <!-- 2. HIZLI SINIF SEÇİM KARTLARI (DEV 3D KARTLAR) -->
+            <div class="home-section-container">
+              <div class="home-section-header">
+                <div class="header-left">
+                  <span class="section-badge-icon">🎒</span>
+                  <div>
+                    <h2 class="home-section-title">Sınıfını Seç ve Düelloya Başla</h2>
+                    <p class="home-section-desc">Kendi sınıf seviyeni seçerek dersleri ve eğlenceli pratikleri keşfet:</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="home-grades-grid">
+                <!-- Anasınıfı -->
+                <div class="home-grade-card card-grade-0" data-grade="0" role="button" tabindex="0">
+                  <div class="card-icon-wrap">
+                    <img src="assets/icons/3d/balloon.png" class="card-3d-icon" alt="🎈">
+                  </div>
+                  <div class="card-badge">4-6 Yaş</div>
+                  <h3 class="card-grade-title">Anasınıfı</h3>
+                  <p class="card-grade-desc">Renkler, Meyveler, Sevimli Hayvanlar ve Nesne Sayma Pratikleri</p>
+                  <div class="card-footer-action">
+                    <span>Dersleri Aç</span>
+                    <span class="arrow-icon">→</span>
+                  </div>
+                </div>
+
+                <!-- 1. Sınıf -->
+                <div class="home-grade-card card-grade-1" data-grade="1" role="button" tabindex="0">
+                  <div class="card-icon-wrap">
+                    <img src="assets/icons/3d/seedling.png" class="card-3d-icon" alt="🌱">
+                  </div>
+                  <div class="card-badge">7 Yaş</div>
+                  <h3 class="card-grade-title">1. Sınıf</h3>
+                  <p class="card-grade-desc">İlk Okuma, Harf ve Ses Avı, 20'ye Kadar Toplama & Ritmik Sayma</p>
+                  <div class="card-footer-action">
+                    <span>Dersleri Aç</span>
+                    <span class="arrow-icon">→</span>
+                  </div>
+                </div>
+
+                <!-- 2. Sınıf -->
+                <div class="home-grade-card card-grade-2" data-grade="2" role="button" tabindex="0">
+                  <div class="card-icon-wrap">
+                    <img src="assets/icons/3d/rocket.png" class="card-3d-icon" alt="🚀">
+                  </div>
+                  <div class="card-badge">8 Yaş</div>
+                  <h3 class="card-grade-title">2. Sınıf</h3>
+                  <p class="card-grade-desc">İki Basamaklı İşlemler, Zıt ve Eş Anlamlı Kelimeler, Hayat Bilgisi</p>
+                  <div class="card-footer-action">
+                    <span>Dersleri Aç</span>
+                    <span class="arrow-icon">→</span>
+                  </div>
+                </div>
+
+                <!-- 3. Sınıf -->
+                <div class="home-grade-card card-grade-3" data-grade="3" role="button" tabindex="0">
+                  <div class="card-icon-wrap">
+                    <img src="assets/icons/3d/lightning.png" class="card-3d-icon" alt="⚡">
+                  </div>
+                  <div class="card-badge">9 Yaş</div>
+                  <h3 class="card-grade-title">3. Sınıf</h3>
+                  <p class="card-grade-desc">Çarpım Tablosu Düellosu, Fen Bilimleri & Gece-Gündüz, Eş Sesliler</p>
+                  <div class="card-footer-action">
+                    <span>Dersleri Aç</span>
+                    <span class="arrow-icon">→</span>
+                  </div>
+                </div>
+
+                <!-- 4. Sınıf -->
+                <div class="home-grade-card card-grade-4" data-grade="4" role="button" tabindex="0">
+                  <div class="card-icon-wrap">
+                    <img src="assets/icons/3d/trophy.png" class="card-3d-icon" alt="🏆">
+                  </div>
+                  <div class="card-badge">10 Yaş</div>
+                  <h3 class="card-grade-title">4. Sınıf</h3>
+                  <p class="card-grade-desc">Zihinden Çarpma & Bölme, Kesirler, Deyimler & Sosyal Bilgiler</p>
+                  <div class="card-footer-action">
+                    <span>Dersleri Aç</span>
+                    <span class="arrow-icon">→</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. POPÜLER OYUNLAR (HIZLI BAŞLAT) -->
+            <div class="home-section-container">
+              <div class="home-section-header">
+                <div class="header-left">
+                  <span class="section-badge-icon">🔥</span>
+                  <div>
+                    <h2 class="home-section-title">Sınıfların Favori Düelloları</h2>
+                    <p class="home-section-desc">Akıllı tahtada en çok sevilen süper düelloları tek tıkla hemen başlat:</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="home-popular-grid">
+                <!-- Oyun 1: Matematik -->
+                <div class="home-popular-card card-pop-math" data-quick-game="math">
+                  <div class="pop-card-top">
+                    <div class="pop-icon-wrap">
+                      <img src="assets/icons/3d/abacus.png" class="pop-3d-icon" alt="🧮">
+                    </div>
+                    <span class="pop-badge pop-badge-hot">⭐ EN ÇOK OYNANAN</span>
+                  </div>
+                  <h3 class="pop-card-title">Kafa Kafaya Matematik</h3>
+                  <p class="pop-card-desc">İki yarışmacı aynı anda ekranda! Toplama, çıkarma ve çarpım tablosunda hızını göster.</p>
+                  <button class="pop-card-launch-btn">
+                    <span>🎮 Düelloyu Başlat</span>
+                    <span class="launch-arrow">▶</span>
+                  </button>
+                </div>
+
+                <!-- Oyun 2: Şimşek Refleks -->
+                <div class="home-popular-card card-pop-reflex" data-quick-game="reflex">
+                  <div class="pop-card-top">
+                    <div class="pop-icon-wrap">
+                      <img src="assets/icons/3d/lightning.png" class="pop-3d-icon" alt="⚡">
+                    </div>
+                    <span class="pop-badge pop-badge-reflex">⚡ ADRENALİN</span>
+                  </div>
+                  <h3 class="pop-card-title">Şimşek Refleks & Bomba</h3>
+                  <p class="pop-card-desc">Sadece doğru hedefi yakala! Tuzaklara ve bombalara basmadan ilk puanı kap.</p>
+                  <button class="pop-card-launch-btn">
+                    <span>🎮 Düelloyu Başlat</span>
+                    <span class="launch-arrow">▶</span>
+                  </button>
+                </div>
+
+                <!-- Oyun 3: Kelime Avcısı -->
+                <div class="home-popular-card card-pop-turkish" data-quick-game="turkish">
+                  <div class="pop-card-top">
+                    <div class="pop-icon-wrap">
+                      <img src="assets/icons/3d/books.png" class="pop-3d-icon" alt="📚">
+                    </div>
+                    <span class="pop-badge pop-badge-word">📖 KELİME USTASI</span>
+                  </div>
+                  <h3 class="pop-card-title">Kelime Avcısı & Türkçe</h3>
+                  <p class="pop-card-desc">Zıt anlamlılar, eş anlamlılar ve sesteş kelimelerde en hızlı doğru cevabı bulan kazanır.</p>
+                  <button class="pop-card-launch-btn">
+                    <span>🎮 Düelloyu Başlat</span>
+                    <span class="launch-arrow">▶</span>
+                  </button>
+                </div>
+
+                <!-- Oyun 4: İlk Okuma -->
+                <div class="home-popular-card card-pop-reading" data-quick-game="firstreading">
+                  <div class="pop-card-top">
+                    <div class="pop-icon-wrap">
+                      <img src="assets/icons/3d/open_book.png" class="pop-3d-icon" alt="🔤">
+                    </div>
+                    <span class="pop-badge pop-badge-read">🌱 1. SINIF GÖZDESİ</span>
+                  </div>
+                  <h3 class="pop-card-title">İlk Okuma & Ses Avcısı</h3>
+                  <p class="pop-card-desc">Harfleri tanı, heceleri birleştir, doğru sevimli görseli rakipten önce yakala!</p>
+                  <button class="pop-card-launch-btn">
+                    <span>🎮 Düelloyu Başlat</span>
+                    <span class="launch-arrow">▶</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </section>
 
-
-      <!-- ============================================== -->
-      <!-- 1. KADEME: DERS SEÇİM EKRANI (SUBJECTS GRID) -->
-      <!-- ============================================== -->
-      <section class="subjects-section" id="subjectsSection">
-        <div class="subjects-section-header">
-          <div class="section-title-wrap">
-            <span class="section-pill-badge">📚 DERSİNİ SEÇ</span>
-            <h2 class="section-title" id="subjectsGradeTitle">1. Sınıf Dersleri</h2>
-            <p class="section-desc">Eğlenceli düelloya veya pratiğe başlamak için bir ders seç:</p>
-          </div>
-          <span class="subjects-count-badge" id="subjectsCountBadge">5 Ders Mevcut</span>
-        </div>
-        <div class="subjects-grid" id="subjectsGrid">
-          <!-- Sınıfa göre dinamik üretilen ders kartları (İlk Okuma, Matematik, Türkçe vb.) -->
-        </div>
-      </section>
+          <!-- ============================================== -->
+          <!-- 1. KADEME: DERS SEÇİM EKRANI (SUBJECTS GRID)   -->
+          <!-- ============================================== -->
+          <section class="subjects-section hide" id="subjectsSection">
+            <div class="subjects-section-header">
+              <button class="btn-back-to-home" id="btnBackToHome" title="Ana Sayfaya Dön">
+                <span>←</span> Ana Sayfa
+              </button>
+              <div class="section-title-wrap">
+                <span class="section-pill-badge">📚 DERSİNİ SEÇ</span>
+                <h2 class="section-title" id="subjectsGradeTitle">1. Sınıf Dersleri</h2>
+                <p class="section-desc">Eğlenceli düelloya veya pratiğe başlamak için bir ders seç:</p>
+              </div>
+              <span class="subjects-count-badge" id="subjectsCountBadge">5 Ders Mevcut</span>
+            </div>
+            <div class="subjects-grid" id="subjectsGrid">
+              <!-- Sınıfa göre dinamik üretilen ders kartları (İlk Okuma, Matematik, Türkçe vb.) -->
+            </div>
+          </section>
 
       <!-- ============================================== -->
       <!-- 2. KADEME: DERS İÇİ OYUNLAR & KONULAR (GAMES VIEW) -->

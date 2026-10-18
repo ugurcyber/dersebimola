@@ -289,15 +289,16 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
-   1) SOL SABİT MENÜ (SIDEBAR - Genişlik: 260px, Gece Mavisi #1E1B4B)
+   1) SOL SABİT MENÜ (SIDEBAR - Genişlik: 260px, Ferah Açık Buz Mavisi #F0F7FF)
    -------------------------------------------------------------------------- */
 .app-sidebar {
   width: 260px;
   min-width: 260px;
   max-width: 260px;
-  background: #1E1B4B; /* Derin ve kurumsal Gece Mavisi / İndigo */
-  color: #ffffff;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: #F0F7FF; /* Ferah, aydınlık yumuşak buz mavisi zemin */
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F7FF 40%, #E8F3FF 100%);
+  color: #0F172A;
+  border-right: 1.5px solid #DCE7F5;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -306,9 +307,9 @@ html, body {
   z-index: 50;
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.14);
+  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.05);
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
 }
 
 /* Sidebar Üst Bölüm: Moli & Logo & Konuşma Balonu */
@@ -317,7 +318,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1.5px solid #DCE7F5;
 }
 
 .sidebar-brand-card {
@@ -326,18 +327,19 @@ html, body {
   gap: 10px;
   padding: 8px 10px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   user-select: none;
   -webkit-user-select: none;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
 }
 .sidebar-brand-card:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 107, 0, 0.4);
+  background: #F8FAFC;
+  border-color: #FF6B00;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 16px rgba(255, 107, 0, 0.15);
 }
 .sidebar-brand-card:active {
   transform: translateY(0);
@@ -515,9 +517,15 @@ html, body {
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(203, 213, 225, 0.55);
+  color: #64748B;
   margin-bottom: 8px;
   padding-left: 4px;
+}
+
+.sidebar-nav-divider {
+  height: 1px;
+  background: #DCE7F5;
+  margin: 10px 4px 12px 4px;
 }
 
 .sidebar-grade-nav {
@@ -527,59 +535,127 @@ html, body {
   width: 100%;
 }
 
-.sidebar-grade-nav .grade-chip {
+/* 🏠 Sol Menü Ana Sayfa Butonu */
+.sidebar-home-btn {
   width: 100%;
   height: 48px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #e2e8f0;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  color: #1E293B;
   font-size: 0.95rem;
   font-weight: 800;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 16px;
+  padding: 0 14px;
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-align: left;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  user-select: none;
+  -webkit-user-select: none;
+  margin-bottom: 2px;
+}
+.sidebar-home-btn:hover {
+  background: #F8FAFC;
+  color: #0F172A;
+  border-color: #CBD5E1;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+.sidebar-home-btn.active {
+  background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #FF9248 !important;
+  box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  transform: translateX(4px) scale(1.02);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.sidebar-home-btn.active .home-icon-box {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.sidebar-grade-nav .grade-chip {
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  color: #1E293B;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
   user-select: none;
   -webkit-user-select: none;
 }
 
 .sidebar-grade-nav .grade-chip:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
+  background: #F8FAFC;
+  color: #0F172A;
+  border-color: #CBD5E1;
   transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
 /* Aktif Seçilen Sınıf: Moli'nin Canlı Turuncusu (#FF6B00) ile Parlar */
 .sidebar-grade-nav .grade-chip.active {
-  background: linear-gradient(135deg, #ff6b00 0%, #ea580c 100%) !important;
-  color: #ffffff !important;
-  border: 1.5px solid #ff9248 !important;
+  background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #FF9248 !important;
   box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
-  transform: translateX(5px) scale(1.02);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transform: translateX(4px) scale(1.02);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.grade-num-badge {
-  display: inline-flex;
+/* Sınıf İkon Kutuları (Her sınıf için özel canlı pastel renk) */
+.grade-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.15);
-  font-size: 0.88rem;
-  font-weight: 900;
-  color: #ffffff;
   flex-shrink: 0;
+  font-size: 1.15rem;
+  transition: all 0.2s;
+}
+.home-icon-box {
+  background: #EEF2FF;
+  border: 1px solid #C7D2FE;
+}
+.grade-icon-0 {
+  background: #FDF2F8;
+  border: 1px solid #FBCFE8;
+}
+.grade-icon-1 {
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+}
+.grade-icon-2 {
+  background: #F0F9FF;
+  border: 1px solid #BAE6FD;
+}
+.grade-icon-3 {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+}
+.grade-icon-4 {
+  background: #F5F3FF;
+  border: 1px solid #DDD6FE;
 }
 
-.sidebar-grade-nav .grade-chip.active .grade-num-badge {
-  background: rgba(255, 255, 255, 0.3);
+.grade-chip.active .grade-icon-box {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
 }
 
 .grade-chip-name {
@@ -591,8 +667,8 @@ html, body {
 /* Sol Menünün Alt Kısmı: Öğretmen Araçları */
 .sidebar-footer {
   padding: 16px 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(15, 23, 42, 0.45);
+  border-top: 1.5px solid #DCE7F5;
+  background: rgba(240, 247, 255, 0.95);
   display: flex;
   flex-direction: column;
 }
@@ -607,9 +683,9 @@ html, body {
   width: 100%;
   height: 42px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  color: #1E293B;
   font-size: 0.88rem;
   font-weight: 800;
   display: flex;
@@ -619,11 +695,12 @@ html, body {
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
 }
 .sidebar-tool-btn:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.22);
+  background: #F8FAFC;
+  color: #0F172A;
+  border-color: #CBD5E1;
   transform: translateX(3px);
 }
 
@@ -809,63 +886,411 @@ body:has(#viewDuel.active) .app-topbar {
   margin: 0 auto;
 }
 
-/* Hero Tanıtım Alanı (Akıllı Tahtada Kompakt Tek Ekran Uyumu) */
-.lobby-hero {
-  text-align: center;
+/* --------------------------------------------------------------------------
+   YENİ 0. KADEME: ANA SAYFA (KARŞILAMA VİTRİNİ) STİLLERİ
+   -------------------------------------------------------------------------- */
+.home-showcase-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 3px;
+  gap: 20px;
+  width: 100%;
+  animation: fadeIn 0.3s ease;
 }
 
-.hero-tag {
+.home-hero-card {
+  background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 50%, #FFF7ED 100%);
+  border: 1.5px solid #DBEAFE;
+  border-radius: 24px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-hero-content {
+  flex: 1;
+}
+
+.home-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: #DBEAFE;
+  border: 1px solid #BFDBFE;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #1E40AF;
+  margin-bottom: 10px;
+}
+
+.home-hero-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.home-hero-subtitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #475569;
+  line-height: 1.4;
+  max-width: 650px;
+  margin-bottom: 16px;
+}
+
+.home-hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hero-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #e0f2fe;
-  color: #0369a1;
-  border: 1.5px solid #bae6fd;
-  padding: 2px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.76rem;
+  padding: 5px 12px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  font-size: 0.82rem;
   font-weight: 800;
+  color: #334155;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
-.pulse-dot {
-  width: 7px;
-  height: 7px;
-  background: #16a34a;
+.home-hero-mascot-wrap {
+  flex-shrink: 0;
+}
+
+.home-moli-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-moli-aura {
+  position: absolute;
+  top: 5%;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.25) 0%, transparent 70%);
   border-radius: 50%;
-  animation: pulseDot 2s infinite;
+  pointer-events: none;
 }
 
-@keyframes pulseDot {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  70% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.8; }
+.home-moli-img {
+  width: 110px;
+  height: auto;
+  filter: drop-shadow(0 8px 18px rgba(234, 88, 12, 0.28));
+  animation: moliFloat 4s ease-in-out infinite;
 }
 
-.hero-title {
-  font-size: 1.6rem;
+.home-moli-tag {
+  margin-top: 6px;
+  background: #FFFFFF;
+  border: 1.5px solid #FFEDD5;
+  border-radius: 12px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
   font-weight: 900;
-  letter-spacing: -0.02em;
-  color: #0f172a;
-  line-height: 1.18;
+  color: #EA580C;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.12);
+  white-space: nowrap;
 }
 
-.highlight-gradient {
-  background: linear-gradient(135deg, #2563eb 0%, #db2777 50%, #ea580c 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.home-contestants-bar {
+  margin-top: -6px;
+  margin-bottom: 4px;
 }
 
-.hero-desc {
-  color: var(--text-secondary);
+/* 2 & 3. Bölüm Konteynerleri */
+.home-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.home-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.home-section-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-badge-icon {
+  font-size: 1.5rem;
+}
+
+.home-section-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.home-section-desc {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+/* 2. Dev Sınıf Seçim Kartları Gridi */
+.home-grades-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.home-grade-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.home-grade-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.1);
+  border-color: #FF6B00;
+}
+
+.home-grade-card .card-icon-wrap {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: transform 0.28s;
+}
+
+.home-grade-card:hover .card-icon-wrap {
+  transform: scale(1.12) rotate(4deg);
+}
+
+.home-grade-card.card-grade-0 .card-icon-wrap { background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%); border: 1px solid #FBCFE8; }
+.home-grade-card.card-grade-1 .card-icon-wrap { background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 1px solid #A7F3D0; }
+.home-grade-card.card-grade-2 .card-icon-wrap { background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 1px solid #BAE6FD; }
+.home-grade-card.card-grade-3 .card-icon-wrap { background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 1px solid #FDE68A; }
+.home-grade-card.card-grade-4 .card-icon-wrap { background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%); border: 1px solid #DDD6FE; }
+
+.home-grade-card .card-3d-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  pointer-events: none;
+}
+
+.home-grade-card .card-badge {
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  background: #F1F5F9;
+  color: #475569;
+}
+.home-grade-card.card-grade-0 .card-badge { background: #FCE7F3; color: #DB2777; }
+.home-grade-card.card-grade-1 .card-badge { background: #D1FAE5; color: #059669; }
+.home-grade-card.card-grade-2 .card-badge { background: #E0F2FE; color: #0284C7; }
+.home-grade-card.card-grade-3 .card-badge { background: #FEF3C7; color: #D97706; }
+.home-grade-card.card-grade-4 .card-badge { background: #EDE9FE; color: #7C3AED; }
+
+.home-grade-card .card-grade-title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.home-grade-card .card-grade-desc {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748B;
+  line-height: 1.35;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.home-grade-card .card-footer-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #334155;
+  transition: all 0.2s;
+}
+
+.home-grade-card:hover .card-footer-action {
+  background: #FF6B00;
+  color: #FFFFFF;
+  border-color: #FF6B00;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+/* 3. Popüler Düellolar Gridi */
+.home-popular-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.home-popular-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.home-popular-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.1);
+  border-color: #3B82F6;
+}
+
+.pop-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.pop-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #EFF6FF;
+  border: 1px solid #DBEAFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pop-3d-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
+  pointer-events: none;
+}
+
+.pop-badge {
+  font-size: 0.68rem;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+.pop-badge-hot { background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; }
+.pop-badge-reflex { background: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
+.pop-badge-word { background: #F5F3FF; color: #7C3AED; border: 1px solid #DDD6FE; }
+.pop-badge-read { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+
+.pop-card-title {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin-bottom: 4px;
+}
+
+.pop-card-desc {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748B;
+  line-height: 1.35;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.pop-card-launch-btn {
+  width: 100%;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  border: 1px solid #60A5FA;
+  color: #FFFFFF;
   font-size: 0.88rem;
-  font-weight: 700;
-  max-width: 820px;
-  line-height: 1.25;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+}
+
+.home-popular-card:hover .pop-card-launch-btn {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+/* Ders Listesi İçi Ana Sayfaya Geri Dön Butonu */
+.btn-back-to-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+.btn-back-to-home:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #0F172A;
+  transform: translateX(-3px);
 }
 
 /* ==========================================================================
@@ -3759,11 +4184,31 @@ input:checked + .slider:before {
     display: none;
   }
 
+  .sidebar-grade-nav .sidebar-home-btn,
   .sidebar-grade-nav .grade-chip {
     width: auto !important;
     flex-shrink: 0;
     height: 42px;
     padding: 0 14px;
+  }
+  .sidebar-nav-divider {
+    display: none !important;
+  }
+
+  /* Ana Sayfa Vitrini Mobil / Tablet Uyumları */
+  .home-hero-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 16px;
+  }
+  .home-hero-pills {
+    justify-content: center;
+  }
+  .home-grades-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .home-popular-grid {
+    grid-template-columns: 1fr !important;
   }
 
   .sidebar-footer {
