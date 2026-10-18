@@ -1986,127 +1986,818 @@
       { englishWord: 'Fish', q: '"Balık" 🐟 hayvanının İngilizcesi hangisidir?', a: 'Fish 🐟', d: ['Frog 🐸', 'Duck 🦆'], exp: 'Balık İngilizce "Fish" demektir.' }
     ],
     // -------------------------------------------------------------
-    // 3. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİ
+    // 3. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİLERİ
     // -------------------------------------------------------------
-    generateGrade3Math() {
-      const type = Math.floor(Math.random() * 3);
-      if (type === 0) {
-        // Çarpım Tablosu Düellosu (2'lerden 9'lara kadar dinamik)
-        const a = Math.floor(Math.random() * 8) + 2; // 2..9
+
+    // 3. SINIF: 3 BASAMAKLI SAYILAR, BASAMAK DEĞERİ VE ROMEN RAKAMLARI (DİNAMİK)
+    generateGrade3RomenAndPlace() {
+      const mode = Math.floor(Math.random() * 4);
+      if (mode === 0) {
+        // Romen Rakamları (I - XX)
+        const romanMap = [
+          { r: 'I', n: 1 }, { r: 'II', n: 2 }, { r: 'III', n: 3 }, { r: 'IV', n: 4 }, { r: 'V', n: 5 },
+          { r: 'VI', n: 6 }, { r: 'VII', n: 7 }, { r: 'VIII', n: 8 }, { r: 'IX', n: 9 }, { r: 'X', n: 10 },
+          { r: 'XI', n: 11 }, { r: 'XII', n: 12 }, { r: 'XIII', n: 13 }, { r: 'XIV', n: 14 }, { r: 'XV', n: 15 },
+          { r: 'XVI', n: 16 }, { r: 'XVII', n: 17 }, { r: 'XVIII', n: 18 }, { r: 'XIX', n: 19 }, { r: 'XX', n: 20 }
+        ];
+        const item = romanMap[Math.floor(Math.random() * romanMap.length)];
+        const askRoman = Math.random() > 0.5;
+
+        if (askRoman) {
+          return {
+            question: `Romen rakamıyla "${item.r}" hangi doğal sayıdır? 🏛️`,
+            correct: item.n.toString(),
+            distractors: [
+              (item.n > 1 ? item.n - 1 : item.n + 2).toString(),
+              (item.n + 1).toString()
+            ],
+            explanation: `Romen rakamlarındaki "${item.r}" sayısı doğal sayılarda ${item.n} değerine karşılık gelir.`
+          };
+        } else {
+          return {
+            question: `"${item.n}" doğal sayısının ROMEN RAKAMIYLA yazılışı hangisidir? 🏛️`,
+            correct: item.r,
+            distractors: [
+              romanMap[(item.n) % romanMap.length].r,
+              romanMap[(item.n + 2) % romanMap.length].r
+            ],
+            explanation: `${item.n} doğal sayısı Romen rakamıyla "${item.r}" şeklinde yazılır.`
+          };
+        }
+      } else if (mode === 1) {
+        // 3 Basamaklı Sayılarda Basamak Değeri
+        const hundreds = Math.floor(Math.random() * 8) + 1; // 1..8
+        const tens = Math.floor(Math.random() * 9) + 1; // 1..9
+        const ones = Math.floor(Math.random() * 9) + 1; // 1..9
+        const num = hundreds * 100 + tens * 10 + ones;
+        const target = Math.floor(Math.random() * 3);
+
+        if (target === 0) {
+          return {
+            question: `"${num}" sayısındaki ${hundreds} rakamının BASAMAK DEĞERİ kaçtır? 📦`,
+            correct: (hundreds * 100).toString(),
+            distractors: [hundreds.toString(), (hundreds * 10).toString()],
+            explanation: `${hundreds} rakamı yüzler basamağında yer aldığı için basamak değeri ${hundreds} × 100 = ${hundreds * 100}'dür.`
+          };
+        } else if (target === 1) {
+          return {
+            question: `"${num}" sayısındaki ${tens} rakamının BASAMAK DEĞERİ kaçtır? 📦`,
+            correct: (tens * 10).toString(),
+            distractors: [tens.toString(), (tens * 100).toString()],
+            explanation: `${tens} rakamı onlar basamağında yer aldığı için basamak değeri ${tens} × 10 = ${tens * 10}'dur.`
+          };
+        } else {
+          return {
+            question: `"${num}" sayısındaki ${ones} rakamının BASAMAK DEĞERİ kaçtır? 📦`,
+            correct: ones.toString(),
+            distractors: [(ones * 10).toString(), (ones * 100).toString()],
+            explanation: `${ones} rakamı birler basamağında yer aldığı için basamak değeri ${ones}'dir.`
+          };
+        }
+      } else if (mode === 2) {
+        // En Yakın Yüzlüğe Yuvarlama
+        const hundreds = Math.floor(Math.random() * 8) + 1; // 1..8
+        const tens = Math.floor(Math.random() * 9) + 1; // 1..9
+        const ones = Math.floor(Math.random() * 9) + 1;
+        const num = hundreds * 100 + tens * 10 + ones;
+        const isUp = tens >= 5;
+        const rounded = isUp ? (hundreds + 1) * 100 : hundreds * 100;
+        const other = isUp ? hundreds * 100 : (hundreds + 1) * 100;
+
+        return {
+          question: `"${num}" sayısı en yakın hangi YÜZLÜĞE yuvarlanır? 🎯`,
+          correct: rounded.toString(),
+          distractors: [other.toString(), (rounded + 100).toString()],
+          explanation: `Onlar basamağında ${tens} vardır (${tens >= 5 ? '5 ve üzeri olduğu için yukarı' : '5\'ten küçük olduğu için aşağı'}). Sayı ${rounded}'e yuvarlanır.`
+        };
+      } else {
+        // Yüzlük, onluk, birlik çözümleme
+        const h = Math.floor(Math.random() * 7) + 2;
+        const t = Math.floor(Math.random() * 8) + 1;
+        const o = Math.floor(Math.random() * 9) + 1;
+        const val = h * 100 + t * 10 + o;
+
+        return {
+          question: `${h} yüzlük, ${t} onluk ve ${o} birlikten oluşan sayı kaçtır? 📦`,
+          correct: val.toString(),
+          distractors: [(h * 100 + o * 10 + t).toString(), (t * 100 + h * 10 + o).toString()],
+          explanation: `${h} yüzlük = ${h * 100}, ${t} onluk = ${t * 10}, ${o} birlik = ${o}. Toplam = ${val}'dir.`
+        };
+      }
+    },
+
+    // 3. SINIF: ÇARPIM TABLOSU (6,7,8,9) VE BÖLME İŞLEMİ (DİNAMİK)
+    generateGrade3MultDiv() {
+      const mode = Math.floor(Math.random() * 3);
+      if (mode === 0) {
+        // 6, 7, 8, 9'larla Çarpım Tablosu
+        const multipliers = [6, 7, 8, 9];
+        const a = multipliers[Math.floor(Math.random() * multipliers.length)];
         const b = Math.floor(Math.random() * 8) + 2; // 2..9
         const ans = a * b;
+
         return {
-          question: `${a} × ${b} = ?`,
+          question: `${a} × ${b} = ? ✖️`,
           correct: ans.toString(),
           distractors: [
             (ans + (Math.random() > 0.5 ? a : b)).toString(),
             Math.max(2, ans - (Math.random() > 0.5 ? a : b)).toString()
           ],
-          explanation: `${a} kere ${b} = ${ans} eder. Çarpma, tekrarlı toplama işlemidir.`
+          explanation: `${a} tane ${b} veya ${b} tane ${a} = ${ans} eder.`
         };
-      } else if (type === 1) {
-        // Basit bölme işlemi
-        const div = Math.floor(Math.random() * 7) + 3; // 3..9
-        const quot = Math.floor(Math.random() * 8) + 2; // 2..9
-        const dividend = div * quot;
+      } else if (mode === 1) {
+        // Bölme İşlemi
+        const divisors = [4, 5, 6, 7, 8, 9];
+        const d = divisors[Math.floor(Math.random() * divisors.length)];
+        const q = Math.floor(Math.random() * 8) + 2; // 2..9
+        const dividend = d * q;
+
         return {
-          question: `${dividend} ÷ ${div} = ?`,
-          correct: quot.toString(),
-          distractors: [(quot + 1).toString(), Math.max(1, quot - 1).toString()],
-          explanation: `${dividend} sayısını ${div} eşit parçaya bölersek her parçada ${quot} bulunur.`
+          question: `${dividend} ÷ ${d} = ? ➗`,
+          correct: q.toString(),
+          distractors: [(q + 1).toString(), Math.max(1, q - 1).toString()],
+          explanation: `${dividend} sayısı ${d} eşit parçaya ayrıldığında her parça ${q} olur.`
         };
       } else {
-        // 3 basamaklı sayılarda basamak değeri
-        const hundreds = Math.floor(Math.random() * 8) + 1;
-        const tens = Math.floor(Math.random() * 8) + 1;
-        const ones = Math.floor(Math.random() * 9);
-        const number = hundreds * 100 + tens * 10 + ones;
-        const askTens = Math.random() > 0.5;
+        // Sözel Problem
+        const problems = [
+          {
+            a: 8, b: 7,
+            q: 'Günde 8 sayfa kitap okuyan Zeynep, 7 günde toplam kaç sayfa okur? 📖',
+            ans: 56, exp: '7 gün × 8 sayfa = 56 sayfa okur.'
+          },
+          {
+            a: 9, b: 6,
+            q: 'Bir pastanede 6 tepsi kurabiye var. Her tepside 9 kurabiye olduğuna göre toplam kaç kurabiye vardır? 🍪',
+            ans: 54, exp: '6 tepsi × 9 kurabiye = 54 kurabiye eder.'
+          },
+          {
+            a: 7, b: 8,
+            q: 'Tanesi 7 TL olan defterlerden 8 tane alan Can kırtasiyeciye kaç TL öder? 📚',
+            ans: 56, exp: '8 defter × 7 TL = 56 TL öder.'
+          },
+          {
+            a: 48, b: 6,
+            q: '48 cevizi 6 kardeş eşit olarak paylaştığında her birine kaç ceviz düşer? 🌰',
+            ans: 8, exp: '48 ceviz ÷ 6 kardeş = 8 ceviz düşer.'
+          },
+          {
+            a: 72, b: 8,
+            q: '72 misketi 8 arkadaş eşit paylaşıyor. Her bir arkadaşa kaç misket düşer? 🔮',
+            ans: 9, exp: '72 misket ÷ 8 arkadaş = 9 misket düşer.'
+          }
+        ];
+        const item = problems[Math.floor(Math.random() * problems.length)];
+        return {
+          question: item.q,
+          correct: item.ans.toString(),
+          distractors: [(item.ans + 6).toString(), Math.max(1, item.ans - 6).toString()],
+          explanation: item.exp
+        };
+      }
+    },
 
-        if (askTens) {
+    // 3. SINIF: KESİRLER VE GEOMETRİK CİSİMLER (26 ÖZGÜN SORU)
+    grade3FractionsAndShapesPool: [
+      { q: 'Payı 1 olan kesirlere (örneğin 1/2, 1/3, 1/5) ne ad verilir? 🍕', a: 'Birim Kesir 🍕', d: ['Bileşik Kesir', 'Tam Sayılı Kesir'], exp: 'Payı 1 olan bütün kesirler "birim kesir" olarak adlandırılır.' },
+      { q: 'Kesir çizgisinin ÜSTÜNDE yer alan ve eş parçalardan kaç tanesinin alındığını gösteren sayıya ne denir?', a: 'Pay ⬆️', d: ['Payda ⬇️', 'Bölüm'], exp: 'Kesir çizgisinin üstündeki sayı pay, altındaki sayı ise paydadır.' },
+      { q: 'Kesir çizgisinin ALTINDA yer alan ve bir bütünün kaç eşit parçaya bölündüğünü gösteren sayıya ne denir?', a: 'Payda ⬇️', d: ['Pay ⬆️', 'Kalan'], exp: 'Payda, bir bütünün kaç eşit parçaya bölündüğünü ifade eder.' },
+      { q: '32 sayısının 1/4\'ü (çeyreği) kaçtır? 🔢', a: '8', d: ['6', '12'], exp: '32 sayısının 1/4\'ünü bulmak için 4\'e böleriz: 32 ÷ 4 = 8.' },
+      { q: '45 elmanın 1/5\'i kaç elma eder? 🍎', a: '9 elma 🍎', d: ['8 elma', '10 elma'], exp: '45 ÷ 5 = 9 elma eder.' },
+      { q: 'Tüm yüzleri kare olan, 6 yüzü, 8 köşesi ve 12 ayrıtı olan geometrik cisim hangisidir? 🧊', a: 'Küp 🧊', d: ['Kare Prizma', 'Küre ⚽'], exp: 'Küpün 6 eşit kare yüzü, 8 köşesi ve 12 ayrıtı vardır.' },
+      { q: 'Küpün kaç adet AYRITI (kenarı) vardır? 🧊', a: '12 ayrıt 🧊', d: ['8 ayrıt', '6 ayrıt'], exp: 'Küpün 12 tane ayrıtı (kenarı) bulunur.' },
+      { q: 'Küpün kaç adet KÖŞESİ vardır? 🧊', a: '8 köşe 🧊', d: ['6 köşe', '12 köşe'], exp: 'Küpün 8 köşesi bulunur.' },
+      { q: 'Kare prizmanın kaç tane karesel yüzü vardır? 📦', a: '2 tane karesel yüz 📦', d: ['4 tane', '6 tane'], exp: 'Kare prizmanın alt ve üst tabanı olmak üzere 2 kare, yanlarında 4 dikdörtgen yüzü vardır.' },
+      { q: 'Dikdörtgen prizmanın tüm yüzleri hangi geometrik şekildedir? 🚪', a: 'Dikdörtgen 🚪', d: ['Kare', 'Üçgen'], exp: 'Dikdörtgenler prizmasının 6 yüzünün tamamı dikdörtgendir.' },
+      { q: 'Üçgen prizmanın kaç köşesi vardır? 📐', a: '6 köşe 📐', d: ['8 köşe', '4 köşe'], exp: 'Üçgen prizmanın üstte 3, altta 3 olmak üzere toplam 6 köşesi vardır.' },
+      { q: 'Hiç köşesi ve ayrıtı olmayan, yuvarlak uzay cismi hangisidir? ⚽', a: 'Küre ⚽', d: ['Silindir 🛢️', 'Koni 🍦'], exp: 'Kürenin eğri tek bir yüzeyi vardır; köşesi ve ayrıtı yoktur.' },
+      { q: 'Dondurma külahı veya trafik konisi hangi geometrik cisme benzer? 🍦', a: 'Koni 🍦', d: ['Silindir 🛢️', 'Prizma 📦'], exp: 'Trafik konisi ve dondurma külahı koni modelidir.' },
+      { q: 'Konserve kutusu veya pil hangi geometrik cisme benzer? 🛢️', a: 'Silindir 🛢️', d: ['Koni 🍦', 'Küp 🧊'], exp: 'Konserve kutusu ve pil silindir şeklindedir (2 daire taban, 1 eğri yüz).' },
+      { q: 'Silindirin kaç adet köşesi vardır? 🛢️', a: '0 (Köşesi yoktur) 🛢️', d: ['2 köşe', '4 köşe'], exp: 'Silindirin köşesi ve ayrıtı bulunmaz.' },
+      { q: '50 liranın 1/2\'si (yarısı) kaç liradır? 💵', a: '25 TL 💵', d: ['20 TL', '30 TL'], exp: '50 ÷ 2 = 25 TL eder.' },
+      { q: 'Bir bütünü 8 eş parçaya böldüğümüzde oluşan her bir parçanın kesir gösterimi nedir?', a: '1/8 🍕', d: ['1/4', '8/1'], exp: '8 eş parçadan biri 1/8 olarak gösterilir.' },
+      { q: 'Bir pastanın 3/4\'ü yendiğinde geriye pastanın ne kadarı kalır? 🎂', a: '1/4\'ü (Çeyreği) 🎂', d: ['2/4\'ü', 'Yarısı'], exp: 'Tam pasta 4/4\'tür. 4/4 - 3/4 = 1/4 kalır.' },
+      { q: 'Üçgen prizmanın kaç adet yüzü vardır? 📐', a: '5 yüz (2 üçgen, 3 dikdörtgen) 📐', d: ['6 yüz', '4 yüz'], exp: 'Üçgen prizmanın 2 üçgen tabanı ve 3 dikdörtgen yan yüzü vardır.' },
+      { q: '60 dakikanın 1/3\'ü kaç dakikadır? ⏳', a: '20 dakika ⏳', d: ['15 dakika', '30 dakika'], exp: '60 ÷ 3 = 20 dakikadır.' },
+      { q: 'Kibrit kutusu hangi geometrik cisme benzer? 📦', a: 'Dikdörtgenler prizması 📦', d: ['Küp', 'Koni'], exp: 'Kibrit kutusu karşılıklı yüzleri eşit dikdörtgenler prizmasıdır.' },
+      { q: '24 cevizin 1/6\'sı kaç cevizdir? 🌰', a: '4 ceviz 🌰', d: ['6 ceviz', '8 ceviz'], exp: '24 ÷ 6 = 4 ceviz eder.' },
+      { q: 'Futbol topu hangi geometrik cisme benzer? ⚽', a: 'Küre ⚽', d: ['Çember', 'Silindir'], exp: 'Futbol topu 3 boyutlu bir küre cismidir.' },
+      { q: 'Aşağıdaki cisimlerin hangisinin KÖŞESİ VARDIR? 🧊', a: 'Küp 🧊', d: ['Silindir 🛢️', 'Küre ⚽'], exp: 'Küpün 8 köşesi varken silindir ve kürenin köşesi yoktur.' },
+      { q: '36 yolcunun 1/4\'ü otobüsten indiğinde kaç yolcu inmiş olur? 🚌', a: '9 yolcu 🚌', d: ['8 yolcu', '12 yolcu'], exp: '36 ÷ 4 = 9 yolcu inmiştir.' },
+      { q: 'Paydası 7, payı 3 olan kesir nasıl yazılır?', a: '3/7 📝', d: ['7/3', '3/10'], exp: 'Pay yukarıya (3), payda aşağıya (7) yazılır: 3/7.' }
+    ],
+
+    // 3. SINIF: EŞ SESLİ KELİMELER VE MECAZ ANLAM (30 ÖZGÜN SORU)
+    grade3HomonymsFigurativePool: [
+      { q: '"Yüz" kelimesi hangi özelliği taşır? 🎭', a: 'Eş Sesli (Sesteş) 🎭', d: ['Zıt Anlamlı', 'Terim Anlam'], exp: '"Yüz" hem sayı (100), hem surat/çehre, hem de suda yüzmek eylemidir.' },
+      { q: '"Çay" kelimesi hangi iki farklı anlama gelir? ☕🌊', a: 'İçilen sıcak çay ve küçük akarsu 🌊', d: ['Meyve ve sebze', 'Deniz ve göl'], exp: 'Çay hem kahvaltıda içtiğimiz içecek hem de dereden büyük akarsudur.' },
+      { q: '"Arkadaşının bu kırıcı sözleri kalbini çok kırdı." cümlesindeki "kırdı" sözcüğü hangi anlamdadır?', a: 'Mecaz Anlam 💔', d: ['Gerçek Anlam', 'Terim Anlam'], exp: 'Kalp porselen gibi fiziksel kırılmaz; üzülmeyi, incinmeyi anlattığı için mecaz anlamdır.' },
+      { q: '"Yere düşen cam bardak tuzla buz oldu, kırıldı." cümlesindeki "kırıldı" sözcüğü hangi anlamdadır?', a: 'Gerçek Anlam 🥛', d: ['Mecaz Anlam', 'Zıt Anlam'], exp: 'Bardağın fiziksel olarak parçalanması sözcüğün ilk ve gerçek anlamıdır.' },
+      { q: '"Bizi kapıda çok SICAK ve samimi karşıladılar." cümlesinde "sıcak" hangi anlamdadır? ☀️', a: 'Mecaz Anlam (İçten, dostça) 🤝', d: ['Gerçek Anlam (Yüksek ısı)', 'Terim Anlam'], exp: 'İnsanın davranışının sıcak olması dostça ve sevgi dolu olduğunu belirten mecazdır.' },
+      { q: '"Sıcak çorba dilimi yaktı." cümlesinde "sıcak" hangi anlamdadır? 🥣', a: 'Gerçek Anlam 🥣', d: ['Mecaz Anlam', 'Eş Sesli'], exp: 'Çorbanın ısısının yüksek olması gerçek anlamdır.' },
+      { q: '"Kaz" kelimesi eş sesli olarak hangi anlamlara gelir? 🦆⛏️', a: 'Beyaz kümes hayvanı ve toprağı kazmak ⛏️', d: ['Uçak ve araba', 'Kedi ve köpek'], exp: 'Kaz hem sevimli kanatlı hayvan hem de kazma eylemidir.' },
+      { q: '"Gül" kelimesi hangi anlamlara gelen bir sesteş sözcüktür? 🌹😊', a: 'Güzel kokulu çiçek ve gülümsemek 😊', d: ['Ağlamak ve gülmek', 'Meyve ve ağaç'], exp: 'Gül hem çiçek hem de neşelenip gülmektir.' },
+      { q: '"Ağır sözleriyle salondaki herkesi susturdu." cümlesindeki "ağır" ne anlama gelir?', a: 'Mecaz Anlam (Kırıcı, incitici) 💔', d: ['Gerçek Anlam (Tartıda ağır)', 'Eş Sesli'], exp: 'Söz tartılamaz; kırıcı ve dokunaklı olması mecazdır.' },
+      { q: '"Pazardan aldığımız çanta çok ağırdı." cümlesindeki "ağır" hangi anlamdadır? 🛍️', a: 'Gerçek Anlam (Kilosu fazla) ⚖️', d: ['Mecaz Anlam', 'Zıt Anlam'], exp: 'Çantanın tartıdaki ağırlığı gerçek fiziksel anlamdır.' },
+      { q: '"Kır" sözcüğü aşağıdaki cümlelerin hangisinde "yeşillik, çimenlik doğa" anlamında kullanılmıştır? 🌿', a: 'Hafta sonu kır çiçekleri toplamaya gittik. 🌸', d: ['Dedemin saçlarına aklar ve kırlar düşmüş.', 'Tahtayı ortadan ikiye kır.'], exp: 'Kır çiçekleri ve kır pikniği doğayı ifade eder.' },
+      { q: '"Dal" sözcüğü eş sesli olarak hangi anlamlara sahiptir? 🌿🏊‍♂️', a: 'Ağacın dalı ve suya dalmak 🏊‍♂️', d: ['Yaprak ve kök', 'Güneş ve bulut'], exp: 'Ağaç dalı ve denize dalmak sesteştir.' },
+      { q: '"Bin" sözcüğü hangi iki farklı anlama gelir? 🔢🐎', a: '1000 sayısı ve ata/arabaya binmek 🐎', d: ['Yürümek ve koşmak', 'Yüz ve on'], exp: 'Bin hem 1000 rakamı hem de bir taşıta binmektir.' },
+      { q: '"Bu haberi alınca gözleri sevinçle parladı." cümlesinde mecazi bir anlatım var mıdır? ✨', a: 'Evet, mecaz anlam vardır (Aşırı sevinmek) ✨', d: ['Hayır, lamba gibi ışık saçmıştır', 'Terim anlamdır'], exp: 'Göz fener gibi ışık saçmaz, aşırı mutluluğu anlatan mecazdır.' },
+      { q: '"Tatlı dilli olursan herkes seni sever." cümlesinde "tatlı" hangi anlamdadır? 🍯', a: 'Mecaz Anlam (Sevimli, hoş konuşan) 😊', d: ['Gerçek Anlam (Şekerli)', 'Zıt Anlam'], exp: 'Dilin şekerli olması değil, sözlerin hoş olması mecazdır.' },
+      { q: '"Annem bayram için çok tatlı bir baklava yaptı." cümlesinde "tatlı" nedir? 🥮', a: 'Gerçek Anlam (Şeker tadı) 🥮', d: ['Mecaz Anlam', 'Eş Sesli'], exp: 'Şekerli yiyecek gerçek anlamdır.' },
+      { q: '"Yaz" sözcüğü hangi iki anlama gelen eş sesli bir kelimedir? ☀️✍️', a: 'Sıcak mevsim ve deftere yazı yazmak ✍️', d: ['Kış ve bahar', 'Kitap ve defter'], exp: 'Yaz mevsimi ve yazı yazmak eş seslidir.' },
+      { q: '"Bağ" kelimesi hangi anlamlara gelebilir? 🍇👟', a: 'Üzüm bağı ve ayakkabı bağı 👟', d: ['Elma ve armut', 'Çorap ve pantolon'], exp: 'Üzüm bahçesi ve bağlamak için kullanılan ip (bağ) eş seslidir.' },
+      { q: '"Karanlık işlere bulaşmamalısın." cümlesindeki "karanlık" ne demektir? 🌑', a: 'Mecaz Anlam (Yasa dışı, gizli, kötü) 🕵️', d: ['Gerçek Anlam (Işıksız ortam)', 'Terim Anlam'], exp: 'Kötü ve gizli işler için mecazen "karanlık" denir.' },
+      { q: '"Güneş batınca sokaklar karanlık oldu." cümlesindeki "karanlık" nedir? 🌑', a: 'Gerçek Anlam (Işığın olmaması) 🌑', d: ['Mecaz Anlam', 'Eş Anlam'], exp: 'Işığın çekilmesi gerçek anlamdır.' },
+      { q: '"At" sözcüğü hangi anlamlara sahiptir? 🐴🎾', a: 'Binek hayvanı ve bir nesneyi fırlatmak 🎾', d: ['Eşek ve katır', 'Koşmak ve yürümek'], exp: 'At hayvanı ve topu atmak eş seslidir.' },
+      { q: '"Boş sözlerle beni oyalamayı bırak." cümlesindeki "boş" hangi anlamdadır? 📦', a: 'Mecaz Anlam (Yararsız, anlamsız) 💬', d: ['Gerçek Anlam (İçinde madde olmayan)', 'Eş Sesli'], exp: 'Sözün içinde eşya olmaması değil, yararsız olması mecazdır.' },
+      { q: '"Boş bardağa süt doldurdum." cümlesindeki "boş" nedir? 🥛', a: 'Gerçek Anlam (İçi dolu olmayan) 🥛', d: ['Mecaz Anlam', 'Zıt Anlam'], exp: 'Bardağın içinde madde bulunmaması gerçek anlamdır.' },
+      { q: '"Yaş" sözcüğü eş sesli olarak hangi anlamlara gelir? 💧🎂', a: 'Islak olma durumu ve doğum yılı yaşı 🎂', d: ['Kuru ve nemli', 'Genç ve ihtiyar'], exp: 'Yaş bez (ıslak) ve "9 yaşındayım" eş seslidir.' },
+      { q: '"Ocak" sözcüğü eş sesli olarak hangilerini ifade eder? 🗓️🔥', a: 'Yılın 1. ayı ve yemek pişirilen ateşlik 🔥', d: ['Şubat ve Mart', 'Fırın ve buzdolabı'], exp: 'Ocak ayı ve mutfaktaki ocak sesteştir.' },
+      { q: '"Ekmek" kelimesi hangi iki temel anlama gelir? 🥖🌱', a: 'Fırında pişen ekmek ve tohum ekmek 🌱', d: ['Su ve yemek', 'Ağaç ve çiçek'], exp: 'Yediğimiz ekmek ve tarlaya buğday ekmek eş seslidir.' },
+      { q: '"Dolu" kelimesi hangi anlamlara sahiptir? 🌧️🥛', a: 'Buzlu yağış türü ve içi doldurulmuş kap 🥛', d: ['Kar ve yağmur', 'Boş ve yarım'], exp: 'Gökyüzünden yağan dolu ve dolu bardak eş seslidir.' },
+      { q: '"Sönmek" sözcüğü hangisinde MECAZ anlamda kullanılmıştır? 💡', a: 'Bu haberden sonra içindeki tüm umutlar söndü. 💔', d: ['İtfaiye yangını söndürdü.', 'Kömürün ateşi söndü.'], exp: 'Umut ateş gibi yanıp sönmez; yok olmasını anlatan mecazdır.' },
+      { q: '"Ben" sözcüğü hangi iki anlama gelen eş sesli bir sözcüktür? 👤🤎', a: '1. tekil şahıs (kendim) ve derideki siyah leke 🤎', d: ['Sen ve o', 'Göz ve kulak'], exp: 'Kişi zamiri "ben" ve ciltteki küçük ben eş seslidir.' },
+      { q: '"Boya" kelimesi hem bir malzeme hem de bir eylemdir. Bu duruma ne denir? 🎨', a: 'Eş Seslilik (Sesteşlik) 🎨', d: ['Zıt Anlamlılık', 'Mecazlık'], exp: 'Resim boyası ve duvarı boyamak eş sesli kullanımdır.' }
+    ],
+
+    // 3. SINIF: NOKTALAMA, YAZIM KURALLARI VE 5N1K (26 ÖZGÜN SORU)
+    grade3Punctuation5N1KPool: [
+      { q: '"Ali dün akşam parkta arkadaşlarıyla bisiklet sürdü." cümlesinde Ali NE ZAMAN bisiklet sürmüştür? 🚲', a: 'Dün akşam 🚲', d: ['Parkta', 'Arkadaşlarıyla'], exp: '"Ne zaman?" sorusu zamanı belirtir: Dün akşam.' },
+      { q: '"Ayşe hasta olduğu için bugün okula gelemedi." cümlesinde Ayşe NİÇİN (NEDEN) okula gelememiştir? 🏫', a: 'Hasta olduğu için 🤒', d: ['Bugün', 'Okula'], exp: 'Eylemin sebebini bildiren ifade "Hasta olduğu için"dir.' },
+      { q: '"Mustafa tatilde dedesini ziyaret etmek için Köyceğiz\'e gitti." Mustafa NEREYE gitmiştir? 🏡', a: 'Köyceğiz\'e 🏡', d: ['Tatilde', 'Dedesine'], exp: '"Nereye?" sorusu mekanı belirtir: Köyceğiz\'e.' },
+      { q: '"Kırtasiyeden defter, kalem, silgi ve cetvel aldım." cümlesinde art arda sıralanan eş görevli kelimelerin arasına ne konur? ✏️', a: 'Virgül (,) ✏️', d: ['Nokta (.)', 'Soru İşareti (?)'], exp: 'Eş görevli kelimeleri ayırmak için virgül (,) kullanılır.' },
+      { q: '"Yaşasın, yarın okulumuzda tiyatro var" cümlesinin sonuna hangi noktalama işareti konmalıdır? 🎉', a: 'Ünlem İşareti (!) 🎉', d: ['Nokta (.)', 'Soru İşareti (?)'], exp: 'Sevinç, heyecan, korku bildiren cümlelerin sonuna ünlem işareti konur.' },
+      { q: '"Öğretmenimiz içeri girdi ve şöyle dedi: — Çocuklar, kitaplarınızı açın." Konuşma öncesinde hangi işaret kullanılır? 💬', a: 'İki Nokta (:) 💬', d: ['Noktalı Virgül (;)', 'Virgül (,)'], exp: 'Konuşma ve açıklamalardan önce iki nokta (:) konur.' },
+      { q: '"Öğretmen Ali\'ye sordu: ( ) Ödevini neden bitirmedin ( )" Parantez içlerine sırasıyla ne gelmelidir? ❓', a: 'Tırnak işareti (") ve Soru işareti (?) ❓', d: ['Nokta ve Virgül', 'Ünlem ve Nokta'], exp: 'Alıntı cümle tırnak ("...") içine alınır ve soru cümlesi soru işaretiyle biter.' },
+      { q: 'Özel isimlere getirilen çekim eklerini ayırmak için hangi işaret kullanılır? 🇹🇷', a: 'Kesme İşareti (\') 🇹🇷', d: ['Kısa Çizgi (-)', 'Virgül (,)'], exp: 'Atatürk\'ün, Ankara\'da gibi özel isim ekleri kesme işaretiyle ayrılır.' },
+      { q: 'Aşağıdaki cümlelerin hangisinde "de / da" bağlacının yazımı DOĞRUDUR? ✅', a: 'Ahmet de bizimle maça gelecek. ✅', d: ['Ahmetde bizimle gelecek.', 'Kitabım ev de kaldı.'], exp: 'Cümleden çıkarıldığında anlam bozulmayan "de/da" bağlacı ayrı yazılır.' },
+      { q: 'Aşağıdaki cümlelerin hangisinde "mi" soru ekinin yazımı YANLIŞTIR? ❌', a: 'Seninle sinemaya gelelimmi? ❌', d: ['Bize yardım eder misin?', 'Ödevini yaptın mı?'], exp: '"mi/mı/mu/mü" soru eki her zaman kendinden önceki kelimeden ayrı yazılır.' },
+      { q: 'Dijital saatlerde saat ve dakikanın arasına Türk Dil Kurumu\'na göre hangi işaret konur? ⏰', a: 'Tek Nokta (.) [Örn: 09.30] ⏰', d: ['İki Nokta (:) [09:30]', 'Virgül (,) [09,30]'], exp: 'TDK yazım kuralına göre saat ve dakika arasına tek nokta (.) konur.' },
+      { q: '"Satır sonuna sığmayan kelimeler hecelerinden bölünürken satır sonuna ne konur? ✍️', a: 'Kısa Çizgi (-) ✍️', d: ['Uzun Çizgi (—)', 'Eğik Çizgi (/)'], exp: 'Satır sonuna sığmayan kelimeleri hecelerine ayırmak için kısa çizgi kullanılır.' },
+      { q: '"Doktor Elif Hanım hastalarını güler yüzle muayene etti." cümlesinde HASTALARI KİM muayene etmiştir? 👩‍⚕️', a: 'Doktor Elif Hanım 👩‍⚕️', d: ['Hastalar', 'Güler yüzle'], exp: '"Kim?" sorusunun cevabı eylemi yapan özneyi verir: Doktor Elif Hanım.' },
+      { q: '"Mehmet yarışmada birincilik kupasını hızla koşarak kazandı." Mehmet kupayı NASIL kazanmıştır? 🏃‍♂️', a: 'Hızla koşarak 🏃‍♂️', d: ['Mehmet', 'Yarışmada'], exp: '"Nasıl?" sorusu eylemin yapılma biçimini açıklar: Hızla koşarak.' },
+      { q: 'Hangisinde büyük harflerin yazımıyla ilgili bir YANLIŞLIK yapılmıştır? ❌', a: 'Yarın ankara\'ya gideceğiz. ❌', d: ['Mustafa Kemal Atatürk büyük bir liderdir.', 'Türkçe dersini çok seviyorum.'], exp: 'Şehir isimleri özel isimdir ve mutlaka büyük harfle başlamalıdır: Ankara\'ya.' },
+      { q: 'Cümlelerin sonuna konan en temel noktalama işareti hangisidir? 🛑', a: 'Nokta (.) 🛑', d: ['Virgül (,)', 'İki Nokta (:)'], exp: 'Tamamlanmış yargı bildiren cümlelerin sonuna nokta konur.' },
+      { q: 'Tarihlerin yazılışında gün, ay ve yılı gösteren sayıların arasına hangisi konabilir? 📅', a: 'Nokta (.) [Örn: 29.10.1923] 📅', d: ['Virgül (,)', 'İki Nokta (:)'], exp: 'Tarihler arasında nokta (.) veya eğik çizgi (/) kullanılır.' },
+      { q: '"Hangi okula gidiyorsun( )" cümlesinin sonuna hangi işaret konmalıdır? 🏫', a: 'Soru İşareti (?) ❓', d: ['Nokta (.)', 'Ünlem İşareti (!)'], exp: 'Soru bildiren cümlelerin sonuna soru işareti konur.' },
+      { q: '"Eyvah, süt taştı( )" cümlesinin sonuna hangi işaret konmalıdır? 🥛', a: 'Ünlem İşareti (!) 💥', d: ['Nokta (.)', 'Soru İşareti (?)'], exp: '"Eyvah" telaş ve panik bildirdiği için ünlem işareti konur.' },
+      { q: 'Aşağıdaki kelimelerden hangisi satır sonunda DOĞRU hecelenmiştir? ✍️', a: 'Ba-şöğ-ret-men 👨‍🏫', d: ['Baş-öğ-ret-men', 'Ba-şö-ğret-men'], exp: 'Türkçe heceleme kuralına göre "ba-şöğ-ret-men" şeklinde bölünür.' },
+      { q: '"İmdat, boğuluyorum( )" cümlesinin sonuna ne konur? 🆘', a: 'Ünlem İşareti (!) 🆘', d: ['Nokta (.)', 'Virgül (,)'], exp: 'Yardım çağrısı ve korku bildiren cümlelerin sonuna ünlem işareti konur.' },
+      { q: '"Kitaplığımda romanlar( ) masallar ve şiir kitapları var." Paranteze ne konur? 📚', a: 'Virgül (,) 📚', d: ['Nokta (.)', 'Soru İşareti (?)'], exp: 'Eş görevli kelimeler virgülle ayrılır.' },
+      { q: '"Akşam babamla beraber satranç oynadık." cümlesinde çocuk KİMİNLE satranç oynamıştır? ♟️', a: 'Babasıyla ♟️', d: ['Akşam', 'Satranç'], exp: '"Kiminle?" sorusunun yanıtı "Babamla" ifadesidir.' },
+      { q: 'Aşağıdaki kısaltmalardan hangisinin yazımı DOĞRUDUR? 🇹🇷', a: 'TBMM 🇹🇷', d: ['T.B.M.M.', 'T.b.m.m'], exp: 'Büyük harflerle yapılan kısaltmalarda (T.C. ve T. hariç) araya nokta konmaz.' },
+      { q: '"Kedi mırıldanarak kucağıma çıktı." cümlesinde kedi kucağa NASIL çıkmıştır? 🐱', a: 'Mırıldanarak 🐱', d: ['Kucağıma', 'Çıktı'], exp: '"Nasıl?" sorusunun cevabı eylemin durumunu belirten "mırıldanarak"tır.' },
+      { q: '"Sen de bizimle kitap okumak ister misin( )" Cümle sonuna ne konur? 📖', a: 'Soru İşareti (?) 📖', d: ['Nokta (.)', 'Ünlem (!)'], exp: 'Soru eylemi içerdiği için soru işareti konur.' }
+    ],
+
+    // 3. SINIF: GEZEGENİMİZ DÜNYA VE BEŞ DUYUMUZ (26 ÖZGÜN SORU)
+    grade3EarthSensesPool: [
+      { q: 'Eski zamanlarda Dünya\'nın düz bir tepsi gibi olduğunu sananların aksine, Dünya\'nın küre şeklinde olduğunu kanıtlayan ünlü denizci kimdir? ⛵', a: 'Macellan ⛵', d: ['Piri Reis', 'Kristof Kolomb'], exp: 'Macellan sürekli batıya yelken açarak başladığı yere dönmüş ve Dünya\'nın yuvarlaklığını ispatlamıştır.' },
+      { q: 'Dünyamızın uzaydan bakıldığında "Mavi Gezegen" olarak görünmesinin temel sebebi nedir? 🌍', a: 'Yüzeyinin yaklaşık 3/4\'ünün sularla kaplı olması 🌊', d: ['Gökyüzünün mavi olması', 'Kutupların buz olması'], exp: 'Dünya yüzeyinin yaklaşık 4\'te 3\'ü deniz ve okyanus sularından oluştuğu için mavi görünür.' },
+      { q: 'Dünyamızı saran ve içinde nefes aldığımız gaz katmanına ne ad verilir? 🌬️', a: 'Hava Katmanı (Atmosfer) 🌬️', d: ['Su Katmanı (Hidrosfer)', 'Taş Küre (Litosfer)'], exp: 'Dünyayı çepeçevre kuşatan gaz kalkanına atmosfer (hava küre) denir.' },
+      { q: 'Üzerinde yaşadığımız, dağların, ovaların ve toprakların bulunduğu katman hangisidir? 🏔️', a: 'Kara Katmanı (Taş Küre / Litosfer) 🏔️', d: ['Ateş Küre (Magma)', 'Hava Küre'], exp: 'İnsanların ve karadaki canlıların üzerinde yaşadığı katman yer kabuğu (taş küre)dir.' },
+      { q: 'Yanardağlardan çıkan lavların kaynağı olan aşırı sıcak erimiş kayaç katmanına ne denir? 🌋', a: 'Magma Katmanı (Ateş Küre / Pirosfer) 🌋', d: ['Çekirdek', 'Hava Katmanı'], exp: 'Taş kürenin altındaki erimiş kızgın lav tabakası ateş küredir.' },
+      { q: 'Dünya\'nın en iç merkezinde bulunan, en sıcak ve en ağır katman hangisidir? 🟡', a: 'Çekirdek (Ağır Küre / Barisfer) 🟡', d: ['Taş Küre', 'Su Küre'], exp: 'Gezegenimizin tam kalbinde yer alan en yoğun ve en sıcak katman çekirdektir.' },
+      { q: 'Görme duyusu organımız hangisidir? 👁️', a: 'Göz 👁️', d: ['Burun', 'Kulak'], exp: 'Gözümüz ışık yardımıyla çevremizi görmemizi sağlar.' },
+      { q: 'Göz sağlığımızı korumak için hangisini yapmamalıyız? ❌', a: 'Televizyon ve tablete çok yakından bakmak ❌', d: ['Yeterli ışıkta kitap okumak', 'Havuç gibi vitaminli besinler yemek'], exp: 'Ekrana yakından bakmak gözleri yorar ve görme kusurlarına yol açabilir.' },
+      { q: 'İşitme duyusu organımız hangisidir? 👂', a: 'Kulak 👂', d: ['Dil', 'Deri'], exp: 'Kulak ses dalgalarını algılayarak beynimize iletir.' },
+      { q: 'Kulağımızı temizlerken sivri uçlu cisimler sokarsak hangi hassas yapımız zarar görebilir? ⚠️', a: 'Kulak Zarı 👂', d: ['Göz Bebeği', 'Burun Kemiği'], exp: 'Sivri cisimler kulak zarını delerek işitme kaybına neden olabilir.' },
+      { q: 'Koku alma ve solunum duyusu organımız hangisidir? 👃', a: 'Burun 👃', d: ['Ağız', 'Deri'], exp: 'Burun hem nefes alıp havayı süzer hem de kokuları algılar.' },
+      { q: 'Burun içindeki mukus tabakası ve kılların en önemli görevi nedir? 🛡️', a: 'Havayı ısıtıp nemlendirmek ve tozları filtrelemek 🛡️', d: ['Sadece koku almak', 'Ses çıkarmak'], exp: 'Burnumuz akciğerlere giden havayı ısıtır, nemlendirir ve tozları tutar.' },
+      { q: 'Tat alma duyusu organımız hangisidir? 👅', a: 'Dil 👅', d: ['Dudak', 'Yanak'], exp: 'Dilimizin üzerindeki tat tomurcukları tatları ayırt etmemizi sağlar.' },
+      { q: 'Dilimiz temel olarak hangi tatları algılayabilir? 🍯🍋', a: 'Tatlı, tuzlu, ekşi ve acı 👅', d: ['Sıcak ve soğuk', 'Sert ve yumuşak'], exp: 'Dilimiz tatlı, tuzlu, ekşi ve acı tatları beynimize iletir.' },
+      { q: 'Bütün vücudumuzu kaplayan, dokunma duyusu organımız hangisidir? 🖐️', a: 'Deri 🖐️', d: ['Kas', 'Kemik'], exp: 'Deri vücudumuzun dış yüzeyini kaplar, sıcak-soğuk, sert-yumuşak hissini verir.' },
+      { q: 'Grip veya nezle olduğumuzda yemeklerin tadını iyi alamamamızın sebebi nedir? 🍲', a: 'Koku ve tat alma duyularının birlikte çalışması 👃👅', d: ['Dilin küçülmesi', 'Dişlerin ağrıması'], exp: 'Tat duyusu ile koku alma duyusu birlikte çalışır; burnumuz tıkalıyken tatları tam alamayız.' },
+      { q: 'Limon yerken yüzümüzü buruşturmamıza sebep olan tat hangisidir? 🍋', a: 'Ekşi 🍋', d: ['Tatlı', 'Acı'], exp: 'Limon ekşi bir tada sahiptir.' },
+      { q: 'Hangisi duyu organlarımızdan birisi DEĞİLDİR? 🧠', a: 'Kalp ❤️', d: ['Göz 👁️', 'Deri 🖐️'], exp: 'Göz, kulak, burun, dil ve deri 5 duyu organımızdır; kalp ise dolaşım organıdır.' },
+      { q: 'Güneş ışınlarının zararlı etkilerinden derimizi korumak için yazın ne kullanmalıyız? 🧴', a: 'Güneş kremi ve şapka 🧴', d: ['Kalın kazak', 'Gözlük bandı'], exp: 'Güneş kremi ve şapka cildi zararlı ultraviyole ışınlardan korur.' },
+      { q: 'Görme engelli bireylerin okuyabilmesi için geliştirilen kabartmalı alfabeye ne ad verilir? 📖', a: 'Braille (Kabartma) Alfabesi 📖', d: ['Mors Alfabesi', 'Romen Alfabesi'], exp: 'Görme engelliler dokunma duyusuyla Braille kabartma alfabesini okurlar.' },
+      { q: 'Çok sıcak bir çaydanlığa dokunduğumuzda elimizi anında çekmemizi sağlayan duyu organımız hangisidir? 🖐️', a: 'Deri 🖐️', d: ['Göz', 'Burun'], exp: 'Deri sıcaklığı hisseder ve tehlikeye karşı beynimize sinyal gönderir.' },
+      { q: 'Hangisi Dünya\'mızın katmanlarından birisi DEĞİLDİR? 🪐', a: 'Halka Katmanı 🪐', d: ['Taş Küre', 'Su Küre'], exp: 'Satürn gibi gezegenlerde halka vardır, Dünya\'da halka katmanı yoktur.' },
+      { q: 'Çok yüksek sesli ortamlarda çalışan işçiler kulaklarını korumak için ne takmalıdır? 🎧', a: 'Koruyucu kulaklık 🎧', d: ['Güneş gözlüğü', 'Kask'], exp: 'Koruyucu kulaklıklar kulak zarını şiddetli ses hasarından korur.' },
+      { q: 'Aşağıdaki maddelerden hangisini koklamak burnumuza ve sağlığımıza CİDDİ ZARAR verir? ☠️', a: 'Çamaşır suyu ve kimyasal deterjanlar ☠️', d: ['Papatya çiçeği 🌼', 'Nane yaprağı 🌿'], exp: 'Kimyasal temizlik maddelerini koklamak solunum yollarına ve akciğerlere zehirli zarar verir.' },
+      { q: 'Okyanuslar, denizler, göller ve yer altı suları Dünya\'nın hangi katmanını oluşturur? 🌊', a: 'Su Katmanı (Hidrosfer) 🌊', d: ['Hava Katmanı', 'Ateş Katmanı'], exp: 'Yeryüzündeki tüm su kaynakları su katmanını (su küre) meydana getirir.' },
+      { q: 'Gözümüzün rengini veren renkli kısma ne ad verilir? 👁️', a: 'İris 👁️', d: ['Göz bebeği', 'Göz kapağı'], exp: 'Gözün kahverengi, mavi, yeşil olan renkli kısmına iris denir.' }
+    ],
+
+    // 3. SINIF: KUVVETİ TANIYALIM VE MADDE (26 ÖZGÜN SORU)
+    grade3ForceMatterPool: [
+      { q: 'Duran bir topa ayağımızla vurduğumuzda topa hangi kuvveti uygularız? ⚽', a: 'İtme kuvveti ⚽', d: ['Çekme kuvveti', 'Durdurma kuvveti'], exp: 'Bir cismi kendimizden uzaklaştırmak için itme kuvveti uygularız.' },
+      { q: 'Masanın çekmecesini açmak için çekmeceye hangi kuvveti uygularız? 🚪', a: 'Çekme kuvveti 🚪', d: ['İtme kuvveti', 'Döndürme kuvveti'], exp: 'Bir cismi kendimize doğru yaklaştırmak için çekme kuvveti uygularız.' },
+      { q: 'Hareket halindeki bir bisikletin frenine bastığımızda bisiklette ne gözlenir? 🚲', a: 'Yavaşlama ve durma 🛑', d: ['Hızlanma', 'Yön değiştirme'], exp: 'Fren kuvveti sürtünme oluşturarak hareketi yavaşlatır ve durdurur.' },
+      { q: 'Uygulanan kuvvet ortadan kalktığında eski haline DÖNEBİLEN maddelere ne ad verilir? 🧽', a: 'Esnek Madde 🧽', d: ['Berk (Sert) Madde', 'Kırılgan Madde'], exp: 'Sünger ve paket lastiği sıkılınca şekil değiştirir, bırakılınca eski haline döner.' },
+      { q: 'Aşağıdakilerden hangisi ESNEK bir maddedir? 🎈', a: 'Paket lastiği 🎈', d: ['Taş 🪨', 'Cam bardak 🥛'], exp: 'Paket lastiği çekilip bırakıldığında eski haline döner, esnektir.' },
+      { q: 'Kuvvet uygulandığında kolayca kırılan ve eski haline dönemeyen maddelere ne denir? 🥛', a: 'Kırılgan Madde 🥛', d: ['Esnek Madde', 'Sıvı Madde'], exp: 'Cam, porselen ve ayna kırılgan maddelerdir.' },
+      { q: 'Maddenin katı, sıvı ve gaz olmak üzere kaç temel hali vardır? 🧊💧💨', a: '3 hali vardır 🧊💧💨', d: ['2 hali', '5 hali'], exp: 'Maddeler doğada katı, sıvı ve gaz olmak üzere 3 temel halde bulunur.' },
+      { q: 'Belirli bir şekli olan ve dışarıdan kuvvet uygulanmadıkça şeklini koruyan maddeler hangi haldedir? 🪨', a: 'Katı Madde 🪨', d: ['Sıvı Madde 💧', 'Gaz Madde 💨'], exp: 'Taş, masa, kalem gibi maddeler katıdır ve belirli şekilleri vardır.' },
+      { q: 'Belirli bir şekli olmayan, akışkan olan ve bulunduğu kabın şeklini alan maddeler hangi haldedir? 💧', a: 'Sıvı Madde 💧', d: ['Katı Madde 🪨', 'Gaz Madde 💨'], exp: 'Su, süt, meyve suyu ve zeytinyağı sıvıdır; kabın şeklini alır.' },
+      { q: 'Bulunduğu odanın veya kabın her yerine hızla yayılan maddeler hangi haldedir? 💨', a: 'Gaz Madde 💨', d: ['Katı Madde 🪨', 'Sıvı Madde 💧'], exp: 'Hava, su buharı ve parfüm kokusu gazdır; bulunduğu ortama hızla yayılır.' },
+      { q: 'Buzluktan çıkarılan buz küpünün oda sıcaklığında eriyerek suya dönüşmesi hangi hal değişimidir? 🧊➡️💧', a: 'Katı halden sıvı hale geçiş (Erime) 💧', d: ['Donma', 'Buharlaşma'], exp: 'Buz ısı alarak erir ve katı halden sıvı hale geçer.' },
+      { q: 'Çaydanlıkta kaynayan suyun buharlaşarak havaya karışması hangi hal değişimidir? 💧➡️💨', a: 'Sıvı halden gaz hale geçiş (Buharlaşma) 💨', d: ['Donma', 'Erime'], exp: 'Sıvı su kaynayınca gaz (su buharı) haline dönüşür.' },
+      { q: 'Direksiyonu çevirdiğimizde arabaya hangi kuvvet etkisini uygulamış oluruz? 🚗', a: 'Döndürme ve yön değiştirme 🚗', d: ['Sadece yavaşlatma', 'Sadece durdurma'], exp: 'Direksiyonu çevirmek döndürme etkisi yaratarak aracın yönünü değiştirir.' },
+      { q: 'Sallanan beşik veya lunaparktaki salıncak hangi hareketi yapar? 🎠', a: 'Sallanma hareketi 🎠', d: ['Hızlanma hareketi', 'Dönme hareketi'], exp: 'İleri geri gidip gelen salıncak sallanma hareketi yapar.' },
+      { q: 'Aşağıdakilerden hangisi PÜRÜZSÜZ bir yüzeye örnektir? 🪞', a: 'Cam ayna 🪞', d: ['Ağaç kabuğu 🪵', 'Zımpara kağıdı'], exp: 'Ayna ve cam yüzeyler son derece pürüzsüz ve kaygandır.' },
+      { q: 'Aşağıdakilerden hangisi KOKULU bir maddedir? 🌸', a: 'Gül kolonyası 🌸', d: ['Saf içme suyu 💧', 'Cam bardak 🥛'], exp: 'Gül kolonyası etrafa güçlü koku yayan bir maddedir.' },
+      { q: 'Topacın veya saatin yelkovanının yaptığı hareket hangisidir? ⏰', a: 'Dönme hareketi 🔄', d: ['Sallanma hareketi', 'Yavaşlama hareketi'], exp: 'Kendi ekseni etrafında tur atan cisimler dönme hareketi yapar.' },
+      { q: 'Futbol maçında kalecinin gelen şutu tutması kuvvetin hangi etkisine örnektir? 🧤', a: 'Durdurma etkisi 🧤', d: ['Hızlandırma etkisi', 'Şekil verme etkisi'], exp: 'Kaleci hareket halindeki topu yakalayarak durdurur.' },
+      { q: 'Oyun hamuruna elimizle bastırdığımızda hamurda ne değişir? 🧸', a: 'Şekli değişir (Şekil değiştirme) 🧸', d: ['Rengi tamamen uçar', 'Tadı değişir'], exp: 'Kuvvet hamur ve sünger gibi maddelerde şekil değişikliği yapar.' },
+      { q: 'Aşağıdakilerden hangisi BERK (SERT) bir maddedir? 🧱', a: 'Tuğla ve demir 🧱', d: ['Pamuk ☁️', 'Yün kazak 🧶'], exp: 'Tuğla ve demir kolay şekil değiştirmeyen sert (berk) maddelerdir.' },
+      { q: 'Aşağıdakilerden hangisi bir GAZ maddedir? 🎈', a: 'Balonun içindeki hava 💨', d: ['Süt 🥛', 'Elma 🍎'], exp: 'Hava gaz halindeki bir maddedir.' },
+      { q: 'Rüzgarın ağaç yapraklarını sallaması kuvvetin hangi türüne örnektir? 🍃', a: 'Havanın itme kuvveti 🍃', d: ['Çekme kuvveti', 'Mıknatıs kuvveti'], exp: 'Rüzgar hareket eden havanın uyguladığı itme kuvvetidir.' },
+      { q: 'Yere düşen cam şişenin kırılması kuvvetin hangi sonucudur? 💥', a: 'Kırılma ve şekil değişikliği 💥', d: ['Esneklik', 'Donma'], exp: 'Kırılgan maddeler darbe alınca kırılır.' },
+      { q: 'Kışın yağan kar taneleri suyun hangi halidir? ❄️', a: 'Katı hali ❄️', d: ['Sıvı hali', 'Gaz hali'], exp: 'Kar ve dolu suyun katılaşmış halidir.' },
+      { q: 'Pürüzlü bir yüzeyde yürürken kayıp düşme ihtimalimiz neden daha azdır? 👟', a: 'Sürtünme daha fazla olduğu için 👟', d: ['Hava soğuk olduğu için', 'Yer yumuşak olduğu için'], exp: 'Pürüzlü yüzeyler sürtünmeyi artırarak tutunmayı kolaylaştırır.' },
+      { q: 'Mıknatısın çiviyi çekmesi kuvvetin hangi türüne örnektir? 🧲', a: 'Temassız çekme kuvveti 🧲', d: ['İtme kuvveti', 'Döndürme kuvveti'], exp: 'Mıknatıs dokunmadan uzaktan bile manyetik çekme kuvveti uygulayabilir.' }
+    ],
+
+    // 3. SINIF: YÖNLERİMİZ, KROKİ VE TÜKETİCİ HAKLARI (26 ÖZGÜN SORU)
+    grade3CompassConsumerPool: [
+      { q: 'Pusulanın renkli (kırmızı) ibresi daima hangi ana yönü gösterir? 🧭', a: 'Kuzey 🧭', d: ['Güney', 'Doğu'], exp: 'Pusula ibresinin renkli ucu Dünya\'nın manyetik kuzeyini gösterir.' },
+      { q: 'Güneş\'in sabahları doğduğu yöne sağ kolumuzu uzatırsak, ÖNÜMÜZ hangi yönü gösterir? ☀️', a: 'Kuzey 🧭', d: ['Güney', 'Batı'], exp: 'Sağ kol Doğu, sol kol Batı olduğunda önümüz Kuzey, arkamız Güney olur.' },
+      { q: 'Geceleri bulutsuz bir havada daima Kuzeyi gösteren parlak yıldız hangisidir? ⭐', a: 'Kutup Yıldızı (Demirkazık) ⭐', d: ['Çoban Yıldızı', 'Kuyruklu Yıldız'], exp: 'Kutup Yıldızı gökyüzünde daima Kuzey yönünü işaret eder.' },
+      { q: 'Ormanda kaybolan bir izci ağaç gövdelerindeki ve taşlardaki YOSUNLARA bakarak hangi yönü bulur? 🌲', a: 'Kuzey (Yosunlu taraf) 🌲', d: ['Güney', 'Doğu'], exp: 'Güneş görmeyen ve nemli kalan kuzey taraflarında yosunlar oluşur.' },
+      { q: 'Karınca yuvalarının ağzı ve çıkarılan toprak tepecikleri hangi yönü gösterir? 🐜', a: 'Yuva ağzı GÜNEYİ, toprak yığını KUZEYİ gösterir 🐜', d: ['Yuva ağzı kuzeyi gösterir', 'Doğuyu gösterir'], exp: 'Karıncalar rüzgardan korunmak için yuva girişlerini güneye doğru açarlar.' },
+      { q: 'Kuzey ile Doğu arasındaki ARA YÖN hangisidir? 🧭', a: 'Kuzeydoğu 🧭', d: ['Güneydoğu', 'Kuzeybatı'], exp: 'Kuzey ile Doğu arasındaki ara yön Kuzeydoğudur.' },
+      { q: 'Güney ile Batı arasındaki ARA YÖN hangisidir? 🧭', a: 'Güneybatı 🧭', d: ['Kuzeybatı', 'Güneydoğu'], exp: 'Güney ve Batı arasındaki ara yöne Güneybatı denir.' },
+      { q: 'Bir yerin KUŞ BAKIŞI görünüşünün ölçüsüz, kaba taslak çizimine ne ad verilir? 🗺️', a: 'Kroki 🗺️', d: ['Harita', 'Plan'], exp: 'Ölçeksiz, kaba taslak kuş bakışı çizimlere kroki denir.' },
+      { q: 'Krokilerde sokakları, binaları ve parkları daha kolay bulabilmek için hangisi kullanılır? 🏷️', a: 'Semboller ve sokak isimleri 🏷️', d: ['Gerçek fotoğraflar', 'Büyük resimler'], exp: 'Krokilerde basit geometrik çizimler ve isimler yer alır.' },
+      { q: 'Marketten yiyecek satın alırken sağlığımız için İLK ÖNCE nereye bakmalıyız? 🥛', a: 'Son Kullanma Tarihine (SKT) 📅', d: ['Paketin süsüne', 'Rengine'], exp: 'Tarihi geçmiş ürünler zehirlenmeye yol açabilir; mutlaka SKT incelenmelidir.' },
+      { q: 'Bir ürün üzerinde "TSE" damgasının bulunması ne anlama gelir? 🛡️', a: 'Ürünün Türk Standartlarına uygun ve kaliteli olduğunu 🛡️', d: ['Ürünün bedava olduğunu', 'İthal edildiğini'], exp: 'TSE, Türk Standartları Enstitüsü güvencesidir.' },
+      { q: 'Alışveriş yaptıktan sonra satıcıdan mutlaka ne istemeliyiz? 🧾', a: 'Fiş veya Fatura 🧾', d: ['Poşet', 'Çikolata'], exp: 'Fiş/fatura alışveriş belgesidir, tüketici hakkını korur ve devlete vergi kazandırır.' },
+      { q: 'Satın aldığımız bozuk veya ayıplı bir ürünü değiştirmek için satıcıya ne ile gitmeliyiz? 🧾', a: 'Ürün ve alışveriş fişiyle birlikte 🧾', d: ['Sadece ürünle', 'Kutusu olmadan'], exp: 'Alışveriş fişi olmadan ürün iadesi veya değişimi yapılamaz.' },
+      { q: 'Tüketici haklarımızı korumak ve şikayette bulunmak için arayabileceğimiz ALO Tüketici Hattı hangisidir? 📞', a: 'ALO 175 📞', d: ['ALO 112', 'ALO 182'], exp: 'ALO 175 Tüketici Danışma Hattı vatandaşlara destek verir.' },
+      { q: '"Komşu komşunun külüne muhtaçtır" atasözü hangi önemli değeri vurgular? 🏡', a: 'Komşuluk dayanışması ve yardımlaşmayı 🤝', d: ['Para biriktirmeyi', 'Tembellik yapmayı'], exp: 'Komşular en zor günlerde birbirlerinin yardımına koşar.' },
+      { q: 'Güneş akşamları hangi ana yönden batar? 🌅', a: 'Batı 🌅', d: ['Doğu', 'Kuzey'], exp: 'Güneş Doğu\'dan doğar, Batı\'dan batar.' },
+      { q: 'Toplam kaç tane ANA YÖN vardır? 🧭', a: '4 ana yön (Kuzey, Güney, Doğu, Batı) 🧭', d: ['2 ana yön', '8 ana yön'], exp: '4 ana yön ve 4 ara yön olmak üzere yönlerimiz belirlenir.' },
+      { q: 'Yangın söndürme, can kurtarma ve afetlerde görev alan fedakar meslek hangisidir? 🚒', a: 'İtfaiyeci 🚒', d: ['Mimar', 'Bankacı'], exp: 'İtfaiyeciler canları pahasına yangınları söndürür ve kurtarma yapar.' },
+      { q: 'Hastalıkları teşhis ve tedavi eden, sağlığımızı koruyan meslek hangisidir? 🩺', a: 'Doktor 🩺', d: ['Mühendis', 'Avukat'], exp: 'Doktorlar ve sağlık çalışanları şifa dağıtır.' },
+      { q: 'Gereksiz yere yanan lambaları kapatmak, diş fırçalarken suyu kapatmak hangi davranıştır? 💡', a: 'Bilinçli tasarruf 💡', d: ['Cimrilik', 'İsraf'], exp: 'Kaynakları gerektiği kadar tüketmeye tasarruf denir.' },
+      { q: 'Geri dönüşümü olan maddeleri çöpe atmak yerine geri dönüşüm kutusuna atmak neye katkı sağlar? ♻️', a: 'Doğanın korunmasına ve ülke ekonomisine 🌍', d: ['Çöp miktarının artmasına', 'Zaman kaybına'], exp: 'Geri dönüşüm ağaçları, suyu ve doğal kaynakları kurtarır.' },
+      { q: 'Evimizin krokisini çizerken eşyaları hangi açıdan görmüş gibi çizeriz? 📐', a: 'Kuş bakışı (Tam üstten) 📐', d: ['Yandan', 'Alttan'], exp: 'Krokiler daima kuş bakışı açıyla çizilir.' },
+      { q: 'Elektronik eşyalar aldığımızda garanti kapsamından yararlanmak için satıcıya neyi onaylatmalıyız? 📄', a: 'Garanti Belgesini 📄', d: ['Fiyat etiketini', 'Kullanım kılavuzunu'], exp: 'Garanti belgesi kaşelenip imzalanmalıdır.' },
+      { q: 'Cami minarelerindeki şerefelerin kapısı genellikle hangi yönü gösterir? 🕌', a: 'Güney (Kıble yönü) 🕌', d: ['Kuzey', 'Batı'], exp: 'Ülkemizde minare şerefe kapıları güneye (kıbleye) bakar.' },
+      { q: 'Öğrencilere yeni bilgiler öğreten, onları geleceğe hazırlayan kutsal meslek hangisidir? 👨‍🏫', a: 'Öğretmen 👨‍🏫', d: ['Pilot', 'Kaptan'], exp: 'Öğretmenler nesilleri yetiştirir.' },
+      { q: 'Aşağıdakilerden hangisi bir İSTEK değil, temel İHTİYAÇTIR? 🍞', a: 'Ekmek ve su 🍞💧', d: ['Pahalı oyuncak robot 🤖', 'Video oyunu 🎮'], exp: 'Beslenme ve su yaşamsal temel ihtiyaçtır.' }
+    ],
+
+    // 3. SINIF: FAMILY MEMBERS, FEELINGS & ABILITIES (30 ÖZGÜN KELİME & SESLİ)
+    grade3FamilyFeelingsPool: [
+      { englishWord: 'Father', q: 'İngilizce "Father" ailemizdeki hangi bireydir? 👨', a: 'Baba 👨', d: ['Anne 👩', 'Dede 👴'], exp: 'Father / Dad = Baba demektir.' },
+      { englishWord: 'Mother', q: 'İngilizce "Mother" ailemizdeki hangi bireydir? 👩', a: 'Anne 👩', d: ['Teyze 👩‍🦰', 'Abla 👧'], exp: 'Mother / Mom = Anne demektir.' },
+      { englishWord: 'Brother', q: 'İngilizce "Brother" kimdir? 👦', a: 'Erkek Kardeş / Abi 👦', d: ['Kız Kardeş 👧', 'Amca 👨'], exp: 'Brother = Erkek kardeş demektir.' },
+      { englishWord: 'Sister', q: 'İngilizce "Sister" kimdir? 👧', a: 'Kız Kardeş / Abla 👧', d: ['Erkek Kardeş 👦', 'Teyze 👩'], exp: 'Sister = Kız kardeş demektir.' },
+      { englishWord: 'Grandfather', q: 'İngilizce "Grandfather" kimdir? 👴', a: 'Dede / Büyükbaba 👴', d: ['Baba 👨', 'Amca 👨'], exp: 'Grandfather / Grandpa = Dede demektir.' },
+      { englishWord: 'Grandmother', q: 'İngilizce "Grandmother" kimdir? 👵', a: 'Büyükanne / Nine 👵', d: ['Anne 👩', 'Hala 👩'], exp: 'Grandmother / Grandma = Büyükanne demektir.' },
+      { englishWord: 'Uncle', q: 'İngilizce "Uncle" ailemizdeki hangi akrabadır? 👨', a: 'Amca / Dayı 👨', d: ['Hala / Teyze 👩', 'Kuzen 👦'], exp: 'Uncle = Amca veya Dayı demektir.' },
+      { englishWord: 'Aunt', q: 'İngilizce "Aunt" ailemizdeki hangi akrabadır? 👩', a: 'Teyze / Hala 👩', d: ['Amca 👨', 'Dede 👴'], exp: 'Aunt = Teyze veya Hala demektir.' },
+      { englishWord: 'Cousin', q: 'İngilizce "Cousin" kimdir? 🧒', a: 'Kuzen 🧒', d: ['Kardeş 👦', 'Bebek 👶'], exp: 'Cousin = Kuzen demektir.' },
+      { englishWord: 'Happy', q: 'İngilizce "I am happy" diyen biri nasıl hissediyordur? 😊', a: 'Mutlu 😊', d: ['Üzgün 😢', 'Kızgın 😠'], exp: 'Happy = Mutlu demektir.' },
+      { englishWord: 'Sad', q: 'İngilizce "Sad" ne anlama gelir? 😢', a: 'Üzgün 😢', d: ['Neşeli 😄', 'Yorgun 🥱'], exp: 'Sad = Üzgün demektir.' },
+      { englishWord: 'Angry', q: 'İngilizce "Angry" nasıl bir duygudur? 😠', a: 'Kızgın / Öfkeli 😠', d: ['Korkmuş 😨', 'Mutlu 😊'], exp: 'Angry = Kızgın demektir.' },
+      { englishWord: 'Tired', q: 'İngilizce "I am tired" diyen biri nasıldır? 🥱', a: 'Yorgun 🥱', d: ['Enerjik ⚡', 'Aç 🥪'], exp: 'Tired = Yorgun demektir.' },
+      { englishWord: 'Hungry', q: 'İngilizce "I am hungry" diyen biri ne hisseder? 🥪', a: 'Açıkmış (Karnı aç) 🥪', d: ['Susamış 🥤', 'Uykulu 😴'], exp: 'Hungry = Aç demektir.' },
+      { englishWord: 'Thirsty', q: 'İngilizce "I am thirsty" diyen biri ne hisseder? 🥤', a: 'Susamış 🥤', d: ['Açıkmış 🥪', 'Tok 🥧'], exp: 'Thirsty = Susamış demektir.' },
+      { englishWord: 'Surprised', q: 'İngilizce "Surprised" hangi duygu ifadesidir? 😲', a: 'Şaşırmış 😲', d: ['Korkmuş 😱', 'Sıkılmış 😑'], exp: 'Surprised = Şaşırmış demektir.' },
+      { englishWord: 'Swim', q: '"A fish can swim." cümlesinin Türkçe karşılığı nedir? 🐟', a: 'Bir balık yüzebilir. 🐟', d: ['Bir balık uçabilir.', 'Bir balık koşabilir.'], exp: 'Can = -ebilmek (yetenek), Swim = Yüzmek demektir.' },
+      { englishWord: 'Fly', q: '"Birds can fly." cümlesi ne anlama gelir? 🐦', a: 'Kuşlar uçabilir. 🐦', d: ['Kuşlar yüzebilir.', 'Kuşlar tırmanabilir.'], exp: 'Fly = Uçmak demektir.' },
+      { englishWord: 'Climb', q: '"Monkeys can climb trees." cümlesi ne demektir? 🐵', a: 'Maymunlar ağaçlara tırmanabilir. 🐵', d: ['Maymunlar ağaç diker.', 'Maymunlar uçamaz.'], exp: 'Climb = Tırmanmak demektir.' },
+      { englishWord: 'Run', q: '"A cheetah can run fast." cümlesi ne anlama gelir? 🐆', a: 'Bir çita hızlı koşabilir. 🐆', d: ['Bir çita yavaş yürür.', 'Bir çita zıplayamaz.'], exp: 'Run = Koşmak, Fast = Hızlı demektir.' },
+      { englishWord: 'Jump', q: '"Kangaroos can jump high." cümlesi ne demektir? 🦘', a: 'Kangurular yükseğe zıplayabilir. 🦘', d: ['Kangurular uçamaz.', 'Kangurular yüzer.'], exp: 'Jump = Zıplamak, High = Yükseğe demektir.' },
+      { englishWord: 'Ride a bike', q: '"I can ride a bicycle." cümlesi ne demektir? 🚲', a: 'Ben bisiklet sürebilirim. 🚲', d: ['Ben araba sürerim.', 'Ben bisiklet alamam.'], exp: 'Ride a bike = Bisiklet sürmek demektir.' },
+      { englishWord: 'Play football', q: '"Can you play football?" sorusuna nasıl cevap verilir? ⚽', a: 'Yes, I can. ⚽', d: ['No, I am happy.', 'Yes, I am father.'], exp: '"Can you...?" sorusuna "Yes, I can" veya "No, I can\'t" ile cevap verilir.' },
+      { englishWord: 'Sing', q: '"She can sing a song." cümlesi ne anlatır? 🎤', a: 'O şarkı söyleyebilir. 🎤', d: ['O dans edemez.', 'O resim çizer.'], exp: 'Sing = Şarkı söylemek demektir.' },
+      { englishWord: 'Dance', q: '"They can dance." cümlesi ne demektir? 💃', a: 'Onlar dans edebilir. 💃', d: ['Onlar koşamaz.', 'Onlar şarkı söyler.'], exp: 'Dance = Dans etmek demektir.' },
+      { englishWord: 'Father', q: '"Baba" sözcüğünün İngilizce karşılığı hangisidir? 👨', a: 'Father 👨', d: ['Mother 👩', 'Brother 👦'], exp: 'Baba İngilizce "Father" demektir.' },
+      { englishWord: 'Mother', q: '"Anne" sözcüğünün İngilizce karşılığı hangisidir? 👩', a: 'Mother 👩', d: ['Sister 👧', 'Aunt 👩'], exp: 'Anne İngilizce "Mother" demektir.' },
+      { englishWord: 'Happy', q: '"Mutlu" 😊 kelimesinin İngilizce karşılığı hangisidir?', a: 'Happy 😊', d: ['Sad 😢', 'Angry 😠'], exp: 'Mutlu İngilizce "Happy" demektir.' },
+      { englishWord: 'Tired', q: '"Yorgun" 🥱 kelimesinin İngilizce karşılığı hangisidir?', a: 'Tired 🥱', d: ['Hungry 🥪', 'Thirsty 🥤'], exp: 'Yorgun İngilizce "Tired" demektir.' },
+      { englishWord: 'Can\'t', q: '"An elephant CAN\'T fly." ne demektir? 🐘', a: 'Bir fil UÇAMAZ. 🐘', d: ['Bir fil uçabilir.', 'Bir fil koşamaz.'], exp: 'Can\'t olumsuz yeteneksizlik bildirir: Uçamaz.' }
+    ],
+
+    // -------------------------------------------------------------
+    // 4. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİLERİ
+    // -------------------------------------------------------------
+
+    // 4. SINIF: 4, 5, 6 BASAMAKLI DOĞAL SAYILAR VE DÖRT İŞLEM (DİNAMİK)
+    generateGrade4DigitsOperations() {
+      const mode = Math.floor(Math.random() * 4);
+      if (mode === 0) {
+        // Bölükler ve Basamak Değeri
+        const thousandsPart = Math.floor(Math.random() * 850) + 12; // 12..861
+        const unitsPart = Math.floor(Math.random() * 850) + 100; // 100..949
+        const fullNum = thousandsPart * 1000 + unitsPart;
+
+        const askThousandsPeriod = Math.random() > 0.5;
+        if (askThousandsPeriod) {
           return {
-            question: `${number} sayısındaki ${tens} rakamının basamak değeri kaçtır?`,
-            correct: (tens * 10).toString(),
-            distractors: [tens.toString(), (tens * 100).toString()],
-            explanation: `${tens} rakamı onlar basamağında olduğu için değeri ${tens} × 10 = ${tens * 10}'dur.`
+            question: `"${fullNum.toLocaleString('tr-TR')}" sayısının BİNLER BÖLÜĞÜNDEKİ sayı kaçtır? 👑`,
+            correct: thousandsPart.toString(),
+            distractors: [unitsPart.toString(), (thousandsPart + 10).toString()],
+            explanation: `Sayının sağdaki üç basamağı birler bölüğü (${unitsPart}), soldaki basamakları ise binler bölüğüdür (${thousandsPart}).`
           };
         } else {
           return {
-            question: `${number} sayısındaki ${hundreds} rakamının basamak değeri kaçtır?`,
-            correct: (hundreds * 100).toString(),
-            distractors: [(hundreds * 10).toString(), hundreds.toString()],
-            explanation: `${hundreds} rakamı yüzler basamağında olduğu için basamak değeri ${hundreds * 100}'dür.`
+            question: `"${fullNum.toLocaleString('tr-TR')}" sayısının BİRLER BÖLÜĞÜNDEKİ sayı kaçtır? 👑`,
+            correct: unitsPart.toString(),
+            distractors: [thousandsPart.toString(), (unitsPart - 10).toString()],
+            explanation: `Sayının en sağındaki 3 basamak birler bölüğüdür (${unitsPart}).`
           };
         }
-      }
-    },
+      } else if (mode === 1) {
+        // 10, 100, 1000 ile Zihinden Çarpma
+        const base = Math.floor(Math.random() * 80) + 12; // 12..91
+        const mul = [10, 100, 1000][Math.floor(Math.random() * 3)];
+        const ans = base * mul;
 
-    grade3TurkishSciencePool: [
-      { q: 'Dünya\'nın kendi etrafında 1 tam tur dönmesiyle ne oluşur?', a: 'Bir Gün (Gece-Gündüz)', d: ['Bir Yıl (Mevsimler)', 'Bir Ay'], exp: 'Dünya kendi etrafında 24 saatte döner ve gece ile gündüz oluşur.' },
-      { q: 'Hangisi doğal bir ışık kaynağıdır?', a: 'Güneş', d: ['Mum', 'El Feneri'], exp: 'Güneş kendiliğinden ışık yayan devasa doğal bir ışık kaynağımızdır.' },
-      { q: '"Yüz" kelimesi hangi özelliği gösterir?', a: 'Eş Sesli (Sesteş)', d: ['Zıt Anlamlı', 'Eş Anlamlı'], exp: '"Yüz" hem sayı (100), hem çehre/surat, hem de suda yüzmek anlamına gelir.' },
-      { q: '"Gül" kelimesi hangi özelliği gösterir?', a: 'Eş Sesli (Sesteş)', d: ['Zıt Anlamlı', 'Kök Kelime'], exp: '"Gül" hem güzel kokulu bir çiçek, hem de gülümsemek eylemidir.' },
-      { q: 'Kuvvet uygulandığında şekil değiştiren, bırakılınca eski haline dönen cisimlere ne denir?', a: 'Esnek Madde', d: ['Kırılgan Madde', 'Sert Madde'], exp: 'Sünger ve lastik esnek maddelere harika birer örnektir.' },
-      { q: 'Hangisi canlı bir varlıktır?', a: 'Ağaç', d: ['Taş', 'Toprak'], exp: 'Bitkiler ve ağaçlar büyür, beslenir ve solunum yapar; canlıdır.' },
-      { q: 'Işık ve ses yayılırken hangisi daha hızlı hareket eder?', a: 'Işık', d: ['Ses', 'İkisi de Aynı'], exp: 'Işık sesten çok daha hızlıdır. Bu yüzden şimşek önce görülür, gök gürültüsü sonra duyulur!' },
-      { q: '"Çay" kelimesi kaç farklı temel anlama sahiptir?', a: 'Eş Sesli (2 Anlam)', d: ['Tek Anlamlı', 'Zıt Anlamlı'], exp: 'İçtiğimiz sıcak çay ve dereden büyük küçük akarsu (çay) eş seslidir.' }
-    ],
-
-    // -------------------------------------------------------------
-    // 4. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİ
-    // -------------------------------------------------------------
-    generateGrade4Math() {
-      const type = Math.floor(Math.random() * 3);
-      if (type === 0) {
-        // Dört işlem zihinden hesaplama hızı
-        const a = [25, 50, 75, 12, 15, 20][Math.floor(Math.random() * 6)];
-        const b = [2, 4, 3, 5][Math.floor(Math.random() * 4)];
-        const ans = a * b;
         return {
-          question: `${a} × ${b} = ?`,
-          correct: ans.toString(),
-          distractors: [(ans + 10).toString(), (ans - a).toString()],
-          explanation: `Zihinden hesaplama: ${a} sayısını ${b} ile çarptığımızda ${ans} elde ederiz.`
+          question: `${base} × ${mul} işleminin zihinden sonucu kaçtır? ⚡`,
+          correct: ans.toLocaleString('tr-TR'),
+          distractors: [
+            (ans / 10).toLocaleString('tr-TR'),
+            (ans * 10).toLocaleString('tr-TR')
+          ],
+          explanation: `Bir sayıyı ${mul} ile kısa yoldan çarpmak için sağına sıfırları ekleriz: ${ans}.`
         };
-      } else if (type === 1) {
-        // Kesirler (Basit birim kesir / hesaplama)
-        const total = [24, 32, 40, 48, 60][Math.floor(Math.random() * 5)];
-        const denom = 4;
-        const ans = total / denom;
+      } else if (mode === 2) {
+        // 10, 100 ile Zihinden Bölme
+        const base = Math.floor(Math.random() * 80) + 12;
+        const mul = [10, 100][Math.floor(Math.random() * 2)];
+        const dividend = base * mul;
+
         return {
-          question: `${total} sayısının 1/4'ü (çeyreği) kaçtır?`,
-          correct: ans.toString(),
-          distractors: [(ans + 2).toString(), (total / 2).toString()],
-          explanation: `Bir sayının 1/4'ünü (çeyreğini) bulmak için o sayıyı 4'e böleriz: ${total} ÷ 4 = ${ans}.`
+          question: `${dividend} ÷ ${mul} işleminin kısa yoldan sonucu kaçtır? ➗`,
+          correct: base.toString(),
+          distractors: [(base * 10).toString(), Math.max(1, base - 5).toString()],
+          explanation: `${dividend} sayısını ${mul}'e bölerken sıfırları karşılıklı sileriz: Sonuç = ${base}.`
         };
       } else {
-        // Geometri / Açı Türleri
-        const angles = [
-          { q: 'Ölçüsü 90 dereceden küçük olan açılara ne denir?', a: 'Dar Açı', d: ['Geniş Açı', 'Dik Açı'], exp: '0° ile 90° arasındaki açılara dar açı denir.' },
-          { q: 'Ölçüsü tam 90 derece olan açıya ne denir?', a: 'Dik Açı', d: ['Dar Açı', 'Doğru Açı'], exp: 'Köşe açısı tam 90 derece olan açılara dik açı adı verilir.' },
-          { q: 'Ölçüsü 90 dereceden büyük, 180\'den küçük açılara ne denir?', a: 'Geniş Açı', d: ['Dar Açı', 'Tam Açı'], exp: '90° ile 180° arasındaki açılar geniş açıdır.' },
-          { q: 'Bir üçgenin iç açıları toplamı kaç derecedir?', a: '180°', d: ['90°', '360°'], exp: 'Tüm üçgenlerin iç açıları toplamı her zaman 180 derecedir.' }
-        ];
-        const chosen = angles[Math.floor(Math.random() * angles.length)];
+        // En Yakın Binliğe Yuvarlama
+        const thousands = Math.floor(Math.random() * 8) + 2; // 2..9
+        const hundreds = Math.floor(Math.random() * 9) + 1; // 1..9
+        const rest = Math.floor(Math.random() * 80) + 10;
+        const num = thousands * 1000 + hundreds * 100 + rest;
+        const isUp = hundreds >= 5;
+        const rounded = isUp ? (thousands + 1) * 1000 : thousands * 1000;
+        const other = isUp ? thousands * 1000 : (thousands + 1) * 1000;
+
         return {
-          question: chosen.q,
-          correct: chosen.a,
-          distractors: chosen.d,
-          explanation: chosen.exp
+          question: `"${num.toLocaleString('tr-TR')}" sayısı en yakın hangi BİNLİĞE yuvarlanır? 🎯`,
+          correct: rounded.toLocaleString('tr-TR'),
+          distractors: [
+            other.toLocaleString('tr-TR'),
+            (rounded + 1000).toLocaleString('tr-TR')
+          ],
+          explanation: `Yüzler basamağında ${hundreds} vardır (${hundreds >= 5 ? '5 ve üzeri olduğu için yukarı' : '5\'ten küçük olduğu için aşağı'}). Sayı ${rounded.toLocaleString('tr-TR')} binliğine yuvarlanır.`
         };
       }
     },
 
-    grade4TurkishSocialPool: [
-      { q: '"Etekleri zil çalmak" deyimi ne anlama gelir?', a: 'Çok sevinmek', d: ['Korkmak', 'Öfkelenmek'], exp: 'Büyük bir müjde veya mutluluk karşısında aşırı sevinmeyi ifade eder.' },
-      { q: '"Göz gezdirmek" deyimi ne anlama gelir?', a: 'Kısaca, derinleşmeden bakmak', d: ['Gözü bozulmak', 'Dikkatle ezberlemek'], exp: 'Bir kitaba veya nesneye derinlemesine dalmadan yüzeysel bakmaktır.' },
-      { q: '"Burnu havada olmak" deyimi ne anlama gelir?', a: 'Kibirlenmek / Kendini beğenmek', d: ['Çok uzun boylu olmak', 'Hızlı koşmak'], exp: 'Başkalarını küçük gören, kibirli insanlara burnu havada denir.' },
-      { q: '"Ağzı kulaklarına varmak" deyimi ne anlama gelir?', a: 'Çok mutlu olmak', d: ['Şaşkına dönmek', 'Yorulmak'], exp: 'Gülümsemekten ağzı yanaklarına kadar açılacak kadar çok sevinmektir.' },
-      { q: '"Pireyi deve yapmak" deyimi ne anlama gelir?', a: 'Küçük bir olayı çok büyütmek', d: ['Hayvanları sevmek', 'Çok çalışmak'], exp: 'Önemsiz ve ufak bir sorunu abartarak büyük bir dert haline getirmektir.' },
-      { q: 'Pusulanın renkli (kırmızı) ucu daima hangi yönü gösterir?', a: 'Kuzey', d: ['Güney', 'Doğu'], exp: 'Pusula ibresinin renkli ucu Dünya\'nın manyetik kuzey kutbunu işaret eder.' },
-      { q: 'Bir yerin kuş bakışı görünüşünün kaba taslak ölçüsüz çizimine ne denir?', a: 'Kroki', d: ['Harita', 'Plan'], exp: 'Ölçeksiz, kaba taslak çizimlere kroki adı verilir.' },
-      { q: 'Kurtuluş Savaşı\'nda Doğu Cephesi komutanımız kimdir?', a: 'Kazım Karabekir', d: ['İsmet İnönü', 'Fevzi Çakmak'], exp: 'Doğu Cephesi kahramanımız ve yetimlerin babası Kazım Karabekir Paşa\'dır.' }
+    // 4. SINIF: KESİRLER, ZAMAN VE AÇILAR (26 ÖZGÜN SORU)
+    grade4FractionsAnglesPool: [
+      { q: 'Payı paydasından KÜÇÜK olan kesirlere (örneğin 3/5, 2/7) ne ad verilir? 🍕', a: 'Basit Kesir 🍕', d: ['Bileşik Kesir', 'Tam Sayılı Kesir'], exp: 'Payı paydasından küçük olan kesirlere basit kesir denir.' },
+      { q: 'Payı paydasına EŞİT veya paydasından BÜYÜK olan kesirlere (örneğin 7/4, 5/5) ne denir? 🍕', a: 'Bileşik Kesir 🍕', d: ['Basit Kesir', 'Birim Kesir'], exp: 'Payı paydasına eşit veya büyük kesirler bileşik kesirdir.' },
+      { q: 'Bir tam sayı ve bir basit kesirden oluşan (örneğin 2 tam 1/3) kesirlere ne ad verilir? 🎂', a: 'Tam Sayılı Kesir 🎂', d: ['Birim Kesir', 'Basit Kesir'], exp: 'Tam kısmı bulunan kesirlere tam sayılı kesir denir.' },
+      { q: 'Ölçüsü 0° ile 90° arasında olan açılara ne ad verilir? 📐', a: 'Dar Açı 📐', d: ['Dik Açı', 'Geniş Açı'], exp: 'Ölçüsü 90 dereceden küçük açılar dar açıdır.' },
+      { q: 'Ölçüsü tam 90 derece (90°) olan açıya ne ad verilir? 📐', a: 'Dik Açı 📐', d: ['Dar Açı', 'Doğru Açı'], exp: 'Birbirini dik kesen doğruların oluşturduğu 90° açı dik açıdır.' },
+      { q: 'Ölçüsü 90° ile 180° arasında olan açılara ne ad verilir? 📐', a: 'Geniş Açı 📐', d: ['Dar Açı', 'Tam Açı'], exp: '90 dereceden büyük, 180 dereceden küçük açılar geniş açıdır.' },
+      { q: 'Ölçüsü tam 180 derece (180°) olan açıya ne denir? 📏', a: 'Doğru Açı 📏', d: ['Dik Açı', 'Geniş Açı'], exp: 'Düz bir doğru oluşturan 180 derecelik açıya doğru açı denir.' },
+      { q: 'Bir üçgenin iç açıları toplamı her zaman kaç derecedir? 🔺', a: '180° 🔺', d: ['90°', '360°'], exp: 'Tüm üçgenlerin iç açıları toplamı daima 180 derecedir.' },
+      { q: 'Bir dörtgenin (kare, dikdörtgen) iç açıları toplamı kaç derecedir? 🟦', a: '360° 🟦', d: ['180°', '270°'], exp: 'Dörtgenlerin iç açıları toplamı 360 derecedir.' },
+      { q: '1 saat kaç saniyeye eşittir? ⏳', a: '3600 saniye ⏳', d: ['60 saniye', '600 saniye'], exp: '1 saat = 60 dakika, her dakika = 60 saniye. 60 × 60 = 3600 saniyedir.' },
+      { q: 'Şubat ayının 4 yılda bir 29 gün çektiği ve yılın 366 gün olduğu yıllara ne denir? 📅', a: 'Artık Yıl 📅', d: ['Güneş Yılı', 'Ay Yılı'], exp: '4 yılda bir 6 saatlik farklar 1 tam gün eder ve o yıla artık yıl denir.' },
+      { q: '60 sayısının 3/5\'i kaçtır? 🔢', a: '36', d: ['30', '40'], exp: '60 ÷ 5 = 12. 12 × 3 = 36.' },
+      { q: '72 sayısının 5/8\'i kaçtır? 🔢', a: '45', d: ['40', '50'], exp: '72 ÷ 8 = 9. 9 × 5 = 45.' },
+      { q: 'Aşağıdaki açılardan hangisi bir DAR AÇIDIR? 📐', a: '45° 📐', d: ['95°', '120°'], exp: '45 derece 90 dereceden küçük olduğu için dar açıdır.' },
+      { q: 'Aşağıdaki açılardan hangisi bir GENİŞ AÇIDIR? 📐', a: '135° 📐', d: ['89°', '90°'], exp: '135 derece 90 ile 180 arasında olduğu için geniş açıdır.' },
+      { q: 'Bir dik açı ile bir doğru açının toplamı kaç derecedir? (90° + 180°)', a: '270° 📐', d: ['360°', '200°'], exp: '90 + 180 = 270 derece eder.' },
+      { q: '3 saat 25 dakika toplam kaç dakikadır? ⏰', a: '205 dakika ⏰', d: ['180 dakika', '225 dakika'], exp: '3 saat = 180 dakika. 180 + 25 = 205 dakika.' },
+      { q: '240 saniye kaç dakikaya eşittir? ⏱️', a: '4 dakika ⏱️', d: ['3 dakika', '6 dakika'], exp: '240 ÷ 60 = 4 dakikadır.' },
+      { q: 'Paydaları eşit 3/7 ile 2/7 kesirlerinin toplamı kaçtır? ➕', a: '5/7', d: ['5/14', '6/7'], exp: 'Paydalar eşitken sadece paylar toplanır: (3 + 2)/7 = 5/7.' },
+      { q: '8/9 kesrinden 3/9 kesri çıkarıldığında sonuç ne olur? ➖', a: '5/9', d: ['5/0', '11/9'], exp: '(8 - 3)/9 = 5/9 kalır.' },
+      { q: 'Bir açıyı ölçmek ve çizmek için kullandığımız yarım daire şeklindeki alete ne denir? 📐', a: 'İletki (Açıölçer) 📐', d: ['Pergel', 'Gönyeli Cetvel'], exp: 'Açıları derece cinsinden iletki (açıölçer) ile ölçeriz.' },
+      { q: 'Bir üçgenin iki açısı 50° ve 60° ise üçüncü açısı kaç derecedir? 🔺', a: '70° 🔺', d: ['60°', '80°'], exp: 'İç açılar toplamı 180°dir. 50 + 60 = 110°. 180 - 110 = 70°.' },
+      { q: 'Tam açının ölçüsü kaç derecedir? 🔄', a: '360° 🔄', d: ['180°', '90°'], exp: 'Tam bir çember dairesi 360 derecelik tam açıdır.' },
+      { q: '5 tam 3/4 kesri bileşik kesre çevrildiğinde payı kaç olur? (5 × 4 + 3)', a: '23 (23/4)', d: ['20', '19'], exp: '5 × 4 = 20, 20 + 3 = 23. Kesir 23/4 olur.' },
+      { q: 'Saat 14:15\'te sinemaya giren Ali, 1 saat 45 dakika sonra çıktığında saat kaç olur? 🎬', a: '16:00 🎬', d: ['15:45', '16:15'], exp: '14:15 + 45 dk = 15:00. 1 saat daha = 16:00.' },
+      { q: 'Bir yılda toplam kaç hafta vardır? 📆', a: '52 hafta 📆', d: ['40 hafta', '48 hafta'], exp: 'Bir takvim yılında yaklaşık 52 hafta bulunur.' }
     ],
+
+    // 4. SINIF: ÇEVRE VE ALAN HESAPLAMA (DİNAMİK ÜRETECİ)
+    generateGrade4PerimeterArea() {
+      const mode = Math.floor(Math.random() * 4);
+      if (mode === 0) {
+        // Karenin Çevresi
+        const a = Math.floor(Math.random() * 15) + 3; // 3..17 cm
+        const perim = 4 * a;
+        return {
+          question: `Bir kenar uzunluğu ${a} cm olan bir KARENİN ÇEVRESİ kaç cm'dir? 🟦`,
+          correct: `${perim} cm`,
+          distractors: [`${perim + a} cm`, `${perim - 4} cm`],
+          explanation: `Karenin 4 kenarı birbirine eşittir. Çevre = 4 × ${a} = ${perim} cm'dir.`
+        };
+      } else if (mode === 1) {
+        // Karenin Alanı
+        const a = Math.floor(Math.random() * 9) + 2; // 2..10 cm
+        const area = a * a;
+        return {
+          question: `Bir kenarı ${a} cm olan bir KARENİN ALANI kaç santimetrekaredir (cm²)? 🟦`,
+          correct: `${area} cm²`,
+          distractors: [`${area + a} cm²`, `${4 * a} cm²`],
+          explanation: `Karenin Alanı = Kenar × Kenar = ${a} × ${a} = ${area} cm²'dir.`
+        };
+      } else if (mode === 2) {
+        // Dikdörtgenin Çevresi
+        const w = Math.floor(Math.random() * 8) + 3; // kısa kenar 3..10
+        const l = w + Math.floor(Math.random() * 8) + 2; // uzun kenar
+        const perim = 2 * (w + l);
+        return {
+          question: `Kısa kenarı ${w} cm, uzun kenarı ${l} cm olan DİKDÖRTGENİN ÇEVRESİ kaç cm'dir? 🚪`,
+          correct: `${perim} cm`,
+          distractors: [`${w + l} cm`, `${perim + 4} cm`],
+          explanation: `Dikdörtgenin Çevresi = 2 × (Kısa + Uzun) = 2 × (${w} + ${l}) = ${perim} cm'dir.`
+        };
+      } else {
+        // Dikdörtgenin Alanı
+        const w = Math.floor(Math.random() * 7) + 2; // 2..8 cm
+        const l = w + Math.floor(Math.random() * 6) + 3; // 5..13 cm
+        const area = w * l;
+        return {
+          question: `Kısa kenarı ${w} cm, uzun kenarı ${l} cm olan DİKDÖRTGENİN ALANI kaç cm²'dir? 🚪`,
+          correct: `${area} cm²`,
+          distractors: [`${2 * (w + l)} cm²`, `${area + w} cm²`],
+          explanation: `Dikdörtgenin Alanı = Kısa Kenar × Uzun Kenar = ${w} × ${l} = ${area} cm²'dir.`
+        };
+      }
+    },
+
+    // 4. SINIF: DEYİMLER VE ATASÖZLERİ DÜELLOSU (35 ÖZGÜN SORU)
+    grade4IdiomsProverbsPool: [
+      { q: '"Göze girmek" deyimi ne anlama gelir? 👁️', a: 'Davranışlarıyla sevgi ve güven kazanmak 🌟', d: ['Gözü ağrımak', 'Görünmez olmak'], exp: 'Çalışkanlığı ve dürüstlüğüyle başkalarının takdirini kazanmaktır.' },
+      { q: '"Gözden düşmek" deyimi ne anlama gelir? 💔', a: 'Eski değer ve sevgisini kaybetmek 💔', d: ['Yere yuvarlanmak', 'Uyumak'], exp: 'Kötü bir davranış sonucu birinin gözündeki değerini yitirmektir.' },
+      { q: '"Kulak kabartmak" deyimi ne anlama gelir? 👂', a: 'Belli etmemeye çalışarak gizlice dinlemek 👂', d: ['Kulağı şişmek', 'Bağırarak konuşmak'], exp: 'Yanında konuşulanları çaktırmadan dinlemeye kulak kabartmak denir.' },
+      { q: '"Kulak misafiri olmak" deyimi ne anlatır? 👂', a: 'İstemeden, yanındayken bir konuşmayı duymak 👂', d: ['Misafirliğe gitmek', 'Kulak temizletmek'], exp: 'Kendi konuşması olmadığı halde yanı başında konuşulanları tesadüfen duymaktır.' },
+      { q: '"Diline dolamak" deyimi ne anlama gelir? 👅', a: 'Bir konuyu veya kişiyi durmadan tekrar edip söylemek 🗣️', d: ['Yemek yemek', 'Hiç konuşmamak'], exp: 'Sürekli aynı şeyi konuşup dedikodusunu yapmaktır.' },
+      { q: '"Baltayı taşa vurmak" deyimi ne anlama gelir? 🪓', a: 'Farkında olmadan pot kırmak, karşısındakini incitecek söz söylemek 🙈', d: ['Odun kesmek', 'Taş kırmak'], exp: 'İstemeden uygunsuz ve mahcup edici bir laf etmektir.' },
+      { q: '"Çantada keklik" deyimi neyi ifade eder? 🎒', a: 'Kolayca ve kesin olarak elde edilecek şey 🎯', d: ['Avcılık yapmak', 'Kayıp eşya'], exp: 'Zaten kazanılmış, kesin gözüyle bakılan işler için kullanılır.' },
+      { q: '"Pabucu dama atılmak" deyimi ne anlatır? 👞', a: 'Kendinden üstün birinin gelmesiyle eski ilgiyi kaybetmek 👞', d: ['Yeni ayakkabı almak', 'Çatıya çıkmak'], exp: 'Özellikle yeni kardeş doğunca veya yeni birisi gelince gözden düşmektir.' },
+      { q: '"Etekleri zil çalmak" deyimi ne anlama gelir? 🔔', a: 'Çok büyük bir sevinç ve heyecan duymak 🎉', d: ['Korkudan titremek', 'Müzik yapmak'], exp: 'Aşırı mutlu olmak ve içi içine sığmamaktır.' },
+      { q: '"Ağzı kulaklarına varmak" deyimi neyi belirtir? 😄', a: 'Gülümsemekten yüzü aydınlanacak kadar çok sevinmek 😄', d: ['Şaşkınlıktan donakalmak', 'Yorulmak'], exp: 'Çok mutlu ve neşeli olmayı anlatır.' },
+      { q: '"Saman alevi gibi parlamak" deyimi ne anlama gelir? 🌾🔥', a: 'Birden öfkelenip çok çabuk yatışmak 🌾', d: ['Sürekli sinirli olmak', 'Karanlığı aydınlatmak'], exp: 'Öfkesi çabucak geçip sakinleşen kişiler için söylenir.' },
+      { q: '"Burnundan kıl aldırmamak" deyimi ne anlatır? 👃', a: 'Çok kibirli ve en küçük eleştiriye bile gelememek 😤', d: ['Çok titiz olmak', 'Grip olmak'], exp: 'Kendini çok beğenmiş, dokunulmaz sanan kişiler için kullanılır.' },
+      { q: '"Pireyi deve yapmak" deyimi ne anlama gelir? 🐪', a: 'Küçük bir sorunu aşırı büyüterek abartmak 🐪', d: ['Hayvanları sevmek', 'Çok çalışmak'], exp: 'Önemsiz bir meseleyi devasa bir dert haline getirmektir.' },
+      { q: '"İpe un sermek" deyimi ne demektir? 🧶', a: 'Geçersiz bahaneler uydurarak işi yapmaktan kaçınmak 🏃‍♂️', d: ['Börek yapmak', 'Temizlik yapmak'], exp: 'Olmayacak engeller öne sürüp işi savsaklamaktır.' },
+      { q: '"Can kulağıyla dinlemek" deyimi ne anlatır? 👂', a: 'Bütün dikkatini vererek büyük bir özenle dinlemek 🎯', d: ['Müzik dinlemek', 'Hiç duymamak'], exp: 'Hiçbir kelimeyi kaçırmadan tam odakla dinlemektir.' },
+      { q: '"Ateş püskürmek" deyimi ne anlama gelir? 🔥', a: 'Çok fazla sinirlenmek ve öfke saçmak 😡', d: ['Ateş yakmak', 'Ejderha olmak'], exp: 'Aşırı kızgınlık halinde bağırıp çağırmaktır.' },
+      { q: '"İçi içine sığmamak" deyimi neyi anlatır? 🎈', a: 'Coşku, sevinç ve heyecandan yerinde duramamak 🎈', d: ['Çok kilo almak', 'Dar elbiseler giymek'], exp: 'Sabırsızlıkla büyük bir sevinç yaşamaktır.' },
+      { q: '"Sineğin yağını çıkarmak" deyimi ne demektir? 🦟', a: 'Aşırı derecede cimri ve çıkarcı davranmak 💰', d: ['Temizlik yapmak', 'Sinek avlamak'], exp: 'En ufak şeyden bile haksız kazanç çıkarmaya çalışan cimriler için söylenir.' },
+      { q: '"Damlaya damlaya göl olur" atasözü neyi öğütler? 💧', a: 'Küçük birikimlerin zamanla büyük değerlere dönüşeceğini (Tasarruf) 💧', d: ['Yağmur yağmasını beklemeyi', 'Su israf etmeyi'], exp: 'Küçük paralar ve tasarruflar birikerek büyük servet olur.' },
+      { q: '"Ağaç yaşken eğilir" atasözünün anlamı nedir? 🌳', a: 'İnsanların küçük yaşlarda daha kolay eğitilebileceği 👦', d: ['Yaş ağaçların kırılacağı', 'Bahçeye ağaç dikilmesi gerektiği'], exp: 'Eğitim ve güzel ahlak çocuklukta kazanılır.' },
+      { q: '"Sakla samanı, gelir zamanı" atasözü ne anlatır? 🌾', a: 'Değersiz görünen şeylerin bile bir gün işe yarayacağını 🌾', d: ['Saman alıp satmayı', 'Hayvan beslemeyi'], exp: 'Hiçbir şeyi gereksiz yere israf etmemek gerektiğini öğütler.' },
+      { q: '"Ev alma, komşu al" atasözü neyi vurgular? 🏡', a: 'İyi bir komşunun evden çok daha değerli olduğunu 🤝', d: ['Pahalı ev satın almayı', 'Yalnız yaşamayı'], exp: 'Huzurlu bir yaşam için komşuluk ilişkileri binadan önemlidir.' },
+      { q: '"Bir elin nesi var, iki elin sesi var" atasözü neyi anlatır? 👏', a: 'Birlik, beraberlik ve yardımlaşmanın gücünü 🤝', d: ['Alkış yapmayı', 'El yıkamayı'], exp: 'Birlikte çalışmak tek başına yapmaktan çok daha güçlü sonuçlar verir.' },
+      { q: '"İşleyen demir ışıldar" atasözü ne demektir? ⚙️', a: 'Sürekli çalışan ve gayret eden insanın başarılı ve sağlıklı olacağı 🌟', d: ['Demir eşyaların parlatılması gerektiği', 'Tembellik yapmayı'], exp: 'Çalışmak insanı diri, zinde ve başarılı tutar.' },
+      { q: '"Acele işe şeytan karışır" atasözü neyi öğütler? ⏳', a: 'Sabırsız ve telaşla yapılan işlerin yanlış ve kusurlu olacağını ⏳', d: ['Çok hızlı koşmayı', 'Hemen bitirmeyi'], exp: 'İşleri dikkatli, sakin ve düşünerek yapmak gerekir.' },
+      { q: '"Tatlı dil yılanı deliğinden çıkarır" atasözü neyi anlatır? 🐍', a: 'Güzel, tatlı ve nazik sözün en zor kişileri bile ikna edeceğini 🍯', d: ['Yılanları sevmeyi', 'Ormanda gezmeyi'], exp: 'Nezaket ve güzel söz her kapıyı açar.' },
+      { q: '"Ne doğrarsan aşına, o çıkar kaşığına" atasözü ne demektir? 🍲', a: 'Kişi ne kadar emek verirse o kadar karşılık alır 🍲', d: ['Çorba pişirmeyi', 'Yemek seçmeyi'], exp: 'Bugün yaptığımız iyi veya kötü işlerin karşılığını gelecekte görürüz.' },
+      { q: '"Ayağını yorganına göre uzat" atasözü neyi öğütler? 🛏️', a: 'Giderlerini gelirine göre ayarlamayı ve bütçeni aşmamayı 💰', d: ['Uzun yorgan satın almayı', 'Erken uyumayı'], exp: 'Kazancından fazlasını harcayanlar borç ve sıkıntıya düşer.' },
+      { q: '"Gülme komşuna, gelir başına" atasözü ne anlatır? 👥', a: 'Başkalarının başına gelen kötü duruma sevinmemek gerektiğini 👥', d: ['Komşulara şaka yapmayı', 'Kahkaha atmayı'], exp: 'Kötü talih herkesin başına gelebilir; başkasıyla alay edilmemelidir.' },
+      { q: '"Vakit nakittir" atasözü neyi ifade eder? ⏰', a: 'Zamanın en az para kadar değerli ve geri getirilemez olduğunu ⏰', d: ['Saat satın almayı', 'Hızlı yürümeyi'], exp: 'Zamanı boşa harcamamak gerekir.' },
+      { q: '"Dost kara günde belli olur" atasözü ne demektir? 🤝', a: 'Gerçek dostların zor ve sıkıntılı zamanlarda yanımızda olduğu 🤝', d: ['Hava kararınca dostla gezmeyi', 'Sadece iyi günlerde eğlenmeyi'], exp: 'Zor zamanlarda yanımızdan ayrılmayanlar hakiki dosttur.' },
+      { q: '"Sütten ağzı yanan yoğurdu üfleyerek yer" atasözü ne anlatır? 🥛', a: 'Bir olaydan zarar görenin benzer durumlarda aşırı temkinli davranacağını 🥛', d: ['Sıcak yoğurt yemeyi', 'Soğuk süt içmeyi'], exp: 'Yaşanan tecrübeler insanı daha dikkatli ve tedbirli yapar.' },
+      { q: '"Akıl akıldan üstündür" atasözü neyi vurgular? 🧠', a: 'Önemli işlerde başkalarına danışmanın ve fikir almanın faydasını 🧠', d: ['Kendi aklına güvenmeyi', 'Her şeyi bilmeyi'], exp: 'İstişare etmek ve fikir alışverişinde bulunmak en doğru yoldur.' },
+      { q: '"Meyve veren ağaç taşlanır" atasözü ne demektir? 🍎', a: 'Başarılı ve yetenekli insanların kıskanılıp eleştirilebileceğini 🍎', d: ['Bahçedeki ağaçlara taş atmayı', 'Meyve toplamayı'], exp: 'Başarılı kimseleri kıskananlar onlara kusur bulmaya çalışır.' },
+      { q: '"Öfkeyle kalkan zararla oturur" atasözü neyi öğütler? 😡', a: 'Öfke anında düşünmeden davrananların sonunda pişman olacağını 😡', d: ['Ayağa kalkmayı', 'Kızgın görünmeyi'], exp: 'Öfkeyle verilen kararlar daima kayıp getirir; sakin olmak gerekir.' }
+    ],
+
+    // 4. SINIF: SEBEP-SONUÇ, AMAÇ-SONUÇ VE ÖZNEL/NESNEL YARGILAR (30 ÖZGÜN SORU)
+    grade4SentencesLogicPool: [
+      { q: '"Kar yağdığı için köy yolları ulaşıma kapandı." cümlesinde hangi anlam ilişkisi vardır? ❄️', a: 'Sebep - Sonuç (Neden - Sonuç) ❄️', d: ['Amaç - Sonuç', 'Koşul - Sonuç'], exp: 'Köy yollarının kapanmasının gerçekleşmiş gerçek sebebi kar yağmasıdır.' },
+      { q: '"Sınavdan yüksek not almak için gece gündüz ders çalıştı." cümlesinde hangi anlam ilişkisi vardır? 🎯', a: 'Amaç - Sonuç 🎯', d: ['Sebep - Sonuç', 'Benzetme'], exp: 'Ders çalışmasının hedefi/gayesi yüksek not almaktır (Amaç-Sonuç).' },
+      { q: '"Hızlı koştuğundan nefes nefese kaldı." cümlesi hangi tür bir cümledir? 🏃‍♂️', a: 'Sebep - Sonuç 🏃‍♂️', d: ['Koşul - Sonuç', 'Öznel Cümle'], exp: 'Nefes nefese kalmanın gerçekleşen nedeni hızlı koşmaktır.' },
+      { q: '"Kilo vermek amacıyla her sabah düzenli yürüyüş yapıyor." cümlesi hangisidir? 🚶‍♂️', a: 'Amaç - Sonuç 🚶‍♂️', d: ['Sebep - Sonuç', 'Nesnel Cümle'], exp: '"Amacıyla" ifadesi açıkça amaç-sonuç ilişkisini gösterir.' },
+      { q: '"Ödevlerini zamanında bitirirsen hafta sonu parka gidebilirsin." cümlesinde hangi anlam vardır? 🎡', a: 'Koşul - Sonuç (Şart) 🎡', d: ['Amaç - Sonuç', 'Sebep - Sonuç'], exp: 'Parka gitmenin şartı/koşulu ödevleri bitirmektir (-se / -sa).' },
+      { q: '"Türkiye\'nin başkenti Ankara\'dır." cümlesi ne tür bir yargı bildirir? 🏛️', a: 'Nesnel Yargı (Kanıtlanabilir) 🏛️', d: ['Öznel Yargı (Kişisel)', 'Amaç Bildiren'], exp: 'Herkes için geçerli, kişiden kişiye değişmeyen bilimsel/resmi gerçekler nesneldir.' },
+      { q: '"En güzel ve dinlendirici renk mavidir." cümlesi ne tür bir yargıdır? 🔵', a: 'Öznel Yargı (Kişisel beğeni) 🔵', d: ['Nesnel Yargı', 'Koşul Bildiren'], exp: 'Güzellik kişiden kişiye değişir, kanıtlanamaz; bu yüzden özneldir.' },
+      { q: '"Türkiye\'nin en yüksek dağı Ağrı Dağı\'dır." cümlesi hangi tür yargıdır? 🏔️', a: 'Nesnel Yargı 🏔️', d: ['Öznel Yargı', 'Sebep-Sonuç'], exp: 'Ölçülebilir coğrafi bir gerçektir, nesneldir.' },
+      { q: '"Bu film hayatımda izlediğim en harika filmdi." cümlesi nedir? 🎬', a: 'Öznel Yargı 🎬', d: ['Nesnel Yargı', 'Amaç Cümlesi'], exp: 'Filmin harika olması tamamen izleyicinin kendi kişisel yorumudur.' },
+      { q: '"Şemsiyesini evde unuttuğu için yağmurda ıslandı." cümlesi hangisidir? 🌧️', a: 'Sebep - Sonuç 🌧️', d: ['Amaç - Sonuç', 'Öznel Cümle'], exp: 'Islanmasının gerçek sebebi şemsiyesini unutmasıdır.' },
+      { q: '"Yeni bir bisiklet almak üzere para biriktiriyor." cümlesinde hangi anlam vardır? 🚲', a: 'Amaç - Sonuç 🚲', d: ['Sebep - Sonuç', 'Koşul - Sonuç'], exp: 'Para biriktirmesinin gayesi yeni bisiklet almaktır.' },
+      { q: '"Hava soğuk olduğu için kalın montunu giydi." cümlesinde sebep nedir? 🧥', a: 'Havanın soğuk olması 🧥', d: ['Montunu giymesi', 'Dışarı çıkması'], exp: 'Mont giyme eyleminin gerekçesi havanın soğuk olmasıdır.' },
+      { q: '"Kitap okursan hayal gücün zenginleşir." cümlesi hangi türdür? 📖', a: 'Koşul - Sonuç 📖', d: ['Amaç - Sonuç', 'Öznel Yargı'], exp: 'Hayal gücünün zenginleşmesi kitap okuma şartına bağlanmıştır.' },
+      { q: '"Pamuk gibi yumuşacık elleri vardı." cümlesinde hangi sanat/anlatım vardır? ☁️', a: 'Benzetme ☁️', d: ['Karşılaştırma', 'Sebep-Sonuç'], exp: 'Eller yumuşaklık yönünden pamuğa benzetilmiştir.' },
+      { q: '"Ali, sınıfın en uzun boylu öğrencisidir." cümlesinde hangi anlatım vardır? 📏', a: 'Karşılaştırma 📏', d: ['Benzetme', 'Koşul'], exp: 'Ali ile sınıftaki diğer öğrencilerin boyları kıyaslanmıştır.' },
+      { q: '"Güneş batınca ortalık zifiri karanlığa büründü." cümlesi ne bildirir? 🌑', a: 'Nesnel Yargı 🌑', d: ['Öznel Yargı', 'Amaç'], exp: 'Güneş battığında havanın kararması doğa kanunudur, nesneldir.' },
+      { q: '"Çilekli dondurma vanilyalı dondurmadan çok daha lezzetlidir." cümlesi nedir? 🍨', a: 'Öznel Yargı 🍨', d: ['Nesnel Yargı', 'Koşul'], exp: 'Lezzet algısı kişiseldir, kanıtlanamaz.' },
+      { q: '"Trafik kurallarına uyarsak kazalar önlenir." cümlesi hangisidir? 🚦', a: 'Koşul - Sonuç 🚦', d: ['Amaç - Sonuç', 'Öznel'], exp: 'Kazaların önlenmesi kurallara uyma şartına bağlıdır.' },
+      { q: '"Yabancı dil öğrenmek maksadıyla kursa kaydoldu." cümlesi nedir? 🌍', a: 'Amaç - Sonuç 🌍', d: ['Sebep - Sonuç', 'Koşul'], exp: '"Maksadıyla" kelimesi amaca işaret eder.' },
+      { q: '"Elektrikler kesilince asansörde mahsur kaldılar." cümlesi nedir? ⚡', a: 'Sebep - Sonuç ⚡', d: ['Amaç - Sonuç', 'Öznel Yargı'], exp: 'Asansörde kalmanın gerçekleşmiş nedeni elektriğin kesilmesidir.' },
+      { q: '"Su 100 derecede kaynar." cümlesi hangi tür yargıdır? 💧', a: 'Nesnel Yargı 💧', d: ['Öznel Yargı', 'Amaç'], exp: 'Deneyle ispatlanabilir bilimsel gerçek nesneldir.' },
+      { q: '"Sonbahar mevsimi insana hüzün verir." cümlesi ne tür bir yargıdır? 🍂', a: 'Öznel Yargı 🍂', d: ['Nesnel Yargı', 'Koşul'], exp: 'Sonbaharın hüzünlü gelmesi kişiden kişiye değişen duygudur.' },
+      { q: '"Geç kaldığı için öğretmeninden özür diledi." cümlesi hangisidir? ⏰', a: 'Sebep - Sonuç ⏰', d: ['Amaç - Sonuç', 'Öznel'], exp: 'Özür dilemesinin sebebi derse geç kalmasıdır.' },
+      { q: '"Temiz bir çevre istiyorsan çöpleri kutuya atmalısın." cümlesi nedir? ♻️', a: 'Koşul - Sonuç ♻️', d: ['Amaç - Sonuç', 'Nesnel'], exp: 'Temiz çevreye kavuşmanın şartı çöpleri kutuya atmaktır.' },
+      { q: '"Bir haftada yedi gün vardır." cümlesi ne tür bir yargıdır? 📅', a: 'Nesnel Yargı 📅', d: ['Öznel Yargı', 'Koşul'], exp: 'Takvim kuralı kesin ve nesneldir.' },
+      { q: '"Tavşan gibi hızlı koşan bir çocuktu." cümlesinde ne vardır? 🐰', a: 'Benzetme 🐰', d: ['Koşul', 'Amaç'], exp: 'Çocuğun hızı tavşana benzetilmiştir.' },
+      { q: '"Bu yazarın dili diğer yazarlara göre daha akıcıdır." cümlesinde ne vardır? ✍️', a: 'Karşılaştırma ve Öznel Yargı ✍️', d: ['Nesnel Yargı', 'Sebep-Sonuç'], exp: 'Yazarlar arasında akıcılık yönünden kişisel bir kıyaslama yapılmıştır.' },
+      { q: '"Kütüphaneden kitap almak üzere evden çıktı." cümlesi nedir? 📚', a: 'Amaç - Sonuç 📚', d: ['Sebep - Sonuç', 'Nesnel'], exp: 'Evden çıkma gayesi kütüphaneden kitap almaktır.' },
+      { q: '"Buzdolabının kapağı açık kaldığı için yiyecekler bozuldu." cümlesi nedir? 🧊', a: 'Sebep - Sonuç 🧊', d: ['Amaç - Sonuç', 'Öznel'], exp: 'Yiyeceklerin bozulmasının somut nedeni kapağın açık kalmasıdır.' },
+      { q: '"En heyecan verici spor futboldur." cümlesi nedir? ⚽', a: 'Öznel Yargı ⚽', d: ['Nesnel Yargı', 'Sebep-Sonuç'], exp: 'Futbolun en heyecanlı olması kişisel bir zevktir.' }
+    ],
+
+    // 4. SINIF: YER KABUĞU, DÜNYA'NIN HAREKETLERİ VE BESİNLERİMİZ (30 ÖZGÜN SORU)
+    grade4CrustNutritionPool: [
+      { q: 'Yer kabuğunu oluşturan kayaçların parçalanmasıyla sırasıyla kaya, taş, çakıl ve en son ne oluşur? 🏖️', a: 'Toprak ve Kum 🏖️', d: ['Maden', 'Fosil'], exp: 'Kayaçlar rüzgar ve suyla aşınarak ufalanır ve toprağı meydana getirir.' },
+      { q: 'Kayaçların içinde bulunan ve ekonomik değeri olan değerli minerallere ne ad verilir? 💎', a: 'Maden 💎', d: ['Fosil', 'Toprak'], exp: 'Ekonomik değere sahip kayaçlara maden denir (Altın, Bor, Bakır vb.).' },
+      { q: 'Ülkemizin dünyada 1. sırada rezervine sahip olduğu, roket yakıtı ve temizlikte kullanılan stratejik maden hangisidir? 🚀', a: 'Bor Madeni 🚀', d: ['Taş Kömürü', 'Petrol'], exp: 'Türkiye dünyadaki bor rezervlerinin yaklaşık %73\'üne sahiptir.' },
+      { q: 'Eski çağlarda yaşamış canlıların kayaç tabakaları arasında taşlaşmış kalıntı ve izlerine ne denir? 🦖', a: 'Fosil 🦖', d: ['Mineral', 'Linyit'], exp: 'Milyonlarca yıllık canlı kalıntıları fosil olarak adlandırılır.' },
+      { q: 'Dünya\'nın kendi ekseni etrafında batıdan doğuya dönmesi ne kadar sürer? ⏳', a: '24 saat (1 gün) ⏳', d: ['365 gün 6 saat', '12 saat'], exp: 'Dünya kendi etrafındaki 1 tam dönüşünü 24 saatte tamamlar.' },
+      { q: 'Dünya\'nın kendi etrafında dönmesi sonucunda hangisi OLUŞUR? 🌍', a: 'Gece ve Gündüz 🌍', d: ['Mevsimler', 'Artık Yıl'], exp: 'Dünya\'nın kendi etrafında dönmesiyle gece ve gündüz döngüsü oluşur.' },
+      { q: 'Dünya\'nın Güneş etrafında dolanması ne kadar sürer? ☀️', a: '365 gün 6 saat (1 yıl) ☀️', d: ['24 saat', '30 gün'], exp: 'Dünya Güneş etrafındaki 1 tam dolanımını 1 yılda tamamlar.' },
+      { q: 'Dünya\'nın Güneş etrafında dolanması ve eksen eğikliği sonucunda hangisi OLUŞUR? 🍂🌸', a: 'Dört Mevsim (İlkbahar, Yaz, Sonbahar, Kış) 🍂', d: ['Gece ve Gündüz', 'Gelgit'], exp: 'Güneş etrafındaki dolanma mevsimleri meydana getirir.' },
+      { q: 'Vücudumuza öncelikli olarak ENERJİ sağlayan temel besin grubu hangisidir? 🍞', a: 'Karbonhidratlar (Ekmek, Makarna, Patates) 🍞', d: ['Proteinler', 'Vitaminler'], exp: 'Karbonhidratlar vücudumuzun 1. dereceden enerji yakıtıdır.' },
+      { q: 'Vücudumuzda BÜYÜME, GELİŞME ve YARALARIN İYİLEŞMESİNİ sağlayan yapıcı-onarıcı besin hangisidir? 🥩', a: 'Proteinler (Et, Süt, Yumurta, Balık) 🥩', d: ['Yağlar', 'Karbonhidratlar'], exp: 'Proteinler vücudun yapı taşıdır; kas ve hücreleri onarır.' },
+      { q: 'Vücudumuza enerji veren, fazlası depolanan ve soğuktan koruyan besin grubu nedir? 🧈', a: 'Yağlar (Zeytinyağı, Tereyağı, Ceviz) 🧈', d: ['Mineraller', 'Su'], exp: 'Yağlar yüksek enerji içerir ve organları korur.' },
+      { q: 'Vücudumuzda DÜZENLEYİCİ olarak görev yapan ve hastalıklara karşı direncimizi artıran besin grubu nedir? 🍎🥦', a: 'Vitaminler (Meyve ve Sebzeler) 🍎', d: ['Karbonhidratlar', 'Yağlar'], exp: 'Vitaminler bağışıklık sistemini güçlendirir ve hastalıklardan korur.' },
+      { q: 'Vücudumuzun yaklaşık %70\'ini oluşturan, her besinde bulunan ve hayati önem taşıyan madde nedir? 💧', a: 'Su ve Mineraller 💧', d: ['Sadece Şeker', 'Sadece Tuz'], exp: 'Su ve mineraller vücudun çalışması için her gün mutlaka tüketilmelidir.' },
+      { q: 'Kayaçların farklı renk ve sertlikte olmasını sağlayan temel yapı nedir? 🪨', a: 'İçerdikleri Mineraller 🪨', d: ['Toprağın nemi', 'Havanın sıcaklığı'], exp: 'Kayaçlara özelliklerini içindeki mineraller kazandırır.' },
+      { q: 'Mutfak tezgahlarında ve heykellerde kullanılan değerli ve sert kayaç/maden hangisidir? 🏛️', a: 'Mermer 🏛️', d: ['Kömür', 'Tuz'], exp: 'Afyon ve Marmara Adası mermerleriyle dünyaca ünlüdür.' },
+      { q: 'Termik santrallerde yakılarak elektrik enerjisi üretilen kahverengi kömür madeni hangisidir? ⛏️', a: 'Linyit ⛏️', d: ['Bor', 'Bakır'], exp: 'Linyit ülkemizde yaygın olarak çıkarılan bir enerji madenidir.' },
+      { q: 'Fosilleri inceleyen bilim dalına ne ad verilir? 🦖', a: 'Paleontoloji (Fosil Bilimi) 🦖', d: ['Arkeoloji', 'Meteoroloji'], exp: 'Fosilleri inceleyen uzmanlara paleontolog denir.' },
+      { q: 'Aşırı ve dengesiz beslenme ile hareketsiz yaşamın yol açtığı tehlikeli sağlık sorunu nedir? ⚖️', a: 'Obezite (Aşırı Şişmanlık) ⚖️', d: ['Grip', 'Kansızlık'], exp: 'Dengesiz beslenme obeziteye yol açar.' },
+      { q: 'Sigara dumanında bulunan ve akciğer kanserine yol açan en zararlı zehirli maddeler nelerdir? 🚭', a: 'Nikotin ve Katran 🚭', d: ['Vitamin ve Mineral', 'Kalsiyum'], exp: 'Sigara dumanında binlerce kanserojen zehir bulunur.' },
+      { q: 'Alkol kullanımı öncelikli olarak hangi hayati organımızı tahrip eder ve siroza yol açar? 🍺', a: 'Karaciğer 🩺', d: ['Mide', 'Göz'], exp: 'Alkol karaciğeri zehirleyerek kalıcı hasar verir.' },
+      { q: 'Kemik ve dişlerimizin güçlü olması için hangi mineral özellikle gereklidir? 🥛', a: 'Kalsiyum 🥛', d: ['Şeker', 'Katran'], exp: 'Süt ve peynirdeki kalsiyum kemikleri güçlendirir.' },
+      { q: 'Güneş\'in sabah doğudan doğup akşam batıdan batıyor gibi görünmesinin sebebi nedir? ☀️', a: 'Dünya\'nın kendi ekseni etrafında batıdan doğuya dönmesi 🌍', d: ['Güneş\'in koşması', 'Ay\'ın durması'], exp: 'Dünya kendi etrafında döndüğü için Güneş gökyüzünde hareket ediyormuş gibi görünür.' },
+      { q: 'Fosil oluşumu genellikle hangi tür kayaç tabakalarında gerçekleşir? 🦴', a: 'Tortul Kayaçlar 🦴', d: ['Magma lavları', 'Ateş küre'], exp: 'Lavlar canlıyı yakar; fosiller tortul kayaçlar arasında korunur.' },
+      { q: 'Elektrik kablolarının içinde elektriği mükemmel ileten hangi maden kullanılır? 🔌', a: 'Bakır 🔌', d: ['Kömür', 'Kireç'], exp: 'Bakır yüksek iletkenliğiyle kablolarda vazgeçilmezdir.' },
+      { q: 'Gözlerimizin karanlıkta daha iyi görmesini sağlayan ve havuçta bolca bulunan vitamin hangisidir? 🥕', a: 'A Vitamini 🥕', d: ['C Vitamini', 'D Vitamini'], exp: 'A vitamini göz retinası için çok faydalıdır.' },
+      { q: 'Portakal, limon ve mandalina gibi kış meyvelerinde bolca bulunan bağışıklık vitamini hangisidir? 🍊', a: 'C Vitamini 🍊', d: ['A Vitamini', 'B Vitamini'], exp: 'C vitamini gribe karşı vücut direncini artırır.' }
+    ],
+
+    // 4. SINIF: KUVVET, MIKNATISLAR VE BASİT ELEKTRİK DEVRELERİ (30 ÖZGÜN SORU)
+    grade4CircuitsMagnetsPool: [
+      { q: 'Bir mıknatısın kaç adet manyetik kutbu vardır? 🧲', a: '2 kutbu vardır (N ve S) 🧲', d: ['1 kutbu', '4 kutbu'], exp: 'Mıknatısın Kuzey (N) ve Güney (S) olmak üzere iki kutbu bulunur.' },
+      { q: 'İki mıknatısın AYNI KUTUPLARI (N-N veya S-S) birbirine yaklaştırılırsa ne olur? 🧲', a: 'Birbirini İTER ↔️', d: ['Birbirini çeker', 'Yapışır'], exp: 'Aynı kutuplar birbirini iter, zıt kutuplar çeker.' },
+      { q: 'İki mıknatısın ZIT KUTUPLARI (N-S) birbirine yaklaştırılırsa ne olur? 🧲', a: 'Birbirini ÇEKER 🧲', d: ['Birbirini iter', 'Hiçbir şey olmaz'], exp: 'Zıt kutuplar birbirini güçlü bir şekilde çeker.' },
+      { q: 'Mıknatıs aşağıdaki maddelerden hangisini KESİNLİKLE ÇEKMEZ? 🪵', a: 'Tahta parçası ve plastik 🪵', d: ['Demir çivi 📌', 'Nikel para 🪙'], exp: 'Mıknatıslar demir, nikel, kobaltı çeker; tahta, plastik, camı çekmez.' },
+      { q: 'Bir mıknatıs ortadan ikiye kırılırsa yeni oluşan parçalarda ne görülür? 🧲', a: 'Her parçada yine 2 kutup (N ve S) oluşur 🧲', d: ['Mıknatıslık özelliği yok olur', 'Sadece N kutbu kalır'], exp: 'Mıknatıs ne kadar bölünürse bölünsün daima N ve S kutuplarına sahip olur.' },
+      { q: 'Yön bulmaya yarayan pusulanın ibresi hangi aletin çalışma prensibine dayanır? 🧭', a: 'Mıknatıs 🧭', d: ['Ayna', 'Pil'], exp: 'Pusula ibresi küçük ve hassas bir mıknatıstır.' },
+      { q: 'Rayların üzerinde temas etmeden havada süzülerek giden çok hızlı trenlere ne denir? 🚄', a: 'Maglev (Manyetik Levitasyon) Treni 🚄', d: ['Buharlı Tren', 'Metro'], exp: 'Maglev trenleri güçlü elektromıknatıslarla rayların üstünde uçar gibi gider.' },
+      { q: 'Aşağıdakilerden hangisi SAF BİR MADDEDİR? 💧', a: 'Saf su ve tuz 💧🧂', d: ['Meyve salatası 🥗', 'Limonata 🍋'], exp: 'Saf maddeler tek cins atom veya molekülden oluşur; limonata karışımdır.' },
+      { q: 'Birden çok maddenin kendi özelliğini kaybetmeden bir araya gelmesiyle ne oluşur? 🥗', a: 'Karışım 🥗', d: ['Saf Madde', 'Element'], exp: 'Salata, ayran ve hava birer karışımdır.' },
+      { q: 'Demir tozları ile kum karışımını en kolay hangi yöntemle ayırabiliriz? 🧲', a: 'Mıknatıs kullanarak 🧲', d: ['Suda bekleterek', 'Elekle eleyerek'], exp: 'Mıknatıs demir tozlarını çeker, kum ise geride kalır.' },
+      { q: 'Tuzlu sudaki tuzu geri elde etmek için hangi ayırma yöntemi uygulanır? 🧂', a: 'Buharlaştırma ☀️', d: ['Mıknatısla çekme', 'Süzme'], exp: 'Su buharlaştığında kabın dibinde tuz kristalleri kalır.' },
+      { q: 'Makarna ile haşlama suyunu birbirinden ayırmak için hangi alet kullanılır? 🍝', a: 'Süzgeç (Süzme yöntemi) 🍝', d: ['Mıknatıs', 'Elek'], exp: 'Katı-sıvı karışımlar süzgeçle süzülür.' },
+      { q: 'Basit bir elektrik devresinde elektrik ENERJİSİ KAYNAĞI olan eleman nedir? 🔋', a: 'Pil 🔋', d: ['Ampul 💡', 'Anahtar'], exp: 'Pil kimyasal enerjiyi elektrik enerjisine çevirir.' },
+      { q: 'Basit bir elektrik devresinde elektrik enerjisini IŞIĞA çeviren eleman hangisidir? 💡', a: 'Ampul 💡', d: ['Anahtar', 'Kablo'], exp: 'Ampul devre tamamlandığında ışık saçar.' },
+      { q: 'Elektrik akımını açıp kapatmaya yarayan (duvardaki lamba düğmesi gibi) devre elemanı nedir? 🎛️', a: 'Anahtar 🎛️', d: ['Pil', 'Duy'], exp: 'Anahtar devreden akım geçişini kontrol eder.' },
+      { q: 'Basit bir devrede anahtar AÇIK konumdayken ampul neden IŞIK VERMEZ? 💡', a: 'Devre tamamlanmadığı ve akım geçmediği için ❌', d: ['Pil bittiği için', 'Ampul kırıldığı için'], exp: 'Anahtar açıkken köprü kalkmış gibidir; akım iletilmez.' },
+      { q: 'Ampulün devrede vidalanarak takıldığı yuvaya ne ad verilir? 💡', a: 'Duy 💡', d: ['Pil yatağı', 'Sigorta'], exp: 'Ampul duya yerleştirilir.' },
+      { q: 'Evimizdeki prizlerde kullanılan şehir elektriği kaç volt gerilime sahiptir? ⚡', a: '220 Volt ⚡', d: ['1.5 Volt', '12 Volt'], exp: 'Evlerdeki prizler 220V yüksek gerilim taşır; asla yabancı cisim sokulmamalıdır!' },
+      { q: 'Islak ellerle elektrik anahtarına veya prize dokunmak neden çok tehlikelidir? ⚠️', a: 'Islak ten elektriği ileterek elektrik çarpmasına yol açar ⚡', d: ['Anahtar kirlenir', 'Elektrik faturası artar'], exp: 'Su ve nem elektriği iletir; ölümcül elektrik çarpması riski doğar.' },
+      { q: 'Hangisi elektrik akımını İLETEN (İletken) bir maddedir? 🔌', a: 'Bakır tel ve demir çivi 🔌', d: ['Plastik eldiven', 'Kuru tahta'], exp: 'Metaller elektrik akımını çok iyi iletir.' },
+      { q: 'Hangisi elektrik akımını İLETMEYEN (Yalıtkan) bir maddedir? 🧤', a: 'Plastik ve kauçuk 🧤', d: ['Bakır', 'Alüminyum folyo'], exp: 'Plastik elektrik teknisyenlerini koruyan yalıtkan bir malzemedir.' },
+      { q: 'Buzdolabı kapaklarının kendiliğinden yapışıp kapanmasını sağlayan nedir? 🧲', a: 'Lastik şeritlerin içindeki mıknatıs 🧲', d: ['Yapıştırıcı', 'Kilit mekanizması'], exp: 'Buzdolabı contalarında gizli mıknatıslar bulunur.' },
+      { q: 'Çakıl taşı ile kum karışımını birbirinden ayırmak için hangi araç kullanılır? 🏖️', a: 'Elek (Eleme yöntemi) 🏖️', d: ['Mıknatıs', 'Buharlaştırma'], exp: 'Tanecik boyutları farklı katılar elekle ayrılır.' },
+      { q: 'Hoparlör, kulaklık ve kapı zillerinin içinde hangi parça ses üretmeye yardımcı olur? 🔊', a: 'Mıknatıs 🧲', d: ['Cam', 'Pil'], exp: 'Hoparlörün diyaframı mıknatısın titreşimiyle ses üretir.' },
+      { q: 'Devredeki pillerin güvenle yerleştirildiği plastik kutuya ne ad verilir? 🔋', a: 'Pil Yatağı 🔋', d: ['Duy', 'Anahtar'], exp: 'Piller pil yatağına takılır.' },
+      { q: 'Atık pilleri doğaya veya çöpe atmayıp nereye bırakmalıyız? ♻️', a: 'Atık Pil Toplama Kutusuna ♻️', d: ['Denize', 'Toprağa'], exp: 'Pillerdeki ağır kimyasallar toprağa ve yer altı sularına karışmamalıdır.' }
+    ],
+
+    // 4. SINIF: BİREY VE TOPLUM & MİLLİ MÜCADELE KAHRAMANLARIMIZ (30 ÖZGÜN SORU)
+    grade4IdentityHeroesPool: [
+      { q: 'Türkiye Cumhuriyeti vatandaşlarının kimlik belgesinde kaç haneli T.C. Kimlik No bulunur? 🪪', a: '11 Haneli 🪪', d: ['10 Haneli', '12 Haneli'], exp: 'T.C. Kimlik numarası 11 haneden oluşur ve her birey için benzersizdir.' },
+      { q: 'Yeni çipli kimlik kartlarımızın üzerindeki küçük elektronik bölüme ne ad verilir? 💳', a: 'Çip (Yonga) 💳', d: ['Barkod', 'Etiket'], exp: 'Çip üzerinde parmak izi gibi güvenli dijital bilgiler saklanır.' },
+      { q: 'Olayların oluş sırasına göre zaman dizinine konulmasına ne ad verilir? ⏳', a: 'Kronoloji ⏳', d: ['Biyografi', 'Otobiyografi'], exp: 'Tarihsel sıralamaya kronoloji denir.' },
+      { q: 'Kendimizi karşımızdaki kişinin yerine koyarak onun duygularını anlama becerisine ne denir? 🤝', a: 'Empati 🤝', d: ['Bencillik', 'Sempati'], exp: 'Empati kurmak toplumda saygı ve hoşgörüyü pekiştirir.' },
+      { q: 'Kurtuluş Savaşı\'mız (Milli Mücadele) Mustafa Kemal Paşa\'nın hangi şehre ayak basmasıyla resmen başlamıştır? 🚢', a: 'Samsun (19 Mayıs 1919) 🚢', d: ['Ankara', 'İzmir'], exp: '19 Mayıs 1919\'da Bandırma Vapuru ile Samsun\'a çıkış kurtuluş meşalesidir.' },
+      { q: 'Kurtuluş Savaşı\'nda Doğu Cephesi Komutanı olan ve yetim çocukların babası sayılan kahramanımız kimdir? 🇹🇷', a: 'Kazım Karabekir Paşa 🇹🇷', d: ['İsmet İnönü', 'Ali Fuat Cebesoy'], exp: 'Kazım Karabekir Doğu Cephesi\'nde Ermenileri mağlup etmiş ve Gümrü Antlaşması\'nı imzalamıştır.' },
+      { q: 'Güney Cephesi\'nde Kahramanmaraş\'ta Fransız işgalcilere ilk kurşunu sıkarak direnişi başlatan kahraman kimdir? 🇹🇷', a: 'Sütçü İmam 🇹🇷', d: ['Şahin Bey', 'Ali Saip Bey'], exp: 'Sütçü İmam Maraş direnişinin bayrak ismidir.' },
+      { q: 'Gaziantep savunmasında düşmana geçit vermemek için canını feda eden kahramanımız kimdir? 🇹🇷', a: 'Şahin Bey 🇹🇷', d: ['Sütçü İmam', 'Hasan Tahsin'], exp: 'Şahin Bey Antep savunmasında kahramanca şehit düşmüştür.' },
+      { q: 'İzmir işgal edildiğinde Kordon\'da düşmana ilk kurşunu sıkarak şehit olan gazeteci kahramanımız kimdir? 🇹🇷', a: 'Hasan Tahsin 🇹🇷', d: ['Yörük Ali Efe', 'İsmet İnönü'], exp: 'Hasan Tahsin Batı Cephesi\'nde milli bilinci ateşlemiştir.' },
+      { q: 'İnebolu\'dan Kastamonu cephesine kağnısıyla mermi taşırken donarak şehit olan kahraman Türk kadını kimdir? 🇹🇷', a: 'Şerife Bacı 🇹🇷', d: ['Nene Hatun', 'Halide Edip'], exp: 'Şerife Bacı bebeği ve cephaneler üzerindeki örtüyü koruyarak şehit olmuştur.' },
+      { q: 'Batı Cephesi\'nde I. ve II. İnönü Savaşlarını kazanan komutanımız kimdir? 🇹🇷', a: 'İsmet İnönü 🇹🇷', d: ['Kazım Karabekir', 'Fevzi Çakmak'], exp: 'İsmet İnönü düşman ordularını durdurmuş ve büyük zaferler kazanmıştır.' },
+      { q: 'Türkiye Büyük Millet Meclisi (TBMM) hangi tarihte Ankara\'da açılmıştır? 🏛️', a: '23 Nisan 1920 🏛️', d: ['19 Mayıs 1919', '29 Ekim 1923'], exp: '23 Nisan 1920 milletin kendi kaderine el koyduğu gündür.' },
+      { q: 'Türkiye Cumhuriyeti hangi tarihte ilan edilmiştir? 🇹🇷', a: '29 Ekim 1923 🇹🇷', d: ['23 Nisan 1920', '30 Ağustos 1922'], exp: '29 Ekim 1923\'te Cumhuriyet resmen ilan edilmiştir.' },
+      { q: 'Düşmanı yurdumuzdan tamamen temizleyen Büyük Taarruz Zaferi hangi gün kazanılmıştır? 🏆', a: '30 Ağustos 1922 🏆', d: ['19 Mayıs', '23 Nisan'], exp: '30 Ağustos Zafer Bayramı olarak coşkuyla kutlanır.' },
+      { q: 'Milli Mücadele\'de Aydın yöresinde düşmana karşı destan yazan efelerin lideri kimdir? 🇹🇷', a: 'Yörük Ali Efe 🇹🇷', d: ['Şahin Bey', 'Sütçü İmam'], exp: 'Yörük Ali Efe Kuva-yı Milliye kahramanıdır.' },
+      { q: 'Kurtuluş Savaşı\'nda Türk milletinin yazdığı kahramanlık destanını ölümsüzleştiren İstiklal Marşımızın şairi kimdir? 📜', a: 'Mehmet Akif Ersoy 📜', d: ['Ziya Gökalp', 'Yahya Kemal'], exp: 'Milli şairimiz Mehmet Akif Ersoy İstiklal Marşı\'nı orduya ve millete armağan etmiştir.' },
+      { q: 'İstiklal Marşı TBMM tarafından hangi tarihte milli marşımız olarak kabul edilmiştir? 📜', a: '12 Mart 1921 📜', d: ['29 Ekim 1923', '23 Nisan 1920'], exp: '12 Mart 1921 İstiklal Marşı\'nın kabul tarihidir.' },
+      { q: 'Her insanın parmak izinin birbirine benzememesi neyi kanıtlar? 🖐️', a: 'Her bireyin eşsiz ve benzersiz olduğunu 🖐️', d: ['İnsanların aynı olduğunu', 'Tesadüf olduğunu'], exp: 'Parmak izi dünyadaki 8 milyar insanın tamamında farklıdır.' },
+      { q: 'Milli kültürümüzü yansıtan aşağıdaki ögelerden hangisi geleneksel bir içeceğimizdir? ☕', a: 'Türk Kahvesi ve Ayran ☕', d: ['Kola', 'Gazoz'], exp: 'Türk kahvesi UNESCO somut olmayan kültürel miras listesindedir.' },
+      { q: 'Kurtuluş Savaşı\'nda cephe gerisindeki kadınların kurduğu cemiyetlerle orduya yardım eden kadın yazarımız kimdir? 📚', a: 'Halide Edib Adıvar 📚', d: ['Sabiha Gökçen', 'Afife Jale'], exp: 'Halide Edip onbaşı ve çavuş rütbeleriyle cephede görev yapmıştır.' },
+      { q: 'T.C. Kimlik Kartımızın arka yüzünde hangi resmi imza alanı ve semboller bulunur? 🪪', a: 'Türk Bayrağı ve güvenlik hologramı 🇹🇷', d: ['Futbol amblemi', 'Banka logosu'], exp: 'Ay yıldız ve özel hologramlar sahteciliği önler.' },
+      { q: 'Aşağıdakilerden hangisi bir halk oyunu türümüz DEĞİLDİR? 💃', a: 'Tango 💃', d: ['Zeybek 🕺', 'Horon 🌊'], exp: 'Zeybek, horon, halay milli danslarımızdır; tango yabancı danstır.' },
+      { q: 'Milli Mücadele\'de düzenli ordu kurulmadan önce halkın oluşturduğu gönüllü direniş birliklerine ne denir? 🇹🇷', a: 'Kuva-yı Milliye (Milli Kuvvetler) 🇹🇷', d: ['Yeniçeri Ocağı', 'Zabıta'], exp: 'Kuva-yı Milliye vatanını savunan sivil halk direnişidir.' },
+      { q: 'Mustafa Kemal Atatürk\'ün nüfus cüzdanında doğum yeri olarak hangi şehir yazar? 🏛️', a: 'Selanik 🏛️', d: ['Ankara', 'İstanbul'], exp: 'Mustafa Kemal 1881 yılında Selanik\'te doğmuştur.' },
+      { q: 'Resmi belgelerde ve sınavlarda kimliğimizi doğrulamak için kimlik kartında neyin olması zorunludur? 📸', a: 'Biyometrik Fotoğraf 📸', d: ['İmza resmi', 'Boy ölçüsü'], exp: 'Biyometrik fotoğraf kimlik doğrulamanın temel şartıdır.' },
+      { q: 'Milli Mücadele\'de Güney Cephesi kahramanlıkları sebebiyle Antep şehrimize TBMM tarafından hangi unvan verilmiştir? 🏅', a: 'Gazi (Gaziantep) 🏅', d: ['Kahraman', 'Şanlı'], exp: 'Antep\'e Gazi, Maraş\'a Kahraman, Urfa\'ya Şanlı unvanı verilmiştir.' }
+    ],
+
+    // 4. SINIF: İNSANLAR, YERLER VE ÜRETİMDEN TÜKETİME (25 ÖZGÜN SORU)
+    grade4PlacesEconomyPool: [
+      { q: 'Meteoroloji Genel Müdürlüğü tarafından yapılan hava tahmin raporlarında gökyüzünde güneş ve bulut sembolü neyi ifade eder? ⛅', a: 'Parçalı Bulutlu ⛅', d: ['Gök Gürültülü Sağanak', 'Karlı'], exp: 'Güneş ve bulut birlikteyse hava parçalı bulutludur.' },
+      { q: 'Eğimli arazilerde aşırı yağışlar sonucu toprağın büyük kütleler halinde kaymasına ne ad verilir? ⛰️', a: 'Heyelan (Toprak Kayması) ⛰️', d: ['Deprem', 'Erozyon'], exp: 'Karadeniz gibi eğimli ve çok yağış alan bölgelerde heyelan sık görülür.' },
+      { q: 'Dağlık ve dik yamaçlarda biriken kar kütlesinin aşağıya doğru hızla kaymasına ne ad verilir? ❄️', a: 'Çığ ❄️', d: ['Sel', 'Fırtına'], exp: 'Yoğun kar yağışında eğimli yamaçlardan çığ düşebilir.' },
+      { q: 'Aşırı yağmur veya eriyen karlar sebebiyle akarsuların yatağından taşarak etrafı sular altında bırakmasına ne denir? 🌊', a: 'Sel 🌊', d: ['Heyelan', 'Kuraklık'], exp: 'Sel baskınları dere yataklarına ev yapıldığında felakete dönüşür.' },
+      { q: 'Toprağın rüzgar ve sularla süpürülüp yok olmasını önlemek için yapılacak en etkili çalışma nedir? 🌲', a: 'Ağaçlandırma yapmak (Fidan dikmek) 🌲', d: ['Ağaçları kesmek', 'Bina yapmak'], exp: 'Ağaç kökleri toprağı sıkıca tutarak erozyonu önler.' },
+      { q: 'Olası bir depreme karşı evlerimizde mutlaka hazır bulundurmamız gereken çantaya ne denir? 🎒', a: 'Acil Durum ve Deprem Çantası 🎒', d: ['Okul Çantası', 'Piknik Çantası'], exp: 'Deprem çantasında su, fener, düdük, ilk yardım seti ve bisküvi olmalıdır.' },
+      { q: 'Deprem sarsıntısı bittikten sonra binadan tahliye olurken hangisi KESİNLİKLE KULLANILMAMALIDIR? 🚫', a: 'Asansör 🚫', d: ['Merdivenler', 'Yangın çıkışı'], exp: 'Deprem anında elektrik kesilebilir veya asansör boşluğa düşebilir; asansöre binilmez!' },
+      { q: 'Ailemizin belirli bir süre içindeki gelir ve giderlerini gösteren plana ne ad verilir? 💰', a: 'Aile Bütçesi 💰', d: ['Alışveriş Listesi', 'Fatura'], exp: 'Bütçe, gelire göre harcama yapmayı sağlayan finansal plandır.' },
+      { q: 'İnsanın yaşamını sürdürebilmesi için vazgeçilmez olan beslenme, barınma ve giyinmeye ne denir? 🏠', a: 'Temel İhtiyaç 🏠', d: ['Sosyal İstek', 'Lüks Harcama'], exp: 'İhtiyaçlar karşılanmazsa yaşam tehlikeye girer.' },
+      { q: 'Olmasa da yaşayabileceğimiz, ancak sahip olmak istediğimiz (pahalı oyuncak, son model telefon) şeylere ne denir? 🎮', a: 'İstek 🎮', d: ['Zorunlu İhtiyaç', 'Vergi'], exp: 'İstekler ihtiyaçlardan sonra bütçeye göre karşılanmalıdır.' },
+      { q: 'Bilinçli bir tüketici alışverişe çıkmadan önce parasını doğru harcamak için ne hazırlamalıdır? 📝', a: 'İhtiyaç Listesi 📝', d: ['Fotoğraf albümü', 'Hediye kutusu'], exp: 'Alışveriş listesi gereksiz harcamaları ve israfı önler.' },
+      { q: 'Ekmek, su ve elektriğin gereksiz yere fazlaca harcanıp tüketilmesine ne ad verilir? ❌', a: 'İsraf ❌', d: ['Tasarruf', 'Üretim'], exp: 'Kaynakların boş yere harcanması israftır.' },
+      { q: 'Geri dönüştürülebilen 1 ton kağıdın geri kazanılması kaç yetişkin ağacın kesilmesini önler? 🌳', a: 'Yaklaşık 17 ağaç 🌳', d: ['1 ağaç', '100 ağaç'], exp: 'Kağıt geri dönüşümü ormanları korumak için muazzam bir katkıdır.' },
+      { q: 'Ülkemizde afet ve acil durum yönetimini yürüten resmi devlet kurumu hangisidir? 🚨', a: 'AFAD 🚨', d: ['TSE', 'TÜİK'], exp: 'AFAD, Afet ve Acil Durum Yönetimi Başkanlığı\'dır.' },
+      { q: 'Tükettiğimiz domates, buğday ve elma hangi ekonomik faaliyet koluna aittir? 🚜', a: 'Tarım 🚜', d: ['Sanayi', 'Madencilik'], exp: 'Topraktan yetiştirilen bitkisel ürünler tarım sektörüdür.' },
+      { q: 'İnek, koyun ve tavuk besleyerek et, süt ve yumurta elde etme faaliyetine ne denir? 🐮', a: 'Hayvancılık 🐮', d: ['Ormancılık', 'Turizm'], exp: 'Hayvansal besinler hayvancılık faaliyetiyle üretilir.' },
+      { q: 'Fabrikalarda hammaddelerin işlenerek yeni ürünlere dönüştürülmesine ne ad verilir? 🏭', a: 'Sanayi (Üretim) 🏭', d: ['Ticaret', 'Hizmet'], exp: 'Sanayi tesisleri un, kumaş, araba ve eşya üretir.' },
+      { q: 'Doktor, öğretmen, şoför ve avukat gibi doğrudan mal üretmeyip hizmet sunan sektör hangisidir? 💼', a: 'Hizmet Sektörü 💼', d: ['Tarım Sektörü', 'Madencilik'], exp: 'Hizmet sektörü toplumun eğitim, sağlık, ulaşım ihtiyaçlarını karşılar.' },
+      { q: 'Bir ürünün bozulması durumunda satıcının tamir veya değişim garantisi verdiği resmi evrak nedir? 📄', a: 'Garanti Belgesi 📄', d: ['Kullanma kılavuzu', 'Reklam broşürü'], exp: 'Garanti belgesi tüketiciyi arızalara karşı korur.' },
+      { q: 'Alışverişte aldığımız fiş üzerindeki KDV ibaresi devlete ne ödendiğini gösterir? 🏛️', a: 'Vergi (Katma Değer Vergisi) 🏛️', d: ['Bağış', 'Ceza'], exp: 'Vergiler okullar, yollar ve hastaneler olarak millete geri döner.' },
+      { q: 'Deprem sarsıntısı anında başımızı korumak için sağlam bir masanın yanında hangi pozisyonu alırız? 🛡️', a: 'Çök - Kapan - Tutun 🛡️', d: ['Ayağa kalkıp koşmak', 'Pencereden bakmak'], exp: 'Çök-Kapan-Tutun düşen cisimlerden başımızı korur.' },
+      { q: 'Orman yangınlarını yetkililere bildirmek için hangi acil çağrı numarası aranır? 🌲🔥', a: '112 Acil Çağrı (Orman Yangın İhbar) 📞', d: ['155', '182'], exp: 'Artık tüm acil durumlar 112 numarasında birleşmiştir.' },
+      { q: 'Suyun buharlaşarak atmosfere çıkması ve yağmur olarak yeryüzüne geri dönmesine ne ad verilir? 💧', a: 'Su Döngüsü 💧', d: ['Rüzgar akımı', 'Toprak kayması'], exp: 'Su döngüsü Dünya\'daki tatlı su kaynaklarını yeniler.' },
+      { q: 'Tarihi ve doğal güzellikleri görmek için ülkemize gelen turistlerin oluşturduğu gelir kapısına ne ad verilir? 🧳', a: 'Turizm (Bacasız Sanayi) 🧳', d: ['Tarım', 'Madencilik'], exp: 'Turizm ülkemize döviz ve kültürel zenginlik kazandırır.' },
+      { q: 'Aşağıdakilerden hangisi çevre kirliliğini ÖNLEYEN bir davranıştır? 🌱', a: 'Toplu taşıma araçlarını tercih etmek 🌱', d: ['Çöpleri yere atmak', 'Naylon poşetleri yakmak'], exp: 'Toplu taşıma karbon salınımını azaltır.' }
+    ],
+
+    // 4. SINIF: COUNTRIES, NATIONALITIES, JOBS & ROUTINES (35 ÖZGÜN KELİME & SESLİ)
+    grade4CountriesRoutinesPool: [
+      { englishWord: 'Turkey', q: 'İngilizce "Turkey" hangi ülkedir? 🇹🇷', a: 'Türkiye 🇹🇷', d: ['Almanya 🇩🇪', 'Fransa 🇫🇷'], exp: 'Turkey = Türkiye demektir.' },
+      { englishWord: 'Turkish', q: '"I am from Turkey. I am Turkish." cümlesinde "Turkish" ne anlama gelir? 🇹🇷', a: 'Türk (Milliyet) 🇹🇷', d: ['İngiliz', 'Fransız'], exp: 'Turkish = Türk demektir.' },
+      { englishWord: 'England', q: 'İngilizce "England" hangi ülkedir? 🇬🇧', a: 'İngiltere 🇬🇧', d: ['İtalya 🇮🇹', 'İspanya 🇪🇸'], exp: 'England = İngiltere demektir.' },
+      { englishWord: 'English', q: '"He is from England. He is English." cümlesinde "English" nedir? 🇬🇧', a: 'İngiliz 🇬🇧', d: ['Alman', 'Japon'], exp: 'English = İngiliz demektir.' },
+      { englishWord: 'Germany', q: 'İngilizce "Germany" hangi ülkedir? 🇩🇪', a: 'Almanya 🇩🇪', d: ['Fransa 🇫🇷', 'Rusya 🇷🇺'], exp: 'Germany = Almanya demektir.' },
+      { englishWord: 'German', q: '"She is from Germany. She is German." cümlesinde "German" nedir? 🇩🇪', a: 'Alman 🇩🇪', d: ['İtalyan', 'İspanyol'], exp: 'German = Alman demektir.' },
+      { englishWord: 'France', q: 'İngilizce "France" hangi ülkedir? 🇫🇷', a: 'Fransa 🇫🇷', d: ['İtalya 🇮🇹', 'Japonya 🇯🇵'], exp: 'France = Fransa demektir.' },
+      { englishWord: 'French', q: '"They are from France. They are French." cümlesinde "French" nedir? 🇫🇷', a: 'Fransız 🇫🇷', d: ['Alman', 'İngiliz'], exp: 'French = Fransız demektir.' },
+      { englishWord: 'Spain', q: 'İngilizce "Spain" hangi ülkedir? 🇪🇸', a: 'İspanya 🇪🇸', d: ['İtalya 🇮🇹', 'Çin 🇨🇳'], exp: 'Spain = İspanya demektir.' },
+      { englishWord: 'Spanish', q: 'İngilizce "Spanish" hangi milliyettir? 🇪🇸', a: 'İspanyol 🇪🇸', d: ['Fransız', 'Alman'], exp: 'Spanish = İspanyol demektir.' },
+      { englishWord: 'Italy', q: 'İngilizce "Italy" hangi ülkedir? 🇮🇹', a: 'İtalya 🇮🇹', d: ['İspanya 🇪🇸', 'Yunanistan 🇬🇷'], exp: 'Italy = İtalya demektir.' },
+      { englishWord: 'Italian', q: 'İngilizce "Italian" hangi milliyettir? 🇮🇹', a: 'İtalyan 🇮🇹', d: ['Alman', 'Fransız'], exp: 'Italian = İtalyan demektir.' },
+      { englishWord: 'Japan', q: 'İngilizce "Japan" hangi Asya ülkesidir? 🇯🇵', a: 'Japonya 🇯🇵', d: ['Çin 🇨🇳', 'Kore 🇰🇷'], exp: 'Japan = Japonya demektir.' },
+      { englishWord: 'Japanese', q: 'İngilizce "Japanese" hangi millettir? 🇯🇵', a: 'Japon 🇯🇵', d: ['Çinli', 'Koreli'], exp: 'Japanese = Japon demektir.' },
+      { englishWord: 'China', q: 'İngilizce "China" hangi ülkedir? 🇨🇳', a: 'Çin 🇨🇳', d: ['Japonya 🇯🇵', 'Hindistan 🇮🇳'], exp: 'China = Çin demektir.' },
+      { englishWord: 'Doctor', q: 'İngilizce "Doctor" hangi meslektir? 🩺', a: 'Doktor 🩺', d: ['Öğretmen 👨‍🏫', 'Pilot ✈️'], exp: 'Doctor = Doktor demektir.' },
+      { englishWord: 'Teacher', q: 'İngilizce "Teacher" hangi meslektir? 👨‍🏫', a: 'Öğretmen 👨‍🏫', d: ['Polis 👮', 'Aşçı 👨‍🍳'], exp: 'Teacher = Öğretmen demektir.' },
+      { englishWord: 'Pilot', q: 'İngilizce "Pilot" ne iş yapar? ✈️', a: 'Uçak kullanır (Pilot) ✈️', d: ['Gemi kullanır', 'Yemek yapar'], exp: 'Pilot = Pilot (Uçak sürücüsü) demektir.' },
+      { englishWord: 'Firefighter', q: 'İngilizce "Firefighter" hangi cesur meslektir? 🚒', a: 'İtfaiyeci 🚒', d: ['Polis 👮', 'Çiftçi 🚜'], exp: 'Firefighter = İtfaiyeci demektir.' },
+      { englishWord: 'Police officer', q: 'İngilizce "Police officer" hangi meslektir? 👮', a: 'Polis Memuru 👮', d: ['Doktor 🩺', 'Hemşire 👩‍⚕️'], exp: 'Police officer = Polis memuru demektir.' },
+      { englishWord: 'Vet', q: 'İngilizce "Vet (Veterinarian)" hangi hayvan dostu doktordur? 🐾', a: 'Veteriner 🐾', d: ['Diş hekimi 🦷', 'Aşçı 👨‍🍳'], exp: 'Vet = Veteriner hekim demektir.' },
+      { englishWord: 'Chef', q: 'İngilizce "Chef" hangi meslektir? 👨‍🍳', a: 'Aşçı / Şef 👨‍🍳', d: ['Garson ☕', 'Çiftçi 🚜'], exp: 'Chef = Aşçı demektir.' },
+      { englishWord: 'Farmer', q: 'İngilizce "Farmer" tarlada çalışan hangi meslektir? 🚜', a: 'Çiftçi 🚜', d: ['Mühendis', 'Bahçıvan'], exp: 'Farmer = Çiftçi demektir.' },
+      { englishWord: 'Nurse', q: 'İngilizce "Nurse" hastanedeki hangi sağlık çalışanıdır? 👩‍⚕️', a: 'Hemşire 👩‍⚕️', d: ['Doktor 🩺', 'Eczacı 💊'], exp: 'Nurse = Hemşire demektir.' },
+      { englishWord: 'Get up', q: 'İngilizce "I get up early in the morning." cümlesinde "Get up" nedir? ⏰', a: 'Uyanmak / Yataktan kalkmak ⏰', d: ['Uyumak 😴', 'Kahvaltı yapmak 🍳'], exp: 'Get up = Yataktan kalkmak demektir.' },
+      { englishWord: 'Brush teeth', q: 'İngilizce "I brush my teeth." ne anlama gelir? 🪥', a: 'Dişlerimi fırçalarım. 🪥', d: ['Yüzümü yıkarım. 🧼', 'Giyinirim. 👕'], exp: 'Brush teeth = Diş fırçalamak demektir.' },
+      { englishWord: 'Have breakfast', q: 'İngilizce "Have breakfast" hangi öğündür? 🍳', a: 'Kahvaltı yapmak 🍳', d: ['Öğle yemeği 🥪', 'Akşam yemeği 🍲'], exp: 'Breakfast = Kahvaltı demektir.' },
+      { englishWord: 'Go to school', q: 'İngilizce "I go to school by bus." cümlesi ne demektir? 🚌', a: 'Okula otobüsle giderim. 🚌', d: ['Okuldan eve dönerim.', 'Parka giderim.'], exp: 'Go to school = Okula gitmek demektir.' },
+      { englishWord: 'Do homework', q: 'İngilizce "Do homework" hangi okul rutinidir? 📝', a: 'Ödev yapmak 📝', d: ['Oyun oynamak 🎮', 'Kitap almak 📚'], exp: 'Do homework = Ödev yapmak demektir.' },
+      { englishWord: 'What time is it', q: '"What time is it? — It is four o\'clock." Saat kaçtır? ⏰', a: 'Saat 04:00 (Dört) ⏰', d: ['Saat 04:30', 'Saat 05:00'], exp: 'Four o\'clock = Saat tam dört demektir.' },
+      { englishWord: 'Half past', q: '"It is half past two." ifadesi dijital saatte hangisidir? ⏰', a: '02:30 ⏰', d: ['02:15', '03:00'], exp: 'Half past = Buçuk demektir. Half past two = İki buçuk (02:30).' },
+      { englishWord: 'Where are you from', q: '"Where are you from?" sorusunun Türkçe karşılığı nedir? 🗺️', a: 'Nerelisin? (Hangi ülkedensin?) 🗺️', d: ['Adın ne?', 'Kaç yaşındasın?'], exp: '"Where are you from?" nereli olduğunu sorar.' },
+      { englishWord: 'Sleep', q: 'İngilizce "I go to bed and sleep at ten." ne anlatır? 😴', a: 'Saat onda yatağa gider ve uyurum. 😴', d: ['Saat onda uyanırım.', 'Saat onda yemek yerim.'], exp: 'Sleep = Uyumak demektir.' },
+      { englishWord: 'Sing a song', q: 'İngilizce "Singer" (şarkıcı) ne yapar? 🎤', a: 'Sings a song (Şarkı söyler) 🎤', d: ['Drives a car', 'Flies a plane'], exp: 'Singer şarkıcı demektir.' },
+      { englishWord: 'Read a book', q: 'İngilizce "I read a book every evening." ne demektir? 📖', a: 'Her akşam kitap okurum. 📖', d: ['Her sabah koşarım.', 'Kitap yazarım.'], exp: 'Read a book = Kitap okumak demektir.' }
+    ],
+
+    // -------------------------------------------------------------
+    // KARMA MATEMATİK FONKSİYONLARI (3. VE 4. SINIF)
+    // -------------------------------------------------------------
+    generateGrade3Math() {
+      const r = Math.random();
+      if (r < 0.4) {
+        return this.generateGrade3MultDiv();
+      } else if (r < 0.75) {
+        return this.generateGrade3RomenAndPlace();
+      } else {
+        const item = this.grade3FractionsAndShapesPool[Math.floor(Math.random() * this.grade3FractionsAndShapesPool.length)];
+        return {
+          question: item.q,
+          correct: item.a,
+          distractors: item.d,
+          explanation: item.exp
+        };
+      }
+    },
+
+    generateGrade4Math() {
+      const r = Math.random();
+      if (r < 0.4) {
+        return this.generateGrade4DigitsOperations();
+      } else if (r < 0.7) {
+        return this.generateGrade4PerimeterArea();
+      } else {
+        const item = this.grade4FractionsAnglesPool[Math.floor(Math.random() * this.grade4FractionsAnglesPool.length)];
+        return {
+          question: item.q,
+          correct: item.a,
+          distractors: item.d,
+          explanation: item.exp
+        };
+      }
+    },
 
     // -------------------------------------------------------------
     // 1. SINIF: İLK OKUMA YAZMA HAVUZU
@@ -2524,11 +3215,11 @@
 
       // Karıştırıp seç
       const shuffled = [...iconPool].sort(() => 0.5 - Math.random());
-      const seqLength = (g === 0 || g === 1) ? 3 : 4;
+      const seqLength = (g === 0 || g === 1) ? 3 : (g >= 4 ? 5 : 4);
       const sequence = shuffled.slice(0, seqLength);
       const unchosen = shuffled[seqLength];
 
-      const modes = ['ask_second', 'ask_first', 'ask_last', 'ask_not_in_seq'];
+      const modes = ['ask_second', 'ask_first', 'ask_last', 'ask_not_in_seq', 'ask_third'];
       const chosenMode = modes[Math.floor(Math.random() * modes.length)];
 
       let questionTitle = '';
@@ -2548,6 +3239,13 @@
         distractors = [
           `2. ${sequence[1].emoji} ${sequence[1].name}`,
           `3. ${sequence[2].emoji} ${sequence[2].name}`
+        ];
+      } else if (chosenMode === 'ask_third') {
+        questionTitle = 'Bu seride 3. (ÜÇÜNCÜ) sırada hangi sembol vardı?';
+        correct = `3. ${sequence[2].emoji} ${sequence[2].name}`;
+        distractors = [
+          `1. ${sequence[0].emoji} ${sequence[0].name}`,
+          `2. ${sequence[1].emoji} ${sequence[1].name}`
         ];
       } else if (chosenMode === 'ask_last') {
         const lastIdx = seqLength - 1;
@@ -2767,6 +3465,142 @@
           englishWord: raw.englishWord,
           lang: 'en'
         }, '🍎 Animals & Fruits');
+      } else if (gameType === 'math_romen_place_3') {
+        const raw = this.generateGrade3RomenAndPlace();
+        return this.buildQuestionItem(raw, '🏛️ 3 Basamaklı Sayılar & Romen Rakamları');
+      } else if (gameType === 'math_mult_div_3') {
+        const raw = this.generateGrade3MultDiv();
+        return this.buildQuestionItem(raw, '🌪️ Çarpım Tablosu & Bölme Düellosu');
+      } else if (gameType === 'math_fractions_shapes_3') {
+        const raw = this.grade3FractionsAndShapesPool[Math.floor(Math.random() * this.grade3FractionsAndShapesPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🧊 Kesirler & Geometrik Cisimler');
+      } else if (gameType === 'turkish_homonyms_figurative_3') {
+        const raw = this.grade3HomonymsFigurativePool[Math.floor(Math.random() * this.grade3HomonymsFigurativePool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🎭 Eş Sesli Kelimeler & Mecaz Anlam');
+      } else if (gameType === 'turkish_punctuation_5n1k_3') {
+        const raw = this.grade3Punctuation5N1KPool[Math.floor(Math.random() * this.grade3Punctuation5N1KPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '✍️ Noktalama, Yazım Kuralları & 5N1K');
+      } else if (gameType === 'science_earth_senses_3') {
+        const raw = this.grade3EarthSensesPool[Math.floor(Math.random() * this.grade3EarthSensesPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🌍 Gezegenimiz Dünya ve Beş Duyumuz');
+      } else if (gameType === 'science_force_matter_3') {
+        const raw = this.grade3ForceMatterPool[Math.floor(Math.random() * this.grade3ForceMatterPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🧲 Kuvveti Tanıyalım ve Madde');
+      } else if (gameType === 'lifescience_compass_consumer_3') {
+        const raw = this.grade3CompassConsumerPool[Math.floor(Math.random() * this.grade3CompassConsumerPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🧭 Yönlerimiz, Kroki ve Tüketici Hakları');
+      } else if (gameType === 'english_family_feelings_3') {
+        const raw = this.grade3FamilyFeelingsPool[Math.floor(Math.random() * this.grade3FamilyFeelingsPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '👨‍👩‍👧 Family, Feelings & Abilities');
+      } else if (gameType === 'math_digits_operations_4') {
+        const raw = this.generateGrade4DigitsOperations();
+        return this.buildQuestionItem(raw, '👑 4, 5, 6 Basamaklı Sayılar & Dört İşlem');
+      } else if (gameType === 'math_fractions_angles_4') {
+        const raw = this.grade4FractionsAnglesPool[Math.floor(Math.random() * this.grade4FractionsAnglesPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🍕 Kesirler, Zaman ve Açılar');
+      } else if (gameType === 'math_perimeter_area_4') {
+        const raw = this.generateGrade4PerimeterArea();
+        return this.buildQuestionItem(raw, '📐 Çevre ve Alan Hesaplama');
+      } else if (gameType === 'turkish_idioms_proverbs_4') {
+        const raw = this.grade4IdiomsProverbsPool[Math.floor(Math.random() * this.grade4IdiomsProverbsPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🏆 Deyimler ve Atasözleri Düellosu');
+      } else if (gameType === 'turkish_sentences_logic_4') {
+        const raw = this.grade4SentencesLogicPool[Math.floor(Math.random() * this.grade4SentencesLogicPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '💡 Sebep-Sonuç, Amaç-Sonuç & Yargılar');
+      } else if (gameType === 'science_crust_nutrition_4') {
+        const raw = this.grade4CrustNutritionPool[Math.floor(Math.random() * this.grade4CrustNutritionPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🌍 Yer Kabuğu, Hareketler & Besinler');
+      } else if (gameType === 'science_circuits_magnets_4') {
+        const raw = this.grade4CircuitsMagnetsPool[Math.floor(Math.random() * this.grade4CircuitsMagnetsPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '💡 Kuvvet, Mıknatıslar & Devreler');
+      } else if (gameType === 'social_identity_heroes_4') {
+        const raw = this.grade4IdentityHeroesPool[Math.floor(Math.random() * this.grade4IdentityHeroesPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🇹🇷 Birey, Toplum & Milli Mücadele');
+      } else if (gameType === 'social_places_economy_4') {
+        const raw = this.grade4PlacesEconomyPool[Math.floor(Math.random() * this.grade4PlacesEconomyPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        }, '🗺️ İnsanlar, Yerler & Üretimden Tüketime');
+      } else if (gameType === 'english_countries_routines_4') {
+        const raw = this.grade4CountriesRoutinesPool[Math.floor(Math.random() * this.grade4CountriesRoutinesPool.length)];
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '🌍 Countries, Routines & Jobs');
       } else if (gameType === 'math') {
         let raw;
         if (g === 0) {
@@ -2854,21 +3688,43 @@
             }, '✍️ Noktalama & Yazım Kuralları');
           }
         } else if (g === 3) {
-          const raw = this.grade3TurkishSciencePool[Math.floor(Math.random() * this.grade3TurkishSciencePool.length)];
-          return this.buildQuestionItem({
-            question: raw.q,
-            correct: raw.a,
-            distractors: raw.d,
-            explanation: raw.exp
-          }, '📚 Türkçe');
+          const r = Math.random();
+          if (r < 0.5) {
+            const raw = this.grade3HomonymsFigurativePool[Math.floor(Math.random() * this.grade3HomonymsFigurativePool.length)];
+            return this.buildQuestionItem({
+              question: raw.q,
+              correct: raw.a,
+              distractors: raw.d,
+              explanation: raw.exp
+            }, '🎭 Eş Sesli Kelimeler & Mecaz');
+          } else {
+            const raw = this.grade3Punctuation5N1KPool[Math.floor(Math.random() * this.grade3Punctuation5N1KPool.length)];
+            return this.buildQuestionItem({
+              question: raw.q,
+              correct: raw.a,
+              distractors: raw.d,
+              explanation: raw.exp
+            }, '✍️ Noktalama & 5N1K');
+          }
         } else {
-          const raw = this.grade4TurkishSocialPool[Math.floor(Math.random() * this.grade4TurkishSocialPool.length)];
-          return this.buildQuestionItem({
-            question: raw.q,
-            correct: raw.a,
-            distractors: raw.d,
-            explanation: raw.exp
-          }, '📚 Türkçe');
+          const r = Math.random();
+          if (r < 0.5) {
+            const raw = this.grade4IdiomsProverbsPool[Math.floor(Math.random() * this.grade4IdiomsProverbsPool.length)];
+            return this.buildQuestionItem({
+              question: raw.q,
+              correct: raw.a,
+              distractors: raw.d,
+              explanation: raw.exp
+            }, '🏆 Deyimler ve Atasözleri');
+          } else {
+            const raw = this.grade4SentencesLogicPool[Math.floor(Math.random() * this.grade4SentencesLogicPool.length)];
+            return this.buildQuestionItem({
+              question: raw.q,
+              correct: raw.a,
+              distractors: raw.d,
+              explanation: raw.exp
+            }, '💡 Cümlede Anlam & Mantık');
+          }
         }
       } else if (gameType === 'lifescience') {
         if (g === 1) {
@@ -2895,6 +3751,15 @@
             const raw = this.grade2CultureAndCountryPool[Math.floor(Math.random() * this.grade2CultureAndCountryPool.length)];
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🇹🇷 Ülkemiz ve Kültürümüz');
           }
+        } else if (g === 3) {
+          const r = Math.random();
+          if (r < 0.75) {
+            const raw = this.grade3CompassConsumerPool[Math.floor(Math.random() * this.grade3CompassConsumerPool.length)];
+            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧭 Yönlerimiz, Kroki & Tüketici');
+          } else {
+            const raw = this.lifeSciencePool[Math.floor(Math.random() * this.lifeSciencePool.length)];
+            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌱 Hayat Bilgisi');
+          }
         } else {
           let filtered = this.lifeSciencePool.filter(item => !item.grade || item.grade <= g);
           if (filtered.length === 0) filtered = this.lifeSciencePool;
@@ -2908,25 +3773,45 @@
           }, '🌱 Hayat Bilgisi');
         }
       } else if (gameType === 'science') {
-        let filtered = this.sciencePool.filter(item => !item.grade || item.grade === g || item.grade <= g);
-        if (filtered.length === 0) filtered = this.sciencePool;
-        const raw = filtered[Math.floor(Math.random() * filtered.length)];
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp,
-          audioKey: raw.audioKey || null
-        }, '🔬 Fen Bilimleri');
+        if (g === 3) {
+          const r = Math.random();
+          if (r < 0.5) {
+            const raw = this.grade3EarthSensesPool[Math.floor(Math.random() * this.grade3EarthSensesPool.length)];
+            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌍 Gezegenimiz & Duyularımız');
+          } else {
+            const raw = this.grade3ForceMatterPool[Math.floor(Math.random() * this.grade3ForceMatterPool.length)];
+            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧲 Kuvvet ve Madde');
+          }
+        } else if (g === 4) {
+          const r = Math.random();
+          if (r < 0.5) {
+            const raw = this.grade4CrustNutritionPool[Math.floor(Math.random() * this.grade4CrustNutritionPool.length)];
+            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌍 Yer Kabuğu & Besinlerimiz');
+          } else {
+            const raw = this.grade4CircuitsMagnetsPool[Math.floor(Math.random() * this.grade4CircuitsMagnetsPool.length)];
+            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '💡 Mıknatıslar & Elektrik Devreleri');
+          }
+        } else {
+          let filtered = this.sciencePool.filter(item => !item.grade || item.grade === g || item.grade <= g);
+          if (filtered.length === 0) filtered = this.sciencePool;
+          const raw = filtered[Math.floor(Math.random() * filtered.length)];
+          return this.buildQuestionItem({
+            question: raw.q,
+            correct: raw.a,
+            distractors: raw.d,
+            explanation: raw.exp,
+            audioKey: raw.audioKey || null
+          }, '🔬 Fen Bilimleri');
+        }
       } else if (gameType === 'social') {
-        const raw = this.socialPool[Math.floor(Math.random() * this.socialPool.length)];
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp,
-          audioKey: raw.audioKey || null
-        }, '🗺️ Sosyal Bilgiler');
+        const r = Math.random();
+        if (r < 0.5) {
+          const raw = this.grade4IdentityHeroesPool[Math.floor(Math.random() * this.grade4IdentityHeroesPool.length)];
+          return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🇹🇷 Birey, Toplum & Kahramanlarımız');
+        } else {
+          const raw = this.grade4PlacesEconomyPool[Math.floor(Math.random() * this.grade4PlacesEconomyPool.length)];
+          return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🗺️ İnsanlar, Yerler & Üretim');
+        }
       } else if (gameType === 'english_colors') {
         const raw = this.englishColorsPool[Math.floor(Math.random() * this.englishColorsPool.length)];
         return this.buildQuestionItem({
@@ -2975,6 +3860,8 @@
           ...this.englishGreetingsPool,
           ...this.englishSchoolObjectsPool,
           ...this.englishAnimalsAndFruitsPool,
+          ...this.grade3FamilyFeelingsPool,
+          ...this.grade4CountriesRoutinesPool,
           ...this.englishPool
         ];
         const raw = allPools[Math.floor(Math.random() * allPools.length)];
@@ -3513,7 +4400,25 @@
       english_colors: 'İngilizce Renkler',
       english_animals: 'İngilizce Hayvanlar',
       english_numbers: 'İngilizce Sayılar',
-      english_greetings: 'İngilizce Selamlaşma',
+      math_romen_place_3: '3 Basamaklı Sayılar ve Romen Rakamları',
+      math_mult_div_3: 'Çarpım Tablosu Şampiyonası ve Bölme',
+      math_fractions_shapes_3: 'Kesirler ve Geometrik Cisimler',
+      turkish_homonyms_figurative_3: 'Eş Sesli Kelimeler ve Mecaz Anlam',
+      turkish_punctuation_5n1k_3: 'Noktalama, Yazım Kuralları ve 5N1K',
+      science_earth_senses_3: 'Gezegenimiz Dünya ve Beş Duyumuz',
+      science_force_matter_3: 'Kuvveti Tanıyalım ve Madde',
+      lifescience_compass_consumer_3: 'Yönlerimiz, Kroki ve Tüketici Hakları',
+      english_family_feelings_3: 'Family Members, Feelings & Abilities',
+      math_digits_operations_4: '4, 5, 6 Basamaklı Sayılar ve Dört İşlem',
+      math_fractions_angles_4: 'Kesirler, Zaman ve Açılar',
+      math_perimeter_area_4: 'Çevre ve Alan Hesaplama',
+      turkish_idioms_proverbs_4: 'Deyimler ve Atasözleri Düellosu',
+      turkish_sentences_logic_4: 'Sebep-Sonuç, Amaç-Sonuç ve Yargılar',
+      science_crust_nutrition_4: 'Yer Kabuğu, Hareketler ve Besinlerimiz',
+      science_circuits_magnets_4: 'Kuvvet, Mıknatıslar ve Basit Devreler',
+      social_identity_heroes_4: 'Birey, Toplum ve Milli Mücadele',
+      social_places_economy_4: 'İnsanlar, Yerler ve Üretimden Tüketime',
+      english_countries_routines_4: 'Countries, Routines & Jobs',
       oddone: 'Farklı Olanı Yakala',
       stroop: 'Renk Tuzakları (Stroop)',
       memory: 'Süper Hafıza',
@@ -4539,34 +5444,58 @@
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'mult_table', label: '🌪️ Çarpım Tablosu' },
-          { id: 'division', label: '➗ Hızlı Bölme' },
-          { id: 'place_value', label: '📐 Basamak Değeri' }
+          { id: 'mult_table', label: '🌪️ Çarpım & Bölme' },
+          { id: 'place_value', label: '🏛️ Basamak & Romen' },
+          { id: 'fractions_3', label: '🍕 Kesirler & Şekiller' }
         ],
         games: [
           {
-            id: 'math',
+            id: 'math_romen_place_3',
             active: true,
-            title: 'Kafa Kafaya Matematik',
-            icon: '🧮',
-            badge: '⚡ Çarpım Tablosu',
-            featureTag: '🌪️ Fırtına Hesap',
-            description: 'Çarpım tablosu fırtınası! Kim daha hızlı hesaplayacak? 🌪️',
-            tags: ['🌪️ Çarpım Tablosu', '➗ Hızlı Bölme', '📐 Basamak Değeri'],
+            title: '3 Basamaklı Sayılar & Romen Rakamları',
+            icon: '🏛️',
+            badge: 'Dinamik Soru',
+            featureTag: '🏛️ Basamak & Romen',
+            description: 'Basamak değerleri, yüzlüğe yuvarlama ve I\'dan XX\'ye Romen rakamları! 🏛️📦',
+            tags: ['🏛️ Romen Rakamları', '📦 Basamak Değeri', '🎯 Yüzlüğe Yuvarlama'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'place_value'
+          },
+          {
+            id: 'math_mult_div_3',
+            active: true,
+            title: 'Çarpım Tablosu & Bölme Düellosu',
+            icon: '🌪️',
+            badge: 'Sınırsız İşlem',
+            featureTag: '⚡ 6, 7, 8, 9 Fırtınası',
+            description: '6, 7, 8 ve 9\'lar çarpım tablosu ve bölme işlemlerinde sınırsız pratik! 🌪️➗',
+            tags: ['🌪️ Çarpım Tablosu', '➗ Bölme İşlemi', '📖 Sözel Problemler'],
             btnText: 'Düelloyu Başlat',
             topic: 'mult_table'
           },
           {
-            id: 'geometry_shapes',
-            active: false,
-            title: 'Geometrik Cisimler & Köşeler',
+            id: 'math_fractions_shapes_3',
+            active: true,
+            title: 'Kesirler & Geometrik Cisimler',
             icon: '🧊',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Küp, prizma ve silindirin yüzey ve köşelerini keşfetme modu! 🧊',
-            tags: ['🧊 Küp & Prizma', '📐 Yüz ve Köşe', '🎯 Uzamsal'],
-            btnText: 'Yakında',
-            topic: 'place_value'
+            badge: '26 Özgün Soru',
+            featureTag: '🍕 Kesir & Prizma',
+            description: 'Birim kesir, pay-payda ve küp/prizmaların yüz-köşe-ayrıt hesapları! 🧊🍕',
+            tags: ['🍕 Birim Kesir', '🧊 Küp & Prizma', '📐 Yüz, Köşe & Ayrıt'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'fractions_3'
+          },
+          {
+            id: 'math',
+            active: true,
+            title: 'Kafa Kafaya Matematik (Karma)',
+            icon: '🧮',
+            badge: '⚡ Sınıf Düellosu',
+            featureTag: '🌪️ Fırtına Hesap',
+            description: 'Çarpım tablosu, bölme, kesirler ve Romen rakamlarından karma meydan okuma! 🌪️',
+            tags: ['🌪️ Çarpım Tablosu', '➗ Hızlı Bölme', '📐 Basamak Değeri'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -4580,34 +5509,45 @@
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'homonyms', label: '🎭 Eş Sesliler' },
-          { id: 'idioms_3', label: '📜 Deyimler' },
-          { id: 'grammar_3', label: '✍️ Dil Bilgisi' }
+          { id: 'homonyms', label: '🎭 Eş Sesli & Mecaz' },
+          { id: 'grammar_3', label: '✍️ Noktalama & 5N1K' }
         ],
         games: [
           {
-            id: 'turkish',
+            id: 'turkish_homonyms_figurative_3',
             active: true,
-            title: 'Hızlı Türkçe & Bilgi Avcısı',
-            icon: '🦉',
-            badge: '⚡ Eş Sesli & Bilgi',
-            featureTag: '🌟 Keşif Zamanı',
-            description: 'Eş sesli kelimeler ve eğlenceli Türkçe meydan okuması! 🌟',
-            tags: ['🎭 Eş Sesliler', '📜 Deyimler', '✍️ Noktalama'],
+            title: 'Eş Sesli Kelimeler & Mecaz Anlam',
+            icon: '🎭',
+            badge: '30 Özgün Soru',
+            featureTag: '🎭 Sözcükte Anlam',
+            description: 'Yüz, çay, kaz gibi eş sesli sözcükler ve gerçek-mecaz anlam ayrımı! 🎭📖',
+            tags: ['🎭 Eş Sesli (Sesteş)', '💔 Mecaz Anlam', '📖 Gerçek Anlam'],
             btnText: 'Düelloyu Başlat',
             topic: 'homonyms'
           },
           {
-            id: '5n1k_challenge',
-            active: false,
-            title: '5N 1K Olay Yeri İnceleme',
-            icon: '🕵️',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Kısa hikayedeki Kim, Ne, Nerede, Ne Zaman sorularını çözme! 📖',
-            tags: ['🕵️ 5N 1K', '📖 Okuduğunu Anlama', '🔍 Kanıt Bul'],
-            btnText: 'Yakında',
+            id: 'turkish_punctuation_5n1k_3',
+            active: true,
+            title: 'Noktalama, Yazım Kuralları & 5N1K',
+            icon: '✍️',
+            badge: '26 Özgün Soru',
+            featureTag: '🔍 Dedektif 5N1K',
+            description: 'Noktalama işaretleri, büyük harf kuralları ve metinlerde 5N1K analizi! 🕵️‍♂️✍️',
+            tags: ['✍️ Noktalama İşaretleri', '🕵️ 5N 1K Analizi', '📝 Yazım Kuralları'],
+            btnText: 'Düelloyu Başlat',
             topic: 'grammar_3'
+          },
+          {
+            id: 'turkish',
+            active: true,
+            title: 'Hızlı Türkçe & Bilgi Avcısı (Karma)',
+            icon: '🦉',
+            badge: '⚡ Eş Sesli & Bilgi',
+            featureTag: '🌟 Keşif Zamanı',
+            description: 'Eş sesli kelimeler, 5N1K ve eğlenceli Türkçe meydan okuması! 🌟',
+            tags: ['🎭 Eş Sesliler', '📜 Deyimler', '✍️ Noktalama'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -4616,39 +5556,38 @@
         name: 'Hayat Bilgisi',
         icon: '🌱',
         colorTheme: 'theme-lifescience',
-        tagline: 'Yönetim & Doğa Olayları',
-        description: 'Yerel yönetimler, afet bilinci, harita bilgisi ve Atatürk ilkeleri! 🏛️🇹🇷',
+        tagline: 'Yönetim, Yönler & Haklarımız',
+        description: 'Ana ve ara yönler, kroki çizimi, tüketici hakları ve toplum bilinci! 🧭🛍️',
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'disaster', label: '🛡️ Afet Bilinci' },
-          { id: 'administration', label: '🏛️ Yönetim Birimleri' },
-          { id: 'ataturk', label: '🇹🇷 Cumhuriyetimiz' }
+          { id: 'compass', label: '🧭 Yönlerimiz & Kroki' },
+          { id: 'consumer', label: '🛍️ Tüketici Hakları' }
         ],
         games: [
           {
+            id: 'lifescience_compass_consumer_3',
+            active: true,
+            title: 'Yönlerimiz, Kroki & Tüketici Hakları',
+            icon: '🧭',
+            badge: '26 Özgün Soru',
+            featureTag: '🧭 Pusula & Haklarımız',
+            description: 'Ana/ara yönler, kroki çizimi, bilinçli tüketici hakları ve komşuluk ilişkileri! 🧭🛍️',
+            tags: ['🧭 Ana & Ara Yönler', '🗺️ Kroki Çizimi', '🛍️ Bilinçli Tüketici'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'compass'
+          },
+          {
             id: 'lifescience',
             active: true,
-            title: 'Hayat Bilgisi Bilgi Yarışı',
+            title: 'Hayat Bilgisi Bilgi Yarışı (Karma)',
             icon: '🌱',
             badge: '⚡ Afet & Toplum',
             featureTag: '🏛️ Vatandaşlık',
             description: 'Afetlerde doğru davranışlar, mahalle yönetimi ve cumhuriyet! 🏛️🛡️',
             tags: ['🛡️ Deprem Bilinci', '🏛️ Muhtar & Kaymakam', '🇹🇷 Atatürk İlkeleri'],
             btnText: 'Düelloyu Başlat',
-            topic: 'disaster'
-          },
-          {
-            id: 'compass_map',
-            active: false,
-            title: 'Harita & Yön Bulucu',
-            icon: '🧭',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Ana yönler, kutup yıldızı ve karınca yuvalarıyla yön bulma oyunu! 🧭',
-            tags: ['🧭 Pusula', '⭐ Kutup Yıldızı', '🗺️ Kroki'],
-            btnText: 'Yakında',
-            topic: 'administration'
+            topic: 'all'
           }
         ]
       },
@@ -4657,39 +5596,50 @@
         name: 'Fen Bilimleri',
         icon: '🔬',
         colorTheme: 'theme-science',
-        tagline: 'Dünya & Duyu Organları',
-        description: 'Dünyamızın katmanları, duyu organlarımız, kuvvet ve hareket! 🌍🧲',
+        tagline: 'Dünya, Duyular & Kuvvet',
+        description: 'Dünyamızın katmanları, duyu organlarımız, kuvvet ve maddenin halleri! 🌍🧲',
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'earth_layers', label: '🌍 Dünyamızın Yapısı' },
-          { id: 'senses', label: '👂 Duyu Organları' },
-          { id: 'forces_3', label: '🧲 Kuvvet & Hareket' }
+          { id: 'earth_senses', label: '🌍 Dünya & Duyularımız' },
+          { id: 'force_matter', label: '🧲 Kuvvet & Maddenin Halleri' }
         ],
         games: [
           {
+            id: 'science_earth_senses_3',
+            active: true,
+            title: 'Gezegenimiz Dünya ve Beş Duyumuz',
+            icon: '🌍',
+            badge: '26 Özgün Soru',
+            featureTag: '🌍 Katmanlar & Duyular',
+            description: 'Dünya\'nın katmanları, 5 duyu organımız, görevleri ve organ sağlığı! 🌍👂',
+            tags: ['🌍 Dünya\'nın Katmanları', '👂 5 Duyu Organı', '👁️ Göz & Kulak Sağlığı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'earth_senses'
+          },
+          {
+            id: 'science_force_matter_3',
+            active: true,
+            title: 'Kuvveti Tanıyalım ve Madde',
+            icon: '🧲',
+            badge: '26 Özgün Soru',
+            featureTag: '⚡ Kuvvet & Haller',
+            description: 'İtme-çekme kuvveti, hareket türleri, maddenin katı-sıvı-gaz halleri! 🧲🧊',
+            tags: ['🧲 İtme & Çekme Kuvveti', '🧊 Maddenin 3 Hali', '🧽 Esnek & Berk Madde'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'force_matter'
+          },
+          {
             id: 'science',
             active: true,
-            title: 'Fen Bilimleri Laboratuvarı',
+            title: 'Fen Bilimleri Laboratuvarı (Karma)',
             icon: '🔬',
             badge: '⚡ Fen & Doğa',
             featureTag: '🌍 Bilim Kaşifi',
-            description: 'Dünyanın şekli, 5 duyu organı ve mıknatısın gizemlerini çöz! 🌍🧲',
+            description: 'Dünyanın şekli, 5 duyu organı, itme-çekme ve maddenin halleri! 🌍🧲',
             tags: ['🌍 Dünyanın Şekli', '👂 5 Duyu Organı', '🧲 İtme & Çekme'],
             btnText: 'Düelloyu Başlat',
-            topic: 'earth_layers'
-          },
-          {
-            id: 'magnet_arena',
-            active: false,
-            title: 'Mıknatıs & Madde Arenası',
-            icon: '🧲',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Mıknatısın çektiği ve çekmediği maddeleri sınıflandırma! 🧲',
-            tags: ['🧲 N & S Kutupları', '📎 Demir & Nikel', '🔬 Madde'],
-            btnText: 'Yakında',
-            topic: 'forces_3'
+            topic: 'all'
           }
         ]
       },
@@ -4698,17 +5648,30 @@
         name: 'İngilizce',
         icon: '🌍',
         colorTheme: 'theme-english',
-        tagline: 'Colors, Animals & Words',
-        description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',
+        tagline: 'Family, Feelings & Abilities',
+        description: 'Aile bireyleri, duygular, yetenekler (can/can\'t) ve renkler! 👨‍👩‍👧😊',
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
+          { id: 'family', label: '👨‍👩‍👧 Family & Feelings' },
           { id: 'colors', label: '🎨 Renkler (Colors)' },
           { id: 'animals', label: '🐾 Hayvanlar (Animals)' },
           { id: 'numbers', label: '🔢 Sayılar (Numbers)' },
           { id: 'greetings', label: '👋 Günlük İfadeler (Greetings)' }
         ],
         games: [
+          {
+            id: 'english_family_feelings_3',
+            active: true,
+            title: 'Family Members, Feelings & Abilities',
+            icon: '👨‍👩‍👧',
+            badge: '30 Soru Sesli',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Father, mother, feelings (happy, sad, tired) ve can/can\'t cümleleri! 👨‍👩‍👧😊',
+            tags: ['👨‍👩‍👧 Family Members', '😊 Feelings & Emotions', '🚀 Can & Can\'t'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'family'
+          },
           {
             id: 'english_colors',
             active: true,
@@ -4764,7 +5727,7 @@
             icon: '🇬🇧',
             badge: '⚡ Sınıf Düellosu',
             featureTag: '⚡ Hızlı Kelime',
-            description: 'Renkler, hayvanlar, sayılar ve ifadelerden karma İngilizce düellosu! 🚀',
+            description: 'Aile, duygular, renkler, hayvanlar ve sayılardan karma İngilizce düellosu! 🚀',
             tags: ['🇬🇧 Karma Pratik', '⚡ Çift Dilli Eşleme', '🔊 Otomatik Telaffuz'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
@@ -4849,38 +5812,62 @@
         icon: '🧮',
         colorTheme: 'theme-math',
         tagline: '4 İşlem & Kesirler',
-        description: 'Dört basamaklı sayılar, kesirler, açılar ve problem çözme ustalığı! 👑🍕',
+        description: 'Dört basamaklı sayılar, kesirler, açılar ve çevre-alan ustalığı! 👑🍕',
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'four_operations', label: '👑 Hızlı 4 İşlem' },
-          { id: 'fractions', label: '🍕 Kesirler' },
-          { id: 'angles', label: '📐 Açılar' }
+          { id: 'four_operations', label: '👑 Bölükler & 4 İşlem' },
+          { id: 'fractions', label: '🍕 Kesirler & Açılar' },
+          { id: 'geometry', label: '📐 Çevre & Alan' }
         ],
         games: [
           {
-            id: 'math',
+            id: 'math_digits_operations_4',
             active: true,
-            title: 'Kafa Kafaya Matematik',
-            icon: '🧮',
-            badge: '👑 4 İşlem Ustası',
-            featureTag: '👑 Usta Hesap',
-            description: '4 işlem fırtınası! Kesirleri ve açıları saliseler içinde fethet! 👑',
-            tags: ['👑 Hızlı 4 İşlem', '🍕 Kesirler', '📐 Açı Türleri'],
+            title: '4, 5, 6 Basamaklı Sayılar & Dört İşlem',
+            icon: '👑',
+            badge: 'Dinamik Üretici',
+            featureTag: '👑 Bölükler & İşlem',
+            description: 'Bölükler, basamak değerleri, en yakın binliğe yuvarlama ve zihinden çarpma/bölme! 👑⚡',
+            tags: ['👑 Binler & Birler Bölüğü', '⚡ Zihinden Çarpma', '🎯 Binliğe Yuvarlama'],
             btnText: 'Düelloyu Başlat',
             topic: 'four_operations'
           },
           {
-            id: 'angle_protractor',
-            active: false,
-            title: 'İletki & Açı Avcısı',
+            id: 'math_fractions_angles_4',
+            active: true,
+            title: 'Kesirler, Zaman ve Açılar',
+            icon: '🍕',
+            badge: '26 Özgün Soru',
+            featureTag: '🍕 Basit & Bileşik',
+            description: 'Basit/bileşik/tam sayılı kesirler, dar-dik-geniş açılar ve saat-dakika dönüşümleri! 🍕📐',
+            tags: ['🍕 Kesir Türleri', '📐 Dar, Dik & Geniş Açı', '⏳ Zaman Dönüşümleri'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'fractions'
+          },
+          {
+            id: 'math_perimeter_area_4',
+            active: true,
+            title: 'Çevre ve Alan Hesaplama',
             icon: '📐',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Dar, dik ve geniş açıları doğru tahmin etme meydan okuması! 📐',
-            tags: ['📐 Dar Açı', '📏 90 Derece Dik', '📐 Geniş Açı'],
-            btnText: 'Yakında',
-            topic: 'angles'
+            badge: 'Dinamik Hesap',
+            featureTag: '📐 Çevre & Alan',
+            description: 'Kare ve dikdörtgenlerin çevre ve alanlarını dinamik uzunluklarla hesaplama düellosu! 🟦📏',
+            tags: ['🟦 Kare Çevre & Alan', '🚪 Dikdörtgen Alanı', '📏 Santimetrekare (cm²)'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'geometry'
+          },
+          {
+            id: 'math',
+            active: true,
+            title: 'Kafa Kafaya Matematik (Karma)',
+            icon: '🧮',
+            badge: '👑 4 İşlem Ustası',
+            featureTag: '👑 Usta Hesap',
+            description: '4 işlem fırtınası! Kesirleri, çevre ve alanları saliseler içinde fethet! 👑',
+            tags: ['👑 Hızlı 4 İşlem', '🍕 Kesirler', '📐 Açı & Alan'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -4889,39 +5876,50 @@
         name: 'Türkçe',
         icon: '📚',
         colorTheme: 'theme-turkish',
-        tagline: 'Deyimler & Atasözleri',
-        description: 'Zengin deyimler, atasözleri, mecaz anlam ve dil bilgisi şampiyonası! 🏆📜',
+        tagline: 'Deyimler & Cümle Mantığı',
+        description: 'Zengin deyimler, atasözleri, sebep-sonuç ve öznel/nesnel yargı şampiyonası! 🏆📜',
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'idioms_4', label: '🏆 Zengin Deyimler' },
-          { id: 'proverbs', label: '📜 Atasözleri' },
-          { id: 'figurative', label: '🎭 Gerçek & Mecaz' }
+          { id: 'idioms_4', label: '🏆 Deyimler & Atasözleri' },
+          { id: 'logic_4', label: '💡 Cümlede Anlam & Mantık' }
         ],
         games: [
           {
-            id: 'turkish',
+            id: 'turkish_idioms_proverbs_4',
             active: true,
-            title: 'Hızlı Türkçe & Genel Kültür',
-            icon: '🦉',
-            badge: '👑 Deyim & Kültür',
-            featureTag: '🏆 Deyim Ustası',
-            description: 'Zengin deyimler ve atasözleri labirentinde kelime ustası ol! 🏆',
-            tags: ['🏆 Zengin Deyimler', '📜 Atasözleri', '🗺️ Genel Kültür'],
+            title: 'Deyimler ve Atasözleri Düellosu',
+            icon: '🏆',
+            badge: '35 Özgün Soru',
+            featureTag: '🏆 Deyim & Atasözü',
+            description: 'En çok kullanılan 35 deyim ve atasözümüzün gerçek anlamını bulma şampiyonası! 🏆📜',
+            tags: ['🏆 Meşhur Deyimler', '📜 Öğüt Veren Atasözleri', '💡 Söz Varlığı'],
             btnText: 'Düelloyu Başlat',
             topic: 'idioms_4'
           },
           {
-            id: 'proverb_puzzle',
-            active: false,
-            title: 'Atasözü Yapboz Arenası',
-            icon: '📜',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'İki parçaya ayrılmış atasözlerini en hızlı şekilde birleştir! 📜',
-            tags: ['📜 Atasözü', '🧩 Hızlı Eşleme', '💡 Anlam'],
-            btnText: 'Yakında',
-            topic: 'proverbs'
+            id: 'turkish_sentences_logic_4',
+            active: true,
+            title: 'Sebep-Sonuç, Amaç-Sonuç & Yargılar',
+            icon: '💡',
+            badge: '30 Özgün Soru',
+            featureTag: '💡 Cümlede Anlam',
+            description: 'Sebep-sonuç, amaç-sonuç, koşul-sonuç ve öznel/nesnel yargı analizi! 💡🔍',
+            tags: ['🎯 Sebep & Amaç Sonuç', '⚖️ Öznel ve Nesnel', '🔍 Koşul ve Benzetme'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'logic_4'
+          },
+          {
+            id: 'turkish',
+            active: true,
+            title: 'Hızlı Türkçe & Genel Kültür (Karma)',
+            icon: '🦉',
+            badge: '👑 Deyim & Kültür',
+            featureTag: '🏆 Deyim Ustası',
+            description: 'Zengin deyimler, atasözleri ve cümle anlamı labirentinde kelime ustası ol! 🏆',
+            tags: ['🏆 Zengin Deyimler', '📜 Atasözleri', '🗺️ Genel Kültür'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
@@ -4930,39 +5928,50 @@
         name: 'Fen Bilimleri',
         icon: '🔬',
         colorTheme: 'theme-science',
-        tagline: 'Maddenin Halleri & Elektrik',
-        description: 'Yer kabuğu, besinlerimiz, saf madde-karışım ve basit elektrik devreleri! ⚡🍎',
+        tagline: 'Yer Kabuğu, Madde & Devreler',
+        description: 'Yer kabuğu, besinlerimiz, mıknatıslar ve basit elektrik devreleri! ⚡🍎',
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'nutrition', label: '🍎 Besinlerimiz' },
-          { id: 'matter_states', label: '🧊 Maddenin Halleri' },
-          { id: 'circuits', label: '💡 Elektrik Devreleri' }
+          { id: 'crust_nutrition', label: '🌍 Yer Kabuğu & Besinler' },
+          { id: 'circuits_magnets', label: '💡 Mıknatıs & Devreler' }
         ],
         games: [
           {
+            id: 'science_crust_nutrition_4',
+            active: true,
+            title: 'Yer Kabuğu, Hareketler & Besinlerimiz',
+            icon: '🌍',
+            badge: '30 Özgün Soru',
+            featureTag: '🌍 Kayaçlar & Besin',
+            description: 'Kayaçlar, madenler, fosiller, Dünya\'nın dönme/dolanma hareketleri ve besin grupları! 🌍🍎',
+            tags: ['💎 Kayaçlar ve Madenler', '🔄 Dönme ve Dolanma', '🥩 Protein & Karbonhidrat'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'crust_nutrition'
+          },
+          {
+            id: 'science_circuits_magnets_4',
+            active: true,
+            title: 'Kuvvet, Mıknatıslar & Basit Devreler',
+            icon: '💡',
+            badge: '30 Özgün Soru',
+            featureTag: '⚡ Devre & Mıknatıs',
+            description: 'Mıknatıs kutupları, saf madde-karışım ayırma ve basit elektrik devreleri! 🧲💡',
+            tags: ['🧲 Mıknatıs Kutupları', '🥗 Saf Madde & Karışım', '💡 Pil, Anahtar & Ampul'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'circuits_magnets'
+          },
+          {
             id: 'science',
             active: true,
-            title: 'Fen Bilimleri Laboratuvarı',
+            title: 'Fen Bilimleri Laboratuvarı (Karma)',
             icon: '🔬',
             badge: '👑 Bilim Ustası',
             featureTag: '⚡ Doğa & Madde',
-            description: 'Karbonhidratlar, elektrik devreleri ve erime-donma olayları! 🔬⚡',
+            description: 'Karbonhidratlar, elektrik devreleri, mıknatıslar ve kayaçlar! 🔬⚡',
             tags: ['🍎 Besin Grupları', '🧊 Katı-Sıvı-Gaz', '💡 Basit Devre'],
             btnText: 'Düelloyu Başlat',
-            topic: 'nutrition'
-          },
-          {
-            id: 'circuit_builder',
-            active: false,
-            title: 'Ampulü Yak: Basit Devre',
-            icon: '💡',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: 'Pil, anahtar ve ampulü bağlayıp devreyi tamamlama simülasyonu! 💡',
-            tags: ['🔋 Pil & Anahtar', '💡 Işık Veren Ampul', '⚡ Elektrik'],
-            btnText: 'Yakında',
-            topic: 'circuits'
+            topic: 'all'
           }
         ]
       },
@@ -4976,34 +5985,45 @@
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'identity', label: '🪪 Birey & Toplum' },
-          { id: 'history_heritage', label: '🇹🇷 Kültür & Tarih' },
-          { id: 'economy', label: '🛒 Üretim & Tüketim' }
+          { id: 'identity_heroes', label: '🇹🇷 Birey & Milli Mücadele' },
+          { id: 'places_economy', label: '🗺️ Yerler & Üretimden Tüketime' }
         ],
         games: [
           {
+            id: 'social_identity_heroes_4',
+            active: true,
+            title: 'Birey, Toplum & Milli Mücadele',
+            icon: '🇹🇷',
+            badge: '30 Özgün Soru',
+            featureTag: '🇹🇷 Şanlı Tarihimiz',
+            description: 'T.C. Kimlik belgesi, kronoloji, Milli Mücadele kahramanlarımız ve zaferlerimiz! 🪪🇹🇷',
+            tags: ['🪪 Kimlik Kartımız', '🇹🇷 Kurtuluş Savaşı', '🎖️ Kahramanlarımız'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'identity_heroes'
+          },
+          {
+            id: 'social_places_economy_4',
+            active: true,
+            title: 'İnsanlar, Yerler & Üretimden Tüketime',
+            icon: '🧭',
+            badge: '25 Özgün Soru',
+            featureTag: '🛒 Ekonomi & Doğa',
+            description: 'Hava durumu, doğal afetler, yönler, bütçe yönetimi ve israfı önleme! 🧭💰',
+            tags: ['⛅ Hava Durumu & Afetler', '💰 Aile Bütçesi & Tasarruf', '🛒 Üretim & Tüketim'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'places_economy'
+          },
+          {
             id: 'social',
             active: true,
-            title: 'Sosyal Bilgiler Keşif Düellosu',
+            title: 'Sosyal Bilgiler Keşif Düellosu (Karma)',
             icon: '🗺️',
             badge: '👑 Keşif & Tarih',
             featureTag: '🇹🇷 Milli Kültür',
-            description: 'T.C. Kimlik kartı, pusula yönleri ve Milli Mücadele kahramanları! 🇹🇷🧭',
+            description: 'T.C. Kimlik kartı, pusula yönleri, afetler ve Milli Mücadele kahramanları! 🇹🇷🧭',
             tags: ['🪪 Kimlik Kartı', '🧭 Pusula Yönleri', '🇹🇷 Milli Mücadele'],
             btnText: 'Düelloyu Başlat',
-            topic: 'identity'
-          },
-          {
-            id: 'turkey_map_game',
-            active: false,
-            title: 'Türkiye Şehirler Haritası',
-            icon: '📍',
-            badge: 'Yakında',
-            featureTag: '🔒 Hazırlanıyor',
-            description: '81 ilimizi haritada yerleştirme ve bölgeleri tanıma oyunu! 🗺️',
-            tags: ['📍 81 İl', '🌊 Bölgelerimiz', '🏛️ Tarihi Eserler'],
-            btnText: 'Yakında',
-            topic: 'history_heritage'
+            topic: 'all'
           }
         ]
       },
@@ -5012,17 +6032,30 @@
         name: 'İngilizce',
         icon: '🌍',
         colorTheme: 'theme-english',
-        tagline: 'Colors, Animals & Words',
-        description: 'Renkler, sevimli hayvanlar, sayılar ve günlük selamlaşmalar! 🌈🐶',
+        tagline: 'Countries, Routines & Words',
+        description: 'Ülkeler, milletler, saatler, rutinler, meslekler ve renkler! 🌍⏰👨‍🍳',
         badge: 'MEB Müfredatı',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'colors', label: '🎨 Renkler (Colors)' },
-          { id: 'animals', label: '🐾 Hayvanlar (Animals)' },
-          { id: 'numbers', label: '🔢 Sayılar (Numbers)' },
-          { id: 'greetings', label: '👋 Günlük İfadeler (Greetings)' }
+          { id: 'countries', label: '🌍 Countries & Routines' },
+          { id: 'colors', label: '🎨 Colors' },
+          { id: 'animals', label: '🐾 Animals' },
+          { id: 'numbers', label: '🔢 Numbers' },
+          { id: 'greetings', label: '👋 Greetings' }
         ],
         games: [
+          {
+            id: 'english_countries_routines_4',
+            active: true,
+            title: 'Countries, Routines & Jobs',
+            icon: '🌍',
+            badge: '35 Soru Sesli',
+            featureTag: '🔊 Sesli Pratik',
+            description: 'Ülkeler, milletler, saatler, günlük rutinler ve İngilizce meslekler! 🌍⏰',
+            tags: ['🌍 Countries & Nationalities', '⏰ Daily Routines & Time', '💼 Jobs & Professions'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'countries'
+          },
           {
             id: 'english_colors',
             active: true,
@@ -5078,7 +6111,7 @@
             icon: '🇬🇧',
             badge: '👑 Şampiyonluk',
             featureTag: '⚡ Hızlı Kelime',
-            description: 'Renkler, hayvanlar, sayılar ve ifadelerden karma İngilizce düellosu! 🚀',
+            description: 'Ülkeler, rutinler, meslekler, renkler ve sayılardan karma İngilizce düellosu! 🚀',
             tags: ['🇬🇧 Karma Pratik', '⚡ Çift Dilli Eşleme', '🔊 Otomatik Telaffuz'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
@@ -5878,6 +6911,25 @@
       lifescience_culture_2: '🇹🇷 Ülkemiz ve Kültürümüz',
       english_school_objects_2: '🎒 Classroom Objects & Numbers',
       english_animals_fruits_2: '🍎 Animals & Fruits',
+      math_romen_place_3: '🏛️ 3 Basamaklı Sayılar & Romen Rakamları',
+      math_mult_div_3: '🌪️ Çarpım Tablosu & Bölme Düellosu',
+      math_fractions_shapes_3: '🧊 Kesirler & Geometrik Cisimler',
+      turkish_homonyms_figurative_3: '🎭 Eş Sesli Kelimeler & Mecaz Anlam',
+      turkish_punctuation_5n1k_3: '✍️ Noktalama, Yazım Kuralları & 5N1K',
+      science_earth_senses_3: '🌍 Gezegenimiz Dünya ve Beş Duyumuz',
+      science_force_matter_3: '🧲 Kuvveti Tanıyalım ve Madde',
+      lifescience_compass_consumer_3: '🧭 Yönlerimiz, Kroki & Tüketici Hakları',
+      english_family_feelings_3: '👨‍👩‍👧 Family, Feelings & Abilities',
+      math_digits_operations_4: '👑 4, 5, 6 Basamaklı Sayılar & Dört İşlem',
+      math_fractions_angles_4: '🍕 Kesirler, Zaman ve Açılar',
+      math_perimeter_area_4: '📐 Çevre ve Alan Hesaplama',
+      turkish_idioms_proverbs_4: '🏆 Deyimler ve Atasözleri Düellosu',
+      turkish_sentences_logic_4: '💡 Sebep-Sonuç, Amaç-Sonuç & Yargılar',
+      science_crust_nutrition_4: '🌍 Yer Kabuğu, Hareketler & Besinlerimiz',
+      science_circuits_magnets_4: '💡 Kuvvet, Mıknatıslar & Basit Devreler',
+      social_identity_heroes_4: '🇹🇷 Birey, Toplum & Milli Mücadele',
+      social_places_economy_4: '🧭 İnsanlar, Yerler & Üretimden Tüketime',
+      english_countries_routines_4: '🌍 Countries, Routines & Jobs',
       turkish: state.currentGrade === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Kelime Avcısı',
       firstreading: '🔤 İlk Okuma & Ses Avcısı',
       firstreading_balloon: '🎈 Ses & Harf Balonları',
