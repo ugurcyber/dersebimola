@@ -3764,26 +3764,230 @@ input:checked + .slider:before {
   color: var(--text-muted);
 }
 
-/* Kura & Çarkıfelek Modalı */
+/* ==========================================================================
+   KURA & ÇARKIFELEK SINIF YÖNETİM MODALI (GAMIFIED LOTTERY EXPERIENCE)
+   ========================================================================== */
 .picker-modal-window {
-  max-width: 680px;
+  max-width: 740px;
+  width: 95%;
+  background: #ffffff;
+  border-radius: var(--radius-xl, 24px);
+  padding: 24px 28px;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
+.picker-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.picker-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.picker-moli-widget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #bfdbfe;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+}
+
+.picker-moli-avatar {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+}
+
+.picker-moli-bubble {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: #1e3a8a;
+  max-width: 170px;
+  line-height: 1.25;
+}
+
+/* Mod Sekmeleri */
+.picker-mode-tabs {
+  display: flex;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 6px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.picker-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.picker-tab-btn:hover {
+  color: #0f172a;
+}
+
+.picker-tab-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+}
+
+.picker-tab-btn.tab-roster-manage {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.picker-tab-btn.tab-roster-manage.active {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+/* Tek Öğrenci Spotlight Sahnesi */
+.picker-single-stage {
+  margin-bottom: 22px;
+}
+
+.single-slot-card {
+  position: relative;
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  border: 3px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 32px 20px;
+  text-align: center;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.single-slot-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(245, 158, 11, 0.4));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.slot-crown-aura {
+  font-size: 2rem;
+  margin-bottom: 4px;
+  opacity: 0.7;
+  transition: transform 0.3s ease;
+}
+
+.single-slot-avatar {
+  font-size: 3.2rem;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+}
+
+.single-slot-name {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  transition: all 0.2s ease;
+}
+
+.single-slot-sub {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+/* Dönen Çark Efektleri */
+.single-slot-card.spinning {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.35);
+  animation: slotCardSpin 0.3s infinite alternate ease-in-out;
+}
+
+.single-slot-card.spinning .single-slot-name {
+  filter: blur(1.5px);
+  transform: scale(0.96);
+  color: #b45309;
+}
+
+@keyframes slotCardSpin {
+  0% { transform: scale(0.99) rotate(-0.4deg); }
+  100% { transform: scale(1.01) rotate(0.4deg); }
+}
+
+/* Kazanan Öğrenci Devleşme & Parlama Efekti */
+.single-slot-card.winner-celebrate {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #ecfdf5 0%, #fef9c3 100%);
+  box-shadow: 0 0 45px rgba(16, 185, 129, 0.45), 0 0 25px rgba(245, 158, 11, 0.35);
+  transform: scale(1.05);
+  animation: winnerCardPulse 1.8s infinite ease-in-out;
+}
+
+.single-slot-card.winner-celebrate .single-slot-name {
+  color: #065f46;
+  font-size: 2.8rem;
+  text-shadow: 0 2px 16px rgba(16, 185, 129, 0.35);
+}
+
+.single-slot-card.winner-celebrate .slot-crown-aura {
+  animation: crownBounce 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes winnerCardPulse {
+  0%, 100% { box-shadow: 0 0 35px rgba(16, 185, 129, 0.4), 0 0 20px rgba(245, 158, 11, 0.3); }
+  50% { box-shadow: 0 0 55px rgba(16, 185, 129, 0.6), 0 0 35px rgba(245, 158, 11, 0.5); }
+}
+
+@keyframes crownBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.25); }
+}
+
+/* 2 Öğrenci Düello Sahnesi */
 .picker-stage {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .picker-slot {
   flex: 1;
   background: #ffffff;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg, 16px);
   padding: 20px;
   text-align: center;
   border: 2.5px solid transparent;
+  transition: all 0.25s ease;
 }
 
 .picker-slot.blue-slot {
@@ -3796,11 +4000,20 @@ input:checked + .slider:before {
   background: #fff1f2;
 }
 
+.picker-slot.spinning {
+  animation: slotCardSpin 0.3s infinite alternate ease-in-out;
+}
+
+.picker-slot.spinning .slot-name {
+  filter: blur(1.5px);
+}
+
 .slot-header {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 900;
   display: block;
   margin-bottom: 8px;
+  letter-spacing: 0.5px;
 }
 
 .blue-slot .slot-header { color: #1d4ed8; }
@@ -3818,7 +4031,7 @@ input:checked + .slider:before {
 }
 
 .slot-name {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 900;
   color: #0f172a;
 }
@@ -3828,11 +4041,12 @@ input:checked + .slider:before {
   color: #d97706;
 }
 
+/* Kura Butonları */
 .picker-controls {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .btn-spin-wheel {
@@ -3840,23 +4054,75 @@ input:checked + .slider:before {
   background: linear-gradient(135deg, #f59e0b, #ea580c);
   color: #fff;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 900;
   padding: 16px;
-  border-radius: var(--radius-md);
+  border-radius: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+  gap: 12px;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
   font-family: inherit;
-  transition: all var(--transition-fast);
+  transition: all 0.2s ease;
 }
 
 .btn-spin-wheel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 8px 26px rgba(245, 158, 11, 0.55);
+}
+
+.btn-spin-wheel:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.picker-result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-picker-action {
+  flex: 1;
+  min-width: 140px;
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  color: #1e293b;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 12px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.btn-picker-action:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+.btn-picker-action.btn-add-today {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.btn-picker-action.btn-add-today:hover {
+  background: linear-gradient(135deg, #fde68a, #fcd34d);
+}
+
+.btn-picker-action.btn-speak-again {
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  border-color: #38bdf8;
+  color: #0369a1;
 }
 
 .btn-use-selected {
@@ -3867,73 +4133,222 @@ input:checked + .slider:before {
   font-size: 1.15rem;
   font-weight: 900;
   padding: 14px;
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
   font-family: inherit;
+  transition: all 0.2s ease;
 }
 
-.class-roster-details {
+.btn-use-selected:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+}
+
+/* Anti-Repeat & Bugün Seçilenler Şeridi */
+.picker-anti-repeat-bar {
   background: #f8fafc;
-  border: 1.5px solid #cbd5e1;
-  border-radius: var(--radius-md);
-  padding: 12px 16px;
-}
-
-.roster-summary {
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-.roster-editor-box {
-  margin-top: 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.roster-label {
+.anti-repeat-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.pool-status-badge {
+  background: #e0f2fe;
+  color: #0369a1;
   font-size: 0.82rem;
-  color: var(--text-secondary);
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #bae6fd;
+}
+
+.today-selected-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 8px;
+}
+
+.today-selected-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #64748b;
+}
+
+.btn-reset-today {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.btn-reset-today:hover {
+  background: #fee2e2;
+}
+
+.today-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 28px;
+  align-items: center;
+}
+
+.today-chip {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e293b;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.today-chip-remove {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.today-chip-remove:hover {
+  color: #ef4444;
+}
+
+.empty-chips-hint {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Sınıf Listesi Düzenleme Bölümü */
+.roster-editor-box.active-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.roster-info-banner {
+  background: #f0fdf4;
+  border: 1.5px solid #bbf7d0;
+  color: #166534;
+  font-size: 0.86rem;
+  padding: 10px 14px;
+  border-radius: 10px;
+  line-height: 1.4;
 }
 
 .roster-textarea {
   width: 100%;
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
-  border-radius: var(--radius-sm);
+  border-radius: 12px;
   color: #0f172a;
-  padding: 10px;
+  padding: 12px;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  line-height: 1.6;
   resize: vertical;
 }
 
 .roster-actions {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .btn-save-roster {
-  background: #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #fff;
   border: none;
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
+  padding: 12px 20px;
+  border-radius: 10px;
   font-weight: 800;
+  font-size: 0.95rem;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  font-family: inherit;
+  transition: all 0.2s ease;
 }
 
-.btn-reset-roster {
+.btn-save-roster:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45);
+}
+
+.btn-reset-roster, .btn-clear-roster, .btn-back-to-stage {
   background: #f1f5f9;
-  color: var(--text-secondary);
-  border: 1px solid #cbd5e1;
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+  padding: 10px 16px;
+  border-radius: 10px;
   font-weight: 800;
+  font-size: 0.9rem;
   cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-roster:hover, .btn-clear-roster:hover, .btn-back-to-stage:hover {
+  background: #e2e8f0;
+}
+
+.btn-back-to-stage {
+  margin-left: auto;
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.btn-back-to-stage:hover {
+  background: #2563eb;
+}
+
+.badge-smart-tool {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.35);
 }
 
 /* Soru Ekleme Formu & Modalı */

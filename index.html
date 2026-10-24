@@ -221,10 +221,10 @@
 
         <!-- Üst Bar Sağ Köşe: Rastgele 2 Öğrenci, Ses, Tam Ekran -->
         <div class="topbar-right">
-          <button class="topbar-picker-btn" id="btnOpenPicker" title="Sınıf Listesinden Rastgele 2 Öğrenci Seç">
+          <button class="topbar-picker-btn" id="btnOpenPicker" title="Sınıf Listesinden Rastgele Öğrenci Seç (Kura Çarkı)">
             <span class="tool-icon">🎲</span>
-            <span class="tool-label">2 Öğrenci Seç</span>
-            <span class="pro-badge">PRO</span>
+            <span class="tool-label">Rastgele Öğrenci Seç</span>
+            <span class="badge-smart-tool">KURA</span>
           </button>
 
           <div class="topbar-divider"></div>
@@ -969,63 +969,133 @@
     </div>
   </div>
 
-  <!-- MODAL 2: SINIF LİSTESİ & ÇARKIFELEK KURA ÇEKME MODALI -->
+  <!-- MODAL 2: SINIF LİSTESİ VE ÇARKIFELEK KURA SİSTEMİ -->
   <div class="modal-backdrop hide" id="modalPicker">
     <div class="modal-window picker-modal-window">
       <button class="modal-close-btn" data-close-modal="modalPicker">✕</button>
-      <div class="modal-header">
-        <div class="modal-badge-icon">🎲</div>
-        <h3 class="modal-title">Sınıf Listesinden Rastgele 2 Öğrenci Seç</h3>
-        <p class="modal-desc">
-          Tahtaya kalkacak iki yarışmacıyı adil bir şekilde çarkıfelek kurasıyla belirleyin!
-        </p>
-      </div>
-
-      <!-- Kura Çarkı / Slot Animasyon Kutusu -->
-      <div class="picker-stage">
-        <div class="picker-slot blue-slot">
-          <span class="slot-header">MAVİ TAKIM OYUNCUSU</span>
-          <div class="slot-display" id="slotDisplay1">
-            <span class="slot-avatar">👦</span>
-            <span class="slot-name" id="slotName1">Seçim Yapılmadı</span>
+      
+      <!-- Modal Başlık & Moli Maskot -->
+      <div class="modal-header picker-modal-header">
+        <div class="picker-header-left">
+          <div class="modal-badge-icon">🎲</div>
+          <div>
+            <h3 class="modal-title">Sınıf Kurası & Rastgele Öğrenci Seçimi</h3>
+            <p class="modal-desc">Akıllı tahtada heyecan dolu adil kura çekin, sözlüye veya oyuna öğrenci belirleyin!</p>
           </div>
         </div>
-
-        <div class="picker-vs"><img src="assets/icons/3d/lightning.png" style="width:36px; height:36px; vertical-align:middle;" alt="VS"></div>
-
-        <div class="picker-slot red-slot">
-          <span class="slot-header">KIRMIZI TAKIM OYUNCUSU</span>
-          <div class="slot-display" id="slotDisplay2">
-            <span class="slot-avatar">👧</span>
-            <span class="slot-name" id="slotName2">Seçim Yapılmadı</span>
-          </div>
+        <div class="picker-moli-widget">
+          <img src="assets/mascot/moli.png" class="picker-moli-avatar" id="pickerMoliImg" alt="Moli">
+          <div class="picker-moli-bubble" id="pickerMoliBubble">Hadi birini seçelim! 🎯</div>
         </div>
       </div>
 
-      <div class="picker-controls">
-        <button class="btn-spin-wheel" id="btnSpinWheel">
-          <span class="spin-icon">🎰</span>
-          <span>Çarkı Çevir & 2 Öğrenci Çek!</span>
+      <!-- Kura Modu Seçici Tabları -->
+      <div class="picker-mode-tabs">
+        <button class="picker-tab-btn active" id="btnPickerModeSingle" data-picker-mode="single">
+          <span>🎯</span> Tek Öğrenci (Sözlü / Soru)
         </button>
-        <button class="btn-use-selected hide" id="btnApplySelectedStudents">
-          <span>🚀 Bu Öğrencilerle Düelloya Başla!</span>
+        <button class="picker-tab-btn" id="btnPickerModeDuel" data-picker-mode="duel">
+          <span>⚔️</span> 2 Öğrenci (Düello Maçı)
+        </button>
+        <button class="picker-tab-btn tab-roster-manage" id="btnPickerTabRoster">
+          <span>📋</span> Sınıf Listesi (<span id="rosterCountBadge">24</span>)
         </button>
       </div>
 
-      <!-- Sınıf Listesini Düzenle Açılır Akordeon -->
-      <details class="class-roster-details">
-        <summary class="roster-summary">
-          <span>📋 Sınıf Öğrenci Listesini Düzenle (<span id="rosterCount">24</span> Öğrenci)</span>
-        </summary>
-        <div class="roster-editor-box">
-          <label for="rosterTextarea" class="roster-label">Öğrenci isimlerini her satıra bir isim gelecek şekilde yazınız:</label>
-          <textarea id="rosterTextarea" class="roster-textarea" rows="7" placeholder="Ali&#10;Ayşe&#10;Mehmet..."></textarea>
+      <!-- 1) KURA SAHNESİ BÖLÜMÜ -->
+      <div class="picker-view-section" id="pickerStageSection">
+        
+        <!-- TEK ÖĞRENCİ SAHNESİ (VARSAYILAN SPOTLIGHT) -->
+        <div class="picker-single-stage" id="pickerSingleStage">
+          <div class="single-slot-card" id="singleSlotCard">
+            <div class="slot-crown-aura" id="slotCrownAura">👑</div>
+            <div class="single-slot-avatar" id="singleSlotAvatar">👤</div>
+            <div class="single-slot-name" id="singleSlotName">Öğrenci Seçilmedi</div>
+            <div class="single-slot-sub" id="singleSlotSub">Kura çekmek için aşağıdaki butona basın</div>
+          </div>
+        </div>
+
+        <!-- 2 ÖĞRENCİ DÜELLO SAHNESİ -->
+        <div class="picker-stage hide" id="pickerDuelStage">
+          <div class="picker-slot blue-slot" id="slotCardBlue">
+            <span class="slot-header">MAVİ TAKIM OYUNCUSU</span>
+            <div class="slot-display" id="slotDisplay1">
+              <span class="slot-avatar">👦</span>
+              <span class="slot-name" id="slotName1">Seçim Yapılmadı</span>
+            </div>
+          </div>
+
+          <div class="picker-vs"><img src="assets/icons/3d/lightning.png" style="width:40px; height:40px; vertical-align:middle;" alt="VS"></div>
+
+          <div class="picker-slot red-slot" id="slotCardRed">
+            <span class="slot-header">KIRMIZI TAKIM OYUNCUSU</span>
+            <div class="slot-display" id="slotDisplay2">
+              <span class="slot-avatar">👧</span>
+              <span class="slot-name" id="slotName2">Seçim Yapılmadı</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kura Kontrolleri -->
+        <div class="picker-controls">
+          <button class="btn-spin-wheel" id="btnSpinWheel">
+            <span class="spin-icon">🎰</span>
+            <span id="btnSpinWheelText">Kura Çek & Öğrenciyi Belirle!</span>
+          </button>
+
+          <!-- Kura Sonuç Eylemleri -->
+          <div class="picker-result-actions hide" id="pickerResultActions">
+            <button class="btn-picker-action btn-add-today" id="btnAddTodaySelected">
+              <span>⭐</span> Bugün Seçilenlere Ekle
+            </button>
+            <button class="btn-picker-action btn-speak-again" id="btnSpeakStudentName" title="İsmi Tekrar Seslendir">
+              <span>🔊</span> Moli'ye Oku
+            </button>
+            <button class="btn-use-selected hide" id="btnApplySelectedStudents">
+              <span>🚀 Bu Öğrencilerle Düelloya Başla!</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Anti-Repeat & Bugün Seçilenler Şeridi -->
+        <div class="picker-anti-repeat-bar">
+          <div class="anti-repeat-toggle">
+            <label class="toggle-label" for="chkExcludeToday">
+              <input type="checkbox" id="chkExcludeToday" checked>
+              <span class="toggle-text">Seçilenleri havuzdan çıkar (Anti-Repeat)</span>
+            </label>
+            <span class="pool-status-badge" id="poolStatusBadge">Havuzda Kalan: 24 / 24</span>
+          </div>
+
+          <div class="today-selected-wrap" id="todaySelectedWrap">
+            <div class="today-selected-title">
+              <span>Bugün Seçilenler (<span id="todayCount">0</span>):</span>
+              <button class="btn-reset-today" id="btnResetTodaySelected" title="Bugün seçilenleri sıfırla">Sıfırla ↺</button>
+            </div>
+            <div class="today-chips-list" id="todayChipsList">
+              <span class="empty-chips-hint">Henüz öğrenci seçilmedi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2) SINIF LİSTESİ DÜZENLEME BÖLÜMÜ (HAFIZA & LOCALSTORAGE) -->
+      <div class="picker-view-section hide" id="pickerRosterSection">
+        <div class="roster-editor-box active-box">
+          <div class="roster-info-banner">
+            <span>💾 <strong>Kalıcı Sınıf Hafızası:</strong> Girdiğiniz öğrenci listesi akıllı tahtanızın tarayıcısına (localStorage) otomatik kaydedilir. Sayfayı yarın açsanız da listeniz silinmez, hep hazır kalır.</span>
+          </div>
+          <label for="rosterTextarea" class="roster-label">Öğrenci isimlerini her satıra bir isim gelecek şekilde alt alta yazınız:</label>
+          <textarea id="rosterTextarea" class="roster-textarea" rows="8" placeholder="Ali&#10;Ayşe&#10;Mehmet&#10;Fatma..."></textarea>
           <div class="roster-actions">
-            <button class="btn-save-roster" id="btnSaveRoster">Listeyi Kaydet</button>
-            <button class="btn-reset-roster" id="btnResetRoster">Örnek Listeyi Yükle</button>
+            <button class="btn-save-roster" id="btnSaveRoster">💾 Listeyi Kaydet (<span id="rosterCount">24</span> Öğrenci)</button>
+            <button class="btn-reset-roster" id="btnResetRoster">📋 Örnek MEB Sınıfı Yükle</button>
+            <button class="btn-clear-roster" id="btnClearRoster">🧹 Temizle</button>
+            <button class="btn-back-to-stage" id="btnBackToStage">← Kuraya Dön</button>
           </div>
         </div>
-      </details>
+      </div>
+
     </div>
   </div>
 

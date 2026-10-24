@@ -73,13 +73,19 @@
       email: '',
     },
 
-    // Sınıf Öğrenci Listesi
+    // Sınıf Öğrenci Listesi (Kalıcı LocalStorage Hafızası)
     classRoster: [
       'Ali', 'Ayşe', 'Mehmet', 'Fatma', 'Can', 'Zeynep',
       'Yusuf', 'Elif', 'Kerem', 'Defne', 'Emir', 'Asya',
       'Burak', 'Nehir', 'Mert', 'Yağmur', 'Arda', 'Zehra',
       'Umut', 'Ela', 'Efe', 'Ceren', 'Baran', 'Duru'
     ],
+
+    // Bugün Seçilen Öğrenciler (Anti-Repeat / Tekrar Önleme)
+    todaySelectedStudents: [],
+    excludeTodaySelected: true,
+    pickerMode: 'single', // 'single' (Tek Öğrenci) | 'duel' (2 Öğrenci Düello)
+    lastPickedStudent: null,
 
     // Özel Soru Bankası (Öğretmenin Ekledikleri)
     customQuestions: [],
@@ -373,6 +379,79 @@
 
       osc.start(now);
       osc.stop(now + 0.035);
+    }
+
+    // Kura Davul Ritmi (Drumroll): 3-4 saniyelik gerilimi tırmandıran tok ve hızlanan trampet vuruşları
+    playDrumroll(durationMs = 3400) {
+      if (!state.soundEnabled || !this.ensureContext()) return { stop: () => {} };
+      try {
+        const ctx = this.ctx;
+        let isStopped = false;
+        let timer = null;
+        const startTime = Date.now();
+
+        const hit = () => {
+          if (isStopped) return;
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(1, elapsed / durationMs);
+
+          const now = ctx.currentTime;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc.type = 'triangle';
+          const baseFreq = 125 + Math.random() * 45 + (progress * 65);
+          osc.frequency.setValueAtTime(baseFreq, now);
+          osc.frequency.exponentialRampToValueAtTime(45, now + 0.045);
+
+          const vol = 0.14 + (progress * 0.28);
+          gain.gain.setValueAtTime(vol, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.042);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.045);
+
+          if (elapsed < durationMs) {
+            // Davul ritmi gittikçe sıklaşır (60ms'den 22ms'ye hızlanır)
+            const interval = Math.max(22, 60 - Math.floor(progress * 38));
+            timer = setTimeout(hit, interval);
+          }
+        };
+
+        hit();
+
+        return {
+          stop: () => {
+            isStopped = true;
+            if (timer) clearTimeout(timer);
+          }
+        };
+      } catch (e) {
+        return { stop: () => {} };
+      }
+    }
+
+    // Kura Zafer Zili / Ta-da Çan Sesi: Kura durduğunda coşkulu kadehler ve çanlar
+    playCymbalTada() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      try {
+        const now = this.ctx.currentTime;
+        const freqs = [659.25, 880, 1318.5]; // E5, A5, E6
+        freqs.forEach((f, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, now + idx * 0.06);
+          gain.gain.setValueAtTime(0.3, now + idx * 0.06);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.85);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.06);
+          osc.stop(now + idx * 0.06 + 0.9);
+        });
+      } catch (e) {}
     }
 
     // Buton & Arayüz Tıklama Sesi: Ding ding yerine canlı, tatlı ahşap/balon pop sesi
@@ -4282,6 +4361,7 @@
     KEYS: {
       TEACHER: 'dersebimola_teacher',
       ROSTER: 'dersebimola_roster',
+      TODAY_SELECTED: 'dersebimola_today_selected',
       CUSTOM_Q: 'dersebimola_custom_questions',
       LEAGUE: 'dersebimola_league',
       SETTINGS: 'dersebimola_settings'
@@ -4293,7 +4373,16 @@
         if (teacher) state.teacherSession = JSON.parse(teacher);
 
         const roster = localStorage.getItem(this.KEYS.ROSTER);
-        if (roster) state.classRoster = JSON.parse(roster);
+        if (roster) {
+          const parsed = JSON.parse(roster);
+          if (Array.isArray(parsed) && parsed.length > 0) state.classRoster = parsed;
+        }
+
+        const todaySelected = localStorage.getItem(this.KEYS.TODAY_SELECTED);
+        if (todaySelected) {
+          const parsedToday = JSON.parse(todaySelected);
+          if (Array.isArray(parsedToday)) state.todaySelectedStudents = parsedToday;
+        }
 
         const customQ = localStorage.getItem(this.KEYS.CUSTOM_Q);
         if (customQ) state.customQuestions = JSON.parse(customQ);
@@ -4321,6 +4410,9 @@
     },
     saveRoster() {
       try { localStorage.setItem(this.KEYS.ROSTER, JSON.stringify(state.classRoster)); } catch (e) {}
+    },
+    saveTodaySelected() {
+      try { localStorage.setItem(this.KEYS.TODAY_SELECTED, JSON.stringify(state.todaySelectedStudents)); } catch (e) {}
     },
     saveCustomQuestions() {
       try { localStorage.setItem(this.KEYS.CUSTOM_Q, JSON.stringify(state.customQuestions)); } catch (e) {}
@@ -4518,14 +4610,42 @@
     btnSimulateGoogleLogin: document.getElementById('btnSimulateGoogleLogin'),
 
     modalPicker: document.getElementById('modalPicker'),
+    pickerMoliBubble: document.getElementById('pickerMoliBubble'),
+    pickerMoliImg: document.getElementById('pickerMoliImg'),
+    btnPickerModeSingle: document.getElementById('btnPickerModeSingle'),
+    btnPickerModeDuel: document.getElementById('btnPickerModeDuel'),
+    btnPickerTabRoster: document.getElementById('btnPickerTabRoster'),
+    pickerStageSection: document.getElementById('pickerStageSection'),
+    pickerRosterSection: document.getElementById('pickerRosterSection'),
+    pickerSingleStage: document.getElementById('pickerSingleStage'),
+    pickerDuelStage: document.getElementById('pickerDuelStage'),
+    singleSlotCard: document.getElementById('singleSlotCard'),
+    singleSlotAvatar: document.getElementById('singleSlotAvatar'),
+    singleSlotName: document.getElementById('singleSlotName'),
+    singleSlotSub: document.getElementById('singleSlotSub'),
+    slotCrownAura: document.getElementById('slotCrownAura'),
+    slotCardBlue: document.getElementById('slotCardBlue'),
+    slotCardRed: document.getElementById('slotCardRed'),
     slotName1: document.getElementById('slotName1'),
     slotName2: document.getElementById('slotName2'),
     btnSpinWheel: document.getElementById('btnSpinWheel'),
+    btnSpinWheelText: document.getElementById('btnSpinWheelText'),
+    pickerResultActions: document.getElementById('pickerResultActions'),
+    btnAddTodaySelected: document.getElementById('btnAddTodaySelected'),
+    btnSpeakStudentName: document.getElementById('btnSpeakStudentName'),
     btnApplySelectedStudents: document.getElementById('btnApplySelectedStudents'),
-    rosterCount: document.getElementById('rosterCount'),
+    chkExcludeToday: document.getElementById('chkExcludeToday'),
+    poolStatusBadge: document.getElementById('poolStatusBadge'),
+    todayCount: document.getElementById('todayCount'),
+    todayChipsList: document.getElementById('todayChipsList'),
+    btnResetTodaySelected: document.getElementById('btnResetTodaySelected'),
     rosterTextarea: document.getElementById('rosterTextarea'),
+    rosterCount: document.getElementById('rosterCount'),
+    rosterCountBadge: document.getElementById('rosterCountBadge'),
     btnSaveRoster: document.getElementById('btnSaveRoster'),
     btnResetRoster: document.getElementById('btnResetRoster'),
+    btnClearRoster: document.getElementById('btnClearRoster'),
+    btnBackToStage: document.getElementById('btnBackToStage'),
 
     modalCustomQ: document.getElementById('modalCustomQ'),
     formAddQuestion: document.getElementById('formAddQuestion'),
@@ -6981,58 +7101,312 @@
   }
 
   /* ==========================================================================
-     11. SINIF LİSTESİ VE ÇARKIFELEK KURA SİSTEMİ
+     11. SINIF LİSTESİ VE ÇARKIFELEK KURA SİSTEMİ (PERMANENT CLASSROOM TOOL)
      ========================================================================== */
   function openPickerModal() {
-    if (!state.teacherSession.isLoggedIn) {
-      openModal(DOM.modalAuth);
-      return;
+    // Öğretmen giriş bariyeri kaldırıldı - Akıllı tahtada herkes doğrudan kullanabilir
+    if (DOM.rosterCount) DOM.rosterCount.textContent = state.classRoster.length;
+    if (DOM.rosterCountBadge) DOM.rosterCountBadge.textContent = state.classRoster.length;
+    if (DOM.rosterTextarea) DOM.rosterTextarea.value = state.classRoster.join('\n');
+    
+    // Varsayılan görünüm ve durumları hazırla
+    switchPickerView('stage');
+    setPickerMode(state.pickerMode || 'single');
+    renderTodaySelectedUI();
+    updatePickerPoolStatus();
+    
+    // Moli selamlama
+    if (DOM.pickerMoliBubble) {
+      DOM.pickerMoliBubble.textContent = 'Kura çekmeye hazır mısın? 🎲';
     }
-    DOM.rosterCount.textContent = state.classRoster.length;
-    DOM.rosterTextarea.value = state.classRoster.join('\n');
+    
     openModal(DOM.modalPicker);
   }
 
+  function setPickerMode(mode) {
+    state.pickerMode = mode;
+    if (DOM.btnPickerModeSingle) DOM.btnPickerModeSingle.classList.toggle('active', mode === 'single');
+    if (DOM.btnPickerModeDuel) DOM.btnPickerModeDuel.classList.toggle('active', mode === 'duel');
+
+    if (mode === 'single') {
+      if (DOM.pickerSingleStage) DOM.pickerSingleStage.classList.remove('hide');
+      if (DOM.pickerDuelStage) DOM.pickerDuelStage.classList.add('hide');
+      if (DOM.btnSpinWheelText) DOM.btnSpinWheelText.textContent = 'Kura Çek & 1 Öğrenci Belirle!';
+      if (DOM.btnApplySelectedStudents) DOM.btnApplySelectedStudents.classList.add('hide');
+    } else {
+      if (DOM.pickerSingleStage) DOM.pickerSingleStage.classList.add('hide');
+      if (DOM.pickerDuelStage) DOM.pickerDuelStage.classList.remove('hide');
+      if (DOM.btnSpinWheelText) DOM.btnSpinWheelText.textContent = 'Kura Çek & 2 Yarışmacı Belirle!';
+    }
+    updatePickerPoolStatus();
+  }
+
+  function switchPickerView(view) {
+    if (view === 'roster') {
+      if (DOM.pickerStageSection) DOM.pickerStageSection.classList.add('hide');
+      if (DOM.pickerRosterSection) DOM.pickerRosterSection.classList.remove('hide');
+      if (DOM.btnPickerTabRoster) DOM.btnPickerTabRoster.classList.add('active');
+      if (DOM.btnPickerModeSingle) DOM.btnPickerModeSingle.classList.remove('active');
+      if (DOM.btnPickerModeDuel) DOM.btnPickerModeDuel.classList.remove('active');
+      if (DOM.rosterTextarea) DOM.rosterTextarea.value = state.classRoster.join('\n');
+    } else {
+      if (DOM.pickerStageSection) DOM.pickerStageSection.classList.remove('hide');
+      if (DOM.pickerRosterSection) DOM.pickerRosterSection.classList.add('hide');
+      if (DOM.btnPickerTabRoster) DOM.btnPickerTabRoster.classList.remove('active');
+      setPickerMode(state.pickerMode || 'single');
+    }
+  }
+
+  function updatePickerPoolStatus() {
+    const total = state.classRoster.length;
+    const excludedCount = state.excludeTodaySelected
+      ? state.todaySelectedStudents.filter(n => state.classRoster.includes(n)).length
+      : 0;
+    const remaining = Math.max(0, total - excludedCount);
+    if (DOM.poolStatusBadge) {
+      DOM.poolStatusBadge.textContent = `Havuzda Kalan: ${remaining} / ${total}`;
+    }
+  }
+
+  function renderTodaySelectedUI() {
+    if (!DOM.todayChipsList) return;
+    if (DOM.todayCount) DOM.todayCount.textContent = state.todaySelectedStudents.length;
+
+    if (state.todaySelectedStudents.length === 0) {
+      DOM.todayChipsList.innerHTML = '<span class="empty-chips-hint">Henüz öğrenci seçilmedi</span>';
+    } else {
+      DOM.todayChipsList.innerHTML = state.todaySelectedStudents.map(name => `
+        <span class="today-chip">
+          ${escapeHtml(name)}
+          <button class="today-chip-remove" data-remove-today="${escapeHtml(name)}" title="Havuza geri döndür">✕</button>
+        </span>
+      `).join('');
+
+      DOM.todayChipsList.querySelectorAll('[data-remove-today]').forEach(btn => {
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          const name = btn.getAttribute('data-remove-today');
+          removeStudentFromToday(name);
+        });
+      });
+    }
+    updatePickerPoolStatus();
+  }
+
+  function removeStudentFromToday(name) {
+    state.todaySelectedStudents = state.todaySelectedStudents.filter(s => s !== name);
+    StorageManager.saveTodaySelected();
+    renderTodaySelectedUI();
+    audio.playClick();
+    showToast(`↩️ ${name} kura havuzuna geri alındı.`);
+  }
+
+  function resetTodaySelected() {
+    if (state.todaySelectedStudents.length === 0) {
+      showToast('Bugün seçilenler listesi zaten boş.');
+      return;
+    }
+    state.todaySelectedStudents = [];
+    StorageManager.saveTodaySelected();
+    renderTodaySelectedUI();
+    audio.playClick();
+    showToast('🔄 Bugün seçilenler sıfırlandı, tüm sınıf kura havuzunda!');
+  }
+
   let spinTimer = null;
+  let activeDrumroll = null;
+
   function spinStudentWheel() {
-    if (state.classRoster.length < 2) {
-      showToast('⚠️ Kura için en az 2 öğrenci olmalıdır!');
+    if (state.classRoster.length < 1) {
+      showToast('⚠️ Sınıf listesinde öğrenci bulunmuyor! Lütfen liste ekleyin.');
+      return;
+    }
+    if (state.pickerMode === 'duel' && state.classRoster.length < 2) {
+      showToast('⚠️ Düello kurası için listede en az 2 öğrenci olmalıdır!');
       return;
     }
 
-    DOM.btnSpinWheel.disabled = true;
-    DOM.btnApplySelectedStudents.classList.add('hide');
+    // Aday havuzunu hesapla
+    let pool = state.classRoster.slice();
+    if (state.excludeTodaySelected && state.todaySelectedStudents.length > 0) {
+      const filtered = pool.filter(n => !state.todaySelectedStudents.includes(n));
+      const minRequired = (state.pickerMode === 'duel') ? 2 : 1;
+      if (filtered.length >= minRequired) {
+        pool = filtered;
+      } else {
+        showToast('ℹ️ Sınıftaki tüm öğrenciler kuradan geçti! Havuz otomatik olarak yenilendi.');
+        state.todaySelectedStudents = [];
+        StorageManager.saveTodaySelected();
+        renderTodaySelectedUI();
+        pool = state.classRoster.slice();
+      }
+    }
 
-    let steps = 0;
-    const maxSteps = 22;
-    let speed = 70;
+    // UI'ı kura çekim moduna al
+    DOM.btnSpinWheel.disabled = true;
+    if (DOM.pickerResultActions) DOM.pickerResultActions.classList.add('hide');
+
+    if (state.pickerMode === 'single') {
+      DOM.singleSlotCard.classList.remove('winner-celebrate');
+      DOM.singleSlotCard.classList.add('spinning');
+      DOM.singleSlotSub.textContent = 'Kura çekiliyor...';
+    } else {
+      DOM.slotCardBlue.classList.remove('winner-celebrate');
+      DOM.slotCardBlue.classList.add('spinning');
+      DOM.slotCardRed.classList.remove('winner-celebrate');
+      DOM.slotCardRed.classList.add('spinning');
+    }
+
+    // Moli tepkisi
+    if (DOM.pickerMoliBubble) {
+      DOM.pickerMoliBubble.textContent = 'Kura çekiliyor, nefesler tutuldu! 🥁';
+    }
+    changeMoliExpression('thinking');
+
+    // Heyecanlı Davul Ritmi (Drumroll) Başlat
+    if (activeDrumroll) activeDrumroll.stop();
+    activeDrumroll = audio.playDrumroll(3400);
+
+    // Animasyon Parametreleri (3.3 - 3.5 saniye süren hızlanıp yavaşlayan kura çarkı)
+    let stepCount = 0;
+    const totalSteps = 34;
+    let stepDelay = 45;
 
     function step() {
-      // 2 farklı rastgele isim seç
-      const r1 = Math.floor(Math.random() * state.classRoster.length);
-      let r2 = Math.floor(Math.random() * state.classRoster.length);
-      while (r2 === r1 && state.classRoster.length > 1) {
-        r2 = Math.floor(Math.random() * state.classRoster.length);
+      // Rastgele geçici isimleri göster
+      if (state.pickerMode === 'single') {
+        const rand = pool[Math.floor(Math.random() * pool.length)];
+        DOM.singleSlotName.textContent = rand;
+      } else {
+        const r1 = pool[Math.floor(Math.random() * pool.length)];
+        let r2 = pool[Math.floor(Math.random() * pool.length)];
+        while (r2 === r1 && pool.length > 1) {
+          r2 = pool[Math.floor(Math.random() * pool.length)];
+        }
+        DOM.slotName1.textContent = r1;
+        DOM.slotName2.textContent = r2;
       }
 
-      DOM.slotName1.textContent = state.classRoster[r1];
-      DOM.slotName2.textContent = state.classRoster[r2];
       audio.playTick();
+      stepCount++;
 
-      steps++;
-      if (steps < maxSteps) {
-        speed += 12; // Yavaşla
-        spinTimer = setTimeout(step, speed);
+      if (stepCount < totalSteps) {
+        // Son saniyede çarkın yavaşlama eğrisi (Deceleration)
+        if (stepCount > 20) {
+          stepDelay += Math.floor((stepCount - 20) * 12);
+        }
+        spinTimer = setTimeout(step, stepDelay);
       } else {
-        // Tamamlandı
+        // KURA TAMAMLANDI - BÜYÜK FİNAL
+        if (activeDrumroll) {
+          activeDrumroll.stop();
+          activeDrumroll = null;
+        }
+
         DOM.btnSpinWheel.disabled = false;
-        DOM.btnApplySelectedStudents.classList.remove('hide');
-        audio.playCorrect();
-        showToast(`🎯 Seçilen Yarışmacılar: ${DOM.slotName1.textContent} vs ${DOM.slotName2.textContent}`);
+
+        // Zafer Zili, Melodi ve Konfeti
+        audio.playCymbalTada();
+        audio.playVictory();
+        confetti.burst(window.innerWidth / 2, window.innerHeight * 0.45, 45);
+
+        if (state.pickerMode === 'single') {
+          // Nihai Kazananı Kesin Seç
+          const winner = pool[Math.floor(Math.random() * pool.length)];
+          state.lastPickedStudent = winner;
+
+          DOM.singleSlotCard.classList.remove('spinning');
+          DOM.singleSlotCard.classList.add('winner-celebrate');
+          DOM.singleSlotName.textContent = winner;
+          DOM.singleSlotSub.textContent = '🌟 Günün şanslı öğrencisi!';
+
+          // Moli Coşkulu Kutlama ve Sesli Okuma (Google TTS & Web Speech)
+          const singleCheers = [
+            `Sahne senin, ${winner}!`,
+            `Sıra sende, ${winner}!`,
+            `Tebrikler ${winner}, sahne senin!`,
+            `Günün şanslısı ${winner}! Bol şans!`
+          ];
+          const cheerText = singleCheers[Math.floor(Math.random() * singleCheers.length)];
+          if (DOM.pickerMoliBubble) DOM.pickerMoliBubble.textContent = cheerText;
+          changeMoliExpression('victory');
+          if (state.soundEnabled) {
+            audio.speakTurkishText(cheerText);
+          }
+
+          // Anti-Repeat havuzuna otomatik ekle
+          if (state.excludeTodaySelected && !state.todaySelectedStudents.includes(winner)) {
+            state.todaySelectedStudents.push(winner);
+            StorageManager.saveTodaySelected();
+            renderTodaySelectedUI();
+          }
+
+          showToast(`🎯 Seçilen Öğrenci: ${winner}`);
+        } else {
+          // 2 Öğrenci Düello Seçimi
+          const w1 = pool[Math.floor(Math.random() * pool.length)];
+          let w2 = pool[Math.floor(Math.random() * pool.length)];
+          while (w2 === w1 && pool.length > 1) {
+            w2 = pool[Math.floor(Math.random() * pool.length)];
+          }
+
+          state.player1.name = w1;
+          state.player2.name = w2;
+          state.lastPickedStudent = `${w1} ve ${w2}`;
+
+          DOM.slotCardBlue.classList.remove('spinning');
+          DOM.slotCardBlue.classList.add('winner-celebrate');
+          DOM.slotCardRed.classList.remove('spinning');
+          DOM.slotCardRed.classList.add('winner-celebrate');
+
+          DOM.slotName1.textContent = w1;
+          DOM.slotName2.textContent = w2;
+
+          const duelCheer = `${w1} ve ${w2}, sahne sizin!`;
+          if (DOM.pickerMoliBubble) DOM.pickerMoliBubble.textContent = duelCheer;
+          changeMoliExpression('victory');
+          if (state.soundEnabled) {
+            audio.speakTurkishText(duelCheer);
+          }
+
+          if (state.excludeTodaySelected) {
+            if (!state.todaySelectedStudents.includes(w1)) state.todaySelectedStudents.push(w1);
+            if (!state.todaySelectedStudents.includes(w2)) state.todaySelectedStudents.push(w2);
+            StorageManager.saveTodaySelected();
+            renderTodaySelectedUI();
+          }
+
+          if (DOM.btnApplySelectedStudents) DOM.btnApplySelectedStudents.classList.remove('hide');
+          showToast(`⚔️ Düello Yarışmacıları: ${w1} vs ${w2}`);
+        }
+
+        if (DOM.pickerResultActions) DOM.pickerResultActions.classList.remove('hide');
       }
     }
 
     step();
+  }
+
+  function speakCurrentWinnerName() {
+    if (!state.lastPickedStudent) return;
+    const cheer = `Sahne senin, ${state.lastPickedStudent}!`;
+    if (DOM.pickerMoliBubble) DOM.pickerMoliBubble.textContent = cheer;
+    audio.speakTurkishText(cheer);
+  }
+
+  function addCurrentWinnerToToday() {
+    if (!state.lastPickedStudent) return;
+    if (state.pickerMode === 'single') {
+      if (!state.todaySelectedStudents.includes(state.lastPickedStudent)) {
+        state.todaySelectedStudents.push(state.lastPickedStudent);
+        StorageManager.saveTodaySelected();
+        renderTodaySelectedUI();
+        audio.playClick();
+        showToast(`⭐ ${state.lastPickedStudent} 'Bugün Seçilenler'e eklendi.`);
+      } else {
+        showToast(`${state.lastPickedStudent} zaten listede.`);
+      }
+    }
   }
 
   function applySelectedStudents() {
@@ -7069,13 +7443,24 @@
 
     state.classRoster = lines;
     StorageManager.saveRoster();
-    DOM.rosterCount.textContent = lines.length;
+    if (DOM.rosterCount) DOM.rosterCount.textContent = lines.length;
+    if (DOM.rosterCountBadge) DOM.rosterCountBadge.textContent = lines.length;
+    updatePickerPoolStatus();
     audio.playClick();
-    showToast(`✅ Sınıf listesi kaydedildi (${lines.length} Öğrenci)`);
+    showToast(`✅ Sınıf listesi kalıcı hafızaya kaydedildi (${lines.length} Öğrenci)`);
+    switchPickerView('stage');
+  }
+
+  function clearClassRoster() {
+    if (confirm('Sınıf listesindeki tüm isimleri silmek istiyor musunuz?')) {
+      DOM.rosterTextarea.value = '';
+      DOM.rosterTextarea.focus();
+      audio.playClick();
+    }
   }
 
   function resetDefaultRoster() {
-    if (confirm('Varsayılan örnek öğrenci listesini yüklemek istiyor musunuz?')) {
+    if (confirm('Varsayılan 24 kişilik örnek MEB sınıf listesini yüklemek istiyor musunuz?')) {
       state.classRoster = [
         'Ali', 'Ayşe', 'Mehmet', 'Fatma', 'Can', 'Zeynep',
         'Yusuf', 'Elif', 'Kerem', 'Defne', 'Emir', 'Asya',
@@ -7083,8 +7468,10 @@
         'Umut', 'Ela', 'Efe', 'Ceren', 'Baran', 'Duru'
       ];
       StorageManager.saveRoster();
-      DOM.rosterCount.textContent = state.classRoster.length;
-      DOM.rosterTextarea.value = state.classRoster.join('\n');
+      if (DOM.rosterCount) DOM.rosterCount.textContent = state.classRoster.length;
+      if (DOM.rosterCountBadge) DOM.rosterCountBadge.textContent = state.classRoster.length;
+      if (DOM.rosterTextarea) DOM.rosterTextarea.value = state.classRoster.join('\n');
+      updatePickerPoolStatus();
       audio.playClick();
       showToast('Örnek liste başarıyla yüklendi.');
     }
@@ -8624,11 +9011,25 @@
       DOM.p2OptD.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 3); });
     }
 
-    // Çarkıfelek Kura Butonları
+    // Çarkıfelek Kura & Sınıf Yönetimi Butonları
     DOM.btnSpinWheel.addEventListener('pointerdown', spinStudentWheel);
     DOM.btnApplySelectedStudents.addEventListener('pointerdown', applySelectedStudents);
     DOM.btnSaveRoster.addEventListener('pointerdown', saveClassRoster);
     DOM.btnResetRoster.addEventListener('pointerdown', resetDefaultRoster);
+    if (DOM.btnClearRoster) DOM.btnClearRoster.addEventListener('pointerdown', clearClassRoster);
+    if (DOM.btnBackToStage) DOM.btnBackToStage.addEventListener('pointerdown', () => switchPickerView('stage'));
+    if (DOM.btnPickerModeSingle) DOM.btnPickerModeSingle.addEventListener('pointerdown', () => setPickerMode('single'));
+    if (DOM.btnPickerModeDuel) DOM.btnPickerModeDuel.addEventListener('pointerdown', () => setPickerMode('duel'));
+    if (DOM.btnPickerTabRoster) DOM.btnPickerTabRoster.addEventListener('pointerdown', () => switchPickerView('roster'));
+    if (DOM.btnAddTodaySelected) DOM.btnAddTodaySelected.addEventListener('pointerdown', addCurrentWinnerToToday);
+    if (DOM.btnSpeakStudentName) DOM.btnSpeakStudentName.addEventListener('pointerdown', speakCurrentWinnerName);
+    if (DOM.btnResetTodaySelected) DOM.btnResetTodaySelected.addEventListener('pointerdown', resetTodaySelected);
+    if (DOM.chkExcludeToday) {
+      DOM.chkExcludeToday.addEventListener('change', () => {
+        state.excludeTodaySelected = DOM.chkExcludeToday.checked;
+        updatePickerPoolStatus();
+      });
+    }
 
     // Özel Soru Formu
     DOM.formAddQuestion.addEventListener('submit', handleAddCustomQuestion);
