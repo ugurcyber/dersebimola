@@ -177,9 +177,36 @@
       this.currentAudio = null;
       this.currentAnnouncerAudio = null;
       this.ttsTimeout = null;
+      this.ttsReady = false;
       this.initOnFirstTouch = this.initOnFirstTouch.bind(this);
       window.addEventListener('pointerdown', this.initOnFirstTouch, { once: true });
       window.addEventListener('keydown', this.initOnFirstTouch, { once: true });
+    }
+
+    // Google TTS & Web Speech motorunu sayfa yüklendikten (window.onload) sonraya ertele (defer)
+    initTTSDeferred() {
+      if (this.ttsReady) return;
+      this.ttsReady = true;
+
+      const setupTTS = () => {
+        try {
+          if ('speechSynthesis' in window) {
+            // Ses motorunu arka planda bloklamadan hazırla (warmup)
+            window.speechSynthesis.getVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+              window.speechSynthesis.onvoiceschanged = () => {
+                try { window.speechSynthesis.getVoices(); } catch (e) {}
+              };
+            }
+          }
+        } catch (e) {}
+      };
+
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(setupTTS, { timeout: 2500 });
+      } else {
+        setTimeout(setupTTS, 1200);
+      }
     }
 
     initOnFirstTouch() {
@@ -876,6 +903,15 @@
 
   const audio = new SoundEngine();
 
+  // Google TTS (Ses motoru) başlatma fonksiyonunu sayfa yüklendikten (window.onload) sonraya ertele (defer)
+  if (document.readyState === 'complete') {
+    audio.initTTSDeferred();
+  } else {
+    window.addEventListener('load', () => {
+      audio.initTTSDeferred();
+    });
+  }
+
   // -------------------------------------------------------------
   // Soru Sesli Okuma Yardımcıları (Edge-TTS & Web Speech)
   // -------------------------------------------------------------
@@ -1092,7 +1128,7 @@
       const key = EMOJI_KEYS_SORTED[i];
       if (result.indexOf(key) !== -1) {
         const iconPath = EMOJI_TO_3D[key];
-        const imgTag = `<img src="${iconPath}" class="${customClass}" alt="" draggable="false">`;
+        const imgTag = `<img src="${iconPath}" class="${customClass}" alt="" draggable="false" loading="lazy" decoding="async">`;
         result = result.split(key).join(imgTag);
       }
     }
@@ -4437,7 +4473,7 @@
   };
 
   /* ==========================================================================
-     4. KONFETİ SİSTEMİ: CANVAS PARTİKÜL MOTORU
+     4. KONFETİ SİSTEMİ: CANVAS PARTİKÜL MOTORU (SADECE OYUN/ZAFER EKRANINDA)
      ========================================================================== */
   class ConfettiCanon {
     constructor(canvasId) {
@@ -4446,8 +4482,12 @@
       this.particles = [];
       this.animId = null;
       this.resize = this.resize.bind(this);
-      window.addEventListener('resize', this.resize);
-      this.resize();
+      window.addEventListener('resize', () => {
+        // Ana sayfayı meşgul etmemek için sadece oyun veya zafer ekranında resize yap
+        if (state.currentView === 'duel' || (DOM.victoryOverlay && !DOM.victoryOverlay.classList.contains('hide'))) {
+          this.resize();
+        }
+      });
     }
 
     resize() {
@@ -4457,6 +4497,11 @@
     }
 
     burst() {
+      // Sadece oyun veya zafer ekranında çalıştır, ana sayfayı meşgul etmesin
+      const isGameActive = state.currentView === 'duel' || 
+        (DOM.viewDuel && DOM.viewDuel.classList.contains('active')) || 
+        (DOM.victoryOverlay && !DOM.victoryOverlay.classList.contains('hide'));
+      if (!isGameActive) return;
       if (!this.canvas || !this.ctx) return;
       this.resize();
       this.particles = [];
@@ -4484,6 +4529,14 @@
     }
 
     loop() {
+      // Oyun veya zafer ekranından çıkıldıysa partikülleri durdur
+      const isGameActive = state.currentView === 'duel' || 
+        (DOM.viewDuel && DOM.viewDuel.classList.contains('active')) || 
+        (DOM.victoryOverlay && !DOM.victoryOverlay.classList.contains('hide'));
+      if (!isGameActive) {
+        this.stop();
+        return;
+      }
       if (!this.ctx) return;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -4516,12 +4569,14 @@
 
     stop() {
       if (this.animId) cancelAnimationFrame(this.animId);
-      if (this.ctx) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.animId = null;
+      this.particles = [];
+      if (this.ctx && this.canvas) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
   }
 
   /* ==========================================================================
-     4.5. JUICINESS & GAME FEEL PARTİKÜL MOTORU (STARS, SPARKS & FLAME EMBERS)
+     4.5. JUICINESS & GAME FEEL PARTİKÜL MOTORU (SADECE OYUN EKRANINDA ÇALIŞIR)
      ========================================================================== */
   class JuiceParticleEngine {
     constructor(canvasId) {
@@ -4531,8 +4586,12 @@
       this.animId = null;
       this.resize = this.resize.bind(this);
       this.loop = this.loop.bind(this);
-      window.addEventListener('resize', this.resize);
-      this.resize();
+      window.addEventListener('resize', () => {
+        // Sadece aktif oyunda canvas boyutlandır
+        if (state.currentView === 'duel' || (DOM.viewDuel && DOM.viewDuel.classList.contains('active'))) {
+          this.resize();
+        }
+      });
     }
 
     resize() {
@@ -4542,6 +4601,10 @@
     }
 
     burst(x, y, mode = 'stars') {
+      // Sadece oyun ekranında (ihtiyaç anında) çalışacak şekilde sınırla, ana sayfayı meşgul etmesin
+      if (state.currentView !== 'duel' && (!DOM.viewDuel || !DOM.viewDuel.classList.contains('active'))) {
+        return;
+      }
       if (!this.canvas || !this.ctx) return;
       this.resize();
 
@@ -4582,6 +4645,11 @@
     }
 
     loop() {
+      // Oyun ekranı kapandıysa partikülleri anında temizle ve durdur
+      if (state.currentView !== 'duel' && (!DOM.viewDuel || !DOM.viewDuel.classList.contains('active'))) {
+        this.stop();
+        return;
+      }
       if (!this.ctx) return;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -4631,7 +4699,7 @@
       if (this.animId) cancelAnimationFrame(this.animId);
       this.animId = null;
       this.particles = [];
-      if (this.ctx) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      if (this.ctx && this.canvas) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
   }
 
@@ -8373,6 +8441,7 @@
     if (DOM.p1WinToast) DOM.p1WinToast.classList.add('hide');
     if (DOM.p2WinToast) DOM.p2WinToast.classList.add('hide');
     confetti.stop();
+    particles.stop();
 
     // Şık butonlarındaki aktif ve kilitli durumları temizle
     document.querySelectorAll('.duel-option-btn').forEach(btn => {

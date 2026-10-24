@@ -85,6 +85,11 @@ html, body {
   touch-action: manipulation;
 }
 
+/* 300ms Dokunma Gecikmesini (Click Delay) Sıfırlama Kuralı */
+button, a, .card, [role="button"], input, select, textarea {
+  touch-action: manipulation;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family);
   color: var(--text-heading, #1e293b);
@@ -7048,6 +7053,85 @@ input:checked + .slider:before {
   .matching-card {
     padding: 10px 12px;
     min-height: 56px;
+  }
+}
+
+/* ==========================================================================
+   MOBİL PERFORMANS OPTİMİZASYONU: HAFİFLETİLMİŞ CSS (max-width: 768px)
+   Ağır 3D gölgeleri (#e2e8f0 ince border ile) kaldırır ve dokunmatik
+   ekranlarda gereksiz GPU yükü oluşturan hover kaldırma animasyonlarını kapatır.
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* 1. Ağır 3D Gölgeleri Kaldır & Hafif İnce Kenarlık Uygula */
+  .home-grade-card,
+  .subject-card,
+  .home-popular-card,
+  .game-card,
+  .saved-quiz-card,
+  .quiz-builder-form-pane,
+  .quiz-saved-library-pane,
+  .edtech-hero-card,
+  .edtech-trust-banner,
+  .active-contestants-bar,
+  .card,
+  .stat-card,
+  .feature-card,
+  .duel-option-btn,
+  .matching-card,
+  .tf-btn,
+  .sidebar-grade-nav .grade-chip,
+  .hero-badge-pill,
+  .trust-item {
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  /* 2. Dokunmatik Ekranlarda Hover (Havaya Kalkma / Transform) Animasyonlarını Devre Dışı Bırak */
+  .home-grade-card:hover,
+  .subject-card:hover,
+  .home-popular-card:hover,
+  .game-card:hover,
+  .saved-quiz-card:hover,
+  .card:hover,
+  .stat-card:hover,
+  .feature-card:hover,
+  .duel-option-btn:hover,
+  .matching-card:hover,
+  .tf-btn:hover,
+  .sidebar-grade-nav .grade-chip:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 3. Kart İçi İkonların Hover Animasyonlarını Kapat */
+  .home-grade-card:hover .card-icon-wrap,
+  .home-popular-card:hover .card-icon-wrap,
+  .home-popular-card:hover .pop-card-launch-btn,
+  .subject-card:hover .subject-icon-box {
+    transform: none !important;
+  }
+
+  /* 4. Mobilde GPU Yoran Sürekli Animasyonları Hafiflet */
+  .hero-moli-img,
+  .floating-badge {
+    animation: none !important;
+  }
+}
+
+/* Dokunmatik Cihazlar İçin Evrensel Hover İptali */
+@media (hover: none) and (pointer: coarse) {
+  .home-grade-card:hover,
+  .subject-card:hover,
+  .home-popular-card:hover,
+  .game-card:hover,
+  .saved-quiz-card:hover,
+  .card:hover,
+  .stat-card:hover,
+  .duel-option-btn:hover,
+  .matching-card:hover,
+  .tf-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
   }
 }
 
