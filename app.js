@@ -85,7 +85,78 @@
     customQuestions: [],
 
     // Sınıf Ligi Maç Geçmişi
-    leagueScores: {}
+    leagueScores: {},
+
+    // Maç Başlangıç Zamanı (Sınıf İçi Kullanım Süresi Ölçümü İçin)
+    matchStartTime: null
+  };
+
+  /* ==========================================================================
+     1.1 GOOGLE ANALYTICS 4 & AKILLI TAHTA ETKİLEŞİM TAKİP MOTORU
+     ========================================================================== */
+  const AnalyticsTracker = {
+    getDeviceInfo() {
+      return (typeof window !== 'undefined' && window.__DERSE_BI_MOLA_DEVICE_INFO__) || {};
+    },
+
+    trackEvent(eventName, params) {
+      try {
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+          const deviceInfo = this.getDeviceInfo();
+          const payload = Object.assign({}, deviceInfo, params || {});
+          window.gtag('event', eventName, payload);
+        }
+      } catch (err) {
+        // Çevrimdışı veya MEB Fatih ağında engel durumunda sessizce devam et
+      }
+    },
+
+    // 1) Sınıf Seçimi
+    trackClassSelect(gradeNumber, gradeLabel) {
+      const label = gradeLabel || (gradeNumber === 0 ? 'Anasınıfı' : `${gradeNumber}. Sınıf`);
+      this.trackEvent('select_class', {
+        grade: label,
+        grade_number: gradeNumber,
+        game_name: 'Ders Seçim Ekranı'
+      });
+    },
+
+    // 2) Ders Seçimi
+    trackSubjectSelect(subjectId, subjectTitle, gradeNumber) {
+      const grade = gradeNumber === 0 ? 'Anasınıfı' : `${gradeNumber}. Sınıf`;
+      this.trackEvent('select_subject', {
+        subject_id: subjectId,
+        subject_title: subjectTitle,
+        grade: grade,
+        game_name: subjectTitle
+      });
+    },
+
+    // 3) Düello / Pratik Başlangıcı
+    trackDuelStart(gameType, gameTitle, gradeNumber, gameMode) {
+      const grade = gradeNumber === 0 ? 'Anasınıfı' : `${gradeNumber}. Sınıf`;
+      this.trackEvent('start_duel', {
+        game_name: gameTitle || gameType,
+        game_type: gameType,
+        grade: grade,
+        game_mode: gameMode || 'duel'
+      });
+    },
+
+    // 4) Oyun / Maç Sonu
+    trackGameFinish(gameType, gameTitle, gradeNumber, gameMode, winnerName, p1Score, p2Score, durationSec) {
+      const grade = gradeNumber === 0 ? 'Anasınıfı' : `${gradeNumber}. Sınıf`;
+      this.trackEvent('finish_game', {
+        game_name: gameTitle || gameType,
+        game_type: gameType,
+        grade: grade,
+        game_mode: gameMode || 'duel',
+        winner: winnerName || 'Belirsiz',
+        p1_score: p1Score || 0,
+        p2_score: p2Score || 0,
+        play_duration_seconds: durationSec || 0
+      });
+    }
   };
 
   /* ==========================================================================
@@ -6579,6 +6650,9 @@
     state.currentSubject = subject.id;
     state.currentCategory = 'all';
 
+    // Analytics: Seçilen dersi raporla
+    AnalyticsTracker.trackSubjectSelect(subject.id, subject.name, g);
+
     // UI Geçişi: Ana sayfa ve dersler gizlenir, oyunlar açılır
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
@@ -6816,6 +6890,10 @@
     state.currentCategory = 'all';
     state.currentSection = 'subjects';
     audio.playClick();
+
+    // Analytics: Sınıf seviyesi seçimini raporla
+    const gradeLabels = { 0: 'Anasınıfı', 1: '1. Sınıf', 2: '2. Sınıf', 3: '3. Sınıf', 4: '4. Sınıf' };
+    AnalyticsTracker.trackClassSelect(state.currentGrade, gradeLabels[state.currentGrade]);
 
     // Sol panelde "🏠 Ana Sayfa" butonunun aktifliğini kaldır
     if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
@@ -7179,6 +7257,7 @@
 
   function startDuel(gameType) {
     state.currentGameType = gameType;
+    state.matchStartTime = Date.now();
     state.player1.score = 0;
     state.player2.score = 0;
     state.player1.streak = 0;
@@ -7186,6 +7265,10 @@
     state.player1.isLocked = false;
     state.player2.isLocked = false;
     state.questionNumber = 1;
+
+    // Analytics: Düello / Solo Oyun Başlangıcını Raporla
+    const gameTitle = getCurrentGameTitle();
+    AnalyticsTracker.trackDuelStart(gameType, gameTitle, state.currentGrade, state.gameMode);
 
     // Alev modlarını ve kombo banner'ını temizle
     if (DOM.p1ScoreContainer) DOM.p1ScoreContainer.classList.remove('on-fire');
@@ -8252,6 +8335,20 @@
     // Zafer Skoru Paylaşım Bilgilerini Sakla
     lastVictoryScore = isSolo ? state.player1.score : (winner ? winner.score : state.player1.score);
     lastVictoryGameTitle = getCurrentGameTitle();
+
+    // Analytics: Oyun / Düello Tamamlandı Raporu (Kullanım Süresi, Kazanan ve Skorlarla)
+    const durationSec = state.matchStartTime ? Math.round((Date.now() - state.matchStartTime) / 1000) : 0;
+    const winnerName = isSolo ? state.player1.name : (winner ? winner.name : 'Berabere');
+    AnalyticsTracker.trackGameFinish(
+      state.currentGameType,
+      lastVictoryGameTitle,
+      state.currentGrade,
+      state.gameMode,
+      winnerName,
+      state.player1.score,
+      state.player2.score,
+      durationSec
+    );
   }
 
   // Zafer Skoru Paylaşım Yardımcıları
