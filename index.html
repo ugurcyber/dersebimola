@@ -560,7 +560,7 @@
             </div>
           </div>
           <!-- 5 Yıldızlı Puan Barı -->
-          <div class="player-score-container">
+          <div class="player-score-container" id="p1ScoreContainer">
             <div class="stars-track" id="p1StarsTrack">
               <span class="star-slot" data-index="0">⭐</span>
               <span class="star-slot" data-index="1">⭐</span>
@@ -569,6 +569,10 @@
               <span class="star-slot" data-index="4">⭐</span>
             </div>
             <div class="score-badge" id="p1ScoreBadge">0 / 5</div>
+            <div class="score-streak-flame hide" id="p1StreakFlame">
+              <span class="flame-emoji">🔥</span>
+              <span class="streak-num" id="p1StreakCount">3x</span>
+            </div>
           </div>
         </div>
 
@@ -584,7 +588,7 @@
           <div class="question-text" id="p1QuestionText">Hazırlanıyor...</div>
         </div>
 
-        <!-- 3 Adet Devasa Şık Butonu (Dokunmatik ve Pointerdown Duyarlı) -->
+        <!-- 3-4 Adet Devasa Şık Butonu (Dokunmatik ve Pointerdown Duyarlı) -->
         <div class="duel-options-grid" id="p1OptionsGrid">
           <button class="duel-option-btn" id="p1OptA" data-option-index="0">
             <span class="opt-letter">A</span>
@@ -597,6 +601,10 @@
           <button class="duel-option-btn" id="p1OptC" data-option-index="2">
             <span class="opt-letter">C</span>
             <span class="opt-text" id="p1OptTextC">...</span>
+          </button>
+          <button class="duel-option-btn hide" id="p1OptD" data-option-index="3">
+            <span class="opt-letter">D</span>
+            <span class="opt-text" id="p1OptTextD">...</span>
           </button>
         </div>
 
@@ -642,7 +650,7 @@
             </div>
           </div>
           <!-- 5 Yıldızlı Puan Barı -->
-          <div class="player-score-container">
+          <div class="player-score-container" id="p2ScoreContainer">
             <div class="stars-track" id="p2StarsTrack">
               <span class="star-slot" data-index="0">⭐</span>
               <span class="star-slot" data-index="1">⭐</span>
@@ -651,6 +659,10 @@
               <span class="star-slot" data-index="4">⭐</span>
             </div>
             <div class="score-badge" id="p2ScoreBadge">0 / 5</div>
+            <div class="score-streak-flame hide" id="p2StreakFlame">
+              <span class="flame-emoji">🔥</span>
+              <span class="streak-num" id="p2StreakCount">3x</span>
+            </div>
           </div>
         </div>
 
@@ -666,7 +678,7 @@
           <div class="question-text" id="p2QuestionText">Hazırlanıyor...</div>
         </div>
 
-        <!-- 3 Adet Devasa Şık Butonu (Dokunmatik ve Pointerdown Duyarlı) -->
+        <!-- 3-4 Adet Devasa Şık Butonu (Dokunmatik ve Pointerdown Duyarlı) -->
         <div class="duel-options-grid" id="p2OptionsGrid">
           <button class="duel-option-btn" id="p2OptA" data-option-index="0">
             <span class="opt-letter">A</span>
@@ -679,6 +691,10 @@
           <button class="duel-option-btn" id="p2OptC" data-option-index="2">
             <span class="opt-letter">C</span>
             <span class="opt-text" id="p2OptTextC">...</span>
+          </button>
+          <button class="duel-option-btn hide" id="p2OptD" data-option-index="3">
+            <span class="opt-letter">D</span>
+            <span class="opt-text" id="p2OptTextD">...</span>
           </button>
         </div>
 
@@ -704,6 +720,18 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- 🔥 KOMBO (SERİ) VE ATEŞ MODU BANNER'I -->
+    <div class="combo-fire-banner hide" id="comboFireBanner">
+      <div class="combo-fire-content">
+        <div class="combo-flame-icon">🔥</div>
+        <div class="combo-fire-text-group">
+          <div class="combo-fire-title" id="comboFireTitle">🔥 3x SERİ! SÜPERSİN! 🔥</div>
+          <div class="combo-fire-subtitle" id="comboFireSubtitle">Mavi Takım Alev Aldı! Durdurulamıyor! ⚡</div>
+        </div>
+        <div class="combo-flame-icon">🔥</div>
+      </div>
     </div>
 
     <!-- Pedagojik Çözüm Notu Alt / Orta Açılır Bildirimi -->
@@ -1041,6 +1069,9 @@
   <div class="toast-notification hide" id="globalToast">
     <span class="toast-msg" id="toastMsg">Bildirim</span>
   </div>
+
+  <!-- Efekt ve Juiciness Parçacık Katmanı (Yıldız & Konfeti Patlamaları) -->
+  <canvas id="gameParticlesCanvas" class="game-particles-canvas"></canvas>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane) -->
   <script src="app.js?v=6.1.0"></script>

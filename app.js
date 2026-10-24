@@ -45,16 +45,20 @@
     player1: {
       name: '1. Öğrenci (Mavi)',
       score: 0,
+      streak: 0,
       avatar: '👦',
       isLocked: false,
       lockTimer: null,
+      frostInterval: null,
     },
     player2: {
       name: '2. Öğrenci (Kırmızı)',
       score: 0,
+      streak: 0,
       avatar: '👧',
       isLocked: false,
       lockTimer: null,
+      frostInterval: null,
     },
 
     // O anki aktif soru nesnesi
@@ -336,6 +340,72 @@
       gainSnap.connect(this.ctx.destination);
       oscSnap.start(now);
       oscSnap.stop(now + 0.024);
+    }
+
+    // Kombo & Ateş Modu Sesi: Coşkulu, yükselen alev arpej ve parıltısı ("🔥 3x SERİ!")
+    playComboFire() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      const now = this.ctx.currentTime;
+      const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+      notes.forEach((freq, i) => {
+        const t = now + i * 0.055;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, t);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.05, t + 0.12);
+
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.25, t + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.3);
+      });
+    }
+
+    // Buz / Donma Sesi: Hatalı şıkta kristal buz kilitlenme efekti ("❄️ 1.5s")
+    playIceFreeze() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      const now = this.ctx.currentTime;
+      const iceFreqs = [2400, 1800, 1320];
+      iceFreqs.forEach((freq, idx) => {
+        const t = now + idx * 0.04;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, t);
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.5, t + 0.1);
+
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.18, t + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.16);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.18);
+      });
+    }
+
+    // Yükselen Puan Sesi: +10 Puan süzülürken ince parlak kristal tınısı
+    playScorePoints() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, now); // A5
+      osc.frequency.exponentialRampToValueAtTime(1320, now + 0.08); // E6
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.18, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.24);
     }
 
     // -------------------------------------------------------------
@@ -880,6 +950,36 @@
      3. DİNAMİK SORU MOTORU (GRADE-BASED QUESTION ENGINE)
      ========================================================================== */
   const QuestionEngine = {
+    // -------------------------------------------------------------
+    // FİSHER-YATES SHUFFLE VE KARIŞTIRMA SİSTEMİ (ANTİ-REPEAT ENGINE)
+    // -------------------------------------------------------------
+    fisherYatesShuffle(array) {
+      if (!array || !Array.isArray(array)) return [];
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    },
+
+    sessionQueues: {},
+    recentSignatures: [],
+
+    initSession(grade, gameType) {
+      this.sessionQueues = {};
+      this.recentSignatures = [];
+    },
+
+    drawFromPool(pool, poolKey = null) {
+      if (!pool || !pool.length) return null;
+      const key = poolKey || (pool.__poolId || (pool.__poolId = 'pool_' + Math.random().toString(36).substring(2, 9)));
+      if (!this.sessionQueues[key] || this.sessionQueues[key].length === 0) {
+        this.sessionQueues[key] = this.fisherYatesShuffle(pool);
+      }
+      return this.sessionQueues[key].pop();
+    },
+
     // -------------------------------------------------------------
     // ANASINIFI & 1. SINIF: ÇOKTAN SEÇMELİ OLMAYAN İNTERAKTİF MOTORLAR
     // -------------------------------------------------------------
@@ -2772,7 +2872,7 @@
       } else if (r < 0.75) {
         return this.generateGrade3RomenAndPlace();
       } else {
-        const item = this.grade3FractionsAndShapesPool[Math.floor(Math.random() * this.grade3FractionsAndShapesPool.length)];
+        const item = this.drawFromPool(this.grade3FractionsAndShapesPool, "grade3FractionsAndShapesPool");
         return {
           question: item.q,
           correct: item.a,
@@ -2789,7 +2889,7 @@
       } else if (r < 0.7) {
         return this.generateGrade4PerimeterArea();
       } else {
-        const item = this.grade4FractionsAnglesPool[Math.floor(Math.random() * this.grade4FractionsAnglesPool.length)];
+        const item = this.drawFromPool(this.grade4FractionsAnglesPool, "grade4FractionsAnglesPool");
         return {
           question: item.q,
           correct: item.a,
@@ -2953,14 +3053,10 @@
       { englishWord: 'Turkey', q: '"Where are you from?" sorusuna Türkiye\'den biri nasıl cevap verir? 🇹🇷', a: "I am from Turkey 🇹🇷", d: ["I am 10 years old", "I like apples"], exp: '"Nerelisin?" sorusuna "I am from Turkey" (Türkiyeliyim) denir. 🇹🇷', grade: 4 }
     ],
 
-    // Şıkları rastgele karıştırarak A, B, C formatında sun
+    // Şıkları rastgele karıştırarak A, B, C, D formatında sun (Ezber Bozan Fisher-Yates)
     buildQuestionItem(qData, category) {
-      const options = [qData.correct, ...qData.distractors];
-      // Karıştır (Fisher-Yates)
-      for (let i = options.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [options[i], options[j]] = [options[j], options[i]];
-      }
+      const allOpts = [qData.correct, ...(qData.distractors || [])];
+      const options = this.fisherYatesShuffle(allOpts);
 
       let questionHtml = qData.questionHtml;
       if (!questionHtml && qData.englishWord) {
@@ -3320,14 +3416,31 @@
       };
     },
 
-    // İstenen sınıf ve türe göre bir soru getir
+    // İstenen sınıf ve türe göre bir soru getir (Anti-Repeat Fisher-Yates Motoru)
     getNextQuestion(grade, gameType) {
+      let attempts = 0;
+      let finalQ = null;
+      while (attempts < 10) {
+        finalQ = this._getRawQuestion(grade, gameType);
+        if (!finalQ) break;
+        const sig = String(finalQ.question || finalQ.spokenText || '') + '_' + JSON.stringify(finalQ.correct);
+        if (!this.recentSignatures.includes(sig) || attempts >= 9) {
+          this.recentSignatures.push(sig);
+          if (this.recentSignatures.length > 25) this.recentSignatures.shift();
+          break;
+        }
+        attempts++;
+      }
+      return finalQ;
+    },
+
+    _getRawQuestion(grade, gameType) {
       // 1. Önce öğretmenin eklediği özel soru var mı kontrol et (varsa %40 ihtimalle araya serpiştir)
       const matchingCustom = state.customQuestions.filter(
         q => parseInt(q.grade, 10) === parseInt(grade, 10) && q.category === gameType
       );
       if (matchingCustom.length > 0 && Math.random() < 0.4) {
-        const cq = matchingCustom[Math.floor(Math.random() * matchingCustom.length)];
+        const cq = this.drawFromPool(matchingCustom, "matchingCustom");
         return this.buildQuestionItem({
           question: cq.question,
           correct: cq.correct,
@@ -3359,13 +3472,13 @@
       } else if (gameType === 'firstreading') {
         // İlk Okuma Yazma karma rotasyon
         const subEngines = ['firstreading_balloon', 'syllable_builder', 'word_catch'];
-        const chosen = subEngines[Math.floor(Math.random() * subEngines.length)];
+        const chosen = this.drawFromPool(subEngines, "subEngines");
         return this.getNextQuestion(1, chosen);
       } else if (gameType === 'math_rhythmic_1') {
         const raw = this.generateGrade1Rhythmic();
         return this.buildQuestionItem(raw, '🔢 Ritmik Sayma Düellosu');
       } else if (gameType === 'math_shapes_money_1') {
-        const raw = this.grade1ShapesAndMoneyPool[Math.floor(Math.random() * this.grade1ShapesAndMoneyPool.length)];
+        const raw = this.drawFromPool(this.grade1ShapesAndMoneyPool, "grade1ShapesAndMoneyPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3373,7 +3486,7 @@
           explanation: raw.exp
         }, '🪙 Geometrik Şekiller & Paralarımız');
       } else if (gameType === 'turkish_antonyms_1') {
-        const raw = this.grade1AntonymsPool[Math.floor(Math.random() * this.grade1AntonymsPool.length)];
+        const raw = this.drawFromPool(this.grade1AntonymsPool, "grade1AntonymsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3384,7 +3497,7 @@
         const raw = this.generateGrade1SyllablesAndLetters();
         return this.buildQuestionItem(raw, '🔤 Hece Sayısı ve Harf Bilgisi');
       } else if (gameType === 'lifescience_school_home_1') {
-        const raw = this.grade1SchoolHomeLifePool[Math.floor(Math.random() * this.grade1SchoolHomeLifePool.length)];
+        const raw = this.drawFromPool(this.grade1SchoolHomeLifePool, "grade1SchoolHomeLifePool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3392,7 +3505,7 @@
           explanation: raw.exp
         }, '🏫 Okulumuzda ve Evimizde Hayat');
       } else if (gameType === 'lifescience_health_seasons_1') {
-        const raw = this.grade1HealthSeasonsPool[Math.floor(Math.random() * this.grade1HealthSeasonsPool.length)];
+        const raw = this.drawFromPool(this.grade1HealthSeasonsPool, "grade1HealthSeasonsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3406,7 +3519,7 @@
         const raw = this.generateGrade2Multiplication();
         return this.buildQuestionItem(raw, '✖️ Hızlı Çarpma Başlangıcı');
       } else if (gameType === 'math_clock_2') {
-        const raw = this.grade2ClocksPool[Math.floor(Math.random() * this.grade2ClocksPool.length)];
+        const raw = this.drawFromPool(this.grade2ClocksPool, "grade2ClocksPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3414,7 +3527,7 @@
           explanation: raw.exp
         }, '⏰ Zamanı Ölçme ve Saatler');
       } else if (gameType === 'turkish_syn_ant_2') {
-        const raw = this.grade2SynAntPool[Math.floor(Math.random() * this.grade2SynAntPool.length)];
+        const raw = this.drawFromPool(this.grade2SynAntPool, "grade2SynAntPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3422,7 +3535,7 @@
           explanation: raw.exp
         }, '✨ Eş ve Zıt Anlam Şampiyonası');
       } else if (gameType === 'turkish_punctuation_2') {
-        const raw = this.grade2PunctuationPool[Math.floor(Math.random() * this.grade2PunctuationPool.length)];
+        const raw = this.drawFromPool(this.grade2PunctuationPool, "grade2PunctuationPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3430,7 +3543,7 @@
           explanation: raw.exp
         }, '✍️ Noktalama & Yazım Kuralları');
       } else if (gameType === 'lifescience_traffic_2') {
-        const raw = this.grade2TrafficSafeLifePool[Math.floor(Math.random() * this.grade2TrafficSafeLifePool.length)];
+        const raw = this.drawFromPool(this.grade2TrafficSafeLifePool, "grade2TrafficSafeLifePool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3438,7 +3551,7 @@
           explanation: raw.exp
         }, '🚦 Güvenli Hayat ve Trafik');
       } else if (gameType === 'lifescience_culture_2') {
-        const raw = this.grade2CultureAndCountryPool[Math.floor(Math.random() * this.grade2CultureAndCountryPool.length)];
+        const raw = this.drawFromPool(this.grade2CultureAndCountryPool, "grade2CultureAndCountryPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3446,7 +3559,7 @@
           explanation: raw.exp
         }, '🇹🇷 Ülkemiz ve Kültürümüz');
       } else if (gameType === 'english_school_objects_2') {
-        const raw = this.englishSchoolObjectsPool[Math.floor(Math.random() * this.englishSchoolObjectsPool.length)];
+        const raw = this.drawFromPool(this.englishSchoolObjectsPool, "englishSchoolObjectsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3456,7 +3569,7 @@
           lang: 'en'
         }, '🎒 Classroom Objects & Numbers');
       } else if (gameType === 'english_animals_fruits_2') {
-        const raw = this.englishAnimalsAndFruitsPool[Math.floor(Math.random() * this.englishAnimalsAndFruitsPool.length)];
+        const raw = this.drawFromPool(this.englishAnimalsAndFruitsPool, "englishAnimalsAndFruitsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3472,7 +3585,7 @@
         const raw = this.generateGrade3MultDiv();
         return this.buildQuestionItem(raw, '🌪️ Çarpım Tablosu & Bölme Düellosu');
       } else if (gameType === 'math_fractions_shapes_3') {
-        const raw = this.grade3FractionsAndShapesPool[Math.floor(Math.random() * this.grade3FractionsAndShapesPool.length)];
+        const raw = this.drawFromPool(this.grade3FractionsAndShapesPool, "grade3FractionsAndShapesPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3480,7 +3593,7 @@
           explanation: raw.exp
         }, '🧊 Kesirler & Geometrik Cisimler');
       } else if (gameType === 'turkish_homonyms_figurative_3') {
-        const raw = this.grade3HomonymsFigurativePool[Math.floor(Math.random() * this.grade3HomonymsFigurativePool.length)];
+        const raw = this.drawFromPool(this.grade3HomonymsFigurativePool, "grade3HomonymsFigurativePool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3488,7 +3601,7 @@
           explanation: raw.exp
         }, '🎭 Eş Sesli Kelimeler & Mecaz Anlam');
       } else if (gameType === 'turkish_punctuation_5n1k_3') {
-        const raw = this.grade3Punctuation5N1KPool[Math.floor(Math.random() * this.grade3Punctuation5N1KPool.length)];
+        const raw = this.drawFromPool(this.grade3Punctuation5N1KPool, "grade3Punctuation5N1KPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3496,7 +3609,7 @@
           explanation: raw.exp
         }, '✍️ Noktalama, Yazım Kuralları & 5N1K');
       } else if (gameType === 'science_earth_senses_3') {
-        const raw = this.grade3EarthSensesPool[Math.floor(Math.random() * this.grade3EarthSensesPool.length)];
+        const raw = this.drawFromPool(this.grade3EarthSensesPool, "grade3EarthSensesPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3504,7 +3617,7 @@
           explanation: raw.exp
         }, '🌍 Gezegenimiz Dünya ve Beş Duyumuz');
       } else if (gameType === 'science_force_matter_3') {
-        const raw = this.grade3ForceMatterPool[Math.floor(Math.random() * this.grade3ForceMatterPool.length)];
+        const raw = this.drawFromPool(this.grade3ForceMatterPool, "grade3ForceMatterPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3512,7 +3625,7 @@
           explanation: raw.exp
         }, '🧲 Kuvveti Tanıyalım ve Madde');
       } else if (gameType === 'lifescience_compass_consumer_3') {
-        const raw = this.grade3CompassConsumerPool[Math.floor(Math.random() * this.grade3CompassConsumerPool.length)];
+        const raw = this.drawFromPool(this.grade3CompassConsumerPool, "grade3CompassConsumerPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3520,7 +3633,7 @@
           explanation: raw.exp
         }, '🧭 Yönlerimiz, Kroki ve Tüketici Hakları');
       } else if (gameType === 'english_family_feelings_3') {
-        const raw = this.grade3FamilyFeelingsPool[Math.floor(Math.random() * this.grade3FamilyFeelingsPool.length)];
+        const raw = this.drawFromPool(this.grade3FamilyFeelingsPool, "grade3FamilyFeelingsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3533,7 +3646,7 @@
         const raw = this.generateGrade4DigitsOperations();
         return this.buildQuestionItem(raw, '👑 4, 5, 6 Basamaklı Sayılar & Dört İşlem');
       } else if (gameType === 'math_fractions_angles_4') {
-        const raw = this.grade4FractionsAnglesPool[Math.floor(Math.random() * this.grade4FractionsAnglesPool.length)];
+        const raw = this.drawFromPool(this.grade4FractionsAnglesPool, "grade4FractionsAnglesPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3544,7 +3657,7 @@
         const raw = this.generateGrade4PerimeterArea();
         return this.buildQuestionItem(raw, '📐 Çevre ve Alan Hesaplama');
       } else if (gameType === 'turkish_idioms_proverbs_4') {
-        const raw = this.grade4IdiomsProverbsPool[Math.floor(Math.random() * this.grade4IdiomsProverbsPool.length)];
+        const raw = this.drawFromPool(this.grade4IdiomsProverbsPool, "grade4IdiomsProverbsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3552,7 +3665,7 @@
           explanation: raw.exp
         }, '🏆 Deyimler ve Atasözleri Düellosu');
       } else if (gameType === 'turkish_sentences_logic_4') {
-        const raw = this.grade4SentencesLogicPool[Math.floor(Math.random() * this.grade4SentencesLogicPool.length)];
+        const raw = this.drawFromPool(this.grade4SentencesLogicPool, "grade4SentencesLogicPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3560,7 +3673,7 @@
           explanation: raw.exp
         }, '💡 Sebep-Sonuç, Amaç-Sonuç & Yargılar');
       } else if (gameType === 'science_crust_nutrition_4') {
-        const raw = this.grade4CrustNutritionPool[Math.floor(Math.random() * this.grade4CrustNutritionPool.length)];
+        const raw = this.drawFromPool(this.grade4CrustNutritionPool, "grade4CrustNutritionPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3568,7 +3681,7 @@
           explanation: raw.exp
         }, '🌍 Yer Kabuğu, Hareketler & Besinler');
       } else if (gameType === 'science_circuits_magnets_4') {
-        const raw = this.grade4CircuitsMagnetsPool[Math.floor(Math.random() * this.grade4CircuitsMagnetsPool.length)];
+        const raw = this.drawFromPool(this.grade4CircuitsMagnetsPool, "grade4CircuitsMagnetsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3576,7 +3689,7 @@
           explanation: raw.exp
         }, '💡 Kuvvet, Mıknatıslar & Devreler');
       } else if (gameType === 'social_identity_heroes_4') {
-        const raw = this.grade4IdentityHeroesPool[Math.floor(Math.random() * this.grade4IdentityHeroesPool.length)];
+        const raw = this.drawFromPool(this.grade4IdentityHeroesPool, "grade4IdentityHeroesPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3584,7 +3697,7 @@
           explanation: raw.exp
         }, '🇹🇷 Birey, Toplum & Milli Mücadele');
       } else if (gameType === 'social_places_economy_4') {
-        const raw = this.grade4PlacesEconomyPool[Math.floor(Math.random() * this.grade4PlacesEconomyPool.length)];
+        const raw = this.drawFromPool(this.grade4PlacesEconomyPool, "grade4PlacesEconomyPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3592,7 +3705,7 @@
           explanation: raw.exp
         }, '🗺️ İnsanlar, Yerler & Üretimden Tüketime');
       } else if (gameType === 'english_countries_routines_4') {
-        const raw = this.grade4CountriesRoutinesPool[Math.floor(Math.random() * this.grade4CountriesRoutinesPool.length)];
+        const raw = this.drawFromPool(this.grade4CountriesRoutinesPool, "grade4CountriesRoutinesPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3610,7 +3723,7 @@
           if (r < 0.6) raw = this.generateGrade1Math();
           else if (r < 0.8) raw = this.generateGrade1Rhythmic();
           else {
-            const item = this.grade1ShapesAndMoneyPool[Math.floor(Math.random() * this.grade1ShapesAndMoneyPool.length)];
+            const item = this.drawFromPool(this.grade1ShapesAndMoneyPool, "grade1ShapesAndMoneyPool");
             raw = { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
           }
         } else if (g === 2) {
@@ -3619,7 +3732,7 @@
           else if (r < 0.70) raw = this.generateGrade2PlaceValue();
           else if (r < 0.85) raw = this.generateGrade2Multiplication();
           else {
-            const item = this.grade2ClocksPool[Math.floor(Math.random() * this.grade2ClocksPool.length)];
+            const item = this.drawFromPool(this.grade2ClocksPool, "grade2ClocksPool");
             raw = { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
           }
         } else if (g === 3) {
@@ -3630,7 +3743,7 @@
         return this.buildQuestionItem(raw, g === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu');
       } else if (gameType === 'turkish') {
         if (g === 0) {
-          const raw = this.grade0AnimalsAndNaturePool[Math.floor(Math.random() * this.grade0AnimalsAndNaturePool.length)];
+          const raw = this.drawFromPool(this.grade0AnimalsAndNaturePool, "grade0AnimalsAndNaturePool");
           return this.buildQuestionItem({
             question: raw.q,
             correct: raw.a,
@@ -3641,7 +3754,7 @@
         } else if (g === 1) {
           const r = Math.random();
           if (r < 0.4) {
-            const raw = this.grade1TurkishPool[Math.floor(Math.random() * this.grade1TurkishPool.length)];
+            const raw = this.drawFromPool(this.grade1TurkishPool, "grade1TurkishPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3649,7 +3762,7 @@
               explanation: raw.exp
             }, '📚 Türkçe & Kelime Avcısı');
           } else if (r < 0.7) {
-            const raw = this.grade1AntonymsPool[Math.floor(Math.random() * this.grade1AntonymsPool.length)];
+            const raw = this.drawFromPool(this.grade1AntonymsPool, "grade1AntonymsPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3663,7 +3776,7 @@
         } else if (g === 2) {
           const r = Math.random();
           if (r < 0.4) {
-            const raw = this.grade2TurkishPool[Math.floor(Math.random() * this.grade2TurkishPool.length)];
+            const raw = this.drawFromPool(this.grade2TurkishPool, "grade2TurkishPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3671,7 +3784,7 @@
               explanation: raw.exp
             }, '📚 Türkçe & Sözcük Düellosu');
           } else if (r < 0.7) {
-            const raw = this.grade2SynAntPool[Math.floor(Math.random() * this.grade2SynAntPool.length)];
+            const raw = this.drawFromPool(this.grade2SynAntPool, "grade2SynAntPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3679,7 +3792,7 @@
               explanation: raw.exp
             }, '✨ Eş ve Zıt Anlam Şampiyonası');
           } else {
-            const raw = this.grade2PunctuationPool[Math.floor(Math.random() * this.grade2PunctuationPool.length)];
+            const raw = this.drawFromPool(this.grade2PunctuationPool, "grade2PunctuationPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3690,7 +3803,7 @@
         } else if (g === 3) {
           const r = Math.random();
           if (r < 0.5) {
-            const raw = this.grade3HomonymsFigurativePool[Math.floor(Math.random() * this.grade3HomonymsFigurativePool.length)];
+            const raw = this.drawFromPool(this.grade3HomonymsFigurativePool, "grade3HomonymsFigurativePool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3698,7 +3811,7 @@
               explanation: raw.exp
             }, '🎭 Eş Sesli Kelimeler & Mecaz');
           } else {
-            const raw = this.grade3Punctuation5N1KPool[Math.floor(Math.random() * this.grade3Punctuation5N1KPool.length)];
+            const raw = this.drawFromPool(this.grade3Punctuation5N1KPool, "grade3Punctuation5N1KPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3709,7 +3822,7 @@
         } else {
           const r = Math.random();
           if (r < 0.5) {
-            const raw = this.grade4IdiomsProverbsPool[Math.floor(Math.random() * this.grade4IdiomsProverbsPool.length)];
+            const raw = this.drawFromPool(this.grade4IdiomsProverbsPool, "grade4IdiomsProverbsPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3717,7 +3830,7 @@
               explanation: raw.exp
             }, '🏆 Deyimler ve Atasözleri');
           } else {
-            const raw = this.grade4SentencesLogicPool[Math.floor(Math.random() * this.grade4SentencesLogicPool.length)];
+            const raw = this.drawFromPool(this.grade4SentencesLogicPool, "grade4SentencesLogicPool");
             return this.buildQuestionItem({
               question: raw.q,
               correct: raw.a,
@@ -3730,40 +3843,40 @@
         if (g === 1) {
           const r = Math.random();
           if (r < 0.34) {
-            const raw = this.lifeSciencePool[Math.floor(Math.random() * this.lifeSciencePool.length)];
+            const raw = this.drawFromPool(this.lifeSciencePool, "lifeSciencePool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌱 Hayat Bilgisi');
           } else if (r < 0.67) {
-            const raw = this.grade1SchoolHomeLifePool[Math.floor(Math.random() * this.grade1SchoolHomeLifePool.length)];
+            const raw = this.drawFromPool(this.grade1SchoolHomeLifePool, "grade1SchoolHomeLifePool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🏫 Okulumuzda ve Evimizde Hayat');
           } else {
-            const raw = this.grade1HealthSeasonsPool[Math.floor(Math.random() * this.grade1HealthSeasonsPool.length)];
+            const raw = this.drawFromPool(this.grade1HealthSeasonsPool, "grade1HealthSeasonsPool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧼 Sağlıklı Hayat ve Mevsimler');
           }
         } else if (g === 2) {
           const r = Math.random();
           if (r < 0.34) {
-            const raw = this.lifeSciencePool[Math.floor(Math.random() * this.lifeSciencePool.length)];
+            const raw = this.drawFromPool(this.lifeSciencePool, "lifeSciencePool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌱 Hayat Bilgisi');
           } else if (r < 0.67) {
-            const raw = this.grade2TrafficSafeLifePool[Math.floor(Math.random() * this.grade2TrafficSafeLifePool.length)];
+            const raw = this.drawFromPool(this.grade2TrafficSafeLifePool, "grade2TrafficSafeLifePool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🚦 Güvenli Hayat ve Trafik');
           } else {
-            const raw = this.grade2CultureAndCountryPool[Math.floor(Math.random() * this.grade2CultureAndCountryPool.length)];
+            const raw = this.drawFromPool(this.grade2CultureAndCountryPool, "grade2CultureAndCountryPool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🇹🇷 Ülkemiz ve Kültürümüz');
           }
         } else if (g === 3) {
           const r = Math.random();
           if (r < 0.75) {
-            const raw = this.grade3CompassConsumerPool[Math.floor(Math.random() * this.grade3CompassConsumerPool.length)];
+            const raw = this.drawFromPool(this.grade3CompassConsumerPool, "grade3CompassConsumerPool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧭 Yönlerimiz, Kroki & Tüketici');
           } else {
-            const raw = this.lifeSciencePool[Math.floor(Math.random() * this.lifeSciencePool.length)];
+            const raw = this.drawFromPool(this.lifeSciencePool, "lifeSciencePool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌱 Hayat Bilgisi');
           }
         } else {
           let filtered = this.lifeSciencePool.filter(item => !item.grade || item.grade <= g);
           if (filtered.length === 0) filtered = this.lifeSciencePool;
-          const raw = filtered[Math.floor(Math.random() * filtered.length)];
+          const raw = this.drawFromPool(filtered, "filtered");
           return this.buildQuestionItem({
             question: raw.q,
             correct: raw.a,
@@ -3776,25 +3889,25 @@
         if (g === 3) {
           const r = Math.random();
           if (r < 0.5) {
-            const raw = this.grade3EarthSensesPool[Math.floor(Math.random() * this.grade3EarthSensesPool.length)];
+            const raw = this.drawFromPool(this.grade3EarthSensesPool, "grade3EarthSensesPool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌍 Gezegenimiz & Duyularımız');
           } else {
-            const raw = this.grade3ForceMatterPool[Math.floor(Math.random() * this.grade3ForceMatterPool.length)];
+            const raw = this.drawFromPool(this.grade3ForceMatterPool, "grade3ForceMatterPool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧲 Kuvvet ve Madde');
           }
         } else if (g === 4) {
           const r = Math.random();
           if (r < 0.5) {
-            const raw = this.grade4CrustNutritionPool[Math.floor(Math.random() * this.grade4CrustNutritionPool.length)];
+            const raw = this.drawFromPool(this.grade4CrustNutritionPool, "grade4CrustNutritionPool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌍 Yer Kabuğu & Besinlerimiz');
           } else {
-            const raw = this.grade4CircuitsMagnetsPool[Math.floor(Math.random() * this.grade4CircuitsMagnetsPool.length)];
+            const raw = this.drawFromPool(this.grade4CircuitsMagnetsPool, "grade4CircuitsMagnetsPool");
             return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '💡 Mıknatıslar & Elektrik Devreleri');
           }
         } else {
           let filtered = this.sciencePool.filter(item => !item.grade || item.grade === g || item.grade <= g);
           if (filtered.length === 0) filtered = this.sciencePool;
-          const raw = filtered[Math.floor(Math.random() * filtered.length)];
+          const raw = this.drawFromPool(filtered, "filtered");
           return this.buildQuestionItem({
             question: raw.q,
             correct: raw.a,
@@ -3806,14 +3919,14 @@
       } else if (gameType === 'social') {
         const r = Math.random();
         if (r < 0.5) {
-          const raw = this.grade4IdentityHeroesPool[Math.floor(Math.random() * this.grade4IdentityHeroesPool.length)];
+          const raw = this.drawFromPool(this.grade4IdentityHeroesPool, "grade4IdentityHeroesPool");
           return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🇹🇷 Birey, Toplum & Kahramanlarımız');
         } else {
-          const raw = this.grade4PlacesEconomyPool[Math.floor(Math.random() * this.grade4PlacesEconomyPool.length)];
+          const raw = this.drawFromPool(this.grade4PlacesEconomyPool, "grade4PlacesEconomyPool");
           return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🗺️ İnsanlar, Yerler & Üretim');
         }
       } else if (gameType === 'english_colors') {
-        const raw = this.englishColorsPool[Math.floor(Math.random() * this.englishColorsPool.length)];
+        const raw = this.drawFromPool(this.englishColorsPool, "englishColorsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3823,7 +3936,7 @@
           lang: 'en'
         }, '🎨 Renkler (Colors Matching)');
       } else if (gameType === 'english_animals') {
-        const raw = this.englishAnimalsPool[Math.floor(Math.random() * this.englishAnimalsPool.length)];
+        const raw = this.drawFromPool(this.englishAnimalsPool, "englishAnimalsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3833,7 +3946,7 @@
           lang: 'en'
         }, '🐾 Hayvanlar (Animals Matching)');
       } else if (gameType === 'english_numbers') {
-        const raw = this.englishNumbersPool[Math.floor(Math.random() * this.englishNumbersPool.length)];
+        const raw = this.drawFromPool(this.englishNumbersPool, "englishNumbersPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3843,7 +3956,7 @@
           lang: 'en'
         }, '🔢 Sayılar (Numbers Matching)');
       } else if (gameType === 'english_greetings') {
-        const raw = this.englishGreetingsPool[Math.floor(Math.random() * this.englishGreetingsPool.length)];
+        const raw = this.drawFromPool(this.englishGreetingsPool, "englishGreetingsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3864,7 +3977,7 @@
           ...this.grade4CountriesRoutinesPool,
           ...this.englishPool
         ];
-        const raw = allPools[Math.floor(Math.random() * allPools.length)];
+        const raw = this.drawFromPool(allPools, "allPools");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
@@ -3972,6 +4085,121 @@
 
     stop() {
       if (this.animId) cancelAnimationFrame(this.animId);
+      if (this.ctx) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+  }
+
+  /* ==========================================================================
+     4.5. JUICINESS & GAME FEEL PARTİKÜL MOTORU (STARS, SPARKS & FLAME EMBERS)
+     ========================================================================== */
+  class JuiceParticleEngine {
+    constructor(canvasId) {
+      this.canvas = document.getElementById(canvasId);
+      this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+      this.particles = [];
+      this.animId = null;
+      this.resize = this.resize.bind(this);
+      this.loop = this.loop.bind(this);
+      window.addEventListener('resize', this.resize);
+      this.resize();
+    }
+
+    resize() {
+      if (!this.canvas) return;
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+    }
+
+    burst(x, y, mode = 'stars') {
+      if (!this.canvas || !this.ctx) return;
+      this.resize();
+
+      const starIcons = ['⭐', '✨', '🌟'];
+      const starColors = ['#10b981', '#34d399', '#6ee7b7', '#f59e0b', '#fbbf24', '#ffffff', '#38bdf8'];
+      const fireColors = ['#ef4444', '#f97316', '#f59e0b', '#fbbf24', '#ffffff', '#dc2626'];
+
+      const count = (mode === 'fire') ? 36 : 28;
+
+      for (let i = 0; i < count; i++) {
+        const isEmoji = (mode !== 'fire' && Math.random() < 0.45);
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 9 + 4;
+        const pColor = (mode === 'fire')
+          ? fireColors[Math.floor(Math.random() * fireColors.length)]
+          : starColors[Math.floor(Math.random() * starColors.length)];
+
+        this.particles.push({
+          x: x || (window.innerWidth / 2),
+          y: y || (window.innerHeight / 2),
+          vx: Math.cos(angle) * speed + (Math.random() - 0.5) * 3,
+          vy: Math.sin(angle) * speed - Math.random() * 4,
+          gravity: 0.22,
+          color: pColor,
+          size: Math.random() * 8 + 6,
+          isEmoji: isEmoji,
+          emoji: starIcons[Math.floor(Math.random() * starIcons.length)],
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 14,
+          opacity: 1,
+          decay: Math.random() * 0.018 + 0.016
+        });
+      }
+
+      if (!this.animId) {
+        this.animId = requestAnimationFrame(this.loop);
+      }
+    }
+
+    loop() {
+      if (!this.ctx) return;
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      let alive = 0;
+      for (let p of this.particles) {
+        p.vy += p.gravity;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.rotSpeed;
+        p.opacity -= p.decay;
+
+        if (p.opacity > 0 && p.y < this.canvas.height + 60) {
+          alive++;
+          this.ctx.save();
+          this.ctx.translate(p.x, p.y);
+          this.ctx.rotate((p.rot * Math.PI) / 180);
+          this.ctx.globalAlpha = Math.max(0, p.opacity);
+
+          if (p.isEmoji) {
+            this.ctx.font = `${p.size * 1.8}px system-ui, sans-serif`;
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText(p.emoji, 0, 0);
+          } else {
+            this.ctx.fillStyle = p.color;
+            this.ctx.shadowColor = p.color;
+            this.ctx.shadowBlur = 10;
+            this.ctx.beginPath();
+            this.ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
+          this.ctx.restore();
+        }
+      }
+
+      this.particles = this.particles.filter(p => p.opacity > 0);
+
+      if (this.particles.length > 0) {
+        this.animId = requestAnimationFrame(this.loop);
+      } else {
+        this.animId = null;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+    }
+
+    stop() {
+      if (this.animId) cancelAnimationFrame(this.animId);
+      this.animId = null;
+      this.particles = [];
       if (this.ctx) this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
   }
@@ -4126,11 +4354,20 @@
     announcerHudIcon: document.getElementById('announcerHudIcon'),
     announcerHudText: document.getElementById('announcerHudText'),
 
+    // Kombo & Ateş Modu ve Parçacık Katmanı
+    comboFireBanner: document.getElementById('comboFireBanner'),
+    comboFireTitle: document.getElementById('comboFireTitle'),
+    comboFireSubtitle: document.getElementById('comboFireSubtitle'),
+    gameParticlesCanvas: document.getElementById('gameParticlesCanvas'),
+
     // Düello: Oyuncu 1 (Mavi)
     p1Panel: document.getElementById('playerPanel1'),
     duelP1Avatar: document.getElementById('duelP1Avatar'),
     duelP1TeamTitle: document.getElementById('duelP1TeamTitle'),
     duelP1Name: document.getElementById('duelP1Name'),
+    p1ScoreContainer: document.getElementById('p1ScoreContainer'),
+    p1StreakFlame: document.getElementById('p1StreakFlame'),
+    p1StreakCount: document.getElementById('p1StreakCount'),
     p1ScoreBadge: document.getElementById('p1ScoreBadge'),
     p1StarsTrack: document.getElementById('p1StarsTrack'),
     p1QuestionCard: document.getElementById('p1QuestionCard'),
@@ -4142,9 +4379,11 @@
     p1OptA: document.getElementById('p1OptA'),
     p1OptB: document.getElementById('p1OptB'),
     p1OptC: document.getElementById('p1OptC'),
+    p1OptD: document.getElementById('p1OptD'),
     p1OptTextA: document.getElementById('p1OptTextA'),
     p1OptTextB: document.getElementById('p1OptTextB'),
     p1OptTextC: document.getElementById('p1OptTextC'),
+    p1OptTextD: document.getElementById('p1OptTextD'),
     p1LockOverlay: document.getElementById('p1LockoutOverlay'),
     p1LockoutDesc: document.getElementById('p1LockoutDesc'),
     p1LockProgress: document.getElementById('p1LockProgress'),
@@ -4153,6 +4392,9 @@
     // Düello: Oyuncu 2 (Kırmızı)
     p2Panel: document.getElementById('playerPanel2'),
     duelP2Name: document.getElementById('duelP2Name'),
+    p2ScoreContainer: document.getElementById('p2ScoreContainer'),
+    p2StreakFlame: document.getElementById('p2StreakFlame'),
+    p2StreakCount: document.getElementById('p2StreakCount'),
     p2ScoreBadge: document.getElementById('p2ScoreBadge'),
     p2StarsTrack: document.getElementById('p2StarsTrack'),
     p2QuestionCard: document.getElementById('p2QuestionCard'),
@@ -4164,9 +4406,11 @@
     p2OptA: document.getElementById('p2OptA'),
     p2OptB: document.getElementById('p2OptB'),
     p2OptC: document.getElementById('p2OptC'),
+    p2OptD: document.getElementById('p2OptD'),
     p2OptTextA: document.getElementById('p2OptTextA'),
     p2OptTextB: document.getElementById('p2OptTextB'),
     p2OptTextC: document.getElementById('p2OptTextC'),
+    p2OptTextD: document.getElementById('p2OptTextD'),
     p2LockOverlay: document.getElementById('p2LockoutOverlay'),
     p2LockProgress: document.getElementById('p2LockProgress'),
     p2WinToast: document.getElementById('p2WinToast'),
@@ -4242,6 +4486,74 @@
   };
 
   const confetti = new ConfettiCanon('confettiCanvas');
+  const particles = new JuiceParticleEngine('gameParticlesCanvas');
+
+  /* ==========================================================================
+     6.5. JUICINESS & GAME FEEL YARDIMCILARI (KOMBO, SHAKE & FLOATING SCORE)
+     ========================================================================== */
+  let comboBannerTimer = null;
+
+  // Yanlış cevapta ekran hafifçe titresin (Shake animasyonu)
+  function triggerScreenShake() {
+    const arena = DOM.splitArena || DOM.viewDuel || document.body;
+    arena.classList.remove('screen-shaking');
+    void arena.offsetWidth; // Force reflow
+    arena.classList.add('screen-shaking');
+    setTimeout(() => {
+      arena.classList.remove('screen-shaking');
+    }, 460);
+  }
+
+  // Doğru cevapta yukarı doğru süzülen "+10 Puan" yazısı
+  function spawnFloatingScore(x, y, text = '+10 Puan', isStreak = false) {
+    const floater = document.createElement('div');
+    floater.className = `floating-score-badge ${isStreak ? 'streak-fire' : ''}`;
+    floater.innerHTML = `<span>${text}</span>`;
+    floater.style.left = `${x || (window.innerWidth / 2)}px`;
+    floater.style.top = `${y || (window.innerHeight / 2)}px`;
+    document.body.appendChild(floater);
+
+    floater.addEventListener('animationend', () => {
+      if (floater.parentNode) floater.parentNode.removeChild(floater);
+    });
+  }
+
+  // 3x ve üzeri serilerde ekrana coşkulu alevli kombo banner'ı çıkar
+  function showComboFireBanner(playerNum, streak) {
+    if (!DOM.comboFireBanner) return;
+    const playerName = (playerNum === 1) ? state.player1.name : state.player2.name;
+    const teamTitle = (playerNum === 1) ? 'Mavi Takım' : 'Kırmızı Takım';
+
+    if (DOM.comboFireTitle) {
+      if (streak === 3) {
+        DOM.comboFireTitle.textContent = `🔥 3x SERİ! SÜPERSİN! 🔥`;
+      } else if (streak === 4) {
+        DOM.comboFireTitle.textContent = `🔥 4x SERİ! ALEV ALDIN! 🔥`;
+      } else {
+        DOM.comboFireTitle.textContent = `🔥 ${streak}x EFSANEVİ SERİ! 🔥`;
+      }
+    }
+
+    if (DOM.comboFireSubtitle) {
+      DOM.comboFireSubtitle.textContent = `${playerName} (${teamTitle}) Ateş Modunda! Durdurulamıyor! ⚡🏆`;
+    }
+
+    if (comboBannerTimer) {
+      clearTimeout(comboBannerTimer);
+      comboBannerTimer = null;
+    }
+
+    DOM.comboFireBanner.classList.remove('hide', 'active');
+    void DOM.comboFireBanner.offsetWidth; // Reflow
+    DOM.comboFireBanner.classList.add('active');
+
+    comboBannerTimer = setTimeout(() => {
+      if (DOM.comboFireBanner) {
+        DOM.comboFireBanner.classList.remove('active');
+        DOM.comboFireBanner.classList.add('hide');
+      }
+    }, 1700);
+  }
 
   /* ==========================================================================
      7. YARDIMCI VE BİLDİRİM FONKSİYONLARI
@@ -6869,9 +7181,24 @@
     state.currentGameType = gameType;
     state.player1.score = 0;
     state.player2.score = 0;
+    state.player1.streak = 0;
+    state.player2.streak = 0;
     state.player1.isLocked = false;
     state.player2.isLocked = false;
     state.questionNumber = 1;
+
+    // Alev modlarını ve kombo banner'ını temizle
+    if (DOM.p1ScoreContainer) DOM.p1ScoreContainer.classList.remove('on-fire');
+    if (DOM.p2ScoreContainer) DOM.p2ScoreContainer.classList.remove('on-fire');
+    if (DOM.p1StreakFlame) DOM.p1StreakFlame.classList.add('hide');
+    if (DOM.p2StreakFlame) DOM.p2StreakFlame.classList.add('hide');
+    if (DOM.comboFireBanner) {
+      DOM.comboFireBanner.classList.remove('active');
+      DOM.comboFireBanner.classList.add('hide');
+    }
+
+    // Anti-Repeat Fisher-Yates Oturumunu Başlat
+    QuestionEngine.initSession(state.currentGrade, gameType);
 
     const isSolo = (state.gameMode === 'solo');
 
@@ -7139,21 +7466,39 @@
       if (DOM.p1OptionsGrid) DOM.p1OptionsGrid.classList.remove('hide');
       if (DOM.p2OptionsGrid) DOM.p2OptionsGrid.classList.remove('hide');
 
-      if (state.currentQuestion.options && state.currentQuestion.options.length >= 3) {
-        DOM.p1OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
-        DOM.p1OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
-        DOM.p1OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
+      const opts = state.currentQuestion.options || [];
+      const hasFour = (opts.length >= 4);
 
-        DOM.p2OptTextA.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[0], 'opt-3d-icon');
-        DOM.p2OptTextB.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[1], 'opt-3d-icon');
-        DOM.p2OptTextC.innerHTML = replaceEmojisWith3D(state.currentQuestion.options[2], 'opt-3d-icon');
+      if (DOM.p1OptionsGrid) DOM.p1OptionsGrid.classList.toggle('has-four-options', hasFour);
+      if (DOM.p2OptionsGrid) DOM.p2OptionsGrid.classList.toggle('has-four-options', hasFour);
+
+      if (opts.length >= 3) {
+        DOM.p1OptTextA.innerHTML = replaceEmojisWith3D(opts[0], 'opt-3d-icon');
+        DOM.p1OptTextB.innerHTML = replaceEmojisWith3D(opts[1], 'opt-3d-icon');
+        DOM.p1OptTextC.innerHTML = replaceEmojisWith3D(opts[2], 'opt-3d-icon');
+
+        DOM.p2OptTextA.innerHTML = replaceEmojisWith3D(opts[0], 'opt-3d-icon');
+        DOM.p2OptTextB.innerHTML = replaceEmojisWith3D(opts[1], 'opt-3d-icon');
+        DOM.p2OptTextC.innerHTML = replaceEmojisWith3D(opts[2], 'opt-3d-icon');
+
+        if (hasFour && DOM.p1OptTextD && DOM.p2OptTextD) {
+          DOM.p1OptTextD.innerHTML = replaceEmojisWith3D(opts[3], 'opt-3d-icon');
+          DOM.p2OptTextD.innerHTML = replaceEmojisWith3D(opts[3], 'opt-3d-icon');
+          if (DOM.p1OptD) DOM.p1OptD.classList.remove('hide');
+          if (DOM.p2OptD) DOM.p2OptD.classList.remove('hide');
+        } else {
+          if (DOM.p1OptD) DOM.p1OptD.classList.add('hide');
+          if (DOM.p2OptD) DOM.p2OptD.classList.add('hide');
+        }
       }
 
-      // Buton stillerini sıfırla
-      [DOM.p1OptA, DOM.p1OptB, DOM.p1OptC, DOM.p2OptA, DOM.p2OptB, DOM.p2OptC].forEach(btn => {
+      // Buton stillerini ve buz kilitlerini sıfırla
+      [DOM.p1OptA, DOM.p1OptB, DOM.p1OptC, DOM.p1OptD, DOM.p2OptA, DOM.p2OptB, DOM.p2OptC, DOM.p2OptD].forEach(btn => {
         if (btn) {
-          btn.className = 'duel-option-btn';
+          btn.className = 'duel-option-btn' + (btn === DOM.p1OptD || btn === DOM.p2OptD ? (hasFour ? '' : ' hide') : '');
           btn.disabled = false;
+          const frost = btn.querySelector('.btn-frost-countdown');
+          if (frost) frost.remove();
         }
       });
     }
@@ -7189,25 +7534,56 @@
 
     audio.stopQuestionAudio();
 
+    // Tıklanan butonun merkez koordinatlarını parçacık ve puan animasyonu için hesapla
+    const gridEl = (playerNum === 1) ? DOM.p1OptionsGrid : DOM.p2OptionsGrid;
+    let cx = window.innerWidth / 2;
+    let cy = window.innerHeight / 2;
+    if (gridEl) {
+      const btns = gridEl.querySelectorAll('.duel-option-btn');
+      if (btns && btns[optionIndex]) {
+        const rect = btns[optionIndex].getBoundingClientRect();
+        cx = rect.left + rect.width / 2;
+        cy = rect.top + rect.height / 2;
+      }
+    }
+
     const chosenText = state.currentQuestion.options[optionIndex];
     const isCorrect = (chosenText === state.currentQuestion.correct);
 
     if (isCorrect) {
-      awardPointAndProgress(playerNum, optionIndex);
+      awardPointAndProgress(playerNum, optionIndex, cx, cy);
     } else {
-      audio.playWrong();
       applyLockout(playerNum, optionIndex);
     }
   }
 
-  function awardPointAndProgress(playerNum, optionIndex = null) {
+  function awardPointAndProgress(playerNum, optionIndex = null, cx = null, cy = null) {
     state.isQuestionAnswered = true;
-    audio.playCorrect();
     changeMoliExpression('correct');
 
-    // Puanı artır
+    if (cx === null || cy === null) {
+      const panel = (playerNum === 1) ? DOM.p1Panel : DOM.p2Panel;
+      if (panel) {
+        const rect = panel.getBoundingClientRect();
+        cx = rect.left + rect.width / 2;
+        cy = rect.top + rect.height * 0.45;
+      } else {
+        cx = window.innerWidth / 2;
+        cy = window.innerHeight / 2;
+      }
+    }
+
+    // Seri (Streak) ve Ateş Modu Yönetimi
+    let streak = 0;
     if (playerNum === 1) {
       state.player1.score += 1;
+      state.player1.streak = (state.player1.streak || 0) + 1;
+      state.player2.streak = 0; // Rakibin serisini kır
+      streak = state.player1.streak;
+
+      if (DOM.p2ScoreContainer) DOM.p2ScoreContainer.classList.remove('on-fire');
+      if (DOM.p2StreakFlame) DOM.p2StreakFlame.classList.add('hide');
+
       DOM.p1Panel.classList.add('winner-glow');
       DOM.p1WinToast.classList.remove('hide');
       if (optionIndex !== null && optionIndex !== undefined) {
@@ -7218,6 +7594,13 @@
       }
     } else {
       state.player2.score += 1;
+      state.player2.streak = (state.player2.streak || 0) + 1;
+      state.player1.streak = 0; // Rakibin serisini kır
+      streak = state.player2.streak;
+
+      if (DOM.p1ScoreContainer) DOM.p1ScoreContainer.classList.remove('on-fire');
+      if (DOM.p1StreakFlame) DOM.p1StreakFlame.classList.add('hide');
+
       DOM.p2Panel.classList.add('winner-glow');
       DOM.p2WinToast.classList.remove('hide');
       if (optionIndex !== null && optionIndex !== undefined) {
@@ -7226,6 +7609,33 @@
       if (state.player2.score < state.targetScore) {
         setDuelTimeout(() => audio.playAnnouncerRedPoint(), 180);
       }
+    }
+
+    // 1) KOMBO (SERİ) VE ATEŞ MODU EFEKTLERİ (3x ve üzeri)
+    const activeScoreBox = (playerNum === 1) ? DOM.p1ScoreContainer : DOM.p2ScoreContainer;
+    const activeStreakFlame = (playerNum === 1) ? DOM.p1StreakFlame : DOM.p2StreakFlame;
+    const activeStreakCount = (playerNum === 1) ? DOM.p1StreakCount : DOM.p2StreakCount;
+
+    if (streak >= 3) {
+      // Puan kutusu alev ve altın rengi parlasın
+      if (activeScoreBox) activeScoreBox.classList.add('on-fire');
+      if (activeStreakFlame) activeStreakFlame.classList.remove('hide');
+      if (activeStreakCount) activeStreakCount.textContent = `${streak}x`;
+
+      // Ateş modu coşkulu animasyon ve ses
+      showComboFireBanner(playerNum, streak);
+      audio.playComboFire();
+
+      // Juiciness: Ekranda alev parçacıkları patlasın
+      particles.burst(cx, cy, 'fire');
+      spawnFloatingScore(cx, cy, `+10 Puan 🔥 ${streak}x SERİ!`, true);
+    } else {
+      audio.playCorrect();
+      audio.playScorePoints();
+
+      // Juiciness: Konfeti / yıldız parçacıkları patlasın ve "+10 Puan" yukarı süzülsün
+      particles.burst(cx, cy, 'stars');
+      spawnFloatingScore(cx, cy, '+10 Puan', false);
     }
 
     renderScoreTrack();
@@ -7266,21 +7676,71 @@
     const lockProgress = isP1 ? DOM.p1LockProgress : DOM.p2LockProgress;
     const gridEl = isP1 ? DOM.p1OptionsGrid : DOM.p2OptionsGrid;
 
-    // Yanlış basılan butonu kızart
+    // Seri sıfırlama: Hatalı cevapta ateş modu söner
+    if (isP1) {
+      state.player1.streak = 0;
+      if (DOM.p1ScoreContainer) DOM.p1ScoreContainer.classList.remove('on-fire');
+      if (DOM.p1StreakFlame) DOM.p1StreakFlame.classList.add('hide');
+    } else {
+      state.player2.streak = 0;
+      if (DOM.p2ScoreContainer) DOM.p2ScoreContainer.classList.remove('on-fire');
+      if (DOM.p2StreakFlame) DOM.p2StreakFlame.classList.add('hide');
+    }
+
+    // 2) GÖRSEL GERİ BİLDİRİM: Ekran hafifçe titresin (Shake)
+    triggerScreenShake();
+    audio.playWrong();
+    audio.playIceFreeze();
+
+    changeMoliExpression('wrong');
+
+    // 1.5 Saniyelik Buz / Kilit Efekti ve Geri Sayım Rozeti (❄️ 1.5s)
+    let lockedButton = null;
     if (gridEl && optionIndex !== null && optionIndex !== undefined) {
       const buttons = gridEl.querySelectorAll('.duel-option-btn');
       if (buttons && buttons[optionIndex]) {
-        buttons[optionIndex].classList.add('btn-wrong');
+        lockedButton = buttons[optionIndex];
+        lockedButton.classList.add('btn-wrong', 'frost-locked');
         if (state.gameMode === 'solo') {
-          buttons[optionIndex].disabled = true;
+          lockedButton.disabled = true;
         }
+
+        // Buton üzerinde canlı geri sayan buz rozeti oluştur
+        const existingBadge = lockedButton.querySelector('.btn-frost-countdown');
+        if (existingBadge) existingBadge.remove();
+
+        const badge = document.createElement('div');
+        badge.className = 'btn-frost-countdown';
+        badge.innerHTML = '<span class="frost-icon">❄️</span> <span class="frost-time">1.5s</span>';
+        lockedButton.appendChild(badge);
+
+        const startTime = Date.now();
+        const duration = 1500;
+        const timeEl = badge.querySelector('.frost-time');
+
+        if (isP1 && state.player1.frostInterval) clearInterval(state.player1.frostInterval);
+        if (!isP1 && state.player2.frostInterval) clearInterval(state.player2.frostInterval);
+
+        const interval = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          const remaining = Math.max(0, (duration - elapsed) / 1000);
+          if (timeEl) {
+            timeEl.textContent = `${remaining.toFixed(1)}s`;
+          }
+          if (elapsed >= duration) {
+            clearInterval(interval);
+            if (badge && badge.parentNode) badge.parentNode.removeChild(badge);
+            if (lockedButton) lockedButton.classList.remove('frost-locked');
+          }
+        }, 100);
+
+        if (isP1) state.player1.frostInterval = interval;
+        else state.player2.frostInterval = interval;
       }
     }
 
     if (isP1) state.player1.isLocked = true;
     else state.player2.isLocked = true;
-
-    changeMoliExpression('wrong');
 
     // Sesli uyarı: Bomba mı yoksa standart kilitlenme mi?
     const chosenOpt = (state.currentQuestion && state.currentQuestion.options && optionIndex !== null && optionIndex !== undefined)
@@ -7292,21 +7752,39 @@
       audio.playAnnouncerLockout();
     }
 
-    // Overlay'i aç ve süre çubuğunu doldur/boşalt
+    // Overlay'i buz temasıyla aç ve süre çubuğunu boşalt
+    const modalBox = lockOverlay.querySelector('.lockout-modal-box');
+    if (modalBox) modalBox.classList.add('frost-theme');
+    const lockIcon = lockOverlay.querySelector('.lockout-icon');
+    if (lockIcon) lockIcon.textContent = '❄️';
+    const lockTitle = lockOverlay.querySelector('.lockout-title');
+    if (lockTitle) lockTitle.textContent = '❄️ Hatalı Şık! Donup Kilitlendin!';
+    const lockDesc = lockOverlay.querySelector('.lockout-desc');
+    if (lockDesc) lockDesc.textContent = '1.5 saniye buz kilidi aktif! Sıra rakipte...';
+
     lockOverlay.classList.remove('hide');
     lockProgress.style.transition = 'none';
     lockProgress.style.width = '100%';
 
-    // Bir sonraki frame'de animasyonu başlat
     requestAnimationFrame(() => {
       lockProgress.style.transition = 'width 1.5s linear';
       lockProgress.style.width = '0%';
     });
 
     const timer = setTimeout(() => {
-      if (isP1) state.player1.isLocked = false;
-      else state.player2.isLocked = false;
+      if (isP1) {
+        state.player1.isLocked = false;
+        if (state.player1.frostInterval) clearInterval(state.player1.frostInterval);
+      } else {
+        state.player2.isLocked = false;
+        if (state.player2.frostInterval) clearInterval(state.player2.frostInterval);
+      }
       lockOverlay.classList.add('hide');
+      if (lockedButton) {
+        lockedButton.classList.remove('frost-locked');
+        const b = lockedButton.querySelector('.btn-frost-countdown');
+        if (b && b.parentNode) b.parentNode.removeChild(b);
+      }
     }, 1500);
 
     if (isP1) state.player1.lockTimer = timer;
@@ -7679,10 +8157,20 @@
   function clearAllLockouts() {
     clearTimeout(state.player1.lockTimer);
     clearTimeout(state.player2.lockTimer);
+    if (state.player1.frostInterval) {
+      clearInterval(state.player1.frostInterval);
+      state.player1.frostInterval = null;
+    }
+    if (state.player2.frostInterval) {
+      clearInterval(state.player2.frostInterval);
+      state.player2.frostInterval = null;
+    }
     state.player1.isLocked = false;
     state.player2.isLocked = false;
-    DOM.p1LockOverlay.classList.add('hide');
-    DOM.p2LockOverlay.classList.add('hide');
+    if (DOM.p1LockOverlay) DOM.p1LockOverlay.classList.add('hide');
+    if (DOM.p2LockOverlay) DOM.p2LockOverlay.classList.add('hide');
+    document.querySelectorAll('.btn-frost-countdown').forEach(b => b.remove());
+    document.querySelectorAll('.duel-option-btn.frost-locked').forEach(b => b.classList.remove('frost-locked'));
   }
 
   /* ==========================================================================
@@ -8027,11 +8515,17 @@
     DOM.p1OptA.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 0); });
     DOM.p1OptB.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 1); });
     DOM.p1OptC.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 2); });
+    if (DOM.p1OptD) {
+      DOM.p1OptD.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 3); });
+    }
 
     // 2. Oyuncu (Kırmızı)
     DOM.p2OptA.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 0); });
     DOM.p2OptB.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 1); });
     DOM.p2OptC.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 2); });
+    if (DOM.p2OptD) {
+      DOM.p2OptD.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 3); });
+    }
 
     // Çarkıfelek Kura Butonları
     DOM.btnSpinWheel.addEventListener('pointerdown', spinStudentWheel);
