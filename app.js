@@ -339,6 +339,44 @@
       } catch (e) {}
     }
 
+    // Hareketli Balon Patlatma Sesi: Tok kauçuk balon patlaması ve çıtırtı
+    playBalloonPop() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(950, now);
+        osc.frequency.exponentialRampToValueAtTime(75, now + 0.11);
+        gain.gain.setValueAtTime(0.45, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.11);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } catch (e) {}
+    }
+
+    // Hafıza Kartı Çevirme Sesi: Kart çevirme ("Whoosh / Flip 🃏")
+    playCardFlip() {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(360, now);
+        osc.frequency.exponentialRampToValueAtTime(720, now + 0.06);
+        gain.gain.setValueAtTime(0.26, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      } catch (e) {}
+    }
+
     // Hece & Küp Yerleştirme Sesi: Kristal tık ("Snap! 🧱")
     playSnap() {
       if (!state.soundEnabled || !this.ensureContext()) return;
@@ -1172,6 +1210,326 @@
     // -------------------------------------------------------------
     // ANASINIFI & 1. SINIF: ÇOKTAN SEÇMELİ OLMAYAN İNTERAKTİF MOTORLAR
     // -------------------------------------------------------------
+
+
+    // =========================================================================
+    // YENİ MOTOR 1: SESLİ YÖNERGE VE BÜYÜK GÖRSEL BUTONLAR (DİNLE & SEÇ)
+    // =========================================================================
+    generateVisualChoiceQuestion(grade, category = null) {
+      let pool = this.grade0VisualQuestionsPool;
+      if (category) {
+        const filtered = pool.filter(item => item.category.toLowerCase().includes(category.toLowerCase()));
+        if (filtered.length > 0) pool = filtered;
+      }
+      const item = this.drawFromPool(pool, 'grade0VisualQuestionsPool') || pool[Math.floor(Math.random() * pool.length)];
+      const shuffledCards = this.fisherYatesShuffle([...item.cards]);
+
+      return {
+        type: 'visual_choice',
+        question: item.prompt,
+        spokenText: item.spokenText || item.prompt,
+        correct: item.correct,
+        explanation: item.explanation,
+        category: `🎨 ${item.category}`,
+        visualCards: shuffledCards,
+        interactiveData: {
+          prompt: item.prompt,
+          spokenText: item.spokenText,
+          category: item.category,
+          cards: shuffledCards
+        }
+      };
+    },
+
+    // =========================================================================
+    // YENİ MOTOR 2: HAREKETLİ BALON PATLATMA MOTORU (HARF / HECE / SAYI AVI)
+    // =========================================================================
+    generateFloatingBalloonQuestion(grade, levelType = null) {
+      let pool = this.grade1BalloonLevelsPool;
+      if (levelType === 'reading' || levelType === 'letters') {
+        pool = pool.filter(l => l.category.includes('Harfler') || l.category.includes('Heceler'));
+      } else if (levelType === 'rhythmic' || levelType === 'math') {
+        pool = pool.filter(l => l.category.includes('Sayılar') || l.category.includes('Ritmik') || l.category.includes('Toplama'));
+      }
+      if (!pool || pool.length === 0) pool = this.grade1BalloonLevelsPool;
+
+      const level = this.drawFromPool(pool, 'grade1BalloonLevelsPool') || pool[Math.floor(Math.random() * pool.length)];
+      const colorClasses = [
+        'balloon-color-red', 'balloon-color-blue', 'balloon-color-green', 
+        'balloon-color-yellow', 'balloon-color-purple', 'balloon-color-pink', 'balloon-color-orange'
+      ];
+
+      const targetList = level.targets || [level.target];
+      const distractorList = level.distractors || ['A', 'B', 'C', 'D'];
+      const targetCount = level.targetsNeeded || 2;
+      const balloons = [];
+
+      for (let i = 0; i < targetCount; i++) {
+        const tVal = targetList[i % targetList.length];
+        balloons.push({ text: tVal, isTarget: true });
+      }
+
+      const distCount = 4;
+      for (let i = 0; i < distCount; i++) {
+        const dVal = distractorList[i % distractorList.length];
+        balloons.push({ text: dVal, isTarget: false });
+      }
+
+      const shuffledBalloons = this.fisherYatesShuffle(balloons).map((b, idx) => {
+        const speed = parseFloat((4.8 + Math.random() * 2.2).toFixed(2));
+        const delay = parseFloat((idx * 0.35 + Math.random() * 0.25).toFixed(2));
+        const left = Math.floor(6 + (idx * 14 + Math.random() * 6) % 78);
+        return {
+          ...b,
+          colorClass: colorClasses[idx % colorClasses.length],
+          speed,
+          delay,
+          left
+        };
+      });
+
+      return {
+        type: 'floating_balloon',
+        question: level.instruction,
+        spokenText: level.spokenText,
+        correct: level.target,
+        explanation: level.explanation,
+        category: `🎈 ${level.category}`,
+        interactiveData: {
+          id: level.id,
+          instruction: level.instruction,
+          spokenText: level.spokenText,
+          target: level.target,
+          targetsNeeded: targetCount,
+          balloons: shuffledBalloons
+        }
+      };
+    },
+
+    // =========================================================================
+    // YENİ MOTOR 3: EŞLEŞTİRME VE HAFIZA KARTLARI (ARDIŞIK DOKUNMA)
+    // =========================================================================
+    generateMemoryGridQuestion(grade, matchType = null) {
+      const g = parseInt(grade, 10);
+      let cat = matchType;
+      if (!cat) {
+        if (g === 0) {
+          cat = Math.random() < 0.6 ? 'antonyms' : 'letters';
+        } else {
+          const r = Math.random();
+          if (r < 0.35) cat = 'letters';
+          else if (r < 0.7) cat = 'antonyms';
+          else cat = 'math';
+        }
+      }
+
+      const rawPool = this.matchingPairsPool[cat] || this.matchingPairsPool.antonyms;
+      const pairsCount = (g === 0) ? 3 : (Math.random() < 0.4 ? 3 : 6);
+      const gridSize = pairsCount === 3 ? 'grid-2x3' : 'grid-3x4';
+
+      const shuffledPairs = this.fisherYatesShuffle([...rawPool]).slice(0, pairsCount);
+      const cards = [];
+
+      shuffledPairs.forEach((pair, idx) => {
+        const pairKey = `pair_${cat}_${idx}`;
+        cards.push({ cardId: `c_${idx}_a`, pairKey, text: pair.left });
+        cards.push({ cardId: `c_${idx}_b`, pairKey, text: pair.right });
+      });
+
+      const randomizedCards = this.fisherYatesShuffle(cards);
+
+      let themeTitle = 'Eşleşen kartları bul! Kartlara sırayla dokun.';
+      let categoryName = '🧠 Hafıza & Eşleştirme';
+      if (cat === 'letters') {
+        themeTitle = '🔤 Büyük Harf - Küçük Harf Eşleştirmesi! Eşini bul.';
+        categoryName = '🔤 Harf Hafıza Kartları';
+      } else if (cat === 'antonyms') {
+        themeTitle = '🔄 Zıt Anlamlı Kelimeleri Eşleştir!';
+        categoryName = '🔄 Zıt Anlam Hafızası';
+      } else if (cat === 'math') {
+        themeTitle = '➕ Toplama İşlemi ve Sonucunu Eşleştir!';
+        categoryName = '➕ Toplama Eşleştirme Kartları';
+      }
+
+      return {
+        type: 'memory',
+        question: themeTitle,
+        spokenText: themeTitle.replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/g, ' '),
+        correct: 'Tüm Kartlar',
+        explanation: 'Muhteşem hafıza! Bütün eşleşen kartları eksiksiz buldun! 🧠⭐',
+        category: categoryName,
+        interactiveData: {
+          gridSize,
+          totalPairs: pairsCount,
+          cards: randomizedCards
+        }
+      };
+    },
+
+    // -------------------------------------------------------------------------
+    // ANASINIFI 55 SORULUK DEV GÖRSEL SORU HAVUZU
+    // -------------------------------------------------------------------------
+    grade0VisualQuestionsPool: [
+      // 1) Hayvanlar (12 Soru)
+      { prompt: 'Hangi sevimli dostumuz "MİYAV" der? 🐾', spokenText: 'Hangi sevimli hayvan miyav der? Kediye dokun.', category: 'Hayvanlar', correct: 'Kedi', cards: [{ text: 'Kedi', icon: '🐱', isCorrect: true }, { text: 'Köpek', icon: '🐶', isCorrect: false }, { text: 'İnek', icon: '🐮', isCorrect: false }], exp: 'Kediler sevilmeyi çok sever ve "Miyav" derler! 🐱👏' },
+      { prompt: 'Hangi sadık dostumuz "HAV HAV" der? 🦴', spokenText: 'Hangi sadık dostumuz hav hav der? Köpeğe dokun.', category: 'Hayvanlar', correct: 'Köpek', cards: [{ text: 'Köpek', icon: '🐶', isCorrect: true }, { text: 'Kedi', icon: '🐱', isCorrect: false }, { text: 'Civciv', icon: '🐥', isCorrect: false }], exp: 'Köpekler kuyruklarını sallayarak "Hav hav" derler! 🐶👏' },
+      { prompt: 'Bize taze ve sağlıklı süt veren sevimli hayvan hangisidir? 🥛', spokenText: 'Bize taze ve sağlıklı süt veren hayvan hangisidir? İneğe dokun.', category: 'Hayvanlar', correct: 'İnek', cards: [{ text: 'İnek', icon: '🐮', isCorrect: true }, { text: 'Aslan', icon: '🦁', isCorrect: false }, { text: 'Kurt', icon: '🐺', isCorrect: false }], exp: 'İnekler "Mööö" der ve bize bembeyaz süt verir! 🥛🐄' },
+      { prompt: 'Ormanların güçlü ve yeleli kralı hangisidir? 👑', spokenText: 'Ormanların güçlü ve yeleli kralı hangisidir? Aslana dokun.', category: 'Hayvanlar', correct: 'Aslan', cards: [{ text: 'Aslan', icon: '🦁', isCorrect: true }, { text: 'Maymun', icon: '🐵', isCorrect: false }, { text: 'Tavşan', icon: '🐰', isCorrect: false }], exp: 'Aslan güçlü kükremesiyle ormanların kralıdır! 🦁👑' },
+      { prompt: 'Havuç yemeyi çok seven, uzun kulaklı zıp zıp hayvan hangisidir? 🥕', spokenText: 'Havuç yemeyi çok seven, uzun kulaklı hayvan hangisidir? Tavşana dokun.', category: 'Hayvanlar', correct: 'Tavşan', cards: [{ text: 'Tavşan', icon: '🐰', isCorrect: true }, { text: 'Ayı', icon: '🐻', isCorrect: false }, { text: 'Kurbağa', icon: '🐸', isCorrect: false }], exp: 'Tavşanlar zıp zıp zıplar ve çıtır havuç yer! 🐰🥕' },
+      { prompt: 'Mavi denizlerde yüzgeçleriyle yüzen sevimli canlı hangisidir? 🌊', spokenText: 'Mavi denizlerde yüzgeçleriyle yüzen canlı hangisidir? Balığa dokun.', category: 'Hayvanlar', correct: 'Balık', cards: [{ text: 'Balık', icon: '🐟', isCorrect: true }, { text: 'Kuş', icon: '🐦', isCorrect: false }, { text: 'Kedi', icon: '🐱', isCorrect: false }], exp: 'Balıklar denizde yüzer ve solungaçlarıyla nefes alır! 🐟🌊' },
+      { prompt: 'Gökyüzünde kanat çırparak uçan ve "Cik cik" öten hangisidir? 🌳', spokenText: 'Gökyüzünde uçan ve cik cik öten hangisidir? Kuşa dokun.', category: 'Hayvanlar', correct: 'Kuş', cards: [{ text: 'Kuş', icon: '🐦', isCorrect: true }, { text: 'Kaplumbağa', icon: '🐢', isCorrect: false }, { text: 'Köpek', icon: '🐶', isCorrect: false }], exp: 'Kuşlar kanatlarını açıp gökyüzünde süzülür! 🐦🌿' },
+      { prompt: 'Kocaman kulakları ve uzun bir hortumu olan dev hayvan hangisidir? 🐘', spokenText: 'Kocaman kulakları ve uzun bir hortumu olan hayvan hangisidir? File dokun.', category: 'Hayvanlar', correct: 'Fil', cards: [{ text: 'Fil', icon: '🐘', isCorrect: true }, { text: 'Fare', icon: '🐭', isCorrect: false }, { text: 'Sincap', icon: '🐿️', isCorrect: false }], exp: 'Fil dünyanın en büyük ve en güçlü kara hayvanıdır! 🐘💧' },
+      { prompt: 'Çiçeklerden nektar toplayıp tatlı bal yapan çalışkan dostumuz hangisidir? 🍯', spokenText: 'Çiçeklerden bal toplayan çalışkan dostumuz hangisidir? Arıya dokun.', category: 'Hayvanlar', correct: 'Arı', cards: [{ text: 'Arı', icon: '🐝', isCorrect: true }, { text: 'Tırtıl', icon: '🐛', isCorrect: false }, { text: 'Salyangoz', icon: '🐌', isCorrect: false }], exp: 'Arılar vız vız uçar ve şifalı bal yapar! 🐝🍯' },
+      { prompt: 'Nilüfer yapraklarında "VAK VAK" diyerek zıplayan yeşil dostumuz hangisidir? 🌿', spokenText: 'Vak vak diyerek zıplayan yeşil dostumuz hangisidir? Kurbağaya dokun.', category: 'Hayvanlar', correct: 'Kurbağa', cards: [{ text: 'Kurbağa', icon: '🐸', isCorrect: true }, { text: 'Tilki', icon: '🦊', isCorrect: false }, { text: 'At', icon: '🐴', isCorrect: false }], exp: 'Kurbağalar göletlerde neşeyle zıplar! 🐸💧' },
+      { prompt: 'Sırtında sert kabuğuyla yavaş yavaş yürüyen sevimli dostumuz hangisidir? 🍃', spokenText: 'Sırtında sert kabuğu olan sevimli dostumuz hangisidir? Kaplumbağaya dokun.', category: 'Hayvanlar', correct: 'Kaplumbağa', cards: [{ text: 'Kaplumbağa', icon: '🐢', isCorrect: true }, { text: 'Tavşan', icon: '🐇', isCorrect: false }, { text: 'Çita', icon: '🐆', isCorrect: false }], exp: 'Kaplumbağa evi olan kabuğunu sırtında taşır! 🐢💚' },
+      { prompt: 'Ağaçlarda daldan dala atlayan ve muz seven sevimli hayvan hangisidir? 🍌', spokenText: 'Daldan dala atlayan ve muz seven sevimli hayvan hangisidir? Maymuna dokun.', category: 'Hayvanlar', correct: 'Maymun', cards: [{ text: 'Maymun', icon: '🐵', isCorrect: true }, { text: 'Kurt', icon: '🐺', isCorrect: false }, { text: 'Ayı', icon: '🐻', isCorrect: false }], exp: 'Maymunlar neşeyle zıplar ve muz yemeye bayılır! 🐵🍌' },
+
+      // 2) Meyveler & Sebzeler (11 Soru)
+      { prompt: 'Hangisi kırmızı ve küçük benekli, çok tatlı bir yaz meyvesidir? 🍓', spokenText: 'Hangisi kırmızı ve küçük benekli tatlı bir meyvedir? Çileğe dokun.', category: 'Meyveler', correct: 'Çilek', cards: [{ text: 'Çilek', icon: '🍓', isCorrect: true }, { text: 'Soğan', icon: '🧅', isCorrect: false }, { text: 'Patates', icon: '🥔', isCorrect: false }], exp: 'Çilek kokulu, kırmızı çok tatlı bir meyvedir! 🍓😋' },
+      { prompt: 'Maymunların yemeye bayıldığı sarı ve tatlı meyve hangisidir? 🍌', spokenText: 'Maymunların yemeye bayıldığı sarı ve tatlı meyve hangisidir? Muza dokun.', category: 'Meyveler', correct: 'Muz', cards: [{ text: 'Muz', icon: '🍌', isCorrect: true }, { text: 'Domates', icon: '🍅', isCorrect: false }, { text: 'Brokoli', icon: '🥦', isCorrect: false }], exp: 'Muz enerji dolu, tatlı ve sapsarı bir meyvedir! 🍌☀️' },
+      { prompt: 'Hangisi kış aylarında bol C vitamini veren sulu portakaldır? 🍊', spokenText: 'Hangisi kış aylarında bol C vitamini veren meyvedir? Portakala dokun.', category: 'Meyveler', correct: 'Portakal', cards: [{ text: 'Portakal', icon: '🍊', isCorrect: true }, { text: 'Karpuz', icon: '🍉', isCorrect: false }, { text: 'Kiraz', icon: '🍒', isCorrect: false }], exp: 'Portakal bizi hastalıklardan koruyan sulu bir kış meyvesidir! 🍊💪' },
+      { prompt: 'Kırmızı veya yeşil renkli, çıtır çıtır ısırılan meyve hangisidir? 🍎', spokenText: 'Kırmızı veya yeşil renkli, çıtır ısırılan meyve hangisidir? Elmaya dokun.', category: 'Meyveler', correct: 'Elma', cards: [{ text: 'Elma', icon: '🍎', isCorrect: true }, { text: 'Havuç', icon: '🥕', isCorrect: false }, { text: 'Patlıcan', icon: '🍆', isCorrect: false }], exp: 'Günde bir elma yemek sağlığımıza çok iyi gelir! 🍎✨' },
+      { prompt: 'Yazın soğuk soğuk dilimlenip yenen koca yeşil meyve hangisidir? 🍉', spokenText: 'Yazın dilimlenip yenen içi kırmızı koca meyve hangisidir? Karpuza dokun.', category: 'Meyveler', correct: 'Karpuz', cards: [{ text: 'Karpuz', icon: '🍉', isCorrect: true }, { text: 'Limon', icon: '🍋', isCorrect: false }, { text: 'Kestane', icon: '🌰', isCorrect: false }], exp: 'Karpuz yaz sıcağında içimizi ferahlatır! 🍉❄️' },
+      { prompt: 'Çorbalara ve salatalara sıkılan ekşi sarı meyve hangisidir? 🍋', spokenText: 'Çorbalara sıkılan ekşi sarı meyve hangisidir? Limona dokun.', category: 'Meyveler', correct: 'Limon', cards: [{ text: 'Limon', icon: '🍋', isCorrect: true }, { text: 'Çilek', icon: '🍓', isCorrect: false }, { text: 'Üzüm', icon: '🍇', isCorrect: false }], exp: 'Limon ekşidir ama C vitamini deposudur! 🍋😋' },
+      { prompt: 'Salkım salkım yetişen mor veya yeşil tatlı meyve hangisidir? 🍇', spokenText: 'Salkım salkım yetişen tatlı meyve hangisidir? Üzüme dokun.', category: 'Meyveler', correct: 'Üzüm', cards: [{ text: 'Üzüm', icon: '🍇', isCorrect: true }, { text: 'Mısır', icon: '🌽', isCorrect: false }, { text: 'Patates', icon: '🥔', isCorrect: false }], exp: 'Üzüm taneleri çok tatlı ve lezzetlidir! 🍇🍇' },
+      { prompt: 'Tavşanların çıtır çıtır yemeyi çok sevdiği turuncu sebze hangisidir? 🥕', spokenText: 'Tavşanların yemeyi çok sevdiği turuncu sebze hangisidir? Havuca dokun.', category: 'Meyveler', correct: 'Havuç', cards: [{ text: 'Havuç', icon: '🥕', isCorrect: true }, { text: 'Yeşil Elma', icon: '🍏', isCorrect: false }, { text: 'Muz', icon: '🍌', isCorrect: false }], exp: 'Havuç gözlerimize çok iyi gelen turuncu bir sebzedir! 🥕👁️' },
+      { prompt: 'İkiz sapları olan minik kırmızı tatlı meyve hangisidir? 🍒', spokenText: 'İkiz sapları olan kırmızı meyve hangisidir? Kiraza dokun.', category: 'Meyveler', correct: 'Kiraz', cards: [{ text: 'Kiraz', icon: '🍒', isCorrect: true }, { text: 'Ananas', icon: '🍍', isCorrect: false }, { text: 'Hindistan Cevizi', icon: '🥥', isCorrect: false }], exp: 'Kirazları kulağımıza küpe gibi takmayı da severiz! 🍒🌸' },
+      { prompt: 'Kahvaltıda yediğimiz kıpkırmızı, sulu sebze hangisidir? 🍅', spokenText: 'Kahvaltıda yediğimiz sulu kırmızı sebze hangisidir? Domatese dokun.', category: 'Meyveler', correct: 'Domates', cards: [{ text: 'Domates', icon: '🍅', isCorrect: true }, { text: 'Limon', icon: '🍋', isCorrect: false }, { text: 'Muz', icon: '🍌', isCorrect: false }], exp: 'Domates salataların ve kahvaltıların vazgeçilmezidir! 🍅❤️' },
+      { prompt: 'Sarı taneleri patlatılarak film izlerken yenen lezzetli yiyecek hangisidir? 🌽', spokenText: 'Sarı taneleri patlatılarak yenen lezzetli yiyecek hangisidir? Mısıra dokun.', category: 'Meyveler', correct: 'Mısır', cards: [{ text: 'Mısır', icon: '🌽', isCorrect: true }, { text: 'Brokoli', icon: '🥦', isCorrect: false }, { text: 'Soğan', icon: '🧅', isCorrect: false }], exp: 'Patlamış mısır çıtır çıtır ve çok eğlencelidir! 🌽🍿' },
+
+      // 3) Taşıtlar (11 Soru)
+      { prompt: 'Gökyüzünde bulutların üstünde kanatlarıyla uçan taşıt hangisidir? ✈️', spokenText: 'Gökyüzünde bulutların üstünde uçan taşıt hangisidir? Uçağa dokun.', category: 'Taşıtlar', correct: 'Uçak', cards: [{ text: 'Uçak', icon: '✈️', isCorrect: true }, { text: 'Araba', icon: '🚗', isCorrect: false }, { text: 'Gemi', icon: '🚢', isCorrect: false }], exp: 'Uçaklar bizi uzak şehirlere hızla götürür! ✈️☁️' },
+      { prompt: 'Raylar üzerinde "Çuf çuf" diyerek giden uzun taşıt hangisidir? 🚂', spokenText: 'Raylar üzerinde çuf çuf diyerek giden taşıt hangisidir? Trene dokun.', category: 'Taşıtlar', correct: 'Tren', cards: [{ text: 'Tren', icon: '🚂', isCorrect: true }, { text: 'Helikopter', icon: '🚁', isCorrect: false }, { text: 'Bisiklet', icon: '🚲', isCorrect: false }], exp: 'Tren vagonlarıyla raylar üzerinde seyahat eder! 🚂🛤️' },
+      { prompt: 'Denizlerde ve okyanuslarda dalgaların üstünde yüzen büyük taşıt hangisidir? 🚢', spokenText: 'Denizlerde dalgaların üstünde yüzen büyük taşıt hangisidir? Gemiye dokun.', category: 'Taşıtlar', correct: 'Gemi', cards: [{ text: 'Gemi', icon: '🚢', isCorrect: true }, { text: 'Otobüs', icon: '🚌', isCorrect: false }, { text: 'Motosiklet', icon: '🏍️', isCorrect: false }], exp: 'Gemiler kaptanlar eşliğinde mavi sularda ilerler! 🚢⚓' },
+      { prompt: 'Hastaları hızla hastaneye yetiştiren sirenli acil araç hangisidir? 🚑', spokenText: 'Hastaları hızla hastaneye yetiştiren sirenli araç hangisidir? Ambulansa dokun.', category: 'Taşıtlar', correct: 'Ambulans', cards: [{ text: 'Ambulans', icon: '🚑', isCorrect: true }, { text: 'Traktör', icon: '🚜', isCorrect: false }, { text: 'Taksi', icon: '🚕', isCorrect: false }], exp: 'Ambulansa trafikte her zaman yol vermeliyiz! 🚑🏥' },
+      { prompt: 'Yangınları söndürmek için siren çalarak koşan kırmızı araç hangisidir? 🚒', spokenText: 'Yangınları söndürmek için koşan kırmızı araç hangisidir? İtfaiye aracına dokun.', category: 'Taşıtlar', correct: 'İtfaiye Arabası', cards: [{ text: 'İtfaiye Arabası', icon: '🚒', isCorrect: true }, { text: 'Kamyon', icon: '🚚', isCorrect: false }, { text: 'Bisiklet', icon: '🚲', isCorrect: false }], exp: 'İtfaiye aracı uzun merdiveniyle yangınları söndürür! 🚒💦' },
+      { prompt: 'Şehirde yolcuları duraklardan toplayan koca taşıt hangisidir? 🚌', spokenText: 'Şehirde yolcuları duraklardan toplayan taşıt hangisidir? Otobüse dokun.', category: 'Taşıtlar', correct: 'Otobüs', cards: [{ text: 'Otobüs', icon: '🚌', isCorrect: true }, { text: 'Scooter', icon: '🛴', isCorrect: false }, { text: 'Kayık', icon: '🛶', isCorrect: false }], exp: 'Otobüs toplu taşıma ile çevremizi korur! 🚌🚏' },
+      { prompt: 'İki tekerleği olan ve pedallarını çevirerek sürdüğümüz sağlıklı taşıt hangisidir? 🚲', spokenText: 'Pedallarını çevirerek sürdüğümüz iki tekerlekli taşıt hangisidir? Bisiklete dokun.', category: 'Taşıtlar', correct: 'Bisiklet', cards: [{ text: 'Bisiklet', icon: '🚲', isCorrect: true }, { text: 'Araba', icon: '🚗', isCorrect: false }, { text: 'Tren', icon: '🚂', isCorrect: false }], exp: 'Bisiklet sürmek hem çok eğlenceli hem de sağlıklıdır! 🚲🚴' },
+      { prompt: 'Tepesinde pervanesi dönerek havada asılı durabilen taşıt hangisidir? 🚁', spokenText: 'Tepesinde pervanesi dönen taşıt hangisidir? Helikoptere dokun.', category: 'Taşıtlar', correct: 'Helikopter', cards: [{ text: 'Helikopter', icon: '🚁', isCorrect: true }, { text: 'Uçak', icon: '✈️', isCorrect: false }, { text: 'Gemi', icon: '🚢', isCorrect: false }], exp: 'Helikopter piste gerek duymadan her yere inebilir! 🚁🚁' },
+      { prompt: 'Tarlaları sürmek için köylerde kullanılan büyük tekerlekli araç hangisidir? 🚜', spokenText: 'Tarlaları sürmek için kullanılan araç hangisidir? Traktöre dokun.', category: 'Taşıtlar', correct: 'Traktör', cards: [{ text: 'Traktör', icon: '🚜', isCorrect: true }, { text: 'Yarış Arabası', icon: '🏎️', isCorrect: false }, { text: 'Motosiklet', icon: '🛵', isCorrect: false }], exp: 'Traktör çiftçilerin en büyük yardımcısıdır! 🚜🌾' },
+      { prompt: 'Uzaya, Ay\'a ve yıldızlara gitmek için ateşlenen araç hangisidir? 🚀', spokenText: 'Uzaya ve Ay\'a gitmek için ateşlenen araç hangisidir? Rokete dokun.', category: 'Taşıtlar', correct: 'Roket', cards: [{ text: 'Roket', icon: '🚀', isCorrect: true }, { text: 'Uçak', icon: '✈️', isCorrect: false }, { text: 'Yelkenli', icon: '⛵', isCorrect: false }], exp: 'Roketler Dünya\'nın yerçekimini yenip uzaya uçar! 🚀⭐' },
+      { prompt: 'Düt düt diye korna çalan dört tekerlekli aile taşıtı hangisidir? 🚗', spokenText: 'Düt düt diye korna çalan dört tekerlekli taşıt hangisidir? Arabaya dokun.', category: 'Taşıtlar', correct: 'Araba', cards: [{ text: 'Araba', icon: '🚗', isCorrect: true }, { text: 'Scooter', icon: '🛴', isCorrect: false }, { text: 'Tren', icon: '🚂', isCorrect: false }], exp: 'Arabaya bindiğimizde daima emniyet kemerimizi takarız! 🚗🛡️' },
+
+      // 4) Meslekler (11 Soru)
+      { prompt: 'Hastalandığımızda bizi muayene eden ve iyileştiren kimdir? 🩺', spokenText: 'Hastalandığımızda bizi muayene eden kimdir? Doktora dokun.', category: 'Meslekler', correct: 'Doktor', cards: [{ text: 'Doktor', icon: '🩺', isCorrect: true }, { text: 'Aşçı', icon: '👨‍🍳', isCorrect: false }, { text: 'Polis', icon: '👮', isCorrect: false }], exp: 'Doktorlar sağlığımıza kavuşmamıza yardımcı olur! 🩺🏥' },
+      { prompt: 'Bize okulda okuma-yazmayı ve yeni bilgileri öğreten kimdir? 👩‍🏫', spokenText: 'Okulda okuma yazmayı ve yeni bilgileri öğreten kimdir? Öğretmene dokun.', category: 'Meslekler', correct: 'Öğretmen', cards: [{ text: 'Öğretmen', icon: '👩‍🏫', isCorrect: true }, { text: 'İtfaiyeci', icon: '🚒', isCorrect: false }, { text: 'İnşaat Ustası', icon: '👷', isCorrect: false }], exp: 'Öğretmenler geleceğimizi sevgiyle aydınlatır! 👩‍🏫📚' },
+      { prompt: 'Yangınları hortumla su sıkarak söndüren kahraman kimdir? 👨‍🚒', spokenText: 'Yangınları söndüren kahraman kimdir? İtfaiyeciye dokun.', category: 'Meslekler', correct: 'İtfaiyeci', cards: [{ text: 'İtfaiyeci', icon: '👨‍🚒', isCorrect: true }, { text: 'Çiftçi', icon: '👨‍🌾', isCorrect: false }, { text: 'Ressam', icon: '🧑‍🎨', isCorrect: false }], exp: 'İtfaiyeciler tehlikeli anlarda canla başla yardım eder! 👨‍🚒🧯' },
+      { prompt: 'Trafiği düzenleyen ve güvenliğimizi sağlayan üniformalı kimdir? 👮', spokenText: 'Trafiği düzenleyen ve güvenliğimizi sağlayan kimdir? Polise dokun.', category: 'Meslekler', correct: 'Polis', cards: [{ text: 'Polis', icon: '👮', isCorrect: true }, { text: 'Aşçı', icon: '👨‍🍳', isCorrect: false }, { text: 'Astronot', icon: '🧑‍🚀', isCorrect: false }], exp: 'Polisler huzur ve güvenliğimiz için nöbettedir! 👮🚨' },
+      { prompt: 'Restoranlarda lezzetli yemekler ve pastalar pişiren kimdir? 👨‍🍳', spokenText: 'Lezzetli yemekler ve tatlılar pişiren kimdir? Aşçıya dokun.', category: 'Meslekler', correct: 'Aşçı', cards: [{ text: 'Aşçı', icon: '👨‍🍳', isCorrect: true }, { text: 'Pilot', icon: '🧑‍✈️', isCorrect: false }, { text: 'Tamirci', icon: '👨‍🔧', isCorrect: false }], exp: 'Aşçılar şef şapkalarıyla harika tatlar üretir! 👨‍🍳🍲' },
+      { prompt: 'Gökyüzünde yolcu uçağını güvenle uçuran kaptan kimdir? 🧑‍✈️', spokenText: 'Gökyüzünde yolcu uçağını uçuran kaptan kimdir? Pilota dokun.', category: 'Meslekler', correct: 'Pilot', cards: [{ text: 'Pilot', icon: '🧑‍✈️', isCorrect: true }, { text: 'Çiftçi', icon: '🧑‍🌾', isCorrect: false }, { text: 'Öğretmen', icon: '👩‍🏫', isCorrect: false }], exp: 'Pilotlar kokpitte uçağı bulutların arasından geçirir! 🧑‍✈️✈️' },
+      { prompt: 'Renkli boyalarla tuvale harika resimler çizen sanatçı kimdir? 🧑‍🎨', spokenText: 'Renkli boyalarla harika resimler çizen sanatçı kimdir? Ressama dokun.', category: 'Meslekler', correct: 'Ressam', cards: [{ text: 'Ressam', icon: '🧑‍🎨', isCorrect: true }, { text: 'Doktor', icon: '👨‍⚕️', isCorrect: false }, { text: 'Polis', icon: '👮', isCorrect: false }], exp: 'Ressamlar fırçalarıyla hayal dünyamızı renklendirir! 🧑‍🎨🎨' },
+      { prompt: 'Tarlalarda meyve, sebze ve buğday yetiştiren üretici kimdir? 👨‍🌾', spokenText: 'Tarlalarda meyve ve sebze yetiştiren kimdir? Çiftçiye dokun.', category: 'Meslekler', correct: 'Çiftçi', cards: [{ text: 'Çiftçi', icon: '👨‍🌾', isCorrect: true }, { text: 'Astronot', icon: '👨‍🚀', isCorrect: false }, { text: 'Aşçı', icon: '👨‍🍳', isCorrect: false }], exp: 'Çiftçiler soframıza gelen sağlıklı besinleri üretir! 👨‍🌾🌾' },
+      { prompt: 'Uzay kıyafeti giyip roketle uzayda yürüyen cesur kaşif kimdir? 👨‍🚀', spokenText: 'Uzay kıyafeti giyip uzayda yürüyen cesur kaşif kimdir? Astronota dokun.', category: 'Meslekler', correct: 'Astronot', cards: [{ text: 'Astronot', icon: '👨‍🚀', isCorrect: true }, { text: 'Tamirci', icon: '👨‍🔧', isCorrect: false }, { text: 'İtfaiyeci', icon: '👨‍🚒', isCorrect: false }], exp: 'Astronotlar Ay\'da ve uzay istasyonunda keşif yapar! 👨‍🚀🚀' },
+      { prompt: 'Çürüyen dişlerimizi tedavi edip parlatan hekim kimdir? 🦷', spokenText: 'Dişlerimizi tedavi edip parlatan hekim kimdir? Diş hekimine dokun.', category: 'Meslekler', correct: 'Diş Hekimi', cards: [{ text: 'Diş Hekimi', icon: '🦷', isCorrect: true }, { text: 'Pilot', icon: '🧑‍✈️', isCorrect: false }, { text: 'Ressam', icon: '🧑‍🎨', isCorrect: false }], exp: 'Günde iki kez diş fırçalayarak diş hekimimizi sevindiririz! 🦷🪥' },
+      { prompt: 'Evleri, okulları ve sağlam binaları inşa eden usta kimdir? 👷', spokenText: 'Sağlam evleri ve binaları inşa eden kimdir? İnşaat ustasına dokun.', category: 'Meslekler', correct: 'İnşaat Ustası', cards: [{ text: 'İnşaat Ustası', icon: '👷', isCorrect: true }, { text: 'Aşçı', icon: '👨‍🍳', isCorrect: false }, { text: 'Ressam', icon: '🧑‍🎨', isCorrect: false }], exp: 'İnşaat ustaları sarı baretleriyle güvenle çalışır! 👷🏢' },
+
+      // 5) Renkler & Şekiller (10 Soru)
+      { prompt: 'Hangisi gökyüzünün ve denizlerin rengi olan MAVİDİR? 🔵', spokenText: 'Hangisi mavi renktir? Mavi daireye dokun.', category: 'Renkler & Şekiller', correct: 'Mavi Daire', cards: [{ text: 'Mavi Daire', icon: '🔵', isCorrect: true }, { text: 'Kırmızı Daire', icon: '🔴', isCorrect: false }, { text: 'Sarı Daire', icon: '🟡', isCorrect: false }], exp: 'Mavi ferahlatıcı gökyüzünün ve denizin rengidir! 🔵🌊' },
+      { prompt: 'Hangisi taze çimenlerin ve yaprakların rengi olan YEŞİLDİR? 🟢', spokenText: 'Hangisi yeşil renktir? Yeşil daireye dokun.', category: 'Renkler & Şekiller', correct: 'Yeşil Daire', cards: [{ text: 'Yeşil Daire', icon: '🟢', isCorrect: true }, { text: 'Mor Daire', icon: '🟣', isCorrect: false }, { text: 'Turuncu Daire', icon: '🟠', isCorrect: false }], exp: 'Yeşil doğanın ve ağaçların rengidir! 🟢🌿' },
+      { prompt: 'Hangisi sıcacık Güneş\'in ve olgun muzun rengi olan SARIDIR? 🟡', spokenText: 'Hangisi sarı renktir? Sarı daireye dokun.', category: 'Renkler & Şekiller', correct: 'Sarı Daire', cards: [{ text: 'Sarı Daire', icon: '🟡', isCorrect: true }, { text: 'Mavi Daire', icon: '🔵', isCorrect: false }, { text: 'Kırmızı Daire', icon: '🔴', isCorrect: false }], exp: 'Sarı içimizi ısıtan Güneş\'in rengidir! 🟡☀️' },
+      { prompt: 'Hangisi parlak çileğin ve kalbin rengi olan KIRMIZIDIR? 🔴', spokenText: 'Hangisi kırmızı renktir? Kırmızı daireye dokun.', category: 'Renkler & Şekiller', correct: 'Kırmızı Daire', cards: [{ text: 'Kırmızı Daire', icon: '🔴', isCorrect: true }, { text: 'Yeşil Daire', icon: '🟢', isCorrect: false }, { text: 'Mor Daire', icon: '🟣', isCorrect: false }], exp: 'Kırmızı canlı ve neşeli bir renktir! 🔴🍓' },
+      { prompt: 'Hangisi geceleri gökyüzünde ışıl ışıl parlayan YILDIZ şeklidir? ⭐', spokenText: 'Hangisi parlayan yıldız şeklidir? Yıldıza dokun.', category: 'Renkler & Şekiller', correct: 'Sarı Yıldız', cards: [{ text: 'Sarı Yıldız', icon: '⭐', isCorrect: true }, { text: 'Mavi Üçgen', icon: '🔺', isCorrect: false }, { text: 'Siyah Kare', icon: '⬛', isCorrect: false }], exp: 'Yıldız gökyüzünde ışıl ışıl göz kırpar! ⭐✨' },
+      { prompt: 'Hangisi sevgimizi anlatan pembe KALP şeklidir? 💖', spokenText: 'Hangisi pembe kalp şeklidir? Kalbe dokun.', category: 'Renkler & Şekiller', correct: 'Pembe Kalp', cards: [{ text: 'Pembe Kalp', icon: '💖', isCorrect: true }, { text: 'Yeşil Daire', icon: '⭕', isCorrect: false }, { text: 'Turuncu Üçgen', icon: '🔺', isCorrect: false }], exp: 'Kalp sevgi ve dostluğun en güzel sembolüdür! 💖' },
+      { prompt: 'Hangisi tıpkı bir futbol topu gibi yuvarlak DAİREDİR? ⭕', spokenText: 'Hangisi yuvarlak dairedir? Daireye dokun.', category: 'Renkler & Şekiller', correct: 'Daire', cards: [{ text: 'Daire', icon: '⭕', isCorrect: true }, { text: 'Kare', icon: '🟩', isCorrect: false }, { text: 'Üçgen', icon: '🔺', isCorrect: false }], exp: 'Dairenin köşesi yoktur, top gibi yuvarlaktır! ⭕⚽' },
+      { prompt: 'Hangisi tam 3 köşesi ve 3 kenarı olan ÜÇGENDİR? 🔺', spokenText: 'Hangisi 3 köşeli üçgendir? Üçgene dokun.', category: 'Renkler & Şekiller', correct: 'Üçgen', cards: [{ text: 'Üçgen', icon: '🔺', isCorrect: true }, { text: 'Daire', icon: '⚪', isCorrect: false }, { text: 'Kare', icon: '🟦', isCorrect: false }], exp: 'Üçgenin tam 3 sivri köşesi vardır! 🔺📐' },
+      { prompt: 'Hangisi 4 kenarı da birbirine eşit olan KAREDİR? 🟩', spokenText: 'Hangisi 4 kenarı eşit karedir? Kareye dokun.', category: 'Renkler & Şekiller', correct: 'Kare', cards: [{ text: 'Kare', icon: '🟩', isCorrect: true }, { text: 'Daire', icon: '⭕', isCorrect: false }, { text: 'Üçgen', icon: '🔺', isCorrect: false }], exp: 'Kare kutu gibi dengeli ve dört köşelidir! 🟩📦' },
+      { prompt: 'Hangisi lezzetli bir portakalın rengi olan TURUNCUDUR? 🟠', spokenText: 'Hangisi turuncu renktir? Turuncu daireye dokun.', category: 'Renkler & Şekiller', correct: 'Turuncu Daire', cards: [{ text: 'Turuncu Daire', icon: '🟠', isCorrect: true }, { text: 'Mor Daire', icon: '🟣', isCorrect: false }, { text: 'Yeşil Daire', icon: '🟢', isCorrect: false }], exp: 'Turuncu portakal ve havuç rengidir! 🟠🍊' }
+    ],
+
+    // -------------------------------------------------------------------------
+    // 1. SINIF: 42 SEVİYELİK BALON PATLATMA HAVUZU (HARF, HECE, SAYI, RİTMİK)
+    // -------------------------------------------------------------------------
+    grade1BalloonLevelsPool: [
+      // 1. Grup Harfler (E-L-A-K-İ-N) - 12 Bölüm
+      { id: 'b_e_up', instruction: '🎈 Sadece "E" harfi olan balonları patlat!', spokenText: 'Sadece E harfi olan balonları patlat', target: 'E', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['E'], distractors: ['L', 'A', 'K', 'İ', 'N'], exp: 'Harika refleks! "E" harfini yakaladın! 🎈👏' },
+      { id: 'b_e_low', instruction: '🎈 Sadece küçük "e" harfi olan balonları patlat!', spokenText: 'Sadece küçük e harfi olan balonları patlat', target: 'e', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['e'], distractors: ['l', 'a', 'k', 'i', 'n'], exp: 'Süpersin! Küçük "e" balonlarını patlattın! 🎈✨' },
+      { id: 'b_l_up', instruction: '🎈 Sadece "L" harfi olan balonları patlat!', spokenText: 'Sadece L harfi olan balonları patlat', target: 'L', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['L'], distractors: ['E', 'A', 'K', 'T', 'N'], exp: 'Tebrikler! "L" harfi balonları patladı! 🎈🎉' },
+      { id: 'b_l_low', instruction: '🎈 Sadece küçük "l" harfi olan balonları patlat!', spokenText: 'Sadece küçük l harfi olan balonları patlat', target: 'l', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['l'], distractors: ['e', 'i', 't', 'k', 'a'], exp: 'Çok hızlısın! Küçük "l" harfini buldun! 🎈⭐' },
+      { id: 'b_a_up', instruction: '🎈 Sadece "A" harfi olan balonları patlat!', spokenText: 'Sadece A harfi olan balonları patlat', target: 'A', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['A'], distractors: ['E', 'L', 'O', 'K', 'İ'], exp: 'Muhteşem! "A" sesi balonunu avladın! 🎈👏' },
+      { id: 'b_a_low', instruction: '🎈 Sadece küçük "a" harfi olan balonları patlat!', spokenText: 'Sadece küçük a harfi olan balonları patlat', target: 'a', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['a'], distractors: ['e', 'o', 'u', 'k', 'n'], exp: 'Bravo! Küçük "a" harfini kaçırmadın! 🎈💖' },
+      { id: 'b_k_up', instruction: '🎈 Sadece "K" harfi olan balonları patlat!', spokenText: 'Sadece K harfi olan balonları patlat', target: 'K', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['K'], distractors: ['L', 'E', 'N', 'T', 'İ'], exp: 'Harika atış! "K" harfi patladı! 🎈💥' },
+      { id: 'b_k_low', instruction: '🎈 Sadece küçük "k" harfi olan balonları patlat!', spokenText: 'Sadece küçük k harfi olan balonları patlat', target: 'k', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['k'], distractors: ['l', 't', 'b', 'h', 'n'], exp: 'Nefis gözlem! Küçük "k" balonunu patlattın! 🎈👍' },
+      { id: 'b_i_up', instruction: '🎈 Sadece "İ" harfi olan balonları patlat!', spokenText: 'Sadece İ harfi olan balonları patlat', target: 'İ', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['İ'], distractors: ['E', 'L', 'A', 'K', 'T'], exp: 'Süper! Noktalı "İ" harfini hemen yakaladın! 🎈🌟' },
+      { id: 'b_i_low', instruction: '🎈 Sadece küçük "i" harfi olan balonları patlat!', spokenText: 'Sadece küçük i harfi olan balonları patlat', target: 'i', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['i'], distractors: ['l', 'e', 't', 'k', 'j'], exp: 'Çok dikkatlisin! Küçük "i" harfini buldun! 🎈👏' },
+      { id: 'b_n_up', instruction: '🎈 Sadece "N" harfi olan balonları patlat!', spokenText: 'Sadece N harfi olan balonları patlat', target: 'N', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['N'], distractors: ['M', 'K', 'L', 'Z', 'H'], exp: 'Tebrikler! "N" harfi balonlarını patlattın! 🎈🎉' },
+      { id: 'b_n_low', instruction: '🎈 Sadece küçük "n" harfi olan balonları patlat!', spokenText: 'Sadece küçük n harfi olan balonları patlat', target: 'n', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['n'], distractors: ['u', 'm', 'h', 'r', 'k'], exp: 'Harikasın! Küçük "n" harfini ustalıkla patlattın! 🎈💥' },
+
+      // 2. Grup Harfler (O-M-U-T-Ü-Y) - 10 Bölüm
+      { id: 'b_o_up', instruction: '🎈 Sadece "O" harfi olan balonları patlat!', spokenText: 'Sadece O harfi olan balonları patlat', target: 'O', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['O'], distractors: ['U', 'A', 'E', 'C', 'D'], exp: 'Tıpkı bir çember gibi olan "O" harfini patlattın! 🎈⭕' },
+      { id: 'b_m_up', instruction: '🎈 Sadece "M" harfi olan balonları patlat!', spokenText: 'Sadece M harfi olan balonları patlat', target: 'M', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['M'], distractors: ['N', 'K', 'T', 'W', 'V'], exp: 'Nefis refleks! "M" sesini yakaladın! 🎈👏' },
+      { id: 'b_m_low', instruction: '🎈 Sadece küçük "m" harfi olan balonları patlat!', spokenText: 'Sadece küçük m harfi olan balonları patlat', target: 'm', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['m'], distractors: ['n', 'u', 'w', 'v', 'h'], exp: 'İki tepeli küçük "m" harfini buldun! 🎈✨' },
+      { id: 'b_u_up', instruction: '🎈 Sadece "U" harfi olan balonları patlat!', spokenText: 'Sadece U harfi olan balonları patlat', target: 'U', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['U'], distractors: ['O', 'Ü', 'A', 'V', 'C'], exp: 'Harika! "U" harfi balonlarını patlattın! 🎈⭐' },
+      { id: 'b_t_up', instruction: '🎈 Sadece "T" harfi olan balonları patlat!', spokenText: 'Sadece T harfi olan balonları patlat', target: 'T', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['T'], distractors: ['L', 'K', 'Y', 'F', 'İ'], exp: 'Çok hızlısın! "T" harfi patladı! 🎈💥' },
+      { id: 'b_t_low', instruction: '🎈 Sadece küçük "t" harfi olan balonları patlat!', spokenText: 'Sadece küçük t harfi olan balonları patlat', target: 't', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['t'], distractors: ['l', 'f', 'k', 'i', 'j'], exp: 'Bravo! Küçük "t" balonunu tam zamanında patlattın! 🎈👍' },
+      { id: 'b_u2_up', instruction: '🎈 Sadece noktalı "Ü" harfi olan balonları patlat!', spokenText: 'Sadece noktalı Ü harfi olan balonları patlat', target: 'Ü', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Ü'], distractors: ['U', 'O', 'Ö', 'Y', 'T'], exp: 'Süper dikkat! Noktalı "Ü" harfini patlattın! 🎈🌟' },
+      { id: 'b_y_up', instruction: '🎈 Sadece "Y" harfi olan balonları patlat!', spokenText: 'Sadece Y harfi olan balonları patlat', target: 'Y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Y'], distractors: ['T', 'K', 'V', 'X', 'U'], exp: 'Muhteşem! "Y" harfi balonunu yakaladın! 🎈🎉' },
+      { id: 'b_y_low', instruction: '🎈 Sadece küçük "y" harfi olan balonları patlat!', spokenText: 'Sadece küçük y harfi olan balonları patlat', target: 'y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['y'], distractors: ['u', 'v', 'g', 'j', 'p'], exp: 'Harika! Küçük "y" balonlarını havada vurdun! 🎈💖' },
+      { id: 'b_vowels', instruction: '🎈 Sadece SESLİ (Ünlü) harfleri patlat! (A, E, İ, O, U)', spokenText: 'Sadece sesli harfleri patlat', target: 'Sesli Harfler', category: 'Harf Bilgisi', targetsNeeded: 3, targets: ['A', 'E', 'İ', 'O', 'U'], distractors: ['K', 'L', 'T', 'M', 'N'], exp: 'Şampiyon! Sesli harfleri eksiksiz topladın! 🎈🏆' },
+
+      // 1. Sınıf Heceler - 10 Bölüm
+      { id: 'b_syl_el', instruction: '🎈 Sadece "EL" hecesi olan balonları patlat!', spokenText: 'Sadece EL hecesi olan balonları patlat', target: 'EL', category: 'Heceler', targetsNeeded: 2, targets: ['EL'], distractors: ['LE', 'AL', 'LA', 'EK'], exp: 'Süpersin! "EL" hecesini hemen okudun ve patlattın! 🎈✋' },
+      { id: 'b_syl_al', instruction: '🎈 Sadece "AL" hecesi olan balonları patlat!', spokenText: 'Sadece AL hecesi olan balonları patlat', target: 'AL', category: 'Heceler', targetsNeeded: 2, targets: ['AL'], distractors: ['LA', 'EL', 'OL', 'AT'], exp: 'Harika! "AL" hecesi balonlarını patlattın! 🎈🔴' },
+      { id: 'b_syl_ak', instruction: '🎈 Sadece "AK" hecesi olan balonları patlat!', spokenText: 'Sadece AK hecesi olan balonları patlat', target: 'AK', category: 'Heceler', targetsNeeded: 2, targets: ['AK'], distractors: ['KA', 'EK', 'OK', 'KE'], exp: 'Nefis! "AK" hecesini tam hedeften vurdun! 🎈⚪' },
+      { id: 'b_syl_ek', instruction: '🎈 Sadece "EK" hecesi olan balonları patlat!', spokenText: 'Sadece EK hecesi olan balonları patlat', target: 'EK', category: 'Heceler', targetsNeeded: 2, targets: ['EK'], distractors: ['KE', 'AK', 'ET', 'EL'], exp: 'Tebrikler! "EK" hecesi balonları patladı! 🎈🌾' },
+      { id: 'b_syl_et', instruction: '🎈 Sadece "ET" hecesi olan balonları patlat!', spokenText: 'Sadece ET hecesi olan balonları patlat', target: 'ET', category: 'Heceler', targetsNeeded: 2, targets: ['ET'], distractors: ['TE', 'AT', 'OT', 'İT'], exp: 'Çok hızlısın! "ET" hecesini yakaladın! 🎈🥩' },
+      { id: 'b_syl_an', instruction: '🎈 Sadece "AN" hecesi olan balonları patlat!', spokenText: 'Sadece AN hecesi olan balonları patlat', target: 'AN', category: 'Heceler', targetsNeeded: 2, targets: ['AN'], distractors: ['NA', 'EN', 'ON', 'AL'], exp: 'Harika okuma! "AN" hecesi patladı! 🎈✨' },
+      { id: 'b_syl_la', instruction: '🎈 Sadece "LA" hecesi olan balonları patlat!', spokenText: 'Sadece LA hecesi olan balonları patlat', target: 'LA', category: 'Heceler', targetsNeeded: 2, targets: ['LA'], distractors: ['AL', 'LE', 'LI', 'LO'], exp: 'Bravo! "LA" hecesini ustalıkla patlattın! 🎈🎶' },
+      { id: 'b_syl_ma', instruction: '🎈 Sadece "MA" hecesi olan balonları patlat!', spokenText: 'Sadece MA hecesi olan balonları patlat', target: 'MA', category: 'Heceler', targetsNeeded: 2, targets: ['MA'], distractors: ['AM', 'ME', 'MO', 'MU'], exp: 'Süper! "MA" hecesi balonları patladı! 🎈⭐' },
+      { id: 'b_syl_to', instruction: '🎈 Sadece "TO" hecesi olan balonları patlat!', spokenText: 'Sadece TO hecesi olan balonları patlat', target: 'TO', category: 'Heceler', targetsNeeded: 2, targets: ['TO'], distractors: ['OT', 'TA', 'TE', 'TU'], exp: 'Harika refleks! "TO" hecesini patlattın! 🎈⚽' },
+      { id: 'b_syl_ku', instruction: '🎈 Sadece "KU" hecesi olan balonları patlat!', spokenText: 'Sadece KU hecesi olan balonları patlat', target: 'KU', category: 'Heceler', targetsNeeded: 2, targets: ['KU'], distractors: ['UK', 'KO', 'KA', 'KE'], exp: 'Tebrikler! "KU" hecesini yakaladın! 🎈🐦' },
+
+      // Sayılar ve Ritmik Sayma - 10 Bölüm
+      { id: 'b_num_5', instruction: '🎈 Sadece "5" yazan balonları patlat!', spokenText: 'Sadece 5 yazan balonları patlat', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['2', '3', '6', '8', '9'], exp: 'Harika! 5 yazan balonları patlattın! 🎈🖐️' },
+      { id: 'b_num_10', instruction: '🎈 Sadece "10" yazan balonları patlat!', spokenText: 'Sadece 10 yazan balonları patlat', target: '10', category: 'Sayılar', targetsNeeded: 2, targets: ['10'], distractors: ['1', '0', '7', '12', '9'], exp: 'Muhteşem! İki basamaklı 10 sayısını yakaladın! 🎈🔟' },
+      { id: 'b_even', instruction: '🎈 Sadece ÇİFT sayıları patlat! (2, 4, 6, 8, 10)', spokenText: 'Sadece çift sayıları patlat', target: 'Çift Sayılar', category: 'Sayılar', targetsNeeded: 3, targets: ['2', '4', '6', '8', '10'], distractors: ['1', '3', '5', '7', '9'], exp: 'Harika matematik refleksi! Çift sayıları patlattın! 🎈🎯' },
+      { id: 'b_odd', instruction: '🎈 Sadece TEK sayıları patlat! (1, 3, 5, 7, 9)', spokenText: 'Sadece tek sayıları patlat', target: 'Tek Sayılar', category: 'Sayılar', targetsNeeded: 3, targets: ['1', '3', '5', '7', '9'], distractors: ['2', '4', '6', '8', '10'], exp: 'Süpersin! Bütün tek sayıları tam zamanında yakaladın! 🎈⚡' },
+      { id: 'b_gt_5', instruction: '🎈 5\'ten BÜYÜK olan sayıları patlat! (6, 7, 8, 9)', spokenText: '5 ten büyük olan sayıları patlat', target: '> 5', category: 'Sayılar', targetsNeeded: 3, targets: ['6', '7', '8', '9'], distractors: ['1', '2', '3', '4'], exp: 'Nefis karşılaştırma! 5\'ten büyük sayıları patlattın! 🎈📈' },
+      { id: 'b_lt_5', instruction: '🎈 5\'ten KÜÇÜK olan sayıları patlat! (1, 2, 3, 4)', spokenText: '5 ten küçük olan sayıları patlat', target: '< 5', category: 'Sayılar', targetsNeeded: 3, targets: ['1', '2', '3', '4'], distractors: ['6', '7', '8', '9', '10'], exp: 'Tebrikler! 5\'ten küçük sayıları buldun! 🎈📉' },
+      { id: 'b_rhythm_2', instruction: '🎈 2\'şer Ritmik Sayma sayılarını patlat! (2, 4, 6, 8, 10)', spokenText: '2 şer ritmik sayma sayılarını patlat', target: '2\'şer Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['2', '4', '6', '8', '10'], distractors: ['3', '5', '7', '9', '11'], exp: '2-4-6-8-10! 2\'şer ritmik saymayı harika biliyorsun! 🎈🚀' },
+      { id: 'b_rhythm_5', instruction: '🎈 5\'er Ritmik Sayma sayılarını patlat! (5, 10, 15, 20)', spokenText: '5 er ritmik sayma sayılarını patlat', target: '5\'er Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['5', '10', '15', '20'], distractors: ['7', '12', '18', '22', '16'], exp: '5-10-15-20! 5\'er saymada bir yıldızsın! 🎈⭐' },
+      { id: 'b_rhythm_10', instruction: '🎈 10\'ar Ritmik Sayma sayılarını patlat! (10, 20, 30, 40)', spokenText: '10 ar ritmik sayma sayılarını patlat', target: '10\'ar Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['10', '20', '30', '40'], distractors: ['15', '25', '35', '45', '18'], exp: '10-20-30-40! Hızına kimse yetişemez! 🎈💨' },
+      { id: 'b_sum_10', instruction: '🎈 Sonucu 10 eden toplama işlemlerini patlat! (5+5, 8+2, 7+3)', spokenText: 'Sonucu 10 eden toplama işlemlerini patlat', target: '= 10', category: 'Toplama', targetsNeeded: 2, targets: ['5+5', '8+2', '7+3', '9+1'], distractors: ['4+4', '6+2', '9+3', '5+3'], exp: 'Müthiş hesap! Sonucu 10 olan balonları patlattın! 🎈🏆' }
+    ],
+
+    // -------------------------------------------------------------------------
+    // 77 ÇİFTLİK HAFIZA & EŞLEŞTİRME HAVUZU (HARF, ZIT ANLAM, TOPLAMA)
+    // -------------------------------------------------------------------------
+    matchingPairsPool: {
+      letters: [
+        { left: 'A', right: 'a' }, { left: 'B', right: 'b' }, { left: 'C', right: 'c' }, { left: 'Ç', right: 'ç' },
+        { left: 'D', right: 'd' }, { left: 'E', right: 'e' }, { left: 'F', right: 'f' }, { left: 'G', right: 'g' },
+        { left: 'H', right: 'h' }, { left: 'I', right: 'ı' }, { left: 'İ', right: 'i' }, { left: 'K', right: 'k' },
+        { left: 'L', right: 'l' }, { left: 'M', right: 'm' }, { left: 'N', right: 'n' }, { left: 'O', right: 'o' },
+        { left: 'Ö', right: 'ö' }, { left: 'P', right: 'p' }, { left: 'R', right: 'r' }, { left: 'S', right: 's' },
+        { left: 'Ş', right: 'ş' }, { left: 'T', right: 't' }, { left: 'U', right: 'u' }, { left: 'Ü', right: 'ü' },
+        { left: 'V', right: 'v' }, { left: 'Y', right: 'y' }, { left: 'Z', right: 'z' }, { left: 'J', right: 'j' }
+      ],
+      antonyms: [
+        { left: 'Sıcak ☀️', right: 'Soğuk ❄️' }, { left: 'Büyük 🐘', right: 'Küçük 🐭' },
+        { left: 'Hızlı 🐆', right: 'Yavaş 🐢' }, { left: 'Açık 📖', right: 'Kapalı 📕' },
+        { left: 'Uzun 🦒', right: 'Kısa 🦔' }, { left: 'Ağır 🪨', right: 'Hafif 🪶' },
+        { left: 'Temiz ✨', right: 'Kirli 🧼' }, { left: 'Genç 🧒', right: 'Yaşlı 👴' },
+        { left: 'Mutlu 😊', right: 'Üzgün 😢' }, { left: 'Aşağı ⬇️', right: 'Yukarı ⬆️' },
+        { left: 'Gündüz ☀️', right: 'Gece 🌙' }, { left: 'Ön 🚗', right: 'Arka 🚙' },
+        { left: 'Dolu 🥛', right: 'Boş 🫗' }, { left: 'Zengin 💰', right: 'Fakir 🪙' },
+        { left: 'Kolay 👍', right: 'Zor 🧠' }, { left: 'Sert 🧱', right: 'Yumuşak 🧸' },
+        { left: 'Doğru ✅', right: 'Yanlış ❌' }, { left: 'Erken ⏰', right: 'Geç ⏳' },
+        { left: 'İnce ✏️', right: 'Kalın 🖍️' }, { left: 'Karanlık 🌑', right: 'Aydınlık 💡' },
+        { left: 'Güzel 🌸', right: 'Çirkin 🧟' }, { left: 'Taze 🍏', right: 'Bayat 🥖' },
+        { left: 'Tatlı 🍯', right: 'Acı 🌶️' }, { left: 'Çalışkan 🐝', right: 'Tembel 🦥' },
+        { left: 'Cesur 🦁', right: 'Korkak 🐭' }
+      ],
+      math: [
+        { left: '2 + 1', right: '3' }, { left: '2 + 2', right: '4' }, { left: '3 + 2', right: '5' },
+        { left: '4 + 2', right: '6' }, { left: '5 + 2', right: '7' }, { left: '4 + 4', right: '8' },
+        { left: '5 + 4', right: '9' }, { left: '5 + 5', right: '10' }, { left: '6 + 4', right: '10' },
+        { left: '7 + 3', right: '10' }, { left: '8 + 2', right: '10' }, { left: '9 + 1', right: '10' },
+        { left: '6 + 5', right: '11' }, { left: '7 + 5', right: '12' }, { left: '8 + 4', right: '12' },
+        { left: '6 + 6', right: '12' }, { left: '7 + 6', right: '13' }, { left: '8 + 5', right: '13' },
+        { left: '9 + 5', right: '14' }, { left: '7 + 7', right: '14' }, { left: '10 + 5', right: '15' },
+        { left: '8 + 8', right: '16' }, { left: '9 + 9', right: '18' }, { left: '10 + 10', right: '20' }
+      ]
+    },
 
     // 1) 🎈 BALON PATLATMA MOTORU (Ses & Harf Balonları ve Renk Balonları)
     generateBalloonQuestion(grade, gameType) {
@@ -3514,6 +3872,8 @@
         lang: qData.lang || (qData.englishWord ? 'en' : 'tr'),
         spokenText: qData.spokenText || qData.englishWord || null,
         type: qData.type || 'standard',
+        category: qData.category || category,
+        visualCards: qData.visualCards || (qData.interactiveData ? qData.interactiveData.cards : null),
         interactiveData: qData.interactiveData || null
       };
     },
@@ -3866,7 +4226,7 @@
 
       // Standart derslerde her 4. soruda bir derse uygun Doğru/Yanlış veya Dokun-Eşleştir interaktif molası
       const isStandardSubject = ['math', 'turkish', 'english', 'lifescience', 'science', 'social'].includes(gameType);
-      if (isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
+      if (parseInt(grade, 10) > 0 && isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
         let catFilter = gameType;
         if (gameType === 'social') catFilter = 'lifescience';
         if (Math.random() < 0.5) {
@@ -3909,12 +4269,37 @@
 
       // 2. Yerleşik Dinamik Motor
       const g = parseInt(grade, 10);
+      if (g === 0) {
+        // ANASINIFI: Çoktan seçmeli test mantığı tamamen kaldırıldı.
+        // 1. Dinle & Seç (Büyük Görseller ve Sesli Yönerge) (%50)
+        // 2. Hareketli Balon Patlatma (%25)
+        // 3. Eşleştirme ve Hafıza Kartları (%25)
+        if (gameType === 'color_balloon' || gameType === 'balloon') {
+          return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0), '🎈 Renkli Balon Avı');
+        } else if (gameType === 'memory' || gameType === 'matching') {
+          return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Eşleştirme ve Hafıza Kartları');
+        } else if (gameType === 'shadow_match') {
+          return this.buildQuestionItem(this.generateShadowMatchQuestion(0), '🧩 Gölgesini Bul');
+        } else if (gameType === 'count_tap') {
+          return this.buildQuestionItem(this.generateCountTapQuestion(), '🔢 Kaç Tane Var? Dokun & Say');
+        } else {
+          const r = Math.random();
+          if (r < 0.50) {
+            return this.buildQuestionItem(this.generateVisualChoiceQuestion(0), '🎨 Dinle & Seç');
+          } else if (r < 0.75) {
+            return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0), '🎈 Hareketli Balon Avı');
+          } else {
+            return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Hafıza Kartları');
+          }
+        }
+      }
+
       if (gameType === 'color_balloon') {
-        const raw = this.generateBalloonQuestion(0, 'color_balloon');
-        return this.buildQuestionItem(raw, '🎈 Renk Balonlarını Patlat');
+        const raw = this.generateFloatingBalloonQuestion(0);
+        return this.buildQuestionItem(raw, '🎈 Renkli Balon Avı');
       } else if (gameType === 'firstreading_balloon') {
-        const raw = this.generateBalloonQuestion(1, 'firstreading_balloon');
-        return this.buildQuestionItem(raw, '🎈 Ses & Harf Balonları');
+        const raw = this.generateFloatingBalloonQuestion(1, 'reading');
+        return this.buildQuestionItem(raw, '🎈 Harf & Hece Balonları');
       } else if (gameType === 'syllable_builder') {
         const raw = this.generateSyllableBuilderQuestion();
         return this.buildQuestionItem(raw, '🔤 Hece Birleştirme Atölyesi');
@@ -3928,13 +4313,19 @@
         const raw = this.generateCountTapQuestion();
         return this.buildQuestionItem(raw, '🔢 Kaç Tane Var? Dokun & Say');
       } else if (gameType === 'firstreading') {
-        // İlk Okuma Yazma karma rotasyon
-        const subEngines = ['firstreading_balloon', 'syllable_builder', 'word_catch'];
-        const chosen = this.drawFromPool(subEngines, "subEngines");
-        return this.getNextQuestion(1, chosen);
+        // 1. Sınıf Okuma-Yazma Rotasyonu: Hareketli Balon (%45), Hafıza Kartları (%35), Hece İnşaatı (%20)
+        const r = Math.random();
+        if (r < 0.45) {
+          return this.buildQuestionItem(this.generateFloatingBalloonQuestion(1, 'reading'), '🎈 Harf & Hece Balonları');
+        } else if (r < 0.80) {
+          return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'letters'), '🧠 Büyük-Küçük Harf Hafızası');
+        } else {
+          return this.buildQuestionItem(this.generateSyllableBuilderQuestion(), '🔤 Hece Birleştirme Atölyesi');
+        }
       } else if (gameType === 'math_rhythmic_1') {
-        const raw = this.generateGrade1Rhythmic();
-        return this.buildQuestionItem(raw, '🔢 Ritmik Sayma Düellosu');
+        return this.buildQuestionItem(this.generateFloatingBalloonQuestion(1, 'rhythmic'), '🎈 Ritmik Sayma Balonları');
+      } else if (gameType === 'turkish_antonyms_1') {
+        return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'antonyms'), '🧠 Zıt Anlam Hafıza Kartları');
       } else if (gameType === 'math_shapes_money_1') {
         const raw = this.drawFromPool(this.grade1ShapesAndMoneyPool, "grade1ShapesAndMoneyPool");
         return this.buildQuestionItem({
@@ -4175,15 +4566,15 @@
       } else if (gameType === 'math') {
         let raw;
         if (g === 0) {
-          raw = this.generateKindergartenMath();
+          const r = Math.random();
+          if (r < 0.5) return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Renkler & Şekiller'), '🎨 Renkler & Şekiller');
+          else if (r < 0.75) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0, 'math'), '🎈 Sayı Balonları');
+          else return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Sayma & Eşleştirme');
         } else if (g === 1) {
           const r = Math.random();
-          if (r < 0.6) raw = this.generateGrade1Math();
-          else if (r < 0.8) raw = this.generateGrade1Rhythmic();
-          else {
-            const item = this.drawFromPool(this.grade1ShapesAndMoneyPool, "grade1ShapesAndMoneyPool");
-            raw = { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
-          }
+          if (r < 0.40) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(1, 'math'), '🎈 Sayı & Toplama Balonları');
+          else if (r < 0.70) return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'math'), '🧠 Toplama Eşleştirme Kartları');
+          else raw = this.generateGrade1Math();
         } else if (g === 2) {
           const r = Math.random();
           if (r < 0.45) raw = this.generateGrade2Math();
@@ -4201,36 +4592,15 @@
         return this.buildQuestionItem(raw, g === 0 ? '🎨 Renkler & Sayma' : '📐 Matematik Düellosu');
       } else if (gameType === 'turkish') {
         if (g === 0) {
-          const raw = this.drawFromPool(this.grade0AnimalsAndNaturePool, "grade0AnimalsAndNaturePool");
-          return this.buildQuestionItem({
-            question: raw.q,
-            correct: raw.a,
-            distractors: raw.d,
-            explanation: raw.exp,
-            audioKey: raw.audioKey || null
-          }, '🦁 Hayvanlar & Doğa');
+          const r = Math.random();
+          if (r < 0.5) return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Hayvanlar'), '🦁 Hayvanlar & Doğa');
+          else if (r < 0.75) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0), '🎈 Balon Avı');
+          else return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Hafıza Kartları');
         } else if (g === 1) {
           const r = Math.random();
-          if (r < 0.4) {
-            const raw = this.drawFromPool(this.grade1TurkishPool, "grade1TurkishPool");
-            return this.buildQuestionItem({
-              question: raw.q,
-              correct: raw.a,
-              distractors: raw.d,
-              explanation: raw.exp
-            }, '📚 Türkçe & Kelime Avcısı');
-          } else if (r < 0.7) {
-            const raw = this.drawFromPool(this.grade1AntonymsPool, "grade1AntonymsPool");
-            return this.buildQuestionItem({
-              question: raw.q,
-              correct: raw.a,
-              distractors: raw.d,
-              explanation: raw.exp
-            }, '🔄 Zıt Anlamlı Kelimeler Avı');
-          } else {
-            const raw = this.generateGrade1SyllablesAndLetters();
-            return this.buildQuestionItem(raw, '🔤 Hece Sayısı ve Harf Bilgisi');
-          }
+          if (r < 0.40) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(1, 'reading'), '🎈 Harf & Sözcük Balonları');
+          else if (r < 0.70) return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'antonyms'), '🧠 Zıt Anlam Hafıza Kartları');
+          else return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'letters'), '🧠 Harf Eşleştirme Kartları');
         } else if (g === 2) {
           const r = Math.random();
           if (r < 0.4) {
@@ -8981,10 +9351,376 @@
   let p1SyllableProgress = [];
   let p2SyllableProgress = [];
 
+  // ---------------------------------------------------------------------------
+  // MOBİL & AKILLI TAHTA SIFIR GECİKME (0ms) DOKUNMA YARDIMCISI
+  // onTouchStart, pointerdown ve mousedown olaylarını birleştirir
+  // ---------------------------------------------------------------------------
+  function attachInstantTouch(el, callback) {
+    let lastTime = 0;
+    const onTrigger = (e) => {
+      const now = Date.now();
+      if (now - lastTime < 280) return;
+      lastTime = now;
+      if (e.cancelable && (e.type === 'touchstart' || e.type === 'pointerdown')) {
+        e.preventDefault();
+      }
+      callback(e);
+    };
+    el.addEventListener('touchstart', onTrigger, { passive: false });
+    el.addEventListener('pointerdown', onTrigger);
+    el.addEventListener('mousedown', onTrigger);
+  }
+
+  // ---------------------------------------------------------------------------
+  // 1) 🎨 DİNLE & SEÇ (SESLİ YÖNERGE VE DEVASA GÖRSEL BUTONLAR)
+  // ---------------------------------------------------------------------------
+  function renderVisualChoiceArena(q) {
+    const data = q.interactiveData || q;
+    const cards = data.cards || q.visualCards || [];
+
+    const createVisualCardsHtml = (playerNum) => {
+      return `
+        <div class="visual-choice-arena" data-player="${playerNum}">
+          <div class="visual-speaker-banner">
+            <button class="visual-audio-repeat-btn" data-player="${playerNum}" role="button" aria-label="Soruyu Tekrar Dinle">
+              <span class="audio-btn-icon">🔊</span>
+              <span>Tekrar Dinle</span>
+            </button>
+            <div class="visual-instruction-text">${replaceEmojisWith3D(q.question, 'q-3d-item')}</div>
+          </div>
+          <div class="visual-cards-grid">
+            ${cards.map((c, idx) => {
+              const iconHtml = EMOJI_TO_3D[c.icon]
+                ? `<img src="${EMOJI_TO_3D[c.icon]}" class="visual-3d-img" alt="${c.text}">`
+                : `<span class="visual-emoji-icon">${c.icon}</span>`;
+              return `
+                <div class="visual-choice-card" data-card-idx="${idx}" data-player="${playerNum}" role="button" tabindex="0">
+                  <div class="visual-card-icon">${iconHtml}</div>
+                  <div class="visual-card-label">${c.text}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = createVisualCardsHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = createVisualCardsHtml(2);
+
+    // Otomatik Soru Sesli Okuma (Google TTS & Web Speech)
+    if (state.soundEnabled && (q.spokenText || q.question)) {
+      setTimeout(() => {
+        if (!state.isQuestionAnswered && state.currentQuestion === q) {
+          audio.speakTurkishText(q.spokenText || q.question);
+        }
+      }, 350);
+    }
+
+    [DOM.p1InteractiveZone, DOM.p2InteractiveZone].forEach((zone, zIdx) => {
+      if (!zone) return;
+      const pNum = zIdx + 1;
+
+      zone.querySelectorAll('.visual-audio-repeat-btn').forEach(btn => {
+        attachInstantTouch(btn, () => {
+          audio.playClick();
+          audio.speakTurkishText(q.spokenText || q.question);
+        });
+      });
+
+      zone.querySelectorAll('.visual-choice-card').forEach(cardEl => {
+        attachInstantTouch(cardEl, (e) => {
+          const idx = parseInt(cardEl.getAttribute('data-card-idx'), 10);
+          handleVisualCardTap(pNum, idx, cardEl, e);
+        });
+      });
+    });
+  }
+
+  function handleVisualCardTap(playerNum, idx, cardEl, e) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    const cards = (state.currentQuestion.interactiveData && state.currentQuestion.interactiveData.cards) || state.currentQuestion.visualCards || [];
+    const card = cards[idx];
+    if (!card) return;
+
+    audio.stopQuestionAudio();
+    const rect = cardEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    if (card.isCorrect) {
+      cardEl.classList.add('card-correct');
+      audio.playCorrect();
+      if (window.gameParticles) {
+        window.gameParticles.burst(cx, cy, 22, ['#10B981', '#34D399', '#FBBF24', '#60A5FA']);
+      }
+      awardPointAndProgress(playerNum, null, cx, cy);
+    } else {
+      cardEl.classList.add('card-wrong');
+      audio.playWrong();
+      setTimeout(() => cardEl.classList.remove('card-wrong'), 500);
+      applyLockout(playerNum, null);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // 2) 🎈 HAREKETLİ BALON PATLATMA MOTORU (HARF / HECE / SAYI AVI)
+  // ---------------------------------------------------------------------------
+  let playerFloatingBalloonState = {
+    1: { poppedTargets: 0, needed: 2 },
+    2: { poppedTargets: 0, needed: 2 }
+  };
+
+  function renderFloatingBalloonArena(data) {
+    const balloons = data.balloons || [];
+    const targetsNeeded = data.targetsNeeded || 2;
+
+    playerFloatingBalloonState = {
+      1: { poppedTargets: 0, needed: targetsNeeded },
+      2: { poppedTargets: 0, needed: targetsNeeded }
+    };
+
+    const createStreamHtml = (playerNum) => {
+      return `
+        <div class="balloon-stream-container" data-player="${playerNum}">
+          <div class="balloon-task-header">
+            <span class="moli-task-avatar">🎈</span>
+            <span class="task-title-text">${replaceEmojisWith3D(data.instruction || 'Hedef Balonları Patlat!', 'inline-3d-icon')}</span>
+            <span class="task-remaining-badge" id="balloonCounterP${playerNum}">Kalan: ${targetsNeeded} 🎯</span>
+          </div>
+          <div class="balloon-stream-sky">
+            ${balloons.map((b, idx) => {
+              const speed = b.speed || (5.5 + (idx % 3) * 0.7);
+              const delay = b.delay || (idx * 0.35);
+              const left = b.left !== undefined ? b.left : ((idx * 18 + 8) % 85);
+              return `
+                <div class="floating-balloon ${b.colorClass || 'balloon-color-red'}"
+                     data-balloon-idx="${idx}"
+                     data-player="${playerNum}"
+                     role="button"
+                     tabindex="0"
+                     style="left: ${left}%; animation-duration: ${speed}s; animation-delay: ${delay}s;">
+                  <span class="balloon-inner-text">${b.text}</span>
+                  <div class="balloon-string-knot"></div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = createStreamHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = createStreamHtml(2);
+
+    if (state.soundEnabled && data.spokenText) {
+      setTimeout(() => {
+        if (!state.isQuestionAnswered && state.currentQuestion && state.currentQuestion.spokenText === data.spokenText) {
+          audio.speakTurkishText(data.spokenText);
+        }
+      }, 350);
+    }
+
+    [DOM.p1InteractiveZone, DOM.p2InteractiveZone].forEach((zone, zIdx) => {
+      if (!zone) return;
+      const pNum = zIdx + 1;
+      zone.querySelectorAll('.floating-balloon').forEach(balloonEl => {
+        attachInstantTouch(balloonEl, (e) => {
+          const idx = parseInt(balloonEl.getAttribute('data-balloon-idx'), 10);
+          handleFloatingBalloonTap(pNum, idx, balloonEl, e);
+        });
+      });
+    });
+  }
+
+  function handleFloatingBalloonTap(playerNum, idx, balloonEl, e) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    if (balloonEl.classList.contains('balloon-popped')) return;
+
+    const data = state.currentQuestion.interactiveData || state.currentQuestion;
+    const balloon = (data.balloons && data.balloons[idx]) || null;
+    if (!balloon) return;
+
+    const rect = balloonEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    if (balloon.isTarget) {
+      balloonEl.classList.add('balloon-popped', 'balloon-popping');
+      audio.playBalloonPop();
+      if (window.gameParticles) {
+        window.gameParticles.burst(cx, cy, 20, ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#EC4899']);
+      }
+
+      const pState = playerFloatingBalloonState[playerNum];
+      if (pState) {
+        pState.poppedTargets++;
+        const remaining = Math.max(0, pState.needed - pState.poppedTargets);
+        const counterEl = document.getElementById(`balloonCounterP${playerNum}`);
+        if (counterEl) {
+          counterEl.textContent = remaining === 0 ? 'Tamamlandı! 🌟' : `Kalan: ${remaining} 🎯`;
+          counterEl.classList.add('badge-bump');
+          setTimeout(() => counterEl.classList.remove('badge-bump'), 300);
+        }
+
+        if (pState.poppedTargets >= pState.needed) {
+          awardPointAndProgress(playerNum, null, cx, cy);
+        }
+      }
+    } else {
+      audio.playWrong();
+      balloonEl.classList.add('balloon-wrong');
+      setTimeout(() => balloonEl.classList.remove('balloon-wrong'), 450);
+      applyLockout(playerNum, null);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // 3) 🧠 EŞLEŞTİRME VE HAFIZA KARTLARI (ARDIŞIK DOKUNMA - TAP TO MATCH)
+  // ---------------------------------------------------------------------------
+  let memoryGameState = {
+    1: { firstCard: null, matchedCount: 0, totalPairs: 0, isBusy: false },
+    2: { firstCard: null, matchedCount: 0, totalPairs: 0, isBusy: false }
+  };
+
+  function renderMemoryGridArena(data) {
+    const cards = data.cards || [];
+    const totalPairs = data.totalPairs || (cards.length / 2);
+    const gridSize = data.gridSize || (cards.length <= 6 ? 'grid-2x3' : 'grid-3x4');
+
+    memoryGameState = {
+      1: { firstCard: null, matchedCount: 0, totalPairs, isBusy: false },
+      2: { firstCard: null, matchedCount: 0, totalPairs, isBusy: false }
+    };
+
+    const createMemoryHtml = (playerNum) => {
+      return `
+        <div class="memory-grid-arena" data-player="${playerNum}">
+          <div class="memory-grid-cards ${gridSize}">
+            ${cards.map((c, idx) => `
+              <div class="memory-flip-card"
+                   data-card-idx="${idx}"
+                   data-pair-key="${c.pairKey}"
+                   data-player="${playerNum}"
+                   role="button"
+                   tabindex="0">
+                <div class="memory-card-inner">
+                  <div class="memory-card-face memory-card-back">
+                    <span class="memory-card-back-icon">❓</span>
+                  </div>
+                  <div class="memory-card-face memory-card-front">
+                    <span class="memory-card-content">${replaceEmojisWith3D(c.text, 'chip-3d-icon')}</span>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = createMemoryHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = createMemoryHtml(2);
+
+    if (state.soundEnabled && data.spokenText) {
+      setTimeout(() => {
+        if (!state.isQuestionAnswered && state.currentQuestion && state.currentQuestion.spokenText === data.spokenText) {
+          audio.speakTurkishText(data.spokenText);
+        }
+      }, 350);
+    }
+
+    [DOM.p1InteractiveZone, DOM.p2InteractiveZone].forEach((zone, zIdx) => {
+      if (!zone) return;
+      const pNum = zIdx + 1;
+      zone.querySelectorAll('.memory-flip-card').forEach(cardEl => {
+        attachInstantTouch(cardEl, (e) => {
+          const idx = parseInt(cardEl.getAttribute('data-card-idx'), 10);
+          handleMemoryCardTap(pNum, idx, cardEl, e);
+        });
+      });
+    });
+  }
+
+  function handleMemoryCardTap(playerNum, idx, cardEl, e) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    const mState = memoryGameState[playerNum];
+    if (!mState || mState.isBusy) return;
+
+    if (cardEl.classList.contains('card-flipped') || cardEl.classList.contains('card-matched')) {
+      return;
+    }
+
+    const pairKey = cardEl.getAttribute('data-pair-key');
+    audio.playCardFlip();
+    cardEl.classList.add('card-flipped');
+
+    if (!mState.firstCard) {
+      cardEl.classList.add('card-selected');
+      mState.firstCard = { idx, pairKey, el: cardEl };
+      return;
+    }
+
+    const first = mState.firstCard;
+    const second = { idx, pairKey, el: cardEl };
+    mState.firstCard = null;
+
+    const rect = cardEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    if (first.pairKey === second.pairKey) {
+      audio.playSnap();
+      first.el.classList.remove('card-selected');
+      first.el.classList.add('card-matched');
+      second.el.classList.add('card-matched');
+
+      if (window.gameParticles) {
+        window.gameParticles.burst(cx, cy, 18, ['#10B981', '#34D399', '#FBBF24']);
+      }
+
+      mState.matchedCount++;
+      if (mState.matchedCount >= mState.totalPairs) {
+        awardPointAndProgress(playerNum, null, cx, cy);
+      }
+    } else {
+      audio.playWrong();
+      mState.isBusy = true;
+      first.el.classList.add('card-mismatch');
+      second.el.classList.add('card-mismatch');
+
+      setTimeout(() => {
+        first.el.classList.remove('card-flipped', 'card-selected', 'card-mismatch');
+        second.el.classList.remove('card-flipped', 'card-mismatch');
+        mState.isBusy = false;
+      }, 700);
+
+      applyLockout(playerNum, null);
+    }
+  }
+
   function renderInteractiveQuestion(q) {
     if (!q) return;
 
-    if (q.type === 'true_false') {
+    if (q.type === 'visual_choice') {
+      renderVisualChoiceArena(q);
+    } else if (q.type === 'floating_balloon') {
+      renderFloatingBalloonArena(q.interactiveData || q);
+    } else if (q.type === 'memory' || q.type === 'memory_grid') {
+      renderMemoryGridArena(q.interactiveData || q);
+    } else if (q.type === 'true_false') {
       renderTrueFalseArena(q);
       startReflexTimer(q.timeLimit || 6000);
     } else if (q.type === 'matching') {
