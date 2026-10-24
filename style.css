@@ -6012,5 +6012,314 @@ input:checked + .slider:before {
   }
 }
 
+/* ==========================================================================
+   8) DOĞRU / YANLIŞ REFLEKS MODU & 2X ZAMAN SAYACI BARLARI
+   ========================================================================== */
+.duel-time-bar-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(15, 23, 42, 0.4);
+  position: relative;
+  overflow: visible;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.15);
+  z-index: 15;
+}
+
+.duel-time-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #f59e0b 55%, #ef4444 100%);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+  transform-origin: left center;
+  transition: width 0.1s linear, background 0.3s ease;
+}
+
+.duel-time-bar-fill.danger-state {
+  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.9);
+  animation: timeBarDangerPulse 0.4s infinite alternate ease-in-out;
+}
+
+@keyframes timeBarDangerPulse {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.4); }
+}
+
+.duel-time-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #0f172a;
+  border: 1.5px solid #f59e0b;
+  color: #fbbf24;
+  font-size: 0.76rem;
+  font-weight: 900;
+  padding: 2px 14px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Doğru / Yanlış Refleks Arena */
+.tf-reflex-arena {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px;
+}
+
+.tf-statement-card {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(226, 232, 240, 0.9);
+  border-radius: 20px;
+  padding: 24px 28px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+}
+
+.tf-statement-text {
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.35;
+  letter-spacing: -0.4px;
+}
+
+.tf-buttons-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.tf-btn {
+  border: 3.5px solid transparent;
+  border-radius: 20px;
+  padding: 24px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  min-height: 140px;
+}
+
+.tf-btn:active {
+  transform: scale(0.96);
+}
+
+.tf-btn-true {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #34d399;
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+.tf-btn-true:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 35px rgba(16, 185, 129, 0.55);
+}
+
+.tf-btn-false {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-color: #f87171;
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+.tf-btn-false:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 35px rgba(239, 68, 68, 0.55);
+}
+
+.tf-icon {
+  font-size: 3.2rem;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+  margin-bottom: 2px;
+}
+
+.tf-title {
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tf-hint {
+  font-size: 0.85rem;
+  font-weight: 700;
+  opacity: 0.88;
+  letter-spacing: 0.3px;
+}
+
+.tf-correct-glow {
+  animation: tfPopGreen 0.45s ease-out forwards;
+}
+
+@keyframes tfPopGreen {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); box-shadow: 0 0 45px rgba(16, 185, 129, 0.8); }
+  100% { transform: scale(1.04); }
+}
+
+.tf-wrong-shake {
+  animation: cardShake 0.4s ease-in-out forwards;
+}
+
+/* ==========================================================================
+   9) DOKUN VE EŞLEŞTİR (MATCHING / CLICK TO MATCH) SAHNESİ
+   ========================================================================== */
+.matching-arena {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px;
+}
+
+.matching-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.matching-divider-vs {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #f59e0b;
+  opacity: 0.85;
+  user-select: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.matching-card {
+  background: #ffffff;
+  border: 2.5px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  min-height: 68px;
+}
+
+.matching-card:hover {
+  transform: translateY(-2px);
+  border-color: #94a3b8;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+}
+
+.matching-card.match-left {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+  border-color: #bae6fd;
+}
+
+.matching-card.match-right {
+  background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
+  border-color: #fde68a;
+}
+
+.match-text {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+/* Seçilen Kart (Active Spotlight) */
+.matching-card.card-selected {
+  border-color: #3b82f6 !important;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%) !important;
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.65), 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+  transform: scale(1.04) translateY(-3px) !important;
+}
+
+.matching-card.card-selected .match-status-icon::after {
+  content: '👉';
+  font-size: 1.2rem;
+}
+
+/* Doğru Eşleşme (Green Dissolve / Matched) */
+.matching-card.card-matched {
+  border-color: #10b981 !important;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%) !important;
+  color: #065f46 !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5) !important;
+  opacity: 0.42;
+  pointer-events: none;
+  transform: scale(0.96);
+}
+
+.matching-card.card-matched .match-status-icon::after {
+  content: '✓';
+  color: #059669;
+  font-weight: 900;
+  font-size: 1.35rem;
+}
+
+/* Yanlış Eşleşme (Red Shake) */
+.matching-card.card-mismatch {
+  border-color: #ef4444 !important;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%) !important;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.6) !important;
+  animation: cardShake 0.4s ease-in-out forwards;
+}
+
+.matching-card.card-mismatch .match-status-icon::after {
+  content: '✕';
+  color: #dc2626;
+  font-weight: 900;
+  font-size: 1.3rem;
+}
+
+@keyframes cardShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px) rotate(-1.5deg); }
+  40%, 80% { transform: translateX(8px) rotate(1.5deg); }
+}
+
+@media (max-width: 900px) {
+  .tf-statement-text {
+    font-size: 1.5rem;
+  }
+  .tf-title {
+    font-size: 1.5rem;
+  }
+  .tf-icon {
+    font-size: 2.4rem;
+  }
+  .match-text {
+    font-size: 1.15rem;
+  }
+  .matching-card {
+    padding: 10px 12px;
+    min-height: 56px;
+  }
+}
+
 
 

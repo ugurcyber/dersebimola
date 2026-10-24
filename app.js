@@ -3203,6 +3203,249 @@
       { englishWord: 'Turkey', q: '"Where are you from?" sorusuna Türkiye\'den biri nasıl cevap verir? 🇹🇷', a: "I am from Turkey 🇹🇷", d: ["I am 10 years old", "I like apples"], exp: '"Nerelisin?" sorusuna "I am from Turkey" (Türkiyeliyim) denir. 🇹🇷', grade: 4 }
     ],
 
+    // -------------------------------------------------------------
+    // DOĞRU / YANLIŞ REFLEKS HAVUZU (36+ MEB MÜFREDAT SORUSU)
+    // -------------------------------------------------------------
+    trueFalsePool: [
+      // Fen Bilimleri & Doğa
+      { q: "Örümceklerin 8 bacağı vardır.", a: true, subject: 'science', exp: "Doğrudur! Örümcekler 8 bacaklı eklembacaklılardır (böcekler 6 bacaklıdır)." },
+      { q: "Güneş, Dünya'mıza en yakın yıldızdır.", a: true, subject: 'science', exp: "Doğrudur! Güneş, Samanyolu Galaksisi'nde Dünya'ya en yakın yıldızdır." },
+      { q: "Balıklar akciğerleriyle solunum yapar.", a: false, subject: 'science', exp: "Yanlıştır! Balıklar solungaçlarıyla solunum yaparlar." },
+      { q: "Bitkiler fotosentez yaparak oksijen üretir.", a: true, subject: 'science', exp: "Doğrudur! Bitkiler Güneş ışığı ve karbondioksit kullanarak oksijen üretir." },
+      { q: "Su 0 derecede kaynar.", a: false, subject: 'science', exp: "Yanlıştır! Su 0 derecede donar, 100 derecede kaynar." },
+      { q: "Dünya'nın kendi etrafında dönmesiyle mevsimler oluşur.", a: false, subject: 'science', exp: "Yanlıştır! Kendi etrafında dönmesiyle gece-gündüz, Güneş etrafında dolanmasıyla mevsimler oluşur." },
+      { q: "Yarasalar uçabilen memeli hayvanlardır.", a: true, subject: 'science', exp: "Doğrudur! Yarasalar yumurtlamaz, doğurarak çoğalan memeli canlılardır." },
+      { q: "Mıknatısların aynı kutupları birbirini çeker.", a: false, subject: 'science', exp: "Yanlıştır! Mıknatıslarda aynı kutuplar birbirini iter, zıt kutuplar çeker." },
+      { q: "Penguenler uçabilen kuşlardır.", a: false, subject: 'science', exp: "Yanlıştır! Penguenler uçamazlar, ancak buzlu sularda çok hızlı yüzerler." },
+      { q: "Ay, Dünya'mızın tek doğal uydusudur.", a: true, subject: 'science', exp: "Doğrudur! Ay, Dünya'nın tek doğal uydusudur." },
+      // Matematik
+      { q: "Üçgenin 3 köşesi ve 3 kenarı vardır.", a: true, subject: 'math', exp: "Doğrudur! Üçgen 3 kenar ve 3 köşeye sahiptir." },
+      { q: "Bir saat 50 dakikadır.", a: false, subject: 'math', exp: "Yanlıştır! Bir saat tam 60 dakikadır." },
+      { q: "5 × 5 = 25 eder.", a: true, subject: 'math', exp: "Doğrudur! 5 kere 5 eşittir 25." },
+      { q: "Karenin 4 kenar uzunluğu birbirine eşittir.", a: true, subject: 'math', exp: "Doğrudur! Karenin tüm kenarları eşit uzunluktadır." },
+      { q: "En küçük iki basamaklı sayı 11'dir.", a: false, subject: 'math', exp: "Yanlıştır! En küçük iki basamaklı doğal sayı 10'dur." },
+      { q: "Bir yılda 12 ay vardır.", a: true, subject: 'math', exp: "Doğrudur! Bir yıl Ocak'tan Aralık'a 12 aydır." },
+      { q: "80 sayısı 8 onluktan oluşur.", a: true, subject: 'math', exp: "Doğrudur! 8 onluk = 80 eder." },
+      { q: "Çift sayıların birler basamağında 1, 3, 5, 7 veya 9 bulunur.", a: false, subject: 'math', exp: "Yanlıştır! Bunlar tek sayılardır. Çift sayılar 0, 2, 4, 6, 8 ile biter." },
+      { q: "Bir haftada 7 gün vardır.", a: true, subject: 'math', exp: "Doğrudur! Pazartesi'den Pazar'a haftada 7 gün vardır." },
+      { q: "100 kuruş, 1 Türk Lirası'na eşittir.", a: true, subject: 'math', exp: "Doğrudur! 100 kuruş = 1 TL eder." },
+      // Türkçe & Dil Bilgisi
+      { q: "'Kara' ve 'Siyah' kelimeleri eş anlamlıdır.", a: true, subject: 'turkish', exp: "Doğrudur! Kara ve siyah aynı anlamı taşır." },
+      { q: "Soru bildiren cümlelerin sonuna nokta konur.", a: false, subject: 'turkish', exp: "Yanlıştır! Soru bildiren cümlelerin sonuna soru işareti (?) konur." },
+      { q: "Türkçemizde 8 tane sesli (ünlü) harf vardır.", a: true, subject: 'turkish', exp: "Doğrudur! a, e, ı, i, o, ö, u, ü olmak üzere 8 ünlü harf vardır." },
+      { q: "'Geniş' kelimesinin zıt anlamlısı 'Dardır'.", a: true, subject: 'turkish', exp: "Doğrudur! Geniş sözcüğünün zıttı dardır." },
+      { q: "'Kitaplık' kelimesi 2 hecelidir.", a: false, subject: 'turkish', exp: "Yanlıştır! Ki-tap-lık tam 3 hecelidir." },
+      { q: "Özel isimlerin ilk harfi her zaman büyük yazılır.", a: true, subject: 'turkish', exp: "Doğrudur! Ali, Ankara, Türkiye gibi özel adlar büyük harfle başlar." },
+      // Hayat Bilgisi & Sosyal
+      { q: "Türkiye Cumhuriyeti'nin başkenti İstanbul'dur.", a: false, subject: 'lifescience', exp: "Yanlıştır! Başkentimiz Ankara'dır." },
+      { q: "Trafik ışıklarında kırmızı 'DUR', yeşil 'GEÇ' anlamına gelir.", a: true, subject: 'lifescience', exp: "Doğrudur! Kırmızı dur, sarı hazırlan, yeşil geç demektir." },
+      { q: "Sonbahar mevsiminde ağaçlar yeşerir ve çiçek açar.", a: false, subject: 'lifescience', exp: "Yanlıştır! Ağaçlar ilkbaharda yeşerir, sonbaharda yaprak döker." },
+      { q: "Atatürk, 19 Mayıs 1919'da Samsun'a çıkmıştır.", a: true, subject: 'lifescience', exp: "Doğrudur! Milli Mücadele'nin başlangıcı 19 Mayıs 1919 Samsun'dur." },
+      { q: "Yemeklerden önce ve sonra ellerimizi yıkamalıyız.", a: true, subject: 'lifescience', exp: "Doğrudur! Sağlığımız ve mikroplardan korunmak için eller yıkanmalıdır." },
+      // İngilizce
+      { q: "'Apple' kelimesi Türkçede 'Elma' demektir.", a: true, subject: 'english', exp: "Doğrudur! Apple = Elma demektir." },
+      { q: "'Blue' kelimesi Türkçede 'Kırmızı' anlamına gelir.", a: false, subject: 'english', exp: "Yanlıştır! Blue = Mavi demektir (Kırmızı = Red)." },
+      { q: "'Dog' kelimesi 'Köpek' demektir.", a: true, subject: 'english', exp: "Doğrudur! Dog = Köpek demektir." },
+      { q: "'School' kelimesi Türkçede 'Hastane' demektir.", a: false, subject: 'english', exp: "Yanlıştır! School = Okul demektir (Hospital = Hastane)." }
+    ],
+
+    // -------------------------------------------------------------
+    // DOKUN VE EŞLEŞTİR (MATCHING) HAVUZU (12+ TEMATİK SET)
+    // -------------------------------------------------------------
+    matchingPool: [
+      {
+        subject: 'english',
+        title: '🐾 Animals (İngilizce Hayvanlar)',
+        explanation: 'Harika eşleştirme! İngilizce hayvan isimlerini eksiksiz bildin! 🐾👏',
+        pairs: [
+          { id: 'm1', left: '🐱 Cat', right: 'Kedi' },
+          { id: 'm2', left: '🐶 Dog', right: 'Köpek' },
+          { id: 'm3', left: '🐦 Bird', right: 'Kuş' },
+          { id: 'm4', left: '🐟 Fish', right: 'Balık' }
+        ]
+      },
+      {
+        subject: 'english',
+        title: '🎒 Classroom & School (Okul Eşyaları)',
+        explanation: 'Süper başarı! Sınıf eşyalarının İngilizce karşılıklarını eşleştirdin! 🎒✨',
+        pairs: [
+          { id: 'm1', left: '📖 Book', right: 'Kitap' },
+          { id: 'm2', left: '✏️ Pencil', right: 'Kurşun Kalem' },
+          { id: 'm3', left: '🏫 School', right: 'Okul' },
+          { id: 'm4', left: '👨‍🏫 Teacher', right: 'Öğretmen' }
+        ]
+      },
+      {
+        subject: 'english',
+        title: '🎨 Colors (İngilizce Renkler)',
+        explanation: 'Renk uzmanı! İngilizce renklerin tamamını doğru birleştirdin! 🎨🌟',
+        pairs: [
+          { id: 'm1', left: '🔴 Red', right: 'Kırmızı' },
+          { id: 'm2', left: '🔵 Blue', right: 'Mavi' },
+          { id: 'm3', left: '🟡 Yellow', right: 'Sarı' },
+          { id: 'm4', left: '🟢 Green', right: 'Yeşil' }
+        ]
+      },
+      {
+        subject: 'math',
+        title: '➕ Matematik İşlem ve Sonuçları',
+        explanation: 'Şimşek hızında hesaplama! İşlemleri sonuçlarıyla eşleştirdin! 🔢⚡',
+        pairs: [
+          { id: 'm1', left: '4 + 5', right: '9' },
+          { id: 'm2', left: '6 × 2', right: '12' },
+          { id: 'm3', left: '15 - 7', right: '8' },
+          { id: 'm4', left: '20 ÷ 4', right: '5' }
+        ]
+      },
+      {
+        subject: 'math',
+        title: '📐 Geometrik Şekiller ve Kenarlar',
+        explanation: 'Geometri dehası! Şekilleri özellikleri ile doğru eşleştirdin! 📐🏆',
+        pairs: [
+          { id: 'm1', left: '🔺 Üçgen', right: '3 Kenar / 3 Köşe' },
+          { id: 'm2', left: '🟦 Kare', right: '4 Eşit Kenar' },
+          { id: 'm3', left: '⭕ Çember', right: '0 Köşe' },
+          { id: 'm4', left: '⬟ Beşgen', right: '5 Kenar' }
+        ]
+      },
+      {
+        subject: 'turkish',
+        title: '🔄 Zıt Anlamlı Kelimeler',
+        explanation: 'Kelimelerin tam karşıtlarını şıp diye buldun! 🔄👏',
+        pairs: [
+          { id: 'm1', left: '🔥 Sıcak', right: '❄️ Soğuk' },
+          { id: 'm2', left: '🐘 Büyük', right: '🐭 Küçük' },
+          { id: 'm3', left: '🦒 Uzun', right: '🦔 Kısa' },
+          { id: 'm4', left: '⚡ Hızlı', right: '🐢 Yavaş' }
+        ]
+      },
+      {
+        subject: 'turkish',
+        title: '✨ Eş Anlamlı Kelimeler',
+        explanation: 'Anlamdaş sözcükleri kusursuz eşleştirdin! ✨🎉',
+        pairs: [
+          { id: 'm1', left: '🔴 Al', right: 'Kırmızı' },
+          { id: 'm2', left: '🏫 Mektep', right: 'Okul' },
+          { id: 'm3', left: '🤍 Ak', right: 'Beyaz' },
+          { id: 'm4', left: '🎁 Hediye', right: 'Armağan' }
+        ]
+      },
+      {
+        subject: 'lifescience',
+        title: '🌍 Ülkeler ve Başkentler',
+        explanation: 'Genel kültür şampiyonu! Ülkeleri başkentleriyle eşleştirdin! 🌍🇹🇷',
+        pairs: [
+          { id: 'm1', left: '🇹🇷 Türkiye', right: 'Ankara' },
+          { id: 'm2', left: '🇫🇷 Fransa', right: 'Paris' },
+          { id: 'm3', left: '🇬🇧 İngiltere', right: 'Londra' },
+          { id: 'm4', left: '🇩🇪 Almanya', right: 'Berlin' }
+        ]
+      },
+      {
+        subject: 'science',
+        title: '🐾 Canlılar ve Yaşam Alanları',
+        explanation: 'Doğa dostu! Canlıları yuvalarıyla doğru birleştirdin! 🌿🐾',
+        pairs: [
+          { id: 'm1', left: '🐦 Kuş', right: 'Yuva' },
+          { id: 'm2', left: '🐝 Arı', right: 'Kovan' },
+          { id: 'm3', left: '🐠 Balık', right: 'Deniz' },
+          { id: 'm4', left: '🐜 Karınca', right: 'Karınca Yuvası' }
+        ]
+      },
+      {
+        subject: 'science',
+        title: '👀 Duyu Organlarımız ve Görevleri',
+        explanation: 'Biyoloji ustası! Duyu organlarımızı başarıyla eşleştirdin! 👀🧠',
+        pairs: [
+          { id: 'm1', left: '👀 Göz', right: 'Görme Duyusu' },
+          { id: 'm2', left: '👂 Kulak', right: 'İşitme Duyusu' },
+          { id: 'm3', left: '👃 Burun', right: 'Koklama Duyusu' },
+          { id: 'm4', left: '👅 Dil', right: 'Tat Alma Duyusu' }
+        ]
+      },
+      {
+        subject: 'math',
+        title: '✖️ Çarpım Tablosu İkizleri',
+        explanation: 'Çarpma şampiyonu! Çarpım sonuçlarını şimşek gibi eşleştirdin! ✖️⚡',
+        pairs: [
+          { id: 'm1', left: '3 × 3', right: '9' },
+          { id: 'm2', left: '4 × 4', right: '16' },
+          { id: 'm3', left: '5 × 5', right: '25' },
+          { id: 'm4', left: '6 × 6', right: '36' }
+        ]
+      },
+      {
+        subject: 'lifescience',
+        title: '⏰ Zaman Ölçüleri Eşleştirmesi',
+        explanation: 'Zaman ustası! Zaman birimlerini doğru karşılıklarıyla eşleştirdin! ⏰🌟',
+        pairs: [
+          { id: 'm1', left: '1 Saat', right: '60 Dakika' },
+          { id: 'm2', left: '1 Hafta', right: '7 Gün' },
+          { id: 'm3', left: '1 Yıl', right: '12 Ay' },
+          { id: 'm4', left: '1 Gün', right: '24 Saat' }
+        ]
+      }
+    ],
+
+    // -------------------------------------------------------------
+    // İNTERAKTİF GENERATOR: DOĞRU / YANLIŞ REFLEKS
+    // -------------------------------------------------------------
+    generateTrueFalseQuestion(grade, categoryFilter = null) {
+      let pool = this.trueFalsePool;
+      if (categoryFilter) {
+        const filtered = pool.filter(item => item.subject === categoryFilter);
+        if (filtered.length > 0) pool = filtered;
+      }
+      const item = this.drawFromPool(pool, 'trueFalsePool_' + (categoryFilter || 'all'));
+      const statement = item.q;
+      const isTrue = item.a;
+
+      return {
+        type: 'true_false',
+        question: statement,
+        statement: statement,
+        isTrue: isTrue,
+        correct: isTrue ? 'DOĞRU' : 'YANLIŞ',
+        options: ['DOĞRU', 'YANLIŞ'],
+        explanation: item.exp,
+        category: '⚡ Doğru / Yanlış Refleks',
+        timeLimit: 6000,
+        spokenText: `${statement}. Doğru mu, yanlış mı?`,
+        interactiveData: {
+          statement: statement,
+          isTrue: isTrue,
+          timeLimit: 6000
+        }
+      };
+    },
+
+    // -------------------------------------------------------------
+    // İNTERAKTİF GENERATOR: DOKUN VE EŞLEŞTİR (MATCHING)
+    // -------------------------------------------------------------
+    generateMatchingQuestion(grade, categoryFilter = null) {
+      let pool = this.matchingPool;
+      if (categoryFilter) {
+        const filtered = pool.filter(item => item.subject === categoryFilter);
+        if (filtered.length > 0) pool = filtered;
+      }
+      const item = this.drawFromPool(pool, 'matchingPool_' + (categoryFilter || 'all'));
+      const pairs = this.fisherYatesShuffle(item.pairs);
+
+      return {
+        type: 'matching',
+        question: item.title || 'Dokun ve Eşleştir!',
+        options: [],
+        correct: 'Tüm Eşleşmeler',
+        explanation: item.explanation || 'Harika eşleştirme! Bütün çiftleri başarıyla birleştirdin! 🧩👏',
+        category: '🧩 Dokun ve Eşleştir',
+        spokenText: `${item.title}. Kutulara dokunarak doğru ikilileri eşleştir.`,
+        interactiveData: {
+          title: item.title,
+          pairs: pairs
+        }
+      };
+    },
+
     // Şıkları rastgele karıştırarak A, B, C, D formatında sun (Ezber Bozan Fisher-Yates)
     buildQuestionItem(qData, category) {
       const allOpts = [qData.correct, ...(qData.distractors || [])];
@@ -3568,6 +3811,18 @@
 
     // İstenen sınıf ve türe göre bir soru getir (Anti-Repeat Fisher-Yates Motoru)
     getNextQuestion(grade, gameType) {
+      // Standart derslerde her 4. soruda bir derse uygun Doğru/Yanlış veya Dokun-Eşleştir interaktif molası
+      const isStandardSubject = ['math', 'turkish', 'english', 'lifescience', 'science', 'social'].includes(gameType);
+      if (isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
+        let catFilter = gameType;
+        if (gameType === 'social') catFilter = 'lifescience';
+        if (Math.random() < 0.5) {
+          return this.generateTrueFalseQuestion(grade, catFilter);
+        } else {
+          return this.generateMatchingQuestion(grade, catFilter);
+        }
+      }
+
       let attempts = 0;
       let finalQ = null;
       while (attempts < 10) {
@@ -4146,8 +4401,17 @@
         const raw = this.generateMemorySequenceQuestion(g);
         return this.buildQuestionItem(raw, '🧠 Süper Hafıza');
       } else if (gameType === 'reflex') {
-        const raw = this.generateSpeedReflexQuestion(g);
-        return this.buildQuestionItem(raw, '⚡ Şimşek Refleks');
+        // %50 Şimşek Refleks (Hedef Avı), %50 Doğru / Yanlış Refleks Düellosu
+        if (Math.random() < 0.5) {
+          return this.generateTrueFalseQuestion(g);
+        } else {
+          const raw = this.generateSpeedReflexQuestion(g);
+          return this.buildQuestionItem(raw, '⚡ Şimşek Refleks');
+        }
+      } else if (gameType === 'true_false') {
+        return this.generateTrueFalseQuestion(g);
+      } else if (gameType === 'matching') {
+        return this.generateMatchingQuestion(g);
       } else {
         const raw = this.generateGrade1Math();
         return this.buildQuestionItem(raw, '📐 Matematik Düellosu');
@@ -4516,6 +4780,11 @@
     btnToggleAnnouncerDuel: document.getElementById('btnToggleAnnouncerDuel'),
     announcerHudIcon: document.getElementById('announcerHudIcon'),
     announcerHudText: document.getElementById('announcerHudText'),
+
+    // Hızlı Refleks Zaman Barı (Doğru / Yanlış Modu)
+    duelTimeBarTrack: document.getElementById('duelTimeBarTrack'),
+    duelTimeBarFill: document.getElementById('duelTimeBarFill'),
+    duelTimeBadge: document.getElementById('duelTimeBadge'),
 
     // Kombo & Ateş Modu ve Parçacık Katmanı
     comboFireBanner: document.getElementById('comboFireBanner'),
@@ -5608,6 +5877,30 @@
             tags: ['⭐ Yıldız Avı', '💣 Bombadan Kaç', '⚡ Şimşek Hız'],
             btnText: 'Düelloyu Başlat',
             topic: 'reflex'
+          },
+          {
+            id: 'true_false',
+            active: true,
+            title: 'Doğru mu Yanlış mı? (Refleks)',
+            icon: '⚡',
+            badge: '✅❌ Hızlı Karar',
+            featureTag: '⚡ 2x Hızlı Süre',
+            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
+            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          },
+          {
+            id: 'matching',
+            active: true,
+            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
+            icon: '🧩',
+            badge: '🧩 Ardışık Dokunma',
+            featureTag: '⭐ Kart Eşleştirme',
+            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
+            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
           }
         ]
       }
@@ -5926,6 +6219,30 @@
             featureTag: '🚀 Saliselik Tepki',
             description: 'Saf hız ve konsantrasyon! Hedefi ilk yakalayan puanı kapar! 🚀',
             tags: ['🚀 Saliselik Tepki', '⚡ Hızlı Dokunuş', '🔒 Kilit Cezası'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          },
+          {
+            id: 'true_false',
+            active: true,
+            title: 'Doğru mu Yanlış mı? (Refleks)',
+            icon: '⚡',
+            badge: '✅❌ Hızlı Karar',
+            featureTag: '⚡ 2x Hızlı Süre',
+            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
+            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          },
+          {
+            id: 'matching',
+            active: true,
+            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
+            icon: '🧩',
+            badge: '🧩 Ardışık Dokunma',
+            featureTag: '⭐ Kart Eşleştirme',
+            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
+            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
             btnText: 'Düelloyu Başlat',
             topic: 'reflex'
           }
@@ -6298,6 +6615,30 @@
             featureTag: '🎯 Keskin Refleks',
             description: 'Hedef çıktığı an rekor hızla dokun! Sahte bombalara asla basma! ⚡',
             tags: ['⚡ Köstebek Avı', '🎯 Seçici Dikkat', '⚡ Hızlı Refleks'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          },
+          {
+            id: 'true_false',
+            active: true,
+            title: 'Doğru mu Yanlış mı? (Refleks)',
+            icon: '⚡',
+            badge: '✅❌ Hızlı Karar',
+            featureTag: '⚡ 2x Hızlı Süre',
+            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
+            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          },
+          {
+            id: 'matching',
+            active: true,
+            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
+            icon: '🧩',
+            badge: '🧩 Ardışık Dokunma',
+            featureTag: '⭐ Kart Eşleştirme',
+            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
+            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
             btnText: 'Düelloyu Başlat',
             topic: 'reflex'
           }
@@ -6682,6 +7023,30 @@
             featureTag: '🏆 Zirve Refleks',
             description: 'Tahtanın en hızlısı kim? Saliseler içinde hedefi avla, zaferi kazan! 🏆',
             tags: ['🏆 Zirve Refleks', '⭐ Sıfır Hata', '👑 Tahta Rekoru'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          },
+          {
+            id: 'true_false',
+            active: true,
+            title: 'Doğru mu Yanlış mı? (Refleks)',
+            icon: '⚡',
+            badge: '✅❌ Hızlı Karar',
+            featureTag: '⚡ 2x Hızlı Süre',
+            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
+            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reflex'
+          },
+          {
+            id: 'matching',
+            active: true,
+            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
+            icon: '🧩',
+            badge: '🧩 Ardışık Dokunma',
+            featureTag: '⭐ Kart Eşleştirme',
+            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
+            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
             btnText: 'Düelloyu Başlat',
             topic: 'reflex'
           }
@@ -7897,7 +8262,84 @@
     }
   }
 
+  /* ==========================================================================
+     14.5. DOĞRU / YANLIŞ 2X REFLEKS ZAMANLAYICISI (HIZLI REFLEKS SAYACI)
+     ========================================================================== */
+  let reflexTimerRaf = null;
+
+  function startReflexTimer(durationMs = 6000) {
+    stopReflexTimer();
+    if (!DOM.duelTimeBarTrack || !DOM.duelTimeBarFill) return;
+
+    DOM.duelTimeBarTrack.classList.remove('hide');
+    DOM.duelTimeBarFill.style.width = '100%';
+    DOM.duelTimeBarFill.classList.remove('danger-state');
+    if (DOM.duelTimeBadge) DOM.duelTimeBadge.textContent = '⚡ 2x HIZLI REFLEKS';
+
+    const startTime = performance.now();
+
+    function updateReflexBar(now) {
+      if (state.isQuestionAnswered || state.currentView !== 'duel') {
+        stopReflexTimer();
+        return;
+      }
+      const elapsed = now - startTime;
+      const remaining = Math.max(0, durationMs - elapsed);
+      const pct = (remaining / durationMs) * 100;
+
+      if (DOM.duelTimeBarFill) {
+        DOM.duelTimeBarFill.style.width = `${pct}%`;
+        if (pct < 30) {
+          DOM.duelTimeBarFill.classList.add('danger-state');
+        }
+      }
+
+      if (remaining <= 0) {
+        handleReflexTimeout();
+      } else {
+        reflexTimerRaf = requestAnimationFrame(updateReflexBar);
+      }
+    }
+
+    reflexTimerRaf = requestAnimationFrame(updateReflexBar);
+  }
+
+  function stopReflexTimer() {
+    if (reflexTimerRaf) {
+      cancelAnimationFrame(reflexTimerRaf);
+      reflexTimerRaf = null;
+    }
+    if (DOM.duelTimeBarTrack) DOM.duelTimeBarTrack.classList.add('hide');
+    if (DOM.duelTimeBarFill) {
+      DOM.duelTimeBarFill.style.width = '100%';
+      DOM.duelTimeBarFill.classList.remove('danger-state');
+    }
+  }
+
+  function handleReflexTimeout() {
+    stopReflexTimer();
+    if (state.isQuestionAnswered) return;
+    state.isQuestionAnswered = true;
+    audio.playWrong();
+
+    const exp = state.currentQuestion ? (state.currentQuestion.explanation || 'Süre doldu! Hızlı davranmalısın.') : 'Süre doldu!';
+    if (DOM.solutionText) {
+      DOM.solutionText.innerHTML = replaceEmojisWith3D(exp, 'inline-3d-icon');
+    }
+    if (DOM.solutionPopup) {
+      DOM.solutionPopup.classList.remove('hide');
+    }
+
+    state.questionNumber += 1;
+    setDuelTimeout(() => {
+      if (state.currentView === 'duel') {
+        loadNextQuestion();
+      }
+    }, 2200);
+  }
+
   function loadNextQuestion() {
+    stopReflexTimer();
     clearAllLockouts();
     audio.stopQuestionAudio();
     DOM.solutionPopup.classList.add('hide');
@@ -8268,17 +8710,22 @@
   let p2SyllableProgress = [];
 
   function renderInteractiveQuestion(q) {
-    if (!q || !q.interactiveData) return;
+    if (!q) return;
 
-    if (q.type === 'balloon') {
+    if (q.type === 'true_false') {
+      renderTrueFalseArena(q);
+      startReflexTimer(q.timeLimit || 6000);
+    } else if (q.type === 'matching') {
+      renderMatchingArena(q.interactiveData || q);
+    } else if (q.type === 'balloon' && q.interactiveData) {
       renderBalloonArena(q.interactiveData);
-    } else if (q.type === 'shadow_match') {
+    } else if (q.type === 'shadow_match' && q.interactiveData) {
       renderShadowMatchArena(q.interactiveData);
-    } else if (q.type === 'syllable_builder') {
+    } else if (q.type === 'syllable_builder' && q.interactiveData) {
       renderSyllableBuilderArena(q.interactiveData);
-    } else if (q.type === 'count_tap') {
+    } else if (q.type === 'count_tap' && q.interactiveData) {
       renderCountTapArena(q.interactiveData);
-    } else if (q.type === 'word_catch') {
+    } else if (q.type === 'word_catch' && q.interactiveData) {
       renderWordCatchArena(q.interactiveData);
     }
   }
@@ -8624,7 +9071,258 @@
     });
   }
 
+  // 6) ⚡ DOĞRU / YANLIŞ REFLEKS SAHNESİ
+  function renderTrueFalseArena(q) {
+    const statement = q.statement || q.question || '';
+    const createTfHtml = (playerNum) => {
+      return `
+        <div class="tf-reflex-arena">
+          <div class="tf-statement-card">
+            <div class="tf-statement-text">${replaceEmojisWith3D(statement, 'q-3d-item')}</div>
+          </div>
+          <div class="tf-buttons-row">
+            <button class="tf-btn tf-btn-true" data-player="${playerNum}" data-val="true" role="button" aria-label="Doğru">
+              <span class="tf-icon">✅</span>
+              <span class="tf-title">DOĞRU</span>
+              <span class="tf-hint">İLK SEN BAS!</span>
+            </button>
+            <button class="tf-btn tf-btn-false" data-player="${playerNum}" data-val="false" role="button" aria-label="Yanlış">
+              <span class="tf-icon">❌</span>
+              <span class="tf-title">YANLIŞ</span>
+              <span class="tf-hint">İLK SEN BAS!</span>
+            </button>
+          </div>
+        </div>
+      `;
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = createTfHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = createTfHtml(2);
+
+    // Event listeners for Player 1
+    if (DOM.p1InteractiveZone) {
+      DOM.p1InteractiveZone.querySelectorAll('.tf-btn').forEach(btn => {
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          const val = btn.getAttribute('data-val') === 'true';
+          handleTrueFalseAnswer(1, val, btn);
+        });
+      });
+    }
+
+    // Event listeners for Player 2
+    if (DOM.p2InteractiveZone) {
+      DOM.p2InteractiveZone.querySelectorAll('.tf-btn').forEach(btn => {
+        btn.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          const val = btn.getAttribute('data-val') === 'true';
+          handleTrueFalseAnswer(2, val, btn);
+        });
+      });
+    }
+  }
+
+  function handleTrueFalseAnswer(playerNum, chosenVal, btnEl) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    audio.stopQuestionAudio();
+
+    const isCorrect = (chosenVal === state.currentQuestion.isTrue);
+    const rect = btnEl.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    if (isCorrect) {
+      stopReflexTimer();
+      btnEl.classList.add('tf-correct-glow');
+      awardPointAndProgress(playerNum, null, cx, cy);
+    } else {
+      btnEl.classList.add('tf-wrong-shake');
+      setTimeout(() => {
+        if (btnEl) btnEl.classList.remove('tf-wrong-shake');
+      }, 420);
+      applyLockout(playerNum, null);
+    }
+  }
+
+  // 7) 🧩 DOKUN VE EŞLEŞTİR (MATCHING / CLICK TO MATCH) SAHNESİ
+  let playerMatchState = {
+    1: { selectedLeft: null, selectedRight: null, matchedCount: 0, totalPairs: 0, isLocked: false },
+    2: { selectedLeft: null, selectedRight: null, matchedCount: 0, totalPairs: 0, isLocked: false }
+  };
+
+  function renderMatchingArena(data) {
+    const rawPairs = data.pairs || [];
+    const totalPairs = rawPairs.length;
+
+    playerMatchState = {
+      1: { selectedLeft: null, selectedRight: null, matchedCount: 0, totalPairs, isLocked: false },
+      2: { selectedLeft: null, selectedRight: null, matchedCount: 0, totalPairs, isLocked: false }
+    };
+
+    const createMatchingHtml = (playerNum) => {
+      // Sol sütun kartları (Orijinal sıra)
+      const leftItems = rawPairs.map((p, idx) => ({ id: p.id || `pair_${idx}`, text: p.left }));
+      // Sağ sütun kartları (Fisher-Yates ile karıştırılmış)
+      const rightItems = QuestionEngine.fisherYatesShuffle(
+        rawPairs.map((p, idx) => ({ id: p.id || `pair_${idx}`, text: p.right }))
+      );
+
+      return `
+        <div class="matching-arena" data-player="${playerNum}">
+          <div class="matching-col col-left">
+            ${leftItems.map(item => `
+              <div class="matching-card match-left" data-pair-id="${item.id}" data-side="left" role="button" tabindex="0">
+                <span class="match-text">${replaceEmojisWith3D(item.text, 'chip-3d-icon')}</span>
+                <span class="match-status-icon"></span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="matching-divider-vs">➔</div>
+          <div class="matching-col col-right">
+            ${rightItems.map(item => `
+              <div class="matching-card match-right" data-pair-id="${item.id}" data-side="right" role="button" tabindex="0">
+                <span class="match-text">${replaceEmojisWith3D(item.text, 'chip-3d-icon')}</span>
+                <span class="match-status-icon"></span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = createMatchingHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = createMatchingHtml(2);
+
+    // Bind Player 1
+    if (DOM.p1InteractiveZone) {
+      DOM.p1InteractiveZone.querySelectorAll('.matching-card').forEach(card => {
+        card.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          handleMatchingCardTap(1, card);
+        });
+      });
+    }
+
+    // Bind Player 2
+    if (DOM.p2InteractiveZone) {
+      DOM.p2InteractiveZone.querySelectorAll('.matching-card').forEach(card => {
+        card.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          handleMatchingCardTap(2, card);
+        });
+      });
+    }
+  }
+
+  function handleMatchingCardTap(playerNum, cardEl) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && playerNum !== 1) return;
+    if (playerNum === 1 && state.player1.isLocked) return;
+    if (playerNum === 2 && state.player2.isLocked) return;
+
+    const pState = playerMatchState[playerNum];
+    if (!pState || pState.isLocked) return;
+
+    if (cardEl.classList.contains('card-matched')) return;
+
+    audio.ensureContext();
+    const side = cardEl.getAttribute('data-side');
+    const pairId = cardEl.getAttribute('data-pair-id');
+
+    if (side === 'left') {
+      if (pState.selectedLeft && pState.selectedLeft.el === cardEl) {
+        cardEl.classList.remove('card-selected');
+        pState.selectedLeft = null;
+        return;
+      }
+      if (pState.selectedLeft && pState.selectedLeft.el) {
+        pState.selectedLeft.el.classList.remove('card-selected');
+      }
+      cardEl.classList.add('card-selected');
+      pState.selectedLeft = { id: pairId, el: cardEl };
+      audio.playSnap();
+
+      if (pState.selectedRight) {
+        checkMatchingPair(playerNum);
+      }
+    } else if (side === 'right') {
+      if (pState.selectedRight && pState.selectedRight.el === cardEl) {
+        cardEl.classList.remove('card-selected');
+        pState.selectedRight = null;
+        return;
+      }
+      if (pState.selectedRight && pState.selectedRight.el) {
+        pState.selectedRight.el.classList.remove('card-selected');
+      }
+      cardEl.classList.add('card-selected');
+      pState.selectedRight = { id: pairId, el: cardEl };
+      audio.playSnap();
+
+      if (pState.selectedLeft) {
+        checkMatchingPair(playerNum);
+      }
+    }
+  }
+
+  function checkMatchingPair(playerNum) {
+    const pState = playerMatchState[playerNum];
+    if (!pState || !pState.selectedLeft || !pState.selectedRight) return;
+
+    const left = pState.selectedLeft;
+    const right = pState.selectedRight;
+    const isMatch = (left.id === right.id);
+
+    if (isMatch) {
+      audio.playPop();
+
+      left.el.classList.remove('card-selected');
+      right.el.classList.remove('card-selected');
+      left.el.classList.add('card-matched');
+      right.el.classList.add('card-matched');
+
+      const r1 = left.el.getBoundingClientRect();
+      const r2 = right.el.getBoundingClientRect();
+      particles.burst(r1.left + r1.width / 2, r1.top + r1.height / 2, 'stars');
+      particles.burst(r2.left + r2.width / 2, r2.top + r2.height / 2, 'stars');
+
+      pState.selectedLeft = null;
+      pState.selectedRight = null;
+      pState.matchedCount += 1;
+
+      if (pState.matchedCount >= pState.totalPairs) {
+        const panel = (playerNum === 1) ? DOM.p1Panel : DOM.p2Panel;
+        let cx = window.innerWidth / 2;
+        let cy = window.innerHeight / 2;
+        if (panel) {
+          const rect = panel.getBoundingClientRect();
+          cx = rect.left + rect.width / 2;
+          cy = rect.top + rect.height / 2;
+        }
+        awardPointAndProgress(playerNum, null, cx, cy);
+      }
+    } else {
+      audio.playWrong();
+      pState.isLocked = true;
+
+      left.el.classList.add('card-mismatch');
+      right.el.classList.add('card-mismatch');
+
+      setTimeout(() => {
+        if (left.el) left.el.classList.remove('card-selected', 'card-mismatch');
+        if (right.el) right.el.classList.remove('card-selected', 'card-mismatch');
+        pState.selectedLeft = null;
+        pState.selectedRight = null;
+        pState.isLocked = false;
+      }, 420);
+    }
+  }
+
   function clearAllLockouts() {
+    stopReflexTimer();
     clearTimeout(state.player1.lockTimer);
     clearTimeout(state.player2.lockTimer);
     if (state.player1.frostInterval) {
