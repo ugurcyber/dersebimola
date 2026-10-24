@@ -4759,6 +4759,7 @@
     currentSubjectGrade: document.getElementById('currentSubjectGrade'),
     lobbyP1Name: document.getElementById('lobbyPlayer1Name'),
     lobbyP2Name: document.getElementById('lobbyPlayer2Name'),
+    btnHeroStart: document.getElementById('btnHeroStart'),
     btnQuickDraw: document.getElementById('btnQuickDrawPlayers'),
     subcategorySection: document.getElementById('subcategorySection'),
     subcategoryTabs: document.getElementById('subcategoryTabs'),
@@ -9577,6 +9578,18 @@
             startDuel(quickGame);
           }
         });
+      });
+    }
+
+    // Ana Sayfa Hero "Hemen Başla" Butonu (Sınıf Seçim Kartlarına Akıcı Kaydır)
+    if (DOM.btnHeroStart) {
+      DOM.btnHeroStart.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        const section = document.querySelector('.home-section-container');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     }
 
