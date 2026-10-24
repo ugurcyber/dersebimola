@@ -87,8 +87,11 @@
     pickerMode: 'single', // 'single' (Tek Öğrenci) | 'duel' (2 Öğrenci Düello)
     lastPickedStudent: null,
 
-    // Özel Soru Bankası (Öğretmenin Ekledikleri)
+    // Özel Soru Bankası & Özel Sınavlar (Custom Quiz Builder)
     customQuestions: [],
+    customQuizzes: [],
+    activeCustomQuiz: null,
+    customQuizQueue: [],
 
     // Sınıf Ligi Maç Geçmişi
     leagueScores: {},
@@ -3811,6 +3814,20 @@
 
     // İstenen sınıf ve türe göre bir soru getir (Anti-Repeat Fisher-Yates Motoru)
     getNextQuestion(grade, gameType) {
+      // Özel Sınav (Custom Quiz) Modu: Öğretmenin Sınavından Soruları Şıklarını Karıştırarak Çek
+      if (gameType === 'custom_quiz' && state.activeCustomQuiz) {
+        if (!state.customQuizQueue || state.customQuizQueue.length === 0) {
+          state.customQuizQueue = this.fisherYatesShuffle([...state.activeCustomQuiz.questions]);
+        }
+        const cq = state.customQuizQueue.shift();
+        return this.buildQuestionItem({
+          question: cq.question,
+          correct: cq.correctText,
+          distractors: cq.wrongOptions,
+          explanation: cq.explanation || `Özel Sınav: "${state.activeCustomQuiz.title}"`
+        }, `📝 ${state.activeCustomQuiz.title}`);
+      }
+
       // Standart derslerde her 4. soruda bir derse uygun Doğru/Yanlış veya Dokun-Eşleştir interaktif molası
       const isStandardSubject = ['math', 'turkish', 'english', 'lifescience', 'science', 'social'].includes(gameType);
       if (isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
@@ -4627,6 +4644,7 @@
       ROSTER: 'dersebimola_roster',
       TODAY_SELECTED: 'dersebimola_today_selected',
       CUSTOM_Q: 'dersebimola_custom_questions',
+      CUSTOM_QUIZZES: 'custom_quizzes',
       LEAGUE: 'dersebimola_league',
       SETTINGS: 'dersebimola_settings'
     },
@@ -4650,6 +4668,53 @@
 
         const customQ = localStorage.getItem(this.KEYS.CUSTOM_Q);
         if (customQ) state.customQuestions = JSON.parse(customQ);
+
+        const customQuizzes = localStorage.getItem(this.KEYS.CUSTOM_QUIZZES);
+        if (customQuizzes) {
+          try {
+            const parsed = JSON.parse(customQuizzes);
+            if (Array.isArray(parsed) && parsed.length > 0) state.customQuizzes = parsed;
+          } catch (e) {}
+        }
+        if (!state.customQuizzes || state.customQuizzes.length === 0) {
+          state.customQuizzes = [
+            {
+              id: 'quiz_sample_math_brain',
+              title: '🌟 Örnek Hızlı Matematik & Dikkat Sınavı',
+              createdAt: new Date().toLocaleDateString('tr-TR'),
+              questions: [
+                {
+                  id: 'q_sample_1',
+                  question: '25 sayısının 4 katının 20 eksiği kaçtır?',
+                  options: { A: '80', B: '70', C: '90', D: '100' },
+                  correctOption: 'A',
+                  correctText: '80',
+                  wrongOptions: ['70', '90', '100'],
+                  explanation: '25 × 4 = 100. 100 - 20 = 80 eder.'
+                },
+                {
+                  id: 'q_sample_2',
+                  question: 'Hangi geometrik şeklin köşesi ve kenarı yoktur?',
+                  options: { A: 'Üçgen', B: 'Kare', C: 'Çember', D: 'Dikdörtgen' },
+                  correctOption: 'C',
+                  correctText: 'Çember',
+                  wrongOptions: ['Üçgen', 'Kare', 'Dikdörtgen'],
+                  explanation: 'Çemberin kenarı ve köşesi yoktur.'
+                },
+                {
+                  id: 'q_sample_3',
+                  question: 'Günde 2 saat kitap okuyan bir öğrenci 1 haftada kaç saat okur?',
+                  options: { A: '12 saat', B: '14 saat', C: '16 saat', D: '10 saat' },
+                  correctOption: 'B',
+                  correctText: '14 saat',
+                  wrongOptions: ['12 saat', '16 saat', '10 saat'],
+                  explanation: '1 hafta = 7 gün. 7 × 2 = 14 saat okur.'
+                }
+              ]
+            }
+          ];
+          try { localStorage.setItem(this.KEYS.CUSTOM_QUIZZES, JSON.stringify(state.customQuizzes)); } catch (e) {}
+        }
 
         const league = localStorage.getItem(this.KEYS.LEAGUE);
         if (league) state.leagueScores = JSON.parse(league);
@@ -4680,6 +4745,9 @@
     },
     saveCustomQuestions() {
       try { localStorage.setItem(this.KEYS.CUSTOM_Q, JSON.stringify(state.customQuestions)); } catch (e) {}
+    },
+    saveCustomQuizzes() {
+      try { localStorage.setItem(this.KEYS.CUSTOM_QUIZZES, JSON.stringify(state.customQuizzes)); } catch (e) {}
     },
     saveLeague() {
       try { localStorage.setItem(this.KEYS.LEAGUE, JSON.stringify(state.leagueScores)); } catch (e) {}
@@ -4918,16 +4986,21 @@
     btnBackToStage: document.getElementById('btnBackToStage'),
 
     modalCustomQ: document.getElementById('modalCustomQ'),
-    formAddQuestion: document.getElementById('formAddQuestion'),
-    customGrade: document.getElementById('customGrade'),
-    customCategory: document.getElementById('customCategory'),
-    customQuestionText: document.getElementById('customQuestionText'),
-    customCorrect: document.getElementById('customCorrect'),
-    customWrong1: document.getElementById('customWrong1'),
-    customWrong2: document.getElementById('customWrong2'),
-    customExplanation: document.getElementById('customExplanation'),
-    savedQCount: document.getElementById('savedQCount'),
-    savedQList: document.getElementById('savedQList'),
+    formCustomQuizBuilder: document.getElementById('formCustomQuizBuilder'),
+    quizTitleInput: document.getElementById('quizTitleInput'),
+    quizQuestionInput: document.getElementById('quizQuestionInput'),
+    quizCurrentQBadge: document.getElementById('quizCurrentQBadge'),
+    quizStagedCountBadge: document.getElementById('quizStagedCountBadge'),
+    quizChoiceInputA: document.getElementById('quizChoiceInputA'),
+    quizChoiceInputB: document.getElementById('quizChoiceInputB'),
+    quizChoiceInputC: document.getElementById('quizChoiceInputC'),
+    quizChoiceInputD: document.getElementById('quizChoiceInputD'),
+    btnQuizAddQuestion: document.getElementById('btnQuizAddQuestion'),
+    btnQuizSaveQuiz: document.getElementById('btnQuizSaveQuiz'),
+    stagedQuestionsPreview: document.getElementById('stagedQuestionsPreview'),
+    stagedChipsList: document.getElementById('stagedChipsList'),
+    savedQuizzesList: document.getElementById('savedQuizzesList'),
+    savedQuizzesCountBadge: document.getElementById('savedQuizzesCountBadge'),
 
     modalLeaderboard: document.getElementById('modalLeaderboard'),
     leaderboardTbody: document.getElementById('leaderboardTbody'),
@@ -5197,6 +5270,9 @@
       memory: 'Süper Hafıza',
       reflex: 'Şimşek Refleks'
     };
+    if (state.currentGameType === 'custom_quiz' && state.activeCustomQuiz) {
+      return state.activeCustomQuiz.title;
+    }
     return fallbackTitles[state.currentGameType] || 'Eğitici Oyun';
   }
 
@@ -7844,82 +7920,261 @@
   }
 
   /* ==========================================================================
-     12. KENDİ SORULARIMI EKLE (ÖĞRETMEN ÖZEL SORU BANKASI)
+     12. ÖZEL SINAV OLUŞTURUCU (CUSTOM QUIZ BUILDER) & AKILLI TAHTA MOTORU
      ========================================================================== */
+  let currentQuizStagedQuestions = [];
+
   function openCustomQModal() {
-    if (!state.teacherSession.isLoggedIn) {
-      openModal(DOM.modalAuth);
-      return;
-    }
-    renderCustomQuestionsList();
+    renderSavedQuizzesList();
+    renderStagedQuestionsPreview();
+    updateQuizRadioRowHighlights();
     openModal(DOM.modalCustomQ);
   }
 
-  function handleAddCustomQuestion(e) {
-    e.preventDefault();
-    const newQ = {
-      id: Date.now().toString(),
-      grade: DOM.customGrade.value,
-      category: DOM.customCategory.value,
-      question: DOM.customQuestionText.value.trim(),
-      correct: DOM.customCorrect.value.trim(),
-      wrong1: DOM.customWrong1.value.trim(),
-      wrong2: DOM.customWrong2.value.trim(),
-      explanation: DOM.customExplanation.value.trim()
-    };
-
-    if (!newQ.question || !newQ.correct || !newQ.wrong1 || !newQ.wrong2) {
-      alert('Lütfen tüm zorunlu alanları doldurunuz.');
-      return;
-    }
-
-    state.customQuestions.push(newQ);
-    StorageManager.saveCustomQuestions();
-    renderCustomQuestionsList();
-
-    // Formu temizle
-    DOM.customQuestionText.value = '';
-    DOM.customCorrect.value = '';
-    DOM.customWrong1.value = '';
-    DOM.customWrong2.value = '';
-    DOM.customExplanation.value = '';
-
-    audio.playCorrect();
-    showToast('✨ Özel sorunuz havuza eklendi ve düellolarda çıkacak!');
+  function updateQuizRadioRowHighlights() {
+    const selected = document.querySelector('input[name="quizCorrectRadio"]:checked')?.value || 'A';
+    ['A', 'B', 'C', 'D'].forEach(letter => {
+      const row = document.getElementById('quizOptionRow' + letter);
+      if (row) {
+        row.classList.toggle('is-correct-selected', letter === selected);
+      }
+    });
   }
 
-  function renderCustomQuestionsList() {
-    DOM.savedQCount.textContent = state.customQuestions.length;
-    if (state.customQuestions.length === 0) {
-      DOM.savedQList.innerHTML = '<div class="empty-q-msg">Henüz özel soru eklemediniz.</div>';
+  function handleQuizAddQuestion(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    const qText = (DOM.quizQuestionInput ? DOM.quizQuestionInput.value.trim() : '');
+    const optA = (DOM.quizChoiceInputA ? DOM.quizChoiceInputA.value.trim() : '');
+    const optB = (DOM.quizChoiceInputB ? DOM.quizChoiceInputB.value.trim() : '');
+    const optC = (DOM.quizChoiceInputC ? DOM.quizChoiceInputC.value.trim() : '');
+    const optD = (DOM.quizChoiceInputD ? DOM.quizChoiceInputD.value.trim() : '');
+
+    if (!qText || !optA || !optB || !optC || !optD) {
+      showToast('⚠️ Lütfen soru metnini ve 4 şıkkı da (A, B, C, D) eksiksiz doldurunuz.');
+      return false;
+    }
+
+    const selectedRadio = document.querySelector('input[name="quizCorrectRadio"]:checked')?.value || 'A';
+    const optMap = { A: optA, B: optB, C: optC, D: optD };
+    const correctText = optMap[selectedRadio];
+    const wrongOptions = ['A', 'B', 'C', 'D'].filter(k => k !== selectedRadio).map(k => optMap[k]);
+
+    const newQuestion = {
+      id: 'q_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+      question: qText,
+      options: { A: optA, B: optB, C: optC, D: optD },
+      correctOption: selectedRadio,
+      correctText: correctText,
+      wrongOptions: wrongOptions
+    };
+
+    currentQuizStagedQuestions.push(newQuestion);
+
+    // Formu sıfırla, soru metnine odaklan
+    DOM.quizQuestionInput.value = '';
+    DOM.quizChoiceInputA.value = '';
+    DOM.quizChoiceInputB.value = '';
+    DOM.quizChoiceInputC.value = '';
+    DOM.quizChoiceInputD.value = '';
+
+    const firstRadio = document.getElementById('choiceRadioA');
+    if (firstRadio) firstRadio.checked = true;
+    updateQuizRadioRowHighlights();
+
+    renderStagedQuestionsPreview();
+    audio.playClick();
+    showToast(`✨ Soru #${currentQuizStagedQuestions.length} sınava eklendi!`);
+    DOM.quizQuestionInput.focus();
+    return true;
+  }
+
+  function handleQuizSaveQuiz(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    const quizTitle = (DOM.quizTitleInput ? DOM.quizTitleInput.value.trim() : '');
+    if (!quizTitle) {
+      showToast('⚠️ Lütfen bir sınav adı giriniz (Örn: Yarınki Matematik Denemesi).');
+      if (DOM.quizTitleInput) DOM.quizTitleInput.focus();
       return;
     }
 
-    DOM.savedQList.innerHTML = state.customQuestions.map(q => `
-      <div class="saved-q-item">
-        <div>
-          <strong>[${q.grade}. Sınıf ${q.category === 'math' ? 'Mat' : 'Tr'}]</strong> ${escapeHtml(q.question)}
-          <div class="saved-q-meta">Doğru: ${escapeHtml(q.correct)} | Yanlış: ${escapeHtml(q.wrong1)}, ${escapeHtml(q.wrong2)}</div>
-        </div>
-        <button class="btn-del-q" data-del-id="${q.id}" title="Sil">✕</button>
+    // Eğer soru metni ve şıklar şu an doluysa otomatik olarak bu soruyu da ekle
+    const qText = (DOM.quizQuestionInput ? DOM.quizQuestionInput.value.trim() : '');
+    const optA = (DOM.quizChoiceInputA ? DOM.quizChoiceInputA.value.trim() : '');
+    const optB = (DOM.quizChoiceInputB ? DOM.quizChoiceInputB.value.trim() : '');
+    const optC = (DOM.quizChoiceInputC ? DOM.quizChoiceInputC.value.trim() : '');
+    const optD = (DOM.quizChoiceInputD ? DOM.quizChoiceInputD.value.trim() : '');
+    if (qText && optA && optB && optC && optD) {
+      handleQuizAddQuestion();
+    }
+
+    if (currentQuizStagedQuestions.length === 0) {
+      showToast('⚠️ Lütfen sınava kaydetmeden önce en az 1 soru ekleyiniz.');
+      return;
+    }
+
+    const newQuiz = {
+      id: 'quiz_' + Date.now(),
+      title: quizTitle,
+      createdAt: new Date().toLocaleDateString('tr-TR'),
+      questions: [...currentQuizStagedQuestions]
+    };
+
+    state.customQuizzes.unshift(newQuiz);
+    StorageManager.saveCustomQuizzes();
+
+    // Sınav formunu tamamen sıfırla
+    currentQuizStagedQuestions = [];
+    DOM.quizTitleInput.value = '';
+    DOM.quizQuestionInput.value = '';
+    DOM.quizChoiceInputA.value = '';
+    DOM.quizChoiceInputB.value = '';
+    DOM.quizChoiceInputC.value = '';
+    DOM.quizChoiceInputD.value = '';
+    const firstRadio = document.getElementById('choiceRadioA');
+    if (firstRadio) firstRadio.checked = true;
+    updateQuizRadioRowHighlights();
+    renderStagedQuestionsPreview();
+
+    // Sağdaki listeyi yenile
+    renderSavedQuizzesList();
+
+    audio.playCorrect();
+    showToast(`🎉 "${quizTitle}" başarıyla kaydedildi! Tahtada Oynatabilirsiniz.`);
+  }
+
+  function renderStagedQuestionsPreview() {
+    const count = currentQuizStagedQuestions.length;
+    if (DOM.quizStagedCountBadge) {
+      DOM.quizStagedCountBadge.textContent = `Eklenen: ${count} Soru`;
+    }
+    if (DOM.quizCurrentQBadge) {
+      DOM.quizCurrentQBadge.textContent = `Soru #${count + 1}`;
+    }
+
+    if (!DOM.stagedQuestionsPreview || !DOM.stagedChipsList) return;
+
+    if (count === 0) {
+      DOM.stagedQuestionsPreview.classList.add('hide');
+      DOM.stagedChipsList.innerHTML = '';
+      return;
+    }
+
+    DOM.stagedQuestionsPreview.classList.remove('hide');
+    DOM.stagedChipsList.innerHTML = currentQuizStagedQuestions.map((q, idx) => `
+      <div class="staged-q-chip">
+        <span><strong>${idx + 1}.</strong> ${escapeHtml(q.question.length > 25 ? q.question.substring(0, 25) + '...' : q.question)}</span>
+        <button type="button" class="btn-remove-staged" data-remove-staged="${idx}" title="Bu soruyu çıkar">✕</button>
       </div>
     `).join('');
 
-    DOM.savedQList.querySelectorAll('[data-del-id]').forEach(btn => {
+    DOM.stagedChipsList.querySelectorAll('[data-remove-staged]').forEach(btn => {
       btn.addEventListener('pointerdown', (e) => {
         e.preventDefault();
-        const id = btn.getAttribute('data-del-id');
-        deleteCustomQuestion(id);
+        const index = parseInt(btn.getAttribute('data-remove-staged'), 10);
+        removeStagedQuestion(index);
       });
     });
   }
 
-  function deleteCustomQuestion(id) {
-    state.customQuestions = state.customQuestions.filter(q => q.id !== id);
-    StorageManager.saveCustomQuestions();
-    renderCustomQuestionsList();
-    audio.playClick();
-    showToast('Soru havuzdan silindi.');
+  function removeStagedQuestion(index) {
+    if (index >= 0 && index < currentQuizStagedQuestions.length) {
+      currentQuizStagedQuestions.splice(index, 1);
+      renderStagedQuestionsPreview();
+      audio.playClick();
+    }
+  }
+
+  function renderSavedQuizzesList() {
+    if (!DOM.savedQuizzesList) return;
+    const count = state.customQuizzes.length;
+    if (DOM.savedQuizzesCountBadge) {
+      DOM.savedQuizzesCountBadge.textContent = `${count} Sınav`;
+    }
+
+    if (count === 0) {
+      DOM.savedQuizzesList.innerHTML = `
+        <div class="empty-quizzes-box">
+          <span class="empty-icon">📝</span>
+          <strong>Henüz Kayıtlı Sınavınız Yok</strong>
+          <p>Soldaki formu kullanarak sınıfınıza özel soruları ekleyin ve "Sınavı Kaydet"e basın.</p>
+        </div>
+      `;
+      return;
+    }
+
+    DOM.savedQuizzesList.innerHTML = state.customQuizzes.map(quiz => `
+      <div class="saved-quiz-card" data-quiz-id="${quiz.id}">
+        <div class="quiz-card-header">
+          <div class="quiz-card-title-group">
+            <span class="quiz-card-icon">📝</span>
+            <h4 class="quiz-card-title">${escapeHtml(quiz.title)}</h4>
+          </div>
+          <span class="quiz-card-count-badge">${quiz.questions ? quiz.questions.length : 0} Soru</span>
+        </div>
+        <div class="quiz-card-meta">
+          <span>📅 ${escapeHtml(quiz.createdAt || 'Bugün')}</span>
+          <span>•</span>
+          <span>Akıllı Tahta Düellosu</span>
+        </div>
+        <div class="quiz-card-actions">
+          <button type="button" class="btn-play-quiz-board" data-play-quiz-id="${quiz.id}" title="Bu sınavı akıllı tahtada hemen oynat">
+            <span>🚀 Tahtada Oynat</span>
+          </button>
+          <button type="button" class="btn-del-quiz" data-del-quiz-id="${quiz.id}" title="Bu sınavı kalıcı olarak sil">
+            <span>🗑️ Sil</span>
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    // "🚀 Tahtada Oynat" Dinleyicileri
+    DOM.savedQuizzesList.querySelectorAll('[data-play-quiz-id]').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const quizId = btn.getAttribute('data-play-quiz-id');
+        startCustomQuiz(quizId);
+      });
+    });
+
+    // "🗑️ Sil" Dinleyicileri
+    DOM.savedQuizzesList.querySelectorAll('[data-del-quiz-id]').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const quizId = btn.getAttribute('data-del-quiz-id');
+        deleteCustomQuiz(quizId);
+      });
+    });
+  }
+
+  function startCustomQuiz(quizId) {
+    const quiz = state.customQuizzes.find(q => q.id === quizId);
+    if (!quiz || !quiz.questions || quiz.questions.length === 0) {
+      showToast('⚠️ Bu sınavda soru bulunamadı.');
+      return;
+    }
+
+    // Modalı kapat
+    closeModal(DOM.modalCustomQ);
+
+    // Aktif sınav state'ini ayarla
+    state.activeCustomQuiz = quiz;
+    state.customQuizQueue = QuestionEngine.fisherYatesShuffle([...quiz.questions]);
+
+    // Düelloyu bu özel sınavla başlat
+    startDuel('custom_quiz');
+    showToast(`🚀 "${quiz.title}" akıllı tahta oyun motoruyla başlatıldı!`);
+  }
+
+  function deleteCustomQuiz(quizId) {
+    const quiz = state.customQuizzes.find(q => q.id === quizId);
+    if (!quiz) return;
+    if (confirm(`"${quiz.title}" isimli sınavı silmek istediğinize emin misiniz?`)) {
+      state.customQuizzes = state.customQuizzes.filter(q => q.id !== quizId);
+      StorageManager.saveCustomQuizzes();
+      renderSavedQuizzesList();
+      audio.playClick();
+      showToast('Sınav listeden silindi.');
+    }
   }
 
   function escapeHtml(str) {
@@ -8055,66 +8310,13 @@
       3: '⚡ 3. Sınıf',
       4: '👑 4. Sınıf'
     };
-    DOM.duelGradeBadge.innerHTML = replaceEmojisWith3D(gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`, 'chip-3d-icon');
-
-    const gameTypeBadges = {
-      math: state.currentGrade === 0 ? '🎨 Renkler & Sayma' : (isSolo ? '📐 Matematik Pratiği' : '📐 Matematik Düellosu'),
-      math_rhythmic_1: '🔢 Ritmik Sayma Düellosu',
-      math_shapes_money_1: '🪙 Geometrik Şekiller & Paralarımız',
-      turkish_antonyms_1: '🔄 Zıt Anlamlı Kelimeler Avı',
-      turkish_syllables_letters_1: '🔤 Hece Sayısı ve Harf Bilgisi',
-      lifescience_school_home_1: '🏫 Okulumuzda ve Evimizde Hayat',
-      lifescience_health_seasons_1: '🧼 Sağlıklı Hayat ve Mevsimler',
-      math_place_value_2: '📦 100\'e Kadar Sayılar & Basamak Değeri',
-      math_multiplication_2: '✖️ Hızlı Çarpma Başlangıcı',
-      math_clock_2: '⏰ Zamanı Ölçme ve Saatler',
-      turkish_syn_ant_2: '✨ Eş ve Zıt Anlam Şampiyonası',
-      turkish_punctuation_2: '✍️ Noktalama & Yazım Kuralları',
-      lifescience_traffic_2: '🚦 Güvenli Hayat ve Trafik',
-      lifescience_culture_2: '🇹🇷 Ülkemiz ve Kültürümüz',
-      english_school_objects_2: '🎒 Classroom Objects & Numbers',
-      english_animals_fruits_2: '🍎 Animals & Fruits',
-      math_romen_place_3: '🏛️ 3 Basamaklı Sayılar & Romen Rakamları',
-      math_mult_div_3: '🌪️ Çarpım Tablosu & Bölme Düellosu',
-      math_fractions_shapes_3: '🧊 Kesirler & Geometrik Cisimler',
-      turkish_homonyms_figurative_3: '🎭 Eş Sesli Kelimeler & Mecaz Anlam',
-      turkish_punctuation_5n1k_3: '✍️ Noktalama, Yazım Kuralları & 5N1K',
-      science_earth_senses_3: '🌍 Gezegenimiz Dünya ve Beş Duyumuz',
-      science_force_matter_3: '🧲 Kuvveti Tanıyalım ve Madde',
-      lifescience_compass_consumer_3: '🧭 Yönlerimiz, Kroki & Tüketici Hakları',
-      english_family_feelings_3: '👨‍👩‍👧 Family, Feelings & Abilities',
-      math_digits_operations_4: '👑 4, 5, 6 Basamaklı Sayılar & Dört İşlem',
-      math_fractions_angles_4: '🍕 Kesirler, Zaman ve Açılar',
-      math_perimeter_area_4: '📐 Çevre ve Alan Hesaplama',
-      turkish_idioms_proverbs_4: '🏆 Deyimler ve Atasözleri Düellosu',
-      turkish_sentences_logic_4: '💡 Sebep-Sonuç, Amaç-Sonuç & Yargılar',
-      science_crust_nutrition_4: '🌍 Yer Kabuğu, Hareketler & Besinlerimiz',
-      science_circuits_magnets_4: '💡 Kuvvet, Mıknatıslar & Basit Devreler',
-      social_identity_heroes_4: '🇹🇷 Birey, Toplum & Milli Mücadele',
-      social_places_economy_4: '🧭 İnsanlar, Yerler & Üretimden Tüketime',
-      english_countries_routines_4: '🌍 Countries, Routines & Jobs',
-      turkish: state.currentGrade === 0 ? '🦁 Hayvanlar & Doğa' : '📚 Türkçe & Kelime Avcısı',
-      firstreading: '🔤 İlk Okuma & Ses Avcısı',
-      firstreading_balloon: '🎈 Ses & Harf Balonları',
-      syllable_builder: '🔤 Hece Birleştirme Atölyesi',
-      word_catch: '⭐ Hızlı Kelime Yakala',
-      color_balloon: '🎈 Renk Balonlarını Patlat',
-      count_tap: '🔢 Kaç Tane Var? Dokun & Say',
-      shadow_match: '🧩 Gölgesini Bul',
-      lifescience: '🌱 Hayat Bilgisi Düellosu',
-      science: '🔬 Fen Bilimleri Laboratuvarı',
-      social: '🗺️ Sosyal Bilgiler Keşfi',
-      english: '🇬🇧 English Word Battle',
-      english_colors: '🎨 Renkler (Colors Matching)',
-      english_animals: '🐾 Hayvanlar (Animals Matching)',
-      english_numbers: '🔢 Sayılar (Numbers Matching)',
-      english_greetings: '👋 Günlük İfadeler (Greetings)',
-      oddone: '👀 Farklı Olanı Yakala',
-      stroop: '🎯 Renk Tuzakları (Stroop)',
-      memory: '🧠 Süper Hafıza',
-      reflex: '⚡ Şimşek Refleks'
-    };
-    DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D(gameTypeBadges[gameType] || (isSolo ? '🎯 Bireysel Pratik' : '🎯 Sınıf Düellosu'), 'chip-3d-icon');
+    if (gameType === 'custom_quiz' && state.activeCustomQuiz) {
+      DOM.duelGradeBadge.innerHTML = '🎯 Özel Sınav';
+      DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D('📝 ' + escapeHtml(state.activeCustomQuiz.title), 'chip-3d-icon');
+    } else {
+      DOM.duelGradeBadge.innerHTML = replaceEmojisWith3D(gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`, 'chip-3d-icon');
+      DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D(gameTypeBadges[gameType] || (isSolo ? '🎯 Bireysel Pratik' : '🎯 Sınıf Düellosu'), 'chip-3d-icon');
+    }
     updateGameModeUI();
     updatePlayerNamesUI();
     renderScoreTrack();
@@ -9742,8 +9944,16 @@
       });
     }
 
-    // Özel Soru Formu
-    DOM.formAddQuestion.addEventListener('submit', handleAddCustomQuestion);
+    // Özel Sınav Oluşturucu & Soru Bankası Butonları
+    if (DOM.btnQuizAddQuestion) {
+      DOM.btnQuizAddQuestion.addEventListener('pointerdown', handleQuizAddQuestion);
+    }
+    if (DOM.btnQuizSaveQuiz) {
+      DOM.btnQuizSaveQuiz.addEventListener('pointerdown', handleQuizSaveQuiz);
+    }
+    document.querySelectorAll('input[name="quizCorrectRadio"]').forEach(radio => {
+      radio.addEventListener('change', updateQuizRadioRowHighlights);
+    });
 
     // Oyun Modu Seçimi (İki Kişilik Düello vs Tek Kişilik Pratik)
     if (DOM.btnModeDuel) {

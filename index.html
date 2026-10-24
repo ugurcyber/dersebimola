@@ -181,9 +181,9 @@
             <span class="tool-icon"><img src="assets/icons/3d/trophy.png" class="chip-3d-icon" alt="🏆"></span>
             <span class="tool-label">Sınıf Ligi</span>
           </button>
-          <button class="sidebar-tool-btn" id="btnOpenCustomQ" title="Kendi Sorularımı Ekle">
-            <span class="tool-icon">✏️</span>
-            <span class="tool-label">Soru Ekle</span>
+          <button class="sidebar-tool-btn" id="btnOpenCustomQ" title="Özel Sınav Oluştur & Soru Ekle">
+            <span class="tool-icon">📝</span>
+            <span class="tool-label">Kendi Sınavını Yap</span>
           </button>
           <button class="sidebar-tool-btn btn-sidebar-share" id="btnSidebarShare" title="Arkadaşına veya Veliye WhatsApp ile Gönder">
             <span class="tool-icon">📲</span>
@@ -1185,76 +1185,114 @@
     </div>
   </div>
 
-  <!-- MODAL 3: KENDİ SORULARIMI EKLE (ÖĞRETMEN ÖZEL SORU BANKASI) -->
+  <!-- MODAL 3: ÖZEL SINAV OLUŞTURUCU & AKILLI TAHTA SORU BANKASI (CUSTOM QUIZ BUILDER) -->
   <div class="modal-backdrop hide" id="modalCustomQ">
-    <div class="modal-window custom-q-modal-window">
+    <div class="modal-window quiz-builder-modal-window">
       <button class="modal-close-btn" data-close-modal="modalCustomQ">✕</button>
       <div class="modal-header">
-        <div class="modal-badge-icon">✏️</div>
-        <h3 class="modal-title">Kendi Soru Bankanı Oluştur</h3>
+        <div class="modal-badge-icon">📝</div>
+        <h3 class="modal-title">Özel Sınav Oluşturucu &amp; Akıllı Tahta Soru Bankası</h3>
         <p class="modal-desc">
-          İşlediğiniz konuya özel soruları ekleyin, sınıf düellolarında kendi sorularınız çıksın!
+          Kendi sınıfınıza özel sınavlar hazırlayın, kaydedin ve dev ekranda akıllı tahta oyun motoruyla hemen oynatın!
         </p>
       </div>
 
-      <form id="formAddQuestion" class="custom-q-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="customGrade">Sınıf Seviyesi:</label>
-            <select id="customGrade" class="custom-input">
-              <option value="0">Anasınıfı (Okul Öncesi)</option>
-              <option value="1">1. Sınıf</option>
-              <option value="2">2. Sınıf</option>
-              <option value="3">3. Sınıf</option>
-              <option value="4">4. Sınıf</option>
-            </select>
+      <div class="quiz-builder-layout">
+        <!-- SOL PANEL: ÖZEL SINAV FORMU -->
+        <div class="quiz-builder-form-pane">
+          <div class="quiz-pane-header">
+            <span class="quiz-pane-title">✏️ Yeni Sınav ve Soru Hazırla</span>
+            <span class="quiz-staged-badge" id="quizStagedCountBadge">Eklenen: 0 Soru</span>
           </div>
-          <div class="form-group">
-            <label for="customCategory">Ders / Alan:</label>
-            <select id="customCategory" class="custom-input">
-              <option value="math">Matematik</option>
-              <option value="turkish">Türkçe & Dikkat</option>
-            </select>
-          </div>
+
+          <form id="formCustomQuizBuilder" class="quiz-builder-form" onsubmit="return false;">
+            <!-- Sınav Adı -->
+            <div class="form-group">
+              <label for="quizTitleInput" class="form-label-bold">📋 Sınav Adı:</label>
+              <input type="text" id="quizTitleInput" class="custom-input quiz-title-input" placeholder="Örn: Yarınki Matematik Denemesi" required>
+            </div>
+
+            <!-- Soru Metni & Aktif Soru Numarası -->
+            <div class="form-group">
+              <div class="question-header-flex">
+                <label for="quizQuestionInput" class="form-label-bold">❓ Soru Metni:</label>
+                <span class="active-q-badge" id="quizCurrentQBadge">Soru #1</span>
+              </div>
+              <textarea id="quizQuestionInput" class="custom-input quiz-question-textarea" rows="2" placeholder="Soru metnini yazınız (Örn: 24 sayısının 4 katı kaçtır?)..." required></textarea>
+            </div>
+
+            <!-- A, B, C, D Şıkları ve Doğru Cevap Radio Butonları -->
+            <div class="quiz-options-group">
+              <div class="options-group-title">
+                <span>🎯 Şıklar ve Doğru Cevap:</span>
+                <small class="text-hint">Doğru şıkkın başındaki daireyi işaretleyin</small>
+              </div>
+
+              <!-- A Şıkkı -->
+              <div class="quiz-option-row is-correct-selected" id="quizOptionRowA">
+                <label class="choice-radio-label" title="Doğru cevap A olsun">
+                  <input type="radio" name="quizCorrectRadio" value="A" id="choiceRadioA" checked>
+                  <span class="choice-pill pill-a">A</span>
+                </label>
+                <input type="text" id="quizChoiceInputA" class="custom-input choice-input" placeholder="A şıkkı cevabı..." required>
+              </div>
+
+              <!-- B Şıkkı -->
+              <div class="quiz-option-row" id="quizOptionRowB">
+                <label class="choice-radio-label" title="Doğru cevap B olsun">
+                  <input type="radio" name="quizCorrectRadio" value="B" id="choiceRadioB">
+                  <span class="choice-pill pill-b">B</span>
+                </label>
+                <input type="text" id="quizChoiceInputB" class="custom-input choice-input" placeholder="B şıkkı cevabı..." required>
+              </div>
+
+              <!-- C Şıkkı -->
+              <div class="quiz-option-row" id="quizOptionRowC">
+                <label class="choice-radio-label" title="Doğru cevap C olsun">
+                  <input type="radio" name="quizCorrectRadio" value="C" id="choiceRadioC">
+                  <span class="choice-pill pill-c">C</span>
+                </label>
+                <input type="text" id="quizChoiceInputC" class="custom-input choice-input" placeholder="C şıkkı cevabı..." required>
+              </div>
+
+              <!-- D Şıkkı -->
+              <div class="quiz-option-row" id="quizOptionRowD">
+                <label class="choice-radio-label" title="Doğru cevap D olsun">
+                  <input type="radio" name="quizCorrectRadio" value="D" id="choiceRadioD">
+                  <span class="choice-pill pill-d">D</span>
+                </label>
+                <input type="text" id="quizChoiceInputD" class="custom-input choice-input" placeholder="D şıkkı cevabı..." required>
+              </div>
+            </div>
+
+            <!-- Bu Sınava Eklenen Sorular Önizleme Listesi (Varsa) -->
+            <div class="staged-questions-preview hide" id="stagedQuestionsPreview">
+              <div class="staged-preview-title">Sınava Eklenen Sorular:</div>
+              <div class="staged-chips-list" id="stagedChipsList"></div>
+            </div>
+
+            <!-- Form Butonları: Yeni Soru Ekle ve Sınavı Kaydet -->
+            <div class="quiz-form-actions">
+              <button type="button" class="btn-builder-action btn-builder-add-q" id="btnQuizAddQuestion" title="Bu soruyu sınava ekle ve sıradaki soruya geç">
+                <span>➕ Yeni Soru Ekle</span>
+              </button>
+              <button type="button" class="btn-builder-action btn-builder-save-quiz" id="btnQuizSaveQuiz" title="Tüm sorularla birlikte sınavı kaydet">
+                <span>💾 Sınavı Kaydet</span>
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div class="form-group">
-          <label for="customQuestionText">Soru Metni:</label>
-          <input type="text" id="customQuestionText" class="custom-input" placeholder="Örn: 15 sayısının 3 fazlası kaçtır?" required>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="customCorrect" class="text-green">✓ Doğru Cevap:</label>
-            <input type="text" id="customCorrect" class="custom-input border-green" placeholder="Örn: 18" required>
+        <!-- SAĞ PANEL: KAYDETTİĞİM SINAVLAR LİSTESİ -->
+        <div class="quiz-saved-library-pane">
+          <div class="quiz-pane-header">
+            <span class="quiz-pane-title">📚 Kaydettiğim Sınavlar</span>
+            <span class="quiz-library-count-badge" id="savedQuizzesCountBadge">0 Sınav</span>
           </div>
-          <div class="form-group">
-            <label for="customWrong1" class="text-red">✕ Yanıltıcı Şık 1:</label>
-            <input type="text" id="customWrong1" class="custom-input" placeholder="Örn: 17" required>
+
+          <div class="saved-quizzes-list" id="savedQuizzesList">
+            <!-- Dinamik Kartlar JS ile Buraya Basılacak -->
           </div>
-          <div class="form-group">
-            <label for="customWrong2" class="text-red">✕ Yanıltıcı Şık 2:</label>
-            <input type="text" id="customWrong2" class="custom-input" placeholder="Örn: 19" required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="customExplanation">Pedagojik Çözüm Açıklaması (İsteğe bağlı):</label>
-          <input type="text" id="customExplanation" class="custom-input" placeholder="Örn: 15'e 3 eklediğimizde 18 eder.">
-        </div>
-
-        <button type="submit" class="btn-submit-q">
-          <span>➕ Soruyu Kaydet ve Havuza Ekle</span>
-        </button>
-      </form>
-
-      <!-- Kayıtlı Özel Sorular Listesi -->
-      <div class="saved-questions-section">
-        <div class="saved-q-header">
-          <strong>Eklediğiniz Sorular (<span id="savedQCount">0</span> Soru):</strong>
-        </div>
-        <div class="saved-q-list" id="savedQList">
-          <div class="empty-q-msg">Henüz özel soru eklemediniz. Yukarıdaki formu kullanarak hemen ekleyebilirsiniz.</div>
         </div>
       </div>
     </div>
