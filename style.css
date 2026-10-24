@@ -1274,6 +1274,115 @@ body:has(#viewDuel.active) .app-topbar {
   }
 }
 
+/* ==========================================================================
+   SOSYAL KANIT VE GÜVEN BANDI (TRUST BADGES)
+   ========================================================================== */
+.edtech-trust-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 16px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 14px 24px;
+  margin: 16px 0 18px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+  width: 100%;
+}
+
+.trust-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.trust-badge-item:hover {
+  background: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+}
+
+.trust-badge-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.trust-badge-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trust-badge-title {
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: #1E293B; /* Kurumsal lacivert / koyu arduvaz */
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.trust-badge-desc {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748B; /* Kurumsal gri */
+  white-space: nowrap;
+}
+
+.trust-badge-divider {
+  width: 1.5px;
+  height: 36px;
+  background: #E2E8F0;
+  flex-shrink: 0;
+}
+
+@media (max-width: 960px) {
+  .edtech-trust-banner {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .trust-badge-divider {
+    display: none;
+  }
+  .trust-badge-item {
+    flex: 1 1 260px;
+    justify-content: flex-start;
+  }
+  .trust-badge-title, .trust-badge-desc {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 600px) {
+  .edtech-trust-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+  }
+  .trust-badge-item {
+    flex: none;
+    width: 100%;
+  }
+}
+
 .home-contestants-bar {
   margin-top: -6px;
   margin-bottom: 4px;
@@ -1326,25 +1435,30 @@ body:has(#viewDuel.active) .app-topbar {
 
 .home-grade-card {
   background: #FFFFFF;
-  border: 2px solid #E2E8F0;
-  border-radius: 20px;
-  padding: 20px 16px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 22px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   cursor: pointer;
-  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   position: relative;
   user-select: none;
   -webkit-user-select: none;
 }
 
 .home-grade-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   border-color: #FF6B00;
+}
+
+.home-grade-card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
 }
 
 .home-grade-card .card-icon-wrap {
@@ -1440,22 +1554,27 @@ body:has(#viewDuel.active) .app-topbar {
 
 .home-popular-card {
   background: #FFFFFF;
-  border: 2px solid #E2E8F0;
-  border-radius: 20px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
   padding: 18px 16px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   user-select: none;
   -webkit-user-select: none;
 }
 
 .home-popular-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   border-color: #3B82F6;
+}
+
+.home-popular-card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
 }
 
 .pop-card-top {
@@ -2120,28 +2239,30 @@ body:has(#viewDuel.active) .app-topbar {
 
 .subject-card {
   position: relative;
-  border-radius: 20px !important;
-  padding: 16px 18px;
+  background: #FFFFFF;
+  border-radius: 16px !important;
+  padding: 18px 20px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 200px;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
 }
 
 .subject-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .subject-card:active {
-  transform: translateY(2px);
-  border-bottom-width: 2px !important;
+  transform: translateY(-2px);
+  border-bottom-width: 3px !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Canlı 3D Tematik Ders Kartları (Border-Bottom 5px solid + Tematik Gradyan) */
@@ -2504,21 +2625,26 @@ body:has(#viewDuel.active) .app-topbar {
   background: #ffffff !important;
   border: 1.5px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 16px !important;
-  padding: 12px 16px;
+  padding: 14px 18px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
   min-height: 185px;
 }
 
 .game-card:hover {
-  border-color: rgba(99, 102, 241, 0.35) !important;
-  transform: translateY(-4px);
-  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.09), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(99, 102, 241, 0.45) !important;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.game-card:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* Farklı Oyun Temaları - Moli Turuncu & Koyu Mavi Uyumlu Sol Vurgular */
