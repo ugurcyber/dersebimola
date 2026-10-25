@@ -1166,7 +1166,8 @@
       const key = EMOJI_KEYS_SORTED[i];
       if (result.indexOf(key) !== -1) {
         const iconPath = EMOJI_TO_3D[key];
-        const imgTag = `<img src="${iconPath}" class="${customClass}" alt="" draggable="false" loading="lazy" decoding="async">`;
+        const webpPath = (iconPath && iconPath.endsWith('.png')) ? iconPath.slice(0, -4) + '.webp' : iconPath;
+        const imgTag = `<img src="${webpPath}" onerror="if(this.dataset.fb!=='1'){this.dataset.fb='1';this.src='${iconPath}';}" class="${customClass}" alt="" draggable="false" loading="lazy" decoding="async">`;
         result = result.split(key).join(imgTag);
       }
     }
@@ -3966,42 +3967,42 @@
         // Anasınıfı: Doğrudan görsel 3D renk & büyüklük tanıma
         const kindergartenStroop = [
           {
-            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/red_circle.png" class="q-3d-fruit" alt="Kırmızı Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu sevimli daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/red_circle.webp" class="q-3d-fruit" alt="Kırmızı Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu sevimli daire hangi renktir?</div>',
             correct: '🔴 Kırmızı',
             distractors: ['🔵 Mavi', '🟡 Sarı'],
             exp: 'Kırmızı, elmanın ve uğur böceğinin rengidir! 🍎',
             audioKey: 'q_daire_kirmizi'
           },
           {
-            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/blue_circle.png" class="q-3d-fruit" alt="Mavi Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu parlak daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/blue_circle.webp" class="q-3d-fruit" alt="Mavi Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu parlak daire hangi renktir?</div>',
             correct: '🔵 Mavi',
             distractors: ['🟢 Yeşil', '🔴 Kırmızı'],
             exp: 'Mavi, engin gökyüzünün ve denizlerin rengidir! 🌊',
             audioKey: 'q_daire_mavi'
           },
           {
-            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/yellow_circle.png" class="q-3d-fruit" alt="Sarı Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu sıcacık daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/yellow_circle.webp" class="q-3d-fruit" alt="Sarı Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu sıcacık daire hangi renktir?</div>',
             correct: '🟡 Sarı',
             distractors: ['🟣 Mor', '🟠 Turuncu'],
             exp: 'Sarı, parlayan Güneş\'in ve tatlı muzun rengidir! ☀️',
             audioKey: 'q_daire_sari'
           },
           {
-            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/green_circle.png" class="q-3d-fruit" alt="Yeşil Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu doğa rengi daire hangi renktir?</div>',
+            html: '<div style="margin:6px auto;"><img src="assets/icons/3d/green_circle.webp" class="q-3d-fruit" alt="Yeşil Daire"></div><div style="font-weight:900; font-size:1.2rem;">Bu doğa rengi daire hangi renktir?</div>',
             correct: '🟢 Yeşil',
             distractors: ['🔴 Kırmızı', '🔵 Mavi'],
             exp: 'Yeşil, ağaç yapraklarının ve çimenlerin rengidir! 🌿',
             audioKey: 'q_daire_yesil'
           },
           {
-            html: '<div class="q-fruit-row" style="margin:8px auto; gap:24px; align-items:center;"><img src="assets/icons/3d/elephant.png" class="q-3d-fruit" alt="Fil" style="width:84px; height:84px;"> <span style="font-size:1.6rem; font-weight:900; color:#64748b;">vs</span> <img src="assets/icons/3d/ant.png" class="q-3d-fruit" alt="Karınca" style="width:48px; height:48px;"></div><div style="font-weight:900; font-size:1.2rem;">Hangisi GERÇEKTE çok daha BÜYÜKTÜR?</div>',
+            html: '<div class="q-fruit-row" style="margin:8px auto; gap:24px; align-items:center;"><img src="assets/icons/3d/elephant.webp" class="q-3d-fruit" alt="Fil" style="width:84px; height:84px;"> <span style="font-size:1.6rem; font-weight:900; color:#64748b;">vs</span> <img src="assets/icons/3d/ant.webp" class="q-3d-fruit" alt="Karınca" style="width:48px; height:48px;"></div><div style="font-weight:900; font-size:1.2rem;">Hangisi GERÇEKTE çok daha BÜYÜKTÜR?</div>',
             correct: '🐘 Fil (Kocaman)',
             distractors: ['🐜 Karınca (Minik)', 'İkisi de Aynı'],
             exp: 'Fil devasa bir canlıdır, karıncadan kat kat büyüktür! 🐘',
             audioKey: 'q_fil_vs_karinca'
           },
           {
-            html: '<div class="q-fruit-row" style="margin:8px auto; gap:24px; align-items:center;"><img src="assets/icons/3d/giraffe.png" class="q-3d-fruit" alt="Zürafa" style="width:84px; height:84px;"> <span style="font-size:1.6rem; font-weight:900; color:#64748b;">vs</span> <img src="assets/icons/3d/turtle.png" class="q-3d-fruit" alt="Kaplumbağa" style="width:52px; height:52px;"></div><div style="font-weight:900; font-size:1.2rem;">Hangisi çok daha UZUNDUR?</div>',
+            html: '<div class="q-fruit-row" style="margin:8px auto; gap:24px; align-items:center;"><img src="assets/icons/3d/giraffe.webp" class="q-3d-fruit" alt="Zürafa" style="width:84px; height:84px;"> <span style="font-size:1.6rem; font-weight:900; color:#64748b;">vs</span> <img src="assets/icons/3d/turtle.webp" class="q-3d-fruit" alt="Kaplumbağa" style="width:52px; height:52px;"></div><div style="font-weight:900; font-size:1.2rem;">Hangisi çok daha UZUNDUR?</div>',
             correct: '🦒 Zürafa (Uzun Boylu)',
             distractors: ['🐢 Kaplumbağa', 'İkisi de Aynı'],
             exp: 'Zürafalar upuzun boyunlarıyla ağaçların en tepesine ulaşır! 🦒',
@@ -8937,7 +8938,7 @@
     for (let i = 0; i < maxScore; i++) {
       const star = document.createElement('span');
       star.className = `star-slot ${i < currentScore ? 'filled' : ''}`;
-      star.innerHTML = `<img src="assets/icons/3d/star.png" style="width:28px; height:28px; object-fit:contain; vertical-align:middle; pointer-events:none;" alt="⭐">`;
+      star.innerHTML = `<img src="assets/icons/3d/star.webp" style="width:28px; height:28px; object-fit:contain; vertical-align:middle; pointer-events:none;" alt="⭐">`;
       container.appendChild(star);
     }
   }
