@@ -295,33 +295,32 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   width: 100vw;
   min-height: 100vh;
-  background: #F8FAFC;
+  background: linear-gradient(180deg, #BAE6FD 0%, #DDF4FF 25%, #F0F9FF 55%, #E6FAF0 85%, #DCFCE7 100%) !important;
   position: relative;
   overflow-x: hidden;
 }
 
 /* --------------------------------------------------------------------------
-   1) SOL SABİT MENÜ (SIDEBAR - Genişlik: 260px, Ferah Açık Buz Mavisi #F0F7FF)
+   1) ÇEKMECE MENÜ (OFF-CANVAS DRAWER - AKILLI TAHTA, TABLET, PC & MOBİL)
    -------------------------------------------------------------------------- */
 .app-sidebar {
-  width: 260px;
-  min-width: 260px;
-  max-width: 260px;
-  background: #F0F7FF; /* Ferah, aydınlık yumuşak buz mavisi zemin */
-  background: linear-gradient(180deg, #FFFFFF 0%, #F0F7FF 40%, #E8F3FF 100%);
+  position: fixed !important;
+  top: 0 !important;
+  left: -320px !important;
+  width: 300px !important;
+  max-width: 85vw !important;
+  height: 100vh !important;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F7FF 40%, #E8F3FF 100%) !important;
   color: #0F172A;
-  border-right: 1.5px solid #DCE7F5;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  overflow-y: auto;
-  overflow-x: hidden;
-  box-shadow: 4px 0 24px rgba(15, 23, 42, 0.05);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+  z-index: 100000 !important;
+  transition: left 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  box-shadow: 8px 0 32px rgba(15, 23, 42, 0.28) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.app-sidebar.sidebar-mobile-open {
+  left: 0 !important;
 }
 
 /* Sidebar Üst Bölüm: Moli & Logo & Konuşma Balonu */
@@ -7573,10 +7572,9 @@ input:checked + .slider:before {
    Moli ve 6 uçuşan rozet, Hızlı Liste karuseli ve MEB Güven kartı.
    ========================================================================== */
 
-/* Masaüstünde Mobil Elemanları Gizle */
+/* Masaüstü, Tablet & Akıllı Tahtada Sadece Telefon Öğelerini Gizle */
 .mobile-top-navbar,
-.mobile-phone-showcase,
-.mobile-drawer-backdrop {
+.mobile-phone-showcase {
   display: none !important;
 }
 
@@ -7595,10 +7593,11 @@ input:checked + .slider:before {
     display: none !important;
   }
 
-  /* Masaüstü Başlığını ve Masaüstü Hero Alanını Mobilde Gizle */
-  .app-topbar,
-  #edtechHeroSection,
-  #edtechTrustBanner,
+  /* Masaüstü/Akıllı Tahta Başlığını ve Vitrinini Mobilde Gizle */
+  .unified-topbar,
+  .desktop-alert-banner,
+  .widescreen-showcase-stage,
+  .widescreen-floating-trust-card,
   .home-contestants-bar {
     display: none !important;
   }
@@ -8228,6 +8227,730 @@ input:checked + .slider:before {
   .trust-check-icon {
     font-weight: 900;
   }
+}
+
+/* ==========================================================================
+   AKILLI TAHTA, TABLET & BİLGİSAYAR VİTRİNİ (GÖRSELDEKİ BİREBİR TASARIM)
+   - Bubbly Moli logosu ve 5 adet hap aksiyon butonu (Giriş Yap, Paylaş, Soru Ekle, Ayarlar, Menü)
+   - Turuncu uyarı bandı (Giriş Yapılmadı...)
+   - 3 Sütunlu Sahne: Sol (7 adet dikey sınıf kartı), Orta (Başlık + DERSE Bİ' MOLA + Hemen Başla),
+     Sağ (Moli Robot ve 6 uçuşan rozet)
+   - Alt Sabit Buzlu Cam Güven Bandı (MEB Müfredatına %100 Uygun - Pardus Uyumlu)
+   ========================================================================== */
+
+/* 1) BİRLEŞİK ÜST BAR (UNIFIED TOPBAR) */
+.unified-topbar {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px 12px 28px;
+  width: 100%;
+  max-width: 1420px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 50;
+  box-sizing: border-box;
+}
+
+.topbar-logo-brand {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.brand-bubbly-logo {
+  font-family: 'Poppins', 'Nunito', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+}
+
+.brand-bubbly-logo .logo-mo {
+  color: #2563EB;
+  -webkit-text-stroke: 1.4px #1E3A8A;
+  text-shadow: 0 2px 5px rgba(37, 99, 235, 0.28);
+}
+
+.brand-bubbly-logo .logo-li {
+  color: #F97316;
+  -webkit-text-stroke: 1.4px #C2410C;
+  text-shadow: 0 2px 5px rgba(249, 115, 22, 0.28);
+  margin-left: 1px;
+}
+
+.brand-bubbly-logo .logo-star {
+  font-size: 1.05rem;
+  margin-top: -16px;
+  margin-left: -2px;
+  filter: drop-shadow(0 0 6px #FBBF24);
+}
+
+.brand-sub-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #1E293B;
+  letter-spacing: -0.2px;
+  margin-top: 2px;
+}
+
+.topbar-unified-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-action-pill {
+  border: none;
+  border-radius: 9999px;
+  padding: 9px 20px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.topbar-action-pill:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.topbar-action-pill:active {
+  transform: scale(0.96);
+}
+
+.topbar-action-pill.pill-login {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.topbar-action-pill.pill-share {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.topbar-action-pill.pill-addquiz {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+}
+
+.topbar-action-pill.pill-settings {
+  background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+}
+
+.topbar-btn-menu {
+  background: #E0F2FE;
+  border: 2px solid #BAE6FD;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(186, 230, 253, 0.6);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.topbar-btn-menu:hover {
+  transform: translateY(-2px);
+  background: #BAE6FD;
+}
+
+.topbar-btn-menu:active {
+  transform: scale(0.94);
+}
+
+.topbar-btn-menu .hamburger-bar {
+  width: 20px;
+  height: 2.8px;
+  background: #0284C7;
+  border-radius: 2px;
+}
+
+/* 2) TAM GENİŞLİK TURUNCU UYARI BANDI */
+.desktop-alert-banner {
+  background: linear-gradient(90deg, #EA580C 0%, #F97316 50%, #EA580C 100%);
+  border-radius: 14px;
+  padding: 10px 24px;
+  text-align: center;
+  color: #FFFFFF;
+  width: calc(100% - 48px);
+  max-width: 1360px;
+  margin: 2px auto 18px auto;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.32);
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.desktop-alert-banner:hover {
+  filter: brightness(1.04);
+}
+
+.desktop-alert-banner:active {
+  transform: scale(0.99);
+}
+
+.desktop-alert-banner .alert-banner-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.desktop-alert-banner .alert-banner-subtitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #FEF3C7;
+  margin-top: 2px;
+}
+
+/* 3) MASAÜSTÜ / AKILLI TAHTA 3 SÜTUNLU SAHNE */
+.widescreen-showcase-stage {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 48px);
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 6px 10px 14px 10px;
+  gap: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı */
+.stage-grades-sidebar {
+  width: 215px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.stage-grade-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.stage-grade-card:hover {
+  transform: translateX(5px) scale(1.02);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+}
+
+.stage-grade-card:active {
+  transform: scale(0.97);
+}
+
+.card-kindergarten { border: 2.2px solid #93C5FD !important; }
+.card-grade1       { border: 2.2px solid #FCA5A5 !important; }
+.card-grade2       { border: 2.2px solid #86EFAC !important; }
+.card-grade3       { border: 2.2px solid #FDBA74 !important; }
+.card-grade4       { border: 2.2px solid #F87171 !important; }
+.card-duels        { border: 2.2px solid #FDE047 !important; }
+.card-english      { border: 2.2px solid #A5B4FC !important; }
+
+.grade-icon-cube {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.grade-card-3d-img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.grade-flag-emoji {
+  font-size: 1.6rem;
+}
+
+.grade-card-label {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1E293B;
+  letter-spacing: -0.2px;
+}
+
+.grade-multiline-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1E293B;
+}
+
+/* Orta Sütun: Başlık & Eylem */
+.stage-center-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 10px;
+  position: relative;
+  z-index: 10;
+}
+
+.stage-heading-block {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 24px;
+  padding: 0 28px;
+}
+
+.stage-main-title {
+  font-family: 'Poppins', 'Nunito', sans-serif;
+  font-size: clamp(2rem, 3.2vw, 3.3rem);
+  font-weight: 900;
+  color: #1E293B;
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.stage-main-title span {
+  display: block;
+}
+
+.stage-bubbly-3d {
+  font-family: 'Poppins', 'Nunito', sans-serif;
+  font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+  font-weight: 950;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.stage-bubbly-3d .word-derse {
+  color: #38BDF8;
+  -webkit-text-stroke: 2.2px #0C4A6E;
+  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+}
+
+.stage-bubbly-3d .word-bi {
+  color: #FBBF24;
+  -webkit-text-stroke: 2.2px #0C4A6E;
+  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+  margin: 0 6px;
+}
+
+.stage-bubbly-3d .word-mola {
+  color: #38BDF8;
+  -webkit-text-stroke: 2.2px #0C4A6E;
+  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+}
+
+.stage-sparkle {
+  position: absolute;
+  font-size: 1.8rem;
+  color: #FDE047;
+  filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.9));
+  user-select: none;
+  pointer-events: none;
+}
+
+.stage-sparkle.sparkle-left {
+  top: 10px;
+  left: 0;
+  animation: pulseSparkle 2.6s ease-in-out infinite alternate;
+}
+
+.stage-sparkle.sparkle-right {
+  top: 36px;
+  right: 0;
+  animation: pulseSparkle 3s ease-in-out 0.8s infinite alternate;
+}
+
+.stage-cta-container {
+  margin-top: 6px;
+}
+
+.stage-btn-start-3d {
+  background: linear-gradient(180deg, #FF7A00 0%, #FA5A00 100%);
+  border: 2.5px solid rgba(255, 255, 255, 0.55);
+  border-radius: 9999px;
+  box-shadow: 0 8px 0 #C2410C, 0 18px 32px rgba(250, 90, 0, 0.45);
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  padding: 16px 56px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.stage-btn-start-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 0 #C2410C, 0 22px 38px rgba(250, 90, 0, 0.5);
+}
+
+.stage-btn-start-3d:active {
+  transform: translateY(4px);
+  box-shadow: 0 4px 0 #C2410C, 0 8px 16px rgba(250, 90, 0, 0.4);
+}
+
+/* Sağ Sütun: Moli & 6 Uçuşan Rozet */
+.stage-moli-showcase {
+  width: 440px;
+  min-width: 360px;
+  max-width: 45vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.widescreen-moli-arena {
+  position: relative;
+  width: 100%;
+  height: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widescreen-moli-mascot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widescreen-moli-mascot .moli-mascot-img {
+  height: 350px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.14));
+  animation: moliFloatGentle 3s ease-in-out infinite alternate;
+}
+
+.moli-floating-pill {
+  position: absolute;
+  background: #FFFFFF;
+  border-radius: 9999px;
+  padding: 7px 16px;
+  font-weight: 900;
+  font-size: 0.98rem;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  z-index: 5;
+  user-select: none;
+  white-space: nowrap;
+  transition: transform 0.15s ease;
+}
+
+.moli-floating-pill:hover {
+  transform: scale(1.05);
+}
+
+.moli-floating-pill.pill-math {
+  top: 40px;
+  left: 10px;
+  border: 2px solid #93C5FD;
+  color: #1E3A8A;
+}
+
+.moli-floating-pill.pill-letters {
+  top: 55px;
+  right: 15px;
+  border: 2px solid #C4B5FD;
+  color: #6D28D9;
+}
+
+.pill-ico-badge {
+  background: #E2E8F0;
+  color: #475569;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.pill-txt-abc {
+  color: #6D28D9;
+  letter-spacing: 1px;
+}
+
+.moli-floating-circle {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  z-index: 5;
+  user-select: none;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.moli-floating-circle:hover {
+  transform: scale(1.15);
+}
+
+.moli-floating-circle.circle-trophy {
+  top: 175px;
+  left: 20px;
+  border: 2px solid #FDE68A;
+}
+
+.moli-floating-circle.circle-balloon {
+  top: 215px;
+  right: 25px;
+  border: 2px solid #FECDD3;
+}
+
+.moli-floating-pill.pill-points {
+  bottom: 50px;
+  left: 5px;
+  border: 2px solid #FDE68A;
+  color: #B45309;
+}
+
+.moli-floating-pill.pill-ready {
+  bottom: 24px;
+  left: 52%;
+  transform: translateX(-40%);
+  border: 2px solid #FDBA74;
+  color: #C2410C;
+  padding: 7px 18px;
+}
+
+.moli-floating-pill.pill-ready:hover {
+  transform: translateX(-40%) scale(1.05);
+}
+
+/* 4) ALT SABİT / YÜZEN GÜVEN BANDI */
+.widescreen-floating-trust-card {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  padding: 12px 28px;
+  width: calc(100% - 48px);
+  max-width: 1360px;
+  margin: 18px auto 26px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.trust-left-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.trust-3d-book-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.trust-lead-text {
+  font-size: 1.05rem;
+  color: #334155;
+  line-height: 1.2;
+}
+
+.trust-lead-text strong {
+  color: #0F172A;
+  font-weight: 900;
+}
+
+.trust-right-tag {
+  background: #DCFCE7;
+  color: #065F46;
+  font-size: 0.82rem;
+  font-weight: 800;
+  border-radius: 9999px;
+  padding: 5px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  white-space: nowrap;
+}
+
+.trust-check-mark {
+  font-weight: 900;
+}
+
+/* 5) TABLET UYARLAMASI (769px - 1100px) */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .unified-topbar {
+    padding: 12px 18px;
+  }
+  .brand-bubbly-logo {
+    font-size: 1.85rem;
+  }
+  .topbar-action-pill {
+    padding: 6px 12px;
+    font-size: 0.82rem;
+    gap: 5px;
+  }
+  .widescreen-showcase-stage {
+    gap: 12px;
+    padding: 0 8px;
+  }
+  .stage-grades-sidebar {
+    width: 175px;
+    min-width: 160px;
+  }
+  .stage-grade-card {
+    padding: 7px 10px;
+    gap: 8px;
+  }
+  .grade-card-label {
+    font-size: 0.92rem;
+  }
+  .grade-icon-cube {
+    width: 30px;
+    height: 30px;
+  }
+  .grade-card-3d-img {
+    width: 28px;
+    height: 28px;
+  }
+  .stage-moli-showcase {
+    width: 320px;
+    min-width: 280px;
+  }
+  .widescreen-moli-arena {
+    height: 360px;
+  }
+  .widescreen-moli-mascot .moli-mascot-img {
+    height: 280px;
+  }
+  .moli-floating-pill {
+    font-size: 0.85rem;
+    padding: 5px 12px;
+  }
+  .trust-lead-text {
+    font-size: 0.92rem;
+  }
+}
+
+/* 6) AYARLAR MODALI STİLLERİ */
+.settings-modal-window {
+  max-width: 520px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 24px 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.settings-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.setting-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  gap: 16px;
+}
+
+.setting-item-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.setting-main-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1E293B;
+}
+
+.setting-sub-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748B;
+  margin-top: 2px;
+}
+
+.setting-btn-toggle,
+.setting-btn-action {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+  transition: transform 0.12s ease;
+}
+
+.setting-btn-toggle.is-off {
+  background: #94A3B8;
+  box-shadow: none;
+}
+
+.setting-btn-toggle:active,
+.setting-btn-action:active {
+  transform: scale(0.95);
 }
 
 

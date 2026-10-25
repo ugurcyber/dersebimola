@@ -228,66 +228,51 @@
         </div>
       </header>
 
-      <!-- FERAH ÜST BAR (TOPBAR - MASAÜSTÜ & AKILLI TAHTA) -->
-      <header class="app-topbar" id="appHeader">
-        <div class="topbar-left">
-          <span class="topbar-tag">
-            <span class="pulse-dot"></span> MEB Akıllı Tahta & ETAP
-          </span>
-        </div>
-
-        <!-- Üst Bar Ortası: Mod Seçici (👥 Düello vs 👤 Pratik) -->
-        <div class="topbar-center">
-          <div class="mode-switch-container" id="modeSwitchContainer">
-            <button class="mode-switch-btn active" id="btnModeDuel" data-mode="duel">
-              <span class="mode-icon">👥</span>
-              <span>İki Kişilik Düello</span>
-            </button>
-            <button class="mode-switch-btn" id="btnModeSolo" data-mode="solo">
-              <span class="mode-icon">👤</span>
-              <span>Tek Kişilik Pratik</span>
-            </button>
+      <!-- ============================================================== -->
+      <!-- AKILLI TAHTA, TABLET & BİLGİSAYAR ÜST BARI (TOPBAR)           -->
+      <!-- ============================================================== -->
+      <header class="app-topbar unified-topbar" id="appHeader" aria-label="Ana Menü ve İşlemler">
+        <div class="topbar-logo-brand" id="btnDesktopHome" role="button" tabindex="0" title="Derse Bi' Mola Ana Menü">
+          <div class="brand-bubbly-logo">
+            <span class="logo-mo">Mo</span><span class="logo-li">li</span><span class="logo-star">⭐</span>
           </div>
+          <div class="brand-sub-title">Derse Bi' Mola</div>
         </div>
 
-        <!-- Üst Bar Sağ Köşe: Rastgele 2 Öğrenci, Ses, Tam Ekran -->
-        <div class="topbar-right">
-          <button class="topbar-picker-btn" id="btnOpenPicker" title="Sınıf Listesinden Rastgele Öğrenci Seç (Kura Çarkı)">
-            <span class="tool-icon">🎲</span>
-            <span class="tool-label">Rastgele Öğrenci Seç</span>
-            <span class="badge-smart-tool">KURA</span>
+        <div class="topbar-unified-actions">
+          <button class="topbar-action-pill pill-login" id="btnDesktopLogin" type="button" aria-label="Giriş Yap">
+            <span class="pill-icon">👤</span>
+            <span class="pill-text" id="desktopLoginText">Giriş Yap</span>
           </button>
-
-          <div class="topbar-divider"></div>
-
-          <!-- Paylaş / WhatsApp Butonu (Üst Bar) -->
-          <button class="icon-tool-btn btn-topbar-share" id="btnTopbarShare" title="Arkadaşına veya Veliye WhatsApp ile Gönder" aria-label="WhatsApp ile Paylaş">
-            <span class="topbar-share-icon">📲</span>
+          <button class="topbar-action-pill pill-share" id="btnDesktopShare" type="button" aria-label="Paylaş">
+            <span class="pill-icon">🔗</span>
+            <span class="pill-text">Paylaş</span>
           </button>
-
-          <!-- Sistem Kontrolleri (Ses & Tam Ekran) -->
-          <button class="icon-tool-btn" id="btnToggleSound" title="Sesi Aç / Kapat" aria-label="Sesi Aç / Kapat">
-            <svg class="svg-icon icon-sound-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-            <svg class="svg-icon icon-sound-off hide" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <line x1="23" y1="9" x2="17" y2="15"></line>
-              <line x1="17" y1="9" x2="23" y2="15"></line>
-            </svg>
+          <button class="topbar-action-pill pill-addquiz" id="btnDesktopAddQuiz" type="button" aria-label="Soru Ekle">
+            <span class="pill-icon">➕</span>
+            <span class="pill-text">Soru Ekle</span>
           </button>
-
-          <button class="icon-tool-btn" id="btnToggleFullscreen" title="Tam Ekran Yap" aria-label="Tam Ekran Yap">
-            <svg class="svg-icon icon-fullscreen-enter" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-            </svg>
-            <svg class="svg-icon icon-fullscreen-exit hide" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
-            </svg>
+          <button class="topbar-action-pill pill-settings" id="btnDesktopSettings" type="button" aria-label="Ayarlar">
+            <span class="pill-icon">⚙️</span>
+            <span class="pill-text">Ayarlar</span>
+          </button>
+          <button class="topbar-btn-menu" id="btnDesktopMenu" type="button" aria-label="Menü" aria-expanded="false">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
           </button>
         </div>
       </header>
+
+      <!-- TAM GENİŞLİK TURUNCU UYARI BANDI (GİRİŞ YAPILMADI...) -->
+      <div class="desktop-alert-banner" id="desktopNoticeBanner" role="button" tabindex="0" title="Öğretmen Girişi Yap">
+        <div class="alert-banner-title">
+          <span class="alert-lock-icon">🔒</span> Giriş Yapılmadı...
+        </div>
+        <div class="alert-banner-subtitle">
+          Öğretmenler İçin Sınıf ve Liste Eklemek İçin Lütfen <strong>Giriş Yapın</strong>
+        </div>
+      </div>
 
       <!-- 1. GÖRÜNÜM: ANA LOBİ EKRANI (#viewLobby) -->
       <main class="view-container active" id="viewLobby">
@@ -439,110 +424,144 @@
               </div>
             </div>
 
-            <!-- 1. MODERN EDTECH HERO (Quizizz & Duolingo Standardı - Masaüstü Görünümü) -->
-            <div class="edtech-hero-card" id="edtechHeroSection">
-              <!-- SOL TARAF (Metin ve Eylem) -->
-              <div class="hero-left-col">
-                <div class="hero-kicker-pill">
-                  <span class="kicker-pulse"></span>
-                  <span class="kicker-text">✨ Türkiye'nin #1 Akıllı Tahta Düello Platformu</span>
+            <!-- ============================================================== -->
+            <!-- MASAÜSTÜ, AKILLI TAHTA & TABLET VİTRİNİ (GÖRSELDEKİ BİREBİR TASARIM) -->
+            <!-- ============================================================== -->
+            <div class="widescreen-showcase-stage" id="widescreenShowcaseStage">
+              <!-- SOL SÜTUN: 7 ADET ŞIK SINIF VE DERS KARTI -->
+              <aside class="stage-grades-sidebar">
+                <div class="stage-grade-card card-kindergarten" data-grade="0" role="button" tabindex="0" title="Anasınıfı">
+                  <div class="grade-icon-cube icon-theme-blue">
+                    <img src="assets/icons/3d/puzzle_piece.png" class="grade-card-3d-img" alt="Anasınıfı">
+                  </div>
+                  <span class="grade-card-label">Anasınıfı</span>
                 </div>
 
-                <h1 class="hero-main-title">
-                  Öğrenmenin <span class="hero-title-highlight">En Eğlenceli</span> Yolu!
-                </h1>
-
-                <p class="hero-description">
-                  Sınıfını seç, Moli ile eğlenceli düellolara katıl ve öğrenirken yarış!
-                </p>
-
-                <div class="hero-cta-group">
-                  <button class="hero-btn-primary" id="btnHeroStart" type="button" aria-label="Hemen Başla">
-                    <span class="btn-emoji">🚀</span>
-                    <span class="btn-label">Hemen Başla</span>
-                  </button>
-                  <div class="hero-perks-list">
-                    <span class="hero-perk-badge">🏆 MEB Müfredatı</span>
-                    <span class="hero-perk-badge">⚡ Canlı Sınıf Düellosu</span>
+                <div class="stage-grade-card card-grade1" data-grade="1" role="button" tabindex="0" title="1. Sınıf">
+                  <div class="grade-icon-cube icon-theme-red">
+                    <img src="assets/icons/3d/bullseye.png" class="grade-card-3d-img" alt="1. Sınıf">
                   </div>
+                  <span class="grade-card-label">1. Sınıf</span>
+                </div>
+
+                <div class="stage-grade-card card-grade2" data-grade="2" role="button" tabindex="0" title="2. Sınıf">
+                  <div class="grade-icon-cube icon-theme-green">
+                    <img src="assets/icons/3d/abacus.png" class="grade-card-3d-img" alt="2. Sınıf">
+                  </div>
+                  <span class="grade-card-label">2. Sınıf</span>
+                </div>
+
+                <div class="stage-grade-card card-grade3" data-grade="3" role="button" tabindex="0" title="3. Sınıf">
+                  <div class="grade-icon-cube icon-theme-orange">
+                    <img src="assets/icons/3d/open_book.png" class="grade-card-3d-img" alt="3. Sınıf">
+                  </div>
+                  <span class="grade-card-label">3. Sınıf</span>
+                </div>
+
+                <div class="stage-grade-card card-grade4" data-grade="4" role="button" tabindex="0" title="4. Sınıf">
+                  <div class="grade-icon-cube icon-theme-crimson">
+                    <img src="assets/icons/3d/books.png" class="grade-card-3d-img" alt="4. Sınıf">
+                  </div>
+                  <span class="grade-card-label">4. Sınıf</span>
+                </div>
+
+                <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Düellolar & Oyunlar">
+                  <div class="grade-icon-cube icon-theme-amber">
+                    <img src="assets/icons/3d/lightning.png" class="grade-card-3d-img" alt="Düellolar">
+                  </div>
+                  <div class="grade-multiline-label">
+                    <span>Düellolar</span>
+                    <span>&amp; Oyunlar</span>
+                  </div>
+                </div>
+
+                <div class="stage-grade-card card-english" id="btnStageQuickEnglish" role="button" tabindex="0" title="İngilizce">
+                  <div class="grade-icon-cube icon-theme-indigo">
+                    <span class="grade-flag-emoji">🇬🇧</span>
+                  </div>
+                  <span class="grade-card-label">İngilizce</span>
+                </div>
+              </aside>
+
+              <!-- ORTA SÜTUN: BAŞLIK, 3D MARKA VE BÜYÜK TURUNCU BUTON -->
+              <div class="stage-center-content">
+                <div class="stage-heading-block">
+                  <span class="stage-sparkle sparkle-left" aria-hidden="true">✨</span>
+                  <h1 class="stage-main-title">
+                    <span>Öğrenmenin</span>
+                    <span>En Eğlenceli Yolu!</span>
+                  </h1>
+                  <div class="stage-bubbly-3d" aria-label="Derse Bi' Mola">
+                    <span class="word-derse">DERSE</span>
+                    <span class="word-bi">Bİ'</span>
+                    <span class="word-mola">MOLA!</span>
+                  </div>
+                  <span class="stage-sparkle sparkle-right" aria-hidden="true">✨</span>
+                </div>
+
+                <div class="stage-cta-container">
+                  <button class="stage-btn-start-3d" id="btnDesktopHeroStart" type="button" aria-label="Hemen Başla">
+                    <span class="rocket-emoji">🚀</span>
+                    <span class="btn-text">Hemen Başla</span>
+                  </button>
                 </div>
               </div>
 
-              <!-- SAĞ TARAF (Görsel Odak: Moli Robot & Uçuşan Semboller) -->
-              <div class="hero-right-col">
-                <div class="hero-stage-wrap">
-                  <!-- Arka Plan Enerji Halesi -->
-                  <div class="hero-glow-aura"></div>
-
-                  <!-- Uçuşan Matematik Sembolü -->
-                  <div class="floating-badge badge-math" aria-hidden="true">
-                    <span class="badge-icon">🧮</span>
-                    <span class="badge-text">4 + 5 = 9</span>
+              <!-- SAĞ SÜTUN: MOLI MASKOTU VE 6 UÇUŞAN ROZET -->
+              <div class="stage-moli-showcase">
+                <div class="widescreen-moli-arena">
+                  <!-- Matematik Rozeti (Sol Üst) -->
+                  <div class="moli-floating-pill pill-math" id="btnPillMath">
+                    <span class="pill-ico">🧮</span>
+                    <span class="pill-txt">4 + 5 = 9</span>
                   </div>
 
-                  <!-- Uçuşan Harfler Sembolü -->
-                  <div class="floating-badge badge-letters" aria-hidden="true">
-                    <span class="badge-icon">🔤</span>
-                    <span class="badge-text">A B C</span>
+                  <!-- Harfler Rozeti (Sağ Üst) -->
+                  <div class="moli-floating-pill pill-letters" id="btnPillLetters">
+                    <span class="pill-ico-badge">abc</span>
+                    <span class="pill-txt-abc">A B C</span>
                   </div>
 
-                  <!-- Uçuşan Yıldız / Puan Sembolü -->
-                  <div class="floating-badge badge-star" aria-hidden="true">
-                    <span class="badge-icon">⭐</span>
-                    <span class="badge-text">+10 Puan</span>
+                  <!-- Kupa Daire (Orta Sol) -->
+                  <div class="moli-floating-circle circle-trophy" id="btnStageCircleTrophy" role="button" tabindex="0" title="Lider Tablosu">
+                    <span>🏆</span>
                   </div>
 
-                  <!-- Uçuşan Balon -->
-                  <div class="floating-badge badge-balloon" aria-hidden="true">
-                    <span class="badge-icon">🎈</span>
+                  <!-- Balon Daire (Orta Sağ) -->
+                  <div class="moli-floating-circle circle-balloon" id="btnStageCircleBalloon" role="button" tabindex="0" title="Kutlama">
+                    <span>🎈</span>
                   </div>
 
-                  <!-- Uçuşan Kupa -->
-                  <div class="floating-badge badge-trophy" aria-hidden="true">
-                    <span class="badge-icon">🏆</span>
+                  <!-- Puan Rozeti (Sol Alt) -->
+                  <div class="moli-floating-pill pill-points" id="btnPillPoints">
+                    <span class="pill-ico">⭐</span>
+                    <span class="pill-txt">+10 Puan</span>
                   </div>
 
-                  <!-- Moli Robot Maskot (Devasa, Şeffaf ve Havada Süzülme Animasyonlu) -->
-                  <div class="hero-moli-mascot-box">
-                    <img src="assets/mascot/moli.png" class="hero-moli-img" alt="Sevimli Robot Moli Maskot" loading="lazy" decoding="async">
-                    <div class="hero-moli-bubble">
-                      <span>🤖 Hazır mısın?</span>
-                    </div>
+                  <!-- Hazır mısın? Rozeti (Alt Orta) -->
+                  <div class="moli-floating-pill pill-ready" id="btnPillReady">
+                    <span class="pill-ico">🤖</span>
+                    <span class="pill-txt">Hazır mısın?</span>
+                  </div>
+
+                  <!-- Moli Maskot Görseli -->
+                  <div class="widescreen-moli-mascot" id="widescreenMoliRobot">
+                    <img src="assets/mascot/moli.png" class="moli-mascot-img" alt="Sevimli Robot Moli" loading="eager">
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- GÜVEN BANDI / TRUST BADGES (MEB Müfredatı, Pardus & Akıllı Tahta, Sınıf İçi Oyun Motoru) -->
-            <div class="edtech-trust-banner" id="edtechTrustBanner" aria-label="Sosyal Kanıt ve Güven Bandı">
-              <div class="trust-badge-item">
-                <div class="trust-badge-icon-box">
-                  <span class="trust-badge-icon" aria-hidden="true">📚</span>
-                </div>
-                <div class="trust-badge-text">
-                  <span class="trust-badge-title">MEB Müfredatına %100 Uygun</span>
-                  <span class="trust-badge-desc">Kazanımlarla tam uyumlu soru havuzu</span>
-                </div>
+            <!-- ALT SABİT / YÜZEN GÜVEN BANDI (MEB MÜFREDATINA %100 UYGUN) -->
+            <div class="widescreen-floating-trust-card" id="widescreenTrustCard">
+              <div class="trust-left-wrap">
+                <img src="assets/icons/3d/books.png" class="trust-3d-book-icon" alt="MEB Müfredatı">
+                <span class="trust-lead-text">
+                  <strong>MEB Müfredatına %100 Uygun</strong> - Kazanımlarla tam uyumlu soru havuzu...
+                </span>
               </div>
-              <div class="trust-badge-divider" aria-hidden="true"></div>
-              <div class="trust-badge-item">
-                <div class="trust-badge-icon-box">
-                  <span class="trust-badge-icon" aria-hidden="true">🐧</span>
-                </div>
-                <div class="trust-badge-text">
-                  <span class="trust-badge-title">Pardus ve Tüm Tahtalarla Uyumlu</span>
-                  <span class="trust-badge-desc">ETAP dokunmatik ekran &amp; sıfır kurulum</span>
-                </div>
-              </div>
-              <div class="trust-badge-divider" aria-hidden="true"></div>
-              <div class="trust-badge-item">
-                <div class="trust-badge-icon-box">
-                  <span class="trust-badge-icon" aria-hidden="true">🎮</span>
-                </div>
-                <div class="trust-badge-text">
-                  <span class="trust-badge-title">Sınıf İçi Eğlenceli Oyun Motoru</span>
-                  <span class="trust-badge-desc">Refleks, düello ve çift dokunuş modu</span>
-                </div>
+              <div class="trust-right-tag">
+                <span class="trust-check-mark">✓</span> GÜVENLİ &amp; PARDUS UYUMLU
               </div>
             </div>
 
@@ -1499,6 +1518,53 @@
 
       <div class="leaderboard-footer">
         <button class="btn-reset-league" id="btnResetLeague">Lig Puanlarını Sıfırla</button>
+      </div>
+    </div>
+  <!-- MODAL: AYARLAR (AKILLI TAHTA, SES VE OYUN TERCİHLERİ) -->
+  <div class="modal-backdrop hide" id="modalSettings">
+    <div class="modal-window settings-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalSettings">✕</button>
+      <div class="modal-header">
+        <div class="modal-badge-icon">⚙️</div>
+        <h3 class="modal-title">Sistem ve Akıllı Tahta Ayarları</h3>
+        <p class="modal-desc">Ses efektleri, anonslar ve ekran tercihlerini buradan yönetebilirsiniz.</p>
+      </div>
+      <div class="settings-modal-body">
+        <div class="setting-item-row">
+          <div class="setting-item-text">
+            <span class="setting-main-label">🔊 Ses Efektleri</span>
+            <span class="setting-sub-label">Doğru, yanlış, tıklama ve konfeti sesleri</span>
+          </div>
+          <button class="setting-btn-toggle" id="btnSettingsSoundToggle">Ses: Açık 🔊</button>
+        </div>
+        <div class="setting-item-row">
+          <div class="setting-item-text">
+            <span class="setting-main-label">🎙️ Sunucu Sesi & Zafer Anonsları</span>
+            <span class="setting-sub-label">Öğretmen ve zafer tebrik anonsları</span>
+          </div>
+          <button class="setting-btn-toggle" id="btnSettingsAnnouncerToggle">Anons: Açık 🎙️</button>
+        </div>
+        <div class="setting-item-row">
+          <div class="setting-item-text">
+            <span class="setting-main-label">📖 Soruları Sesli Oku</span>
+            <span class="setting-sub-label">Soru geldiğinde otomatik seslendirme</span>
+          </div>
+          <button class="setting-btn-toggle" id="btnSettingsAutoReadToggle">Okuma: Açık 📖</button>
+        </div>
+        <div class="setting-item-row">
+          <div class="setting-item-text">
+            <span class="setting-main-label">💡 Çözüm Açıklamasını Göster</span>
+            <span class="setting-sub-label">Cevap verildikten sonra açıklama gösterimi</span>
+          </div>
+          <button class="setting-btn-toggle" id="btnSettingsExplanationToggle">Açıklama: Açık 💡</button>
+        </div>
+        <div class="setting-item-row">
+          <div class="setting-item-text">
+            <span class="setting-main-label">⛶ Tam Ekran Modu (Akıllı Tahta)</span>
+            <span class="setting-sub-label">Pardus ETAP ve büyük ekranlarda tam ekran</span>
+          </div>
+          <button class="setting-btn-action" id="btnSettingsFullscreenAction">Tam Ekran ⛶</button>
+        </div>
       </div>
     </div>
   </div>

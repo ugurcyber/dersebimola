@@ -7924,6 +7924,9 @@
   function updateTeacherAuthUI() {
     const mobileLoginBtn = document.getElementById('btnMobileLogin');
     const mobileNoticeBanner = document.getElementById('btnMobileNoticeBanner');
+    const desktopLoginText = document.getElementById('desktopLoginText');
+    const desktopNoticeBanner = document.getElementById('desktopNoticeBanner');
+    const btnDesktopLogin = document.getElementById('btnDesktopLogin');
 
     if (state.teacherSession.isLoggedIn) {
       DOM.btnTeacherAuth.classList.add('logged-in');
@@ -7936,6 +7939,15 @@
       if (mobileNoticeBanner) {
         mobileNoticeBanner.style.display = 'none';
       }
+      if (desktopLoginText) {
+        desktopLoginText.textContent = state.teacherSession.name || 'Öğretmenim';
+      }
+      if (btnDesktopLogin) {
+        btnDesktopLogin.classList.add('logged-in');
+      }
+      if (desktopNoticeBanner) {
+        desktopNoticeBanner.style.display = 'none';
+      }
     } else {
       DOM.btnTeacherAuth.classList.remove('logged-in');
       DOM.authBtnText.textContent = 'Öğretmen Girişi';
@@ -7946,6 +7958,15 @@
       }
       if (mobileNoticeBanner) {
         mobileNoticeBanner.style.display = '';
+      }
+      if (desktopLoginText) {
+        desktopLoginText.textContent = 'Giriş Yap';
+      }
+      if (btnDesktopLogin) {
+        btnDesktopLogin.classList.remove('logged-in');
+      }
+      if (desktopNoticeBanner) {
+        desktopNoticeBanner.style.display = '';
       }
     }
   }
@@ -11076,6 +11097,241 @@
       pillBadgeReady.addEventListener('pointerdown', () => {
         audio.playClick();
         showToast('🤖 Moli seninle oynamaya hazır!');
+      });
+    }
+
+    // =========================================================================
+    // AKILLI TAHTA, TABLET & BİLGİSAYAR VİTRİNİ ETKİLEŞİMLERİ (WIDESCREEN SHOWCASE)
+    // =========================================================================
+    const btnDesktopHome = document.getElementById('btnDesktopHome');
+    if (btnDesktopHome) {
+      btnDesktopHome.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        if (state.currentView === 'duel') {
+          exitDuel();
+        } else if (state.currentSection !== 'home') {
+          openHomePage();
+        } else {
+          handleMoliClick();
+        }
+      });
+      btnDesktopHome.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnDesktopLogin = document.getElementById('btnDesktopLogin');
+    if (btnDesktopLogin) {
+      btnDesktopLogin.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        handleAuthClick();
+      });
+      btnDesktopLogin.addEventListener('click', e => e.preventDefault());
+    }
+
+    const desktopNoticeBanner = document.getElementById('desktopNoticeBanner');
+    if (desktopNoticeBanner) {
+      desktopNoticeBanner.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        handleAuthClick();
+      });
+      desktopNoticeBanner.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnDesktopShare = document.getElementById('btnDesktopShare');
+    if (btnDesktopShare) {
+      btnDesktopShare.addEventListener('pointerdown', handleGeneralShare);
+      btnDesktopShare.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnDesktopAddQuiz = document.getElementById('btnDesktopAddQuiz');
+    if (btnDesktopAddQuiz) {
+      btnDesktopAddQuiz.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        openCustomQModal();
+      });
+      btnDesktopAddQuiz.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnDesktopSettings = document.getElementById('btnDesktopSettings');
+    const modalSettings = document.getElementById('modalSettings');
+    if (btnDesktopSettings && modalSettings) {
+      btnDesktopSettings.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        openModal(modalSettings);
+      });
+      btnDesktopSettings.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnSettingsSoundToggle = document.getElementById('btnSettingsSoundToggle');
+    if (btnSettingsSoundToggle) {
+      btnSettingsSoundToggle.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        toggleSound();
+        btnSettingsSoundToggle.textContent = state.soundEnabled ? 'Ses: Açık 🔊' : 'Ses: Kapalı 🔇';
+        btnSettingsSoundToggle.classList.toggle('is-off', !state.soundEnabled);
+      });
+    }
+
+    const btnSettingsAnnouncerToggle = document.getElementById('btnSettingsAnnouncerToggle');
+    if (btnSettingsAnnouncerToggle) {
+      btnSettingsAnnouncerToggle.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        toggleAnnouncerVoice();
+        btnSettingsAnnouncerToggle.textContent = state.announcerEnabled ? 'Anons: Açık 🎙️' : 'Anons: Kapalı 🔇';
+        btnSettingsAnnouncerToggle.classList.toggle('is-off', !state.announcerEnabled);
+      });
+    }
+
+    const btnSettingsAutoReadToggle = document.getElementById('btnSettingsAutoReadToggle');
+    if (btnSettingsAutoReadToggle) {
+      btnSettingsAutoReadToggle.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        state.autoReadQuestion = !state.autoReadQuestion;
+        StorageManager.saveSettings();
+        updateAutoReadUI();
+        btnSettingsAutoReadToggle.textContent = state.autoReadQuestion ? 'Okuma: Açık 📖' : 'Okuma: Kapalı 🔇';
+        btnSettingsAutoReadToggle.classList.toggle('is-off', !state.autoReadQuestion);
+      });
+    }
+
+    const btnSettingsExplanationToggle = document.getElementById('btnSettingsExplanationToggle');
+    if (btnSettingsExplanationToggle) {
+      btnSettingsExplanationToggle.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        state.showAutoExplanation = !state.showAutoExplanation;
+        StorageManager.saveSettings();
+        btnSettingsExplanationToggle.textContent = state.showAutoExplanation ? 'Açıklama: Açık 💡' : 'Açıklama: Kapalı 🔇';
+        btnSettingsExplanationToggle.classList.toggle('is-off', !state.showAutoExplanation);
+      });
+    }
+
+    const btnSettingsFullscreenAction = document.getElementById('btnSettingsFullscreenAction');
+    if (btnSettingsFullscreenAction) {
+      btnSettingsFullscreenAction.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        toggleFullscreen();
+      });
+    }
+
+    const btnDesktopMenu = document.getElementById('btnDesktopMenu');
+    if (btnDesktopMenu) {
+      btnDesktopMenu.addEventListener('pointerdown', toggleMobileSidebar);
+      btnDesktopMenu.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnDesktopHeroStart = document.getElementById('btnDesktopHeroStart');
+    if (btnDesktopHeroStart) {
+      btnDesktopHeroStart.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        const section = document.querySelector('.home-section-container');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          setGrade(1);
+        }
+      });
+      btnDesktopHeroStart.addEventListener('click', e => e.preventDefault());
+    }
+
+    // 7 Adet Dikey Sınıf / Ders Kartı (Sol Sütun)
+    document.querySelectorAll('.stage-grades-sidebar .stage-grade-card[data-grade]').forEach(card => {
+      card.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const g = card.getAttribute('data-grade');
+        if (g !== null && g !== undefined) {
+          setGrade(g);
+        }
+      });
+      card.addEventListener('click', e => e.preventDefault());
+    });
+
+    const btnStageQuickDuels = document.getElementById('btnStageQuickDuels');
+    if (btnStageQuickDuels) {
+      btnStageQuickDuels.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        setGameMode('duel');
+        const section = document.querySelector('.home-popular-grid') || document.querySelector('.home-section-container');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+      btnStageQuickDuels.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnStageQuickEnglish = document.getElementById('btnStageQuickEnglish');
+    if (btnStageQuickEnglish) {
+      btnStageQuickEnglish.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        setGrade(2);
+        if (typeof selectSubject === 'function') {
+          selectSubject('english');
+        }
+      });
+      btnStageQuickEnglish.addEventListener('click', e => e.preventDefault());
+    }
+
+    // Sağ Sütundaki Rozetler
+    const btnPillMath = document.getElementById('btnPillMath');
+    if (btnPillMath) {
+      btnPillMath.addEventListener('pointerdown', () => {
+        audio.playCorrect();
+        showToast('🧮 4 + 5 = 9! Matematik harika!');
+      });
+    }
+
+    const btnPillLetters = document.getElementById('btnPillLetters');
+    if (btnPillLetters) {
+      btnPillLetters.addEventListener('pointerdown', () => {
+        audio.playClick();
+        showToast('🔤 A B C - Harfleri öğrenmeye hazır mısın?');
+      });
+    }
+
+    const btnStageCircleTrophy = document.getElementById('btnStageCircleTrophy');
+    if (btnStageCircleTrophy) {
+      btnStageCircleTrophy.addEventListener('pointerdown', () => {
+        audio.playFanfare();
+        openLeaderboardModal();
+      });
+    }
+
+    const btnStageCircleBalloon = document.getElementById('btnStageCircleBalloon');
+    if (btnStageCircleBalloon) {
+      btnStageCircleBalloon.addEventListener('pointerdown', () => {
+        audio.playPop();
+        if (typeof launchConfetti === 'function') launchConfetti();
+      });
+    }
+
+    const btnPillPoints = document.getElementById('btnPillPoints');
+    if (btnPillPoints) {
+      btnPillPoints.addEventListener('pointerdown', () => {
+        audio.playCorrect();
+        showToast('⭐ +10 Puan Kazandın! Harikasın!');
+      });
+    }
+
+    const btnPillReady = document.getElementById('btnPillReady');
+    if (btnPillReady) {
+      btnPillReady.addEventListener('pointerdown', () => {
+        audio.playClick();
+        showToast('🤖 Moli seninle oynamaya hazır!');
+      });
+    }
+
+    const widescreenMoliRobot = document.getElementById('widescreenMoliRobot');
+    if (widescreenMoliRobot) {
+      widescreenMoliRobot.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        audio.playClick();
+        handleMoliClick();
       });
     }
   }
