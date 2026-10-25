@@ -290,14 +290,25 @@ h1, h2, h3, h4, h5, h6 {
    3. EDTECH SAAS MİMARİSİ: SOL SABİT MENÜ (SIDEBAR) & FERAH ÜST BAR (TOPBAR)
    ========================================================================== */
 
-/* Ana Panel Taşıyıcı Izgarası */
+/* Ana Panel Taşıyıcı Izgarası (Sabit Ekran - 100vh) */
+html, body {
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden !important;
+  background: linear-gradient(180deg, #62B3F9 0%, #7EC3FA 18%, #A3D4FB 42%, #C5E5FD 68%, #DCF0FE 86%, #BCE2FD 100%) !important;
+}
+
 .app-layout {
   display: flex;
+  flex-direction: column;
   width: 100vw;
-  min-height: 100vh;
-  background: linear-gradient(180deg, #BAE6FD 0%, #DDF4FF 25%, #F0F9FF 55%, #E6FAF0 85%, #DCFCE7 100%) !important;
+  height: 100vh;
+  max-height: 100vh;
+  background: linear-gradient(180deg, #62B3F9 0%, #7EC3FA 18%, #A3D4FB 42%, #C5E5FD 68%, #DCF0FE 86%, #BCE2FD 100%) !important;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -750,8 +761,10 @@ h1, h2, h3, h4, h5, h6 {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background: #F8FAFC; /* Göz yormayan, akıllı tahtada parlamayan ferah zemin */
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden !important;
+  background: transparent !important;
 }
 
 /* FERAH ÜST BAR (TOPBAR) */
@@ -7565,667 +7578,271 @@ input:checked + .slider:before {
 }
 
 /* ==========================================================================
-   MOBİL TELEFON VİTRİNİ: GÖRSELDEKİ BİREBİR TASARIM & RENKLER
-   Ferah gökyüzü mavisi (#BAE6FD) -> nane yeşili (#DCFCE7) gradyanı,
-   Bubbly Moli logosu, turuncu uyarı bandı, 3D renkli DERSE Bİ' MOLA başlığı,
-   3D turuncu "Hemen Başla", 2 sütunlu Sınıflar & Düellolar kartları,
-   Moli ve 6 uçuşan rozet, Hızlı Liste karuseli ve MEB Güven kartı.
+   TÜM CİHAZLAR İÇİN ORTAK ÇEKMECE MENÜ ARKA PLANI
    ========================================================================== */
+.mobile-drawer-backdrop {
+  display: block !important;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
-/* Masaüstü, Tablet & Akıllı Tahtada Sadece Telefon Öğelerini Gizle */
-.mobile-top-navbar,
-.mobile-phone-showcase {
-  display: none !important;
+.mobile-drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ==========================================================================
-   MOBİL EKRANLAR (max-width: 768px): GÖRSELLE 1:1 ÖRTÜŞEN TEMEL VE VİTRİN
+   MOBİL VE KÜÇÜK EKRAN UYARLAMASI (max-width: 768px):
+   Görseldeki 3 Sütunlu Tasarımın Tek Ekrana (100vh) Sabit Sığdırılması
    ========================================================================== */
 @media (max-width: 768px) {
-  /* 1) Göz Alıcı Gökyüzü -> Nane Yeşili Arka Plan Gradyanı */
-  body, 
-  .app-main-wrapper, 
-  #viewLobby {
-    background: linear-gradient(180deg, #BAE6FD 0%, #DDF4FF 22%, #F0F9FF 45%, #E6FAF0 78%, #DCFCE7 100%) !important;
+  /* 1) Birleşik Üst Bar */
+  .unified-topbar {
+    padding: 6px 10px 4px 10px !important;
+    gap: 6px;
   }
 
-  .bg-mesh {
+  .brand-bubbly-logo {
+    font-size: 1.45rem !important;
+  }
+
+  .brand-sub-title {
+    font-size: 0.65rem !important;
+  }
+
+  .topbar-unified-actions {
+    gap: 4px !important;
+  }
+
+  .topbar-action-pill {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+    gap: 4px !important;
+  }
+
+  .topbar-btn-menu {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  /* 2) Turuncu Uyarı Bandı */
+  .desktop-alert-banner {
+    padding: 4px 12px !important;
+    margin: 1px auto 4px auto !important;
+    width: calc(100% - 16px) !important;
+    border-radius: 10px !important;
+  }
+
+  .desktop-alert-banner .alert-banner-title {
+    font-size: 0.82rem !important;
+  }
+
+  .desktop-alert-banner .alert-banner-subtitle {
+    font-size: 0.7rem !important;
+  }
+
+  /* 3) Ana Sahne Kapsayıcısı */
+  .home-showcase-section {
+    height: calc(100vh - 95px) !important;
+    max-height: calc(100vh - 95px) !important;
+    padding: 0 4px !important;
+  }
+
+  .widescreen-showcase-stage {
+    padding: 0 2px !important;
+    gap: 4px !important;
+  }
+
+  /* Sol Sütun: 7 Sınıf Kartı */
+  .stage-grades-sidebar {
+    width: 105px !important;
+    min-width: 95px !important;
+    gap: 3.5px !important;
+  }
+
+  .stage-grade-card {
+    padding: 3.5px 6px !important;
+    border-radius: 9px !important;
+    gap: 5px !important;
+  }
+
+  .grade-icon-cube {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .grade-card-3d-img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .grade-flag-emoji {
+    font-size: 1.1rem !important;
+  }
+
+  .grade-card-label {
+    font-size: 0.72rem !important;
+  }
+
+  .grade-multiline-label {
+    font-size: 0.65rem !important;
+  }
+
+  /* Orta Sütun: Başlık ve Eylem */
+  .stage-center-content {
+    padding: 0 2px !important;
+  }
+
+  .stage-heading-block {
+    margin-bottom: 6px !important;
+    padding: 0 10px !important;
+  }
+
+  .stage-main-title {
+    font-size: clamp(0.85rem, 2.5vw, 1.25rem) !important;
+  }
+
+  .stage-bubbly-3d {
+    font-size: clamp(1.05rem, 3.4vw, 1.6rem) !important;
+    margin-top: 2px !important;
+  }
+
+  .stage-sparkle {
+    font-size: 1.1rem !important;
+  }
+
+  .stage-btn-start-3d {
+    padding: 8px 18px !important;
+    font-size: clamp(0.85rem, 2.6vw, 1.05rem) !important;
+    box-shadow: 0 4px 0 #C2410C, 0 8px 16px rgba(250, 90, 0, 0.38) !important;
+    gap: 6px !important;
+  }
+
+  /* Sağ Sütun: Moli ve Uçuşan Rozetler */
+  .stage-moli-showcase {
+    width: 130px !important;
+    min-width: 110px !important;
+  }
+
+  .widescreen-moli-arena {
+    height: clamp(170px, 32vh, 230px) !important;
+  }
+
+  .widescreen-moli-mascot .moli-mascot-img {
+    height: clamp(130px, 24vh, 185px) !important;
+  }
+
+  .moli-floating-pill {
+    padding: 3px 6px !important;
+    font-size: 0.62rem !important;
+    gap: 3px !important;
+  }
+
+  .moli-floating-circle {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .moli-floating-pill.pill-math {
+    top: 10px !important;
+    left: -12px !important;
+  }
+
+  .moli-floating-pill.pill-letters {
+    top: 22px !important;
+    right: -10px !important;
+  }
+
+  .moli-floating-circle.circle-trophy {
+    top: 85px !important;
+    left: -8px !important;
+  }
+
+  .moli-floating-circle.circle-balloon {
+    top: 105px !important;
+    right: -8px !important;
+  }
+
+  .moli-floating-pill.pill-points {
+    bottom: 24px !important;
+    left: -12px !important;
+  }
+
+  .moli-floating-pill.pill-ready {
+    bottom: 6px !important;
+    left: 45% !important;
+    padding: 3px 8px !important;
+  }
+
+  /* 4) Alt Güven Bandı */
+  .widescreen-floating-trust-card {
+    width: calc(100% - 12px) !important;
+    margin: 1px auto 4px auto !important;
+    padding: 4px 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .trust-3d-book-icon {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .trust-lead-text {
+    font-size: 0.68rem !important;
+  }
+
+  .trust-right-tag {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Çok dar telefon ekranlarında hap butonların yazılarını gizleyip simge bırak */
+  .topbar-action-pill.pill-share .pill-text,
+  .topbar-action-pill.pill-addquiz .pill-text,
+  .topbar-action-pill.pill-settings .pill-text {
     display: none !important;
   }
-
-  /* Masaüstü/Akıllı Tahta Başlığını ve Vitrinini Mobilde Gizle */
-  .unified-topbar,
-  .desktop-alert-banner,
-  .widescreen-showcase-stage,
-  .widescreen-floating-trust-card,
-  .home-contestants-bar {
-    display: none !important;
-  }
-
-  /* 2) Mobil Üst Bar (Navbar) */
-  .mobile-top-navbar {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    width: 100%;
-    z-index: 50;
-    position: relative;
-  }
-
-  .mobile-logo-group {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .mobile-bubbly-logo {
-    font-family: 'Poppins', 'Nunito', sans-serif;
-    font-size: 1.95rem;
-    font-weight: 950;
-    line-height: 1;
-    letter-spacing: -0.5px;
-    display: flex;
-    align-items: center;
-  }
-
-  .mobile-bubbly-logo .logo-mo {
-    color: #2563EB;
-    -webkit-text-stroke: 1.2px #1E3A8A;
-    text-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
-  }
-
-  .mobile-bubbly-logo .logo-li {
-    color: #F97316;
-    -webkit-text-stroke: 1.2px #C2410C;
-    text-shadow: 0 2px 4px rgba(249, 115, 22, 0.25);
-    margin-left: 1px;
-  }
-
-  .mobile-bubbly-logo .logo-star {
-    font-size: 0.95rem;
-    margin-top: -14px;
-    margin-left: -2px;
-    filter: drop-shadow(0 0 6px #FBBF24);
-  }
-
-  .mobile-logo-subtitle {
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: #1E293B;
-    letter-spacing: -0.2px;
-    margin-top: 1px;
-  }
-
-  .mobile-nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .mobile-btn-pill {
-    border: none;
-    border-radius: 9999px;
-    padding: 7px 13px;
-    font-size: 0.82rem;
-    font-weight: 800;
-    color: #FFFFFF;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .mobile-btn-pill:active {
-    transform: scale(0.96);
-  }
-
-  .btn-pill-login {
-    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.32);
-  }
-
-  .btn-pill-share {
-    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.32);
-  }
-
-  .mobile-btn-menu {
-    background: #E0F2FE;
-    border: 2px solid #BAE6FD;
-    border-radius: 12px;
-    width: 38px;
-    height: 38px;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4.5px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(186, 230, 253, 0.6);
-    transition: transform 0.15s ease, background 0.15s ease;
-  }
-
-  .mobile-btn-menu:active {
-    transform: scale(0.94);
-    background: #BAE6FD;
-  }
-
-  .mobile-btn-menu .hamburger-bar {
-    width: 18px;
-    height: 2.5px;
-    background: #0284C7;
-    border-radius: 2px;
-  }
-
-  /* 3) Mobil Off-Canvas Drawer (Menü) & Backdrop */
-  .app-sidebar {
-    position: fixed !important;
-    top: 0 !important;
-    left: -310px !important;
-    width: 290px !important;
-    max-width: 85vw !important;
-    height: 100vh !important;
-    background: linear-gradient(180deg, #FFFFFF 0%, #F0F7FF 40%, #E8F3FF 100%) !important;
-    z-index: 100000 !important;
-    transition: left 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    box-shadow: 8px 0 32px rgba(15, 23, 42, 0.28) !important;
-    overflow-y: auto !important;
-  }
-
-  .app-sidebar.sidebar-mobile-open {
-    left: 0 !important;
-  }
-
-  .mobile-drawer-backdrop {
-    display: block !important;
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    z-index: 99999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .mobile-drawer-backdrop.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  /* 4) Mobil Vitrin Kapsayıcısı */
-  .mobile-phone-showcase {
-    display: flex !important;
-    flex-direction: column;
-    width: 100%;
-    padding: 0 4px;
-    animation: fadeIn 0.4s ease;
-  }
-
-  /* 5) Turuncu Uyarı / Giriş Bandı */
-  .mobile-alert-banner {
-    background: linear-gradient(90deg, #EA580C 0%, #F97316 50%, #EA580C 100%);
-    border-radius: 14px;
-    padding: 10px 14px;
-    text-align: center;
-    color: #FFFFFF;
-    margin: 2px 8px 16px 8px;
-    box-shadow: 0 6px 16px rgba(234, 88, 12, 0.32);
-    cursor: pointer;
-    transition: transform 0.15s ease;
-  }
-
-  .mobile-alert-banner:active {
-    transform: scale(0.98);
-  }
-
-  .alert-banner-title {
-    font-size: 0.98rem;
-    font-weight: 900;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  }
-
-  .alert-banner-subtitle {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #FEF3C7;
-    margin-top: 2px;
-  }
-
-  /* 6) Başlık Grubu: "Öğrenmenin En Eğlenceli Yolu! DERSE Bİ' MOLA!" */
-  .mobile-hero-heading-group {
-    position: relative;
-    text-align: center;
-    margin: 4px 0 16px 0;
-    padding: 0 18px;
-  }
-
-  .hero-subtext-main {
-    font-family: 'Poppins', 'Nunito', sans-serif;
-    font-size: 1.85rem;
-    font-weight: 900;
-    color: #1E293B;
-    line-height: 1.15;
-    margin: 0;
-    letter-spacing: -0.5px;
-  }
-
-  .hero-subtext-main span {
-    display: block;
-  }
-
-  .hero-title-bubbly-3d {
-    font-family: 'Poppins', 'Nunito', sans-serif;
-    font-size: 2.35rem;
-    font-weight: 950;
-    letter-spacing: 0.5px;
-    margin-top: 6px;
-    display: inline-block;
-  }
-
-  .hero-title-bubbly-3d .word-derse {
-    color: #38BDF8;
-    -webkit-text-stroke: 1.8px #0C4A6E;
-    text-shadow: 0 3px 0 #0C4A6E, 0 6px 12px rgba(12, 74, 110, 0.35);
-  }
-
-  .hero-title-bubbly-3d .word-bi {
-    color: #FBBF24;
-    -webkit-text-stroke: 1.8px #0C4A6E;
-    text-shadow: 0 3px 0 #0C4A6E, 0 6px 12px rgba(12, 74, 110, 0.35);
-    margin: 0 4px;
-  }
-
-  .hero-title-bubbly-3d .word-mola {
-    color: #38BDF8;
-    -webkit-text-stroke: 1.8px #0C4A6E;
-    text-shadow: 0 3px 0 #0C4A6E, 0 6px 12px rgba(12, 74, 110, 0.35);
-  }
-
-  .mobile-sparkle {
-    position: absolute;
-    font-size: 1.45rem;
-    color: #FDE047;
-    filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.8));
-    user-select: none;
-    pointer-events: none;
-  }
-
-  .sparkle-left {
-    top: 6px;
-    left: 14px;
-    animation: pulseSparkle 2.6s ease-in-out infinite alternate;
-  }
-
-  .sparkle-right {
-    top: 24px;
-    right: 14px;
-    animation: pulseSparkle 3s ease-in-out 0.8s infinite alternate;
-  }
-
-  @keyframes pulseSparkle {
-    0% { transform: scale(0.9) rotate(-5deg); opacity: 0.75; }
-    100% { transform: scale(1.15) rotate(10deg); opacity: 1; }
-  }
-
-  /* 7) Devasa 3D Turuncu Eylem Butonu: "🚀 Hemen Başla" */
-  .mobile-cta-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 4px 0 18px 0;
-  }
-
-  .mobile-hero-btn-start {
-    background: linear-gradient(180deg, #FF7A00 0%, #FA5A00 100%);
-    border: 2px solid rgba(255, 255, 255, 0.45);
-    border-radius: 9999px;
-    box-shadow: 0 8px 0 #C2410C, 0 16px 28px rgba(250, 90, 0, 0.45);
-    color: #FFFFFF;
-    font-weight: 900;
-    font-size: 1.35rem;
-    padding: 13px 44px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .mobile-hero-btn-start:active {
-    transform: translateY(4px);
-    box-shadow: 0 4px 0 #C2410C, 0 8px 16px rgba(250, 90, 0, 0.4);
-  }
-
-  /* 8) İki Hızlı Kart: Sınıflar & Düellolar */
-  .mobile-quick-action-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 0 8px 16px 8px;
-  }
-
-  .mobile-action-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.95) 100%);
-    border: 2.5px solid #BAE6FD !important;
-    border-radius: 18px !important;
-    box-shadow: 0 6px 18px rgba(186, 230, 253, 0.45) !important;
-    padding: 11px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.15s ease;
-  }
-
-  .mobile-action-card:active {
-    transform: scale(0.97);
-  }
-
-  .action-card-icon-wrap {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .action-card-3d-img {
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
-  }
-
-  .action-card-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
-  }
-
-  .action-card-sublabel {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #64748B;
-  }
-
-  .action-card-title {
-    font-size: 1.05rem;
-    font-weight: 900;
-    color: #0F172A;
-  }
-
-  /* 9) Moli Maskot Sahnesi ve 6 Uçuşan Rozet */
-  .mobile-moli-showcase-stage {
-    position: relative;
-    width: 100%;
-    max-width: 330px;
-    height: 310px;
-    margin: 4px auto 14px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mobile-moli-mascot-wrap {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mobile-moli-mascot-img {
-    width: 195px;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.12));
-    animation: moliFloatGentle 3s ease-in-out infinite alternate;
-  }
-
-  @keyframes moliFloatGentle {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-8px); }
-  }
-
-  .stage-pill-badge {
-    position: absolute;
-    background: #FFFFFF;
-    border-radius: 9999px;
-    padding: 6px 13px;
-    font-weight: 900;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    z-index: 2;
-    user-select: none;
-    white-space: nowrap;
-  }
-
-  .pill-badge-math {
-    top: 22px;
-    left: 6px;
-    border: 2px solid #93C5FD;
-    color: #1E3A8A;
-  }
-
-  .pill-badge-letters {
-    top: 28px;
-    right: 8px;
-    border: 2px solid #C4B5FD;
-    color: #6D28D9;
-  }
-
-  .stage-circle-badge {
-    position: absolute;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.15rem;
-    z-index: 2;
-    user-select: none;
-  }
-
-  .badge-circle-trophy {
-    top: 130px;
-    left: 20px;
-    border: 2px solid #FDE68A;
-  }
-
-  .badge-circle-balloon {
-    top: 150px;
-    right: 20px;
-    border: 2px solid #FECDD3;
-  }
-
-  .pill-badge-points {
-    bottom: 34px;
-    left: 8px;
-    border: 2px solid #FDE68A;
-    color: #B45309;
-  }
-
-  .pill-badge-ready {
-    bottom: 18px;
-    left: 52%;
-    transform: translateX(-40%);
-    border: 2px solid #FDBA74;
-    color: #C2410C;
-    padding: 6px 15px;
-  }
-
-  /* 10) HIZLI LİSTE Bölümü */
-  .mobile-quick-list-section {
-    margin: 8px 8px 16px 8px;
-  }
-
-  .quick-list-header {
-    font-size: 0.88rem;
-    font-weight: 900;
-    color: #1E293B;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-  }
-
-  .quick-list-carousel {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding-bottom: 6px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .quick-list-carousel::-webkit-scrollbar {
-    display: none;
-  }
-
-  .quick-list-chip {
-    flex: 0 0 auto;
-    background: #FFFFFF;
-    border-radius: 14px;
-    padding: 9px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 800;
-    font-size: 0.95rem;
-    color: #1E293B;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.12s ease;
-  }
-
-  .quick-list-chip:active {
-    transform: scale(0.96);
-  }
-
-  .chip-theme-green {
-    border: 2px solid #A7F3D0;
-    background: #F0FDF4;
-  }
-
-  .chip-theme-orange {
-    border: 2px solid #FED7AA;
-    background: #FFF7ED;
+  
+  .topbar-action-pill {
+    padding: 5px 7px !important;
   }
+}
 
-  .chip-theme-blue {
-    border: 2px solid #BAE6FD;
-    background: #F0F9FF;
+@media (max-height: 620px) {
+  /* Düşük ekran yüksekliğine sahip cihazlarda (yatay telefon, küçük netbook) boşlukları kıs */
+  .unified-topbar {
+    padding: 4px 12px 2px 12px !important;
   }
-
-  .chip-theme-purple {
-    border: 2px solid #DDD6FE;
-    background: #F5F3FF;
-  }
-
-  .chip-icon-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .chip-3d-img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-
-  .chip-emoji {
-    font-size: 1.15rem;
-  }
-
-  /* 11) Alt Sabit / Yüzen Güven Bandı */
-  .mobile-floating-trust-card {
-    background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 2px solid rgba(255, 255, 255, 0.95) !important;
-    border-radius: 20px !important;
-    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.15), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-    padding: 12px 16px;
-    margin: 8px 8px 24px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .trust-card-top-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .trust-book-icon-box {
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .trust-book-img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
+  .desktop-alert-banner {
+    padding: 3px 10px !important;
+    margin: 1px auto 2px auto !important;
   }
-
-  .trust-card-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
+  .home-showcase-section {
+    height: calc(100vh - 85px) !important;
+    max-height: calc(100vh - 85px) !important;
   }
-
-  .trust-main-heading {
-    font-size: 0.98rem;
-    font-weight: 900;
-    color: #0F172A;
+  .stage-grades-sidebar {
+    gap: 3px !important;
   }
-
-  .trust-sub-heading {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #64748B;
-    margin-top: 2px;
+  .stage-grade-card {
+    padding: 3px 8px !important;
   }
-
-  .trust-badge-pill-tag {
-    align-self: flex-end;
-    background: #DCFCE7;
-    color: #065F46;
-    font-size: 0.72rem;
-    font-weight: 800;
-    border-radius: 9999px;
-    padding: 3px 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+  .widescreen-moli-arena {
+    height: clamp(160px, 30vh, 210px) !important;
   }
-
-  .trust-check-icon {
-    font-weight: 900;
+  .widescreen-floating-trust-card {
+    padding: 3px 10px !important;
+    margin: 1px auto 3px auto !important;
   }
 }
 
@@ -8243,13 +7860,14 @@ input:checked + .slider:before {
   display: flex !important;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 28px 12px 28px;
+  padding: 10px 28px 4px 28px;
   width: 100%;
   max-width: 1420px;
   margin: 0 auto;
   position: relative;
   z-index: 50;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .topbar-logo-brand {
@@ -8262,7 +7880,7 @@ input:checked + .slider:before {
 
 .brand-bubbly-logo {
   font-family: 'Poppins', 'Nunito', sans-serif;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 950;
   line-height: 1;
   letter-spacing: -0.5px;
@@ -8291,11 +7909,11 @@ input:checked + .slider:before {
 }
 
 .brand-sub-title {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 800;
   color: #1E293B;
   letter-spacing: -0.2px;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .topbar-unified-actions {
@@ -8307,8 +7925,8 @@ input:checked + .slider:before {
 .topbar-action-pill {
   border: none;
   border-radius: 9999px;
-  padding: 9px 20px;
-  font-size: 0.95rem;
+  padding: 8px 18px;
+  font-size: 0.92rem;
   font-weight: 800;
   color: #FFFFFF;
   display: inline-flex;
@@ -8354,8 +7972,8 @@ input:checked + .slider:before {
   background: #E0F2FE;
   border: 2px solid #BAE6FD;
   border-radius: 12px;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -8385,16 +8003,17 @@ input:checked + .slider:before {
 /* 2) TAM GENİŞLİK TURUNCU UYARI BANDI */
 .desktop-alert-banner {
   background: linear-gradient(90deg, #EA580C 0%, #F97316 50%, #EA580C 100%);
-  border-radius: 14px;
-  padding: 10px 24px;
+  border-radius: 12px;
+  padding: 7px 22px;
   text-align: center;
   color: #FFFFFF;
   width: calc(100% - 48px);
   max-width: 1360px;
-  margin: 2px auto 18px auto;
-  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.32);
+  margin: 1px auto 6px auto;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
   cursor: pointer;
   user-select: none;
+  flex-shrink: 0;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
 
@@ -8407,81 +8026,96 @@ input:checked + .slider:before {
 }
 
 .desktop-alert-banner .alert-banner-title {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 900;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 6px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .desktop-alert-banner .alert-banner-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: #FEF3C7;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
-/* 3) MASAÜSTÜ / AKILLI TAHTA 3 SÜTUNLU SAHNE */
+/* 3) MASAÜSTÜ / AKILLI TAHTA 3 SÜTUNLU SAHNE (SABİT EKRANA SIĞAN) */
+.home-showcase-section {
+  flex: 1;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 125px) !important;
+  max-height: calc(100vh - 125px) !important;
+  overflow: hidden !important;
+  padding: 0 14px !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
 .widescreen-showcase-stage {
+  flex: 1;
+  min-height: 0;
   display: flex !important;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 48px);
+  width: 100%;
   max-width: 1380px;
   margin: 0 auto;
-  padding: 6px 10px 14px 10px;
-  gap: 20px;
+  padding: 2px 10px;
+  gap: 16px;
   box-sizing: border-box;
   position: relative;
 }
 
 /* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı */
 .stage-grades-sidebar {
-  width: 215px;
-  min-width: 200px;
+  width: 200px;
+  min-width: 185px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   flex-shrink: 0;
   z-index: 10;
 }
 
 .stage-grade-card {
   background: #FFFFFF;
-  border-radius: 16px;
-  padding: 9px 14px;
+  border-radius: 14px;
+  padding: 6.5px 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .stage-grade-card:hover {
-  transform: translateX(5px) scale(1.02);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+  transform: translateX(4px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
 .stage-grade-card:active {
   transform: scale(0.97);
 }
 
-.card-kindergarten { border: 2.2px solid #93C5FD !important; }
-.card-grade1       { border: 2.2px solid #FCA5A5 !important; }
-.card-grade2       { border: 2.2px solid #86EFAC !important; }
-.card-grade3       { border: 2.2px solid #FDBA74 !important; }
-.card-grade4       { border: 2.2px solid #F87171 !important; }
-.card-duels        { border: 2.2px solid #FDE047 !important; }
-.card-english      { border: 2.2px solid #A5B4FC !important; }
+.card-kindergarten { border: 2px solid #93C5FD !important; }
+.card-grade1       { border: 2px solid #FCA5A5 !important; }
+.card-grade2       { border: 2px solid #86EFAC !important; }
+.card-grade3       { border: 2px solid #FDBA74 !important; }
+.card-grade4       { border: 2px solid #F87171 !important; }
+.card-duels        { border: 2px solid #FDE047 !important; }
+.card-english      { border: 2px solid #A5B4FC !important; }
 
 .grade-icon-cube {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8489,17 +8123,17 @@ input:checked + .slider:before {
 }
 
 .grade-card-3d-img {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
 }
 
 .grade-flag-emoji {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 .grade-card-label {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 800;
   color: #1E293B;
   letter-spacing: -0.2px;
@@ -8509,7 +8143,7 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   line-height: 1.15;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 800;
   color: #1E293B;
 }
@@ -8521,7 +8155,7 @@ input:checked + .slider:before {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 0 10px;
+  padding: 0 8px;
   position: relative;
   z-index: 10;
 }
@@ -8529,13 +8163,13 @@ input:checked + .slider:before {
 .stage-heading-block {
   position: relative;
   display: inline-block;
-  margin-bottom: 24px;
-  padding: 0 28px;
+  margin-bottom: 14px;
+  padding: 0 24px;
 }
 
 .stage-main-title {
   font-family: 'Poppins', 'Nunito', sans-serif;
-  font-size: clamp(2rem, 3.2vw, 3.3rem);
+  font-size: clamp(1.7rem, 2.6vw, 2.8rem);
   font-weight: 900;
   color: #1E293B;
   line-height: 1.15;
@@ -8549,69 +8183,69 @@ input:checked + .slider:before {
 
 .stage-bubbly-3d {
   font-family: 'Poppins', 'Nunito', sans-serif;
-  font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+  font-size: clamp(2.2rem, 3.6vw, 3.8rem);
   font-weight: 950;
   letter-spacing: 0.5px;
-  margin-top: 8px;
+  margin-top: 6px;
   display: inline-block;
 }
 
 .stage-bubbly-3d .word-derse {
   color: #38BDF8;
-  -webkit-text-stroke: 2.2px #0C4A6E;
-  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+  -webkit-text-stroke: 2px #0C4A6E;
+  text-shadow: 0 3px 0 #0C4A6E, 0 6px 14px rgba(12, 74, 110, 0.35);
 }
 
 .stage-bubbly-3d .word-bi {
   color: #FBBF24;
-  -webkit-text-stroke: 2.2px #0C4A6E;
-  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
-  margin: 0 6px;
+  -webkit-text-stroke: 2px #0C4A6E;
+  text-shadow: 0 3px 0 #0C4A6E, 0 6px 14px rgba(12, 74, 110, 0.35);
+  margin: 0 5px;
 }
 
 .stage-bubbly-3d .word-mola {
   color: #38BDF8;
-  -webkit-text-stroke: 2.2px #0C4A6E;
-  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+  -webkit-text-stroke: 2px #0C4A6E;
+  text-shadow: 0 3px 0 #0C4A6E, 0 6px 14px rgba(12, 74, 110, 0.35);
 }
 
 .stage-sparkle {
   position: absolute;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #FDE047;
-  filter: drop-shadow(0 0 8px rgba(253, 224, 71, 0.9));
+  filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.9));
   user-select: none;
   pointer-events: none;
 }
 
 .stage-sparkle.sparkle-left {
-  top: 10px;
+  top: 8px;
   left: 0;
   animation: pulseSparkle 2.6s ease-in-out infinite alternate;
 }
 
 .stage-sparkle.sparkle-right {
-  top: 36px;
+  top: 28px;
   right: 0;
   animation: pulseSparkle 3s ease-in-out 0.8s infinite alternate;
 }
 
 .stage-cta-container {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .stage-btn-start-3d {
   background: linear-gradient(180deg, #FF7A00 0%, #FA5A00 100%);
-  border: 2.5px solid rgba(255, 255, 255, 0.55);
+  border: 2px solid rgba(255, 255, 255, 0.55);
   border-radius: 9999px;
-  box-shadow: 0 8px 0 #C2410C, 0 18px 32px rgba(250, 90, 0, 0.45);
+  box-shadow: 0 7px 0 #C2410C, 0 14px 26px rgba(250, 90, 0, 0.42);
   color: #FFFFFF;
   font-weight: 900;
-  font-size: clamp(1.25rem, 2vw, 1.6rem);
-  padding: 16px 56px;
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  padding: 13px 50px;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   cursor: pointer;
   user-select: none;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
@@ -8620,19 +8254,19 @@ input:checked + .slider:before {
 
 .stage-btn-start-3d:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 0 #C2410C, 0 22px 38px rgba(250, 90, 0, 0.5);
+  box-shadow: 0 9px 0 #C2410C, 0 18px 32px rgba(250, 90, 0, 0.48);
 }
 
 .stage-btn-start-3d:active {
-  transform: translateY(4px);
-  box-shadow: 0 4px 0 #C2410C, 0 8px 16px rgba(250, 90, 0, 0.4);
+  transform: translateY(3px);
+  box-shadow: 0 4px 0 #C2410C, 0 6px 12px rgba(250, 90, 0, 0.4);
 }
 
 /* Sağ Sütun: Moli & 6 Uçuşan Rozet */
 .stage-moli-showcase {
-  width: 440px;
-  min-width: 360px;
-  max-width: 45vw;
+  width: 420px;
+  min-width: 330px;
+  max-width: 42vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8644,7 +8278,7 @@ input:checked + .slider:before {
 .widescreen-moli-arena {
   position: relative;
   width: 100%;
-  height: 430px;
+  height: clamp(280px, 44vh, 380px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8659,10 +8293,10 @@ input:checked + .slider:before {
 }
 
 .widescreen-moli-mascot .moli-mascot-img {
-  height: 350px;
+  height: clamp(230px, 35vh, 320px);
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.14));
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.14));
   animation: moliFloatGentle 3s ease-in-out infinite alternate;
 }
 
@@ -8670,13 +8304,13 @@ input:checked + .slider:before {
   position: absolute;
   background: #FFFFFF;
   border-radius: 9999px;
-  padding: 7px 16px;
+  padding: 6px 14px;
   font-weight: 900;
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   display: flex;
   align-items: center;
-  gap: 7px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  gap: 6px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
   z-index: 5;
   user-select: none;
   white-space: nowrap;
@@ -8688,14 +8322,14 @@ input:checked + .slider:before {
 }
 
 .moli-floating-pill.pill-math {
-  top: 40px;
+  top: 30px;
   left: 10px;
   border: 2px solid #93C5FD;
   color: #1E3A8A;
 }
 
 .moli-floating-pill.pill-letters {
-  top: 55px;
+  top: 45px;
   right: 15px;
   border: 2px solid #C4B5FD;
   color: #6D28D9;
@@ -8717,15 +8351,15 @@ input:checked + .slider:before {
 
 .moli-floating-circle {
   position: absolute;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #FFFFFF;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   z-index: 5;
   user-select: none;
   cursor: pointer;
@@ -8737,31 +8371,31 @@ input:checked + .slider:before {
 }
 
 .moli-floating-circle.circle-trophy {
-  top: 175px;
+  top: 155px;
   left: 20px;
   border: 2px solid #FDE68A;
 }
 
 .moli-floating-circle.circle-balloon {
-  top: 215px;
+  top: 185px;
   right: 25px;
   border: 2px solid #FECDD3;
 }
 
 .moli-floating-pill.pill-points {
-  bottom: 50px;
+  bottom: 40px;
   left: 5px;
   border: 2px solid #FDE68A;
   color: #B45309;
 }
 
 .moli-floating-pill.pill-ready {
-  bottom: 24px;
+  bottom: 16px;
   left: 52%;
   transform: translateX(-40%);
   border: 2px solid #FDBA74;
   color: #C2410C;
-  padding: 7px 18px;
+  padding: 6px 16px;
 }
 
 .moli-floating-pill.pill-ready:hover {
@@ -8774,32 +8408,33 @@ input:checked + .slider:before {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 2px solid rgba(255, 255, 255, 0.95) !important;
-  border-radius: 24px !important;
-  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.12), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-  padding: 12px 28px;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+  padding: 8px 24px;
   width: calc(100% - 48px);
   max-width: 1360px;
-  margin: 18px auto 26px auto;
+  margin: 2px auto 10px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .trust-left-wrap {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .trust-3d-book-icon {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
 }
 
 .trust-lead-text {
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: #334155;
   line-height: 1.2;
 }
@@ -8812,19 +8447,27 @@ input:checked + .slider:before {
 .trust-right-tag {
   background: #DCFCE7;
   color: #065F46;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 800;
   border-radius: 9999px;
-  padding: 5px 14px;
+  padding: 4px 12px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  gap: 5px;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
   white-space: nowrap;
 }
 
 .trust-check-mark {
   font-weight: 900;
+}
+
+/* Sınıflar ve Oyunlar modunda kaydırmayı aç */
+.subjects-section:not(.hide),
+.games-section:not(.hide) {
+  overflow-y: auto !important;
+  max-height: calc(100vh - 65px) !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* 5) TABLET UYARLAMASI (769px - 1100px) */
