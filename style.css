@@ -5585,27 +5585,27 @@ input:checked + .slider:before {
   filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
 }
 
-/* Balon Renk Temaları */
+/* Balon Renk Temaları (Gerçekçi 3D Parlak Lateks Doygunluk) */
 .balloon-color-red {
-  background: radial-gradient(circle at 35% 35%, #FF6B81 0%, #EE5253 60%, #C0392B 100%);
+  background: radial-gradient(circle at 35% 26%, #ff8fa3 0%, #ff3b56 32%, #e01e37 68%, #850e1b 100%) !important;
 }
 .balloon-color-blue {
-  background: radial-gradient(circle at 35% 35%, #54A0FF 0%, #2E86DE 60%, #0984E3 100%);
+  background: radial-gradient(circle at 35% 26%, #82b1ff 0%, #2979ff 32%, #1565c0 68%, #0d3b75 100%) !important;
 }
 .balloon-color-green {
-  background: radial-gradient(circle at 35% 35%, #1DD1A1 0%, #10AC84 60%, #009432 100%);
+  background: radial-gradient(circle at 35% 26%, #81ecec 0%, #00b894 32%, #008f68 68%, #004d38 100%) !important;
 }
 .balloon-color-yellow {
-  background: radial-gradient(circle at 35% 35%, #FECA57 0%, #FF9F43 60%, #E67E22 100%);
+  background: radial-gradient(circle at 35% 26%, #fffab0 0%, #ffc048 35%, #ff9f1a 68%, #b55600 100%) !important;
 }
 .balloon-color-purple {
-  background: radial-gradient(circle at 35% 35%, #A29BFE 0%, #6C5CE7 60%, #5F27CD 100%);
+  background: radial-gradient(circle at 35% 26%, #dcd6f7 0%, #9c88ff 32%, #6c5ce7 68%, #37288a 100%) !important;
 }
 .balloon-color-orange {
-  background: radial-gradient(circle at 35% 35%, #FF9F43 0%, #EE5A24 60%, #EA2027 100%);
+  background: radial-gradient(circle at 35% 26%, #ffd394 0%, #ff922b 32%, #f76707 68%, #aa3800 100%) !important;
 }
 .balloon-color-pink {
-  background: radial-gradient(circle at 35% 35%, #FD79A8 0%, #E84393 60%, #B83280 100%);
+  background: radial-gradient(circle at 35% 26%, #ffd1eb 0%, #f472b6 32%, #db2777 68%, #831843 100%) !important;
 }
 
 /* Balon Patlama Animasyonu */
@@ -7063,12 +7063,47 @@ input:checked + .slider:before {
 .balloon-stream-container {
   position: relative;
   width: 100%;
-  height: 290px;
+  height: 320px;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 20%, #eff6ff 0%, #f0fdf4 60%, #fef3c7 100%);
-  border-radius: 20px;
-  border: 2px dashed #93c5fd;
-  box-shadow: inset 0 4px 14px rgba(59, 130, 246, 0.08);
+  background: radial-gradient(circle at 50% 18%, #f0f7ff 0%, #e0f2fe 50%, #fef3c7 100%);
+  border-radius: 24px;
+  border: 3px solid rgba(147, 197, 253, 0.7);
+  box-shadow: inset 0 6px 20px rgba(59, 130, 246, 0.12), 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.balloon-task-header {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.balloon-task-header .moli-task-avatar,
+.balloon-task-header .task-title-text {
+  display: none !important;
+}
+
+.balloon-task-header .task-remaining-badge {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 2.5px solid #3b82f6;
+  color: #1e40af;
+  font-weight: 900;
+  font-size: 0.95rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.balloon-task-header .task-remaining-badge.badge-bump {
+  transform: scale(1.18);
+  border-color: #10b981;
+  color: #065f46;
 }
 
 .balloon-stream-sky {
@@ -7076,99 +7111,157 @@ input:checked + .slider:before {
   inset: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
+/* GERÇEKÇİ 3D PARLAK LATEKS UÇAN BALON */
 .floating-balloon {
   position: absolute;
-  bottom: -110px;
-  width: 84px;
-  height: 106px;
+  bottom: -130px;
+  width: 90px;
+  height: 116px;
   border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: inset -6px -6px 14px rgba(0, 0, 0, 0.22),
-              inset 8px 8px 12px rgba(255, 255, 255, 0.45),
-              0 10px 22px rgba(0, 0, 0, 0.16);
+  box-shadow: inset -8px -10px 18px rgba(0, 0, 0, 0.32),
+              inset 7px 7px 14px rgba(255, 255, 255, 0.55),
+              0 14px 28px rgba(0, 0, 0, 0.18);
   user-select: none;
   touch-action: manipulation;
   animation: floatUpBalloon 6s linear infinite, swayBalloon 2.5s ease-in-out infinite alternate;
-  will-change: transform;
+  will-change: transform, bottom;
+  transform-origin: bottom center;
 }
 
 @keyframes floatUpBalloon {
   0% {
-    bottom: -110px;
+    bottom: -130px;
     opacity: 0.95;
   }
-  90% {
+  10% {
+    opacity: 1;
+  }
+  88% {
     opacity: 1;
   }
   100% {
-    bottom: 330px;
-    opacity: 0.2;
+    bottom: 350px;
+    opacity: 0.15;
   }
 }
 
 @keyframes swayBalloon {
   0% {
-    transform: translateX(-16px) rotate(-3deg);
+    transform: translateX(-14px) rotate(-4deg);
+  }
+  50% {
+    transform: translateX(0px) rotate(1deg);
   }
   100% {
-    transform: translateX(16px) rotate(3deg);
+    transform: translateX(14px) rotate(4deg);
   }
 }
 
+/* 3D Curved Specular Glare (Üst Sol Işıma) */
 .floating-balloon::before {
   content: '';
   position: absolute;
-  top: 12px;
-  left: 14px;
-  width: 15px;
-  height: 26px;
+  top: 14px;
+  left: 18px;
+  width: 18px;
+  height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  transform: rotate(-28deg);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.35) 60%, rgba(255, 255, 255, 0) 100%);
+  transform: rotate(-32deg);
+  pointer-events: none;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
+}
+
+/* 3D Secondary Rim Reflection (Alt Sağ Yansıma) */
+.floating-balloon::after {
+  content: '';
+  position: absolute;
+  bottom: 16px;
+  right: 14px;
+  width: 16px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(315deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 80%);
+  transform: rotate(30deg);
   pointer-events: none;
 }
 
+/* Balon Düğümü (Knot) */
 .floating-balloon .balloon-knot {
   position: absolute;
-  bottom: -6px;
-  width: 12px;
-  height: 8px;
-  border-radius: 2px 2px 5px 5px;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 9px;
+  border-radius: 2px 2px 6px 6px;
   background: inherit;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  filter: brightness(0.82);
+  z-index: 2;
+  pointer-events: none;
 }
 
+/* Balon İpi (Dangling String) */
 .floating-balloon .balloon-string {
   position: absolute;
-  bottom: -22px;
-  width: 1.5px;
-  height: 18px;
-  background: rgba(100, 116, 139, 0.5);
+  bottom: -46px;
+  left: 50%;
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(148, 163, 184, 0.9), rgba(203, 213, 225, 0.35));
+  transform-origin: top center;
+  animation: stringWave 2s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 1;
 }
 
+@keyframes stringWave {
+  0% { transform: translateX(-50%) rotate(-6deg) skewX(-4deg); }
+  50% { transform: translateX(-50%) rotate(2deg) skewX(2deg); }
+  100% { transform: translateX(-50%) rotate(7deg) skewX(5deg); }
+}
+
+/* Balon Üzerindeki Yazı / Sayı / İkon (Yalnızca Sayı ve Şekil Balonlarında Gösterilir) */
 .floating-balloon .balloon-inner-text {
-  font-size: 1.7rem;
+  font-size: 2.2rem;
   font-weight: 900;
   color: #ffffff;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.7);
   pointer-events: none;
   line-height: 1;
+  z-index: 3;
+  transform: translateY(-4px);
 }
 
 .floating-balloon.balloon-popping {
-  animation: popBalloonAnim 0.3s cubic-bezier(0.1, 0.9, 0.2, 1) forwards !important;
+  animation: popBalloonAnim 0.32s cubic-bezier(0.1, 0.9, 0.2, 1) forwards !important;
   pointer-events: none;
 }
 
 @keyframes popBalloonAnim {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.5) rotate(8deg); filter: brightness(1.7); opacity: 0.85; }
-  100% { transform: scale(2.2); filter: blur(8px); opacity: 0; }
+  0% { transform: scale(1); opacity: 1; filter: brightness(1); }
+  40% { transform: scale(1.4) rotate(6deg); filter: brightness(1.8); opacity: 0.9; }
+  100% { transform: scale(2.4); filter: brightness(2) blur(8px); opacity: 0; }
+}
+
+.floating-balloon.balloon-wrong {
+  animation: balloonWobble 0.45s ease-in-out forwards !important;
+  filter: brightness(0.65) saturate(0.8);
+}
+
+@keyframes balloonWobble {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20%, 60% { transform: translateX(-10px) rotate(-8deg); }
+  40%, 80% { transform: translateX(10px) rotate(8deg); }
 }
 
 /* 21.3 EŞLEŞTİRME VE HAFIZA KARTLARI (CSS GRID & FLIP) */

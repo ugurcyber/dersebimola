@@ -1276,20 +1276,41 @@
         'balloon-color-yellow', 'balloon-color-purple', 'balloon-color-pink', 'balloon-color-orange'
       ];
 
-      const targetList = level.targets || [level.target];
-      const distractorList = level.distractors || ['A', 'B', 'C', 'D'];
+      const isColorLevel = level.isColorLevel || level.category === 'Renkler';
       const targetCount = level.targetsNeeded || 2;
       const balloons = [];
 
-      for (let i = 0; i < targetCount; i++) {
-        const tVal = targetList[i % targetList.length];
-        balloons.push({ text: tVal, isTarget: true });
-      }
-
-      const distCount = 4;
-      for (let i = 0; i < distCount; i++) {
-        const dVal = distractorList[i % distractorList.length];
-        balloons.push({ text: dVal, isTarget: false });
+      if (isColorLevel && level.targetColorClass) {
+        // Renk Seviyeleri: Balonların rengi kendi gövde rengidir (içinde yuvarlak emoji/yazı olmaz)
+        for (let i = 0; i < targetCount; i++) {
+          balloons.push({
+            text: '',
+            colorClass: level.targetColorClass,
+            isTarget: true
+          });
+        }
+        const distCount = 4;
+        const dColors = level.distractorColorClasses || colorClasses.filter(c => c !== level.targetColorClass);
+        for (let i = 0; i < distCount; i++) {
+          balloons.push({
+            text: '',
+            colorClass: dColors[i % dColors.length],
+            isTarget: false
+          });
+        }
+      } else {
+        // Sayılar, Harfler, Şekiller ve Semboller
+        const targetList = level.targets || [level.target];
+        const distractorList = level.distractors || ['A', 'B', 'C', 'D'];
+        for (let i = 0; i < targetCount; i++) {
+          const tVal = targetList[i % targetList.length];
+          balloons.push({ text: tVal, isTarget: true });
+        }
+        const distCount = 4;
+        for (let i = 0; i < distCount; i++) {
+          const dVal = distractorList[i % distractorList.length];
+          balloons.push({ text: dVal, isTarget: false });
+        }
       }
 
       const shuffledBalloons = this.fisherYatesShuffle(balloons).map((b, idx) => {
@@ -1298,7 +1319,7 @@
         const left = Math.floor(6 + (idx * 14 + Math.random() * 6) % 78);
         return {
           ...b,
-          colorClass: colorClasses[idx % colorClasses.length],
+          colorClass: b.colorClass || colorClasses[idx % colorClasses.length],
           speed,
           delay,
           left
@@ -1535,27 +1556,104 @@
     // (Okuma Yazma Gerektirmez, 2026 Maarif Renk, Miktar ve Şekil Kazanımları)
     // -------------------------------------------------------------------------
     grade0BalloonLevelsPool: [
-      // 1) Renk Balonları (Canlı Renk Tanıma)
-      { id: 'b0_red', instruction: '🎈 Sadece KIRMIZI renkli balonları patlat! 🔴', spokenText: 'Sadece kırmızı renkli balonları patlat', target: '🔴', category: 'Renkler', targetsNeeded: 2, targets: ['🔴'], distractors: ['🔵', '🟡', '🟢', '🟣'], exp: 'Güm! Kırmızı renkli balonları ustalıkla patlattın! 🔴🎈💥' },
-      { id: 'b0_blue', instruction: '🎈 Sadece MAVİ renkli balonları patlat! 🔵', spokenText: 'Sadece mavi renkli balonları patlat', target: '🔵', category: 'Renkler', targetsNeeded: 2, targets: ['🔵'], distractors: ['🔴', '🟡', '🟢', '🟠'], exp: 'Harika! Masmavi balonları havada yakaladın! 🔵🎈✨' },
-      { id: 'b0_yellow', instruction: '🎈 Sadece SARI güneş renkli balonları patlat! 🟡', spokenText: 'Sadece sarı renkli balonları patlat', target: '🟡', category: 'Renkler', targetsNeeded: 2, targets: ['🟡'], distractors: ['🔴', '🔵', '🟢', '🟣'], exp: 'Süpersin! Parlak sarı balonlar patladı! 🟡🎈⭐' },
-      { id: 'b0_green', instruction: '🎈 Sadece YEŞİL yaprak renkli balonları patlat! 🟢', spokenText: 'Sadece yeşil renkli balonları patlat', target: '🟢', category: 'Renkler', targetsNeeded: 2, targets: ['🟢'], distractors: ['🔴', '🔵', '🟡', '🟣'], exp: 'Bravo! Yemyeşil balonları tam zamanında vurdun! 🟢🎈🌿' },
-      { id: 'b0_purple', instruction: '🎈 Sadece MOR renkli balonları patlat! 🟣', spokenText: 'Sadece mor renkli balonları patlat', target: '🟣', category: 'Renkler', targetsNeeded: 2, targets: ['🟣'], distractors: ['🔴', '🔵', '🟡', '🟢'], exp: 'Nefis refleks! Mor balonlar güm diye patladı! 🟣🎈🎉' },
-      { id: 'b0_orange', instruction: '🎈 Sadece TURUNCU portakal renkli balonları patlat! 🟠', spokenText: 'Sadece turuncu renkli balonları patlat', target: '🟠', category: 'Renkler', targetsNeeded: 2, targets: ['🟠'], distractors: ['🔴', '🔵', '🟢', '🟣'], exp: 'Tebrikler! Turuncu balonları kaçırmadın! 🟠🎈🍊' },
-      { id: 'b0_pink', instruction: '🎈 Sadece PEMBE çiçek renkli balonları patlat! 🌸', spokenText: 'Sadece pembe renkli balonları patlat', target: '🌸', category: 'Renkler', targetsNeeded: 2, targets: ['🌸'], distractors: ['🔴', '🔵', '🟢', '🟤'], exp: 'Harika! Pembe balonları yakaladın! 🌸🎈💖' },
-      
+      // 1) Renk Balonları (Canlı Renk Tanıma - Yuvarlaklar Olmadan, Balonun Kendi Rengiyle)
+      { 
+        id: 'b0_red', 
+        instruction: '🎈 Sadece KIRMIZI balonları patlat!', 
+        spokenText: 'Sadece kırmızı renkli balonları patlat', 
+        target: 'Kırmızı', 
+        category: 'Renkler', 
+        isColorLevel: true,
+        targetColorClass: 'balloon-color-red',
+        distractorColorClasses: ['balloon-color-blue', 'balloon-color-yellow', 'balloon-color-green', 'balloon-color-purple', 'balloon-color-orange'],
+        targetsNeeded: 2, 
+        exp: 'Güm! Kırmızı renkli balonları ustalıkla patlattın! 🎈💥' 
+      },
+      { 
+        id: 'b0_blue', 
+        instruction: '🎈 Sadece MAVİ balonları patlat!', 
+        spokenText: 'Sadece mavi renkli balonları patlat', 
+        target: 'Mavi', 
+        category: 'Renkler', 
+        isColorLevel: true,
+        targetColorClass: 'balloon-color-blue',
+        distractorColorClasses: ['balloon-color-red', 'balloon-color-yellow', 'balloon-color-green', 'balloon-color-orange', 'balloon-color-purple'],
+        targetsNeeded: 2, 
+        exp: 'Harika! Masmavi balonları havada yakaladın! 🎈✨' 
+      },
+      { 
+        id: 'b0_yellow', 
+        instruction: '🎈 Sadece SARI balonları patlat!', 
+        spokenText: 'Sadece sarı renkli balonları patlat', 
+        target: 'Sarı', 
+        category: 'Renkler', 
+        isColorLevel: true,
+        targetColorClass: 'balloon-color-yellow',
+        distractorColorClasses: ['balloon-color-red', 'balloon-color-blue', 'balloon-color-green', 'balloon-color-purple', 'balloon-color-orange'],
+        targetsNeeded: 2, 
+        exp: 'Süpersin! Parlak sarı balonlar patladı! 🎈⭐' 
+      },
+      { 
+        id: 'b0_green', 
+        instruction: '🎈 Sadece YEŞİL balonları patlat!', 
+        spokenText: 'Sadece yeşil renkli balonları patlat', 
+        target: 'Yeşil', 
+        category: 'Renkler', 
+        isColorLevel: true,
+        targetColorClass: 'balloon-color-green',
+        distractorColorClasses: ['balloon-color-red', 'balloon-color-blue', 'balloon-color-yellow', 'balloon-color-purple', 'balloon-color-orange'],
+        targetsNeeded: 2, 
+        exp: 'Bravo! Yemyeşil balonları tam zamanında vurdun! 🎈🌿' 
+      },
+      { 
+        id: 'b0_purple', 
+        instruction: '🎈 Sadece MOR balonları patlat!', 
+        spokenText: 'Sadece mor renkli balonları patlat', 
+        target: 'Mor', 
+        category: 'Renkler', 
+        isColorLevel: true,
+        targetColorClass: 'balloon-color-purple',
+        distractorColorClasses: ['balloon-color-red', 'balloon-color-blue', 'balloon-color-yellow', 'balloon-color-green', 'balloon-color-orange'],
+        targetsNeeded: 2, 
+        exp: 'Nefis refleks! Mor balonlar güm diye patladı! 🎈🎉' 
+      },
+      { 
+        id: 'b0_orange', 
+        instruction: '🎈 Sadece TURUNCU balonları patlat!', 
+        spokenText: 'Sadece turuncu renkli balonları patlat', 
+        target: 'Turuncu', 
+        category: 'Renkler', 
+        isColorLevel: true,
+        targetColorClass: 'balloon-color-orange',
+        distractorColorClasses: ['balloon-color-red', 'balloon-color-blue', 'balloon-color-green', 'balloon-color-purple', 'balloon-color-yellow'],
+        targetsNeeded: 2, 
+        exp: 'Tebrikler! Turuncu renkli balonları kaçırmadın! 🎈🍊' 
+      },
+      { 
+        id: 'b0_pink', 
+        instruction: '🎈 Sadece PEMBE balonları patlat!', 
+        spokenText: 'Sadece pembe renkli balonları patlat', 
+        target: 'Pembe', 
+        category: 'Renkler', 
+        isColorLevel: true,
+        targetColorClass: 'balloon-color-pink',
+        distractorColorClasses: ['balloon-color-red', 'balloon-color-blue', 'balloon-color-green', 'balloon-color-yellow', 'balloon-color-purple'],
+        targetsNeeded: 2, 
+        exp: 'Harika! Pembe renkli balonları yakaladın! 🎈💖' 
+      },
+
       // 2) Minik Sayılar 1-5 (Dokunmatik Sayı Balonları)
-      { id: 'b0_num_1', instruction: '🎈 Sadece "1" (BİR) yazan balonları patlat! 1️⃣', spokenText: 'Sadece bir yazan balonları patlat', target: '1', category: 'Sayılar', targetsNeeded: 2, targets: ['1'], distractors: ['2', '3', '4', '5'], exp: 'Harika başlangıç! 1 yazan balonları patlattın! 1️⃣🎈👏' },
-      { id: 'b0_num_2', instruction: '🎈 Sadece "2" (İKİ) yazan balonları patlat! 2️⃣', spokenText: 'Sadece iki yazan balonları patlat', target: '2', category: 'Sayılar', targetsNeeded: 2, targets: ['2'], distractors: ['1', '3', '4', '5'], exp: 'İki tavşan kulağı gibi: 2 balonlarını buldun! 2️⃣🎈🐰' },
-      { id: 'b0_num_3', instruction: '🎈 Sadece "3" (ÜÇ) yazan balonları patlat! 3️⃣', spokenText: 'Sadece üç yazan balonları patlat', target: '3', category: 'Sayılar', targetsNeeded: 2, targets: ['3'], distractors: ['1', '2', '4', '5'], exp: '1-2-3! 3 yazan balonlar güm diye patladı! 3️⃣🎈🚀' },
-      { id: 'b0_num_4', instruction: '🎈 Sadece "4" (DÖRT) yazan balonları patlat! 4️⃣', spokenText: 'Sadece dört yazan balonları patlat', target: '4', category: 'Sayılar', targetsNeeded: 2, targets: ['4'], distractors: ['1', '2', '3', '5'], exp: 'Dört tekerlek gibi: 4 balonları patladı! 4️⃣🎈🚗' },
-      { id: 'b0_num_5', instruction: '🎈 Sadece "5" (BEŞ) yazan balonları patlat! 5️⃣', spokenText: 'Sadece beş yazan balonları patlat', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['1', '2', '3', '4'], exp: 'Çak bir beşlik! 5 yazan balonları yakaladın! 5️⃣🎈🖐️' },
+      { id: 'b0_num_1', instruction: '🎈 Sadece "1" yazan balonları patlat!', spokenText: 'Sadece 1 yazan balonları patlat', target: '1', category: 'Sayılar', targetsNeeded: 2, targets: ['1'], distractors: ['2', '3', '4', '5'], exp: 'Harika başlangıç! 1 yazan balonları patlattın! 🎈👏' },
+      { id: 'b0_num_2', instruction: '🎈 Sadece "2" yazan balonları patlat!', spokenText: 'Sadece 2 yazan balonları patlat', target: '2', category: 'Sayılar', targetsNeeded: 2, targets: ['2'], distractors: ['1', '3', '4', '5'], exp: 'İki tavşan kulağı gibi: 2 balonlarını buldun! 🎈🐰' },
+      { id: 'b0_num_3', instruction: '🎈 Sadece "3" yazan balonları patlat!', spokenText: 'Sadece 3 yazan balonları patlat', target: '3', category: 'Sayılar', targetsNeeded: 2, targets: ['3'], distractors: ['1', '2', '4', '5'], exp: '1-2-3! 3 yazan balonlar güm diye patladı! 🎈🚀' },
+      { id: 'b0_num_4', instruction: '🎈 Sadece "4" yazan balonları patlat!', spokenText: 'Sadece 4 yazan balonları patlat', target: '4', category: 'Sayılar', targetsNeeded: 2, targets: ['4'], distractors: ['1', '2', '3', '5'], exp: 'Dört tekerlek gibi: 4 balonları patladı! 🎈🚗' },
+      { id: 'b0_num_5', instruction: '🎈 Sadece "5" yazan balonları patlat!', spokenText: 'Sadece 5 yazan balonları patlat', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['1', '2', '3', '4'], exp: 'Çak bir beşlik! 5 yazan balonları yakaladın! 🎈🖐️' },
 
       // 3) Sevimli Şekiller ve Semboller (Görsel Balonlar)
-      { id: 'b0_star', instruction: '🎈 Sadece YILDIZ olan balonları patlat! ⭐', spokenText: 'Sadece yıldız olan balonları patlat', target: '⭐', category: 'Şekiller', targetsNeeded: 2, targets: ['⭐'], distractors: ['💖', '🍎', '🐱', '🚗'], exp: 'Işıl ışıl parlayan yıldız balonlarını patlattın! ⭐🎈✨' },
-      { id: 'b0_heart', instruction: '🎈 Sadece KALP olan sevgi balonlarını patlat! 💖', spokenText: 'Sadece kalp olan balonları patlat', target: '💖', category: 'Şekiller', targetsNeeded: 2, targets: ['💖'], distractors: ['⭐', '🍎', '🚗', '🐱'], exp: 'Kocaman sevgiyle kalp balonlarını patlattın! 💖🎈🥰' },
-      { id: 'b0_cat', instruction: '🎈 Sadece KEDİ olan miyav balonlarını patlat! 🐱', spokenText: 'Sadece sevimli kedi balonlarını patlat', target: '🐱', category: 'Hayvanlar', targetsNeeded: 2, targets: ['🐱'], distractors: ['🐶', '🐰', '🦁', '🐸'], exp: 'Miyav! Sevimli kedili balonları yakaladın! 🐱🎈🐾' },
-      { id: 'b0_apple', instruction: '🎈 Sadece KIRMIZI ELMA olan balonları patlat! 🍎', spokenText: 'Sadece elma olan balonları patlat', target: '🍎', category: 'Meyveler', targetsNeeded: 2, targets: ['🍎'], distractors: ['🍌', '🍓', '🍇', '🍉'], exp: 'Kıtır kıtır elmalı balonlar patladı! 🍎🎈😋' }
+      { id: 'b0_star', instruction: '🎈 Sadece YILDIZ olan balonları patlat!', spokenText: 'Sadece yıldız olan balonları patlat', target: '⭐', category: 'Şekiller', targetsNeeded: 2, targets: ['⭐'], distractors: ['💖', '🍎', '🐱', '🚗'], exp: 'Işıl ışıl parlayan yıldız balonlarını patlattın! ⭐🎈✨' },
+      { id: 'b0_heart', instruction: '🎈 Sadece KALP olan sevgi balonlarını patlat!', spokenText: 'Sadece kalp olan balonları patlat', target: '💖', category: 'Şekiller', targetsNeeded: 2, targets: ['💖'], distractors: ['⭐', '🍎', '🚗', '🐱'], exp: 'Kocaman sevgiyle kalp balonlarını patlattın! 💖🎈🥰' },
+      { id: 'b0_cat', instruction: '🎈 Sadece KEDİ olan miyav balonlarını patlat!', spokenText: 'Sadece sevimli kedi balonlarını patlat', target: '🐱', category: 'Hayvanlar', targetsNeeded: 2, targets: ['🐱'], distractors: ['🐶', '🐰', '🦁', '🐸'], exp: 'Miyav! Sevimli kedili balonları yakaladın! 🐱🎈🐾' },
+      { id: 'b0_apple', instruction: '🎈 Sadece KIRMIZI ELMA olan balonları patlat!', spokenText: 'Sadece elma olan balonları patlat', target: '🍎', category: 'Meyveler', targetsNeeded: 2, targets: ['🍎'], distractors: ['🍌', '🍓', '🍇', '🍉'], exp: 'Kıtır kıtır elmalı balonlar patladı! 🍎🎈😋' }
     ],
 
     // -------------------------------------------------------------------------
@@ -1663,20 +1761,20 @@
     generateBalloonQuestion(grade, gameType) {
       if (gameType === 'color_balloon' || grade === 0) {
         const colorPool = [
-          { name: 'Kırmızı', colorClass: 'balloon-color-red', emoji: '🔴', prompt: '🎈 KIRMIZI balonu patlat! 🔴' },
-          { name: 'Mavi', colorClass: 'balloon-color-blue', emoji: '🔵', prompt: '🎈 MAVİ balonu patlat! 🔵' },
-          { name: 'Sarı', colorClass: 'balloon-color-yellow', emoji: '🟡', prompt: '🎈 SARI balonu patlat! 🟡' },
-          { name: 'Yeşil', colorClass: 'balloon-color-green', emoji: '🟢', prompt: '🎈 YEŞİL balonu patlat! 🟢' },
-          { name: 'Turuncu', colorClass: 'balloon-color-orange', emoji: '🟠', prompt: '🎈 TURUNCU balonu patlat! 🟠' },
-          { name: 'Mor', colorClass: 'balloon-color-purple', emoji: '🟣', prompt: '🎈 MOR balonu patlat! 🟣' },
-          { name: 'Pembe', colorClass: 'balloon-color-pink', emoji: '🌸', prompt: '🎈 PEMBE balonu patlat! 🌸' }
+          { name: 'Kırmızı', colorClass: 'balloon-color-red', prompt: '🎈 Sadece KIRMIZI balonu patlat!' },
+          { name: 'Mavi', colorClass: 'balloon-color-blue', prompt: '🎈 Sadece MAVİ balonu patlat!' },
+          { name: 'Sarı', colorClass: 'balloon-color-yellow', prompt: '🎈 Sadece SARI balonu patlat!' },
+          { name: 'Yeşil', colorClass: 'balloon-color-green', prompt: '🎈 Sadece YEŞİL balonu patlat!' },
+          { name: 'Turuncu', colorClass: 'balloon-color-orange', prompt: '🎈 Sadece TURUNCU balonu patlat!' },
+          { name: 'Mor', colorClass: 'balloon-color-purple', prompt: '🎈 Sadece MOR balonu patlat!' },
+          { name: 'Pembe', colorClass: 'balloon-color-pink', prompt: '🎈 Sadece PEMBE balonu patlat!' }
         ];
         const target = colorPool[Math.floor(Math.random() * colorPool.length)];
         const otherColors = colorPool.filter(c => c.name !== target.name);
         const shuffledOthers = [...otherColors].sort(() => 0.5 - Math.random()).slice(0, 3);
         const balloons = [
-          { text: target.name, colorClass: target.colorClass, isTarget: true, emoji: target.emoji },
-          ...shuffledOthers.map(o => ({ text: o.name, colorClass: o.colorClass, isTarget: false, emoji: o.emoji }))
+          { text: '', colorClass: target.colorClass, isTarget: true },
+          ...shuffledOthers.map(o => ({ text: '', colorClass: o.colorClass, isTarget: false }))
         ].sort(() => 0.5 - Math.random());
 
         return {
@@ -9829,8 +9927,6 @@
       return `
         <div class="balloon-stream-container" data-player="${playerNum}">
           <div class="balloon-task-header">
-            <span class="moli-task-avatar">🎈</span>
-            <span class="task-title-text">${replaceEmojisWith3D(data.instruction || 'Hedef Balonları Patlat!', 'inline-3d-icon')}</span>
             <span class="task-remaining-badge" id="balloonCounterP${playerNum}">Kalan: ${targetsNeeded} 🎯</span>
           </div>
           <div class="balloon-stream-sky">
@@ -9845,8 +9941,9 @@
                      role="button"
                      tabindex="0"
                      style="left: ${left}%; animation-duration: ${speed}s; animation-delay: ${delay}s;">
-                  <span class="balloon-inner-text">${b.text}</span>
-                  <div class="balloon-string-knot"></div>
+                  ${b.text ? `<span class="balloon-inner-text">${b.text}</span>` : ''}
+                  <div class="balloon-knot"></div>
+                  <div class="balloon-string"></div>
                 </div>
               `;
             }).join('')}
