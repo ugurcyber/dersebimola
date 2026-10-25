@@ -7510,7 +7510,7 @@ input:checked + .slider:before {
     max-height: calc(100dvh - 95px) !important;
     max-height: calc(100vh - 95px) !important;
     padding: 0 4px !important;
-    display: flex !important;
+    display: flex;
     flex-direction: column !important;
     justify-content: space-between !important;
     overflow: hidden !important;
@@ -7920,7 +7920,7 @@ input:checked + .slider:before {
 /* 3) MASAÜSTÜ / AKILLI TAHTA 3 SÜTUNLU SAHNE (EKRANI TAM KAPLAYAN) */
 .home-showcase-section {
   flex: 1;
-  display: flex !important;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 104px) !important;
@@ -8336,12 +8336,29 @@ input:checked + .slider:before {
   font-weight: 900;
 }
 
-/* Sınıflar ve Oyunlar modunda kaydırmayı aç */
+/* Sınıflar ve Oyunlar modunda kaydırmayı aç ve boşlukları hizala */
+.subjects-section,
+.games-section {
+  width: 100%;
+  padding: 12px clamp(20px, 3vw, 48px) 36px clamp(20px, 3vw, 48px) !important;
+  box-sizing: border-box !important;
+}
+
 .subjects-section:not(.hide),
 .games-section:not(.hide) {
+  display: flex !important;
+  flex-direction: column !important;
   overflow-y: auto !important;
-  max-height: calc(100vh - 65px) !important;
+  max-height: calc(100vh - 75px) !important;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Sayfa bölümleri gizlendiğinde kesinlikle gizli kalmasını garanti altına al */
+.home-showcase-section.hide,
+.subjects-section.hide,
+.games-section.hide,
+.hide {
+  display: none !important;
 }
 
 /* 5) TABLET UYARLAMASI (769px - 1100px) */
