@@ -311,7 +311,16 @@
 
                 <div class="stage-grade-card card-english" id="btnStageQuickEnglish" role="button" tabindex="0" title="İngilizce">
                   <div class="grade-icon-cube icon-theme-indigo">
-                    <span class="grade-flag-emoji">🇬🇧</span>
+                    <svg class="grade-card-3d-img flag-uk" viewBox="0 0 60 40" width="30" height="20" style="border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.25);">
+                      <clipPath id="ukClip"><rect width="60" height="40" rx="4"/></clipPath>
+                      <g clip-path="url(#ukClip)">
+                        <rect width="60" height="40" fill="#012169"/>
+                        <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+                        <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="4"/>
+                        <path d="M30,0 v40 M0,20 h60" stroke="#fff" stroke-width="12"/>
+                        <path d="M30,0 v40 M0,20 h60" stroke="#C8102E" stroke-width="7"/>
+                      </g>
+                    </svg>
                   </div>
                   <span class="grade-card-label">İngilizce</span>
                 </div>
@@ -450,49 +459,49 @@
         <div class="games-grid" id="gamesGrid">
           <!-- Seçilen derse göre aktif oyunlar ve yakında rozetli konular -->
         </div>
-      </section>
 
-      <!-- Düello Ayarları ve Hızlı Bilgi -->
-      <section class="duel-settings-bar">
-        <div class="setting-item">
-          <span class="setting-icon">🎯</span>
-          <span class="setting-label">Hedef Puan:</span>
-          <div class="target-score-selector" id="targetScoreSelector">
-            <button class="score-btn" data-score="3">3 Puan</button>
-            <button class="score-btn active" data-score="5">5 Puan (Standart)</button>
-            <button class="score-btn" data-score="7">7 Puan (Uzun)</button>
+        <!-- Düello Ayarları ve Hızlı Bilgi -->
+        <div class="duel-settings-bar">
+          <div class="setting-item">
+            <span class="setting-icon">🎯</span>
+            <span class="setting-label">Hedef Puan:</span>
+            <div class="target-score-selector" id="targetScoreSelector">
+              <button class="score-btn" data-score="3">3 Puan</button>
+              <button class="score-btn active" data-score="5">5 Puan (Standart)</button>
+              <button class="score-btn" data-score="7">7 Puan (Uzun)</button>
+            </div>
           </div>
-        </div>
 
-        <div class="setting-item">
-          <span class="setting-icon">💡</span>
-          <span class="setting-label">Her Soruda Pedagojik Çözümü Göster:</span>
-          <label class="switch">
-            <input type="checkbox" id="chkAutoExplanation" checked>
-            <span class="slider round"></span>
-          </label>
-        </div>
+          <div class="setting-item">
+            <span class="setting-icon">💡</span>
+            <span class="setting-label">Her Soruda Pedagojik Çözümü Göster:</span>
+            <label class="switch">
+              <input type="checkbox" id="chkAutoExplanation" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
 
-        <div class="setting-item">
-          <span class="setting-icon">🎙️</span>
-          <span class="setting-label">Sunucu & Zafer Seslendirmesi:</span>
-          <label class="switch">
-            <input type="checkbox" id="chkAnnouncerVoice" checked>
-            <span class="slider round"></span>
-          </label>
-        </div>
+          <div class="setting-item">
+            <span class="setting-icon">🎙️</span>
+            <span class="setting-label">Sunucu & Zafer Seslendirmesi:</span>
+            <label class="switch">
+              <input type="checkbox" id="chkAnnouncerVoice" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
 
-        <div class="setting-item">
-          <span class="setting-icon">🔊</span>
-          <span class="setting-label">Soru Sesli Okuma (Edge-TTS):</span>
-          <label class="switch">
-            <input type="checkbox" id="chkAutoReadQuestion" checked>
-            <span class="slider round"></span>
-          </label>
-        </div>
+          <div class="setting-item">
+            <span class="setting-icon">🔊</span>
+            <span class="setting-label">Soru Sesli Okuma (Edge-TTS):</span>
+            <label class="switch">
+              <input type="checkbox" id="chkAutoReadQuestion" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
 
-        <div class="setting-info-badge">
-          <span>🖐️ <strong>Tahta Kuralı:</strong> İki öğrenci aynı anda parmakla dokunabilir. Yanlış şıkka basanın ekranı 1.5 sn kilitlenir!</span>
+          <div class="setting-info-badge">
+            <span>🖐️ <strong>Tahta Kuralı:</strong> İki öğrenci aynı anda parmakla dokunabilir. Yanlış şıkka basanın ekranı 1.5 sn kilitlenir!</span>
+          </div>
         </div>
       </section>
 
