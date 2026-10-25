@@ -7615,10 +7615,10 @@ input:checked + .slider:before {
 
   /* 3) Ana Sahne Kapsayıcısı */
   .home-showcase-section {
-    height: calc(100dvh - 95px) !important;
-    height: calc(100vh - 95px) !important;
-    max-height: calc(100dvh - 95px) !important;
-    max-height: calc(100vh - 95px) !important;
+    height: calc(100dvh - 82px) !important;
+    height: calc(100vh - 82px) !important;
+    max-height: calc(100dvh - 82px) !important;
+    max-height: calc(100vh - 82px) !important;
     padding: 0 4px !important;
     display: flex;
     flex-direction: column !important;
@@ -7630,14 +7630,14 @@ input:checked + .slider:before {
     flex: 1;
     min-height: 0;
     width: 100% !important;
-    max-width: 440px !important;
+    max-width: 480px !important;
     margin: 0 auto !important;
-    padding: 4px 12px !important;
+    padding: 6px 10px 0 10px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
-    gap: 8px !important;
+    justify-content: flex-start !important;
+    gap: clamp(4px, 1.2vh, 8px) !important;
   }
 
   /* Sol Sütun: Telefonda Tamamen Kaldırıldı (Hemen Başla ile Açılır) */
@@ -7645,7 +7645,7 @@ input:checked + .slider:before {
     display: none !important;
   }
 
-  /* Orta Sütun: Başlık, Marka ve Büyük Buton (Tam Ortalanmış) */
+  /* Orta Sütun: Başlık, Marka ve Büyük Buton (Yukarı Alınmış ve Kompakt) */
   .stage-center-content {
     flex: 0 0 auto !important;
     width: 100% !important;
@@ -7657,111 +7657,136 @@ input:checked + .slider:before {
   }
 
   .stage-heading-block {
-    margin-bottom: 4px !important;
+    margin-bottom: 2px !important;
     padding: 0 4px !important;
     width: 100%;
     text-align: center !important;
   }
 
   .stage-main-title {
-    font-size: clamp(1.1rem, 4.8vw, 1.45rem) !important;
-    line-height: 1.25 !important;
+    font-size: clamp(1.05rem, 4.4vw, 1.35rem) !important;
+    line-height: 1.2 !important;
     text-align: center !important;
   }
 
   .stage-bubbly-3d {
-    font-size: clamp(1.85rem, 8.2vw, 2.5rem) !important;
+    font-size: clamp(1.75rem, 7.8vw, 2.35rem) !important;
     white-space: nowrap !important;
-    margin: 3px auto !important;
+    margin: 2px auto !important;
     justify-content: center !important;
   }
 
   .stage-sparkle {
-    font-size: 1.2rem !important;
+    font-size: 1.15rem !important;
   }
 
   .stage-cta-container {
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
-    margin-top: 6px !important;
+    margin-top: 3px !important;
+    margin-bottom: 2px !important;
   }
 
   .stage-btn-start-3d {
-    width: min(290px, 88vw) !important;
-    padding: 13px 28px !important;
-    font-size: 1.18rem !important;
+    width: min(300px, 86vw) !important;
+    padding: 12px 28px !important;
+    font-size: 1.22rem !important;
     border-radius: 999px !important;
     box-shadow: 0 6px 0 #C2410C, 0 10px 24px rgba(250, 90, 0, 0.42) !important;
-    gap: 8px !important;
+    gap: 10px !important;
     white-space: nowrap !important;
     justify-content: center !important;
   }
 
-  /* Alt Bölüm: Moli ve Uçuşan Rozetler (Tam Ortalanmış) */
+  /* Alt Bölüm: Moli ve Uçuşan Rozetler (Ekranı Daha Fazla Kaplayacak Şekilde Büyütülmüş) */
   .stage-moli-showcase {
-    flex: 0 0 auto !important;
+    flex: 1 1 auto !important;
     width: 100% !important;
-    max-width: 240px !important;
+    max-width: clamp(320px, 92vw, 420px) !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    margin: 4px auto 2px auto !important;
+    margin: 0 auto !important;
+    min-height: 0 !important;
   }
 
   .widescreen-moli-arena {
-    height: clamp(155px, 26vh, 205px) !important;
-    width: 210px !important;
+    height: clamp(230px, 36vh, 320px) !important;
+    width: clamp(280px, 84vw, 360px) !important;
     margin: 0 auto !important;
     position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .widescreen-moli-mascot {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .widescreen-moli-mascot .moli-mascot-img {
-    height: clamp(130px, 22vh, 175px) !important;
+    height: clamp(190px, 29vh, 265px) !important;
+    max-height: 94% !important;
     width: auto !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.16)) !important;
   }
 
   .moli-floating-pill {
-    padding: 3px 6px !important;
-    font-size: 0.62rem !important;
-    gap: 3px !important;
+    padding: 5px 12px !important;
+    font-size: clamp(0.72rem, 2.1vw, 0.84rem) !important;
+    gap: 5px !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
   }
 
   .moli-floating-circle {
-    width: 26px !important;
-    height: 26px !important;
-    font-size: 0.85rem !important;
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 1.15rem !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
   }
 
   .moli-floating-pill.pill-math {
     top: 6px !important;
-    left: -10px !important;
+    left: 2px !important;
   }
 
   .moli-floating-pill.pill-letters {
     top: 14px !important;
-    right: -10px !important;
+    right: 2px !important;
   }
 
   .moli-floating-circle.circle-trophy {
-    top: 72px !important;
-    left: -10px !important;
+    top: 38% !important;
+    left: 4px !important;
   }
 
   .moli-floating-circle.circle-balloon {
-    top: 86px !important;
-    right: -10px !important;
+    top: 42% !important;
+    right: 6px !important;
   }
 
   .moli-floating-pill.pill-points {
-    bottom: 18px !important;
-    left: -12px !important;
+    bottom: 24px !important;
+    left: 4px !important;
+  }
+
+  .pill-ico-badge {
+    font-size: 0.64rem !important;
+    padding: 1px 5px !important;
   }
 
   .moli-floating-pill.pill-ready {
-    bottom: 2px !important;
-    left: 42% !important;
-    padding: 3px 8px !important;
+    bottom: 4px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 5px 14px !important;
   }
 
   /* 4) Alt Güven Bandı */
