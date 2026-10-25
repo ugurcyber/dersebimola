@@ -5539,6 +5539,27 @@
     }, duration);
   }
 
+  // Mobil ve Akıllı Tahta Dokunmatik Tap Yöneticisi (Çift tetiklemeyi önler, gecikmesiz çalışır)
+  function addTapListener(el, callback) {
+    if (!el) return;
+    let lastTrigger = 0;
+    const run = (e) => {
+      const now = Date.now();
+      if (now - lastTrigger < 320) return;
+      lastTrigger = now;
+      callback(e);
+    };
+    el.addEventListener('pointerdown', (e) => {
+      if (e.button === 0 || e.pointerType === 'touch') {
+        run(e);
+      }
+    });
+    el.addEventListener('click', (e) => {
+      if (e && e.cancelable) e.preventDefault();
+      run(e);
+    });
+  }
+
   function openModal(modalEl) {
     audio.playClick();
     modalEl.classList.remove('hide');
@@ -5640,6 +5661,39 @@
       url: 'https://dersebimola.com',
       directWhatsApp: false
     });
+  }
+
+  const gameTypeBadges = {
+    math: '📐 Matematik',
+    turkish: '📚 Türkçe',
+    english: '🇬🇧 İngilizce',
+    lifescience: '🌱 Hayat Bilgisi',
+    science: '🔬 Fen Bilimleri',
+    social: '🌍 Sosyal Bilgiler',
+    color_balloon: '🎈 Renk Balonları',
+    count_tap: '🔢 Dokun & Say',
+    shadow_match: '🧩 Gölgesini Bul',
+    oddone: '👀 Farklı Olanı Bul',
+    memory: '🧠 Hafıza Kartları',
+    stroop: '🎨 Renk & Kelime',
+    reflex: '⚡ Hızlı Refleks',
+    true_false: '✅ Doğru / Yanlış',
+    matching: '🎯 Dokun & Eşleştir',
+    firstreading: '🔤 İlk Okuma Yazma'
+  };
+
+  function getCurrentGameObject() {
+    const g = state.currentGrade;
+    const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
+    if (subjects) {
+      for (const s of subjects) {
+        if (s.games) {
+          const gm = s.games.find(x => x.id === state.currentGameType);
+          if (gm) return gm;
+        }
+      }
+    }
+    return null;
   }
 
   function getCurrentGameTitle() {
@@ -7635,10 +7689,12 @@
 
     // Ders Kartlarına Tıklama Dinleyicisi
     DOM.subjectsGrid.querySelectorAll('.subject-card').forEach(card => {
-      card.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(card, (e) => {
+        if (e && e.target && e.target.closest('.card-share-btn')) return;
         const subjectId = card.getAttribute('data-subject-id');
-        selectSubject(subjectId);
+        if (subjectId) {
+          selectSubject(subjectId);
+        }
       });
     });
   }
@@ -7820,12 +7876,15 @@
       });
     });
 
-    // Aktif kartlara tıklama dinleyicisi
+    // Aktif kartlara tıklama dinleyicisi (Hem kart gövdesi hem de "Pratiğe Başla / Düelloyu Başlat" butonu)
     DOM.gamesGrid.querySelectorAll('.game-card:not(.game-card-upcoming)').forEach(card => {
-      card.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(card, (e) => {
+        if (e && e.target && e.target.closest('.card-share-btn')) return;
         const gameId = card.getAttribute('data-game-id');
-        startDuel(gameId);
+        if (gameId) {
+          audio.playClick();
+          startDuel(gameId);
+        }
       });
     });
   }
@@ -8789,23 +8848,32 @@
       3: '⚡ 3. Sınıf',
       4: '👑 4. Sınıf'
     };
+    const currentGm = getCurrentGameObject();
+    const gameBadgeText = (currentGm && (currentGm.badge || currentGm.title))
+      || (gameTypeBadges && gameTypeBadges[gameType])
+      || (isSolo ? '🎯 Bireysel Pratik' : '🎯 Sınıf Düellosu');
+
     if (gameType === 'custom_quiz' && state.activeCustomQuiz) {
-      DOM.duelGradeBadge.innerHTML = '🎯 Özel Sınav';
-      DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D('📝 ' + escapeHtml(state.activeCustomQuiz.title), 'chip-3d-icon');
+      if (DOM.duelGradeBadge) DOM.duelGradeBadge.innerHTML = '🎯 Özel Sınav';
+      if (DOM.duelGameTypeBadge) DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D('📝 ' + escapeHtml(state.activeCustomQuiz.title), 'chip-3d-icon');
     } else {
-      DOM.duelGradeBadge.innerHTML = replaceEmojisWith3D(gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`, 'chip-3d-icon');
-      DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D(gameTypeBadges[gameType] || (isSolo ? '🎯 Bireysel Pratik' : '🎯 Sınıf Düellosu'), 'chip-3d-icon');
+      if (DOM.duelGradeBadge) DOM.duelGradeBadge.innerHTML = replaceEmojisWith3D(gradeLabels[state.currentGrade] || `${state.currentGrade}. Sınıf`, 'chip-3d-icon');
+      if (DOM.duelGameTypeBadge) DOM.duelGameTypeBadge.innerHTML = replaceEmojisWith3D(gameBadgeText, 'chip-3d-icon');
     }
     updateGameModeUI();
     updatePlayerNamesUI();
     renderScoreTrack();
 
     // Lobi -> Düello Görünümüne Geçiş (Kesin ve zorunlu ekran geçişi)
-    DOM.viewLobby.classList.remove('active');
-    DOM.viewLobby.style.display = 'none';
+    if (DOM.viewLobby) {
+      DOM.viewLobby.classList.remove('active');
+      DOM.viewLobby.style.display = 'none';
+    }
 
-    DOM.viewDuel.classList.add('active');
-    DOM.viewDuel.style.display = 'flex';
+    if (DOM.viewDuel) {
+      DOM.viewDuel.classList.add('active');
+      DOM.viewDuel.style.display = 'flex';
+    }
     state.currentView = 'duel';
 
     audio.playCorrect();
@@ -8959,14 +9027,17 @@
     DOM.duelTimeBarFill.classList.remove('danger-state');
     if (DOM.duelTimeBadge) DOM.duelTimeBadge.textContent = '⚡ 2x HIZLI REFLEKS';
 
-    const startTime = performance.now();
+    const getNow = () => (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+    const getRaf = (cb) => (typeof window !== 'undefined' && window.requestAnimationFrame) ? window.requestAnimationFrame(cb) : setTimeout(() => cb(getNow()), 16);
+
+    const startTime = getNow();
 
     function updateReflexBar(now) {
       if (state.isQuestionAnswered || state.currentView !== 'duel') {
         stopReflexTimer();
         return;
       }
-      const elapsed = now - startTime;
+      const elapsed = (now || getNow()) - startTime;
       const remaining = Math.max(0, durationMs - elapsed);
       const pct = (remaining / durationMs) * 100;
 
@@ -8980,16 +9051,20 @@
       if (remaining <= 0) {
         handleReflexTimeout();
       } else {
-        reflexTimerRaf = requestAnimationFrame(updateReflexBar);
+        reflexTimerRaf = getRaf(updateReflexBar);
       }
     }
 
-    reflexTimerRaf = requestAnimationFrame(updateReflexBar);
+    reflexTimerRaf = getRaf(updateReflexBar);
   }
 
   function stopReflexTimer() {
     if (reflexTimerRaf) {
-      cancelAnimationFrame(reflexTimerRaf);
+      if (typeof window !== 'undefined' && window.cancelAnimationFrame) {
+        cancelAnimationFrame(reflexTimerRaf);
+      } else {
+        clearTimeout(reflexTimerRaf);
+      }
       reflexTimerRaf = null;
     }
     if (DOM.duelTimeBarTrack) DOM.duelTimeBarTrack.classList.add('hide');
@@ -10545,27 +10620,6 @@
     // -------------------------------------------------------------
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    // Mobil ve Akıllı Tahta Dokunmatik Tap Yöneticisi (Çift tetiklemeyi önler, gecikmesiz çalışır)
-    function addTapListener(el, callback) {
-      if (!el) return;
-      let lastTrigger = 0;
-      const run = (e) => {
-        const now = Date.now();
-        if (now - lastTrigger < 320) return;
-        lastTrigger = now;
-        callback(e);
-      };
-      el.addEventListener('pointerdown', (e) => {
-        if (e.button === 0 || e.pointerType === 'touch') {
-          run(e);
-        }
-      });
-      el.addEventListener('click', (e) => {
-        if (e && e.cancelable) e.preventDefault();
-        run(e);
-      });
-    }
-
     // Header Kontrolleri (Moli & Derse Bi' Mola Birleşik Logo)
     if (DOM.logoBtn) {
       addTapListener(DOM.logoBtn, () => {
@@ -11394,6 +11448,7 @@
   window.changeMoliExpression = changeMoliExpression;
   window.returnToLobby = returnToLobby;
   window.exitDuel = exitDuel;
+  window.startDuel = startDuel;
   window.selectSubject = selectSubject;
   window.returnToSubjectsList = returnToSubjectsList;
   window.renderSubjects = renderSubjects;
