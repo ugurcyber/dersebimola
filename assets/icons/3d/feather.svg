@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="featherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <filter id="featherShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#4338ca" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <path d="M78 18 C58 22 36 42 22 78 C28 72 38 70 46 72 C38 64 38 52 46 44 C52 48 58 50 64 52 C58 40 64 30 78 18 Z" fill="url(#featherGrad)" filter="url(#featherShadow)"/>
+  <path d="M20 84 Q 45 55 80 16" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+</svg>

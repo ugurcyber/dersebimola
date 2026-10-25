@@ -7014,6 +7014,8 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
   font-size: clamp(3.8rem, 8vw, 4.8rem);
   line-height: 1;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -7026,6 +7028,13 @@ input:checked + .slider:before {
   height: clamp(72px, 9vw, 96px);
   object-fit: contain;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Sayma kartlarında birden fazla 3D nesne olduğunda uyumlu boyutlandırma */
+.visual-card-icon:has(img:nth-child(2)) img,
+.visual-card-icon:has(img:nth-child(2)) .visual-3d-img {
+  width: clamp(38px, 4.8vw, 52px);
+  height: clamp(38px, 4.8vw, 52px);
 }
 
 .visual-choice-card:hover .visual-card-icon img,
