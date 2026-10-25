@@ -7620,99 +7620,96 @@ input:checked + .slider:before {
   .widescreen-showcase-stage {
     flex: 1;
     min-height: 0;
-    padding: 0 2px !important;
-    gap: 4px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-  }
-
-  /* Sol Sütun: 7 Sınıf Kartı */
-  .stage-grades-sidebar {
-    width: clamp(96px, 26vw, 115px) !important;
-    min-width: 92px !important;
-    gap: 3.5px !important;
-    flex-shrink: 0 !important;
-  }
-
-  .stage-grade-card {
-    padding: 3.5px 6px !important;
-    border-radius: 9px !important;
-    gap: 5px !important;
-  }
-
-  .grade-icon-cube {
-    width: 22px !important;
-    height: 22px !important;
-  }
-
-  .grade-card-3d-img {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
-  .grade-card-label {
-    font-size: 0.72rem !important;
-    font-weight: 850;
-  }
-
-  .grade-multiline-label {
-    font-size: 0.65rem !important;
-    font-weight: 850;
-  }
-
-  /* Orta Sütun: Başlık ve Eylem */
-  .stage-center-content {
-    flex: 1 !important;
-    min-width: 0 !important;
-    padding: 0 2px !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    margin: 0 auto !important;
+    padding: 4px 12px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  /* Sol Sütun: Telefonda Tamamen Kaldırıldı (Hemen Başla ile Açılır) */
+  .stage-grades-sidebar {
+    display: none !important;
+  }
+
+  /* Orta Sütun: Başlık, Marka ve Büyük Buton (Tam Ortalanmış) */
+  .stage-center-content {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
   }
 
   .stage-heading-block {
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     padding: 0 4px !important;
     width: 100%;
+    text-align: center !important;
   }
 
   .stage-main-title {
-    font-size: clamp(0.85rem, 2.5vw, 1.25rem) !important;
-    line-height: 1.15;
+    font-size: clamp(1.1rem, 4.8vw, 1.45rem) !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
   }
 
   .stage-bubbly-3d {
-    font-size: clamp(1.1rem, 3.6vw, 1.6rem) !important;
+    font-size: clamp(1.85rem, 8.2vw, 2.5rem) !important;
     white-space: nowrap !important;
-    margin-top: 2px !important;
+    margin: 3px auto !important;
+    justify-content: center !important;
   }
 
   .stage-sparkle {
-    font-size: 1.1rem !important;
+    font-size: 1.2rem !important;
+  }
+
+  .stage-cta-container {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-top: 6px !important;
   }
 
   .stage-btn-start-3d {
-    padding: 8px 18px !important;
-    font-size: clamp(0.85rem, 2.6vw, 1.05rem) !important;
-    box-shadow: 0 4px 0 #C2410C, 0 8px 16px rgba(250, 90, 0, 0.38) !important;
-    gap: 6px !important;
+    width: min(290px, 88vw) !important;
+    padding: 13px 28px !important;
+    font-size: 1.18rem !important;
+    border-radius: 999px !important;
+    box-shadow: 0 6px 0 #C2410C, 0 10px 24px rgba(250, 90, 0, 0.42) !important;
+    gap: 8px !important;
     white-space: nowrap !important;
+    justify-content: center !important;
   }
 
-  /* Sağ Sütun: Moli ve Uçuşan Rozetler */
+  /* Alt Bölüm: Moli ve Uçuşan Rozetler (Tam Ortalanmış) */
   .stage-moli-showcase {
-    width: clamp(120px, 32vw, 160px) !important;
-    min-width: 110px !important;
-    flex-shrink: 0 !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 240px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 4px auto 2px auto !important;
   }
 
   .widescreen-moli-arena {
-    height: clamp(180px, 34vh, 250px) !important;
+    height: clamp(155px, 26vh, 205px) !important;
+    width: 210px !important;
+    margin: 0 auto !important;
+    position: relative !important;
   }
 
   .widescreen-moli-mascot .moli-mascot-img {
-    height: clamp(140px, 26vh, 200px) !important;
+    height: clamp(130px, 22vh, 175px) !important;
+    width: auto !important;
   }
 
   .moli-floating-pill {
@@ -7728,33 +7725,33 @@ input:checked + .slider:before {
   }
 
   .moli-floating-pill.pill-math {
-    top: 10px !important;
-    left: -12px !important;
+    top: 6px !important;
+    left: -10px !important;
   }
 
   .moli-floating-pill.pill-letters {
-    top: 22px !important;
+    top: 14px !important;
     right: -10px !important;
   }
 
   .moli-floating-circle.circle-trophy {
-    top: 85px !important;
-    left: -8px !important;
+    top: 72px !important;
+    left: -10px !important;
   }
 
   .moli-floating-circle.circle-balloon {
-    top: 105px !important;
-    right: -8px !important;
+    top: 86px !important;
+    right: -10px !important;
   }
 
   .moli-floating-pill.pill-points {
-    bottom: 24px !important;
+    bottom: 18px !important;
     left: -12px !important;
   }
 
   .moli-floating-pill.pill-ready {
-    bottom: 6px !important;
-    left: 45% !important;
+    bottom: 2px !important;
+    left: 42% !important;
     padding: 3px 8px !important;
   }
 
@@ -8587,6 +8584,117 @@ input:checked + .slider:before {
 .setting-btn-action:active {
   transform: scale(0.95);
 }
+
+/* ==========================================================================
+   SINIFINI SEÇ (GRADE SELECTOR) MODAL TASARIMI
+   ========================================================================== */
+.grade-selector-modal-window {
+  max-width: 520px !important;
+  width: min(92vw, 520px) !important;
+  padding: 24px 20px !important;
+  border-radius: 28px !important;
+  background: #ffffff !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25) !important;
+  border: 3.5px solid #ffeedb !important;
+}
+
+.grade-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+@media (max-width: 440px) {
+  .grade-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.grade-modal-card {
+  background: #f8fafc;
+  border: 2.5px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  text-align: left;
+  user-select: none;
+  touch-action: manipulation;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  font-family: inherit;
+}
+
+.grade-modal-card:hover,
+.grade-modal-card:active {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #ff7a00;
+  background: #fff7ed;
+  box-shadow: 0 10px 24px rgba(255, 122, 0, 0.2);
+}
+
+.grade-modal-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  border: 2px solid #edf2f7;
+}
+
+.grade-modal-3d-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+
+.grade-modal-card:hover .grade-modal-3d-icon {
+  transform: scale(1.15) rotate(4deg);
+}
+
+.grade-modal-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.grade-modal-name {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.grade-modal-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.grade-modal-arrow {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #cbd5e1;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.grade-modal-card:hover .grade-modal-arrow {
+  transform: translateX(4px);
+  color: #ff7a00;
+}
+
 
 
 

@@ -11638,10 +11638,43 @@
     }
 
     const btnDesktopHeroStart = document.getElementById('btnDesktopHeroStart');
+    const modalSelectGrade = document.getElementById('modalSelectGrade');
     if (btnDesktopHeroStart) {
       addTapListener(btnDesktopHeroStart, (e) => {
         audio.playClick();
-        setGrade(1);
+        if (modalSelectGrade) {
+          openModal(modalSelectGrade);
+        } else {
+          setGrade(1);
+        }
+      });
+    }
+
+    // Modal içindeki sınıf kartları seçilince
+    document.querySelectorAll('[data-modal-grade]').forEach(card => {
+      addTapListener(card, (e) => {
+        audio.playClick();
+        const g = card.getAttribute('data-modal-grade');
+        if (modalSelectGrade) {
+          closeModal(modalSelectGrade);
+        }
+        if (g !== null && g !== undefined) {
+          setGrade(g);
+        }
+      });
+    });
+
+    const btnModalEnglish = document.getElementById('btnModalEnglish');
+    if (btnModalEnglish) {
+      addTapListener(btnModalEnglish, (e) => {
+        audio.playClick();
+        if (modalSelectGrade) {
+          closeModal(modalSelectGrade);
+        }
+        setGrade(2);
+        if (typeof selectSubject === 'function') {
+          selectSubject('english');
+        }
       });
     }
 

@@ -801,6 +801,88 @@
   <!-- MODALLER: PRO & FREEMIUM VE ARAÇLAR -->
   <!-- ============================================== -->
 
+  <!-- MODAL: SINIFINI SEÇ (HEMEN BAŞLA) -->
+  <div class="modal-backdrop hide" id="modalSelectGrade">
+    <div class="modal-window grade-selector-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalSelectGrade" aria-label="Kapat">✕</button>
+      <div class="modal-header">
+        <div class="modal-badge-icon">🎓</div>
+        <h3 class="modal-title">Sınıfını Seç</h3>
+        <p class="modal-desc">
+          Eğlenceli öğrenme ve düello macerasına başlamak için sınıfına dokun:
+        </p>
+      </div>
+
+      <div class="grade-modal-grid">
+        <button class="grade-modal-card card-grade-0" data-modal-grade="0" type="button">
+          <div class="grade-modal-icon-wrap">
+            <img src="assets/icons/3d/puzzle_piece.webp" class="grade-modal-3d-icon" alt="Anasınıfı" width="46" height="46" loading="lazy">
+          </div>
+          <div class="grade-modal-info">
+            <span class="grade-modal-name">Anasınıfı</span>
+            <span class="grade-modal-badge">Okul Öncesi (4-6 Yaş)</span>
+          </div>
+          <span class="grade-modal-arrow">→</span>
+        </button>
+
+        <button class="grade-modal-card card-grade-1" data-modal-grade="1" type="button">
+          <div class="grade-modal-icon-wrap">
+            <img src="assets/icons/3d/abc_blocks.webp" class="grade-modal-3d-icon" alt="1. Sınıf" width="46" height="46" loading="lazy">
+          </div>
+          <div class="grade-modal-info">
+            <span class="grade-modal-name">1. Sınıf</span>
+            <span class="grade-modal-badge">İlk Okuma &amp; Temel</span>
+          </div>
+          <span class="grade-modal-arrow">→</span>
+        </button>
+
+        <button class="grade-modal-card card-grade-2" data-modal-grade="2" type="button">
+          <div class="grade-modal-icon-wrap">
+            <img src="assets/icons/3d/abacus.webp" class="grade-modal-3d-icon" alt="2. Sınıf" width="46" height="46" loading="lazy">
+          </div>
+          <div class="grade-modal-info">
+            <span class="grade-modal-name">2. Sınıf</span>
+            <span class="grade-modal-badge">Gelişim &amp; Matematik</span>
+          </div>
+          <span class="grade-modal-arrow">→</span>
+        </button>
+
+        <button class="grade-modal-card card-grade-3" data-modal-grade="3" type="button">
+          <div class="grade-modal-icon-wrap">
+            <img src="assets/icons/3d/open_book.webp" class="grade-modal-3d-icon" alt="3. Sınıf" width="46" height="46" loading="lazy">
+          </div>
+          <div class="grade-modal-info">
+            <span class="grade-modal-name">3. Sınıf</span>
+            <span class="grade-modal-badge">Fen &amp; Hayat Bilgisi</span>
+          </div>
+          <span class="grade-modal-arrow">→</span>
+        </button>
+
+        <button class="grade-modal-card card-grade-4" data-modal-grade="4" type="button">
+          <div class="grade-modal-icon-wrap">
+            <img src="assets/icons/3d/books.webp" class="grade-modal-3d-icon" alt="4. Sınıf" width="46" height="46" loading="lazy">
+          </div>
+          <div class="grade-modal-info">
+            <span class="grade-modal-name">4. Sınıf</span>
+            <span class="grade-modal-badge">Mezuniyet &amp; Sosyal</span>
+          </div>
+          <span class="grade-modal-arrow">→</span>
+        </button>
+
+        <button class="grade-modal-card card-grade-english" id="btnModalEnglish" type="button">
+          <div class="grade-modal-icon-wrap">
+            <img src="assets/icons/3d/globe.webp" class="grade-modal-3d-icon" alt="İngilizce" width="46" height="46" loading="lazy">
+          </div>
+          <div class="grade-modal-info">
+            <span class="grade-modal-name">İngilizce</span>
+            <span class="grade-modal-badge">English Fun 🇬🇧</span>
+          </div>
+          <span class="grade-modal-arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL 0: OYUNDAN ÇIKIŞ ONAYI (MOBİL & AKILLI TAHTA GÜVENLİ) -->
   <div class="modal-backdrop hide" id="modalConfirmExit">
     <div class="modal-window exit-modal-window">
