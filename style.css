@@ -5299,183 +5299,6 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 1024px) {
-  html, body {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    height: auto !important;
-    min-height: 100vh;
-  }
-
-  .app-layout {
-    flex-direction: column;
-  }
-
-  .app-sidebar {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    height: auto !important;
-    position: relative !important;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2);
-  }
-
-  .sidebar-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-  }
-
-  .sidebar-speech-bubble {
-    display: none !important;
-  }
-
-  .sidebar-nav-wrap {
-    padding: 2px 14px 10px 14px;
-  }
-
-  .sidebar-nav-title {
-    display: none;
-  }
-
-  .sidebar-grade-nav {
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    gap: 8px !important;
-    padding: 4px 0 8px 0;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .sidebar-grade-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .sidebar-grade-nav .sidebar-home-btn,
-  .sidebar-grade-nav .grade-chip {
-    width: auto !important;
-    flex-shrink: 0;
-    height: 42px;
-    padding: 0 14px;
-  }
-  .sidebar-nav-divider {
-    display: none !important;
-  }
-
-  /* Ana Sayfa Vitrini Mobil / Tablet Uyumları */
-  .edtech-hero-card {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 24px 20px;
-    gap: 24px;
-  }
-  .hero-left-col {
-    align-items: center;
-  }
-  .hero-cta-group {
-    justify-content: center;
-  }
-  .home-grades-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-  .home-popular-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .sidebar-footer {
-    padding: 10px 14px;
-  }
-
-  .sidebar-tools-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .sidebar-tool-btn, .sidebar-teacher-btn {
-    width: auto;
-    flex: 1;
-    min-width: 110px;
-    white-space: nowrap;
-  }
-
-  .app-topbar {
-    height: auto !important;
-    flex-wrap: wrap;
-    padding: 10px 14px;
-    gap: 10px;
-  }
-
-  .topbar-left {
-    display: none;
-  }
-
-  .topbar-center {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .topbar-right {
-    margin-left: auto;
-  }
-
-  .view-container {
-    height: auto !important;
-    min-height: calc(100vh - 120px);
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    position: relative;
-  }
-
-  #viewLobby {
-    height: auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding: 14px 14px 48px !important;
-  }
-
-  .lobby-content {
-    gap: 14px;
-    width: 100%;
-  }
-
-  .lobby-hero {
-    gap: 8px;
-    padding: 0 4px;
-  }
-
-  .hero-tag {
-    font-size: 0.72rem;
-    text-align: center;
-    white-space: normal;
-    padding: 4px 12px;
-    line-height: 1.3;
-  }
-
-  .hero-title {
-    font-size: 1.45rem;
-    line-height: 1.22;
-  }
-
-  .hero-desc {
-    font-size: 0.88rem;
-    line-height: 1.35;
-    padding: 0 8px;
-  }
-
-  .mode-switch-container {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .mode-switch-btn {
-    flex: 1;
-    justify-content: center;
-    font-size: 0.8rem;
-    padding: 6px 10px;
-  }
-
   .split-arena.solo-mode {
     padding: 10px !important;
   }
@@ -7612,14 +7435,37 @@ input:checked + .slider:before {
    Görseldeki 3 Sütunlu Tasarımın Tek Ekrana (100vh) Sabit Sığdırılması
    ========================================================================== */
 @media (max-width: 768px) {
+  html, body {
+    height: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .app-layout,
+  .app-main-wrapper,
+  #viewLobby {
+    height: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .lobby-content {
+    height: 100% !important;
+    max-height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   /* 1) Birleşik Üst Bar */
   .unified-topbar {
-    padding: 6px 10px 4px 10px !important;
+    padding: 6px 12px 4px 12px !important;
     gap: 6px;
   }
 
   .brand-bubbly-logo {
-    font-size: 1.45rem !important;
+    font-size: 1.55rem !important;
   }
 
   .brand-sub-title {
@@ -7631,8 +7477,8 @@ input:checked + .slider:before {
   }
 
   .topbar-action-pill {
-    padding: 4px 8px !important;
-    font-size: 0.72rem !important;
+    padding: 5px 8px !important;
+    font-size: 0.74rem !important;
     gap: 4px !important;
   }
 
@@ -7643,7 +7489,7 @@ input:checked + .slider:before {
 
   /* 2) Turuncu Uyarı Bandı */
   .desktop-alert-banner {
-    padding: 4px 12px !important;
+    padding: 5px 12px !important;
     margin: 1px auto 4px auto !important;
     width: calc(100% - 16px) !important;
     border-radius: 10px !important;
@@ -7659,21 +7505,33 @@ input:checked + .slider:before {
 
   /* 3) Ana Sahne Kapsayıcısı */
   .home-showcase-section {
+    height: calc(100dvh - 95px) !important;
     height: calc(100vh - 95px) !important;
+    max-height: calc(100dvh - 95px) !important;
     max-height: calc(100vh - 95px) !important;
     padding: 0 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
   }
 
   .widescreen-showcase-stage {
+    flex: 1;
+    min-height: 0;
     padding: 0 2px !important;
     gap: 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
   }
 
   /* Sol Sütun: 7 Sınıf Kartı */
   .stage-grades-sidebar {
-    width: 105px !important;
-    min-width: 95px !important;
+    width: clamp(96px, 26vw, 115px) !important;
+    min-width: 92px !important;
     gap: 3.5px !important;
+    flex-shrink: 0 !important;
   }
 
   .stage-grade-card {
@@ -7692,34 +7550,40 @@ input:checked + .slider:before {
     height: 20px !important;
   }
 
-  .grade-flag-emoji {
-    font-size: 1.1rem !important;
-  }
-
   .grade-card-label {
     font-size: 0.72rem !important;
+    font-weight: 850;
   }
 
   .grade-multiline-label {
     font-size: 0.65rem !important;
+    font-weight: 850;
   }
 
   /* Orta Sütun: Başlık ve Eylem */
   .stage-center-content {
+    flex: 1 !important;
+    min-width: 0 !important;
     padding: 0 2px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   .stage-heading-block {
     margin-bottom: 6px !important;
-    padding: 0 10px !important;
+    padding: 0 4px !important;
+    width: 100%;
   }
 
   .stage-main-title {
     font-size: clamp(0.85rem, 2.5vw, 1.25rem) !important;
+    line-height: 1.15;
   }
 
   .stage-bubbly-3d {
-    font-size: clamp(1.05rem, 3.4vw, 1.6rem) !important;
+    font-size: clamp(1.1rem, 3.6vw, 1.6rem) !important;
+    white-space: nowrap !important;
     margin-top: 2px !important;
   }
 
@@ -7732,20 +7596,22 @@ input:checked + .slider:before {
     font-size: clamp(0.85rem, 2.6vw, 1.05rem) !important;
     box-shadow: 0 4px 0 #C2410C, 0 8px 16px rgba(250, 90, 0, 0.38) !important;
     gap: 6px !important;
+    white-space: nowrap !important;
   }
 
   /* Sağ Sütun: Moli ve Uçuşan Rozetler */
   .stage-moli-showcase {
-    width: 130px !important;
+    width: clamp(120px, 32vw, 160px) !important;
     min-width: 110px !important;
+    flex-shrink: 0 !important;
   }
 
   .widescreen-moli-arena {
-    height: clamp(170px, 32vh, 230px) !important;
+    height: clamp(180px, 34vh, 250px) !important;
   }
 
   .widescreen-moli-mascot .moli-mascot-img {
-    height: clamp(130px, 24vh, 185px) !important;
+    height: clamp(140px, 26vh, 200px) !important;
   }
 
   .moli-floating-pill {
