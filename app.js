@@ -1246,15 +1246,31 @@
     // YENİ MOTOR 2: HAREKETLİ BALON PATLATMA MOTORU (HARF / HECE / SAYI AVI)
     // =========================================================================
     generateFloatingBalloonQuestion(grade, levelType = null) {
+      const g = parseInt(grade, 10);
       let pool = this.grade1BalloonLevelsPool;
-      if (levelType === 'reading' || levelType === 'letters') {
-        pool = pool.filter(l => l.category.includes('Harfler') || l.category.includes('Heceler'));
-      } else if (levelType === 'rhythmic' || levelType === 'math') {
-        pool = pool.filter(l => l.category.includes('Sayılar') || l.category.includes('Ritmik') || l.category.includes('Toplama'));
-      }
-      if (!pool || pool.length === 0) pool = this.grade1BalloonLevelsPool;
+      let poolKey = 'grade1BalloonLevelsPool';
 
-      const level = this.drawFromPool(pool, 'grade1BalloonLevelsPool') || pool[Math.floor(Math.random() * pool.length)];
+      if (g === 0) {
+        pool = this.grade0BalloonLevelsPool;
+        poolKey = 'grade0BalloonLevelsPool';
+        if (levelType === 'colors') {
+          pool = pool.filter(l => l.category === 'Renkler');
+        } else if (levelType === 'numbers') {
+          pool = pool.filter(l => l.category === 'Sayılar');
+        } else if (levelType === 'shapes') {
+          pool = pool.filter(l => l.category === 'Şekiller' || l.category === 'Hayvanlar' || l.category === 'Meyveler');
+        }
+        if (!pool || pool.length === 0) pool = this.grade0BalloonLevelsPool;
+      } else {
+        if (levelType === 'reading' || levelType === 'letters') {
+          pool = pool.filter(l => l.category.includes('Harfler') || l.category.includes('Heceler'));
+        } else if (levelType === 'rhythmic' || levelType === 'math') {
+          pool = pool.filter(l => l.category.includes('Sayılar') || l.category.includes('Ritmik') || l.category.includes('Toplama'));
+        }
+        if (!pool || pool.length === 0) pool = this.grade1BalloonLevelsPool;
+      }
+
+      const level = this.drawFromPool(pool, poolKey) || pool[Math.floor(Math.random() * pool.length)];
       const colorClasses = [
         'balloon-color-red', 'balloon-color-blue', 'balloon-color-green', 
         'balloon-color-yellow', 'balloon-color-purple', 'balloon-color-pink', 'balloon-color-orange'
@@ -1315,7 +1331,7 @@
       let cat = matchType;
       if (!cat) {
         if (g === 0) {
-          cat = Math.random() < 0.6 ? 'antonyms' : 'letters';
+          cat = 'kindergarten_visual';
         } else {
           const r = Math.random();
           if (r < 0.35) cat = 'letters';
@@ -1323,8 +1339,11 @@
           else cat = 'math';
         }
       }
+      if (g === 0 && (!this.matchingPairsPool[cat] || cat !== 'kindergarten_visual')) {
+        cat = 'kindergarten_visual';
+      }
 
-      const rawPool = this.matchingPairsPool[cat] || this.matchingPairsPool.antonyms;
+      const rawPool = this.matchingPairsPool[cat] || this.matchingPairsPool.kindergarten_visual || this.matchingPairsPool.antonyms;
       const pairsCount = (g === 0) ? 3 : (Math.random() < 0.4 ? 3 : 6);
       const gridSize = pairsCount === 3 ? 'grid-2x3' : 'grid-3x4';
 
@@ -1341,7 +1360,10 @@
 
       let themeTitle = 'Eşleşen kartları bul! Kartlara sırayla dokun.';
       let categoryName = '🧠 Hafıza & Eşleştirme';
-      if (cat === 'letters') {
+      if (cat === 'kindergarten_visual') {
+        themeTitle = '👀 Eşleşen sevimli görselleri bul! Dokun ve eşleştir.';
+        categoryName = '🧩 Sevimli Görsel Hafıza';
+      } else if (cat === 'letters') {
         themeTitle = '🔤 Büyük Harf - Küçük Harf Eşleştirmesi! Eşini bul.';
         categoryName = '🔤 Harf Hafıza Kartları';
       } else if (cat === 'antonyms') {
@@ -1434,7 +1456,106 @@
       { prompt: 'Hangisi tıpkı bir futbol topu gibi yuvarlak DAİREDİR? ⭕', spokenText: 'Hangisi yuvarlak dairedir? Daireye dokun.', category: 'Renkler & Şekiller', correct: 'Daire', cards: [{ text: 'Daire', icon: '⭕', isCorrect: true }, { text: 'Kare', icon: '🟩', isCorrect: false }, { text: 'Üçgen', icon: '🔺', isCorrect: false }], exp: 'Dairenin köşesi yoktur, top gibi yuvarlaktır! ⭕⚽' },
       { prompt: 'Hangisi tam 3 köşesi ve 3 kenarı olan ÜÇGENDİR? 🔺', spokenText: 'Hangisi 3 köşeli üçgendir? Üçgene dokun.', category: 'Renkler & Şekiller', correct: 'Üçgen', cards: [{ text: 'Üçgen', icon: '🔺', isCorrect: true }, { text: 'Daire', icon: '⚪', isCorrect: false }, { text: 'Kare', icon: '🟦', isCorrect: false }], exp: 'Üçgenin tam 3 sivri köşesi vardır! 🔺📐' },
       { prompt: 'Hangisi 4 kenarı da birbirine eşit olan KAREDİR? 🟩', spokenText: 'Hangisi 4 kenarı eşit karedir? Kareye dokun.', category: 'Renkler & Şekiller', correct: 'Kare', cards: [{ text: 'Kare', icon: '🟩', isCorrect: true }, { text: 'Daire', icon: '⭕', isCorrect: false }, { text: 'Üçgen', icon: '🔺', isCorrect: false }], exp: 'Kare kutu gibi dengeli ve dört köşelidir! 🟩📦' },
-      { prompt: 'Hangisi lezzetli bir portakalın rengi olan TURUNCUDUR? 🟠', spokenText: 'Hangisi turuncu renktir? Turuncu daireye dokun.', category: 'Renkler & Şekiller', correct: 'Turuncu Daire', cards: [{ text: 'Turuncu Daire', icon: '🟠', isCorrect: true }, { text: 'Mor Daire', icon: '🟣', isCorrect: false }, { text: 'Yeşil Daire', icon: '🟢', isCorrect: false }], exp: 'Turuncu portakal ve havuç rengidir! 🟠🍊' }
+      { prompt: 'Hangisi lezzetli bir portakalın rengi olan TURUNCUDUR? 🟠', spokenText: 'Hangisi turuncu renktir? Turuncu daireye dokun.', category: 'Renkler & Şekiller', correct: 'Turuncu Daire', cards: [{ text: 'Turuncu Daire', icon: '🟠', isCorrect: true }, { text: 'Mor Daire', icon: '🟣', isCorrect: false }, { text: 'Yeşil Daire', icon: '🟢', isCorrect: false }], exp: 'Turuncu portakal ve havuç rengidir! 🟠🍊' },
+      // =======================================================================
+      // 2026 TÜRKİYE YÜZYILI MAARİF MODELİ: OKUL ÖNCESİ BİLİŞSEL VE DUYUŞSAL HAVUZ
+      // =======================================================================
+
+      // 6) DUYGULARIM VE YÜZ İFADELERİ (Maarif Duyuşsal Kazanımlar / 12 Soru)
+      { prompt: 'Parkta kaydıraktan kayarken neşeyle gülen MUTLU yüz hangisidir? 😊', spokenText: 'Parkta neşeyle gülen mutlu yüz hangisidir? Mutlu yüze dokun.', category: 'Duygular', correct: 'Mutlu Yüz', cards: [{ text: 'Mutlu Yüz', icon: '😊', isCorrect: true }, { text: 'Üzgün Yüz', icon: '😢', isCorrect: false }, { text: 'Kızgın Yüz', icon: '😠', isCorrect: false }], exp: 'Mutlu olunca yüzümüzde kocaman sıcacık bir tebessüm açar! 😊✨' },
+      { prompt: 'Dondurması yere düştüğü için ağlayan ÜZGÜN yüz hangisidir? 😢', spokenText: 'Dondurması düşen üzgün yüz hangisidir? Üzgün yüze dokun.', category: 'Duygular', correct: 'Üzgün Yüz', cards: [{ text: 'Üzgün Yüz', icon: '😢', isCorrect: true }, { text: 'Mutlu Yüz', icon: '😊', isCorrect: false }, { text: 'Şaşkın Yüz', icon: '😲', isCorrect: false }], exp: 'Üzülünce minik bir damla yaş gelebilir, ama sonra neşeleniriz! 😢💖' },
+      { prompt: 'Sürpriz hediye paketini görünce ağzı açık kalan ŞAŞKIN yüz hangisidir? 😲', spokenText: 'Sürpriz hediye görünce şaşıran yüz hangisidir? Şaşkın yüze dokun.', category: 'Duygular', correct: 'Şaşkın Yüz', cards: [{ text: 'Şaşkın Yüz', icon: '😲', isCorrect: true }, { text: 'Uykulu Yüz', icon: '🥱', isCorrect: false }, { text: 'Kızgın Yüz', icon: '😠', isCorrect: false }], exp: 'Oooo! Şaşırınca gözlerimiz ve ağzımız kocaman açılır! 😲🎁' },
+      { prompt: 'Yaptığı kule devrilince kaşlarını çatan KIZGIN yüz hangisidir? 😠', spokenText: 'Kaşlarını çatan kızgın yüz hangisidir? Kızgın yüze dokun.', category: 'Duygular', correct: 'Kızgın Yüz', cards: [{ text: 'Kızgın Yüz', icon: '😠', isCorrect: true }, { text: 'Mutlu Yüz', icon: '😊', isCorrect: false }, { text: 'Sevgi Dolu Yüz', icon: '🥰', isCorrect: false }], exp: 'Kızınca derin bir nefes alıp sakinleşebiliriz! 😠💨' },
+      { prompt: 'Sevdiklerine sımsıkı sarılan SEVGİ DOLU yüz hangisidir? 🥰', spokenText: 'Sevdiklerine sarılan sevgi dolu kalp yüz hangisidir? Kalpli yüze dokun.', category: 'Duygular', correct: 'Sevgi Dolu Yüz', cards: [{ text: 'Sevgi Dolu Yüz', icon: '🥰', isCorrect: true }, { text: 'Kızgın Yüz', icon: '😠', isCorrect: false }, { text: 'Üzgün Yüz', icon: '😢', isCorrect: false }], exp: 'Sevgi paylaştıkça kalbimiz sıcacık olur! 🥰❤️' },
+      { prompt: 'Gece olunca uykusu gelen ve esneyen UYKULU yüz hangisidir? 🥱', spokenText: 'Uykusu gelip esneyen yüz hangisidir? Uykulu yüze dokun.', category: 'Duygular', correct: 'Uykulu Yüz', cards: [{ text: 'Uykulu Yüz', icon: '🥱', isCorrect: true }, { text: 'Mutlu Yüz', icon: '😊', isCorrect: false }, { text: 'Şaşkın Yüz', icon: '😲', isCorrect: false }], exp: 'Uykumuz gelince esneriz ve tatlı rüyalara dalarız! 🥱🌙' },
+      { prompt: 'Yemekten önce ellerimizi tertemiz yapmak için neyle yıkarız? 🧼', spokenText: 'Ellerimizi yıkamak için ne kullanırız? Sabuna dokun.', category: 'Duygular', correct: 'Sabun & Köpük', cards: [{ text: 'Sabun & Köpük', icon: '🧼', isCorrect: true }, { text: 'Çikolata', icon: '🍫', isCorrect: false }, { text: 'Oyuncak Araba', icon: '🚗', isCorrect: false }], exp: 'Bol köpüklü sabunla ellerimizi yıkar, mikropları kovarız! 🧼✨' },
+      { prompt: 'İnci gibi parlayan dişlerimizi yemekten sonra neyle fırçalarız? 🪥', spokenText: 'Dişlerimizi parlatmak için ne kullanırız? Diş fırçasına dokun.', category: 'Duygular', correct: 'Diş Fırçası', cards: [{ text: 'Diş Fırçası', icon: '🪥', isCorrect: true }, { text: 'Kaşık', icon: '🥄', isCorrect: false }, { text: 'Tarak', icon: '🪮', isCorrect: false }], exp: 'Sabah ve akşam dişlerimizi fırçalayıp pırıl pırıl yaparız! 🪥🦷' },
+      { prompt: 'Susayan sevimli kedi dostumuza kapta ne ikram ederiz? 🥛', spokenText: 'Susayan sevimli kediye ne veririz? Süte dokun.', category: 'Duygular', correct: 'Taze Süt', cards: [{ text: 'Taze Süt', icon: '🥛', isCorrect: true }, { text: 'Taş', icon: '🪨', isCorrect: false }, { text: 'Acı Biber', icon: '🌶️', isCorrect: false }], exp: 'Hayvan dostlarımıza sevgiyle süt ve su ikram ederiz! 🐱🥛' },
+      { prompt: 'Bahçemizdeki güzel çiçeklerin büyümesi için ne dökeriz? 💧', spokenText: 'Çiçekleri sulamak için ne kullanırız? Can suyuna dokun.', category: 'Duygular', correct: 'Can Suyu', cards: [{ text: 'Can Suyu', icon: '💧', isCorrect: true }, { text: 'Kum', icon: '🏖️', isCorrect: false }, { text: 'Boya', icon: '🎨', isCorrect: false }], exp: 'Çiçekler suyu çok sever ve mis gibi yapraklar açar! 🌸💧' },
+      { prompt: 'Yere düşen çöpü nereye atmalıyız? 🗑️', spokenText: 'Çöpü nereye atmalıyız? Çöp kutusuna dokun.', category: 'Duygular', correct: 'Çöp Kutusu', cards: [{ text: 'Çöp Kutusu', icon: '🗑️', isCorrect: true }, { text: 'Yere', icon: '🍂', isCorrect: false }, { text: 'Denize', icon: '🌊', isCorrect: false }], exp: 'Çöpleri kutuya atarak dünyamızı tertemiz tutarız! 🗑️🌍' },
+      { prompt: 'Bize yardım eden arkadaşımıza sevgimizi gösteren KALP hangisidir? ❤️', spokenText: 'Sevgimizi göstermek için hangi kalbe dokunuruz? Kalbe dokun.', category: 'Duygular', correct: 'Sevgi Kalbi', cards: [{ text: 'Sevgi Kalbi', icon: '❤️', isCorrect: true }, { text: 'Kızgın Çarpı', icon: '❌', isCorrect: false }, { text: 'Kuru Yaprak', icon: '🍂', isCorrect: false }], exp: 'Sevgimizi ve teşekkürümüzü sıcacık bir kalple gösteririz! ❤️' },
+
+      // 7) BOYUTLAR & MONTESSORİ KARŞILAŞTIRMALARI (10 Soru)
+      { prompt: 'Hangisi ÇOK DAHA BÜYÜKTÜR ve kocaman kulakları vardır? 🐘', spokenText: 'Hangisi daha büyüktür? Koca file dokun.', category: 'Boyutlar', correct: 'Koca Fil', cards: [{ text: 'Koca Fil', icon: '🐘', isCorrect: true }, { text: 'Minik Fare', icon: '🐭', isCorrect: false }, { text: 'Küçük Karınca', icon: '🐜', isCorrect: false }], exp: 'Fil dünyanın en büyük ve en güçlü kara hayvanıdır! 🐘' },
+      { prompt: 'Hangisi ÇOK DAHA KÜÇÜKTÜR ve parmağımızdan bile ufaktır? 🐜', spokenText: 'Hangisi daha küçüktür? Minik karıncaya dokun.', category: 'Boyutlar', correct: 'Minik Karınca', cards: [{ text: 'Minik Karınca', icon: '🐜', isCorrect: true }, { text: 'Kocaman Ayı', icon: '🐻', isCorrect: false }, { text: 'Büyük İnek', icon: '🐮', isCorrect: false }], exp: 'Karınca miniciktir ama çok çalışkandır! 🐜🔍' },
+      { prompt: 'Hangisi ÇOK DAHA UZUNDUR ve yüksek dallara yetişir? 🦒', spokenText: 'Hangisi daha uzundur? Zürafaya dokun.', category: 'Boyutlar', correct: 'Uzun Zürafa', cards: [{ text: 'Uzun Zürafa', icon: '🦒', isCorrect: true }, { text: 'Kısa Kirpi', icon: '🦔', isCorrect: false }, { text: 'Küçük Tavşan', icon: '🐰', isCorrect: false }], exp: 'Zürafanın upuzun boynu en yüksek dallara bile uzanır! 🦒🌳' },
+      { prompt: 'Hangisi ÇOK DAHA AĞIRDIR? 🪨', spokenText: 'Hangisi daha ağırdır? Büyük kayaya dokun.', category: 'Boyutlar', correct: 'Ağır Kaya', cards: [{ text: 'Ağır Kaya', icon: '🪨', isCorrect: true }, { text: 'Hafif Tüy', icon: '🪶', isCorrect: false }, { text: 'Hafif Yaprak', icon: '🍃', isCorrect: false }], exp: 'Koca kaya çok ağırdır, kuş tüyü ise havada uçuşur! 🪨💪' },
+      { prompt: 'Hangisi rüzgardan bile ÇOK DAHA HIZLIDIR? 🚀', spokenText: 'Hangisi daha hızlıdır? Hızlı rokete dokun.', category: 'Boyutlar', correct: 'Hızlı Roket', cards: [{ text: 'Hızlı Roket', icon: '🚀', isCorrect: true }, { text: 'Yavaş Kaplumbağa', icon: '🐢', isCorrect: false }, { text: 'Yavaş Salyangoz', icon: '🐌', isCorrect: false }], exp: 'Roket gökyüzüne şimşek gibi fırlar! 🚀🐢' },
+      { prompt: 'Gündüzleri dünyamızı ısıtan SICACIK dostumuz hangisidir? ☀️', spokenText: 'Hangisi sıcaktır? Parlak güneşe dokun.', category: 'Boyutlar', correct: 'Sıcak Güneş', cards: [{ text: 'Sıcak Güneş', icon: '☀️', isCorrect: true }, { text: 'Kardan Adam', icon: '⛄', isCorrect: false }, { text: 'Buz Küpü', icon: '🧊', isCorrect: false }], exp: 'Güneş her sabah doğar ve sıcacık ışıklarıyla dünyamızı ısıtır! ☀️' },
+      { prompt: 'Hangisi BUZ GİBİ SOĞUK ve lezzetli bir tatlıdır? 🍦', spokenText: 'Hangisi soğuktur? Dondurmaya dokun.', category: 'Boyutlar', correct: 'Soğuk Dondurma', cards: [{ text: 'Soğuk Dondurma', icon: '🍦', isCorrect: true }, { text: 'Sıcak Çorba', icon: '🍲', isCorrect: false }, { text: 'Sıcak Çay', icon: '☕', isCorrect: false }], exp: 'Dondurma buz gibi soğuktur, yazın bizi serinletir! 🍦❄️' },
+      { prompt: 'Hangisi bembeyaz taze süt ile DOLUDUR? 🥛', spokenText: 'Hangisi doludur? Süt bardağına dokun.', category: 'Boyutlar', correct: 'Dolu Bardak', cards: [{ text: 'Dolu Bardak', icon: '🥛', isCorrect: true }, { text: 'Boş Bardak', icon: '🫗', isCorrect: false }, { text: 'Kuru Tabak', icon: '🍽️', isCorrect: false }], exp: 'Bardak ağzına kadar bembeyaz süt ile doludur! 🥛' },
+      { prompt: 'Bulutların üstünde EN YÜKSEKTE hangisi uçar? ✈️', spokenText: 'En yüksekte hangisi uçar? Uçağa dokun.', category: 'Boyutlar', correct: 'Yüksek Uçak', cards: [{ text: 'Yüksek Uçak', icon: '✈️', isCorrect: true }, { text: 'Yerdeki Karınca', icon: '🐜', isCorrect: false }, { text: 'Yerdeki Solucan', icon: '🪱', isCorrect: false }], exp: 'Uçaklar masmavi gökyüzünde bulutların üstünde uçar! ✈️☁️' },
+      { prompt: 'Kuşlara ve sevimli sincaplara yuva olan BÜYÜK AĞAÇ hangisidir? 🌳', spokenText: 'Hangisi büyük ağaçtır? Ağaca dokun.', category: 'Boyutlar', correct: 'Büyük Ağaç', cards: [{ text: 'Büyük Ağaç', icon: '🌳', isCorrect: true }, { text: 'Minik Ot', icon: '🌱', isCorrect: false }, { text: 'Küçük Mantar', icon: '🍄', isCorrect: false }], exp: 'Büyük ağaç kocaman dallarıyla bize gölge olur! 🌳🐿️' },
+
+      // 8) SAYMA VE MİKTAR (1-5 Miktar Algısı / 8 Soru)
+      { prompt: 'Hangisinde TAM 1 TANE kırmızı elma var? 🍎', spokenText: 'Hangisinde sadece 1 tane elma var? Tek elmaya dokun.', category: 'Sayma', correct: '1 Elma', cards: [{ text: '1 Elma (Bir)', icon: '🍎', isCorrect: true }, { text: '3 Elma', icon: '🍎🍎🍎', isCorrect: false }, { text: '5 Elma', icon: '🍎🍎🍎🍎🍎', isCorrect: false }], exp: 'Harika sayma! Burada tam 1 tane tatlı elma var! 🍎1️⃣' },
+      { prompt: 'Hangisinde TAM 2 TANE parıldayan yıldız var? ⭐⭐', spokenText: 'Hangisinde 2 tane yıldız var? İki yıldıza dokun.', category: 'Sayma', correct: '2 Yıldız', cards: [{ text: '2 Yıldız (İki)', icon: '⭐⭐', isCorrect: true }, { text: '1 Yıldız', icon: '⭐', isCorrect: false }, { text: '4 Yıldız', icon: '⭐⭐⭐⭐', isCorrect: false }], exp: 'Bir, iki! Tam 2 tane yıldız parıldıyor! ⭐⭐2️⃣' },
+      { prompt: 'Hangisinde TAM 3 TANE sevimli kedi var? 🐱🐱🐱', spokenText: 'Hangisinde 3 tane kedi var? Üç kediye dokun.', category: 'Sayma', correct: '3 Kedi', cards: [{ text: '3 Kedi (Üç)', icon: '🐱🐱🐱', isCorrect: true }, { text: '1 Kedi', icon: '🐱', isCorrect: false }, { text: '5 Kedi', icon: '🐱🐱🐱🐱🐱', isCorrect: false }], exp: 'Bir, iki, üç! Tam 3 miyavlayan kedi dostumuz var! 🐱3️⃣' },
+      { prompt: 'Hangisinde TAM 4 TANE renkli uçan balon var? 🎈🎈🎈🎈', spokenText: 'Hangisinde 4 tane balon var? Dört balona dokun.', category: 'Sayma', correct: '4 Balon', cards: [{ text: '4 Balon (Dört)', icon: '🎈🎈🎈🎈', isCorrect: true }, { text: '2 Balon', icon: '🎈🎈', isCorrect: false }, { text: '1 Balon', icon: '🎈', isCorrect: false }], exp: 'Bir, iki, üç, dört! Tam 4 tane rengarenk balon! 🎈4️⃣' },
+      { prompt: 'Hangisinde TAM 5 TANE lezzetli çilek var? 🍓🍓🍓🍓🍓', spokenText: 'Hangisinde 5 tane çilek var? Beş çileğe dokun.', category: 'Sayma', correct: '5 Çilek', cards: [{ text: '5 Çilek (Beş)', icon: '🍓🍓🍓🍓🍓', isCorrect: true }, { text: '2 Çilek', icon: '🍓🍓', isCorrect: false }, { text: '1 Çilek', icon: '🍓', isCorrect: false }], exp: 'Tam beş parmağımız kadar: 5 tane lezzetli çilek! 🍓🖐️5️⃣' },
+      { prompt: 'Hangisinde DAHA ÇOK muz var? 🍌🍌🍌🍌', spokenText: 'Hangisinde daha çok muz var? Çok olan sepeti seç.', category: 'Sayma', correct: 'Çok Muz', cards: [{ text: 'Çok Muz (Dört Tane)', icon: '🍌🍌🍌🍌', isCorrect: true }, { text: 'Az Muz (Bir Tane)', icon: '🍌', isCorrect: false }, { text: 'Boş Tabak', icon: '🍽️', isCorrect: false }], exp: 'Burada tam 4 muz var, diğerinde ise sadece 1 tane var! 🍌👏' },
+      { prompt: 'Hangisinde DAHA AZ yıldız var? ⭐', spokenText: 'Hangisinde daha az yıldız var? En az olana dokun.', category: 'Sayma', correct: '1 Yıldız (Az)', cards: [{ text: '1 Yıldız (Az)', icon: '⭐', isCorrect: true }, { text: '4 Yıldız (Çok)', icon: '⭐⭐⭐⭐', isCorrect: false }, { text: '5 Yıldız (Çok)', icon: '⭐⭐⭐⭐⭐', isCorrect: false }], exp: 'Sadece 1 yıldız var, yani en az olan budur! ⭐👍' },
+      { prompt: 'Bir elimizde toplam kaç tane parmak vardır? 🖐️', spokenText: 'Bir elimizde kaç parmak vardır? 5 parmağa dokun.', category: 'Sayma', correct: '5 Parmak', cards: [{ text: '5 Parmak', icon: '🖐️', isCorrect: true }, { text: '2 Parmak', icon: '✌️', isCorrect: false }, { text: '1 Parmak', icon: '☝️', isCorrect: false }], exp: 'Bir elimizde tam 5 tane parmak vardır: 1, 2, 3, 4, 5! 🖐️' },
+
+      // 9) GÖRSEL DİKKAT VE FARKLI OLANI BUL (10 Soru)
+      { prompt: 'Kırmızı elmaların arasındaki FARKLI meyve hangisidir? 🥑', spokenText: 'Hangisi diğerlerinden farklıdır? Farklı olana dokun.', category: 'Farklı', correct: 'Yeşil Avokado', cards: [{ text: 'Farklı Avokado', icon: '🥑', isCorrect: true }, { text: 'Kırmızı Elma', icon: '🍎', isCorrect: false }, { text: 'Kırmızı Elma', icon: '🍎', isCorrect: false }], exp: 'Tebrikler! İkisi kırmızı elma, ama diğeri yeşil avokado! 🥑👀' },
+      { prompt: 'Sevimli köpeklerin arasına saklanan FARKLI dostumuz hangisidir? 🐱', spokenText: 'Köpeklerin arasındaki farklı kediye dokun.', category: 'Farklı', correct: 'Miyavlayan Kedi', cards: [{ text: 'Farklı Kedi', icon: '🐱', isCorrect: true }, { text: 'Sadık Köpek', icon: '🐶', isCorrect: false }, { text: 'Sadık Köpek', icon: '🐶', isCorrect: false }], exp: 'Keskin gözler! Köpekler arasındaki sevimli kediyi hemen fark ettin! 🐱✨' },
+      { prompt: 'Sarı yıldızların arasındaki FARKLI şekil hangisidir? 💖', spokenText: 'Yıldızların arasındaki farklı kalbe dokun.', category: 'Farklı', correct: 'Pembe Kalp', cards: [{ text: 'Farklı Kalp', icon: '💖', isCorrect: true }, { text: 'Sarı Yıldız', icon: '⭐', isCorrect: false }, { text: 'Sarı Yıldız', icon: '⭐', isCorrect: false }], exp: 'Harika dikkat! Sarı yıldızlar arasında parlayan pembe kalbi buldun! 💖⭐' },
+      { prompt: 'Uçan taşıtların arasındaki FARKLI olan kara taşıtı hangisidir? 🚗', spokenText: 'Uçanların arasındaki arabaya dokun.', category: 'Farklı', correct: 'Kırmızı Araba', cards: [{ text: 'Farklı Araba', icon: '🚗', isCorrect: true }, { text: 'Hızlı Uçak', icon: '✈️', isCorrect: false }, { text: 'Helikopter', icon: '🚁', isCorrect: false }], exp: 'Uçak ve helikopter havada uçar, araba ise yolda gider! 🚗🛣️' },
+      { prompt: 'Mavi dairelerin arasındaki FARKLI renk hangisidir? 🔴', spokenText: 'Mavilerin arasındaki kırmızı daireye dokun.', category: 'Farklı', correct: 'Kırmızı Daire', cards: [{ text: 'Kırmızı Daire', icon: '🔴', isCorrect: true }, { text: 'Mavi Daire', icon: '🔵', isCorrect: false }, { text: 'Mavi Daire', icon: '🔵', isCorrect: false }], exp: 'Masmavi daireler arasındaki kırmızı daireyi anında yakaladın! 🔴🔵' },
+      { prompt: 'Denizde yüzen canlıların arasındaki FARKLI dostumuz hangisidir? 🦁', spokenText: 'Balıkların arasındaki aslana dokun.', category: 'Farklı', correct: 'Aslan', cards: [{ text: 'Farklı Aslan', icon: '🦁', isCorrect: true }, { text: 'Yüzen Balık', icon: '🐟', isCorrect: false }, { text: 'Ahtapot', icon: '🐙', isCorrect: false }], exp: 'Balık ve ahtapot denizde yüzer, aslan karada yaşar! 🦁🌊' },
+      { prompt: 'Sarı muzların arasına saklanan FARKLI meyve hangisidir? 🍓', spokenText: 'Muzların arasındaki çileğe dokun.', category: 'Farklı', correct: 'Kırmızı Çilek', cards: [{ text: 'Farklı Çilek', icon: '🍓', isCorrect: true }, { text: 'Sarı Muz', icon: '🍌', isCorrect: false }, { text: 'Sarı Muz', icon: '🍌', isCorrect: false }], exp: 'Muzların arasındaki kırmızı çileği hemen buldun! 🍓🍌' },
+      { prompt: 'Yeşil yaprakların arasındaki FARKLI renkli çiçek hangisidir? 🌸', spokenText: 'Yaprakların arasındaki pembe çiçeğe dokun.', category: 'Farklı', correct: 'Pembe Çiçek', cards: [{ text: 'Farklı Çiçek', icon: '🌸', isCorrect: true }, { text: 'Yeşil Yaprak', icon: '🍃', isCorrect: false }, { text: 'Yeşil Yaprak', icon: '🍃', isCorrect: false }], exp: 'Yeşil yapraklar arasında açan pembe çiçeği yakaladın! 🌸🍃' },
+      { prompt: 'Kuşların arasındaki FARKLI balık hangisidir? 🐟', spokenText: 'Uçan kuşların arasındaki balığa dokun.', category: 'Farklı', correct: 'Yüzen Balık', cards: [{ text: 'Farklı Balık', icon: '🐟', isCorrect: true }, { text: 'Sevimli Kuş', icon: '🐦', isCorrect: false }, { text: 'Sevimli Kuş', icon: '🐦', isCorrect: false }], exp: 'Kuşlar gökyüzünde uçar, balık suda yüzer! 🐟🐦' },
+      { prompt: 'Sevimli tavşanların arasındaki FARKLI civciv hangisidir? 🐥', spokenText: 'Tavşanların arasındaki sarı civcive dokun.', category: 'Farklı', correct: 'Sarı Civciv', cards: [{ text: 'Farklı Civciv', icon: '🐥', isCorrect: true }, { text: 'Zıp Tavşan', icon: '🐰', isCorrect: false }, { text: 'Zıp Tavşan', icon: '🐰', isCorrect: false }], exp: 'Tavşanların arasındaki minik sarı civcivi hemen fark ettin! 🐥🐰' },
+
+      // 10) HAYVAN SESLERİ VE DOĞA (8 Soru)
+      { prompt: 'Ağaç dalında "CİK CİK" öten sevimli dostumuz hangisidir? 🐦', spokenText: 'Cik cik öten kuşa dokun.', category: 'Hayvan Sesleri', correct: 'Kuş', cards: [{ text: 'Sevimli Kuş', icon: '🐦', isCorrect: true }, { text: 'İnek', icon: '🐮', isCorrect: false }, { text: 'Aslan', icon: '🦁', isCorrect: false }], exp: 'Kuşlar minik gagalarıyla neşeyle "Cik cik" şarkılar söyler! 🐦🎶' },
+      { prompt: 'Gölde neşeyle yüzen ve "VAK VAK" diyen sarı gagalı kimdir? 🦆', spokenText: 'Vak vak diyen sevimli ördeğe dokun.', category: 'Hayvan Sesleri', correct: 'Ördek', cards: [{ text: 'Vak Vak Ördek', icon: '🦆', isCorrect: true }, { text: 'Tavşan', icon: '🐰', isCorrect: false }, { text: 'Kedi', icon: '🐱', isCorrect: false }], exp: 'Ördekler paytak paytak yürür ve suda "Vak vak" der! 🦆🌊' },
+      { prompt: 'Çimenlerde otlayan ve "MEEE" diyen pamuk kuzu hangisidir? 🐑', spokenText: 'Mee diyen kuzuya dokun.', category: 'Hayvan Sesleri', correct: 'Pamuk Kuzu', cards: [{ text: 'Pamuk Kuzu', icon: '🐑', isCorrect: true }, { text: 'Köpek', icon: '🐶', isCorrect: false }, { text: 'Kurt', icon: '🐺', isCorrect: false }], exp: 'Kuzular yumuşacık yünleriyle "Meee" der! 🐑🌾' },
+      { prompt: 'Sabah güneş doğarken "Ü-ÜRÜ-ÜÜÜ" diye öten horoz hangisidir? 🐓', spokenText: 'Ü ürü üüü diye öten horoza dokun.', category: 'Hayvan Sesleri', correct: 'Horoz', cards: [{ text: 'Neşeli Horoz', icon: '🐓', isCorrect: true }, { text: 'Ayı', icon: '🐻', isCorrect: false }, { text: 'Balık', icon: '🐟', isCorrect: false }], exp: 'Horoz rengarenk tüyleriyle her sabah bizi neşeyle uyandırır! 🐓☀️' },
+      { prompt: 'Çiçeklerden bal toplayan ve "VZZZZ" diyen çalışkan arı hangisidir? 🐝', spokenText: 'Vzzz diyen bal arısına dokun.', category: 'Hayvan Sesleri', correct: 'Bal Arısı', cards: [{ text: 'Çalışkan Arı', icon: '🐝', isCorrect: true }, { text: 'Fil', icon: '🐘', isCorrect: false }, { text: 'Maymun', icon: '🐵', isCorrect: false }], exp: 'Arılar vızıldayarak çiçekten çiçeğe uçar ve tatlı bal yapar! 🐝🍯' },
+      { prompt: 'Dıgıdık dıgıdık koşan ve yelesi rüzgarda dalgalanan AT hangisidir? 🐴', spokenText: 'Dıgıdık koşan ata dokun.', category: 'Hayvan Sesleri', correct: 'At', cards: [{ text: 'Koşan At', icon: '🐴', isCorrect: true }, { text: 'Kaplumbağa', icon: '🐢', isCorrect: false }, { text: 'Koyun', icon: '🐑', isCorrect: false }], exp: 'Atlar rüzgar gibi hızlı koşar ve "İ-hi-hii" der! 🐴🌾' },
+      { prompt: 'Derelerde nilüfer yaprağında zıplayan "VRAK VRAK" kurbağa hangisidir? 🐸', spokenText: 'Vrak vrak diyen kurbağaya dokun.', category: 'Hayvan Sesleri', correct: 'Kurbağa', cards: [{ text: 'Zıp Kurbağa', icon: '🐸', isCorrect: true }, { text: 'Tavuk', icon: '🐔', isCorrect: false }, { text: 'Aslan', icon: '🦁', isCorrect: false }], exp: 'Kurbağalar nilüfer yapraklarının üstünde zıp zıp zıplar! 🐸' },
+      { prompt: 'Kocaman kanatlarıyla "GUK GUK" diyen barış güvercini hangisidir? 🕊️', spokenText: 'Bembeyaz güvercine dokun.', category: 'Hayvan Sesleri', correct: 'Güvercin', cards: [{ text: 'Beyaz Güvercin', icon: '🕊️', isCorrect: true }, { text: 'Köpek', icon: '🐶', isCorrect: false }, { text: 'Kedi', icon: '🐱', isCorrect: false }], exp: 'Güvercinler gökyüzünde süzülerek uçar! 🕊️✨' },
+
+      // 11) GEOMETRİK ŞEKİLLER VE RENKLER (8 Soru)
+      { prompt: 'Tıpkı parlak güneş ve yuvarlak tekerlek gibi DAİRE hangisidir? 🔴', spokenText: 'Daire şekline dokun.', category: 'Şekiller', correct: 'Daire', cards: [{ text: 'Kırmızı Daire', icon: '🔴', isCorrect: true }, { text: 'Mavi Kare', icon: '🟦', isCorrect: false }, { text: 'Sarı Üçgen', icon: '🔺', isCorrect: false }], exp: 'Daire top gibi yuvarlaktır, köşesi yoktur! 🔴⭕' },
+      { prompt: 'Hediye kutusu gibi dört kenarı birbirine eşit olan KARE hangisidir? 🟦', spokenText: 'Kare şekline dokun.', category: 'Şekiller', correct: 'Kare', cards: [{ text: 'Mavi Kare', icon: '🟦', isCorrect: true }, { text: 'Daire', icon: '🔴', isCorrect: false }, { text: 'Kalp', icon: '💖', isCorrect: false }], exp: 'Kare tıpkı bir kutu gibi dört eşit kenara sahiptir! 🟦📦' },
+      { prompt: 'Lezzetli bir dilim pizza gibi üç sivri köşeli ÜÇGEN hangisidir? 🔺', spokenText: 'Üçgen şekline dokun.', category: 'Şekiller', correct: 'Üçgen', cards: [{ text: 'Sarı Üçgen', icon: '🔺', isCorrect: true }, { text: 'Daire', icon: '🔴', isCorrect: false }, { text: 'Kare', icon: '🟦', isCorrect: false }], exp: 'Üçgenin 3 tane sivri köşesi vardır, tıpkı çatı gibi! 🔺🍕' },
+      { prompt: 'Gece gökyüzünde ışıl ışıl parıldayan YILDIZ hangisidir? ⭐', spokenText: 'Yıldız şekline dokun.', category: 'Şekiller', correct: 'Yıldız', cards: [{ text: 'Parlak Yıldız', icon: '⭐', isCorrect: true }, { text: 'Kare', icon: '🟦', isCorrect: false }, { text: 'Daire', icon: '🔴', isCorrect: false }], exp: 'Yıldız gökyüzünde bize göz kırpar ve ışık saçar! ⭐✨' },
+      { prompt: 'Pamuk şeker ve güzel kokulu gül rengi olan PEMBE hangisidir? 🌸', spokenText: 'Pembe renge dokun.', category: 'Renkler', correct: 'Pembe Renk', cards: [{ text: 'Pembe Daire', icon: '🌸', isCorrect: true }, { text: 'Siyah Daire', icon: '⚫', isCorrect: false }, { text: 'Yeşil Daire', icon: '🟢', isCorrect: false }], exp: 'Pembe pamuk şekerin ve mis kokulu güllerin rengidir! 🌸🍭' },
+      { prompt: 'Ağaç gövdelerinin ve tatlı çikolatanın rengi olan KAHVERENGİ hangisidir? 🟤', spokenText: 'Kahverengi renge dokun.', category: 'Renkler', correct: 'Kahverengi Renk', cards: [{ text: 'Kahverengi Daire', icon: '🟤', isCorrect: true }, { text: 'Sarı Daire', icon: '🟡', isCorrect: false }, { text: 'Mavi Daire', icon: '🔵', isCorrect: false }], exp: 'Kahverengi ağaç gövdelerinin ve nefis çikolatanın rengidir! 🟤🍫' },
+      { prompt: 'Kocaman sevgi dolu kırmızı KALP hangisidir? 💖', spokenText: 'Kalp şekline dokun.', category: 'Şekiller', correct: 'Kalp', cards: [{ text: 'Sevgi Kalbi', icon: '💖', isCorrect: true }, { text: 'Kare', icon: '🟦', isCorrect: false }, { text: 'Üçgen', icon: '🔺', isCorrect: false }], exp: 'Kalp sevgiyi ve mutluluğu simgeler! 💖🥰' },
+      { prompt: 'Geceleri gökyüzünü kaplayan SİYAH daire hangisidir? ⚫', spokenText: 'Siyah renge dokun.', category: 'Renkler', correct: 'Siyah Renk', cards: [{ text: 'Siyah Daire', icon: '⚫', isCorrect: true }, { text: 'Sarı Daire', icon: '🟡', isCorrect: false }, { text: 'Beyaz Daire', icon: '⚪', isCorrect: false }], exp: 'Siyah gece gökyüzünün gizemli rengidir! ⚫' }
+    ],
+
+    // -------------------------------------------------------------------------
+    // ANASINIFI: 16 SEVİYELİK 100% GÖRSEL VE İŞİTSEL BALON PATLATMA HAVUZU
+    // (Okuma Yazma Gerektirmez, 2026 Maarif Renk, Miktar ve Şekil Kazanımları)
+    // -------------------------------------------------------------------------
+    grade0BalloonLevelsPool: [
+      // 1) Renk Balonları (Canlı Renk Tanıma)
+      { id: 'b0_red', instruction: '🎈 Sadece KIRMIZI renkli balonları patlat! 🔴', spokenText: 'Sadece kırmızı renkli balonları patlat', target: '🔴', category: 'Renkler', targetsNeeded: 2, targets: ['🔴'], distractors: ['🔵', '🟡', '🟢', '🟣'], exp: 'Güm! Kırmızı renkli balonları ustalıkla patlattın! 🔴🎈💥' },
+      { id: 'b0_blue', instruction: '🎈 Sadece MAVİ renkli balonları patlat! 🔵', spokenText: 'Sadece mavi renkli balonları patlat', target: '🔵', category: 'Renkler', targetsNeeded: 2, targets: ['🔵'], distractors: ['🔴', '🟡', '🟢', '🟠'], exp: 'Harika! Masmavi balonları havada yakaladın! 🔵🎈✨' },
+      { id: 'b0_yellow', instruction: '🎈 Sadece SARI güneş renkli balonları patlat! 🟡', spokenText: 'Sadece sarı renkli balonları patlat', target: '🟡', category: 'Renkler', targetsNeeded: 2, targets: ['🟡'], distractors: ['🔴', '🔵', '🟢', '🟣'], exp: 'Süpersin! Parlak sarı balonlar patladı! 🟡🎈⭐' },
+      { id: 'b0_green', instruction: '🎈 Sadece YEŞİL yaprak renkli balonları patlat! 🟢', spokenText: 'Sadece yeşil renkli balonları patlat', target: '🟢', category: 'Renkler', targetsNeeded: 2, targets: ['🟢'], distractors: ['🔴', '🔵', '🟡', '🟣'], exp: 'Bravo! Yemyeşil balonları tam zamanında vurdun! 🟢🎈🌿' },
+      { id: 'b0_purple', instruction: '🎈 Sadece MOR renkli balonları patlat! 🟣', spokenText: 'Sadece mor renkli balonları patlat', target: '🟣', category: 'Renkler', targetsNeeded: 2, targets: ['🟣'], distractors: ['🔴', '🔵', '🟡', '🟢'], exp: 'Nefis refleks! Mor balonlar güm diye patladı! 🟣🎈🎉' },
+      { id: 'b0_orange', instruction: '🎈 Sadece TURUNCU portakal renkli balonları patlat! 🟠', spokenText: 'Sadece turuncu renkli balonları patlat', target: '🟠', category: 'Renkler', targetsNeeded: 2, targets: ['🟠'], distractors: ['🔴', '🔵', '🟢', '🟣'], exp: 'Tebrikler! Turuncu balonları kaçırmadın! 🟠🎈🍊' },
+      { id: 'b0_pink', instruction: '🎈 Sadece PEMBE çiçek renkli balonları patlat! 🌸', spokenText: 'Sadece pembe renkli balonları patlat', target: '🌸', category: 'Renkler', targetsNeeded: 2, targets: ['🌸'], distractors: ['🔴', '🔵', '🟢', '🟤'], exp: 'Harika! Pembe balonları yakaladın! 🌸🎈💖' },
+      
+      // 2) Minik Sayılar 1-5 (Dokunmatik Sayı Balonları)
+      { id: 'b0_num_1', instruction: '🎈 Sadece "1" (BİR) yazan balonları patlat! 1️⃣', spokenText: 'Sadece bir yazan balonları patlat', target: '1', category: 'Sayılar', targetsNeeded: 2, targets: ['1'], distractors: ['2', '3', '4', '5'], exp: 'Harika başlangıç! 1 yazan balonları patlattın! 1️⃣🎈👏' },
+      { id: 'b0_num_2', instruction: '🎈 Sadece "2" (İKİ) yazan balonları patlat! 2️⃣', spokenText: 'Sadece iki yazan balonları patlat', target: '2', category: 'Sayılar', targetsNeeded: 2, targets: ['2'], distractors: ['1', '3', '4', '5'], exp: 'İki tavşan kulağı gibi: 2 balonlarını buldun! 2️⃣🎈🐰' },
+      { id: 'b0_num_3', instruction: '🎈 Sadece "3" (ÜÇ) yazan balonları patlat! 3️⃣', spokenText: 'Sadece üç yazan balonları patlat', target: '3', category: 'Sayılar', targetsNeeded: 2, targets: ['3'], distractors: ['1', '2', '4', '5'], exp: '1-2-3! 3 yazan balonlar güm diye patladı! 3️⃣🎈🚀' },
+      { id: 'b0_num_4', instruction: '🎈 Sadece "4" (DÖRT) yazan balonları patlat! 4️⃣', spokenText: 'Sadece dört yazan balonları patlat', target: '4', category: 'Sayılar', targetsNeeded: 2, targets: ['4'], distractors: ['1', '2', '3', '5'], exp: 'Dört tekerlek gibi: 4 balonları patladı! 4️⃣🎈🚗' },
+      { id: 'b0_num_5', instruction: '🎈 Sadece "5" (BEŞ) yazan balonları patlat! 5️⃣', spokenText: 'Sadece beş yazan balonları patlat', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['1', '2', '3', '4'], exp: 'Çak bir beşlik! 5 yazan balonları yakaladın! 5️⃣🎈🖐️' },
+
+      // 3) Sevimli Şekiller ve Semboller (Görsel Balonlar)
+      { id: 'b0_star', instruction: '🎈 Sadece YILDIZ olan balonları patlat! ⭐', spokenText: 'Sadece yıldız olan balonları patlat', target: '⭐', category: 'Şekiller', targetsNeeded: 2, targets: ['⭐'], distractors: ['💖', '🍎', '🐱', '🚗'], exp: 'Işıl ışıl parlayan yıldız balonlarını patlattın! ⭐🎈✨' },
+      { id: 'b0_heart', instruction: '🎈 Sadece KALP olan sevgi balonlarını patlat! 💖', spokenText: 'Sadece kalp olan balonları patlat', target: '💖', category: 'Şekiller', targetsNeeded: 2, targets: ['💖'], distractors: ['⭐', '🍎', '🚗', '🐱'], exp: 'Kocaman sevgiyle kalp balonlarını patlattın! 💖🎈🥰' },
+      { id: 'b0_cat', instruction: '🎈 Sadece KEDİ olan miyav balonlarını patlat! 🐱', spokenText: 'Sadece sevimli kedi balonlarını patlat', target: '🐱', category: 'Hayvanlar', targetsNeeded: 2, targets: ['🐱'], distractors: ['🐶', '🐰', '🦁', '🐸'], exp: 'Miyav! Sevimli kedili balonları yakaladın! 🐱🎈🐾' },
+      { id: 'b0_apple', instruction: '🎈 Sadece KIRMIZI ELMA olan balonları patlat! 🍎', spokenText: 'Sadece elma olan balonları patlat', target: '🍎', category: 'Meyveler', targetsNeeded: 2, targets: ['🍎'], distractors: ['🍌', '🍓', '🍇', '🍉'], exp: 'Kıtır kıtır elmalı balonlar patladı! 🍎🎈😋' }
     ],
 
     // -------------------------------------------------------------------------
@@ -1496,6 +1617,12 @@
     // 77 ÇİFTLİK HAFIZA & EŞLEŞTİRME HAVUZU (HARF, ZIT ANLAM, TOPLAMA)
     // -------------------------------------------------------------------------
     matchingPairsPool: {
+      kindergarten_visual: [
+        { left: '🐱', right: '🐱' }, { left: '🐶', right: '🐶' }, { left: '🍎', right: '🍎' },
+        { left: '⭐', right: '⭐' }, { left: '🚗', right: '🚗' }, { left: '🍓', right: '🍓' },
+        { left: '🦁', right: '🦁' }, { left: '🎈', right: '🎈' }, { left: '🐻', right: '🐻' },
+        { left: '☀️', right: '☀️' }, { left: '🚀', right: '🚀' }, { left: '🍌', right: '🍌' }
+      ],
       letters: [
         { left: 'A', right: 'a' }, { left: 'B', right: 'b' }, { left: 'C', right: 'c' }, { left: 'Ç', right: 'ç' },
         { left: 'D', right: 'd' }, { left: 'E', right: 'e' }, { left: 'F', right: 'f' }, { left: 'G', right: 'g' },
@@ -4271,26 +4398,44 @@
       // 2. Yerleşik Dinamik Motor
       const g = parseInt(grade, 10);
       if (g === 0) {
-        // ANASINIFI: Çoktan seçmeli test mantığı tamamen kaldırıldı.
-        // 1. Dinle & Seç (Büyük Görseller ve Sesli Yönerge) (%50)
-        // 2. Hareketli Balon Patlatma (%25)
-        // 3. Eşleştirme ve Hafıza Kartları (%25)
+        // ANASINIFI (OKUL ÖNCESİ): Okuma yazma gerektirmeyen, 100% görsel, işitsel ve motor oyun motorları
         if (gameType === 'color_balloon' || gameType === 'balloon') {
-          return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0), '🎈 Renkli Balon Avı');
-        } else if (gameType === 'memory' || gameType === 'matching') {
-          return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Eşleştirme ve Hafıza Kartları');
+          return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0, 'colors'), '🎈 Renkli Balon Avı');
+        } else if (gameType === 'kinder_number_balloon') {
+          return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0, 'numbers'), '🎈 Sayı Balonları');
+        } else if (gameType === 'count_tap') {
+          return this.buildQuestionItem(this.generateCountTapQuestion(), '🍎 Kaç Tane Var? Dokun & Say');
         } else if (gameType === 'shadow_match') {
           return this.buildQuestionItem(this.generateShadowMatchQuestion(0), '🧩 Gölgesini Bul');
-        } else if (gameType === 'count_tap') {
-          return this.buildQuestionItem(this.generateCountTapQuestion(), '🔢 Kaç Tane Var? Dokun & Say');
+        } else if (gameType === 'memory' || gameType === 'matching') {
+          return this.buildQuestionItem(this.generateMemoryGridQuestion(0, 'kindergarten_visual'), '🧠 Sevimli Hafıza Kartları');
+        } else if (gameType === 'kinder_emotions') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Duygular'), '💖 Duygularım & Yüz İfadeleri');
+        } else if (gameType === 'kinder_size') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Boyutlar'), '🐘 Büyük ve Küçük');
+        } else if (gameType === 'kinder_shapes') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Şekiller'), '⭐ Şekilleri Keşfet');
+        } else if (gameType === 'kinder_counting') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Sayma'), '🔢 Meyve & Yıldız Sayma');
+        } else if (gameType === 'kinder_animal_sounds') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Hayvan Sesleri'), '🐾 Kim Miyavlar? Hayvan Sesleri');
+        } else if (gameType === 'kinder_fruits') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Meyveler'), '🍓 Meyve Sepeti');
+        } else if (gameType === 'kinder_oddone' || gameType === 'oddone') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Farklı'), '👀 Farklı Olanı Yakala');
+        } else if (gameType === 'kinder_colors') {
+          return this.buildQuestionItem(this.generateVisualChoiceQuestion(0, 'Renkler'), '🎨 Canlı Renkler');
         } else {
+          // Genel Anasınıfı Rotasyonu (Her kategoriden dengeli görsel/işitsel dağıtım)
           const r = Math.random();
-          if (r < 0.50) {
+          if (r < 0.40) {
             return this.buildQuestionItem(this.generateVisualChoiceQuestion(0), '🎨 Dinle & Seç');
-          } else if (r < 0.75) {
+          } else if (r < 0.65) {
             return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0), '🎈 Hareketli Balon Avı');
+          } else if (r < 0.85) {
+            return this.buildQuestionItem(this.generateMemoryGridQuestion(0, 'kindergarten_visual'), '🧠 Sevimli Hafıza Kartları');
           } else {
-            return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Hafıza Kartları');
+            return this.buildQuestionItem(this.generateShadowMatchQuestion(0), '🧩 Gölgesini Bul');
           }
         }
       }
@@ -6022,21 +6167,23 @@
 
   const GRADE_SUBJECTS_CONFIG = {
     // -------------------------------------------------------------
-    // ANASINIFI (0): Renk & Şekil, Sayma & Kavram, Hayvanlar & Doğa, Akıl Oyunları
+    // ANASINIFI (0): 2026 MAARİF MODELİ OKUL ÖNCESİ OYUN HAVUZU
+    // (Bilişsel, Duyuşsal ve Motor Beceriler - 100% Görsel, İşitsel ve Şıksız)
     // -------------------------------------------------------------
     0: [
       {
-        id: 'kinder_math',
-        name: 'Renkler & Sayma',
+        id: 'kinder_shapes_size',
+        name: 'Renkler, Şekiller & Boyutlar',
         icon: '🎨',
         colorTheme: 'theme-math',
-        tagline: 'Temel Kavramlar',
-        description: 'Meyve sayma, canlı renkler ve geometrik şekilleri keşfet! 🍎⭐',
+        tagline: 'Montessori & Görsel Keşif',
+        description: 'Canlı renkler, geometrik şekiller ve Montessori büyük-küçük karşılaştırmaları! 🎈⭐',
         badge: 'Okul Öncesi',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
           { id: 'colors', label: '🎈 Renk Balonları' },
-          { id: 'counting', label: '🔢 Dokun & Say' }
+          { id: 'sizes', label: '🐘 Büyük & Küçük' },
+          { id: 'shapes', label: '⭐ Şekiller' }
         ],
         games: [
           {
@@ -6047,51 +6194,116 @@
             badge: '🎈 Balon Patlatma',
             featureTag: '⭐ Şıksız & Canlı',
             description: 'Söylenen renkteki uçan balonu yakala ve güm diye patlat! 🎈💥',
-            tags: ['🎈 Uçan Balonlar', '🎨 Canlı Renkler', '💥 Patlatma'],
+            tags: ['🎈 Uçan Balonlar', '🎨 Canlı Renkler', '💥 Hızlı Patlat'],
             btnText: 'Düelloyu Başlat',
             topic: 'colors'
           },
           {
+            id: 'kinder_size',
+            active: true,
+            title: 'Büyük mü, Küçük mü?',
+            icon: '🐘',
+            badge: '🐘 Boyut & Karşılaştırma',
+            featureTag: '🌱 Montessori Algısı',
+            description: 'Koca fil mi minik fare mi? Büyük, küçük, uzun ve ağır nesneleri keşfet! 🐘🐭',
+            tags: ['🐘 Büyük-Küçük', '🦒 Uzun-Kısa', '🪨 Ağır-Hafif'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'sizes'
+          },
+          {
+            id: 'kinder_shapes',
+            active: true,
+            title: 'Şekilleri Keşfet',
+            icon: '⭐',
+            badge: '⭐ Geometrik Şekiller',
+            featureTag: '🔺 Daire, Kare, Üçgen',
+            description: 'Daire, kare, üçgen ve parlayan yıldızları sesli yönergelerle bul! ⭐🔺',
+            tags: ['🔴 Daire', '🟦 Kare', '🔺 Üçgen'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'shapes'
+          }
+        ]
+      },
+      {
+        id: 'kinder_math',
+        name: 'Minik Sayılar & Sayma',
+        icon: '🔢',
+        colorTheme: 'theme-science',
+        tagline: '1-5 Miktar & Sayma',
+        description: 'Meyveleri dokunarak say, zıplayan nesneleri yakala ve sayı balonlarını patlat! 🍎🔢',
+        badge: 'Erken Matematik',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'count_tap', label: '🍎 Dokun & Say' },
+          { id: 'counting', label: '🔢 Miktar Bul' },
+          { id: 'number_balloon', label: '🎈 Sayı Balonları' }
+        ],
+        games: [
+          {
             id: 'count_tap',
             active: true,
             title: 'Kaç Tane Var? Dokun & Say',
-            icon: '🔢',
+            icon: '🍎',
             badge: '🍎 Dokunmatik Sayma',
             featureTag: '🐾 Sevimli Sayma',
             description: 'Ekranda zıplayan nesnelere dokunarak say, doğru sayıyı bul! 🍎',
             tags: ['🍎 Dokunarak Say', '🔢 1-5 Sayılar', '✨ Sesli Yönerge'],
             btnText: 'Düelloyu Başlat',
+            topic: 'count_tap'
+          },
+          {
+            id: 'kinder_counting',
+            active: true,
+            title: 'Meyve & Yıldız Sayma',
+            icon: '🔢',
+            badge: '🔢 Miktar Eşleştirme',
+            featureTag: '🖐️ 1-5 Miktar',
+            description: 'Sepetteki çilekleri, parıldayan yıldızları ve kedileri sayıp doğru karta dokun! 🍓⭐',
+            tags: ['🍓 Meyve Say', '⭐ Yıldız Say', '🖐️ Sayı Algısı'],
+            btnText: 'Düelloyu Başlat',
             topic: 'counting'
           },
           {
-            id: 'math',
+            id: 'kinder_number_balloon',
             active: true,
-            title: 'Kafa Kafaya Renkler & Şekiller',
-            icon: '🎨',
-            badge: '🎨 Renk & Şekil',
-            featureTag: '⭐ Görsel Keşif',
-            description: 'Meyveleri ve parlayan yıldızları say, doğru cevaba ilk sen dokun! 🍎⭐',
-            tags: ['🍎 1-5 Sayma', '🎨 Canlı Renkler', '⭐ Şekil Avı'],
+            title: 'Sayı Balonlarını Yakala',
+            icon: '🎈',
+            badge: '🎈 Uçan Sayılar',
+            featureTag: '1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣',
+            description: 'Gökyüzünde süzülen 1-5 arası sayı balonlarını sesli dinle ve anında patlat! 🎈💥',
+            tags: ['🎈 Uçan Balon', '🔢 1-5 Sayılar', '⚡ Refleks'],
             btnText: 'Düelloyu Başlat',
-            topic: 'all'
+            topic: 'number_balloon'
           }
         ]
       },
       {
         id: 'kinder_nature',
-        name: 'Hayvanlar & Doğa',
+        name: 'Sevimli Hayvanlar & Doğa',
         icon: '🦁',
         colorTheme: 'theme-turkish',
-        tagline: 'Çevre & Canlılar',
-        description: 'Sevimli hayvan sesleri, doğa sevgisi ve neşeli dostlarımız! 🐾',
-        badge: 'Doğa Kahramanları',
+        tagline: 'Canlılar & Çevre Sevgisi',
+        description: 'Sevimli hayvan sesleri, gizemli gölge eşleştirme ve lezzetli meyveler! 🐾🦁',
+        badge: 'Doğa Dostları',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
+          { id: 'sounds', label: '🐾 Hayvan Sesleri' },
           { id: 'shadows', label: '🧩 Gölgesini Bul' },
-          { id: 'animals', label: '🐾 Hayvanlar' },
-          { id: 'nature', label: '🌿 Doğa' }
+          { id: 'fruits', label: '🍓 Meyve Sepeti' }
         ],
         games: [
+          {
+            id: 'kinder_animal_sounds',
+            active: true,
+            title: 'Kim Miyavlar? Hayvan Sesleri',
+            icon: '🐾',
+            badge: '🐾 Sevimli Dostlar',
+            featureTag: '🔊 İşitsel Tanıma',
+            description: 'Miyavlayan, havlayan veya vak vak diyen dostlarımızı sesinden tanı! 🐱🐶',
+            tags: ['🐱 Miyav', '🐶 Hav Hav', '🦆 Vak Vak'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'sounds'
+          },
           {
             id: 'shadow_match',
             active: true,
@@ -6099,48 +6311,61 @@
             icon: '🧩',
             badge: '🧩 Gölge Kartları',
             featureTag: '👀 Keskin Gözler',
-            description: 'Sevimli hayvan ve meyvelerin gizemli gölgesini bul, dokunup rengini aç! 🦁',
+            description: 'Sevimli hayvan ve taşıtların gizemli gölgesini bul, dokunup rengini aç! 🦁🚗',
             tags: ['🧩 Gölge Eşleştir', '🦁 Sevimli Hayvanlar', '⚡ Hızlı Bul'],
             btnText: 'Düelloyu Başlat',
             topic: 'shadows'
           },
           {
-            id: 'turkish',
+            id: 'kinder_fruits',
             active: true,
-            title: 'Sevimli Hayvanlar & Doğa',
-            icon: '🦁',
-            badge: '🦁 Doğa Kahramanları',
-            featureTag: '🐾 Sevimli Dostlar',
-            description: 'Miyavlayan dostlarımız ve doğa kahramanlarıyla tanış! 🐾',
-            tags: ['🐾 Hayvan Sesleri', '🐘 Büyük-Küçük', '🌿 Doğa Sevgisi'],
+            title: 'Meyve Sepeti & Sağlıklı Yaşam',
+            icon: '🍓',
+            badge: '🍓 Sağlıklı Beslenme',
+            featureTag: '🍎 Vitamin Deposu',
+            description: 'Çıtır elmalar, tatlı çilekler ve taze süt gibi sağlıklı yiyecekleri tanı! 🍎🥛',
+            tags: ['🍓 Çilek & Elma', '🥛 Süt & Yoğurt', '🥕 Taze Havuç'],
             btnText: 'Düelloyu Başlat',
-            topic: 'animals'
+            topic: 'fruits'
           }
         ]
       },
       {
         id: 'kinder_brain',
-        name: 'Akıl ve Zeka Oyunları',
-        icon: '🧠',
+        name: 'Duygularım & Görsel Dikkat',
+        icon: '💖',
         colorTheme: 'theme-brain',
-        tagline: 'Dikkat & Refleks',
-        description: 'Gözlem yeteneği, hızlı fark etme ve sevimli hafıza kartları! 👀⚡',
-        badge: 'Minik Zekalar',
+        tagline: 'Duyuşsal Maarif & Dikkat',
+        description: 'Yüz ifadeleri, duygularımızı tanıma, farklı olanı yakalama ve hafıza kartları! 😊👀',
+        badge: 'Duygusal Zeka',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'attention', label: '👀 Görsel Dikkat' },
-          { id: 'memory', label: '🧠 Hafıza' }
+          { id: 'emotions', label: '💖 Duygularım' },
+          { id: 'attention', label: '👀 Farklı Olanı Bul' },
+          { id: 'memory', label: '🧠 Sevimli Hafıza' }
         ],
         games: [
           {
-            id: 'oddone',
+            id: 'kinder_emotions',
+            active: true,
+            title: 'Duygularım & Yüz İfadeleri',
+            icon: '😊',
+            badge: '💖 Maarif Duyuşsal',
+            featureTag: '😊 😢 😲 😠 🥰',
+            description: 'Mutlu, üzgün, şaşkın ve sevgi dolu yüz ifadelerini sesli hikayelerle tanı! 😊💖',
+            tags: ['😊 Mutlu', '😢 Üzgün', '😲 Şaşkın', '🥰 Sevgi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'emotions'
+          },
+          {
+            id: 'kinder_oddone',
             active: true,
             title: 'Farklı Olanı Yakala',
             icon: '👀',
             badge: '👀 Görsel Dikkat',
-            featureTag: '👀 Keskin Gözler',
-            description: 'Meyve ve hayvanlar arasında saklanan yabancıyı ilk sen bul! 🥑',
-            tags: ['🥑 Tatlı Meyveler', '👀 Görsel Dikkat', '⚡ Hızlı Bul'],
+            featureTag: '🥑 Keskin Gözler',
+            description: 'Meyve, hayvan ve şekiller arasına gizlenen yabancı nesneyi ilk sen bul! 🥑',
+            tags: ['👀 Görsel Dikkat', '🥑 Yabancıyı Bul', '⚡ Hızlı Dokun'],
             btnText: 'Düelloyu Başlat',
             topic: 'attention'
           },
@@ -6149,10 +6374,10 @@
             active: true,
             title: 'Sevimli Hafıza Düellosu',
             icon: '🧠',
-            badge: '🎈 Görsel Hafıza',
-            featureTag: '🎈 Neşeli Zihin',
-            description: 'Ekranda parlayan 3 sevimli nesneyi aklında tut, sırayı bil! 🎈',
-            tags: ['🎈 3 Nesne Sırası', '🧠 Görsel Hatırlama', '⭐ Hafıza'],
+            badge: '🧠 2x3 Hafıza',
+            featureTag: '🐱🐶 Eşleştirme',
+            description: 'Sevimli kedi, köpek ve meyve kartlarını hafızanda tut, eşini bul! 🐱🍎',
+            tags: ['🐱 Sevimli Hayvanlar', '🧠 Görsel Hafıza', '⭐ Çiftini Bul'],
             btnText: 'Düelloyu Başlat',
             topic: 'memory'
           }
