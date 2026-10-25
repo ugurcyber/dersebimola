@@ -200,7 +200,35 @@
     <!-- 2) SAĞDAKİ FERAH ANA SAHNE (MAIN WRAPPER - #F8FAFC) -->
     <div class="app-main-wrapper">
       
-      <!-- FERAH ÜST BAR (TOPBAR) -->
+      <!-- ============================================================== -->
+      <!-- MOBİL TELEFON ÜST BARI (NAVBAR: Moli Logosu, Giriş, Paylaş, Menü) -->
+      <!-- ============================================================== -->
+      <header class="mobile-top-navbar" id="mobileTopNavbar" aria-label="Mobil Üst Menü">
+        <div class="mobile-logo-group" id="btnMobileHome" role="button" tabindex="0" title="Derse Bi' Mola Ana Sayfa">
+          <div class="mobile-bubbly-logo">
+            <span class="logo-mo">Mo</span><span class="logo-li">li</span><span class="logo-star">⭐</span>
+          </div>
+          <div class="mobile-logo-subtitle">Derse Bi' Mola</div>
+        </div>
+
+        <div class="mobile-nav-actions">
+          <button class="mobile-btn-pill btn-pill-login" id="btnMobileLogin" type="button" aria-label="Öğretmen Girişi Yap">
+            <span class="btn-pill-icon">👤🔒</span>
+            <span>Giriş Yap</span>
+          </button>
+          <button class="mobile-btn-pill btn-pill-share" id="btnMobileShare" type="button" aria-label="WhatsApp ve Bağlantı Paylaş">
+            <span class="btn-pill-icon">🔗</span>
+            <span>Paylaş</span>
+          </button>
+          <button class="mobile-btn-menu" id="btnMobileMenu" type="button" aria-label="Menüyü Aç" aria-expanded="false">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- FERAH ÜST BAR (TOPBAR - MASAÜSTÜ & AKILLI TAHTA) -->
       <header class="app-topbar" id="appHeader">
         <div class="topbar-left">
           <span class="topbar-tag">
@@ -269,7 +297,149 @@
           <!-- 0. KADEME: YENİ ANA SAYFA (KARŞILAMA VİTRİNİ)    -->
           <!-- ============================================== -->
           <section class="home-showcase-section" id="homeShowcaseSection">
-            <!-- 1. MODERN EDTECH HERO (Quizizz & Duolingo Standardı) -->
+            <!-- ============================================================== -->
+            <!-- MOBİL VİTRİN (TELEFON GÖRÜNÜMÜ: GÖRSELDEKİ BİREBİR TASARIM)    -->
+            <!-- ============================================================== -->
+            <div class="mobile-phone-showcase" id="mobilePhoneShowcase">
+              <!-- 1) Turuncu Uyarı / Giriş Bandı -->
+              <div class="mobile-alert-banner" id="btnMobileNoticeBanner" role="button" tabindex="0" title="Öğretmen Girişi Yap">
+                <div class="alert-banner-title">
+                  <span class="alert-lock-icon">🔒</span> Giriş Yapılmadı
+                </div>
+                <div class="alert-banner-subtitle">
+                  Öğretmenler İçin Sınıf ve Liste Eklemek İçin Lütfen <strong>Giriş Yapın</strong>
+                </div>
+              </div>
+
+              <!-- 2) Başlık Grubu: Öğrenmenin En Eğlenceli Yolu! DERSE Bİ' MOLA! -->
+              <div class="mobile-hero-heading-group">
+                <span class="mobile-sparkle sparkle-left" aria-hidden="true">✨</span>
+                <h1 class="hero-subtext-main">
+                  <span>Öğrenmenin</span>
+                  <span>En Eğlenceli Yolu!</span>
+                </h1>
+                <div class="hero-title-bubbly-3d" aria-label="Derse Bi' Mola">
+                  <span class="word-derse">DERSE</span>
+                  <span class="word-bi">Bİ'</span>
+                  <span class="word-mola">MOLA!</span>
+                </div>
+                <span class="mobile-sparkle sparkle-right" aria-hidden="true">✨</span>
+              </div>
+
+              <!-- 3) Devasa 3D Turuncu Eylem Butonu: "🚀 Hemen Başla" -->
+              <div class="mobile-cta-wrap">
+                <button class="mobile-hero-btn-start" id="btnMobileHeroStart" type="button" aria-label="Hemen Başla">
+                  <span class="btn-rocket-icon">🚀</span>
+                  <span class="btn-text">Hemen Başla</span>
+                </button>
+              </div>
+
+              <!-- 4) İki Hızlı Kart: Sınıflar & Düellolar -->
+              <div class="mobile-quick-action-grid">
+                <div class="mobile-action-card card-target-classes" id="btnMobileQuickClasses" role="button" tabindex="0">
+                  <div class="action-card-icon-wrap icon-target">
+                    <img src="assets/icons/3d/bullseye.png" class="action-card-3d-img" alt="Sınıflar" loading="eager">
+                  </div>
+                  <div class="action-card-text">
+                    <span class="action-card-sublabel">Sınıflar</span>
+                    <span class="action-card-title">Sınıflar</span>
+                  </div>
+                </div>
+
+                <div class="mobile-action-card card-lightning-duels" id="btnMobileQuickDuels" role="button" tabindex="0">
+                  <div class="action-card-icon-wrap icon-lightning">
+                    <img src="assets/icons/3d/lightning.png" class="action-card-3d-img" alt="Düellolar" loading="eager">
+                  </div>
+                  <div class="action-card-text">
+                    <span class="action-card-sublabel">Düellolar</span>
+                    <span class="action-card-title">Düellolar</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5) Moli Maskot Sahnesi ve 6 Uçuşan Rozet -->
+              <div class="mobile-moli-showcase-stage">
+                <!-- Matematik Rozeti (Sol Üst) -->
+                <div class="stage-pill-badge pill-badge-math">
+                  <span class="badge-icon">🧮</span>
+                  <span class="badge-text">4 + 5 = 9</span>
+                </div>
+
+                <!-- Harfler Rozeti (Sağ Üst) -->
+                <div class="stage-pill-badge pill-badge-letters">
+                  <span class="badge-icon">🔤</span>
+                  <span class="badge-text">A B C</span>
+                </div>
+
+                <!-- Kupa Yuvarlak Rozet (Orta Sol) -->
+                <div class="stage-circle-badge badge-circle-trophy">
+                  <span class="circle-icon">🏆</span>
+                </div>
+
+                <!-- Balon Yuvarlak Rozet (Orta Sağ) -->
+                <div class="stage-circle-badge badge-circle-balloon">
+                  <span class="circle-icon">🎈</span>
+                </div>
+
+                <!-- Puan Rozeti (Sol Alt) -->
+                <div class="stage-pill-badge pill-badge-points">
+                  <span class="badge-icon">⭐</span>
+                  <span class="badge-text">+10 Puan</span>
+                </div>
+
+                <!-- Hazır mısın? Rozeti (Alt Orta) -->
+                <div class="stage-pill-badge pill-badge-ready">
+                  <span class="badge-icon">🤖</span>
+                  <span class="badge-text">Hazır mısın?</span>
+                </div>
+
+                <!-- Moli Maskot Görseli -->
+                <div class="mobile-moli-mascot-wrap">
+                  <img src="assets/mascot/moli.png" class="mobile-moli-mascot-img" alt="Sevimli Robot Moli" loading="eager">
+                </div>
+              </div>
+
+              <!-- 6) HIZLI LİSTE Bölümü -->
+              <div class="mobile-quick-list-section">
+                <div class="quick-list-header">HIZLI LİSTE</div>
+                <div class="quick-list-carousel" id="mobileQuickListCarousel">
+                  <div class="quick-list-chip chip-theme-green" data-grade="0" role="button" tabindex="0" title="Anasınıfı">
+                    <span class="chip-icon-box"><img src="assets/icons/3d/bullseye.png" class="chip-3d-img" alt="🎯"></span>
+                    <span class="chip-title">Sınıflar</span>
+                  </div>
+                  <div class="quick-list-chip chip-theme-orange" data-grade="1" role="button" tabindex="0" title="1. Sınıf">
+                    <span class="chip-icon-box"><img src="assets/icons/3d/bullseye.png" class="chip-3d-img" alt="🎯"></span>
+                    <span class="chip-title">Sınıflar</span>
+                  </div>
+                  <div class="quick-list-chip chip-theme-blue" data-grade="2" role="button" tabindex="0" title="2. Sınıf">
+                    <span class="chip-icon-box"><span class="chip-emoji">🔤</span></span>
+                    <span class="chip-title">Sınıflar</span>
+                  </div>
+                  <div class="quick-list-chip chip-theme-purple" data-grade="3" role="button" tabindex="0" title="3. Sınıf">
+                    <span class="chip-icon-box"><img src="assets/icons/3d/lightning.png" class="chip-3d-img" alt="⚡"></span>
+                    <span class="chip-title">Düellolar</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 7) Alt Sabit / Yüzen Güven Bandı (MEB Müfredatı %100 Uygun) -->
+              <div class="mobile-floating-trust-card">
+                <div class="trust-card-top-row">
+                  <div class="trust-book-icon-box">
+                    <img src="assets/icons/3d/books.png" class="trust-book-img" alt="MEB Müfredatı" loading="lazy">
+                  </div>
+                  <div class="trust-card-text">
+                    <div class="trust-main-heading">MEB Müfredatına %100 Uygun</div>
+                    <div class="trust-sub-heading">Kazanımlarla tam uyumlu soru havuzu...</div>
+                  </div>
+                </div>
+                <div class="trust-badge-pill-tag">
+                  <span class="trust-check-icon">✓</span> GÜVENLİ &amp; PARDUS UYUMLU
+                </div>
+              </div>
+            </div>
+
+            <!-- 1. MODERN EDTECH HERO (Quizizz & Duolingo Standardı - Masaüstü Görünümü) -->
             <div class="edtech-hero-card" id="edtechHeroSection">
               <!-- SOL TARAF (Metin ve Eylem) -->
               <div class="hero-left-col">
@@ -1351,6 +1521,9 @@
 
   <!-- Efekt ve Juiciness Parçacık Katmanı (Yıldız & Konfeti Patlamaları) -->
   <canvas id="gameParticlesCanvas" class="game-particles-canvas"></canvas>
+
+  <!-- Mobil Menü Karartma Katmanı (Drawer Backdrop) -->
+  <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane) -->
   <script src="app.js?v=6.1.0"></script>

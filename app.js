@@ -7922,14 +7922,31 @@
      10. FREEMIUM MODEL & ÖĞRETMEN OTURUMU
      ========================================================================== */
   function updateTeacherAuthUI() {
+    const mobileLoginBtn = document.getElementById('btnMobileLogin');
+    const mobileNoticeBanner = document.getElementById('btnMobileNoticeBanner');
+
     if (state.teacherSession.isLoggedIn) {
       DOM.btnTeacherAuth.classList.add('logged-in');
       DOM.authBtnText.textContent = state.teacherSession.name || 'Öğretmenim';
       DOM.authIcon.textContent = '🎓';
+      if (mobileLoginBtn) {
+        mobileLoginBtn.classList.add('logged-in');
+        mobileLoginBtn.innerHTML = '<span>🎓 ' + (state.teacherSession.name || 'Öğretmen') + '</span>';
+      }
+      if (mobileNoticeBanner) {
+        mobileNoticeBanner.style.display = 'none';
+      }
     } else {
       DOM.btnTeacherAuth.classList.remove('logged-in');
       DOM.authBtnText.textContent = 'Öğretmen Girişi';
       DOM.authIcon.textContent = '👨‍🏫';
+      if (mobileLoginBtn) {
+        mobileLoginBtn.classList.remove('logged-in');
+        mobileLoginBtn.innerHTML = '<span class="btn-icon">👤</span> Giriş Yap';
+      }
+      if (mobileNoticeBanner) {
+        mobileNoticeBanner.style.display = '';
+      }
     }
   }
 
@@ -10855,6 +10872,212 @@
         e.stopPropagation();
       });
     });
+
+    // =========================================================================
+    // MOBİL TELEFON GÖRÜNÜMÜ & VİTRİN ETKİLEŞİMLERİ (1:1 Mobil Tasarım)
+    // =========================================================================
+    const btnMobileLogin = document.getElementById('btnMobileLogin');
+    const btnMobileNoticeBanner = document.getElementById('btnMobileNoticeBanner');
+    const btnMobileShare = document.getElementById('btnMobileShare');
+    const btnMobileMenu = document.getElementById('btnMobileMenu');
+    const mobileDrawerBackdrop = document.getElementById('mobileDrawerBackdrop');
+    const btnMobileLogo = document.getElementById('btnMobileLogo');
+    const btnMobileHeroStart = document.getElementById('btnMobileHeroStart');
+    const btnMobileQuickClasses = document.getElementById('btnMobileQuickClasses');
+    const btnMobileQuickDuels = document.getElementById('btnMobileQuickDuels');
+    const appSidebar = document.getElementById('appSidebar');
+
+    if (btnMobileLogin) {
+      btnMobileLogin.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        handleAuthClick();
+      });
+      btnMobileLogin.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    if (btnMobileNoticeBanner) {
+      btnMobileNoticeBanner.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        handleAuthClick();
+      });
+      btnMobileNoticeBanner.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    if (btnMobileShare) {
+      btnMobileShare.addEventListener('pointerdown', handleGeneralShare);
+      btnMobileShare.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    const closeMobileSidebar = () => {
+      if (appSidebar) appSidebar.classList.remove('sidebar-mobile-open');
+      if (mobileDrawerBackdrop) mobileDrawerBackdrop.classList.remove('active');
+      document.body.classList.remove('mobile-drawer-locked');
+    };
+
+    const toggleMobileSidebar = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      audio.playClick();
+      if (appSidebar) {
+        const isOpen = appSidebar.classList.toggle('sidebar-mobile-open');
+        if (mobileDrawerBackdrop) {
+          mobileDrawerBackdrop.classList.toggle('active', isOpen);
+        }
+        document.body.classList.toggle('mobile-drawer-locked', isOpen);
+      }
+    };
+
+    if (btnMobileMenu) {
+      btnMobileMenu.addEventListener('pointerdown', toggleMobileSidebar);
+      btnMobileMenu.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    if (mobileDrawerBackdrop) {
+      mobileDrawerBackdrop.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        closeMobileSidebar();
+      });
+      mobileDrawerBackdrop.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    // Mobil menüdeki herhangi bir öğeye tıklandığında çekmeceyi otomatik kapat
+    if (appSidebar) {
+      appSidebar.querySelectorAll('.sidebar-item, .grade-chip, .sidebar-home-btn, .sidebar-sub-item').forEach(el => {
+        el.addEventListener('pointerdown', () => {
+          setTimeout(closeMobileSidebar, 150);
+        });
+      });
+    }
+
+    if (btnMobileLogo) {
+      btnMobileLogo.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        if (state.currentView === 'duel') {
+          exitDuel();
+        } else if (state.currentSection !== 'home') {
+          openHomePage();
+        } else {
+          handleMoliClick();
+        }
+      });
+      btnMobileLogo.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    if (btnMobileHeroStart) {
+      btnMobileHeroStart.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        const section = document.querySelector('.home-section-container');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          setGrade(1);
+        }
+      });
+      btnMobileHeroStart.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    if (btnMobileQuickClasses) {
+      btnMobileQuickClasses.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        const section = document.querySelector('.home-section-container');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          setGrade(1);
+        }
+      });
+      btnMobileQuickClasses.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    if (btnMobileQuickDuels) {
+      btnMobileQuickDuels.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        setGameMode('duel');
+        const section = document.querySelector('.home-popular-grid') || document.querySelector('.home-section-container');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+      btnMobileQuickDuels.addEventListener('click', (e) => e.preventDefault());
+    }
+
+    // Mobil Hızlı Liste Çipleri
+    document.querySelectorAll('.mobile-quick-list-section .quick-list-chip').forEach(chip => {
+      chip.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        const gradeAttr = chip.getAttribute('data-grade');
+        if (gradeAttr !== null && gradeAttr !== undefined) {
+          setGrade(gradeAttr);
+        }
+      });
+      chip.addEventListener('click', (e) => e.preventDefault());
+    });
+
+    // Mobil Moli Maskotu ve Rozet Etkileşimleri
+    const mobileMoliMascot = document.querySelector('.mobile-moli-mascot-wrap');
+    if (mobileMoliMascot) {
+      mobileMoliMascot.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        audio.playClick();
+        handleMoliClick();
+      });
+    }
+
+    const pillBadgeMath = document.querySelector('.pill-badge-math');
+    if (pillBadgeMath) {
+      pillBadgeMath.addEventListener('pointerdown', () => {
+        audio.playCorrect();
+        showToast('🧮 4 + 5 = 9! Matematik harika!');
+      });
+    }
+
+    const pillBadgeLetters = document.querySelector('.pill-badge-letters');
+    if (pillBadgeLetters) {
+      pillBadgeLetters.addEventListener('pointerdown', () => {
+        audio.playClick();
+        showToast('🔤 A B C - Harfleri öğrenmeye hazır mısın?');
+      });
+    }
+
+    const badgeTrophy = document.querySelector('.badge-circle-trophy');
+    if (badgeTrophy) {
+      badgeTrophy.addEventListener('pointerdown', () => {
+        audio.playFanfare();
+        openLeaderboardModal();
+      });
+    }
+
+    const badgeBalloon = document.querySelector('.badge-circle-balloon');
+    if (badgeBalloon) {
+      badgeBalloon.addEventListener('pointerdown', () => {
+        audio.playPop();
+        if (typeof launchConfetti === 'function') launchConfetti();
+      });
+    }
+
+    const pillBadgePoints = document.querySelector('.pill-badge-points');
+    if (pillBadgePoints) {
+      pillBadgePoints.addEventListener('pointerdown', () => {
+        audio.playCorrect();
+        showToast('⭐ +10 Puan Kazandın! Tebrikler!');
+      });
+    }
+
+    const pillBadgeReady = document.querySelector('.pill-badge-ready');
+    if (pillBadgeReady) {
+      pillBadgeReady.addEventListener('pointerdown', () => {
+        audio.playClick();
+        showToast('🤖 Moli seninle oynamaya hazır!');
+      });
+    }
   }
 
   /* ==========================================================================
