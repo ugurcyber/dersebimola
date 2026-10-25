@@ -5910,12 +5910,14 @@
   }
 
   function updateSoundUI() {
-    if (state.soundEnabled) {
-      DOM.iconSoundOn.classList.remove('hide');
-      DOM.iconSoundOff.classList.add('hide');
-    } else {
-      DOM.iconSoundOn.classList.add('hide');
-      DOM.iconSoundOff.classList.remove('hide');
+    if (DOM.iconSoundOn && DOM.iconSoundOff) {
+      if (state.soundEnabled) {
+        DOM.iconSoundOn.classList.remove('hide');
+        DOM.iconSoundOff.classList.add('hide');
+      } else {
+        DOM.iconSoundOn.classList.add('hide');
+        DOM.iconSoundOff.classList.remove('hide');
+      }
     }
   }
 
@@ -8343,10 +8345,10 @@
   }
 
   function updatePlayerNamesUI() {
-    DOM.lobbyP1Name.textContent = state.player1.name;
-    DOM.lobbyP2Name.textContent = state.player2.name;
-    DOM.duelP1Name.textContent = state.player1.name;
-    DOM.duelP2Name.textContent = state.player2.name;
+    if (DOM.lobbyP1Name) DOM.lobbyP1Name.textContent = state.player1.name;
+    if (DOM.lobbyP2Name) DOM.lobbyP2Name.textContent = state.player2.name;
+    if (DOM.duelP1Name) DOM.duelP1Name.textContent = state.player1.name;
+    if (DOM.duelP2Name) DOM.duelP2Name.textContent = state.player2.name;
   }
 
   function saveClassRoster() {
@@ -10543,9 +10545,30 @@
     // -------------------------------------------------------------
     document.addEventListener('contextmenu', e => e.preventDefault());
 
+    // Mobil ve Akıllı Tahta Dokunmatik Tap Yöneticisi (Çift tetiklemeyi önler, gecikmesiz çalışır)
+    function addTapListener(el, callback) {
+      if (!el) return;
+      let lastTrigger = 0;
+      const run = (e) => {
+        const now = Date.now();
+        if (now - lastTrigger < 320) return;
+        lastTrigger = now;
+        callback(e);
+      };
+      el.addEventListener('pointerdown', (e) => {
+        if (e.button === 0 || e.pointerType === 'touch') {
+          run(e);
+        }
+      });
+      el.addEventListener('click', (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        run(e);
+      });
+    }
+
     // Header Kontrolleri (Moli & Derse Bi' Mola Birleşik Logo)
     if (DOM.logoBtn) {
-      DOM.logoBtn.addEventListener('pointerdown', () => {
+      addTapListener(DOM.logoBtn, () => {
         audio.playClick();
         if (state.currentView === 'duel') {
           exitDuel();
@@ -10557,14 +10580,14 @@
       });
     }
 
-    DOM.btnToggleFullscreen.addEventListener('pointerdown', toggleFullscreen);
-    DOM.btnToggleSound.addEventListener('pointerdown', toggleSound);
-    DOM.btnTeacherAuth.addEventListener('pointerdown', handleAuthClick);
-    DOM.btnSimulateGoogleLogin.addEventListener('pointerdown', simulateGoogleLogin);
+    if (DOM.btnToggleFullscreen) addTapListener(DOM.btnToggleFullscreen, toggleFullscreen);
+    if (DOM.btnToggleSound) addTapListener(DOM.btnToggleSound, toggleSound);
+    if (DOM.btnTeacherAuth) addTapListener(DOM.btnTeacherAuth, handleAuthClick);
+    if (DOM.btnSimulateGoogleLogin) addTapListener(DOM.btnSimulateGoogleLogin, simulateGoogleLogin);
 
     // Sol Panel "🏠 Ana Sayfa" Butonu
     if (DOM.btnNavHome) {
-      DOM.btnNavHome.addEventListener('pointerdown', () => {
+      addTapListener(DOM.btnNavHome, () => {
         audio.playClick();
         openHomePage();
       });
@@ -10572,32 +10595,35 @@
 
     // Dersler Ekranındaki "← Ana Sayfa" Butonu
     if (DOM.btnBackToHome) {
-      DOM.btnBackToHome.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(DOM.btnBackToHome, (e) => {
         audio.playClick();
         openHomePage();
       });
     }
 
     // Pro Butonlar
-    DOM.btnOpenPicker.addEventListener('pointerdown', openPickerModal);
-    DOM.btnOpenCustomQ.addEventListener('pointerdown', openCustomQModal);
-    DOM.btnOpenLeaderboard.addEventListener('pointerdown', openLeaderboardModal);
-    DOM.btnResetLeague.addEventListener('pointerdown', resetLeagueScores);
+    if (DOM.btnOpenPicker) addTapListener(DOM.btnOpenPicker, openPickerModal);
+    if (DOM.btnOpenCustomQ) addTapListener(DOM.btnOpenCustomQ, openCustomQModal);
+    if (DOM.btnOpenLeaderboard) addTapListener(DOM.btnOpenLeaderboard, openLeaderboardModal);
+    if (DOM.btnResetLeague) addTapListener(DOM.btnResetLeague, resetLeagueScores);
 
     // Sınıf Çipleri (Header & Sidebar)
-    DOM.gradeChips.forEach(chip => {
-      chip.addEventListener('pointerdown', () => {
-        setGrade(chip.getAttribute('data-grade'));
+    if (DOM.gradeChips) {
+      DOM.gradeChips.forEach(chip => {
+        addTapListener(chip, () => {
+          setGrade(chip.getAttribute('data-grade'));
+        });
       });
-    });
+    }
 
     // Sınıf Kartları (Lobi ve Vitrin)
-    DOM.gradeCards.forEach(card => {
-      card.addEventListener('pointerdown', () => {
-        setGrade(card.getAttribute('data-grade'));
+    if (DOM.gradeCards) {
+      DOM.gradeCards.forEach(card => {
+        addTapListener(card, () => {
+          setGrade(card.getAttribute('data-grade'));
+        });
       });
-    });
+    }
 
     // Ana Sayfa Vitrini: Dev Sınıf Kartları (🎈 Anasınıfı, 1., 2., 3., 4. Sınıf)
     if (DOM.homeGradeCards) {
@@ -10640,24 +10666,28 @@
     }
 
     // Lobi Hızlı Öğrenci Değiştir
-    DOM.btnQuickDraw.addEventListener('pointerdown', openPickerModal);
+    if (DOM.btnQuickDraw) DOM.btnQuickDraw.addEventListener('pointerdown', openPickerModal);
 
     // Hedef Puan Seçicileri
-    DOM.targetScoreBtns.forEach(btn => {
-      btn.addEventListener('pointerdown', () => {
-        audio.playClick();
-        DOM.targetScoreBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.targetScore = parseInt(btn.getAttribute('data-score'), 10);
-        StorageManager.saveSettings();
+    if (DOM.targetScoreBtns) {
+      DOM.targetScoreBtns.forEach(btn => {
+        btn.addEventListener('pointerdown', () => {
+          audio.playClick();
+          DOM.targetScoreBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state.targetScore = parseInt(btn.getAttribute('data-score'), 10);
+          StorageManager.saveSettings();
+        });
       });
-    });
+    }
 
     // Çözüm Gösterme Switch'i
-    DOM.chkAutoExplanation.addEventListener('change', () => {
-      state.showAutoExplanation = DOM.chkAutoExplanation.checked;
-      StorageManager.saveSettings();
-    });
+    if (DOM.chkAutoExplanation) {
+      DOM.chkAutoExplanation.addEventListener('change', () => {
+        state.showAutoExplanation = DOM.chkAutoExplanation.checked;
+        StorageManager.saveSettings();
+      });
+    }
 
     // Sunucu Sesi Switch'i (Lobi)
     if (DOM.chkAnnouncerVoice) {
@@ -10714,26 +10744,34 @@
       }
       returnToLobby();
     };
-    DOM.btnExitDuel.addEventListener('pointerdown', handleExitAction);
-    DOM.btnExitDuel.addEventListener('click', handleExitAction);
-    DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
-      audio.playClick();
-      state.questionNumber += 1;
-      loadNextQuestion();
-    });
+    if (DOM.btnExitDuel) {
+      DOM.btnExitDuel.addEventListener('pointerdown', handleExitAction);
+      DOM.btnExitDuel.addEventListener('click', handleExitAction);
+    }
+    if (DOM.btnSkipQuestion) {
+      DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
+        audio.playClick();
+        state.questionNumber += 1;
+        loadNextQuestion();
+      });
+    }
 
-    DOM.btnToggleSolutionNow.addEventListener('pointerdown', () => {
-      audio.playClick();
-      if (state.currentQuestion) {
-        DOM.solutionText.textContent = state.currentQuestion.explanation;
-        DOM.solutionPopup.classList.toggle('hide');
-      }
-    });
+    if (DOM.btnToggleSolutionNow) {
+      DOM.btnToggleSolutionNow.addEventListener('pointerdown', () => {
+        audio.playClick();
+        if (state.currentQuestion) {
+          DOM.solutionText.textContent = state.currentQuestion.explanation;
+          DOM.solutionPopup.classList.toggle('hide');
+        }
+      });
+    }
 
-    DOM.btnCloseSolution.addEventListener('pointerdown', () => {
-      audio.playClick();
-      DOM.solutionPopup.classList.add('hide');
-    });
+    if (DOM.btnCloseSolution) {
+      DOM.btnCloseSolution.addEventListener('pointerdown', () => {
+        audio.playClick();
+        DOM.solutionPopup.classList.add('hide');
+      });
+    }
 
     // Modal Çıkış Onayı Dinleyicileri (Mobilde anında ve takılmasız çıkış)
     if (DOM.btnConfirmExitYes) {
@@ -10753,26 +10791,26 @@
     // Akıllı Tahta Multi-Touch Şık Butonları (Pointerdown)
     // -------------------------------------------------------------
     // 1. Oyuncu (Mavi)
-    DOM.p1OptA.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 0); });
-    DOM.p1OptB.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 1); });
-    DOM.p1OptC.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 2); });
+    if (DOM.p1OptA) DOM.p1OptA.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 0); });
+    if (DOM.p1OptB) DOM.p1OptB.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 1); });
+    if (DOM.p1OptC) DOM.p1OptC.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 2); });
     if (DOM.p1OptD) {
       DOM.p1OptD.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(1, 3); });
     }
 
     // 2. Oyuncu (Kırmızı)
-    DOM.p2OptA.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 0); });
-    DOM.p2OptB.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 1); });
-    DOM.p2OptC.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 2); });
+    if (DOM.p2OptA) DOM.p2OptA.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 0); });
+    if (DOM.p2OptB) DOM.p2OptB.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 1); });
+    if (DOM.p2OptC) DOM.p2OptC.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 2); });
     if (DOM.p2OptD) {
       DOM.p2OptD.addEventListener('pointerdown', e => { e.preventDefault(); handleAnswer(2, 3); });
     }
 
     // Çarkıfelek Kura & Sınıf Yönetimi Butonları
-    DOM.btnSpinWheel.addEventListener('pointerdown', spinStudentWheel);
-    DOM.btnApplySelectedStudents.addEventListener('pointerdown', applySelectedStudents);
-    DOM.btnSaveRoster.addEventListener('pointerdown', saveClassRoster);
-    DOM.btnResetRoster.addEventListener('pointerdown', resetDefaultRoster);
+    if (DOM.btnSpinWheel) DOM.btnSpinWheel.addEventListener('pointerdown', spinStudentWheel);
+    if (DOM.btnApplySelectedStudents) DOM.btnApplySelectedStudents.addEventListener('pointerdown', applySelectedStudents);
+    if (DOM.btnSaveRoster) DOM.btnSaveRoster.addEventListener('pointerdown', saveClassRoster);
+    if (DOM.btnResetRoster) DOM.btnResetRoster.addEventListener('pointerdown', resetDefaultRoster);
     if (DOM.btnClearRoster) DOM.btnClearRoster.addEventListener('pointerdown', clearClassRoster);
     if (DOM.btnBackToStage) DOM.btnBackToStage.addEventListener('pointerdown', () => switchPickerView('stage'));
     if (DOM.btnPickerModeSingle) DOM.btnPickerModeSingle.addEventListener('pointerdown', () => setPickerMode('single'));
@@ -10833,9 +10871,9 @@
     }
 
     // Zafer Ekranı Butonları
-    DOM.btnRematchSame.addEventListener('pointerdown', handleRematchSame);
-    DOM.btnSelectNewStudents.addEventListener('pointerdown', handleSelectNewStudentsFromVictory);
-    DOM.btnBackToLobby.addEventListener('pointerdown', handleBackToLobby);
+    if (DOM.btnRematchSame) DOM.btnRematchSame.addEventListener('pointerdown', handleRematchSame);
+    if (DOM.btnSelectNewStudents) DOM.btnSelectNewStudents.addEventListener('pointerdown', handleSelectNewStudentsFromVictory);
+    if (DOM.btnBackToLobby) DOM.btnBackToLobby.addEventListener('pointerdown', handleBackToLobby);
     if (DOM.btnShareVictoryWhatsApp) {
       DOM.btnShareVictoryWhatsApp.addEventListener('pointerdown', (e) => {
         e.preventDefault();
@@ -11220,68 +11258,51 @@
 
     const btnDesktopMenu = document.getElementById('btnDesktopMenu');
     if (btnDesktopMenu) {
-      btnDesktopMenu.addEventListener('pointerdown', toggleMobileSidebar);
-      btnDesktopMenu.addEventListener('click', e => e.preventDefault());
+      addTapListener(btnDesktopMenu, toggleMobileSidebar);
     }
 
     const btnDesktopHeroStart = document.getElementById('btnDesktopHeroStart');
     if (btnDesktopHeroStart) {
-      btnDesktopHeroStart.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnDesktopHeroStart, (e) => {
         audio.playClick();
-        const section = document.querySelector('.home-section-container');
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          setGrade(1);
-        }
+        setGrade(1);
       });
-      btnDesktopHeroStart.addEventListener('click', e => e.preventDefault());
     }
 
     // 7 Adet Dikey Sınıf / Ders Kartı (Sol Sütun)
     document.querySelectorAll('.stage-grades-sidebar .stage-grade-card[data-grade]').forEach(card => {
-      card.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(card, (e) => {
         const g = card.getAttribute('data-grade');
         if (g !== null && g !== undefined) {
           setGrade(g);
         }
       });
-      card.addEventListener('click', e => e.preventDefault());
     });
 
     const btnStageQuickDuels = document.getElementById('btnStageQuickDuels');
     if (btnStageQuickDuels) {
-      btnStageQuickDuels.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnStageQuickDuels, (e) => {
         audio.playClick();
         setGameMode('duel');
-        const section = document.querySelector('.home-popular-grid') || document.querySelector('.home-section-container');
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        setGrade(1);
       });
-      btnStageQuickDuels.addEventListener('click', e => e.preventDefault());
     }
 
     const btnStageQuickEnglish = document.getElementById('btnStageQuickEnglish');
     if (btnStageQuickEnglish) {
-      btnStageQuickEnglish.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnStageQuickEnglish, (e) => {
         audio.playClick();
         setGrade(2);
         if (typeof selectSubject === 'function') {
           selectSubject('english');
         }
       });
-      btnStageQuickEnglish.addEventListener('click', e => e.preventDefault());
     }
 
     // Sağ Sütundaki Rozetler
     const btnPillMath = document.getElementById('btnPillMath');
     if (btnPillMath) {
-      btnPillMath.addEventListener('pointerdown', () => {
+      addTapListener(btnPillMath, () => {
         audio.playCorrect();
         showToast('🧮 4 + 5 = 9! Matematik harika!');
       });
@@ -11289,7 +11310,7 @@
 
     const btnPillLetters = document.getElementById('btnPillLetters');
     if (btnPillLetters) {
-      btnPillLetters.addEventListener('pointerdown', () => {
+      addTapListener(btnPillLetters, () => {
         audio.playClick();
         showToast('🔤 A B C - Harfleri öğrenmeye hazır mısın?');
       });
@@ -11297,7 +11318,7 @@
 
     const btnStageCircleTrophy = document.getElementById('btnStageCircleTrophy');
     if (btnStageCircleTrophy) {
-      btnStageCircleTrophy.addEventListener('pointerdown', () => {
+      addTapListener(btnStageCircleTrophy, () => {
         audio.playFanfare();
         openLeaderboardModal();
       });
@@ -11305,7 +11326,7 @@
 
     const btnStageCircleBalloon = document.getElementById('btnStageCircleBalloon');
     if (btnStageCircleBalloon) {
-      btnStageCircleBalloon.addEventListener('pointerdown', () => {
+      addTapListener(btnStageCircleBalloon, () => {
         audio.playPop();
         if (typeof launchConfetti === 'function') launchConfetti();
       });
@@ -11313,7 +11334,7 @@
 
     const btnPillPoints = document.getElementById('btnPillPoints');
     if (btnPillPoints) {
-      btnPillPoints.addEventListener('pointerdown', () => {
+      addTapListener(btnPillPoints, () => {
         audio.playCorrect();
         showToast('⭐ +10 Puan Kazandın! Harikasın!');
       });
@@ -11321,7 +11342,7 @@
 
     const btnPillReady = document.getElementById('btnPillReady');
     if (btnPillReady) {
-      btnPillReady.addEventListener('pointerdown', () => {
+      addTapListener(btnPillReady, () => {
         audio.playClick();
         showToast('🤖 Moli seninle oynamaya hazır!');
       });
@@ -11329,8 +11350,8 @@
 
     const widescreenMoliRobot = document.getElementById('widescreenMoliRobot');
     if (widescreenMoliRobot) {
-      widescreenMoliRobot.addEventListener('pointerdown', (e) => {
-        e.stopPropagation();
+      addTapListener(widescreenMoliRobot, (e) => {
+        if (e) e.stopPropagation();
         audio.playClick();
         handleMoliClick();
       });
@@ -11352,14 +11373,18 @@
     openHomePage(); // Varsayılan olarak Ana Sayfa Vitrini ile başla!
 
     // Kayıtlı ayarları UI'a yansıt
-    DOM.chkAutoExplanation.checked = state.showAutoExplanation;
+    if (DOM.chkAutoExplanation) {
+      DOM.chkAutoExplanation.checked = state.showAutoExplanation;
+    }
     if (DOM.chkAutoReadQuestion) {
       DOM.chkAutoReadQuestion.checked = state.autoReadQuestion;
     }
-    DOM.targetScoreBtns.forEach(btn => {
-      const s = parseInt(btn.getAttribute('data-score'), 10);
-      btn.classList.toggle('active', s === state.targetScore);
-    });
+    if (DOM.targetScoreBtns) {
+      DOM.targetScoreBtns.forEach(btn => {
+        const s = parseInt(btn.getAttribute('data-score'), 10);
+        btn.classList.toggle('active', s === state.targetScore);
+      });
+    }
 
     setupEventListeners();
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
