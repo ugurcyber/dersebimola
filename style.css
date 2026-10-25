@@ -101,17 +101,7 @@ h1, h2, h3, h4, h5, h6 {
    Göz yormayan, ferah buz mavisi / kırık beyaz zemin (#F8FAFC)
    ========================================================================== */
 .bg-mesh {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  background-color: #F8FAFC;
-  background: 
-    radial-gradient(circle at 10% 12%, rgba(59, 130, 246, 0.05) 0%, transparent 45%),
-    radial-gradient(circle at 90% 14%, rgba(255, 107, 0, 0.04) 0%, transparent 42%),
-    radial-gradient(circle at 50% 90%, rgba(99, 102, 241, 0.03) 0%, transparent 48%),
-    #F8FAFC;
+  display: none !important;
 }
 
 /* Soluk pastel desenleri ve dikkat dağıtıcı öğeleri kaldır */
@@ -297,7 +287,12 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden !important;
-  background: linear-gradient(180deg, #62B3F9 0%, #7EC3FA 18%, #A3D4FB 42%, #C5E5FD 68%, #DCF0FE 86%, #BCE2FD 100%) !important;
+  background-color: #62B3F9 !important;
+  background-image: url('assets/background/sky-hills-bg.webp') !important;
+  background-repeat: no-repeat !important;
+  background-position: center bottom !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
 }
 
 .app-layout {
@@ -306,7 +301,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   max-height: 100vh;
-  background: linear-gradient(180deg, #62B3F9 0%, #7EC3FA 18%, #A3D4FB 42%, #C5E5FD 68%, #DCF0FE 86%, #BCE2FD 100%) !important;
+  background: transparent !important;
   position: relative;
   overflow: hidden !important;
 }
