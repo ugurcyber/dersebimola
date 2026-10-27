@@ -1,0 +1,215 @@
+# 4. Sınıf - Kesirler, Zaman ve Açılar (26 Cümle)
+Payı paydasından KÜÇÜK olan kesirlere (örneğin 3/5, 2/7) ne ad verilir?
+Payı paydasına EŞİT veya paydasından BÜYÜK olan kesirlere (örneğin 7/4, 5/5) ne denir?
+Bir tam sayı ve bir basit kesirden oluşan (örneğin 2 tam 1/3) kesirlere ne ad verilir?
+Ölçüsü 0° ile 90° arasında olan açılara ne ad verilir?
+Ölçüsü tam 90 derece (90°) olan açıya ne ad verilir?
+Ölçüsü 90° ile 180° arasında olan açılara ne ad verilir?
+Ölçüsü tam 180 derece (180°) olan açıya ne denir?
+Bir üçgenin iç açıları toplamı her zaman kaç derecedir?
+Bir dörtgenin (kare, dikdörtgen) iç açıları toplamı kaç derecedir?
+1 saat kaç saniyeye eşittir?
+Şubat ayının 4 yılda bir 29 gün çektiği ve yılın 366 gün olduğu yıllara ne denir?
+60 sayısının 3/5'i kaçtır?
+72 sayısının 5/8'i kaçtır?
+Aşağıdaki açılardan hangisi bir DAR AÇIDIR?
+Aşağıdaki açılardan hangisi bir GENİŞ AÇIDIR?
+Bir dik açı ile bir doğru açının toplamı kaç derecedir? (90° + 180°)?
+3 saat 25 dakika toplam kaç dakikadır?
+240 saniye kaç dakikaya eşittir?
+Paydaları eşit 3/7 ile 2/7 kesirlerinin toplamı kaçtır?
+8/9 kesrinden 3/9 kesri çıkarıldığında sonuç ne olur?
+Bir açıyı ölçmek ve çizmek için kullandığımız yarım daire şeklindeki alete ne denir?
+Bir üçgenin iki açısı 50° ve 60° ise üçüncü açısı kaç derecedir?
+Tam açının ölçüsü kaç derecedir?
+5 tam 3/4 kesri bileşik kesre çevrildiğinde payı kaç olur? (5 × 4 + 3)?
+Saat 14:15'te sinemaya giren Ali, 1 saat 45 dakika sonra çıktığında saat kaç olur?
+Bir yılda toplam kaç hafta vardır?
+
+# 4. Sınıf - Deyimler ve Atasözleri (35 Cümle)
+"Göze girmek" deyimi ne anlama gelir?
+"Gözden düşmek" deyimi ne anlama gelir?
+"Kulak kabartmak" deyimi ne anlama gelir?
+"Kulak misafiri olmak" deyimi ne anlatır?
+"Diline dolamak" deyimi ne anlama gelir?
+"Baltayı taşa vurmak" deyimi ne anlama gelir?
+"Çantada keklik" deyimi neyi ifade eder?
+"Pabucu dama atılmak" deyimi ne anlatır?
+"Etekleri zil çalmak" deyimi ne anlama gelir?
+"Ağzı kulaklarına varmak" deyimi neyi belirtir?
+"Saman alevi gibi parlamak" deyimi ne anlama gelir?
+"Burnundan kıl aldırmamak" deyimi ne anlatır?
+"Pireyi deve yapmak" deyimi ne anlama gelir?
+"İpe un sermek" deyimi ne demektir?
+"Can kulağıyla dinlemek" deyimi ne anlatır?
+"Ateş püskürmek" deyimi ne anlama gelir?
+"İçi içine sığmamak" deyimi neyi anlatır?
+"Sineğin yağını çıkarmak" deyimi ne demektir?
+"Damlaya damlaya göl olur" atasözü neyi öğütler?
+"Ağaç yaşken eğilir" atasözünün anlamı nedir?
+"Sakla samanı, gelir zamanı" atasözü ne anlatır?
+"Ev alma, komşu al" atasözü neyi vurgular?
+"Bir elin nesi var, iki elin sesi var" atasözü neyi anlatır?
+"İşleyen demir ışıldar" atasözü ne demektir?
+"Acele işe şeytan karışır" atasözü neyi öğütler?
+"Tatlı dil yılanı deliğinden çıkarır" atasözü neyi anlatır?
+"Ne doğrarsan aşına, o çıkar kaşığına" atasözü ne demektir?
+"Ayağını yorganına göre uzat" atasözü neyi öğütler?
+"Gülme komşuna, gelir başına" atasözü ne anlatır?
+"Vakit nakittir" atasözü neyi ifade eder?
+"Dost kara günde belli olur" atasözü ne demektir?
+"Sütten ağzı yanan yoğurdu üfleyerek yer" atasözü ne anlatır?
+"Akıl akıldan üstündür" atasözü neyi vurgular?
+"Meyve veren ağaç taşlanır" atasözü ne demektir?
+"Öfkeyle kalkan zararla oturur" atasözü neyi öğütler?
+
+# 4. Sınıf - Cümlede Anlam ve Mantık (30 Cümle)
+"Kar yağdığı için köy yolları ulaşıma kapandı." cümlesinde hangi anlam ilişkisi vardır?
+"Sınavdan yüksek not almak için gece gündüz ders çalıştı." cümlesinde hangi anlam ilişkisi vardır?
+"Hızlı koştuğundan nefes nefese kaldı." cümlesi hangi tür bir cümledir?
+"Kilo vermek amacıyla her sabah düzenli yürüyüş yapıyor." cümlesi hangisidir?
+"Ödevlerini zamanında bitirirsen hafta sonu parka gidebilirsin." cümlesinde hangi anlam vardır?
+"Türkiye'nin başkenti Ankara'dır." cümlesi ne tür bir yargı bildirir?
+"En güzel ve dinlendirici renk mavidir." cümlesi ne tür bir yargıdır?
+"Türkiye'nin en yüksek dağı Ağrı Dağı'dır." cümlesi hangi tür yargıdır?
+"Bu film hayatımda izlediğim en harika filmdi." cümlesi nedir?
+"Şemsiyesini evde unuttuğu için yağmurda ıslandı." cümlesi hangisidir?
+"Yeni bir bisiklet almak üzere para biriktiriyor." cümlesinde hangi anlam vardır?
+"Hava soğuk olduğu için kalın montunu giydi." cümlesinde sebep nedir?
+"Kitap okursan hayal gücün zenginleşir." cümlesi hangi türdür?
+"Pamuk gibi yumuşacık elleri vardı." cümlesinde hangi sanat/anlatım vardır?
+"Ali, sınıfın en uzun boylu öğrencisidir." cümlesinde hangi anlatım vardır?
+"Güneş batınca ortalık zifiri karanlığa büründü." cümlesi ne bildirir?
+"Çilekli dondurma vanilyalı dondurmadan çok daha lezzetlidir." cümlesi nedir?
+"Trafik kurallarına uyarsak kazalar önlenir." cümlesi hangisidir?
+"Yabancı dil öğrenmek maksadıyla kursa kaydoldu." cümlesi nedir?
+"Elektrikler kesilince asansörde mahsur kaldılar." cümlesi nedir?
+"Su 100 derecede kaynar." cümlesi hangi tür yargıdır?
+"Sonbahar mevsimi insana hüzün verir." cümlesi ne tür bir yargıdır?
+"Geç kaldığı için öğretmeninden özür diledi." cümlesi hangisidir?
+"Temiz bir çevre istiyorsan çöpleri kutuya atmalısın." cümlesi nedir?
+"Bir haftada yedi gün vardır." cümlesi ne tür bir yargıdır?
+"Tavşan gibi hızlı koşan bir çocuktu." cümlesinde ne vardır?
+"Bu yazarın dili diğer yazarlara göre daha akıcıdır." cümlesinde ne vardır?
+"Kütüphaneden kitap almak üzere evden çıktı." cümlesi nedir?
+"Buzdolabının kapağı açık kaldığı için yiyecekler bozuldu." cümlesi nedir?
+"En heyecan verici spor futboldur." cümlesi nedir?
+
+# 4. Sınıf - Yer Kabuğu ve Besinlerimiz (26 Cümle)
+Yer kabuğunu oluşturan kayaçların parçalanmasıyla sırasıyla kaya, taş, çakıl ve en son ne oluşur?
+Kayaçların içinde bulunan ve ekonomik değeri olan değerli minerallere ne ad verilir?
+Ülkemizin dünyada 1. sırada rezervine sahip olduğu, roket yakıtı ve temizlikte kullanılan stratejik maden hangisidir?
+Eski çağlarda yaşamış canlıların kayaç tabakaları arasında taşlaşmış kalıntı ve izlerine ne denir?
+Dünya'nın kendi ekseni etrafında batıdan doğuya dönmesi ne kadar sürer?
+Dünya'nın kendi etrafında dönmesi sonucunda hangisi OLUŞUR?
+Dünya'nın Güneş etrafında dolanması ne kadar sürer?
+Dünya'nın Güneş etrafında dolanması ve eksen eğikliği sonucunda hangisi OLUŞUR?
+Vücudumuza öncelikli olarak ENERJİ sağlayan temel besin grubu hangisidir?
+Vücudumuzda BÜYÜME, GELİŞME ve YARALARIN İYİLEŞMESİNİ sağlayan yapıcı-onarıcı besin hangisidir?
+Vücudumuza enerji veren, fazlası depolanan ve soğuktan koruyan besin grubu nedir?
+Vücudumuzda DÜZENLEYİCİ olarak görev yapan ve hastalıklara karşı direncimizi artıran besin grubu nedir?
+Vücudumuzun yaklaşık %70'ini oluşturan, her besinde bulunan ve hayati önem taşıyan madde nedir?
+Kayaçların farklı renk ve sertlikte olmasını sağlayan temel yapı nedir?
+Mutfak tezgahlarında ve heykellerde kullanılan değerli ve sert kayaç/maden hangisidir?
+Termik santrallerde yakılarak elektrik enerjisi üretilen kahverengi kömür madeni hangisidir?
+Fosilleri inceleyen bilim dalına ne ad verilir?
+Aşırı ve dengesiz beslenme ile hareketsiz yaşamın yol açtığı tehlikeli sağlık sorunu nedir?
+Sigara dumanında bulunan ve akciğer kanserine yol açan en zararlı zehirli maddeler nelerdir?
+Alkol kullanımı öncelikli olarak hangi hayati organımızı tahrip eder ve siroza yol açar?
+Kemik ve dişlerimizin güçlü olması için hangi mineral özellikle gereklidir?
+Güneş'in sabah doğudan doğup akşam batıdan batıyor gibi görünmesinin sebebi nedir?
+Fosil oluşumu genellikle hangi tür kayaç tabakalarında gerçekleşir?
+Elektrik kablolarının içinde elektriği mükemmel ileten hangi maden kullanılır?
+Gözlerimizin karanlıkta daha iyi görmesini sağlayan ve havuçta bolca bulunan vitamin hangisidir?
+Portakal, limon ve mandalina gibi kış meyvelerinde bolca bulunan bağışıklık vitamini hangisidir?
+
+# 4. Sınıf - Elektrik Devreleri ve Mıknatıslar (26 Cümle)
+Bir mıknatısın kaç adet manyetik kutbu vardır?
+İki mıknatısın AYNI KUTUPLARI (N-N veya S-S) birbirine yaklaştırılırsa ne olur?
+İki mıknatısın ZIT KUTUPLARI (N-S) birbirine yaklaştırılırsa ne olur?
+Mıknatıs aşağıdaki maddelerden hangisini KESİNLİKLE ÇEKMEZ?
+Bir mıknatıs ortadan ikiye kırılırsa yeni oluşan parçalarda ne görülür?
+Yön bulmaya yarayan pusulanın ibresi hangi aletin çalışma prensibine dayanır?
+Rayların üzerinde temas etmeden havada süzülerek giden çok hızlı trenlere ne denir?
+Aşağıdakilerden hangisi SAF BİR MADDEDİR?
+Birden çok maddenin kendi özelliğini kaybetmeden bir araya gelmesiyle ne oluşur?
+Demir tozları ile kum karışımını en kolay hangi yöntemle ayırabiliriz?
+Tuzlu sudaki tuzu geri elde etmek için hangi ayırma yöntemi uygulanır?
+Makarna ile haşlama suyunu birbirinden ayırmak için hangi alet kullanılır?
+Basit bir elektrik devresinde elektrik ENERJİSİ KAYNAĞI olan eleman nedir?
+Basit bir elektrik devresinde elektrik enerjisini IŞIĞA çeviren eleman hangisidir?
+Elektrik akımını açıp kapatmaya yarayan (duvardaki lamba düğmesi gibi) devre elemanı nedir?
+Basit bir devrede anahtar AÇIK konumdayken ampul neden IŞIK VERMEZ?
+Ampulün devrede vidalanarak takıldığı yuvaya ne ad verilir?
+Evimizdeki prizlerde kullanılan şehir elektriği kaç volt gerilime sahiptir?
+Islak ellerle elektrik anahtarına veya prize dokunmak neden çok tehlikelidir?
+Hangisi elektrik akımını İLETEN (İletken) bir maddedir?
+Hangisi elektrik akımını İLETMEYEN (Yalıtkan) bir maddedir?
+Buzdolabı kapaklarının kendiliğinden yapışıp kapanmasını sağlayan nedir?
+Çakıl taşı ile kum karışımını birbirinden ayırmak için hangi araç kullanılır?
+Hoparlör, kulaklık ve kapı zillerinin içinde hangi parça ses üretmeye yardımcı olur?
+Devredeki pillerin güvenle yerleştirildiği plastik kutuya ne ad verilir?
+Atık pilleri doğaya veya çöpe atmayıp nereye bırakmalıyız?
+
+# 4. Sınıf - Birey, Toplum ve Milli Mücadele (26 Cümle)
+Türkiye Cumhuriyeti vatandaşlarının kimlik belgesinde kaç haneli T.C. Kimlik No bulunur?
+Yeni çipli kimlik kartlarımızın üzerindeki küçük elektronik bölüme ne ad verilir?
+Olayların oluş sırasına göre zaman dizinine konulmasına ne ad verilir?
+Kendimizi karşımızdaki kişinin yerine koyarak onun duygularını anlama becerisine ne denir?
+Kurtuluş Savaşı'mız (Milli Mücadele) Mustafa Kemal Paşa'nın hangi şehre ayak basmasıyla resmen başlamıştır?
+Kurtuluş Savaşı'nda Doğu Cephesi Komutanı olan ve yetim çocukların babası sayılan kahramanımız kimdir?
+Güney Cephesi'nde Kahramanmaraş'ta Fransız işgalcilere ilk kurşunu sıkarak direnişi başlatan kahraman kimdir?
+Gaziantep savunmasında düşmana geçit vermemek için canını feda eden kahramanımız kimdir?
+İzmir işgal edildiğinde Kordon'da düşmana ilk kurşunu sıkarak şehit olan gazeteci kahramanımız kimdir?
+İnebolu'dan Kastamonu cephesine kağnısıyla mermi taşırken donarak şehit olan kahraman Türk kadını kimdir?
+Batı Cephesi'nde I. ve II. İnönü Savaşlarını kazanan komutanımız kimdir?
+Türkiye Büyük Millet Meclisi (TBMM) hangi tarihte Ankara'da açılmıştır?
+Türkiye Cumhuriyeti hangi tarihte ilan edilmiştir?
+Düşmanı yurdumuzdan tamamen temizleyen Büyük Taarruz Zaferi hangi gün kazanılmıştır?
+Milli Mücadele'de Aydın yöresinde düşmana karşı destan yazan efelerin lideri kimdir?
+Kurtuluş Savaşı'nda Türk milletinin yazdığı kahramanlık destanını ölümsüzleştiren İstiklal Marşımızın şairi kimdir?
+İstiklal Marşı TBMM tarafından hangi tarihte milli marşımız olarak kabul edilmiştir?
+Her insanın parmak izinin birbirine benzememesi neyi kanıtlar?
+Milli kültürümüzü yansıtan aşağıdaki ögelerden hangisi geleneksel bir içeceğimizdir?
+Kurtuluş Savaşı'nda cephe gerisindeki kadınların kurduğu cemiyetlerle orduya yardım eden kadın yazarımız kimdir?
+T.C. Kimlik Kartımızın arka yüzünde hangi resmi imza alanı ve semboller bulunur?
+Aşağıdakilerden hangisi bir halk oyunu türümüz DEĞİLDİR?
+Milli Mücadele'de düzenli ordu kurulmadan önce halkın oluşturduğu gönüllü direniş birliklerine ne denir?
+Mustafa Kemal Atatürk'ün nüfus cüzdanında doğum yeri olarak hangi şehir yazar?
+Resmi belgelerde ve sınavlarda kimliğimizi doğrulamak için kimlik kartında neyin olması zorunludur?
+Milli Mücadele'de Güney Cephesi kahramanlıkları sebebiyle Antep şehrimize TBMM tarafından hangi unvan verilmiştir?
+
+# 4. Sınıf - İnsanlar, Yerler ve Üretim (25 Cümle)
+Meteoroloji Genel Müdürlüğü tarafından yapılan hava tahmin raporlarında gökyüzünde güneş ve bulut sembolü neyi ifade eder?
+Eğimli arazilerde aşırı yağışlar sonucu toprağın büyük kütleler halinde kaymasına ne ad verilir?
+Dağlık ve dik yamaçlarda biriken kar kütlesinin aşağıya doğru hızla kaymasına ne ad verilir?
+Aşırı yağmur veya eriyen karlar sebebiyle akarsuların yatağından taşarak etrafı sular altında bırakmasına ne denir?
+Toprağın rüzgar ve sularla süpürülüp yok olmasını önlemek için yapılacak en etkili çalışma nedir?
+Olası bir depreme karşı evlerimizde mutlaka hazır bulundurmamız gereken çantaya ne denir?
+Deprem sarsıntısı bittikten sonra binadan tahliye olurken hangisi KESİNLİKLE KULLANILMAMALIDIR?
+Ailemizin belirli bir süre içindeki gelir ve giderlerini gösteren plana ne ad verilir?
+İnsanın yaşamını sürdürebilmesi için vazgeçilmez olan beslenme, barınma ve giyinmeye ne denir?
+Olmasa da yaşayabileceğimiz, ancak sahip olmak istediğimiz (pahalı oyuncak, son model telefon) şeylere ne denir?
+Bilinçli bir tüketici alışverişe çıkmadan önce parasını doğru harcamak için ne hazırlamalıdır?
+Ekmek, su ve elektriğin gereksiz yere fazlaca harcanıp tüketilmesine ne ad verilir?
+Geri dönüştürülebilen 1 ton kağıdın geri kazanılması kaç yetişkin ağacın kesilmesini önler?
+Ülkemizde afet ve acil durum yönetimini yürüten resmi devlet kurumu hangisidir?
+Tükettiğimiz domates, buğday ve elma hangi ekonomik faaliyet koluna aittir?
+İnek, koyun ve tavuk besleyerek et, süt ve yumurta elde etme faaliyetine ne denir?
+Fabrikalarda hammaddelerin işlenerek yeni ürünlere dönüştürülmesine ne ad verilir?
+Doktor, öğretmen, şoför ve avukat gibi doğrudan mal üretmeyip hizmet sunan sektör hangisidir?
+Bir ürünün bozulması durumunda satıcının tamir veya değişim garantisi verdiği resmi evrak nedir?
+Alışverişte aldığımız fiş üzerindeki KDV ibaresi devlete ne ödendiğini gösterir?
+Deprem sarsıntısı anında başımızı korumak için sağlam bir masanın yanında hangi pozisyonu alırız?
+Orman yangınlarını yetkililere bildirmek için hangi acil çağrı numarası aranır?
+Suyun buharlaşarak atmosfere çıkması ve yağmur olarak yeryüzüne geri dönmesine ne ad verilir?
+Tarihi ve doğal güzellikleri görmek için ülkemize gelen turistlerin oluşturduğu gelir kapısına ne ad verilir?
+Aşağıdakilerden hangisi çevre kirliliğini ÖNLEYEN bir davranıştır?
+
+# 4. Sınıf - Fen Bilimleri Genel Soruları (6 Cümle)
+Vücudumuza gereken enerjiyi sağlayan temel besin grubu hangisidir?
+Yaralarımızın iyileşmesini, büyüme ve gelişmemizi sağlayan besin hangisidir?
+Suyun ısı kaybederek katı (buz) hale geçmesine ne ad verilir?
+Basit bir elektrik devresinde elektrik akımını açıp kapatmaya yarayan eleman nedir?
+Dünya'nın kendi ekseni etrafında 1 tam tur dönmesiyle ne oluşur?
+Aşağıdakilerden hangisi saf bir maddedir?
