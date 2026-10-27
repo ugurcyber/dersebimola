@@ -781,18 +781,22 @@
           .trim();
       } else {
         // Matematik sembollerini doğal Türkçe metne dönüştür
-        cleanText = cleanText
-          .replace(/\+/g, ' artı ')
-          .replace(/[-−–—]/g, ' eksi ')
-          .replace(/(\d+)\s*[*×xX]\s*(\d+)/g, '$1 çarpı $2')
-          .replace(/(^|\s)[*×xX](\s|$)/g, '$1 çarpı $2')
-          .replace(/[*×]/g, ' çarpı ')
-          .replace(/[\/÷]/g, ' bölü ')
-          .replace(/=/g, ' eşittir ')
-          .replace(/\b(kaç eder|kaçtır)\s*\?/gi, '$1')
-          .replace(/\?/g, ' kaçtır ')
-          .replace(/\s+/g, ' ')
-          .trim();
+        if (cleanText.includes('=')) {
+          cleanText = cleanText
+            .replace(/\+/g, ' artı ')
+            .replace(/[-−–—]/g, ' eksi ')
+            .replace(/(\d+)\s*[*×xX]\s*(\d+)/g, '$1 çarpı $2')
+            .replace(/(^|\s)[*×xX](\s|$)/g, '$1 çarpı $2')
+            .replace(/[*×]/g, ' çarpı ')
+            .replace(/[\/÷]/g, ' bölü ')
+            .replace(/=/g, ' eşittir ')
+            .replace(/\b(kaç eder|kaçtır)\s*\?/gi, '$1')
+            .replace(/\?/g, ' kaçtır ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        } else {
+          cleanText = cleanText.replace(/\s+/g, ' ').trim();
+        }
       }
 
       if (!cleanText) {
@@ -943,7 +947,13 @@
       // Yoksa veya açılamazsa aynı cümle Google TTS / cihaz sesi ile söylenir
       // -------------------------------------------------------------
       if (!isEn) {
-        const key = speechKey(cleanText);
+        let key = speechKey(text);
+        if (!recordedSpeechKeys.has(key)) {
+          const altKey = speechKey(cleanText);
+          if (recordedSpeechKeys.has(altKey)) {
+            key = altKey;
+          }
+        }
         if (recordedSpeechKeys.has(key)) {
           try {
             const recordedAudio = new Audio(`sesler/${key}.mp3`);
@@ -988,7 +998,7 @@
           }
         } else {
           // Geliştirici yardımı: kaydı olmayan her cümleyi konsola yaz
-          console.log(`[ses] kaydı yok: "${cleanText}" (anahtar: ${key})`);
+          console.log(`[ses] kaydı yok: "${text}" (anahtar: ${key})`);
         }
       }
 
@@ -1506,7 +1516,9 @@
       return {
         type: 'memory',
         question: themeTitle,
-        spokenText: themeTitle.replace(/[^\w\sğüşıöçĞÜŞİÖÇ]/g, ' '),
+        spokenText: cat === 'kindergarten_visual'
+          ? 'Eşleşen sevimli görselleri bul! Dokun ve eşleştir.'
+          : themeTitle.replace(/\p{Extended_Pictographic}/gu, '').replace(/[^\w\sğüşıöçĞÜŞİÖÇ.!?]/g, ' ').replace(/\s+/g, ' ').trim(),
         correct: 'Tüm Kartlar',
         explanation: 'Muhteşem hafıza! Bütün eşleşen kartları eksiksiz buldun! 🧠⭐',
         category: categoryName,
@@ -1577,8 +1589,8 @@
     { prompt: 'Hangisi geceleri gökyüzünde ışıl ışıl parlayan YILDIZ şeklidir? ⭐', spokenText: 'Hangisi parlayan yıldız şeklidir? Yıldıza dokun.', category: 'Renkler & Şekiller', correct: 'Sarı Yıldız', cards: [{ text: 'Sarı Yıldız', icon: '⭐', isCorrect: true }, { text: 'Kırmızı Üçgen', icon: '🔺', isCorrect: false }, { text: 'Yeşil Kare', icon: '🟩', isCorrect: false }], exp: 'Yıldız gökyüzünde ışıl ışıl göz kırpar! ⭐✨' },
     { prompt: 'Hangisi sevgimizi anlatan pembe KALP şeklidir? 💖', spokenText: 'Hangisi pembe kalp şeklidir? Kalbe dokun.', category: 'Renkler & Şekiller', correct: 'Pembe Kalp', cards: [{ text: 'Pembe Kalp', icon: '💖', isCorrect: true }, { text: 'Yeşil Daire', icon: '🟢', isCorrect: false }, { text: 'Kırmızı Üçgen', icon: '🔺', isCorrect: false }], exp: 'Kalp sevgi ve dostluğun en güzel sembolüdür! 💖' },
     { prompt: 'Hangisi tıpkı bir futbol topu gibi yuvarlak DAİREDİR? 🔴', spokenText: 'Hangisi yuvarlak dairedir? Daireye dokun.', category: 'Renkler & Şekiller', correct: 'Daire', cards: [{ text: 'Kırmızı Daire', icon: '🔴', isCorrect: true }, { text: 'Yeşil Kare', icon: '🟩', isCorrect: false }, { text: 'Kırmızı Üçgen', icon: '🔺', isCorrect: false }], exp: 'Dairenin köşesi yoktur, top gibi yuvarlaktır! 🔴⚽' },
-    { prompt: 'Hangisi tam 3 köşesi ve 3 kenarı olan ÜÇGENDİR? 🔺', spokenText: 'Hangisi 3 köşeli üçgendir? Üçgene dokun.', category: 'Renkler & Şekiller', correct: 'Üçgen', cards: [{ text: 'Kırmızı Üçgen', icon: '🔺', isCorrect: true }, { text: 'Beyaz Daire', icon: '⚪', isCorrect: false }, { text: 'Yeşil Kare', icon: '🟩', isCorrect: false }], exp: 'Üçgenin tam 3 sivri köşesi vardır! 🔺📐' },
-    { prompt: 'Hangisi 4 kenarı da birbirine eşit olan KAREDİR? 🟩', spokenText: 'Hangisi 4 kenarı eşit karedir? Kareye dokun.', category: 'Renkler & Şekiller', correct: 'Kare', cards: [{ text: 'Yeşil Kare', icon: '🟩', isCorrect: true }, { text: 'Kırmızı Daire', icon: '🔴', isCorrect: false }, { text: 'Kırmızı Üçgen', icon: '🔺', isCorrect: false }], exp: 'Kare kutu gibi dengeli ve dört köşelidir! 🟩📦' },
+    { prompt: 'Hangisi tam 3 köşesi ve 3 kenarı olan ÜÇGENDİR? 🔺', spokenText: 'Hangisi üç köşeli üçgendir? Üçgene dokun.', category: 'Renkler & Şekiller', correct: 'Üçgen', cards: [{ text: 'Kırmızı Üçgen', icon: '🔺', isCorrect: true }, { text: 'Beyaz Daire', icon: '⚪', isCorrect: false }, { text: 'Yeşil Kare', icon: '🟩', isCorrect: false }], exp: 'Üçgenin tam 3 sivri köşesi vardır! 🔺📐' },
+    { prompt: 'Hangisi 4 kenarı da birbirine eşit olan KAREDİR? 🟩', spokenText: 'Hangisi dört kenarı eşit karedir? Kareye dokun.', category: 'Renkler & Şekiller', correct: 'Kare', cards: [{ text: 'Yeşil Kare', icon: '🟩', isCorrect: true }, { text: 'Kırmızı Daire', icon: '🔴', isCorrect: false }, { text: 'Kırmızı Üçgen', icon: '🔺', isCorrect: false }], exp: 'Kare kutu gibi dengeli ve dört köşelidir! 🟩📦' },
     { prompt: 'Hangisi lezzetli bir portakalın rengi olan TURUNCUDUR? 🟠', spokenText: 'Hangisi turuncu renktir? Turuncu daireye dokun.', category: 'Renkler & Şekiller', correct: 'Turuncu Daire', cards: [{ text: 'Turuncu Daire', icon: '🟠', isCorrect: true }, { text: 'Mor Daire', icon: '🟣', isCorrect: false }, { text: 'Yeşil Daire', icon: '🟢', isCorrect: false }], exp: 'Turuncu portakal ve havuç rengidir! 🟠🍊' },
 
     // 6) DUYGULARIM VE KALBİM (6 Soru)
@@ -1602,11 +1614,11 @@
     { prompt: 'Kuşlara ve sevimli sincaplara yuva olan yeşil DOĞA DOSTUMUZ hangisidir? 🌱', spokenText: 'Doğa dostumuz minik fidana dokun.', category: 'Boyutlar', correct: 'Minik Fidan', cards: [{ text: 'Minik Fidan', icon: '🌱', isCorrect: true }, { text: 'Kırmızı Çiçek', icon: '🌺', isCorrect: false }, { text: 'Sarı Ayçiçeği', icon: '🌻', isCorrect: false }], exp: 'Fidanlar büyüyüp kocaman gölgeli ağaçlar olur! 🌱🌳' },
 
     // 8) SAYMA VE MİKTAR (Meyve & Yıldız Sayma / Çoktan Aza)
-    { prompt: 'Hangisinde TAM 1 TANE kırmızı elma var? 🍎', spokenText: 'Hangisinde sadece 1 tane elma var? Tek elmaya dokun.', category: 'Sayma', correct: '1 Elma', cards: [{ text: '1 Elma (Bir)', icon: '🍎', isCorrect: true }, { text: '3 Elma', icon: '🍎🍎🍎', isCorrect: false }, { text: '5 Elma', icon: '🍎🍎🍎🍎🍎', isCorrect: false }], exp: 'Harika sayma! Burada tam 1 tane tatlı elma var! 🍎1️⃣' },
-    { prompt: 'Hangisinde TAM 2 TANE parıldayan yıldız var? ⭐⭐', spokenText: 'Hangisinde 2 tane yıldız var? İki yıldıza dokun.', category: 'Sayma', correct: '2 Yıldız', cards: [{ text: '2 Yıldız (İki)', icon: '⭐⭐', isCorrect: true }, { text: '1 Yıldız', icon: '⭐', isCorrect: false }, { text: '4 Yıldız', icon: '⭐⭐⭐⭐', isCorrect: false }], exp: 'Bir, iki! Tam 2 tane yıldız parıldıyor! ⭐⭐2️⃣' },
-    { prompt: 'Hangisinde TAM 3 TANE sevimli kedi var? 🐱🐱🐱', spokenText: 'Hangisinde 3 tane kedi var? Üç kediye dokun.', category: 'Sayma', correct: '3 Kedi', cards: [{ text: '3 Kedi (Üç)', icon: '🐱🐱🐱', isCorrect: true }, { text: '1 Kedi', icon: '🐱', isCorrect: false }, { text: '5 Kedi', icon: '🐱🐱🐱🐱🐱', isCorrect: false }], exp: 'Bir, iki, üç! Tam 3 miyavlayan kedi dostumuz var! 🐱3️⃣' },
-    { prompt: 'Hangisinde TAM 4 TANE renkli uçan balon var? 🎈🎈🎈🎈', spokenText: 'Hangisinde 4 tane balon var? Dört balona dokun.', category: 'Sayma', correct: '4 Balon', cards: [{ text: '4 Balon (Dört)', icon: '🎈🎈🎈🎈', isCorrect: true }, { text: '2 Balon', icon: '🎈🎈', isCorrect: false }, { text: '1 Balon', icon: '🎈', isCorrect: false }], exp: 'Bir, iki, üç, dört! Tam 4 tane rengarenk balon! 🎈4️⃣' },
-    { prompt: 'Hangisinde TAM 5 TANE lezzetli çilek var? 🍓🍓🍓🍓🍓', spokenText: 'Hangisinde 5 tane çilek var? Beş çileğe dokun.', category: 'Sayma', correct: '5 Çilek', cards: [{ text: '5 Çilek (Beş)', icon: '🍓🍓🍓🍓🍓', isCorrect: true }, { text: '2 Çilek', icon: '🍓🍓', isCorrect: false }, { text: '1 Çilek', icon: '🍓', isCorrect: false }], exp: 'Tam beş parmağımız kadar: 5 tane lezzetli çilek! 🍓🖐️5️⃣' },
+    { prompt: 'Hangisinde TAM 1 TANE kırmızı elma var? 🍎', spokenText: 'Hangisinde sadece bir tane elma var? Tek elmaya dokun.', category: 'Sayma', correct: '1 Elma', cards: [{ text: '1 Elma (Bir)', icon: '🍎', isCorrect: true }, { text: '3 Elma', icon: '🍎🍎🍎', isCorrect: false }, { text: '5 Elma', icon: '🍎🍎🍎🍎🍎', isCorrect: false }], exp: 'Harika sayma! Burada tam 1 tane tatlı elma var! 🍎1️⃣' },
+    { prompt: 'Hangisinde TAM 2 TANE parıldayan yıldız var? ⭐⭐', spokenText: 'Hangisinde iki tane yıldız var? İki yıldıza dokun.', category: 'Sayma', correct: '2 Yıldız', cards: [{ text: '2 Yıldız (İki)', icon: '⭐⭐', isCorrect: true }, { text: '1 Yıldız', icon: '⭐', isCorrect: false }, { text: '4 Yıldız', icon: '⭐⭐⭐⭐', isCorrect: false }], exp: 'Bir, iki! Tam 2 tane yıldız parıldıyor! ⭐⭐2️⃣' },
+    { prompt: 'Hangisinde TAM 3 TANE sevimli kedi var? 🐱🐱🐱', spokenText: 'Hangisinde üç tane kedi var? Üç kediye dokun.', category: 'Sayma', correct: '3 Kedi', cards: [{ text: '3 Kedi (Üç)', icon: '🐱🐱🐱', isCorrect: true }, { text: '1 Kedi', icon: '🐱', isCorrect: false }, { text: '5 Kedi', icon: '🐱🐱🐱🐱🐱', isCorrect: false }], exp: 'Bir, iki, üç! Tam 3 miyavlayan kedi dostumuz var! 🐱3️⃣' },
+    { prompt: 'Hangisinde TAM 4 TANE renkli uçan balon var? 🎈🎈🎈🎈', spokenText: 'Hangisinde dört tane balon var? Dört balona dokun.', category: 'Sayma', correct: '4 Balon', cards: [{ text: '4 Balon (Dört)', icon: '🎈🎈🎈🎈', isCorrect: true }, { text: '2 Balon', icon: '🎈🎈', isCorrect: false }, { text: '1 Balon', icon: '🎈', isCorrect: false }], exp: 'Bir, iki, üç, dört! Tam 4 tane rengarenk balon! 🎈4️⃣' },
+    { prompt: 'Hangisinde TAM 5 TANE lezzetli çilek var? 🍓🍓🍓🍓🍓', spokenText: 'Hangisinde beş tane çilek var? Beş çileğe dokun.', category: 'Sayma', correct: '5 Çilek', cards: [{ text: '5 Çilek (Beş)', icon: '🍓🍓🍓🍓🍓', isCorrect: true }, { text: '2 Çilek', icon: '🍓🍓', isCorrect: false }, { text: '1 Çilek', icon: '🍓', isCorrect: false }], exp: 'Tam beş parmağımız kadar: 5 tane lezzetli çilek! 🍓🖐️5️⃣' },
     { prompt: 'Hangisinde DAHA ÇOK muz var? 🍌🍌🍌🍌', spokenText: 'Hangisinde daha çok muz var? Çok olan sepeti seç.', category: 'Sayma', correct: 'Çok Muz', cards: [{ text: 'Çok Muz (Dört Tane)', icon: '🍌🍌🍌🍌', isCorrect: true }, { text: 'Az Muz (Bir Tane)', icon: '🍌', isCorrect: false }, { text: 'Elma', icon: '🍎', isCorrect: false }], exp: 'Burada tam 4 muz var, diğerinde ise sadece 1 tane var! 🍌👏' },
     { prompt: 'Hangisinde DAHA AZ yıldız var? ⭐', spokenText: 'Hangisinde daha az yıldız var? En az olana dokun.', category: 'Sayma', correct: '1 Yıldız (Az)', cards: [{ text: '1 Yıldız (Az)', icon: '⭐', isCorrect: true }, { text: '4 Yıldız (Çok)', icon: '⭐⭐⭐⭐', isCorrect: false }, { text: '5 Yıldız (Çok)', icon: '⭐⭐⭐⭐⭐', isCorrect: false }], exp: 'Sadece 1 yıldız var, yani en az olan budur! ⭐👍' },
 
@@ -1652,7 +1664,7 @@
       { 
         id: 'b0_red', 
         instruction: '🎈 Sadece KIRMIZI balonları patlat!', 
-        spokenText: 'Sadece kırmızı renkli balonları patlat', 
+        spokenText: 'Sadece kırmızı renkli balonları patlat.', 
         target: 'Kırmızı', 
         category: 'Renkler', 
         isColorLevel: true,
@@ -1664,7 +1676,7 @@
       { 
         id: 'b0_blue', 
         instruction: '🎈 Sadece MAVİ balonları patlat!', 
-        spokenText: 'Sadece mavi renkli balonları patlat', 
+        spokenText: 'Sadece mavi renkli balonları patlat.', 
         target: 'Mavi', 
         category: 'Renkler', 
         isColorLevel: true,
@@ -1676,7 +1688,7 @@
       { 
         id: 'b0_yellow', 
         instruction: '🎈 Sadece SARI balonları patlat!', 
-        spokenText: 'Sadece sarı renkli balonları patlat', 
+        spokenText: 'Sadece sarı renkli balonları patlat.', 
         target: 'Sarı', 
         category: 'Renkler', 
         isColorLevel: true,
@@ -1688,7 +1700,7 @@
       { 
         id: 'b0_green', 
         instruction: '🎈 Sadece YEŞİL balonları patlat!', 
-        spokenText: 'Sadece yeşil renkli balonları patlat', 
+        spokenText: 'Sadece yeşil renkli balonları patlat.', 
         target: 'Yeşil', 
         category: 'Renkler', 
         isColorLevel: true,
@@ -1700,7 +1712,7 @@
       { 
         id: 'b0_purple', 
         instruction: '🎈 Sadece MOR balonları patlat!', 
-        spokenText: 'Sadece mor renkli balonları patlat', 
+        spokenText: 'Sadece mor renkli balonları patlat.', 
         target: 'Mor', 
         category: 'Renkler', 
         isColorLevel: true,
@@ -1712,7 +1724,7 @@
       { 
         id: 'b0_orange', 
         instruction: '🎈 Sadece TURUNCU balonları patlat!', 
-        spokenText: 'Sadece turuncu renkli balonları patlat', 
+        spokenText: 'Sadece turuncu renkli balonları patlat.', 
         target: 'Turuncu', 
         category: 'Renkler', 
         isColorLevel: true,
@@ -1724,7 +1736,7 @@
       { 
         id: 'b0_pink', 
         instruction: '🎈 Sadece PEMBE balonları patlat!', 
-        spokenText: 'Sadece pembe renkli balonları patlat', 
+        spokenText: 'Sadece pembe renkli balonları patlat.', 
         target: 'Pembe', 
         category: 'Renkler', 
         isColorLevel: true,
@@ -1735,17 +1747,17 @@
       },
 
       // 2) Minik Sayılar 1-5 (Dokunmatik Sayı Balonları)
-      { id: 'b0_num_1', instruction: '🎈 Sadece "1" yazan balonları patlat!', spokenText: 'Sadece 1 yazan balonları patlat', target: '1', category: 'Sayılar', targetsNeeded: 2, targets: ['1'], distractors: ['2', '3', '4', '5'], exp: 'Harika başlangıç! 1 yazan balonları patlattın! 🎈👏' },
-      { id: 'b0_num_2', instruction: '🎈 Sadece "2" yazan balonları patlat!', spokenText: 'Sadece 2 yazan balonları patlat', target: '2', category: 'Sayılar', targetsNeeded: 2, targets: ['2'], distractors: ['1', '3', '4', '5'], exp: 'İki tavşan kulağı gibi: 2 balonlarını buldun! 🎈🐰' },
-      { id: 'b0_num_3', instruction: '🎈 Sadece "3" yazan balonları patlat!', spokenText: 'Sadece 3 yazan balonları patlat', target: '3', category: 'Sayılar', targetsNeeded: 2, targets: ['3'], distractors: ['1', '2', '4', '5'], exp: '1-2-3! 3 yazan balonlar güm diye patladı! 🎈🚀' },
-      { id: 'b0_num_4', instruction: '🎈 Sadece "4" yazan balonları patlat!', spokenText: 'Sadece 4 yazan balonları patlat', target: '4', category: 'Sayılar', targetsNeeded: 2, targets: ['4'], distractors: ['1', '2', '3', '5'], exp: 'Dört tekerlek gibi: 4 balonları patladı! 🎈🚗' },
-      { id: 'b0_num_5', instruction: '🎈 Sadece "5" yazan balonları patlat!', spokenText: 'Sadece 5 yazan balonları patlat', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['1', '2', '3', '4'], exp: 'Çak bir beşlik! 5 yazan balonları yakaladın! 🎈🖐️' },
+      { id: 'b0_num_1', instruction: '🎈 Sadece "1" yazan balonları patlat!', spokenText: 'Sadece bir yazan balonları patlat.', target: '1', category: 'Sayılar', targetsNeeded: 2, targets: ['1'], distractors: ['2', '3', '4', '5'], exp: 'Harika başlangıç! 1 yazan balonları patlattın! 🎈👏' },
+      { id: 'b0_num_2', instruction: '🎈 Sadece "2" yazan balonları patlat!', spokenText: 'Sadece iki yazan balonları patlat.', target: '2', category: 'Sayılar', targetsNeeded: 2, targets: ['2'], distractors: ['1', '3', '4', '5'], exp: 'İki tavşan kulağı gibi: 2 balonlarını buldun! 🎈🐰' },
+      { id: 'b0_num_3', instruction: '🎈 Sadece "3" yazan balonları patlat!', spokenText: 'Sadece üç yazan balonları patlat.', target: '3', category: 'Sayılar', targetsNeeded: 2, targets: ['3'], distractors: ['1', '2', '4', '5'], exp: '1-2-3! 3 yazan balonlar güm diye patladı! 🎈🚀' },
+      { id: 'b0_num_4', instruction: '🎈 Sadece "4" yazan balonları patlat!', spokenText: 'Sadece dört yazan balonları patlat.', target: '4', category: 'Sayılar', targetsNeeded: 2, targets: ['4'], distractors: ['1', '2', '3', '5'], exp: 'Dört tekerlek gibi: 4 balonları patladı! 🎈🚗' },
+      { id: 'b0_num_5', instruction: '🎈 Sadece "5" yazan balonları patlat!', spokenText: 'Sadece beş yazan balonları patlat.', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['1', '2', '3', '4'], exp: 'Çak bir beşlik! 5 yazan balonları yakaladın! 🎈🖐️' },
 
       // 3) Sevimli Şekiller ve Semboller (Görsel Balonlar)
-      { id: 'b0_star', instruction: '🎈 Sadece YILDIZ olan balonları patlat!', spokenText: 'Sadece yıldız olan balonları patlat', target: '⭐', category: 'Şekiller', targetsNeeded: 2, targets: ['⭐'], distractors: ['💖', '🍎', '🐱', '🚗'], exp: 'Işıl ışıl parlayan yıldız balonlarını patlattın! ⭐🎈✨' },
-      { id: 'b0_heart', instruction: '🎈 Sadece KALP olan sevgi balonlarını patlat!', spokenText: 'Sadece kalp olan balonları patlat', target: '💖', category: 'Şekiller', targetsNeeded: 2, targets: ['💖'], distractors: ['⭐', '🍎', '🚗', '🐱'], exp: 'Kocaman sevgiyle kalp balonlarını patlattın! 💖🎈🥰' },
-      { id: 'b0_cat', instruction: '🎈 Sadece KEDİ olan miyav balonlarını patlat!', spokenText: 'Sadece sevimli kedi balonlarını patlat', target: '🐱', category: 'Hayvanlar', targetsNeeded: 2, targets: ['🐱'], distractors: ['🐶', '🐰', '🦁', '🐸'], exp: 'Miyav! Sevimli kedili balonları yakaladın! 🐱🎈🐾' },
-      { id: 'b0_apple', instruction: '🎈 Sadece KIRMIZI ELMA olan balonları patlat!', spokenText: 'Sadece elma olan balonları patlat', target: '🍎', category: 'Meyveler', targetsNeeded: 2, targets: ['🍎'], distractors: ['🍌', '🍓', '🍇', '🍉'], exp: 'Kıtır kıtır elmalı balonlar patladı! 🍎🎈😋' }
+      { id: 'b0_star', instruction: '🎈 Sadece YILDIZ olan balonları patlat!', spokenText: 'Sadece yıldız olan balonları patlat.', target: '⭐', category: 'Şekiller', targetsNeeded: 2, targets: ['⭐'], distractors: ['💖', '🍎', '🐱', '🚗'], exp: 'Işıl ışıl parlayan yıldız balonlarını patlattın! ⭐🎈✨' },
+      { id: 'b0_heart', instruction: '🎈 Sadece KALP olan sevgi balonlarını patlat!', spokenText: 'Sadece kalp olan balonları patlat.', target: '💖', category: 'Şekiller', targetsNeeded: 2, targets: ['💖'], distractors: ['⭐', '🍎', '🚗', '🐱'], exp: 'Kocaman sevgiyle kalp balonlarını patlattın! 💖🎈🥰' },
+      { id: 'b0_cat', instruction: '🎈 Sadece KEDİ olan miyav balonlarını patlat!', spokenText: 'Sadece sevimli kedi balonlarını patlat.', target: '🐱', category: 'Hayvanlar', targetsNeeded: 2, targets: ['🐱'], distractors: ['🐶', '🐰', '🦁', '🐸'], exp: 'Miyav! Sevimli kedili balonları yakaladın! 🐱🎈🐾' },
+      { id: 'b0_apple', instruction: '🎈 Sadece KIRMIZI ELMA olan balonları patlat!', spokenText: 'Sadece elma olan balonları patlat.', target: '🍎', category: 'Meyveler', targetsNeeded: 2, targets: ['🍎'], distractors: ['🍌', '🍓', '🍇', '🍉'], exp: 'Kıtır kıtır elmalı balonlar patladı! 🍎🎈😋' }
     ],
 
     // -------------------------------------------------------------------------
@@ -2000,7 +2012,7 @@
             <div style="font-size:1.35rem; font-weight:900;">${target.name} dostumuzun GÖLGESİ hangisidir?</div>
           </div>
         `,
-        spokenText: `${target.name} dostumuzun gölgesini bul`,
+        spokenText: `${target.name} dostumuzun gölgesini bul.`,
         correct: target.name,
         explanation: `Harika gözlem! ${target.name} dostumuzun gölgesini doğru buldun! ${target.emoji}👏`,
         interactiveData: { target, cards }
@@ -2078,7 +2090,7 @@
       return {
         type: 'count_tap',
         question: `Ekranda kaç tane ${item.name} var? Dokunarak say! ${item.emoji}`,
-        spokenText: `Kaç tane ${item.name} var? Dokunarak say`,
+        spokenText: `Kaç tane ${item.name} var? Dokunarak say.`,
         correct: count.toString(),
         explanation: `Tebrikler! Birlikte saydık: Tam ${count} tane ${item.name} var! ${item.emoji}👏`,
         interactiveData: { count, item }

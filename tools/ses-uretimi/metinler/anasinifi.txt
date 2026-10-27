@@ -1,0 +1,163 @@
+# Anasınıfı: Çocuğun duyduğu bütün cümleler
+
+# HAYVANLAR
+Hangi sevimli hayvan miyav der? Kediye dokun.
+Hangi sadık dostumuz hav hav der? Köpeğe dokun.
+Bize taze ve sağlıklı süt veren hayvan hangisidir? İneğe dokun.
+Ormanların güçlü ve yeleli kralı hangisidir? Aslana dokun.
+Havuç yemeyi seven uzun kulaklı hayvan hangisidir? Tavşana dokun.
+Mavi denizlerde yüzen canlı hangisidir? Balığa dokun.
+Gökyüzünde uçan ve cik cik öten hangisidir? Kuşa dokun.
+Kocaman kulakları ve uzun bir hortumu olan hayvan hangisidir? File dokun.
+Çiçeklerden bal toplayan çalışkan dostumuz hangisidir? Arıya dokun.
+Vak vak diyerek zıplayan yeşil dostumuz hangisidir? Kurbağaya dokun.
+Sırtında sert kabuğu olan sevimli dostumuz hangisidir? Kaplumbağaya dokun.
+Daldan dala atlayan ve muz seven sevimli hayvan hangisidir? Maymuna dokun.
+
+# MEYVELER & SEBZELER
+Hangisi kırmızı ve küçük benekli tatlı bir meyvedir? Çileğe dokun.
+Maymunların yemeye bayıldığı sarı ve tatlı meyve hangisidir? Muza dokun.
+Hangisi kış aylarında bol C vitamini veren meyvedir? Portakala dokun.
+Kırmızı veya yeşil renkli, çıtır ısırılan meyve hangisidir? Elmaya dokun.
+Tatlı şeftali hangisidir? Şeftaliye dokun.
+Sulu kırmızı domates hangisidir? Domatese dokun.
+Salkım salkım yetişen tatlı meyve hangisidir? Üzüme dokun.
+Tavşanların yemeyi çok sevdiği turuncu sebze hangisidir? Havuca dokun.
+İkiz sapları olan kırmızı meyve hangisidir? Kiraza dokun.
+İçi yumuşacık yeşil avokadoya dokun.
+Fırında pişen nefis pizzaya dokun.
+
+# TAŞITLAR
+Gökyüzünde bulutların üstünde uçan taşıt hangisidir? Uçağa dokun.
+Mavi sularda süzülen yelkenliye dokun.
+Hızla giden sürat motoruna dokun.
+Pedallarını çevirerek sürdüğümüz bisiklete dokun.
+Uzaya ve Ay'a gitmek için ateşlenen rokete dokun.
+Düt düt diye korna çalan arabaya dokun.
+En hızlı giden rokete dokun.
+İki tekerlekli bisiklete dokun.
+
+# OKUL, OYUN VE SANAT
+Ressamın boya paletine dokun.
+Bilgi dolu kitaplara dokun.
+Neşeli şarkılar çalan gitara dokun.
+Yeşil sahadaki futbol topuna dokun.
+Sürpriz hediye paketine dokun.
+Renkli uçan balona dokun.
+Sevimli oyuncak ayıya dokun.
+Altın şampiyonluk kupasına dokun.
+
+# RENKLER & ŞEKİLLER
+Hangisi mavi renktir? Mavi daireye dokun.
+Hangisi yeşil renktir? Yeşil daireye dokun.
+Hangisi sarı renktir? Sarı daireye dokun.
+Hangisi kırmızı renktir? Kırmızı daireye dokun.
+Hangisi parlayan yıldız şeklidir? Yıldıza dokun.
+Hangisi pembe kalp şeklidir? Kalbe dokun.
+Hangisi yuvarlak dairedir? Daireye dokun.
+Hangisi üç köşeli üçgendir? Üçgene dokun.
+Hangisi dört kenarı eşit karedir? Kareye dokun.
+Hangisi turuncu renktir? Turuncu daireye dokun.
+
+# DUYGULARIM VE KALBİM
+Neşeyle gülen mutlu yüze dokun.
+Kahkaha atan neşeli yüze dokun.
+Heyecanlı yüze dokun.
+Sevgimizi gösteren kalbe dokun.
+Tatlı rüyalar için parlayan hilale dokun.
+Kutlama yapan parti şapkasına dokun.
+
+# BOYUTLAR & MONTESSORİ KARŞILAŞTIRMALARI
+Hangisi daha büyüktür? Koca file dokun.
+Hangisi daha küçüktür? Minik karıncaya dokun.
+Hangisi daha uzundur? Zürafaya dokun.
+Hangisi çok daha ağırdır? Koca file dokun.
+Hangisi daha hızlıdır? Hızlı rokete dokun.
+Hangisi sıcaktır? Parlak güneşe dokun.
+Hangisi soğuktur? Dondurmaya dokun.
+İçi dolu hediye paketine dokun.
+En yüksekte hangisi uçar? Uçağa dokun.
+Doğa dostumuz minik fidana dokun.
+
+# SAYMA VE MİKTAR
+Hangisinde sadece bir tane elma var? Tek elmaya dokun.
+Hangisinde iki tane yıldız var? İki yıldıza dokun.
+Hangisinde üç tane kedi var? Üç kediye dokun.
+Hangisinde dört tane balon var? Dört balona dokun.
+Hangisinde beş tane çilek var? Beş çileğe dokun.
+Hangisinde daha çok muz var? Çok olan sepeti seç.
+Hangisinde daha az yıldız var? En az olana dokun.
+
+# GÖRSEL DİKKAT VE FARKLI OLANI BUL
+Hangisi diğerlerinden farklıdır? Farklı olana dokun.
+Köpeklerin arasındaki farklı kediye dokun.
+Yıldızların arasındaki farklı kalbe dokun.
+Uçanların arasındaki arabaya dokun.
+Mavilerin arasındaki kırmızı daireye dokun.
+Yüzenlerin arasındaki aslana dokun.
+Muzların arasındaki çileğe dokun.
+Ayçiçeklerinin arasındaki pembe çiçeğe dokun.
+Uçan kuşların arasındaki balığa dokun.
+Tavşanların arasındaki sarı civcive dokun.
+
+# HAYVAN SESLERİ VE DOĞA
+Cik cik öten kuşa dokun.
+Vak vak diyen sevimli ördeğe dokun.
+Möö diyen ineğe dokun.
+Hav hav diyen köpeğe dokun.
+Vzzz diyen bal arısına dokun.
+Dıgıdık koşan ata dokun.
+Vrak vrak diyen kurbağaya dokun.
+Kükreyen aslana dokun.
+
+# GEOMETRİK ŞEKİLLER VE RENKLER
+Daire şekline dokun.
+Kare şekline dokun.
+Üçgen şekline dokun.
+Yıldız şekline dokun.
+Pembe kalbe dokun.
+Mavi renge dokun.
+Kalp şekline dokun.
+Sarı renge dokun.
+
+# Balon Patlatma (Renkler, Sayılar ve Şekiller)
+Sadece kırmızı renkli balonları patlat.
+Sadece mavi renkli balonları patlat.
+Sadece sarı renkli balonları patlat.
+Sadece yeşil renkli balonları patlat.
+Sadece mor renkli balonları patlat.
+Sadece turuncu renkli balonları patlat.
+Sadece pembe renkli balonları patlat.
+Sadece bir yazan balonları patlat.
+Sadece iki yazan balonları patlat.
+Sadece üç yazan balonları patlat.
+Sadece dört yazan balonları patlat.
+Sadece beş yazan balonları patlat.
+Sadece yıldız olan balonları patlat.
+Sadece kalp olan balonları patlat.
+Sadece sevimli kedi balonlarını patlat.
+Sadece elma olan balonları patlat.
+
+# Dokunarak Sayma (Meyveler ve Nesneler)
+Kaç tane Kırmızı Elma var? Dokunarak say.
+Kaç tane Sevimli Tavşan var? Dokunarak say.
+Kaç tane Parlak Yıldız var? Dokunarak say.
+Kaç tane Miyavlayan Kedi var? Dokunarak say.
+Kaç tane Renkli Balon var? Dokunarak say.
+Kaç tane Hızlı Araba var? Dokunarak say.
+Kaç tane Tatlı Çilek var? Dokunarak say.
+
+# Gölgesini Bul (Hayvanlar ve Taşıtlar)
+Aslan dostumuzun gölgesini bul.
+Koca Fil dostumuzun gölgesini bul.
+Zıp Tavşan dostumuzun gölgesini bul.
+Sevimli Kedi dostumuzun gölgesini bul.
+Sadık Köpek dostumuzun gölgesini bul.
+Kırmızı Araba dostumuzun gölgesini bul.
+Hızlı Uçak dostumuzun gölgesini bul.
+Tatlı Elma dostumuzun gölgesini bul.
+Rengarenk Kelebek dostumuzun gölgesini bul.
+Yüzen Balık dostumuzun gölgesini bul.
+
+# Sevimli Görsel Hafıza Kartları
+Eşleşen sevimli görselleri bul! Dokun ve eşleştir.
