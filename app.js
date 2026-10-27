@@ -5783,7 +5783,7 @@
       callback(e);
     };
     el.addEventListener('pointerdown', (e) => {
-      if (e.button === 0 || e.pointerType === 'touch') {
+      if (e.button === 0 || e.pointerType === 'touch' || e.pointerType === 'pen') {
         run(e);
       }
     });
@@ -5794,6 +5794,7 @@
   }
 
   function openModal(modalEl) {
+    if (!modalEl) return;
     audio.playClick();
     modalEl.classList.remove('hide');
   }
@@ -6135,14 +6136,44 @@
   }
 
   function closeModal(modalEl) {
+    if (!modalEl) return;
     audio.playClick();
     modalEl.classList.add('hide');
   }
 
-  // Tüm modal kapatma butonları
+  function updateSettingsModalUI() {
+    const btnSettingsSoundToggle = document.getElementById('btnSettingsSoundToggle');
+    if (btnSettingsSoundToggle) {
+      btnSettingsSoundToggle.textContent = state.soundEnabled ? 'Ses: Açık 🔊' : 'Ses: Kapalı 🔇';
+      btnSettingsSoundToggle.classList.toggle('is-off', !state.soundEnabled);
+    }
+    const btnSettingsAnnouncerToggle = document.getElementById('btnSettingsAnnouncerToggle');
+    if (btnSettingsAnnouncerToggle) {
+      btnSettingsAnnouncerToggle.textContent = state.announcerEnabled ? 'Anons: Açık 🎙️' : 'Anons: Kapalı 🔇';
+      btnSettingsAnnouncerToggle.classList.toggle('is-off', !state.announcerEnabled);
+    }
+    const btnSettingsAutoReadToggle = document.getElementById('btnSettingsAutoReadToggle');
+    if (btnSettingsAutoReadToggle) {
+      btnSettingsAutoReadToggle.textContent = state.autoReadQuestion ? 'Okuma: Açık 📖' : 'Okuma: Kapalı 🔇';
+      btnSettingsAutoReadToggle.classList.toggle('is-off', !state.autoReadQuestion);
+    }
+    const btnSettingsExplanationToggle = document.getElementById('btnSettingsExplanationToggle');
+    if (btnSettingsExplanationToggle) {
+      btnSettingsExplanationToggle.textContent = state.showAutoExplanation ? 'Açıklama: Açık 💡' : 'Açıklama: Kapalı 🔇';
+      btnSettingsExplanationToggle.classList.toggle('is-off', !state.showAutoExplanation);
+    }
+  }
+
+  function openSettingsModal() {
+    const modalSettings = document.getElementById('modalSettings');
+    if (!modalSettings) return;
+    updateSettingsModalUI();
+    openModal(modalSettings);
+  }
+
+  // Tüm modal kapatma butonları (Hem dokunma hem tıklama gecikmesiz çalışır)
   document.querySelectorAll('[data-close-modal]').forEach(btn => {
-    btn.addEventListener('pointerdown', (e) => {
-      e.preventDefault();
+    addTapListener(btn, (e) => {
       const targetId = btn.getAttribute('data-close-modal');
       const target = document.getElementById(targetId);
       if (target) closeModal(target);
@@ -6151,11 +6182,27 @@
 
   // Modal dışına tıklayınca kapatma
   document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-    backdrop.addEventListener('pointerdown', (e) => {
+    addTapListener(backdrop, (e) => {
       if (e.target === backdrop) {
         closeModal(backdrop);
       }
     });
+  });
+
+  // ESC tuşuna basıldığında açık modalları kapat
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      document.querySelectorAll('.modal-backdrop:not(.hide)').forEach(m => closeModal(m));
+    }
+  });
+
+  // Erken ayarlar delegasyonu (Sayfa açılırken bile tıklandığında anında tepki verir)
+  document.addEventListener('click', (e) => {
+    const settingsBtn = e.target.closest('#btnDesktopSettings, #btnSidebarSettings');
+    if (settingsBtn) {
+      if (e.cancelable) e.preventDefault();
+      openSettingsModal();
+    }
   });
 
   /* ==========================================================================
@@ -6170,16 +6217,16 @@
       } else if (docEl.webkitRequestFullscreen) {
         docEl.webkitRequestFullscreen();
       }
-      DOM.iconFsEnter.classList.add('hide');
-      DOM.iconFsExit.classList.remove('hide');
+      if (DOM.iconFsEnter) DOM.iconFsEnter.classList.add('hide');
+      if (DOM.iconFsExit) DOM.iconFsExit.classList.remove('hide');
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
       } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
       }
-      DOM.iconFsEnter.classList.remove('hide');
-      DOM.iconFsExit.classList.add('hide');
+      if (DOM.iconFsEnter) DOM.iconFsEnter.classList.remove('hide');
+      if (DOM.iconFsExit) DOM.iconFsExit.classList.add('hide');
     }
   }
 
@@ -11536,98 +11583,85 @@
 
     const btnDesktopLogin = document.getElementById('btnDesktopLogin');
     if (btnDesktopLogin) {
-      btnDesktopLogin.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        audio.playClick();
+      addTapListener(btnDesktopLogin, () => {
         handleAuthClick();
       });
-      btnDesktopLogin.addEventListener('click', e => e.preventDefault());
     }
 
     const desktopNoticeBanner = document.getElementById('desktopNoticeBanner');
     if (desktopNoticeBanner) {
-      desktopNoticeBanner.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        audio.playClick();
+      addTapListener(desktopNoticeBanner, () => {
         handleAuthClick();
       });
-      desktopNoticeBanner.addEventListener('click', e => e.preventDefault());
     }
 
     const btnDesktopShare = document.getElementById('btnDesktopShare');
     if (btnDesktopShare) {
-      btnDesktopShare.addEventListener('pointerdown', handleGeneralShare);
-      btnDesktopShare.addEventListener('click', e => e.preventDefault());
+      addTapListener(btnDesktopShare, handleGeneralShare);
     }
 
     const btnDesktopAddQuiz = document.getElementById('btnDesktopAddQuiz');
     if (btnDesktopAddQuiz) {
-      btnDesktopAddQuiz.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        audio.playClick();
+      addTapListener(btnDesktopAddQuiz, () => {
         openCustomQModal();
       });
-      btnDesktopAddQuiz.addEventListener('click', e => e.preventDefault());
     }
 
     const btnDesktopSettings = document.getElementById('btnDesktopSettings');
-    const modalSettings = document.getElementById('modalSettings');
-    if (btnDesktopSettings && modalSettings) {
-      btnDesktopSettings.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        audio.playClick();
-        openModal(modalSettings);
+    if (btnDesktopSettings) {
+      addTapListener(btnDesktopSettings, () => {
+        openSettingsModal();
       });
-      btnDesktopSettings.addEventListener('click', e => e.preventDefault());
+    }
+
+    const btnSidebarSettings = document.getElementById('btnSidebarSettings');
+    if (btnSidebarSettings) {
+      addTapListener(btnSidebarSettings, () => {
+        closeMobileSidebar();
+        openSettingsModal();
+      });
     }
 
     const btnSettingsSoundToggle = document.getElementById('btnSettingsSoundToggle');
     if (btnSettingsSoundToggle) {
-      btnSettingsSoundToggle.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnSettingsSoundToggle, () => {
         toggleSound();
-        btnSettingsSoundToggle.textContent = state.soundEnabled ? 'Ses: Açık 🔊' : 'Ses: Kapalı 🔇';
-        btnSettingsSoundToggle.classList.toggle('is-off', !state.soundEnabled);
+        updateSettingsModalUI();
       });
     }
 
     const btnSettingsAnnouncerToggle = document.getElementById('btnSettingsAnnouncerToggle');
     if (btnSettingsAnnouncerToggle) {
-      btnSettingsAnnouncerToggle.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnSettingsAnnouncerToggle, () => {
         toggleAnnouncerVoice();
-        btnSettingsAnnouncerToggle.textContent = state.announcerEnabled ? 'Anons: Açık 🎙️' : 'Anons: Kapalı 🔇';
-        btnSettingsAnnouncerToggle.classList.toggle('is-off', !state.announcerEnabled);
+        updateSettingsModalUI();
       });
     }
 
     const btnSettingsAutoReadToggle = document.getElementById('btnSettingsAutoReadToggle');
     if (btnSettingsAutoReadToggle) {
-      btnSettingsAutoReadToggle.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnSettingsAutoReadToggle, () => {
         state.autoReadQuestion = !state.autoReadQuestion;
         StorageManager.saveSettings();
         updateAutoReadUI();
-        btnSettingsAutoReadToggle.textContent = state.autoReadQuestion ? 'Okuma: Açık 📖' : 'Okuma: Kapalı 🔇';
-        btnSettingsAutoReadToggle.classList.toggle('is-off', !state.autoReadQuestion);
+        updateSettingsModalUI();
+        audio.playClick();
       });
     }
 
     const btnSettingsExplanationToggle = document.getElementById('btnSettingsExplanationToggle');
     if (btnSettingsExplanationToggle) {
-      btnSettingsExplanationToggle.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnSettingsExplanationToggle, () => {
         state.showAutoExplanation = !state.showAutoExplanation;
         StorageManager.saveSettings();
-        btnSettingsExplanationToggle.textContent = state.showAutoExplanation ? 'Açıklama: Açık 💡' : 'Açıklama: Kapalı 🔇';
-        btnSettingsExplanationToggle.classList.toggle('is-off', !state.showAutoExplanation);
+        updateSettingsModalUI();
+        audio.playClick();
       });
     }
 
     const btnSettingsFullscreenAction = document.getElementById('btnSettingsFullscreenAction');
     if (btnSettingsFullscreenAction) {
-      btnSettingsFullscreenAction.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnSettingsFullscreenAction, () => {
         toggleFullscreen();
       });
     }
@@ -11795,6 +11829,7 @@
       });
     }
 
+    updateSettingsModalUI();
     setupEventListeners();
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
   }
@@ -11812,6 +11847,8 @@
   window.shareContent = shareContent;
   window.shareActivity = shareActivity;
   window.showShareToast = showShareToast;
+  window.openSettingsModal = openSettingsModal;
+  window.updateSettingsModalUI = updateSettingsModalUI;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {

@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.1.2">
+  <link rel="stylesheet" href="style.css?v=6.1.3">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -185,6 +185,10 @@
             <span class="tool-icon">📲</span>
             <span class="tool-label">Paylaş / WhatsApp</span>
           </button>
+          <button class="sidebar-tool-btn" id="btnSidebarSettings" title="Sistem ve Akıllı Tahta Ayarları" onclick="window.openSettingsModal ? window.openSettingsModal() : (document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.remove('hide'))">
+            <span class="tool-icon">⚙️</span>
+            <span class="tool-label">Ayarlar</span>
+          </button>
           <button class="teacher-auth-btn sidebar-teacher-btn" id="btnTeacherAuth" title="Öğretmen Girişi / Profil">
             <span class="auth-icon" id="authIcon">👨‍🏫</span>
             <span class="auth-text" id="authBtnText">Öğretmenim</span>
@@ -222,7 +226,7 @@
             <span class="pill-icon">➕</span>
             <span class="pill-text">Soru Ekle</span>
           </button>
-          <button class="topbar-action-pill pill-settings" id="btnDesktopSettings" type="button" aria-label="Ayarlar">
+          <button class="topbar-action-pill pill-settings" id="btnDesktopSettings" type="button" aria-label="Ayarlar" onclick="window.openSettingsModal ? window.openSettingsModal() : (document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.remove('hide'))">
             <span class="pill-icon">⚙️</span>
             <span class="pill-text">Ayarlar</span>
           </button>
@@ -1233,7 +1237,7 @@
   <!-- MODAL: AYARLAR (AKILLI TAHTA, SES VE OYUN TERCİHLERİ) -->
   <div class="modal-backdrop hide" id="modalSettings">
     <div class="modal-window settings-modal-window">
-      <button class="modal-close-btn" data-close-modal="modalSettings">✕</button>
+      <button class="modal-close-btn" data-close-modal="modalSettings" onclick="document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.add('hide')">✕</button>
       <div class="modal-header">
         <div class="modal-badge-icon">⚙️</div>
         <h3 class="modal-title">Sistem ve Akıllı Tahta Ayarları</h3>
@@ -1302,6 +1306,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=6.1.2" defer></script>
+  <script src="app.js?v=6.1.3" defer></script>
 </body>
 </html>

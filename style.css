@@ -3976,15 +3976,17 @@ input:checked + .slider:before {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 120;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200000 !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.25s ease;
+  animation: fadeIn 0.15s ease-out;
   padding: 20px;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 @keyframes fadeIn {
@@ -4002,12 +4004,14 @@ input:checked + .slider:before {
   max-width: 620px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-  animation: modalScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+  animation: modalScale 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 @keyframes modalScale {
-  from { transform: scale(0.9); opacity: 0; }
+  from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
@@ -4026,6 +4030,7 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: manipulation;
   transition: all var(--transition-fast);
 }
 
@@ -8555,6 +8560,8 @@ input:checked + .slider:before {
   border-radius: 24px;
   padding: 24px 28px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .settings-modal-body {
@@ -8607,6 +8614,8 @@ input:checked + .slider:before {
   white-space: nowrap;
   box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
   transition: transform 0.12s ease;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 .setting-btn-toggle.is-off {
