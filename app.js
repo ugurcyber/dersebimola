@@ -1499,26 +1499,29 @@
 
       let themeTitle = 'Eşleşen kartları bul! Kartlara sırayla dokun.';
       let categoryName = '🧠 Hafıza & Eşleştirme';
+      let spoken = 'Eşleşen kartları bul! Kartlara sırayla dokun.';
       if (cat === 'kindergarten_visual') {
         themeTitle = '👀 Eşleşen sevimli görselleri bul! Dokun ve eşleştir.';
         categoryName = '🧩 Sevimli Görsel Hafıza';
+        spoken = 'Eşleşen sevimli görselleri bul! Dokun ve eşleştir.';
       } else if (cat === 'letters') {
         themeTitle = '🔤 Büyük Harf - Küçük Harf Eşleştirmesi! Eşini bul.';
         categoryName = '🔤 Harf Hafıza Kartları';
+        spoken = 'Büyük harf ile küçük harfi eşleştir! Eşini bul.';
       } else if (cat === 'antonyms') {
         themeTitle = '🔄 Zıt Anlamlı Kelimeleri Eşleştir!';
         categoryName = '🔄 Zıt Anlam Hafızası';
+        spoken = 'Zıt anlamlı kelimeleri eşleştir!';
       } else if (cat === 'math') {
         themeTitle = '➕ Toplama İşlemi ve Sonucunu Eşleştir!';
         categoryName = '➕ Toplama Eşleştirme Kartları';
+        spoken = 'Toplama işlemi ve sonucunu eşleştir!';
       }
 
       return {
         type: 'memory',
         question: themeTitle,
-        spokenText: cat === 'kindergarten_visual'
-          ? 'Eşleşen sevimli görselleri bul! Dokun ve eşleştir.'
-          : themeTitle.replace(/\p{Extended_Pictographic}/gu, '').replace(/[^\w\sğüşıöçĞÜŞİÖÇ.!?]/g, ' ').replace(/\s+/g, ' ').trim(),
+        spokenText: spoken,
         correct: 'Tüm Kartlar',
         explanation: 'Muhteşem hafıza! Bütün eşleşen kartları eksiksiz buldun! 🧠⭐',
         category: categoryName,
@@ -1765,54 +1768,54 @@
     // -------------------------------------------------------------------------
     grade1BalloonLevelsPool: [
       // 1. Grup Harfler (E-L-A-K-İ-N) - 12 Bölüm
-      { id: 'b_e_up', instruction: '🎈 Sadece "E" harfi olan balonları patlat!', spokenText: 'Sadece E harfi olan balonları patlat', target: 'E', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['E'], distractors: ['L', 'A', 'K', 'İ', 'N'], exp: 'Harika refleks! "E" harfini yakaladın! 🎈👏' },
-      { id: 'b_e_low', instruction: '🎈 Sadece küçük "e" harfi olan balonları patlat!', spokenText: 'Sadece küçük e harfi olan balonları patlat', target: 'e', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['e'], distractors: ['l', 'a', 'k', 'i', 'n'], exp: 'Süpersin! Küçük "e" balonlarını patlattın! 🎈✨' },
-      { id: 'b_l_up', instruction: '🎈 Sadece "L" harfi olan balonları patlat!', spokenText: 'Sadece L harfi olan balonları patlat', target: 'L', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['L'], distractors: ['E', 'A', 'K', 'T', 'N'], exp: 'Tebrikler! "L" harfi balonları patladı! 🎈🎉' },
-      { id: 'b_l_low', instruction: '🎈 Sadece küçük "l" harfi olan balonları patlat!', spokenText: 'Sadece küçük l harfi olan balonları patlat', target: 'l', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['l'], distractors: ['e', 'i', 't', 'k', 'a'], exp: 'Çok hızlısın! Küçük "l" harfini buldun! 🎈⭐' },
-      { id: 'b_a_up', instruction: '🎈 Sadece "A" harfi olan balonları patlat!', spokenText: 'Sadece A harfi olan balonları patlat', target: 'A', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['A'], distractors: ['E', 'L', 'O', 'K', 'İ'], exp: 'Muhteşem! "A" sesi balonunu avladın! 🎈👏' },
-      { id: 'b_a_low', instruction: '🎈 Sadece küçük "a" harfi olan balonları patlat!', spokenText: 'Sadece küçük a harfi olan balonları patlat', target: 'a', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['a'], distractors: ['e', 'o', 'u', 'k', 'n'], exp: 'Bravo! Küçük "a" harfini kaçırmadın! 🎈💖' },
-      { id: 'b_k_up', instruction: '🎈 Sadece "K" harfi olan balonları patlat!', spokenText: 'Sadece K harfi olan balonları patlat', target: 'K', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['K'], distractors: ['L', 'E', 'N', 'T', 'İ'], exp: 'Harika atış! "K" harfi patladı! 🎈💥' },
-      { id: 'b_k_low', instruction: '🎈 Sadece küçük "k" harfi olan balonları patlat!', spokenText: 'Sadece küçük k harfi olan balonları patlat', target: 'k', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['k'], distractors: ['l', 't', 'b', 'h', 'n'], exp: 'Nefis gözlem! Küçük "k" balonunu patlattın! 🎈👍' },
-      { id: 'b_i_up', instruction: '🎈 Sadece "İ" harfi olan balonları patlat!', spokenText: 'Sadece İ harfi olan balonları patlat', target: 'İ', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['İ'], distractors: ['E', 'L', 'A', 'K', 'T'], exp: 'Süper! Noktalı "İ" harfini hemen yakaladın! 🎈🌟' },
-      { id: 'b_i_low', instruction: '🎈 Sadece küçük "i" harfi olan balonları patlat!', spokenText: 'Sadece küçük i harfi olan balonları patlat', target: 'i', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['i'], distractors: ['l', 'e', 't', 'k', 'j'], exp: 'Çok dikkatlisin! Küçük "i" harfini buldun! 🎈👏' },
-      { id: 'b_n_up', instruction: '🎈 Sadece "N" harfi olan balonları patlat!', spokenText: 'Sadece N harfi olan balonları patlat', target: 'N', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['N'], distractors: ['M', 'K', 'L', 'Z', 'H'], exp: 'Tebrikler! "N" harfi balonlarını patlattın! 🎈🎉' },
-      { id: 'b_n_low', instruction: '🎈 Sadece küçük "n" harfi olan balonları patlat!', spokenText: 'Sadece küçük n harfi olan balonları patlat', target: 'n', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['n'], distractors: ['u', 'm', 'h', 'r', 'k'], exp: 'Harikasın! Küçük "n" harfini ustalıkla patlattın! 🎈💥' },
+      { id: 'b_e_up', instruction: '🎈 Sadece "E" harfi olan balonları patlat!', spokenText: 'Sadece e! sesi olan balonları patlat.', target: 'E', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['E'], distractors: ['L', 'A', 'K', 'İ', 'N'], exp: 'Harika refleks! "E" harfini yakaladın! 🎈👏' },
+      { id: 'b_e_low', instruction: '🎈 Sadece küçük "e" harfi olan balonları patlat!', spokenText: 'Sadece küçük e! sesi olan balonları patlat.', target: 'e', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['e'], distractors: ['l', 'a', 'k', 'i', 'n'], exp: 'Süpersin! Küçük "e" balonlarını patlattın! 🎈✨' },
+      { id: 'b_l_up', instruction: '🎈 Sadece "L" harfi olan balonları patlat!', spokenText: 'Sadece le! sesi olan balonları patlat.', target: 'L', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['L'], distractors: ['E', 'A', 'K', 'T', 'N'], exp: 'Tebrikler! "L" harfi balonları patladı! 🎈🎉' },
+      { id: 'b_l_low', instruction: '🎈 Sadece küçük "l" harfi olan balonları patlat!', spokenText: 'Sadece küçük le! sesi olan balonları patlat.', target: 'l', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['l'], distractors: ['e', 'i', 't', 'k', 'a'], exp: 'Çok hızlısın! Küçük "l" harfini buldun! 🎈⭐' },
+      { id: 'b_a_up', instruction: '🎈 Sadece "A" harfi olan balonları patlat!', spokenText: 'Sadece a! sesi olan balonları patlat.', target: 'A', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['A'], distractors: ['E', 'L', 'O', 'K', 'İ'], exp: 'Muhteşem! "A" sesi balonunu avladın! 🎈👏' },
+      { id: 'b_a_low', instruction: '🎈 Sadece küçük "a" harfi olan balonları patlat!', spokenText: 'Sadece küçük a! sesi olan balonları patlat.', target: 'a', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['a'], distractors: ['e', 'o', 'u', 'k', 'n'], exp: 'Bravo! Küçük "a" harfini kaçırmadın! 🎈💖' },
+      { id: 'b_k_up', instruction: '🎈 Sadece "K" harfi olan balonları patlat!', spokenText: 'Sadece ke! sesi olan balonları patlat.', target: 'K', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['K'], distractors: ['L', 'E', 'N', 'T', 'İ'], exp: 'Harika atış! "K" harfi patladı! 🎈💥' },
+      { id: 'b_k_low', instruction: '🎈 Sadece küçük "k" harfi olan balonları patlat!', spokenText: 'Sadece küçük ke! sesi olan balonları patlat.', target: 'k', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['k'], distractors: ['l', 't', 'b', 'h', 'n'], exp: 'Nefis gözlem! Küçük "k" balonunu patlattın! 🎈👍' },
+      { id: 'b_i_up', instruction: '🎈 Sadece "İ" harfi olan balonları patlat!', spokenText: 'Sadece i! sesi olan balonları patlat.', target: 'İ', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['İ'], distractors: ['E', 'L', 'A', 'K', 'T'], exp: 'Süper! Noktalı "İ" harfini hemen yakaladın! 🎈🌟' },
+      { id: 'b_i_low', instruction: '🎈 Sadece küçük "i" harfi olan balonları patlat!', spokenText: 'Sadece küçük i! sesi olan balonları patlat.', target: 'i', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['i'], distractors: ['l', 'e', 't', 'k', 'j'], exp: 'Çok dikkatlisin! Küçük "i" harfini buldun! 🎈👏' },
+      { id: 'b_n_up', instruction: '🎈 Sadece "N" harfi olan balonları patlat!', spokenText: 'Sadece ne! sesi olan balonları patlat.', target: 'N', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['N'], distractors: ['M', 'K', 'L', 'Z', 'H'], exp: 'Tebrikler! "N" harfi balonlarını patlattın! 🎈🎉' },
+      { id: 'b_n_low', instruction: '🎈 Sadece küçük "n" harfi olan balonları patlat!', spokenText: 'Sadece küçük ne! sesi olan balonları patlat.', target: 'n', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['n'], distractors: ['u', 'm', 'h', 'r', 'k'], exp: 'Harikasın! Küçük "n" harfini ustalıkla patlattın! 🎈💥' },
 
       // 2. Grup Harfler (O-M-U-T-Ü-Y) - 10 Bölüm
-      { id: 'b_o_up', instruction: '🎈 Sadece "O" harfi olan balonları patlat!', spokenText: 'Sadece O harfi olan balonları patlat', target: 'O', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['O'], distractors: ['U', 'A', 'E', 'C', 'D'], exp: 'Tıpkı bir çember gibi olan "O" harfini patlattın! 🎈⭕' },
-      { id: 'b_m_up', instruction: '🎈 Sadece "M" harfi olan balonları patlat!', spokenText: 'Sadece M harfi olan balonları patlat', target: 'M', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['M'], distractors: ['N', 'K', 'T', 'W', 'V'], exp: 'Nefis refleks! "M" sesini yakaladın! 🎈👏' },
-      { id: 'b_m_low', instruction: '🎈 Sadece küçük "m" harfi olan balonları patlat!', spokenText: 'Sadece küçük m harfi olan balonları patlat', target: 'm', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['m'], distractors: ['n', 'u', 'w', 'v', 'h'], exp: 'İki tepeli küçük "m" harfini buldun! 🎈✨' },
-      { id: 'b_u_up', instruction: '🎈 Sadece "U" harfi olan balonları patlat!', spokenText: 'Sadece U harfi olan balonları patlat', target: 'U', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['U'], distractors: ['O', 'Ü', 'A', 'V', 'C'], exp: 'Harika! "U" harfi balonlarını patlattın! 🎈⭐' },
-      { id: 'b_t_up', instruction: '🎈 Sadece "T" harfi olan balonları patlat!', spokenText: 'Sadece T harfi olan balonları patlat', target: 'T', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['T'], distractors: ['L', 'K', 'Y', 'F', 'İ'], exp: 'Çok hızlısın! "T" harfi patladı! 🎈💥' },
-      { id: 'b_t_low', instruction: '🎈 Sadece küçük "t" harfi olan balonları patlat!', spokenText: 'Sadece küçük t harfi olan balonları patlat', target: 't', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['t'], distractors: ['l', 'f', 'k', 'i', 'j'], exp: 'Bravo! Küçük "t" balonunu tam zamanında patlattın! 🎈👍' },
-      { id: 'b_u2_up', instruction: '🎈 Sadece noktalı "Ü" harfi olan balonları patlat!', spokenText: 'Sadece noktalı Ü harfi olan balonları patlat', target: 'Ü', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Ü'], distractors: ['U', 'O', 'Ö', 'Y', 'T'], exp: 'Süper dikkat! Noktalı "Ü" harfini patlattın! 🎈🌟' },
-      { id: 'b_y_up', instruction: '🎈 Sadece "Y" harfi olan balonları patlat!', spokenText: 'Sadece Y harfi olan balonları patlat', target: 'Y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Y'], distractors: ['T', 'K', 'V', 'X', 'U'], exp: 'Muhteşem! "Y" harfi balonunu yakaladın! 🎈🎉' },
-      { id: 'b_y_low', instruction: '🎈 Sadece küçük "y" harfi olan balonları patlat!', spokenText: 'Sadece küçük y harfi olan balonları patlat', target: 'y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['y'], distractors: ['u', 'v', 'g', 'j', 'p'], exp: 'Harika! Küçük "y" balonlarını havada vurdun! 🎈💖' },
-      { id: 'b_vowels', instruction: '🎈 Sadece SESLİ (Ünlü) harfleri patlat! (A, E, İ, O, U)', spokenText: 'Sadece sesli harfleri patlat', target: 'Sesli Harfler', category: 'Harf Bilgisi', targetsNeeded: 3, targets: ['A', 'E', 'İ', 'O', 'U'], distractors: ['K', 'L', 'T', 'M', 'N'], exp: 'Şampiyon! Sesli harfleri eksiksiz topladın! 🎈🏆' },
+      { id: 'b_o_up', instruction: '🎈 Sadece "O" harfi olan balonları patlat!', spokenText: 'Sadece o! sesi olan balonları patlat.', target: 'O', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['O'], distractors: ['U', 'A', 'E', 'C', 'D'], exp: 'Tıpkı bir çember gibi olan "O" harfini patlattın! 🎈⭕' },
+      { id: 'b_m_up', instruction: '🎈 Sadece "M" harfi olan balonları patlat!', spokenText: 'Sadece me! sesi olan balonları patlat.', target: 'M', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['M'], distractors: ['N', 'K', 'T', 'W', 'V'], exp: 'Nefis refleks! "M" sesini yakaladın! 🎈👏' },
+      { id: 'b_m_low', instruction: '🎈 Sadece küçük "m" harfi olan balonları patlat!', spokenText: 'Sadece küçük me! sesi olan balonları patlat.', target: 'm', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['m'], distractors: ['n', 'u', 'w', 'v', 'h'], exp: 'İki tepeli küçük "m" harfini buldun! 🎈✨' },
+      { id: 'b_u_up', instruction: '🎈 Sadece "U" harfi olan balonları patlat!', spokenText: 'Sadece u! sesi olan balonları patlat.', target: 'U', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['U'], distractors: ['O', 'Ü', 'A', 'V', 'C'], exp: 'Harika! "U" harfi balonlarını patlattın! 🎈⭐' },
+      { id: 'b_t_up', instruction: '🎈 Sadece "T" harfi olan balonları patlat!', spokenText: 'Sadece te! sesi olan balonları patlat.', target: 'T', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['T'], distractors: ['L', 'K', 'Y', 'F', 'İ'], exp: 'Çok hızlısın! "T" harfi patladı! 🎈💥' },
+      { id: 'b_t_low', instruction: '🎈 Sadece küçük "t" harfi olan balonları patlat!', spokenText: 'Sadece küçük te! sesi olan balonları patlat.', target: 't', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['t'], distractors: ['l', 'f', 'k', 'i', 'j'], exp: 'Bravo! Küçük "t" balonunu tam zamanında patlattın! 🎈👍' },
+      { id: 'b_u2_up', instruction: '🎈 Sadece noktalı "Ü" harfi olan balonları patlat!', spokenText: 'Sadece noktalı ü! sesi olan balonları patlat.', target: 'Ü', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Ü'], distractors: ['U', 'O', 'Ö', 'Y', 'T'], exp: 'Süper dikkat! Noktalı "Ü" harfini patlattın! 🎈🌟' },
+      { id: 'b_y_up', instruction: '🎈 Sadece "Y" harfi olan balonları patlat!', spokenText: 'Sadece ye! sesi olan balonları patlat.', target: 'Y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Y'], distractors: ['T', 'K', 'V', 'X', 'U'], exp: 'Muhteşem! "Y" harfi balonunu yakaladın! 🎈🎉' },
+      { id: 'b_y_low', instruction: '🎈 Sadece küçük "y" harfi olan balonları patlat!', spokenText: 'Sadece küçük ye! sesi olan balonları patlat.', target: 'y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['y'], distractors: ['u', 'v', 'g', 'j', 'p'], exp: 'Harika! Küçük "y" balonlarını havada vurdun! 🎈💖' },
+      { id: 'b_vowels', instruction: '🎈 Sadece SESLİ (Ünlü) harfleri patlat! (A, E, İ, O, U)', spokenText: 'Sadece sesli harfleri patlat.', target: 'Sesli Harfler', category: 'Harf Bilgisi', targetsNeeded: 3, targets: ['A', 'E', 'İ', 'O', 'U'], distractors: ['K', 'L', 'T', 'M', 'N'], exp: 'Şampiyon! Sesli harfleri eksiksiz topladın! 🎈🏆' },
 
       // 1. Sınıf Heceler - 10 Bölüm
-      { id: 'b_syl_el', instruction: '🎈 Sadece "EL" hecesi olan balonları patlat!', spokenText: 'Sadece EL hecesi olan balonları patlat', target: 'EL', category: 'Heceler', targetsNeeded: 2, targets: ['EL'], distractors: ['LE', 'AL', 'LA', 'EK'], exp: 'Süpersin! "EL" hecesini hemen okudun ve patlattın! 🎈✋' },
-      { id: 'b_syl_al', instruction: '🎈 Sadece "AL" hecesi olan balonları patlat!', spokenText: 'Sadece AL hecesi olan balonları patlat', target: 'AL', category: 'Heceler', targetsNeeded: 2, targets: ['AL'], distractors: ['LA', 'EL', 'OL', 'AT'], exp: 'Harika! "AL" hecesi balonlarını patlattın! 🎈🔴' },
-      { id: 'b_syl_ak', instruction: '🎈 Sadece "AK" hecesi olan balonları patlat!', spokenText: 'Sadece AK hecesi olan balonları patlat', target: 'AK', category: 'Heceler', targetsNeeded: 2, targets: ['AK'], distractors: ['KA', 'EK', 'OK', 'KE'], exp: 'Nefis! "AK" hecesini tam hedeften vurdun! 🎈⚪' },
-      { id: 'b_syl_ek', instruction: '🎈 Sadece "EK" hecesi olan balonları patlat!', spokenText: 'Sadece EK hecesi olan balonları patlat', target: 'EK', category: 'Heceler', targetsNeeded: 2, targets: ['EK'], distractors: ['KE', 'AK', 'ET', 'EL'], exp: 'Tebrikler! "EK" hecesi balonları patladı! 🎈🌾' },
-      { id: 'b_syl_et', instruction: '🎈 Sadece "ET" hecesi olan balonları patlat!', spokenText: 'Sadece ET hecesi olan balonları patlat', target: 'ET', category: 'Heceler', targetsNeeded: 2, targets: ['ET'], distractors: ['TE', 'AT', 'OT', 'İT'], exp: 'Çok hızlısın! "ET" hecesini yakaladın! 🎈🥩' },
-      { id: 'b_syl_an', instruction: '🎈 Sadece "AN" hecesi olan balonları patlat!', spokenText: 'Sadece AN hecesi olan balonları patlat', target: 'AN', category: 'Heceler', targetsNeeded: 2, targets: ['AN'], distractors: ['NA', 'EN', 'ON', 'AL'], exp: 'Harika okuma! "AN" hecesi patladı! 🎈✨' },
-      { id: 'b_syl_la', instruction: '🎈 Sadece "LA" hecesi olan balonları patlat!', spokenText: 'Sadece LA hecesi olan balonları patlat', target: 'LA', category: 'Heceler', targetsNeeded: 2, targets: ['LA'], distractors: ['AL', 'LE', 'LI', 'LO'], exp: 'Bravo! "LA" hecesini ustalıkla patlattın! 🎈🎶' },
-      { id: 'b_syl_ma', instruction: '🎈 Sadece "MA" hecesi olan balonları patlat!', spokenText: 'Sadece MA hecesi olan balonları patlat', target: 'MA', category: 'Heceler', targetsNeeded: 2, targets: ['MA'], distractors: ['AM', 'ME', 'MO', 'MU'], exp: 'Süper! "MA" hecesi balonları patladı! 🎈⭐' },
-      { id: 'b_syl_to', instruction: '🎈 Sadece "TO" hecesi olan balonları patlat!', spokenText: 'Sadece TO hecesi olan balonları patlat', target: 'TO', category: 'Heceler', targetsNeeded: 2, targets: ['TO'], distractors: ['OT', 'TA', 'TE', 'TU'], exp: 'Harika refleks! "TO" hecesini patlattın! 🎈⚽' },
-      { id: 'b_syl_ku', instruction: '🎈 Sadece "KU" hecesi olan balonları patlat!', spokenText: 'Sadece KU hecesi olan balonları patlat', target: 'KU', category: 'Heceler', targetsNeeded: 2, targets: ['KU'], distractors: ['UK', 'KO', 'KA', 'KE'], exp: 'Tebrikler! "KU" hecesini yakaladın! 🎈🐦' },
+      { id: 'b_syl_el', instruction: '🎈 Sadece "EL" hecesi olan balonları patlat!', spokenText: 'Sadece el hecesi olan balonları patlat.', target: 'EL', category: 'Heceler', targetsNeeded: 2, targets: ['EL'], distractors: ['LE', 'AL', 'LA', 'EK'], exp: 'Süpersin! "EL" hecesini hemen okudun ve patlattın! 🎈✋' },
+      { id: 'b_syl_al', instruction: '🎈 Sadece "AL" hecesi olan balonları patlat!', spokenText: 'Sadece al hecesi olan balonları patlat.', target: 'AL', category: 'Heceler', targetsNeeded: 2, targets: ['AL'], distractors: ['LA', 'EL', 'OL', 'AT'], exp: 'Harika! "AL" hecesi balonlarını patlattın! 🎈🔴' },
+      { id: 'b_syl_ak', instruction: '🎈 Sadece "AK" hecesi olan balonları patlat!', spokenText: 'Sadece ak hecesi olan balonları patlat.', target: 'AK', category: 'Heceler', targetsNeeded: 2, targets: ['AK'], distractors: ['KA', 'EK', 'OK', 'KE'], exp: 'Nefis! "AK" hecesini tam hedeften vurdun! 🎈⚪' },
+      { id: 'b_syl_ek', instruction: '🎈 Sadece "EK" hecesi olan balonları patlat!', spokenText: 'Sadece ek hecesi olan balonları patlat.', target: 'EK', category: 'Heceler', targetsNeeded: 2, targets: ['EK'], distractors: ['KE', 'AK', 'ET', 'EL'], exp: 'Tebrikler! "EK" hecesi balonları patladı! 🎈🌾' },
+      { id: 'b_syl_et', instruction: '🎈 Sadece "ET" hecesi olan balonları patlat!', spokenText: 'Sadece et hecesi olan balonları patlat.', target: 'ET', category: 'Heceler', targetsNeeded: 2, targets: ['ET'], distractors: ['TE', 'AT', 'OT', 'İT'], exp: 'Çok hızlısın! "ET" hecesini yakaladın! 🎈🥩' },
+      { id: 'b_syl_an', instruction: '🎈 Sadece "AN" hecesi olan balonları patlat!', spokenText: 'Sadece an hecesi olan balonları patlat.', target: 'AN', category: 'Heceler', targetsNeeded: 2, targets: ['AN'], distractors: ['NA', 'EN', 'ON', 'AL'], exp: 'Harika okuma! "AN" hecesi patladı! 🎈✨' },
+      { id: 'b_syl_la', instruction: '🎈 Sadece "LA" hecesi olan balonları patlat!', spokenText: 'Sadece la hecesi olan balonları patlat.', target: 'LA', category: 'Heceler', targetsNeeded: 2, targets: ['LA'], distractors: ['AL', 'LE', 'LI', 'LO'], exp: 'Bravo! "LA" hecesini ustalıkla patlattın! 🎈🎶' },
+      { id: 'b_syl_ma', instruction: '🎈 Sadece "MA" hecesi olan balonları patlat!', spokenText: 'Sadece ma hecesi olan balonları patlat.', target: 'MA', category: 'Heceler', targetsNeeded: 2, targets: ['MA'], distractors: ['AM', 'ME', 'MO', 'MU'], exp: 'Süper! "MA" hecesi balonları patladı! 🎈⭐' },
+      { id: 'b_syl_to', instruction: '🎈 Sadece "TO" hecesi olan balonları patlat!', spokenText: 'Sadece to hecesi olan balonları patlat.', target: 'TO', category: 'Heceler', targetsNeeded: 2, targets: ['TO'], distractors: ['OT', 'TA', 'TE', 'TU'], exp: 'Harika refleks! "TO" hecesini patlattın! 🎈⚽' },
+      { id: 'b_syl_ku', instruction: '🎈 Sadece "KU" hecesi olan balonları patlat!', spokenText: 'Sadece ku hecesi olan balonları patlat.', target: 'KU', category: 'Heceler', targetsNeeded: 2, targets: ['KU'], distractors: ['UK', 'KO', 'KA', 'KE'], exp: 'Tebrikler! "KU" hecesini yakaladın! 🎈🐦' },
 
       // Sayılar ve Ritmik Sayma - 10 Bölüm
-      { id: 'b_num_5', instruction: '🎈 Sadece "5" yazan balonları patlat!', spokenText: 'Sadece 5 yazan balonları patlat', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['2', '3', '6', '8', '9'], exp: 'Harika! 5 yazan balonları patlattın! 🎈🖐️' },
-      { id: 'b_num_10', instruction: '🎈 Sadece "10" yazan balonları patlat!', spokenText: 'Sadece 10 yazan balonları patlat', target: '10', category: 'Sayılar', targetsNeeded: 2, targets: ['10'], distractors: ['1', '0', '7', '12', '9'], exp: 'Muhteşem! İki basamaklı 10 sayısını yakaladın! 🎈🔟' },
-      { id: 'b_even', instruction: '🎈 Sadece ÇİFT sayıları patlat! (2, 4, 6, 8, 10)', spokenText: 'Sadece çift sayıları patlat', target: 'Çift Sayılar', category: 'Sayılar', targetsNeeded: 3, targets: ['2', '4', '6', '8', '10'], distractors: ['1', '3', '5', '7', '9'], exp: 'Harika matematik refleksi! Çift sayıları patlattın! 🎈🎯' },
-      { id: 'b_odd', instruction: '🎈 Sadece TEK sayıları patlat! (1, 3, 5, 7, 9)', spokenText: 'Sadece tek sayıları patlat', target: 'Tek Sayılar', category: 'Sayılar', targetsNeeded: 3, targets: ['1', '3', '5', '7', '9'], distractors: ['2', '4', '6', '8', '10'], exp: 'Süpersin! Bütün tek sayıları tam zamanında yakaladın! 🎈⚡' },
-      { id: 'b_gt_5', instruction: '🎈 5\'ten BÜYÜK olan sayıları patlat! (6, 7, 8, 9)', spokenText: '5 ten büyük olan sayıları patlat', target: '> 5', category: 'Sayılar', targetsNeeded: 3, targets: ['6', '7', '8', '9'], distractors: ['1', '2', '3', '4'], exp: 'Nefis karşılaştırma! 5\'ten büyük sayıları patlattın! 🎈📈' },
-      { id: 'b_lt_5', instruction: '🎈 5\'ten KÜÇÜK olan sayıları patlat! (1, 2, 3, 4)', spokenText: '5 ten küçük olan sayıları patlat', target: '< 5', category: 'Sayılar', targetsNeeded: 3, targets: ['1', '2', '3', '4'], distractors: ['6', '7', '8', '9', '10'], exp: 'Tebrikler! 5\'ten küçük sayıları buldun! 🎈📉' },
-      { id: 'b_rhythm_2', instruction: '🎈 2\'şer Ritmik Sayma sayılarını patlat! (2, 4, 6, 8, 10)', spokenText: '2 şer ritmik sayma sayılarını patlat', target: '2\'şer Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['2', '4', '6', '8', '10'], distractors: ['3', '5', '7', '9', '11'], exp: '2-4-6-8-10! 2\'şer ritmik saymayı harika biliyorsun! 🎈🚀' },
-      { id: 'b_rhythm_5', instruction: '🎈 5\'er Ritmik Sayma sayılarını patlat! (5, 10, 15, 20)', spokenText: '5 er ritmik sayma sayılarını patlat', target: '5\'er Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['5', '10', '15', '20'], distractors: ['7', '12', '18', '22', '16'], exp: '5-10-15-20! 5\'er saymada bir yıldızsın! 🎈⭐' },
-      { id: 'b_rhythm_10', instruction: '🎈 10\'ar Ritmik Sayma sayılarını patlat! (10, 20, 30, 40)', spokenText: '10 ar ritmik sayma sayılarını patlat', target: '10\'ar Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['10', '20', '30', '40'], distractors: ['15', '25', '35', '45', '18'], exp: '10-20-30-40! Hızına kimse yetişemez! 🎈💨' },
-      { id: 'b_sum_10', instruction: '🎈 Sonucu 10 eden toplama işlemlerini patlat! (5+5, 8+2, 7+3)', spokenText: 'Sonucu 10 eden toplama işlemlerini patlat', target: '= 10', category: 'Toplama', targetsNeeded: 2, targets: ['5+5', '8+2', '7+3', '9+1'], distractors: ['4+4', '6+2', '9+3', '5+3'], exp: 'Müthiş hesap! Sonucu 10 olan balonları patlattın! 🎈🏆' }
+      { id: 'b_num_5', instruction: '🎈 Sadece "5" yazan balonları patlat!', spokenText: 'Sadece beş yazan balonları patlat.', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['2', '3', '6', '8', '9'], exp: 'Harika! 5 yazan balonları patlattın! 🎈🖐️' },
+      { id: 'b_num_10', instruction: '🎈 Sadece "10" yazan balonları patlat!', spokenText: 'Sadece on yazan balonları patlat.', target: '10', category: 'Sayılar', targetsNeeded: 2, targets: ['10'], distractors: ['1', '0', '7', '12', '9'], exp: 'Muhteşem! İki basamaklı 10 sayısını yakaladın! 🎈🔟' },
+      { id: 'b_even', instruction: '🎈 Sadece ÇİFT sayıları patlat! (2, 4, 6, 8, 10)', spokenText: 'Sadece çift sayıları patlat.', target: 'Çift Sayılar', category: 'Sayılar', targetsNeeded: 3, targets: ['2', '4', '6', '8', '10'], distractors: ['1', '3', '5', '7', '9'], exp: 'Harika matematik refleksi! Çift sayıları patlattın! 🎈🎯' },
+      { id: 'b_odd', instruction: '🎈 Sadece TEK sayıları patlat! (1, 3, 5, 7, 9)', spokenText: 'Sadece tek sayıları patlat.', target: 'Tek Sayılar', category: 'Sayılar', targetsNeeded: 3, targets: ['1', '3', '5', '7', '9'], distractors: ['2', '4', '6', '8', '10'], exp: 'Süpersin! Bütün tek sayıları tam zamanında yakaladın! 🎈⚡' },
+      { id: 'b_gt_5', instruction: '🎈 5\'ten BÜYÜK olan sayıları patlat! (6, 7, 8, 9)', spokenText: 'Beşten büyük olan sayıları patlat.', target: '> 5', category: 'Sayılar', targetsNeeded: 3, targets: ['6', '7', '8', '9'], distractors: ['1', '2', '3', '4'], exp: 'Nefis karşılaştırma! 5\'ten büyük sayıları patlattın! 🎈📈' },
+      { id: 'b_lt_5', instruction: '🎈 5\'ten KÜÇÜK olan sayıları patlat! (1, 2, 3, 4)', spokenText: 'Beşten küçük olan sayıları patlat.', target: '< 5', category: 'Sayılar', targetsNeeded: 3, targets: ['1', '2', '3', '4'], distractors: ['6', '7', '8', '9', '10'], exp: 'Tebrikler! 5\'ten küçük sayıları buldun! 🎈📉' },
+      { id: 'b_rhythm_2', instruction: '🎈 2\'şer Ritmik Sayma sayılarını patlat! (2, 4, 6, 8, 10)', spokenText: 'İkişer ritmik sayma sayılarını patlat.', target: '2\'şer Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['2', '4', '6', '8', '10'], distractors: ['3', '5', '7', '9', '11'], exp: '2-4-6-8-10! 2\'şer ritmik saymayı harika biliyorsun! 🎈🚀' },
+      { id: 'b_rhythm_5', instruction: '🎈 5\'er Ritmik Sayma sayılarını patlat! (5, 10, 15, 20)', spokenText: 'Beşer ritmik sayma sayılarını patlat.', target: '5\'er Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['5', '10', '15', '20'], distractors: ['7', '12', '18', '22', '16'], exp: '5-10-15-20! 5\'er saymada bir yıldızsın! 🎈⭐' },
+      { id: 'b_rhythm_10', instruction: '🎈 10\'ar Ritmik Sayma sayılarını patlat! (10, 20, 30, 40)', spokenText: 'Onar ritmik sayma sayılarını patlat.', target: '10\'ar Sayma', category: 'Ritmik Sayma', targetsNeeded: 3, targets: ['10', '20', '30', '40'], distractors: ['15', '25', '35', '45', '18'], exp: '10-20-30-40! Hızına kimse yetişemez! 🎈💨' },
+      { id: 'b_sum_10', instruction: '🎈 Sonucu 10 eden toplama işlemlerini patlat! (5+5, 8+2, 7+3)', spokenText: 'Sonucu on eden toplama işlemlerini patlat.', target: '= 10', category: 'Toplama', targetsNeeded: 2, targets: ['5+5', '8+2', '7+3', '9+1'], distractors: ['4+4', '6+2', '9+3', '5+3'], exp: 'Müthiş hesap! Sonucu 10 olan balonları patlattın! 🎈🏆' }
     ],
 
     // -------------------------------------------------------------------------
@@ -2061,7 +2064,7 @@
             <div style="font-size:1.35rem; font-weight:900;">Küp parçalarına dokunarak <strong>"${chosen.word}"</strong> kelimesini oluştur:</div>
           </div>
         `,
-        spokenText: `${chosen.word} kelimesini oluştur`,
+        spokenText: `${chosen.word.toLowerCase('tr-TR')} kelimesini oluştur.`,
         correct: chosen.word,
         explanation: `Muhteşem! Parçaları birleştirip "${chosen.word}" kelimesini tamamladın ve okudun! ${chosen.icon}👏`,
         interactiveData: {
@@ -2100,14 +2103,14 @@
     // 5) ⭐ HIZLI KELİME YAKALA (WORD CATCH)
     generateWordCatchQuestion() {
       const pool = [
-        { visual: '🍎', name: 'Elma', q: 'Bu lezzetli meyvenin İLK HARFİ hangisidir? 🍎', a: 'E', d: ['A', 'M'], exp: 'Elma "E" harfi ile başlar! 🍎' },
-        { visual: '🐴', name: 'At', q: 'Bu rüzgar gibi koşan dostumuzun adı nedir? 🐴', a: 'AT', d: ['OT', 'ET'], exp: 'Rüzgar gibi koşan dostumuz AT! 🐴' },
-        { visual: '🥛', name: 'Süt', q: 'Bembeyaz sağlıklı içeceğin İLK SESİ nedir? 🥛', a: 'S', d: ['K', 'B'], exp: 'Süt "S" sesiyle başlar: S-ü-t! 🥛' },
-        { visual: '🍋', name: 'Limon', q: 'Sarı ekşi meyvenin İLK SESİ nedir? 🍋', a: 'L', d: ['N', 'T'], exp: 'Limon "L" sesiyle başlar: L-i-m-o-n! 🍋' },
-        { visual: '🐱', name: 'Kedi', q: 'Miyav diyen sevimli dostumuzun adı nedir? 🐱', a: 'KEDİ', d: ['KÖPEK', 'KUŞ'], exp: 'Miyav diyen dostumuz KEDİ! 🐱' },
-        { visual: '🚗', name: 'Araba', q: 'Düt düt diye korna çalan taşıtın İLK SESİ nedir? 🚗', a: 'A', d: ['O', 'E'], exp: 'Araba "A" harfiyle başlar: A-r-a-b-a! 🚗' },
-        { visual: '🐟', name: 'Balık', q: 'Mavi sularda yüzen sevimli canlının İLK HARFİ nedir? 🐟', a: 'B', d: ['D', 'P'], exp: 'Balık "B" harfiyle başlar: B-a-l-ı-k! 🐟' },
-        { visual: '☀️', name: 'Güneş', q: 'Dünyamızı ısıtan sıcacık dostumuzun İLK SESİ nedir? ☀️', a: 'G', d: ['S', 'M'], exp: 'Güneş "G" harfiyle başlar! ☀️' }
+        { visual: '🍎', name: 'Elma', q: 'Bu lezzetli meyvenin İLK HARFİ hangisidir? 🍎', spokenText: 'Bu lezzetli meyvenin ilk harfi hangisidir?', a: 'E', d: ['A', 'M'], exp: 'Elma "E" harfi ile başlar! 🍎' },
+        { visual: '🐴', name: 'At', q: 'Bu rüzgar gibi koşan dostumuzun adı nedir? 🐴', spokenText: 'Bu rüzgar gibi koşan dostumuzun adı nedir?', a: 'AT', d: ['OT', 'ET'], exp: 'Rüzgar gibi koşan dostumuz AT! 🐴' },
+        { visual: '🥛', name: 'Süt', q: 'Bembeyaz sağlıklı içeceğin İLK SESİ nedir? 🥛', spokenText: 'Bembeyaz sağlıklı içeceğin ilk sesi nedir?', a: 'S', d: ['K', 'B'], exp: 'Süt "S" sesiyle başlar: S-ü-t! 🥛' },
+        { visual: '🍋', name: 'Limon', q: 'Sarı ekşi meyvenin İLK SESİ nedir? 🍋', spokenText: 'Sarı ekşi meyvenin ilk sesi nedir?', a: 'L', d: ['N', 'T'], exp: 'Limon "L" sesiyle başlar: L-i-m-o-n! 🍋' },
+        { visual: '🐱', name: 'Kedi', q: 'Miyav diyen sevimli dostumuzun adı nedir? 🐱', spokenText: 'Miyav diyen sevimli dostumuzun adı nedir?', a: 'KEDİ', d: ['KÖPEK', 'KUŞ'], exp: 'Miyav diyen dostumuz KEDİ! 🐱' },
+        { visual: '🚗', name: 'Araba', q: 'Düt düt diye korna çalan taşıtın İLK SESİ nedir? 🚗', spokenText: 'Düt düt diye korna çalan taşıtın ilk sesi nedir?', a: 'A', d: ['O', 'E'], exp: 'Araba "A" harfiyle başlar: A-r-a-b-a! 🚗' },
+        { visual: '🐟', name: 'Balık', q: 'Mavi sularda yüzen sevimli canlının İLK HARFİ nedir? 🐟', spokenText: 'Mavi sularda yüzen sevimli canlının ilk harfi nedir?', a: 'B', d: ['D', 'P'], exp: 'Balık "B" harfiyle başlar: B-a-l-ı-k! 🐟' },
+        { visual: '☀️', name: 'Güneş', q: 'Dünyamızı ısıtan sıcacık dostumuzun İLK SESİ nedir? ☀️', spokenText: 'Dünyamızı ısıtan sıcacık dostumuzun ilk sesi nedir?', a: 'G', d: ['S', 'M'], exp: 'Güneş "G" harfiyle başlar! ☀️' }
       ];
 
       const item = pool[Math.floor(Math.random() * pool.length)];
@@ -2130,7 +2133,7 @@
             <div style="font-size:1.35rem; font-weight:900;">${item.q}</div>
           </div>
         `,
-        spokenText: item.q,
+        spokenText: item.spokenText || item.q,
         correct: item.a,
         explanation: item.exp,
         interactiveData: { options }
@@ -2453,6 +2456,7 @@
         const item = words[Math.floor(Math.random() * words.length)];
         return {
           question: `"${item.word}" sözcüğü kaç hecelidir? 📖`,
+          spokenText: `"${item.word.toLowerCase('tr-TR')}" sözcüğü kaç hecelidir?`,
           correct: `${item.count} hece`,
           distractors: [`${item.count + 1} hece`, `${Math.max(1, item.count - 1)} hece`],
           explanation: `"${item.word}" kelimesi ${item.syllables} şeklinde ayrılır ve ${item.count} hecelidir.`
@@ -2465,6 +2469,7 @@
         const shuffledCons = [...consonants].sort(() => 0.5 - Math.random());
         return {
           question: 'Aşağıdakilerden hangisi bir SESLİ (ÜNLÜ) harftir? 🔤',
+          spokenText: 'Aşağıdakilerden hangisi bir sesli harftir?',
           correct: targetVowel,
           distractors: [shuffledCons[0], shuffledCons[1]],
           explanation: `Alfabemizdeki ünlü harfler: A, E, I, İ, O, Ö, U, Ü. "${targetVowel}" bir ünlü harftir.`
@@ -2482,6 +2487,7 @@
         const item = words[Math.floor(Math.random() * words.length)];
         return {
           question: `"${item.word}" kelimesinde kaç tane sesli (ünlü) harf vardır? 🔤`,
+          spokenText: `"${item.word.toLowerCase('tr-TR')}" kelimesinde kaç tane sesli harf vardır?`,
           correct: item.count.toString(),
           distractors: [(item.count + 1).toString(), Math.max(1, item.count - 1).toString()],
           explanation: `"${item.word}" sözcüğündeki sesli harfler (${item.vowels}) toplam ${item.count} tanedir.`

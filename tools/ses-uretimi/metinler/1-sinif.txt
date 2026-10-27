@@ -1,0 +1,228 @@
+# 1. Sınıf - Balon Seviyeleri (Harfler, Heceler, Sayılar, Ritmik Sayma, Toplama) (42 Cümle)
+Sadece e! sesi olan balonları patlat.
+Sadece küçük e! sesi olan balonları patlat.
+Sadece le! sesi olan balonları patlat.
+Sadece küçük le! sesi olan balonları patlat.
+Sadece a! sesi olan balonları patlat.
+Sadece küçük a! sesi olan balonları patlat.
+Sadece ke! sesi olan balonları patlat.
+Sadece küçük ke! sesi olan balonları patlat.
+Sadece i! sesi olan balonları patlat.
+Sadece küçük i! sesi olan balonları patlat.
+Sadece ne! sesi olan balonları patlat.
+Sadece küçük ne! sesi olan balonları patlat.
+Sadece o! sesi olan balonları patlat.
+Sadece me! sesi olan balonları patlat.
+Sadece küçük me! sesi olan balonları patlat.
+Sadece u! sesi olan balonları patlat.
+Sadece te! sesi olan balonları patlat.
+Sadece küçük te! sesi olan balonları patlat.
+Sadece noktalı ü! sesi olan balonları patlat.
+Sadece ye! sesi olan balonları patlat.
+Sadece küçük ye! sesi olan balonları patlat.
+Sadece sesli harfleri patlat.
+Sadece el hecesi olan balonları patlat.
+Sadece al hecesi olan balonları patlat.
+Sadece ak hecesi olan balonları patlat.
+Sadece ek hecesi olan balonları patlat.
+Sadece et hecesi olan balonları patlat.
+Sadece an hecesi olan balonları patlat.
+Sadece la hecesi olan balonları patlat.
+Sadece ma hecesi olan balonları patlat.
+Sadece to hecesi olan balonları patlat.
+Sadece ku hecesi olan balonları patlat.
+Sadece beş yazan balonları patlat.
+Sadece on yazan balonları patlat.
+Sadece çift sayıları patlat.
+Sadece tek sayıları patlat.
+Beşten büyük olan sayıları patlat.
+Beşten küçük olan sayıları patlat.
+İkişer ritmik sayma sayılarını patlat.
+Beşer ritmik sayma sayılarını patlat.
+Onar ritmik sayma sayılarını patlat.
+Sonucu on eden toplama işlemlerini patlat.
+
+# 1. Sınıf - Geometrik Şekiller ve Paralarımız (25 Cümle)
+Hangi geometrik şeklin 4 kenarı, 4 köşesi vardır ve tüm kenar uzunlukları birbirine EŞİTTİR?
+3 kenarı ve 3 köşesi olan geometrik şekil hangisidir?
+Hiç köşesi ve kenarı olmayan, yuvarlak geometrik şekil hangisidir?
+2 uzun ve 2 kısa kenarı olan, karşılıklı kenarları eşit şekil hangisidir?
+En büyük madeni paramız hangisidir?
+1 Türk Lirası (1 TL) kaç kuruşa eşittir?
+En küçük kağıt paramız hangisidir?
+2 tane 50 Kuruş bir araya gelirse kaç TL eder?
+Tanesi 5 TL olan kalemden 2 tane alırsak toplam kaç TL öderiz?
+Cebinde 20 TL olan Can, 8 TL'ye defter alırsa kaç TL parası kalır?
+Oyun zarı hangi geometrik şekle benzer?
+Sınıf kapımız veya yazı tahtamız hangi geometrik şekle benzer?
+Futbol topu veya madeni para hangi geometrik şekle benzer?
+Trafikteki tehlike uyarı levhaları genellikle hangi şekildedir?
+Hangisi bir madeni (demir) paradır?
+Bir kare ile bir üçgenin köşe sayıları toplamı kaçtır? (4 + 3)?
+Tanesi 2 TL olan simitten 3 tane alan Elif kaç TL öder?
+Hangisi paramızın resmi simgesidir?
+Üçgenin kaç kenarı vardır?
+Çemberin kaç köşesi vardır?
+4 tane 5 TL kağıt para toplam kaç TL eder?
+10 TL parası olan Mehmet, 4 TL'ye toka aldı. Geriye kaç TL'si kaldı?
+Dikdörtgenin kaç köşesi vardır?
+2 tane 10 TL kağıt para toplam kaç TL eder?
+Hangisinin kenar sayısı DİĞERLERİNDEN DAHA AZDIR?
+
+# 1. Sınıf - Zıt Anlamlı Kelimeler (35 Cümle)
+"Büyük" kelimesinin zıt anlamlısı nedir?
+"Uzun" kelimesinin zıt anlamlısı nedir?
+"Sıcak" kelimesinin zıt anlamlısı nedir?
+"Hızlı" kelimesinin zıt anlamlısı nedir?
+"Açık" kelimesinin zıt anlamlısı nedir?
+"Dolu" kelimesinin zıt anlamlısı nedir?
+"Gece" kelimesinin zıt anlamlısı nedir?
+"Ağır" kelimesinin zıt anlamlısı nedir?
+"Ön" kelimesinin zıt anlamlısı nedir?
+"Sert" kelimesinin zıt anlamlısı nedir?
+"Aşağı" kelimesinin zıt anlamlısı nedir? ⬇?
+"Taze" kelimesinin zıt anlamlısı nedir?
+"Temiz" kelimesinin zıt anlamlısı nedir?
+"Acı" biberin zıt anlamlısı nedir?
+"İyi" kelimesinin zıt anlamlısı nedir?
+"Siyah" kelimesinin zıt anlamlısı nedir?
+"Doğru" cevabın zıt anlamlısı nedir?
+"Islak" kelimesinin zıt anlamlısı nedir?
+"Şişman" kelimesinin zıt anlamlısı nedir?
+"Zor" sorunun zıt anlamlısı nedir?
+"Neşeli" kelimesinin zıt anlamlısı nedir?
+"İç" kelimesinin zıt anlamlısı nedir?
+"Uzak" kelimesinin zıt anlamlısı nedir?
+"Genç" kelimesinin zıt anlamlısı nedir?
+"Zengin" kelimesinin zıt anlamlısı nedir?
+"Cesur" kahramanın zıt anlamlısı nedir?
+"Giriş" kapısının zıt anlamlısı nedir?
+"Gülmek" eyleminin zıt anlamlısı nedir?
+"Gelmek" fiilinin zıt anlamlısı nedir? ‍?
+"Almak" kelimesinin zıt anlamlısı nedir?
+"Başlamak" eyleminin zıt anlamlısı nedir?
+"Yüksek" dağın zıt anlamlısı nedir?
+"Yeni" eşyanın zıt anlamlısı nedir?
+"Aydınlık" odanın zıt anlamlısı nedir?
+"Kalın" kitabın zıt anlamlısı nedir?
+
+# 1. Sınıf - Okulumuzda ve Evimizde Hayat (26 Cümle)
+Sınıfta öğretmenimizden veya arkadaşımızdan söz isterken ne yaparız?
+Teneffüslerde koridorda ve merdivenlerde nasıl yürümeliyiz? ‍?
+Arkadaşımız bize yardım ettiğinde hangi nezaket sözünü söyleriz?
+İstemeden arkadaşımıza çarptığımızda hangi nezaket sözünü söyleriz?
+Sabah okula geldiğimizde öğretmenimize ve arkadaşlarımıza ne deriz?
+Birinden silgi veya kalem ödünç isterken hangi sihirli kelimeyi kullanırız?
+Okul tuvaletlerini kullandıktan sonra ellerimizi ne ile yıkamalıyız?
+Sıramızı ve sınıfımızı temiz tutmak kimin görevidir?
+Çöplerimizi nereye atmalıyız?
+Evde kendi odamızı ve oyuncaklarımızı kim toplamalıdır?
+Tanımadığımız biri bize çikolata veya hediye vermek isterse ne yapmalıyız?
+Evde pencereden veya balkondan aşağı doğru ne yapmamalıyız?
+Elektrik prizlerine ve kablolara ne yapmamalıyız?
+Islak ellerle elektrik anahtarına basmak neden tehlikelidir?
+Ders zili çaldığında ne yapmalıyız?
+Okul servisindeyken güvenliğimiz için ne yapmalıyız?
+Bayrak töreninde İstiklal Marşı söylenirken nasıl durmalıyız?
+Okulda bir sorun yaşadığımızda ilk kime haber vermeliyiz? ‍?
+Arkadaşımızın boya kalemini kullanmak istediğimizde ne yaparız?
+Yemek yerken ağzımızda lokma varken ne yapmamalıyız?
+Akrabalarımızdan babamızın annesine ne deriz?
+Annemizin kız kardeşine ne deriz?
+Babamızın erkek kardeşine ne deriz?
+Büyüklerimizin konuşması sırasında araya girmemiz gerektiğinde ne deriz?
+Akşam yatarken aile bireylerimize ne dileriz?
+Sınıf kütüphanesinden aldığımız kitabı okuduktan sonra ne yapmalıyız?
+
+# 1. Sınıf - Sağlıklı Hayat ve Mevsimler (26 Cümle)
+Yemeklerden önce ve sonra mikroplardan korunmak için ne yaparız?
+Dişlerimizin çürümemesi için günde en az kaç kez fırçalamalıyız?
+Kemiklerimizin ve dişlerimizin güçlü olması için her gün ne içmeliyiz?
+Güne zinde ve enerjik başlamak için sabahları ne yapmalıyız?
+Hangi besin grubu sağlığımız için ZARARLIDIR?
+Vücudumuzun susuz kalmaması için günde bol bol ne içmeliyiz?
+Hapşırırken veya öksürürken ağzımızı ne ile kapatmalıyız?
+Ağaçların yaprak açtığı, çiçeklerin açtığı ve havaların ısındığı mevsim hangisidir?
+Havanın en sıcak olduğu, denize girilen ve dondurma yenilen mevsim hangisidir?
+Ağaçların yapraklarını döktüğü, rüzgarlı ve okulların açıldığı mevsim hangisidir?
+Havanın en soğuk olduğu, kar yağdığı ve kardan adam yapılan mevsim hangisidir?
+Bir yılda toplam kaç mevsim vardır?
+Kış mevsiminde dışarı çıkarken nasıl giyinmeliyiz?
+Yaz mevsiminde Güneş'in yakıcı ışınlarından korunmak için ne takarız?
+Hangisi C vitamini deposu olan bir kış meyvesidir?
+Gözlerimizin sağlıklı görmesi için hangi sebzeyi tüketmek çok faydalıdır?
+Geceleri sağlıklı büyümek için vaktinde ne yapmalıyız?
+Tırnaklarımız uzadığında ne yapmalıyız?
+Saçlarımızın ve vücudumuzun temiz olması için haftada en az kaç kez banyo yapmalıyız?
+Meyve ve sebzeleri yemeden önce mutlaka ne yapmalıyız?
+Kardan adam hangi mevsimde yapılabilir?
+Deniz ve kum mevsimi hangi mevsimdir?
+Yağmur yağdığında ıslanmamak için yanımıza ne alırız?
+Gözlerimizin yorulmaması için tablete ve ekrana nasıl bakmalıyız?
+Spor yapmak ve bahçede koşup oynamak vücudumuza ne kazandırır?
+Hasta olduğumuzda iyileşmek için kime gideriz?
+
+# 1. Sınıf - Hece Birleştirme Atölyesi (18 Cümle)
+el kelimesini oluştur.
+al kelimesini oluştur.
+at kelimesini oluştur.
+et kelimesini oluştur.
+ana kelimesini oluştur.
+ala kelimesini oluştur.
+ali̇ kelimesini oluştur.
+anne kelimesini oluştur.
+elma kelimesini oluştur.
+nane kelimesini oluştur.
+kale kelimesini oluştur.
+kedi̇ kelimesini oluştur.
+okul kelimesini oluştur.
+ki̇tap kelimesini oluştur.
+süt kelimesini oluştur.
+li̇mon kelimesini oluştur.
+balik kelimesini oluştur.
+kalem kelimesini oluştur.
+
+# 1. Sınıf - Hızlı Kelime Yakala (8 Cümle)
+Bu lezzetli meyvenin ilk harfi hangisidir?
+Bu rüzgar gibi koşan dostumuzun adı nedir?
+Bembeyaz sağlıklı içeceğin ilk sesi nedir?
+Sarı ekşi meyvenin ilk sesi nedir?
+Miyav diyen sevimli dostumuzun adı nedir?
+Düt düt diye korna çalan taşıtın ilk sesi nedir?
+Mavi sularda yüzen sevimli canlının ilk harfi nedir?
+Dünyamızı ısıtan sıcacık dostumuzun ilk sesi nedir?
+
+# 1. Sınıf - Hece Sayısı ve Harf Bilgisi (22 Cümle)
+"ki̇tap" sözcüğü kaç hecelidir?
+"çanta" sözcüğü kaç hecelidir?
+"okul" sözcüğü kaç hecelidir?
+"kalem" sözcüğü kaç hecelidir?
+"elma" sözcüğü kaç hecelidir?
+"araba" sözcüğü kaç hecelidir?
+"kelebek" sözcüğü kaç hecelidir?
+"papağan" sözcüğü kaç hecelidir?
+"domates" sözcüğü kaç hecelidir?
+"merdi̇ven" sözcüğü kaç hecelidir?
+"şemsi̇ye" sözcüğü kaç hecelidir?
+"bi̇lgi̇sayar" sözcüğü kaç hecelidir?
+"televi̇zyon" sözcüğü kaç hecelidir?
+"cumhuri̇yet" sözcüğü kaç hecelidir?
+"kütüphane" sözcüğü kaç hecelidir?
+Aşağıdakilerden hangisi bir sesli harftir?
+"okul" kelimesinde kaç tane sesli harf vardır?
+"kalem" kelimesinde kaç tane sesli harf vardır?
+"ki̇taplik" kelimesinde kaç tane sesli harf vardır?
+"türki̇ye" kelimesinde kaç tane sesli harf vardır?
+"araba" kelimesinde kaç tane sesli harf vardır?
+"güneş" kelimesinde kaç tane sesli harf vardır?
+
+# 1. Sınıf - Hafıza Kartları Yönergeleri (3 Cümle)
+Büyük harf ile küçük harfi eşleştir! Eşini bul.
+Zıt anlamlı kelimeleri eşleştir!
+Toplama işlemi ve sonucunu eşleştir!
+
+# 1. Sınıf - Hayat Bilgisi Genel Havuz Soruları (4 Cümle)
+Yemeklerden önce ve sonra sağlığımız için ne yapmalıyız?
+Trafikte karşıdan karşıya geçerken nereden geçmeliyiz?
+Türkiye Cumhuriyeti'nin kurucusu ve ilk Cumhurbaşkanı kimdir?
+Sağlıklı büyümek ve gelişmek için sabahları ne yapmalıyız?
