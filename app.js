@@ -2574,45 +2574,256 @@
     // 2. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİ
     // -------------------------------------------------------------
     generateGrade2Math() {
-      const type = Math.floor(Math.random() * 3);
-      if (type === 0) {
-        // İki basamaklı eldeli/eldesiz toplama
-        const a = Math.floor(Math.random() * 45) + 15;
-        const b = Math.floor(Math.random() * 35) + 12;
-        const ans = a + b;
-        return {
-          question: `${a} + ${b} = ?`,
-          correct: ans.toString(),
-          distractors: [(ans + 10).toString(), (ans - 2).toString()],
-          explanation: `${a} + ${b}: Birlikleri topla (${a%10}+${b%10}), onlukları ekle -> Sonuç: ${ans}.`
-        };
-      } else if (type === 1) {
-        // İki basamaklı çıkarma
-        const a = Math.floor(Math.random() * 40) + 50; // 50..89
-        const b = Math.floor(Math.random() * 30) + 12; // 12..41
-        const ans = a - b;
-        return {
-          question: `${a} - ${b} = ?`,
-          correct: ans.toString(),
-          distractors: [(ans + 2).toString(), (ans - 10).toString()],
-          explanation: `${a} sayısından ${b} çıkarıldığında fark ${ans} olur.`
-        };
+      const r = Math.random();
+      if (r < 0.35) {
+        const item = this.drawFromPool(this.grade2AdditionSubtractionPool, "grade2AdditionSubtractionPool");
+        return { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else if (r < 0.65) {
+        return this.generateGrade2PlaceValue();
+      } else if (r < 0.85) {
+        return this.generateGrade2Multiplication();
       } else {
-        // Ritmik sayma (3'er veya 4'er)
-        const step = Math.random() > 0.5 ? 3 : 4;
-        const start = step * (Math.floor(Math.random() * 4) + 1);
-        const s1 = start;
-        const s2 = start + step;
-        const s3 = start + step * 2;
-        const ans = start + step * 3;
-        return {
-          question: `${s1} - ${s2} - ${s3} - ?`,
-          correct: ans.toString(),
-          distractors: [(ans + step).toString(), (ans - 2).toString()],
-          explanation: `Sayılar ${step}'er ritmik sayma kuralına göre ilerliyor. Doğru cevap: ${ans}.`
-        };
+        const item = this.drawFromPool(this.grade2ClocksPool, "grade2ClocksPool");
+        return { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
       }
     },
+
+    grade2AdditionSubtractionPool: [
+      {
+            "q": "25 ile 14 sayılarının toplamı kaçtır? ➕",
+            "a": "39",
+            "d": [
+                  "49",
+                  "37"
+            ],
+            "exp": "25 + 14 = 39 eder."
+      },
+      {
+            "q": "32 ile 27 sayılarının toplamı kaçtır? ➕",
+            "a": "59",
+            "d": [
+                  "69",
+                  "57"
+            ],
+            "exp": "32 + 27 = 59 eder."
+      },
+      {
+            "q": "46 ile 18 sayılarının toplamı kaçtır? ➕",
+            "a": "64",
+            "d": [
+                  "54",
+                  "62"
+            ],
+            "exp": "46 + 18 = 64 eder."
+      },
+      {
+            "q": "54 ile 29 sayılarının toplamı kaçtır? ➕",
+            "a": "83",
+            "d": [
+                  "73",
+                  "85"
+            ],
+            "exp": "54 + 29 = 83 eder."
+      },
+      {
+            "q": "38 ile 25 sayılarının toplamı kaçtır? ➕",
+            "a": "63",
+            "d": [
+                  "53",
+                  "65"
+            ],
+            "exp": "38 + 25 = 63 eder."
+      },
+      {
+            "q": "63 ile 24 sayılarının toplamı kaçtır? ➕",
+            "a": "87",
+            "d": [
+                  "77",
+                  "89"
+            ],
+            "exp": "63 + 24 = 87 eder."
+      },
+      {
+            "q": "47 ile 36 sayılarının toplamı kaçtır? ➕",
+            "a": "83",
+            "d": [
+                  "73",
+                  "81"
+            ],
+            "exp": "47 + 36 = 83 eder."
+      },
+      {
+            "q": "58 ile 15 sayılarının toplamı kaçtır? ➕",
+            "a": "73",
+            "d": [
+                  "63",
+                  "75"
+            ],
+            "exp": "58 + 15 = 73 eder."
+      },
+      {
+            "q": "19 ile 28 sayılarının toplamı kaçtır? ➕",
+            "a": "47",
+            "d": [
+                  "37",
+                  "49"
+            ],
+            "exp": "19 + 28 = 47 eder."
+      },
+      {
+            "q": "45 sayısından 12 çıkarıldığında fark kaç olur? ➖",
+            "a": "33",
+            "d": [
+                  "35",
+                  "23"
+            ],
+            "exp": "45 - 12 = 33 kalır."
+      },
+      {
+            "q": "68 sayısından 25 çıkarıldığında fark kaç olur? ➖",
+            "a": "43",
+            "d": [
+                  "45",
+                  "33"
+            ],
+            "exp": "68 - 25 = 43 kalır."
+      },
+      {
+            "q": "74 sayısından 36 çıkarıldığında fark kaç olur? ➖",
+            "a": "38",
+            "d": [
+                  "48",
+                  "36"
+            ],
+            "exp": "74 - 36 = 38 kalır."
+      },
+      {
+            "q": "85 sayısından 29 çıkarıldığında fark kaç olur? ➖",
+            "a": "56",
+            "d": [
+                  "66",
+                  "54"
+            ],
+            "exp": "85 - 29 = 56 kalır."
+      },
+      {
+            "q": "92 sayısından 45 çıkarıldığında fark kaç olur? ➖",
+            "a": "47",
+            "d": [
+                  "57",
+                  "45"
+            ],
+            "exp": "92 - 45 = 47 kalır."
+      },
+      {
+            "q": "56 sayısından 18 çıkarıldığında fark kaç olur? ➖",
+            "a": "38",
+            "d": [
+                  "48",
+                  "36"
+            ],
+            "exp": "56 - 18 = 38 kalır."
+      },
+      {
+            "q": "63 sayısından 27 çıkarıldığında fark kaç olur? ➖",
+            "a": "36",
+            "d": [
+                  "46",
+                  "34"
+            ],
+            "exp": "63 - 27 = 36 kalır."
+      },
+      {
+            "q": "80 sayısından 34 çıkarıldığında fark kaç olur? ➖",
+            "a": "46",
+            "d": [
+                  "56",
+                  "44"
+            ],
+            "exp": "80 - 34 = 46 kalır."
+      },
+      {
+            "q": "71 sayısından 23 çıkarıldığında fark kaç olur? ➖",
+            "a": "48",
+            "d": [
+                  "58",
+                  "46"
+            ],
+            "exp": "71 - 23 = 48 kalır."
+      },
+      {
+            "q": "3, 6, 9 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "12",
+            "d": [
+                  "11",
+                  "15"
+            ],
+            "exp": "Sayılar 3'er artıyor. 9'dan sonra 12 gelir."
+      },
+      {
+            "q": "12, 15, 18 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "21",
+            "d": [
+                  "20",
+                  "24"
+            ],
+            "exp": "Sayılar 3'er artıyor. 18'den sonra 21 gelir."
+      },
+      {
+            "q": "21, 24, 27 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "30",
+            "d": [
+                  "29",
+                  "33"
+            ],
+            "exp": "Sayılar 3'er artıyor. 27'den sonra 30 gelir."
+      },
+      {
+            "q": "4, 8, 12 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "16",
+            "d": [
+                  "14",
+                  "18"
+            ],
+            "exp": "Sayılar 4'er artıyor. 12'den sonra 16 gelir."
+      },
+      {
+            "q": "16, 20, 24 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "28",
+            "d": [
+                  "26",
+                  "30"
+            ],
+            "exp": "Sayılar 4'er artıyor. 24'ten sonra 28 gelir."
+      },
+      {
+            "q": "28, 32, 36 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "40",
+            "d": [
+                  "38",
+                  "42"
+            ],
+            "exp": "Sayılar 4'er artıyor. 36'dan sonra 40 gelir."
+      },
+      {
+            "q": "5, 10, 15 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "20",
+            "d": [
+                  "18",
+                  "25"
+            ],
+            "exp": "Sayılar 5'er artıyor. 15'ten sonra 20 gelir."
+      },
+      {
+            "q": "20, 25, 30 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
+            "a": "35",
+            "d": [
+                  "32",
+                  "40"
+            ],
+            "exp": "Sayılar 5'er artıyor. 30'dan sonra 35 gelir."
+      }
+],
 
     grade2TurkishPool: [
       { q: '"Siyah" kelimesinin eş anlamlısı nedir?', a: 'Kara', d: ['Karanlık', 'Koyu'], exp: 'Siyah ile Kara aynı anlama gelen eş anlamlı kelimelerdir.' },
@@ -2628,110 +2839,500 @@
       { q: '"Pahalı" kelimesinin zıt anlamlısı nedir?', a: 'Ucuz', d: ['Bedava', 'Basit'], exp: 'Fiyatı yüksek olan pahalıdır, düşük olan ucuzdur.' },
       { q: '"Cesur" kelimesinin zıt anlamlısı nedir?', a: 'Korkak', d: ['Zayıf', 'Ürkek'], exp: 'Cesur yüreğin zıttı korkak davranmaktır.' }
     ],
-    // 2. SINIF: BASAMAK DEĞERİ VE SAYILAR DİNAMİK ÜRETECİ (SINIRSIZ SORU)
-    generateGrade2PlaceValue() {
-      const mode = Math.floor(Math.random() * 4);
-      if (mode === 0) {
-        // Onluk ve Birlikten Sayı Oluşturma
-        const tens = Math.floor(Math.random() * 8) + 2; // 2..9
-        const ones = Math.floor(Math.random() * 9) + 1; // 1..9
-        const num = tens * 10 + ones;
-        return {
-          question: `${tens} onluk ve ${ones} birlikten oluşan sayı kaçtır? 📦`,
-          correct: num.toString(),
-          distractors: [(ones * 10 + tens).toString(), (num + 10).toString()],
-          explanation: `${tens} onluk = ${tens * 10}, ${ones} birlik = ${ones}. Sayı: ${num}'dur.`
-        };
-      } else if (mode === 1) {
-        // Basamak Değeri
-        const tens = Math.floor(Math.random() * 8) + 2; // 2..9
-        const ones = Math.floor(Math.random() * 9) + 1; // 1..9
-        const num = tens * 10 + ones;
-        const askTens = Math.random() > 0.5;
-        if (askTens) {
-          return {
-            question: `"${num}" sayısındaki ${tens} rakamının basamak değeri kaçtır? 🔢`,
-            correct: (tens * 10).toString(),
-            distractors: [tens.toString(), (tens * 10 + ones).toString()],
-            explanation: `${tens} rakamı onlar basamağında yer aldığı için basamak değeri ${tens} × 10 = ${tens * 10}'dur.`
-          };
-        } else {
-          return {
-            question: `"${num}" sayısındaki ${ones} rakamının basamak değeri kaçtır? 🔢`,
-            correct: ones.toString(),
-            distractors: [(ones * 10).toString(), num.toString()],
-            explanation: `${ones} rakamı birler basamağında yer aldığı için basamak değeri ${ones}'dir.`
-          };
-        }
-      } else if (mode === 2) {
-        // En Yakın Onluğa Yuvarlama
-        const tens = Math.floor(Math.random() * 8) + 1; // 1..8
-        const ones = Math.floor(Math.random() * 9) + 1; // 1..9
-        const num = tens * 10 + ones;
-        const rounded = ones >= 5 ? (tens + 1) * 10 : tens * 10;
-        const otherTens = ones >= 5 ? tens * 10 : (tens + 1) * 10;
-        return {
-          question: `"${num}" sayısı en yakın hangi onluğa yuvarlanır? 🎯`,
-          correct: rounded.toString(),
-          distractors: [otherTens.toString(), (rounded + 10).toString()],
-          explanation: `Birler basamağında ${ones} vardır. (${ones >= 5 ? '5 ve üzeri olduğu için yukarı' : '5\'ten küçük olduğu için aşağı'}) ${rounded} sayısına yuvarlanır.`
-        };
-      } else {
-        // Deste ve Düzine
-        const isDeste = Math.random() > 0.5;
-        if (isDeste) {
-          const count = Math.floor(Math.random() * 3) + 1; // 1..3 deste
-          const ans = count * 10;
-          return {
-            question: `${count} deste kalem toplam kaç tanedir? 📦`,
-            correct: `${ans} tane`,
-            distractors: [`${ans + 2} tane`, `${ans - 2} tane`],
-            explanation: `1 deste = 10 tanedir. ${count} deste = ${count} × 10 = ${ans} tane eder.`
-          };
-        } else {
-          const count = Math.floor(Math.random() * 2) + 1; // 1..2 düzine
-          const ans = count * 12;
-          return {
-            question: `${count} düzine gül toplam kaç tanedir? 🌹`,
-            correct: `${ans} tane`,
-            distractors: [`${count * 10} tane`, `${ans + 4} tane`],
-            explanation: `1 düzine = 12 tanedir. ${count} düzine = ${count} × 12 = ${ans} tane eder.`
-          };
-        }
+    // 2. SINIF: BASAMAK DEĞERİ VE SAYILAR HAVUZU (26 SORU)
+    grade2PlaceValuePool: [
+      {
+            "q": "3 onluk ve 5 birlikten oluşan sayı kaçtır? 📦",
+            "a": "35",
+            "d": [
+                  "53",
+                  "45"
+            ],
+            "exp": "3 onluk = 30, 5 birlik = 5. Toplam: 35 eder."
+      },
+      {
+            "q": "7 onluk ve 2 birlikten oluşan sayı kaçtır? 📦",
+            "a": "72",
+            "d": [
+                  "27",
+                  "82"
+            ],
+            "exp": "7 onluk = 70, 2 birlik = 2. Toplam: 72 eder."
+      },
+      {
+            "q": "4 onluk ve 9 birlikten oluşan sayı kaçtır? 📦",
+            "a": "49",
+            "d": [
+                  "94",
+                  "59"
+            ],
+            "exp": "4 onluk = 40, 9 birlik = 9. Toplam: 49 eder."
+      },
+      {
+            "q": "6 onluk ve 0 birlikten oluşan sayı kaçtır? 📦",
+            "a": "60",
+            "d": [
+                  "6",
+                  "66"
+            ],
+            "exp": "6 onluk = 60, 0 birlik = 0. Toplam: 60 eder."
+      },
+      {
+            "q": "8 onluk ve 4 birlikten oluşan sayı kaçtır? 📦",
+            "a": "84",
+            "d": [
+                  "48",
+                  "94"
+            ],
+            "exp": "8 onluk = 80, 4 birlik = 4. Toplam: 84 eder."
+      },
+      {
+            "q": "5 onluk ve 8 birlikten oluşan sayı kaçtır? 📦",
+            "a": "58",
+            "d": [
+                  "85",
+                  "68"
+            ],
+            "exp": "5 onluk = 50, 8 birlik = 8. Toplam: 58 eder."
+      },
+      {
+            "q": "2 onluk ve 6 birlikten oluşan sayı kaçtır? 📦",
+            "a": "26",
+            "d": [
+                  "62",
+                  "36"
+            ],
+            "exp": "2 onluk = 20, 6 birlik = 6. Toplam: 26 eder."
+      },
+      {
+            "q": "9 onluk ve 1 birlikten oluşan sayı kaçtır? 📦",
+            "a": "91",
+            "d": [
+                  "19",
+                  "81"
+            ],
+            "exp": "9 onluk = 90, 1 birlik = 1. Toplam: 91 eder."
+      },
+      {
+            "q": "64 sayısındaki 6 rakamının basamak değeri kaçtır? 🔢",
+            "a": "60",
+            "d": [
+                  "6",
+                  "64"
+            ],
+            "exp": "6 rakamı onlar basamağında olduğu için basamak değeri 6 × 10 = 60'tır."
+      },
+      {
+            "q": "85 sayısındaki 5 rakamının basamak değeri kaçtır? 🔢",
+            "a": "5",
+            "d": [
+                  "50",
+                  "85"
+            ],
+            "exp": "5 rakamı birler basamağında olduğu için basamak değeri 5'tir."
+      },
+      {
+            "q": "47 sayısındaki 4 rakamının basamak değeri kaçtır? 🔢",
+            "a": "40",
+            "d": [
+                  "4",
+                  "47"
+            ],
+            "exp": "4 rakamı onlar basamağında yer aldığı için basamak değeri 40'tır."
+      },
+      {
+            "q": "93 sayısındaki 9 rakamının basamak değeri kaçtır? 🔢",
+            "a": "90",
+            "d": [
+                  "9",
+                  "93"
+            ],
+            "exp": "9 rakamı onlar basamağında olduğu için basamak değeri 90'dır."
+      },
+      {
+            "q": "52 sayısındaki 2 rakamının basamak değeri kaçtır? 🔢",
+            "a": "2",
+            "d": [
+                  "20",
+                  "50"
+            ],
+            "exp": "2 rakamı birler basamağında olduğu için basamak değeri 2'dir."
+      },
+      {
+            "q": "38 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
+            "a": "40",
+            "d": [
+                  "30",
+                  "50"
+            ],
+            "exp": "Birler basamağında 8 olduğu için (5 ve üzeri) 40 sayısına yuvarlanır."
+      },
+      {
+            "q": "73 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
+            "a": "70",
+            "d": [
+                  "80",
+                  "60"
+            ],
+            "exp": "Birler basamağında 3 olduğu için (5'ten küçük) 70 sayısına yuvarlanır."
+      },
+      {
+            "q": "55 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
+            "a": "60",
+            "d": [
+                  "50",
+                  "70"
+            ],
+            "exp": "Birler basamağında 5 olduğu için yukarı, yani 60 sayısına yuvarlanır."
+      },
+      {
+            "q": "82 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
+            "a": "80",
+            "d": [
+                  "90",
+                  "70"
+            ],
+            "exp": "Birler basamağında 2 olduğu için 80 sayısına yuvarlanır."
+      },
+      {
+            "q": "64 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
+            "a": "60",
+            "d": [
+                  "70",
+                  "50"
+            ],
+            "exp": "Birler basamağında 4 olduğu için aşağı, yani 60 sayısına yuvarlanır."
+      },
+      {
+            "q": "29 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
+            "a": "30",
+            "d": [
+                  "20",
+                  "40"
+            ],
+            "exp": "Birler basamağında 9 olduğu için 30 sayısına yuvarlanır."
+      },
+      {
+            "q": "45 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
+            "a": "50",
+            "d": [
+                  "40",
+                  "60"
+            ],
+            "exp": "Birler basamağında 5 olduğu için 50 sayısına yuvarlanır."
+      },
+      {
+            "q": "1 deste kalem kaç tanedir? 📦",
+            "a": "10 tane",
+            "d": [
+                  "12 tane",
+                  "8 tane"
+            ],
+            "exp": "1 deste daima 10 tanedir."
+      },
+      {
+            "q": "2 deste silgi toplam kaç tanedir? 📦",
+            "a": "20 tane",
+            "d": [
+                  "24 tane",
+                  "18 tane"
+            ],
+            "exp": "1 deste = 10 tanedir. 2 deste = 2 × 10 = 20 tane eder."
+      },
+      {
+            "q": "3 deste cetvel toplam kaç tanedir? 📦",
+            "a": "30 tane",
+            "d": [
+                  "36 tane",
+                  "25 tane"
+            ],
+            "exp": "3 deste = 3 × 10 = 30 tane eder."
+      },
+      {
+            "q": "1 düzine gül kaç tanedir? 🌹",
+            "a": "12 tane",
+            "d": [
+                  "10 tane",
+                  "15 tane"
+            ],
+            "exp": "1 düzine daima 12 tanedir."
+      },
+      {
+            "q": "2 düzine yumurta toplam kaç tanedir? 🥚",
+            "a": "24 tane",
+            "d": [
+                  "20 tane",
+                  "22 tane"
+            ],
+            "exp": "1 düzine = 12 tanedir. 2 düzine = 2 × 12 = 24 tane eder."
+      },
+      {
+            "q": "1 düzine bardak ile 1 deste bardağın toplamı kaçtır? 🥛",
+            "a": "22 tane",
+            "d": [
+                  "20 tane",
+                  "24 tane"
+            ],
+            "exp": "1 düzine = 12, 1 deste = 10. Toplam: 12 + 10 = 22 tane eder."
       }
+],
+
+    generateGrade2PlaceValue() {
+      const item = this.drawFromPool(this.grade2PlaceValuePool, "grade2PlaceValuePool");
+      return {
+        question: item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
     },
 
-    // 2. SINIF: HIZLI ÇARPMA DİNAMİK ÜRETECİ (2, 3, 4, 5'LERLE ÇARPIM TABLOSU)
-    generateGrade2Multiplication() {
-      const multipliers = [2, 3, 4, 5];
-      const a = multipliers[Math.floor(Math.random() * multipliers.length)];
-      const b = Math.floor(Math.random() * 9) + 2; // 2..10
-      const ans = a * b;
-      const isWordProblem = Math.random() < 0.35;
-
-      if (isWordProblem) {
-        const problems = [
-          { text: `Günde ${a} elma yiyen Ayşe, ${b} günde toplam kaç elma yer? 🍎`, exp: `${b} gün boyunca her gün ${a} elma: ${b} × ${a} = ${ans} elma eder.` },
-          { text: `Her masada ${a} öğrenci oturuyor. ${b} masada toplam kaç öğrenci vardır? 🏫`, exp: `${b} masada ${a}'şar öğrenci: ${b} × ${a} = ${ans} öğrenci eder.` },
-          { text: `Tanesi ${a} TL olan defterlerden ${b} tane alan Mert satıcıya kaç TL öder? 📚`, exp: `${b} tane ${a} TL: ${b} × ${a} = ${ans} TL öder.` },
-          { text: `Bir sandalyenin 4 ayağı vardır. ${b} sandalyenin toplam kaç ayağı vardır? 🪑`, forceA: 4, ans: 4 * b, exp: `${b} sandalye × 4 ayak = ${4 * b} ayak eder.` }
-        ];
-        const prob = problems[Math.floor(Math.random() * problems.length)];
-        const finalAns = prob.forceA ? prob.ans : ans;
-        return {
-          question: prob.text,
-          correct: finalAns.toString(),
-          distractors: [(finalAns + a).toString(), Math.max(1, finalAns - a).toString()],
-          explanation: prob.exp
-        };
-      } else {
-        return {
-          question: `${a} × ${b} = ? ✖️`,
-          correct: ans.toString(),
-          distractors: [(ans + a).toString(), Math.max(1, ans - a).toString()],
-          explanation: `${a} kere ${b} = ${ans} eder. Çarpma, aynı sayıyı tekrarlı toplama işlemidir.`
-        };
+    // 2. SINIF: ÇARPIM TABLOSU VE PROBLEMLER HAVUZU (26 SORU)
+    grade2MultiplicationPool: [
+      {
+            "q": "2 kere 4 işleminin sonucu kaçtır? ✖️",
+            "a": "8",
+            "d": [
+                  "6",
+                  "10"
+            ],
+            "exp": "2 × 4 = 8 eder."
+      },
+      {
+            "q": "3 kere 5 işleminin sonucu kaçtır? ✖️",
+            "a": "15",
+            "d": [
+                  "12",
+                  "18"
+            ],
+            "exp": "3 × 5 = 15 eder."
+      },
+      {
+            "q": "4 kere 3 işleminin sonucu kaçtır? ✖️",
+            "a": "12",
+            "d": [
+                  "10",
+                  "14"
+            ],
+            "exp": "4 × 3 = 12 eder."
+      },
+      {
+            "q": "5 kere 6 işleminin sonucu kaçtır? ✖️",
+            "a": "30",
+            "d": [
+                  "25",
+                  "35"
+            ],
+            "exp": "5 × 6 = 30 eder."
+      },
+      {
+            "q": "2 kere 8 işleminin sonucu kaçtır? ✖️",
+            "a": "16",
+            "d": [
+                  "14",
+                  "18"
+            ],
+            "exp": "2 × 8 = 16 eder."
+      },
+      {
+            "q": "3 kere 7 işleminin sonucu kaçtır? ✖️",
+            "a": "21",
+            "d": [
+                  "18",
+                  "24"
+            ],
+            "exp": "3 × 7 = 21 eder."
+      },
+      {
+            "q": "4 kere 5 işleminin sonucu kaçtır? ✖️",
+            "a": "20",
+            "d": [
+                  "16",
+                  "24"
+            ],
+            "exp": "4 × 5 = 20 eder."
+      },
+      {
+            "q": "5 kere 8 işleminin sonucu kaçtır? ✖️",
+            "a": "40",
+            "d": [
+                  "35",
+                  "45"
+            ],
+            "exp": "5 × 8 = 40 eder."
+      },
+      {
+            "q": "2 kere 9 işleminin sonucu kaçtır? ✖️",
+            "a": "18",
+            "d": [
+                  "16",
+                  "20"
+            ],
+            "exp": "2 × 9 = 18 eder."
+      },
+      {
+            "q": "3 kere 9 işleminin sonucu kaçtır? ✖️",
+            "a": "27",
+            "d": [
+                  "24",
+                  "30"
+            ],
+            "exp": "3 × 9 = 27 eder."
+      },
+      {
+            "q": "4 kere 4 işleminin sonucu kaçtır? ✖️",
+            "a": "16",
+            "d": [
+                  "12",
+                  "20"
+            ],
+            "exp": "4 × 4 = 16 eder."
+      },
+      {
+            "q": "5 kere 5 işleminin sonucu kaçtır? ✖️",
+            "a": "25",
+            "d": [
+                  "20",
+                  "30"
+            ],
+            "exp": "5 × 5 = 25 eder."
+      },
+      {
+            "q": "4 kere 6 işleminin sonucu kaçtır? ✖️",
+            "a": "24",
+            "d": [
+                  "20",
+                  "28"
+            ],
+            "exp": "4 × 6 = 24 eder."
+      },
+      {
+            "q": "5 kere 9 işleminin sonucu kaçtır? ✖️",
+            "a": "45",
+            "d": [
+                  "40",
+                  "50"
+            ],
+            "exp": "5 × 9 = 45 eder."
+      },
+      {
+            "q": "3 kere 6 işleminin sonucu kaçtır? ✖️",
+            "a": "18",
+            "d": [
+                  "15",
+                  "21"
+            ],
+            "exp": "3 × 6 = 18 eder."
+      },
+      {
+            "q": "2 kere 7 işleminin sonucu kaçtır? ✖️",
+            "a": "14",
+            "d": [
+                  "12",
+                  "16"
+            ],
+            "exp": "2 × 7 = 14 eder."
+      },
+      {
+            "q": "4 kere 8 işleminin sonucu kaçtır? ✖️",
+            "a": "32",
+            "d": [
+                  "28",
+                  "36"
+            ],
+            "exp": "4 × 8 = 32 eder."
+      },
+      {
+            "q": "5 kere 7 işleminin sonucu kaçtır? ✖️",
+            "a": "35",
+            "d": [
+                  "30",
+                  "40"
+            ],
+            "exp": "5 × 7 = 35 eder."
+      },
+      {
+            "q": "Günde 2 elma yiyen Ayşe 5 günde toplam kaç elma yer? 🍎",
+            "a": "10 elma",
+            "d": [
+                  "8 elma",
+                  "12 elma"
+            ],
+            "exp": "5 gün × 2 elma = 10 elma eder."
+      },
+      {
+            "q": "Her masada 4 öğrenci oturuyor. 3 masada toplam kaç öğrenci vardır? 🏫",
+            "a": "12 öğrenci",
+            "d": [
+                  "10 öğrenci",
+                  "14 öğrenci"
+            ],
+            "exp": "3 masa × 4 öğrenci = 12 öğrenci eder."
+      },
+      {
+            "q": "Tanesi 5 lira olan defterlerden 4 tane alan Mert satıcıya kaç lira öder? 📚",
+            "a": "20 lira",
+            "d": [
+                  "18 lira",
+                  "25 lira"
+            ],
+            "exp": "4 defter × 5 lira = 20 lira öder."
+      },
+      {
+            "q": "Bir sandalyenin 4 ayağı vardır. 5 sandalyenin toplam kaç ayağı vardır? 🪑",
+            "a": "20 ayak",
+            "d": [
+                  "16 ayak",
+                  "24 ayak"
+            ],
+            "exp": "5 sandalye × 4 ayak = 20 ayak eder."
+      },
+      {
+            "q": "Bir kedinin 4 patisi vardır. 6 kedinin toplam kaç patisi vardır? 🐱",
+            "a": "24 pati",
+            "d": [
+                  "20 pati",
+                  "28 pati"
+            ],
+            "exp": "6 kedi × 4 pati = 24 pati eder."
+      },
+      {
+            "q": "Her gün 3 sayfa kitap okuyan Ali 4 günde toplam kaç sayfa okur? 📖",
+            "a": "12 sayfa",
+            "d": [
+                  "10 sayfa",
+                  "15 sayfa"
+            ],
+            "exp": "4 gün × 3 sayfa = 12 sayfa okur."
+      },
+      {
+            "q": "Bir tabakta 5 kurabiye var. 6 tabakta toplam kaç kurabiye vardır? 🍪",
+            "a": "30 kurabiye",
+            "d": [
+                  "25 kurabiye",
+                  "35 kurabiye"
+            ],
+            "exp": "6 tabak × 5 kurabiye = 30 kurabiye eder."
+      },
+      {
+            "q": "Bir bisikletin 2 tekerleği vardır. 7 bisikletin toplam kaç tekerleği vardır? 🚲",
+            "a": "14 tekerlek",
+            "d": [
+                  "12 tekerlek",
+                  "16 tekerlek"
+            ],
+            "exp": "7 bisiklet × 2 tekerlek = 14 tekerlek eder."
       }
+],
+
+    generateGrade2Multiplication() {
+      const item = this.drawFromPool(this.grade2MultiplicationPool, "grade2MultiplicationPool");
+      return {
+        question: item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
     },
 
     // 2. SINIF: ZAMANI ÖLÇME VE SAATLER (26 ÖZGÜN SORU)
@@ -2972,172 +3573,500 @@
     // 3. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİLERİ
     // -------------------------------------------------------------
 
-    // 3. SINIF: 3 BASAMAKLI SAYILAR, BASAMAK DEĞERİ VE ROMEN RAKAMLARI (DİNAMİK)
-    generateGrade3RomenAndPlace() {
-      const mode = Math.floor(Math.random() * 4);
-      if (mode === 0) {
-        // Romen Rakamları (I - XX)
-        const romanMap = [
-          { r: 'I', n: 1 }, { r: 'II', n: 2 }, { r: 'III', n: 3 }, { r: 'IV', n: 4 }, { r: 'V', n: 5 },
-          { r: 'VI', n: 6 }, { r: 'VII', n: 7 }, { r: 'VIII', n: 8 }, { r: 'IX', n: 9 }, { r: 'X', n: 10 },
-          { r: 'XI', n: 11 }, { r: 'XII', n: 12 }, { r: 'XIII', n: 13 }, { r: 'XIV', n: 14 }, { r: 'XV', n: 15 },
-          { r: 'XVI', n: 16 }, { r: 'XVII', n: 17 }, { r: 'XVIII', n: 18 }, { r: 'XIX', n: 19 }, { r: 'XX', n: 20 }
-        ];
-        const item = romanMap[Math.floor(Math.random() * romanMap.length)];
-        const askRoman = Math.random() > 0.5;
-
-        if (askRoman) {
-          return {
-            question: `Romen rakamıyla "${item.r}" hangi doğal sayıdır? 🏛️`,
-            correct: item.n.toString(),
-            distractors: [
-              (item.n > 1 ? item.n - 1 : item.n + 2).toString(),
-              (item.n + 1).toString()
+    // 3. SINIF: 3 BASAMAKLI SAYILAR, BASAMAK DEĞERİ VE ROMEN RAKAMLARI (26 SORU)
+    grade3RomenPlacePool: [
+      {
+            "q": "Romen rakamıyla \"IV\" hangi doğal sayıdır? 🏛️",
+            "a": "4",
+            "d": [
+                  "3",
+                  "6"
             ],
-            explanation: `Romen rakamlarındaki "${item.r}" sayısı doğal sayılarda ${item.n} değerine karşılık gelir.`
-          };
-        } else {
-          return {
-            question: `"${item.n}" doğal sayısının ROMEN RAKAMIYLA yazılışı hangisidir? 🏛️`,
-            correct: item.r,
-            distractors: [
-              romanMap[(item.n) % romanMap.length].r,
-              romanMap[(item.n + 2) % romanMap.length].r
+            "exp": "Romen rakamlarındaki IV sayısı 4 değerindedir."
+      },
+      {
+            "q": "Romen rakamıyla \"IX\" hangi doğal sayıdır? 🏛️",
+            "a": "9",
+            "d": [
+                  "8",
+                  "11"
             ],
-            explanation: `${item.n} doğal sayısı Romen rakamıyla "${item.r}" şeklinde yazılır.`
-          };
-        }
-      } else if (mode === 1) {
-        // 3 Basamaklı Sayılarda Basamak Değeri
-        const hundreds = Math.floor(Math.random() * 8) + 1; // 1..8
-        const tens = Math.floor(Math.random() * 9) + 1; // 1..9
-        const ones = Math.floor(Math.random() * 9) + 1; // 1..9
-        const num = hundreds * 100 + tens * 10 + ones;
-        const target = Math.floor(Math.random() * 3);
-
-        if (target === 0) {
-          return {
-            question: `"${num}" sayısındaki ${hundreds} rakamının BASAMAK DEĞERİ kaçtır? 📦`,
-            correct: (hundreds * 100).toString(),
-            distractors: [hundreds.toString(), (hundreds * 10).toString()],
-            explanation: `${hundreds} rakamı yüzler basamağında yer aldığı için basamak değeri ${hundreds} × 100 = ${hundreds * 100}'dür.`
-          };
-        } else if (target === 1) {
-          return {
-            question: `"${num}" sayısındaki ${tens} rakamının BASAMAK DEĞERİ kaçtır? 📦`,
-            correct: (tens * 10).toString(),
-            distractors: [tens.toString(), (tens * 100).toString()],
-            explanation: `${tens} rakamı onlar basamağında yer aldığı için basamak değeri ${tens} × 10 = ${tens * 10}'dur.`
-          };
-        } else {
-          return {
-            question: `"${num}" sayısındaki ${ones} rakamının BASAMAK DEĞERİ kaçtır? 📦`,
-            correct: ones.toString(),
-            distractors: [(ones * 10).toString(), (ones * 100).toString()],
-            explanation: `${ones} rakamı birler basamağında yer aldığı için basamak değeri ${ones}'dir.`
-          };
-        }
-      } else if (mode === 2) {
-        // En Yakın Yüzlüğe Yuvarlama
-        const hundreds = Math.floor(Math.random() * 8) + 1; // 1..8
-        const tens = Math.floor(Math.random() * 9) + 1; // 1..9
-        const ones = Math.floor(Math.random() * 9) + 1;
-        const num = hundreds * 100 + tens * 10 + ones;
-        const isUp = tens >= 5;
-        const rounded = isUp ? (hundreds + 1) * 100 : hundreds * 100;
-        const other = isUp ? hundreds * 100 : (hundreds + 1) * 100;
-
-        return {
-          question: `"${num}" sayısı en yakın hangi YÜZLÜĞE yuvarlanır? 🎯`,
-          correct: rounded.toString(),
-          distractors: [other.toString(), (rounded + 100).toString()],
-          explanation: `Onlar basamağında ${tens} vardır (${tens >= 5 ? '5 ve üzeri olduğu için yukarı' : '5\'ten küçük olduğu için aşağı'}). Sayı ${rounded}'e yuvarlanır.`
-        };
-      } else {
-        // Yüzlük, onluk, birlik çözümleme
-        const h = Math.floor(Math.random() * 7) + 2;
-        const t = Math.floor(Math.random() * 8) + 1;
-        const o = Math.floor(Math.random() * 9) + 1;
-        const val = h * 100 + t * 10 + o;
-
-        return {
-          question: `${h} yüzlük, ${t} onluk ve ${o} birlikten oluşan sayı kaçtır? 📦`,
-          correct: val.toString(),
-          distractors: [(h * 100 + o * 10 + t).toString(), (t * 100 + h * 10 + o).toString()],
-          explanation: `${h} yüzlük = ${h * 100}, ${t} onluk = ${t * 10}, ${o} birlik = ${o}. Toplam = ${val}'dir.`
-        };
+            "exp": "Romen rakamlarındaki IX sayısı 9 değerindedir."
+      },
+      {
+            "q": "Romen rakamıyla \"XIV\" hangi doğal sayıdır? 🏛️",
+            "a": "14",
+            "d": [
+                  "13",
+                  "16"
+            ],
+            "exp": "X (10) ve IV (4) birleşimi 14 eder."
+      },
+      {
+            "q": "Romen rakamıyla \"XIX\" hangi doğal sayıdır? 🏛️",
+            "a": "19",
+            "d": [
+                  "18",
+                  "21"
+            ],
+            "exp": "X (10) ve IX (9) birleşimi 19 eder."
+      },
+      {
+            "q": "Romen rakamıyla \"VII\" hangi doğal sayıdır? 🏛️",
+            "a": "7",
+            "d": [
+                  "6",
+                  "8"
+            ],
+            "exp": "V (5) ve II (2) birleşimi 7 eder."
+      },
+      {
+            "q": "Romen rakamıyla \"XII\" hangi doğal sayıdır? 🏛️",
+            "a": "12",
+            "d": [
+                  "11",
+                  "13"
+            ],
+            "exp": "X (10) ve II (2) birleşimi 12 eder."
+      },
+      {
+            "q": "Romen rakamıyla \"XV\" hangi doğal sayıdır? 🏛️",
+            "a": "15",
+            "d": [
+                  "14",
+                  "16"
+            ],
+            "exp": "X (10) ve V (5) birleşimi 15 eder."
+      },
+      {
+            "q": "Romen rakamıyla \"XVIII\" hangi doğal sayıdır? 🏛️",
+            "a": "18",
+            "d": [
+                  "17",
+                  "19"
+            ],
+            "exp": "X (10) ve VIII (8) birleşimi 18 eder."
+      },
+      {
+            "q": "Romen rakamıyla \"XX\" hangi doğal sayıdır? 🏛️",
+            "a": "20",
+            "d": [
+                  "15",
+                  "25"
+            ],
+            "exp": "İki adet X yan yana 10 + 10 = 20 eder."
+      },
+      {
+            "q": "16 doğal sayısının Romen rakamıyla yazılışı hangisidir? 🏛️",
+            "a": "XVI",
+            "d": [
+                  "XIV",
+                  "XVII"
+            ],
+            "exp": "16 sayısı Romen rakamıyla XVI şeklinde yazılır."
+      },
+      {
+            "q": "13 doğal sayısının Romen rakamıyla yazılışı hangisidir? 🏛️",
+            "a": "XIII",
+            "d": [
+                  "XII",
+                  "XIV"
+            ],
+            "exp": "13 sayısı Romen rakamıyla XIII şeklinde yazılır."
+      },
+      {
+            "q": "17 doğal sayısının Romen rakamıyla yazılışı hangisidir? 🏛️",
+            "a": "XVII",
+            "d": [
+                  "XVI",
+                  "XVIII"
+            ],
+            "exp": "17 sayısı Romen rakamıyla XVII şeklinde yazılır."
+      },
+      {
+            "q": "485 sayısındaki 4 rakamının basamak değeri kaçtır? 📦",
+            "a": "400",
+            "d": [
+                  "40",
+                  "4"
+            ],
+            "exp": "4 rakamı yüzler basamağında yer aldığı için basamak değeri 400'dür."
+      },
+      {
+            "q": "672 sayısındaki 7 rakamının basamak değeri kaçtır? 📦",
+            "a": "70",
+            "d": [
+                  "700",
+                  "7"
+            ],
+            "exp": "7 rakamı onlar basamağında yer aldığı için basamak değeri 70'tir."
+      },
+      {
+            "q": "839 sayısındaki 9 rakamının basamak değeri kaçtır? 📦",
+            "a": "9",
+            "d": [
+                  "90",
+                  "900"
+            ],
+            "exp": "9 rakamı birler basamağında yer aldığı için basamak değeri 9'dur."
+      },
+      {
+            "q": "526 sayısındaki 5 rakamının basamak değeri kaçtır? 📦",
+            "a": "500",
+            "d": [
+                  "50",
+                  "5"
+            ],
+            "exp": "5 rakamı yüzler basamağında yer aldığı için basamak değeri 500'dür."
+      },
+      {
+            "q": "714 sayısındaki 1 rakamının basamak değeri kaçtır? 📦",
+            "a": "10",
+            "d": [
+                  "100",
+                  "1"
+            ],
+            "exp": "1 rakamı onlar basamağında yer aldığı için basamak değeri 10'dur."
+      },
+      {
+            "q": "958 sayısındaki 9 rakamının basamak değeri kaçtır? 📦",
+            "a": "900",
+            "d": [
+                  "90",
+                  "9"
+            ],
+            "exp": "9 rakamı yüzler basamağında yer aldığı için basamak değeri 900'dür."
+      },
+      {
+            "q": "348 sayısı en yakın hangi yüzlüğe yuvarlanır? 🎯",
+            "a": "300",
+            "d": [
+                  "400",
+                  "350"
+            ],
+            "exp": "Onlar basamağında 4 olduğu için (50'den küçük) 300 yüzlüğüne yuvarlanır."
+      },
+      {
+            "q": "562 sayısı en yakın hangi yüzlüğe yuvarlanır? 🎯",
+            "a": "600",
+            "d": [
+                  "500",
+                  "550"
+            ],
+            "exp": "Onlar basamağında 6 olduğu için (50 ve üzeri) 600 yüzlüğüne yuvarlanır."
+      },
+      {
+            "q": "785 sayısı en yakın hangi yüzlüğe yuvarlanır? 🎯",
+            "a": "800",
+            "d": [
+                  "700",
+                  "750"
+            ],
+            "exp": "Onlar basamağında 8 olduğu için 800 yüzlüğüne yuvarlanır."
+      },
+      {
+            "q": "419 sayısı en yakın hangi yüzlüğe yuvarlanır? 🎯",
+            "a": "400",
+            "d": [
+                  "500",
+                  "450"
+            ],
+            "exp": "Onlar basamağında 1 olduğu için 400 yüzlüğüne yuvarlanır."
+      },
+      {
+            "q": "650 sayısı en yakın hangi yüzlüğe yuvarlanır? 🎯",
+            "a": "700",
+            "d": [
+                  "600",
+                  "650"
+            ],
+            "exp": "Onlar basamağında 5 olduğu için yukarı, yani 700 yüzlüğüne yuvarlanır."
+      },
+      {
+            "q": "4 yüzlük, 6 onluk ve 3 birlikten oluşan sayı kaçtır? 📦",
+            "a": "463",
+            "d": [
+                  "436",
+                  "643"
+            ],
+            "exp": "400 + 60 + 3 = 463 eder."
+      },
+      {
+            "q": "7 yüzlük, 0 onluk ve 8 birlikten oluşan sayı kaçtır? 📦",
+            "a": "708",
+            "d": [
+                  "780",
+                  "78"
+            ],
+            "exp": "700 + 0 + 8 = 708 eder."
+      },
+      {
+            "q": "5 yüzlük, 9 onluk ve 2 birlikten oluşan sayı kaçtır? 📦",
+            "a": "592",
+            "d": [
+                  "529",
+                  "952"
+            ],
+            "exp": "500 + 90 + 2 = 592 eder."
       }
+],
+
+    generateGrade3RomenAndPlace() {
+      const item = this.drawFromPool(this.grade3RomenPlacePool, "grade3RomenPlacePool");
+      return {
+        question: item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
     },
 
-    // 3. SINIF: ÇARPIM TABLOSU (6,7,8,9) VE BÖLME İŞLEMİ (DİNAMİK)
-    generateGrade3MultDiv() {
-      const mode = Math.floor(Math.random() * 3);
-      if (mode === 0) {
-        // 6, 7, 8, 9'larla Çarpım Tablosu
-        const multipliers = [6, 7, 8, 9];
-        const a = multipliers[Math.floor(Math.random() * multipliers.length)];
-        const b = Math.floor(Math.random() * 8) + 2; // 2..9
-        const ans = a * b;
-
-        return {
-          question: `${a} × ${b} = ? ✖️`,
-          correct: ans.toString(),
-          distractors: [
-            (ans + (Math.random() > 0.5 ? a : b)).toString(),
-            Math.max(2, ans - (Math.random() > 0.5 ? a : b)).toString()
-          ],
-          explanation: `${a} tane ${b} veya ${b} tane ${a} = ${ans} eder.`
-        };
-      } else if (mode === 1) {
-        // Bölme İşlemi
-        const divisors = [4, 5, 6, 7, 8, 9];
-        const d = divisors[Math.floor(Math.random() * divisors.length)];
-        const q = Math.floor(Math.random() * 8) + 2; // 2..9
-        const dividend = d * q;
-
-        return {
-          question: `${dividend} ÷ ${d} = ? ➗`,
-          correct: q.toString(),
-          distractors: [(q + 1).toString(), Math.max(1, q - 1).toString()],
-          explanation: `${dividend} sayısı ${d} eşit parçaya ayrıldığında her parça ${q} olur.`
-        };
-      } else {
-        // Sözel Problem
-        const problems = [
-          {
-            a: 8, b: 7,
-            q: 'Günde 8 sayfa kitap okuyan Zeynep, 7 günde toplam kaç sayfa okur? 📖',
-            ans: 56, exp: '7 gün × 8 sayfa = 56 sayfa okur.'
-          },
-          {
-            a: 9, b: 6,
-            q: 'Bir pastanede 6 tepsi kurabiye var. Her tepside 9 kurabiye olduğuna göre toplam kaç kurabiye vardır? 🍪',
-            ans: 54, exp: '6 tepsi × 9 kurabiye = 54 kurabiye eder.'
-          },
-          {
-            a: 7, b: 8,
-            q: 'Tanesi 7 TL olan defterlerden 8 tane alan Can kırtasiyeciye kaç TL öder? 📚',
-            ans: 56, exp: '8 defter × 7 TL = 56 TL öder.'
-          },
-          {
-            a: 48, b: 6,
-            q: '48 cevizi 6 kardeş eşit olarak paylaştığında her birine kaç ceviz düşer? 🌰',
-            ans: 8, exp: '48 ceviz ÷ 6 kardeş = 8 ceviz düşer.'
-          },
-          {
-            a: 72, b: 8,
-            q: '72 misketi 8 arkadaş eşit paylaşıyor. Her bir arkadaşa kaç misket düşer? 🔮',
-            ans: 9, exp: '72 misket ÷ 8 arkadaş = 9 misket düşer.'
-          }
-        ];
-        const item = problems[Math.floor(Math.random() * problems.length)];
-        return {
-          question: item.q,
-          correct: item.ans.toString(),
-          distractors: [(item.ans + 6).toString(), Math.max(1, item.ans - 6).toString()],
-          explanation: item.exp
-        };
+    // 3. SINIF: ÇARPMA, BÖLME VE SÖZEL PROBLEMLER (26 SORU)
+    grade3MultDivPool: [
+      {
+            "q": "6 kere 7 işleminin sonucu kaçtır? ✖️",
+            "a": "42",
+            "d": [
+                  "36",
+                  "48"
+            ],
+            "exp": "6 × 7 = 42 eder."
+      },
+      {
+            "q": "7 kere 8 işleminin sonucu kaçtır? ✖️",
+            "a": "56",
+            "d": [
+                  "48",
+                  "64"
+            ],
+            "exp": "7 × 8 = 56 eder."
+      },
+      {
+            "q": "8 kere 9 işleminin sonucu kaçtır? ✖️",
+            "a": "72",
+            "d": [
+                  "64",
+                  "81"
+            ],
+            "exp": "8 × 9 = 72 eder."
+      },
+      {
+            "q": "6 kere 8 işleminin sonucu kaçtır? ✖️",
+            "a": "48",
+            "d": [
+                  "42",
+                  "54"
+            ],
+            "exp": "6 × 8 = 48 eder."
+      },
+      {
+            "q": "7 kere 9 işleminin sonucu kaçtır? ✖️",
+            "a": "63",
+            "d": [
+                  "56",
+                  "72"
+            ],
+            "exp": "7 × 9 = 63 eder."
+      },
+      {
+            "q": "8 kere 8 işleminin sonucu kaçtır? ✖️",
+            "a": "64",
+            "d": [
+                  "56",
+                  "72"
+            ],
+            "exp": "8 × 8 = 64 eder."
+      },
+      {
+            "q": "9 kere 9 işleminin sonucu kaçtır? ✖️",
+            "a": "81",
+            "d": [
+                  "72",
+                  "90"
+            ],
+            "exp": "9 × 9 = 81 eder."
+      },
+      {
+            "q": "6 kere 6 işleminin sonucu kaçtır? ✖️",
+            "a": "36",
+            "d": [
+                  "30",
+                  "42"
+            ],
+            "exp": "6 × 6 = 36 eder."
+      },
+      {
+            "q": "7 kere 7 işleminin sonucu kaçtır? ✖️",
+            "a": "49",
+            "d": [
+                  "42",
+                  "56"
+            ],
+            "exp": "7 × 7 = 49 eder."
+      },
+      {
+            "q": "6 kere 9 işleminin sonucu kaçtır? ✖️",
+            "a": "54",
+            "d": [
+                  "48",
+                  "60"
+            ],
+            "exp": "6 × 9 = 54 eder."
+      },
+      {
+            "q": "24 sayısı 4 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "6",
+            "d": [
+                  "5",
+                  "7"
+            ],
+            "exp": "24 ÷ 4 = 6 olur."
+      },
+      {
+            "q": "35 sayısı 5 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "7",
+            "d": [
+                  "6",
+                  "8"
+            ],
+            "exp": "35 ÷ 5 = 7 olur."
+      },
+      {
+            "q": "42 sayısı 6 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "7",
+            "d": [
+                  "6",
+                  "8"
+            ],
+            "exp": "42 ÷ 6 = 7 olur."
+      },
+      {
+            "q": "48 sayısı 8 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "6",
+            "d": [
+                  "5",
+                  "7"
+            ],
+            "exp": "48 ÷ 8 = 6 olur."
+      },
+      {
+            "q": "56 sayısı 7 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "8",
+            "d": [
+                  "7",
+                  "9"
+            ],
+            "exp": "56 ÷ 7 = 8 olur."
+      },
+      {
+            "q": "54 sayısı 6 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "9",
+            "d": [
+                  "8",
+                  "7"
+            ],
+            "exp": "54 ÷ 6 = 9 olur."
+      },
+      {
+            "q": "63 sayısı 9 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "7",
+            "d": [
+                  "6",
+                  "8"
+            ],
+            "exp": "63 ÷ 9 = 7 olur."
+      },
+      {
+            "q": "72 sayısı 8 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "9",
+            "d": [
+                  "8",
+                  "7"
+            ],
+            "exp": "72 ÷ 8 = 9 olur."
+      },
+      {
+            "q": "81 sayısı 9 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "9",
+            "d": [
+                  "8",
+                  "10"
+            ],
+            "exp": "81 ÷ 9 = 9 olur."
+      },
+      {
+            "q": "36 sayısı 6 eşit parçaya bölündüğünde sonuç kaç olur? ➗",
+            "a": "6",
+            "d": [
+                  "5",
+                  "7"
+            ],
+            "exp": "36 ÷ 6 = 6 olur."
+      },
+      {
+            "q": "Günde 8 sayfa kitap okuyan Zeynep 7 günde toplam kaç sayfa okur? 📖",
+            "a": "56 sayfa",
+            "d": [
+                  "48 sayfa",
+                  "64 sayfa"
+            ],
+            "exp": "7 gün × 8 sayfa = 56 sayfa okur."
+      },
+      {
+            "q": "Bir pastanede 6 tepsi kurabiye var. Her tepside 9 kurabiye olduğuna göre toplam kaç kurabiye vardır? 🍪",
+            "a": "54 kurabiye",
+            "d": [
+                  "48 kurabiye",
+                  "60 kurabiye"
+            ],
+            "exp": "6 tepsi × 9 kurabiye = 54 kurabiye eder."
+      },
+      {
+            "q": "Tanesi 7 lira olan defterlerden 8 tane alan Can kırtasiyeciye kaç lira öder? 📚",
+            "a": "56 lira",
+            "d": [
+                  "49 lira",
+                  "63 lira"
+            ],
+            "exp": "8 defter × 7 lira = 56 lira öder."
+      },
+      {
+            "q": "32 öğrenci 4 gruba eşit olarak ayrılırsa her grupta kaç öğrenci olur? 🏫",
+            "a": "8 öğrenci",
+            "d": [
+                  "6 öğrenci",
+                  "9 öğrenci"
+            ],
+            "exp": "32 ÷ 4 = 8 öğrenci olur."
+      },
+      {
+            "q": "45 elma 5 sepete eşit olarak paylaştırılırsa her sepette kaç elma olur? 🍎",
+            "a": "9 elma",
+            "d": [
+                  "8 elma",
+                  "7 elma"
+            ],
+            "exp": "45 ÷ 5 = 9 elma olur."
+      },
+      {
+            "q": "Bir çiftlikte 9 tavşan var. Bu tavşanların toplam kaç ayağı vardır? 🐇",
+            "a": "36 ayak",
+            "d": [
+                  "27 ayak",
+                  "40 ayak"
+            ],
+            "exp": "9 tavşan × 4 ayak = 36 ayak eder."
       }
+],
+
+    generateGrade3MultDiv() {
+      const item = this.drawFromPool(this.grade3MultDivPool, "grade3MultDivPool");
+      return {
+        question: item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
     },
 
     // 3. SINIF: KESİRLER VE GEOMETRİK CİSİMLER (26 ÖZGÜN SORU)
@@ -3362,78 +4291,252 @@
     // 4. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİLERİ
     // -------------------------------------------------------------
 
-    // 4. SINIF: 4, 5, 6 BASAMAKLI DOĞAL SAYILAR VE DÖRT İŞLEM (DİNAMİK)
-    generateGrade4DigitsOperations() {
-      const mode = Math.floor(Math.random() * 4);
-      if (mode === 0) {
-        // Bölükler ve Basamak Değeri
-        const thousandsPart = Math.floor(Math.random() * 850) + 12; // 12..861
-        const unitsPart = Math.floor(Math.random() * 850) + 100; // 100..949
-        const fullNum = thousandsPart * 1000 + unitsPart;
-
-        const askThousandsPeriod = Math.random() > 0.5;
-        if (askThousandsPeriod) {
-          return {
-            question: `"${fullNum.toLocaleString('tr-TR')}" sayısının BİNLER BÖLÜĞÜNDEKİ sayı kaçtır? 👑`,
-            correct: thousandsPart.toString(),
-            distractors: [unitsPart.toString(), (thousandsPart + 10).toString()],
-            explanation: `Sayının sağdaki üç basamağı birler bölüğü (${unitsPart}), soldaki basamakları ise binler bölüğüdür (${thousandsPart}).`
-          };
-        } else {
-          return {
-            question: `"${fullNum.toLocaleString('tr-TR')}" sayısının BİRLER BÖLÜĞÜNDEKİ sayı kaçtır? 👑`,
-            correct: unitsPart.toString(),
-            distractors: [thousandsPart.toString(), (unitsPart - 10).toString()],
-            explanation: `Sayının en sağındaki 3 basamak birler bölüğüdür (${unitsPart}).`
-          };
-        }
-      } else if (mode === 1) {
-        // 10, 100, 1000 ile Zihinden Çarpma
-        const base = Math.floor(Math.random() * 80) + 12; // 12..91
-        const mul = [10, 100, 1000][Math.floor(Math.random() * 3)];
-        const ans = base * mul;
-
-        return {
-          question: `${base} × ${mul} işleminin zihinden sonucu kaçtır? ⚡`,
-          correct: ans.toLocaleString('tr-TR'),
-          distractors: [
-            (ans / 10).toLocaleString('tr-TR'),
-            (ans * 10).toLocaleString('tr-TR')
-          ],
-          explanation: `Bir sayıyı ${mul} ile kısa yoldan çarpmak için sağına sıfırları ekleriz: ${ans}.`
-        };
-      } else if (mode === 2) {
-        // 10, 100 ile Zihinden Bölme
-        const base = Math.floor(Math.random() * 80) + 12;
-        const mul = [10, 100][Math.floor(Math.random() * 2)];
-        const dividend = base * mul;
-
-        return {
-          question: `${dividend} ÷ ${mul} işleminin kısa yoldan sonucu kaçtır? ➗`,
-          correct: base.toString(),
-          distractors: [(base * 10).toString(), Math.max(1, base - 5).toString()],
-          explanation: `${dividend} sayısını ${mul}'e bölerken sıfırları karşılıklı sileriz: Sonuç = ${base}.`
-        };
-      } else {
-        // En Yakın Binliğe Yuvarlama
-        const thousands = Math.floor(Math.random() * 8) + 2; // 2..9
-        const hundreds = Math.floor(Math.random() * 9) + 1; // 1..9
-        const rest = Math.floor(Math.random() * 80) + 10;
-        const num = thousands * 1000 + hundreds * 100 + rest;
-        const isUp = hundreds >= 5;
-        const rounded = isUp ? (thousands + 1) * 1000 : thousands * 1000;
-        const other = isUp ? thousands * 1000 : (thousands + 1) * 1000;
-
-        return {
-          question: `"${num.toLocaleString('tr-TR')}" sayısı en yakın hangi BİNLİĞE yuvarlanır? 🎯`,
-          correct: rounded.toLocaleString('tr-TR'),
-          distractors: [
-            other.toLocaleString('tr-TR'),
-            (rounded + 1000).toLocaleString('tr-TR')
-          ],
-          explanation: `Yüzler basamağında ${hundreds} vardır (${hundreds >= 5 ? '5 ve üzeri olduğu için yukarı' : '5\'ten küçük olduğu için aşağı'}). Sayı ${rounded.toLocaleString('tr-TR')} binliğine yuvarlanır.`
-        };
+    // 4. SINIF: 4, 5, 6 BASAMAKLI SAYILAR VE DÖRT İŞLEM (26 SORU)
+    grade4DigitsOperationsPool: [
+      {
+            "q": "45.820 sayısının binler bölüğündeki sayı kaçtır? 👑",
+            "a": "45",
+            "d": [
+                  "820",
+                  "58"
+            ],
+            "exp": "Sayının solundaki basamaklar binler bölüğüdür: 45."
+      },
+      {
+            "q": "128.450 sayısının birler bölüğündeki sayı kaçtır? 👑",
+            "a": "450",
+            "d": [
+                  "128",
+                  "28"
+            ],
+            "exp": "Sayının sağındaki üç basamak birler bölüğüdür: 450."
+      },
+      {
+            "q": "67.314 sayısının binler bölüğündeki sayı kaçtır? 👑",
+            "a": "67",
+            "d": [
+                  "314",
+                  "73"
+            ],
+            "exp": "Sayının binler bölüğündeki sayı 67'dir."
+      },
+      {
+            "q": "250.789 sayısının birler bölüğündeki sayı kaçtır? 👑",
+            "a": "789",
+            "d": [
+                  "250",
+                  "50"
+            ],
+            "exp": "Sayının birler bölüğündeki sayı 789'dur."
+      },
+      {
+            "q": "84.905 sayısındaki 8 rakamının basamak değeri kaçtır? 📦",
+            "a": "80.000",
+            "d": [
+                  "8.000",
+                  "800"
+            ],
+            "exp": "8 rakamı on binler basamağında yer aldığı için basamak değeri 80.000'dir."
+      },
+      {
+            "q": "156.420 sayısındaki 1 rakamının basamak değeri kaçtır? 📦",
+            "a": "100.000",
+            "d": [
+                  "10.000",
+                  "1.000"
+            ],
+            "exp": "1 rakamı yüz binler basamağında yer aldığı için basamak değeri 100.000'dir."
+      },
+      {
+            "q": "73.680 sayısındaki 3 rakamının basamak değeri kaçtır? 📦",
+            "a": "3.000",
+            "d": [
+                  "30.000",
+                  "300"
+            ],
+            "exp": "3 rakamı binler basamağında yer aldığı için basamak değeri 3.000'dir."
+      },
+      {
+            "q": "42 sayısını 10 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
+            "a": "420",
+            "d": [
+                  "4200",
+                  "42"
+            ],
+            "exp": "10 ile çarpmak için sayının sağına bir sıfır eklenir: 420."
+      },
+      {
+            "q": "65 sayısını 100 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
+            "a": "6500",
+            "d": [
+                  "650",
+                  "65000"
+            ],
+            "exp": "100 ile çarpmak için sayının sağına iki sıfır eklenir: 6500."
+      },
+      {
+            "q": "18 sayısını 1000 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
+            "a": "18000",
+            "d": [
+                  "1800",
+                  "180"
+            ],
+            "exp": "1000 ile çarpmak için sayının sağına üç sıfır eklenir: 18000."
+      },
+      {
+            "q": "74 sayısını 100 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
+            "a": "7400",
+            "d": [
+                  "740",
+                  "74000"
+            ],
+            "exp": "100 ile çarpmak için sayının sağına iki sıfır eklenir: 7400."
+      },
+      {
+            "q": "50 sayısını 1000 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
+            "a": "50000",
+            "d": [
+                  "5000",
+                  "500"
+            ],
+            "exp": "50 × 1000 = 50.000 eder."
+      },
+      {
+            "q": "480 sayısını 10'a kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
+            "a": "48",
+            "d": [
+                  "480",
+                  "4"
+            ],
+            "exp": "10'a bölerken bir sıfır silinir: 48."
+      },
+      {
+            "q": "3500 sayısını 100'e kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
+            "a": "35",
+            "d": [
+                  "350",
+                  "3"
+            ],
+            "exp": "100'e bölerken iki sıfır silinir: 35."
+      },
+      {
+            "q": "7200 sayısını 100'e kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
+            "a": "72",
+            "d": [
+                  "720",
+                  "7"
+            ],
+            "exp": "100'e bölerken iki sıfır silinir: 72."
+      },
+      {
+            "q": "9000 sayısını 1000'e kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
+            "a": "9",
+            "d": [
+                  "90",
+                  "900"
+            ],
+            "exp": "1000'e bölerken üç sıfır silinir: 9."
+      },
+      {
+            "q": "3480 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
+            "a": "3000",
+            "d": [
+                  "4000",
+                  "3500"
+            ],
+            "exp": "Yüzler basamağında 4 olduğu için 3000 binliğine yuvarlanır."
+      },
+      {
+            "q": "6720 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
+            "a": "7000",
+            "d": [
+                  "6000",
+                  "6500"
+            ],
+            "exp": "Yüzler basamağında 7 olduğu için 7000 binliğine yuvarlanır."
+      },
+      {
+            "q": "5290 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
+            "a": "5000",
+            "d": [
+                  "6000",
+                  "5500"
+            ],
+            "exp": "Yüzler basamağında 2 olduğu için 5000 binliğine yuvarlanır."
+      },
+      {
+            "q": "8650 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
+            "a": "9000",
+            "d": [
+                  "8000",
+                  "8500"
+            ],
+            "exp": "Yüzler basamağında 6 olduğu için 9000 binliğine yuvarlanır."
+      },
+      {
+            "q": "4150 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
+            "a": "4000",
+            "d": [
+                  "5000",
+                  "4500"
+            ],
+            "exp": "Yüzler basamağında 1 olduğu için 4000 binliğine yuvarlanır."
+      },
+      {
+            "q": "9820 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
+            "a": "10000",
+            "d": [
+                  "9000",
+                  "9500"
+            ],
+            "exp": "Yüzler basamağında 8 olduğu için 10000 binliğine yuvarlanır."
+      },
+      {
+            "q": "325 ile 175 sayılarının toplamı zihinden kaç eder? ➕",
+            "a": "500",
+            "d": [
+                  "450",
+                  "550"
+            ],
+            "exp": "325 + 175 = 500 eder."
+      },
+      {
+            "q": "650 sayısından 250 çıkarıldığında fark kaç olur? ➖",
+            "a": "400",
+            "d": [
+                  "350",
+                  "450"
+            ],
+            "exp": "650 - 250 = 400 kalır."
+      },
+      {
+            "q": "Dört basamaklı en küçük doğal sayı kaçtır? 🔢",
+            "a": "1000",
+            "d": [
+                  "1001",
+                  "1023"
+            ],
+            "exp": "Dört basamaklı en küçük doğal sayı 1000'dir."
+      },
+      {
+            "q": "Dört basamaklı rakamları farklı en küçük doğal sayı kaçtır? 🔢",
+            "a": "1023",
+            "d": [
+                  "1000",
+                  "1234"
+            ],
+            "exp": "Rakamları farklı dört basamaklı en küçük sayı 1023'tür."
       }
+],
+
+    generateGrade4DigitsOperations() {
+      const item = this.drawFromPool(this.grade4DigitsOperationsPool, "grade4DigitsOperationsPool");
+      return {
+        question: item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
     },
 
     // 4. SINIF: KESİRLER, ZAMAN VE AÇILAR (26 ÖZGÜN SORU)
@@ -3466,52 +4569,252 @@
       { q: 'Bir yılda toplam kaç hafta vardır? 📆', a: '52 hafta 📆', d: ['40 hafta', '48 hafta'], exp: 'Bir takvim yılında yaklaşık 52 hafta bulunur.' }
     ],
 
-    // 4. SINIF: ÇEVRE VE ALAN HESAPLAMA (DİNAMİK ÜRETECİ)
-    generateGrade4PerimeterArea() {
-      const mode = Math.floor(Math.random() * 4);
-      if (mode === 0) {
-        // Karenin Çevresi
-        const a = Math.floor(Math.random() * 15) + 3; // 3..17 cm
-        const perim = 4 * a;
-        return {
-          question: `Bir kenar uzunluğu ${a} cm olan bir KARENİN ÇEVRESİ kaç cm'dir? 🟦`,
-          correct: `${perim} cm`,
-          distractors: [`${perim + a} cm`, `${perim - 4} cm`],
-          explanation: `Karenin 4 kenarı birbirine eşittir. Çevre = 4 × ${a} = ${perim} cm'dir.`
-        };
-      } else if (mode === 1) {
-        // Karenin Alanı
-        const a = Math.floor(Math.random() * 9) + 2; // 2..10 cm
-        const area = a * a;
-        return {
-          question: `Bir kenarı ${a} cm olan bir KARENİN ALANI kaç santimetrekaredir (cm²)? 🟦`,
-          correct: `${area} cm²`,
-          distractors: [`${area + a} cm²`, `${4 * a} cm²`],
-          explanation: `Karenin Alanı = Kenar × Kenar = ${a} × ${a} = ${area} cm²'dir.`
-        };
-      } else if (mode === 2) {
-        // Dikdörtgenin Çevresi
-        const w = Math.floor(Math.random() * 8) + 3; // kısa kenar 3..10
-        const l = w + Math.floor(Math.random() * 8) + 2; // uzun kenar
-        const perim = 2 * (w + l);
-        return {
-          question: `Kısa kenarı ${w} cm, uzun kenarı ${l} cm olan DİKDÖRTGENİN ÇEVRESİ kaç cm'dir? 🚪`,
-          correct: `${perim} cm`,
-          distractors: [`${w + l} cm`, `${perim + 4} cm`],
-          explanation: `Dikdörtgenin Çevresi = 2 × (Kısa + Uzun) = 2 × (${w} + ${l}) = ${perim} cm'dir.`
-        };
-      } else {
-        // Dikdörtgenin Alanı
-        const w = Math.floor(Math.random() * 7) + 2; // 2..8 cm
-        const l = w + Math.floor(Math.random() * 6) + 3; // 5..13 cm
-        const area = w * l;
-        return {
-          question: `Kısa kenarı ${w} cm, uzun kenarı ${l} cm olan DİKDÖRTGENİN ALANI kaç cm²'dir? 🚪`,
-          correct: `${area} cm²`,
-          distractors: [`${2 * (w + l)} cm²`, `${area + w} cm²`],
-          explanation: `Dikdörtgenin Alanı = Kısa Kenar × Uzun Kenar = ${w} × ${l} = ${area} cm²'dir.`
-        };
+    // 4. SINIF: ÇEVRE VE ALAN HESAPLAMA (26 SORU)
+    grade4PerimeterAreaPool: [
+      {
+            "q": "Bir kenarı 5 cm olan karenin çevresi kaç santimetredir? 🟦",
+            "a": "20 cm",
+            "d": [
+                  "15 cm",
+                  "25 cm"
+            ],
+            "exp": "Çevre = 4 × 5 = 20 cm'dir."
+      },
+      {
+            "q": "Bir kenarı 8 cm olan karenin çevresi kaç santimetredir? 🟦",
+            "a": "32 cm",
+            "d": [
+                  "24 cm",
+                  "40 cm"
+            ],
+            "exp": "Çevre = 4 × 8 = 32 cm'dir."
+      },
+      {
+            "q": "Bir kenarı 12 cm olan karenin çevresi kaç santimetredir? 🟦",
+            "a": "48 cm",
+            "d": [
+                  "36 cm",
+                  "60 cm"
+            ],
+            "exp": "Çevre = 4 × 12 = 48 cm'dir."
+      },
+      {
+            "q": "Bir kenarı 15 cm olan karenin çevresi kaç santimetredir? 🟦",
+            "a": "60 cm",
+            "d": [
+                  "45 cm",
+                  "75 cm"
+            ],
+            "exp": "Çevre = 4 × 15 = 60 cm'dir."
+      },
+      {
+            "q": "Bir kenarı 20 cm olan karenin çevresi kaç santimetredir? 🟦",
+            "a": "80 cm",
+            "d": [
+                  "60 cm",
+                  "100 cm"
+            ],
+            "exp": "Çevre = 4 × 20 = 80 cm'dir."
+      },
+      {
+            "q": "Bir kenarı 4 cm olan karenin alanı kaç santimetrekaredir? 🟦",
+            "a": "16 cm²",
+            "d": [
+                  "12 cm²",
+                  "20 cm²"
+            ],
+            "exp": "Alan = 4 × 4 = 16 cm²'dir."
+      },
+      {
+            "q": "Bir kenarı 6 cm olan karenin alanı kaç santimetrekaredir? 🟦",
+            "a": "36 cm²",
+            "d": [
+                  "24 cm²",
+                  "42 cm²"
+            ],
+            "exp": "Alan = 6 × 6 = 36 cm²'dir."
+      },
+      {
+            "q": "Bir kenarı 7 cm olan karenin alanı kaç santimetrekaredir? 🟦",
+            "a": "49 cm²",
+            "d": [
+                  "28 cm²",
+                  "56 cm²"
+            ],
+            "exp": "Alan = 7 × 7 = 49 cm²'dir."
+      },
+      {
+            "q": "Bir kenarı 9 cm olan karenin alanı kaç santimetrekaredir? 🟦",
+            "a": "81 cm²",
+            "d": [
+                  "36 cm²",
+                  "72 cm²"
+            ],
+            "exp": "Alan = 9 × 9 = 81 cm²'dir."
+      },
+      {
+            "q": "Bir kenarı 10 cm olan karenin alanı kaç santimetrekaredir? 🟦",
+            "a": "100 cm²",
+            "d": [
+                  "40 cm²",
+                  "80 cm²"
+            ],
+            "exp": "Alan = 10 × 10 = 100 cm²'dir."
+      },
+      {
+            "q": "Kısa kenarı 4 cm, uzun kenarı 7 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
+            "a": "22 cm",
+            "d": [
+                  "18 cm",
+                  "28 cm"
+            ],
+            "exp": "Çevre = 2 × (4 + 7) = 2 × 11 = 22 cm'dir."
+      },
+      {
+            "q": "Kısa kenarı 6 cm, uzun kenarı 10 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
+            "a": "32 cm",
+            "d": [
+                  "26 cm",
+                  "60 cm"
+            ],
+            "exp": "Çevre = 2 × (6 + 10) = 2 × 16 = 32 cm'dir."
+      },
+      {
+            "q": "Kısa kenarı 5 cm, uzun kenarı 9 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
+            "a": "28 cm",
+            "d": [
+                  "24 cm",
+                  "45 cm"
+            ],
+            "exp": "Çevre = 2 × (5 + 9) = 2 × 14 = 28 cm'dir."
+      },
+      {
+            "q": "Kısa kenarı 8 cm, uzun kenarı 12 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
+            "a": "40 cm",
+            "d": [
+                  "32 cm",
+                  "96 cm"
+            ],
+            "exp": "Çevre = 2 × (8 + 12) = 2 × 20 = 40 cm'dir."
+      },
+      {
+            "q": "Kısa kenarı 3 cm, uzun kenarı 8 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
+            "a": "24 cm²",
+            "d": [
+                  "22 cm²",
+                  "26 cm²"
+            ],
+            "exp": "Alan = 3 × 8 = 24 cm²'dir."
+      },
+      {
+            "q": "Kısa kenarı 5 cm, uzun kenarı 7 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
+            "a": "35 cm²",
+            "d": [
+                  "24 cm²",
+                  "42 cm²"
+            ],
+            "exp": "Alan = 5 × 7 = 35 cm²'dir."
+      },
+      {
+            "q": "Kısa kenarı 6 cm, uzun kenarı 9 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
+            "a": "54 cm²",
+            "d": [
+                  "30 cm²",
+                  "45 cm²"
+            ],
+            "exp": "Alan = 6 × 9 = 54 cm²'dir."
+      },
+      {
+            "q": "Kısa kenarı 4 cm, uzun kenarı 11 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
+            "a": "44 cm²",
+            "d": [
+                  "30 cm²",
+                  "40 cm²"
+            ],
+            "exp": "Alan = 4 × 11 = 44 cm²'dir."
+      },
+      {
+            "q": "Çevresi 36 cm olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
+            "a": "9 cm",
+            "d": [
+                  "8 cm",
+                  "12 cm"
+            ],
+            "exp": "Kenar = 36 ÷ 4 = 9 cm'dir."
+      },
+      {
+            "q": "Çevresi 48 cm olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
+            "a": "12 cm",
+            "d": [
+                  "10 cm",
+                  "16 cm"
+            ],
+            "exp": "Kenar = 48 ÷ 4 = 12 cm'dir."
+      },
+      {
+            "q": "Alanı 64 santimetrekare olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
+            "a": "8 cm",
+            "d": [
+                  "6 cm",
+                  "16 cm"
+            ],
+            "exp": "8 × 8 = 64 olduğu için kenar 8 cm'dir."
+      },
+      {
+            "q": "Alanı 81 santimetrekare olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
+            "a": "9 cm",
+            "d": [
+                  "8 cm",
+                  "18 cm"
+            ],
+            "exp": "9 × 9 = 81 olduğu için kenar 9 cm'dir."
+      },
+      {
+            "q": "Bir kenarı 25 metre olan kare şeklindeki bahçenin çevresi kaç metredir? 🌳",
+            "a": "100 metre",
+            "d": [
+                  "75 metre",
+                  "125 metre"
+            ],
+            "exp": "Çevre = 4 × 25 = 100 metredir."
+      },
+      {
+            "q": "Kısa kenarı 15 metre, uzun kenarı 20 metre olan bahçenin çevresi kaç metredir? 🏡",
+            "a": "70 metre",
+            "d": [
+                  "60 metre",
+                  "80 metre"
+            ],
+            "exp": "Çevre = 2 × (15 + 20) = 2 × 35 = 70 metredir."
+      },
+      {
+            "q": "Tüm kenarları eşit üçgen olan eşkenar üçgenin bir kenarı 7 cm ise çevresi kaç santimetredir? 🔺",
+            "a": "21 cm",
+            "d": [
+                  "14 cm",
+                  "28 cm"
+            ],
+            "exp": "Çevre = 3 × 7 = 21 cm'dir."
+      },
+      {
+            "q": "Kenar uzunlukları 5 cm, 7 cm ve 9 cm olan çeşitkenar üçgenin çevresi kaç santimetredir? 🔺",
+            "a": "21 cm",
+            "d": [
+                  "19 cm",
+                  "23 cm"
+            ],
+            "exp": "Çevre = 5 + 7 + 9 = 21 cm'dir."
       }
+],
+
+    generateGrade4PerimeterArea() {
+      const item = this.drawFromPool(this.grade4PerimeterAreaPool, "grade4PerimeterAreaPool");
+      return {
+        question: item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
     },
 
     // 4. SINIF: DEYİMLER VE ATASÖZLERİ DÜELLOSU (35 ÖZGÜN SORU)
@@ -3750,9 +5053,9 @@
     // -------------------------------------------------------------
     generateGrade3Math() {
       const r = Math.random();
-      if (r < 0.4) {
+      if (r < 0.35) {
         return this.generateGrade3MultDiv();
-      } else if (r < 0.75) {
+      } else if (r < 0.70) {
         return this.generateGrade3RomenAndPlace();
       } else {
         const item = this.drawFromPool(this.grade3FractionsAndShapesPool, "grade3FractionsAndShapesPool");
@@ -3767,9 +5070,9 @@
 
     generateGrade4Math() {
       const r = Math.random();
-      if (r < 0.4) {
+      if (r < 0.35) {
         return this.generateGrade4DigitsOperations();
-      } else if (r < 0.7) {
+      } else if (r < 0.70) {
         return this.generateGrade4PerimeterArea();
       } else {
         const item = this.drawFromPool(this.grade4FractionsAnglesPool, "grade4FractionsAnglesPool");
@@ -3954,7 +5257,7 @@
       // Matematik
       { q: "Üçgenin 3 köşesi ve 3 kenarı vardır.", a: true, subject: 'math', exp: "Doğrudur! Üçgen 3 kenar ve 3 köşeye sahiptir." },
       { q: "Bir saat 50 dakikadır.", a: false, subject: 'math', exp: "Yanlıştır! Bir saat tam 60 dakikadır." },
-      { q: "5 × 5 = 25 eder.", a: true, subject: 'math', exp: "Doğrudur! 5 kere 5 eşittir 25." },
+      { q: "5 × 5 = 25 eder.", spokenText: "5 kere 5 eşittir 25 eder.", a: true, subject: 'math', exp: "Doğrudur! 5 kere 5 eşittir 25." },
       { q: "Karenin 4 kenar uzunluğu birbirine eşittir.", a: true, subject: 'math', exp: "Doğrudur! Karenin tüm kenarları eşit uzunluktadır." },
       { q: "En küçük iki basamaklı sayı 11'dir.", a: false, subject: 'math', exp: "Yanlıştır! En küçük iki basamaklı doğal sayı 10'dur." },
       { q: "Bir yılda 12 ay vardır.", a: true, subject: 'math', exp: "Doğrudur! Bir yıl Ocak'tan Aralık'a 12 aydır." },
@@ -4021,7 +5324,7 @@
       },
       {
         subject: 'math',
-        title: '➕ Matematik İşlem ve Sonuçları',
+        title: 'Matematik İşlem ve Sonuçları',
         explanation: 'Şimşek hızında hesaplama! İşlemleri sonuçlarıyla eşleştirdin! 🔢⚡',
         pairs: [
           { id: 'm1', left: '4 + 5', right: '9' },
@@ -4143,7 +5446,7 @@
         explanation: item.exp,
         category: '⚡ Doğru / Yanlış Refleks',
         timeLimit: 6000,
-        spokenText: `${statement}. Doğru mu, yanlış mı?`,
+        spokenText: `${item.spokenText || statement}. Doğru mu, yanlış mı?`,
         interactiveData: {
           statement: statement,
           isTrue: isTrue,
@@ -10018,7 +11321,7 @@
     if (state.soundEnabled && (q.spokenText || q.question)) {
       setTimeout(() => {
         if (!state.isQuestionAnswered && state.currentQuestion === q) {
-          audio.speakTurkishText(q.spokenText || q.question);
+          audio.speakTurkishText(getSpokenTextForQuestion(q));
         }
       }, 350);
     }
@@ -10030,7 +11333,7 @@
       zone.querySelectorAll('.visual-audio-repeat-btn').forEach(btn => {
         attachInstantTouch(btn, () => {
           audio.playClick();
-          audio.speakTurkishText(q.spokenText || q.question);
+          audio.speakTurkishText(getSpokenTextForQuestion(q));
         });
       });
 
