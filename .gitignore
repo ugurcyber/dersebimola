@@ -11,3 +11,8 @@ scratch/
 
 yayina-al.bat
 
+# Ses Dönüştürme Sanal Ortamı ve Geçici Dinleme Dosyaları
+.venv-ses/
+*.venv*/
+dinle*.mp3
+deneme*.mp3
