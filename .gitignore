@@ -16,3 +16,4 @@ yayina-al.bat
 *.venv*/
 dinle*.mp3
 deneme*.mp3
+__pycache__/

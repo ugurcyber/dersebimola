@@ -169,8 +169,49 @@
   };
 
   /* ==========================================================================
-     2. SES MOTORU: WEB AUDIO API (SIFIR HARİCİ SES DOSYASI)
+     2. SES MOTORU: WEB AUDIO API & EMA LIGHTNING DOĞAL TÜRKÇE SES KATMANI
      ========================================================================== */
+
+  // -------------------------------------------------------------
+  // EMA Lightning Doğal Türkçe Ses Anahtarlama ve Normalizasyon Motoru
+  // -------------------------------------------------------------
+  function normalizeSpeechText(text) {
+    return (text || '').toString().normalize('NFC').trim().replace(/\s+/g, ' ');
+  }
+
+  function cyrb53(str) {
+    let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+    for (let i = 0; i < str.length; i++) {
+      const ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507);
+    h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
+    h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+
+  function speechKey(text) {
+    return cyrb53(normalizeSpeechText(text)).toString(16).padStart(14, '0');
+  }
+
+  let recordedSpeechKeys = new Set();
+  async function loadSpeechIndex() {
+    try {
+      const res = await fetch('sesler/index.json?v=' + Date.now());
+      if (res.ok) {
+        const data = await res.json();
+        if (data && Array.isArray(data.anahtarlar)) {
+          recordedSpeechKeys = new Set(data.anahtarlar);
+        }
+      }
+    } catch (e) {
+      recordedSpeechKeys = new Set();
+    }
+  }
+
   class SoundEngine {
     constructor() {
       this.ctx = null;
@@ -178,6 +219,7 @@
       this.currentAnnouncerAudio = null;
       this.ttsTimeout = null;
       this.ttsReady = false;
+      this.speechSeq = 0;
       this.initOnFirstTouch = this.initOnFirstTouch.bind(this);
       window.addEventListener('pointerdown', this.initOnFirstTouch, { once: true });
       window.addEventListener('keydown', this.initOnFirstTouch, { once: true });
@@ -720,6 +762,8 @@
       }
       // Devam eden önceki ses veya konuşmayı mutlaka durdur
       this.stopQuestionAudio();
+      this.speechSeq = (this.speechSeq || 0) + 1;
+      const currentSeq = this.speechSeq;
 
       // 1) Emojileri temizle ve matematik sembollerini metne çevir
       let cleanText = (text || '').toString()
@@ -736,8 +780,7 @@
           .replace(/\s+/g, ' ')
           .trim();
       } else {
-        // Matematik sembollerini doğal Türkçe metne dönüştür:
-        // + -> "artı", - -> "eksi", x veya * -> "çarpı", / veya ÷ -> "bölü", = -> "eşittir"
+        // Matematik sembollerini doğal Türkçe metne dönüştür
         cleanText = cleanText
           .replace(/\+/g, ' artı ')
           .replace(/[-−–—]/g, ' eksi ')
@@ -759,6 +802,7 @@
 
       let done = false;
       const finish = () => {
+        if (currentSeq !== this.speechSeq) return;
         if (!done) {
           done = true;
           if (this.ttsTimeout) {
@@ -775,11 +819,9 @@
 
       // -------------------------------------------------------------
       // YEDEK SES MOTORU: Web Speech API (speechSynthesis)
-      // MEB Pardus ve Linux akıllı tahtalarda Almanca veya bozuk sesleri
-      // engellemek için STRICT tr-TR zorlaması ve ses filtresi uygulanır
       // -------------------------------------------------------------
       const playWithSpeechSynthesis = () => {
-        if (done) return;
+        if (currentSeq !== this.speechSeq || done) return;
         if (!('speechSynthesis' in window)) {
           finish();
           return;
@@ -804,7 +846,6 @@
               (v.name && (v.name.toLowerCase().includes('english') || v.name.toLowerCase().includes('google us') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('zira')))
             );
           } else {
-            // SADECE Türkçe sesleri ara ve eşle (Almanca 'de' veya İngilizce 'en' sesleri KESİNLİKLE seçilmez)
             matchedVoice = voices.find(v => 
               (v.lang && (v.lang === 'tr-TR' || v.lang.toLowerCase().startsWith('tr') || v.lang === 'tr')) ||
               (v.name && (v.name.toLowerCase().includes('turkish') || v.name.toLowerCase().includes('türkçe') || v.name.toLowerCase().includes('yelda') || v.name.toLowerCase().includes('tolga')))
@@ -814,12 +855,15 @@
           if (matchedVoice) {
             u.voice = matchedVoice;
           } else {
-            // Sistemde Türkçe ses tanımlı değilse yabancı ses atama, sadece lang zorlaması yap
             u.lang = synthLang;
           }
 
-          u.onend = finish;
-          u.onerror = finish;
+          u.onend = () => {
+            if (currentSeq === this.speechSeq) finish();
+          };
+          u.onerror = () => {
+            if (currentSeq === this.speechSeq) finish();
+          };
           window.speechSynthesis.speak(u);
         } catch (e) {
           finish();
@@ -827,11 +871,11 @@
       };
 
       // -------------------------------------------------------------
-      // BİRİNCİL SES MOTORU: Online Doğal Türkçe TTS (Google TTS Ses Akışı)
-      // MEB Pardus akıllı tahta dahil tüm cihazlarda kusursuz doğal Türkçe
+      // İKİNCİL YEDEK MOTOR: Online Doğal TTS (Google TTS Ses Akışı)
       // -------------------------------------------------------------
       let fallbackTriggered = false;
       const triggerFallback = () => {
+        if (currentSeq !== this.speechSeq) return;
         if (fallbackTriggered || done) return;
         fallbackTriggered = true;
         if (this.ttsTimeout) {
@@ -850,40 +894,42 @@
       };
 
       const playWithGoogleTts = () => {
+        if (currentSeq !== this.speechSeq || done) return;
         try {
           const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
           const audioEl = new Audio(googleUrl);
           this.currentAudio = audioEl;
           audioEl.volume = 1.0;
 
-          // Ağ engeli veya bağlantı kopukluğunda takılı kalmayı önleyen güvenlik zamanlayıcısı
           this.ttsTimeout = setTimeout(() => {
-            triggerFallback();
+            if (currentSeq === this.speechSeq) triggerFallback();
           }, 3500);
 
           audioEl.onplaying = () => {
-            if (this.ttsTimeout) {
+            if (currentSeq === this.speechSeq && this.ttsTimeout) {
               clearTimeout(this.ttsTimeout);
               this.ttsTimeout = null;
             }
           };
 
           audioEl.onended = () => {
-            if (this.ttsTimeout) {
-              clearTimeout(this.ttsTimeout);
-              this.ttsTimeout = null;
+            if (currentSeq === this.speechSeq) {
+              if (this.ttsTimeout) {
+                clearTimeout(this.ttsTimeout);
+                this.ttsTimeout = null;
+              }
+              finish();
             }
-            finish();
           };
 
           audioEl.onerror = () => {
-            triggerFallback();
+            if (currentSeq === this.speechSeq) triggerFallback();
           };
 
           const p = audioEl.play();
           if (p !== undefined) {
             p.catch(() => {
-              triggerFallback();
+              if (currentSeq === this.speechSeq) triggerFallback();
             });
           }
         } catch (err) {
@@ -891,7 +937,62 @@
         }
       };
 
-      // Birincil olarak doğal online TTS çalıştırılır
+      // -------------------------------------------------------------
+      // BİRİNCİL SES MOTORU: EMA Lightning Yerel Doğal MP3 Kaydı
+      // Eğer cümlenin anahtarı index.json'da varsa sesler/<anahtar>.mp3 çalınır
+      // Yoksa veya açılamazsa aynı cümle Google TTS / cihaz sesi ile söylenir
+      // -------------------------------------------------------------
+      if (!isEn) {
+        const key = speechKey(cleanText);
+        if (recordedSpeechKeys.has(key)) {
+          try {
+            const recordedAudio = new Audio(`sesler/${key}.mp3`);
+            this.currentAudio = recordedAudio;
+            recordedAudio.volume = 1.0;
+
+            this.ttsTimeout = setTimeout(() => {
+              if (currentSeq === this.speechSeq) playWithGoogleTts();
+            }, 4000);
+
+            recordedAudio.onplaying = () => {
+              if (currentSeq === this.speechSeq && this.ttsTimeout) {
+                clearTimeout(this.ttsTimeout);
+                this.ttsTimeout = null;
+              }
+            };
+
+            recordedAudio.onended = () => {
+              if (currentSeq === this.speechSeq) {
+                if (this.ttsTimeout) {
+                  clearTimeout(this.ttsTimeout);
+                  this.ttsTimeout = null;
+                }
+                finish();
+              }
+            };
+
+            recordedAudio.onerror = () => {
+              if (currentSeq === this.speechSeq) playWithGoogleTts();
+            };
+
+            const p = recordedAudio.play();
+            if (p !== undefined) {
+              p.catch(() => {
+                if (currentSeq === this.speechSeq) playWithGoogleTts();
+              });
+            }
+            return;
+          } catch (e) {
+            playWithGoogleTts();
+            return;
+          }
+        } else {
+          // Geliştirici yardımı: kaydı olmayan her cümleyi konsola yaz
+          console.log(`[ses] kaydı yok: "${cleanText}" (anahtar: ${key})`);
+        }
+      }
+
+      // Kayıt yoksa eski yöntemle söyle
       playWithGoogleTts();
     }
 
@@ -904,6 +1005,7 @@
     }
 
     stopQuestionAudio() {
+      this.speechSeq = (this.speechSeq || 0) + 1;
       if (this.ttsTimeout) {
         clearTimeout(this.ttsTimeout);
         this.ttsTimeout = null;
@@ -11806,6 +11908,7 @@
      ========================================================================== */
   function init() {
     StorageManager.loadAll();
+    loadSpeechIndex();
     updateSoundUI();
     updateAnnouncerUI();
     updateAutoReadUI();
@@ -11849,6 +11952,9 @@
   window.showShareToast = showShareToast;
   window.openSettingsModal = openSettingsModal;
   window.updateSettingsModalUI = updateSettingsModalUI;
+  window.speechKey = speechKey;
+  window.normalizeSpeechText = normalizeSpeechText;
+  window.loadSpeechIndex = loadSpeechIndex;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {
