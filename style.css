@@ -8097,7 +8097,7 @@ input:checked + .slider:before {
   position: relative;
 }
 
-/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı (Lila Panel & Lila Kart Tasarımı) */
+/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı (Lila Panel & Lila Sınıf Seçenekleri) */
 .stage-grades-sidebar {
   width: clamp(210px, 16vw, 260px);
   min-width: 195px;
@@ -8106,18 +8106,19 @@ input:checked + .slider:before {
   gap: clamp(5px, 0.9vh, 9px);
   flex-shrink: 0;
   z-index: 10;
-  background: linear-gradient(180deg, rgba(245, 243, 255, 0.88) 0%, rgba(237, 233, 254, 0.8) 100%);
+  background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 2px solid rgba(216, 180, 254, 0.7);
+  border: 2px solid rgba(192, 132, 252, 0.65);
   border-radius: 22px;
   padding: clamp(7px, 1.1vh, 12px) clamp(8px, 0.8vw, 12px);
-  box-shadow: 0 10px 30px -5px rgba(139, 92, 246, 0.16), 0 4px 14px rgba(168, 85, 247, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(147, 51, 234, 0.18), 0 4px 14px rgba(168, 85, 247, 0.1);
   box-sizing: border-box;
 }
 
 .stage-grade-card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 55%, #EDE9FE 100%);
+  background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 50%, #DDD6FE 100%) !important;
+  border: 2px solid #C084FC !important;
   border-radius: 16px;
   padding: clamp(6px, 0.95vh, 10px) 12px;
   display: flex;
@@ -8125,28 +8126,31 @@ input:checked + .slider:before {
   gap: 12px;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.08);
-  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease, background 0.16s ease;
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.16) !important;
+  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .stage-grade-card:hover {
-  background: linear-gradient(135deg, #FFFFFF 0%, #EDE9FE 40%, #E9D5FF 100%);
+  background: linear-gradient(135deg, #E9D5FF 0%, #DDD6FE 40%, #C4B5FD 100%) !important;
+  border-color: #A855F7 !important;
   transform: translateX(4px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.22);
+  box-shadow: 0 8px 24px rgba(147, 51, 234, 0.28) !important;
 }
 
 .stage-grade-card:active {
   transform: scale(0.97);
 }
 
-.card-kindergarten { border: 2px solid #93C5FD !important; }
-.card-grade1       { border: 2px solid #FCA5A5 !important; }
-.card-grade2       { border: 2px solid #86EFAC !important; }
-.card-grade3       { border: 2px solid #FDBA74 !important; }
-.card-grade4       { border: 2px solid #F87171 !important; }
-.card-duels        { border: 2px solid #FDE047 !important; }
-.card-english      { border: 2px solid #A5B4FC !important; }
+.card-kindergarten,
+.card-grade1,
+.card-grade2,
+.card-grade3,
+.card-grade4,
+.card-duels,
+.card-english {
+  border: 2px solid #C084FC !important;
+}
 
 .grade-icon-cube {
   width: 36px;
