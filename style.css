@@ -8457,21 +8457,23 @@ input:checked + .slider:before {
   transform: translateX(-40%) scale(1.05);
 }
 
-/* 4) ALT SABİT / YÜZEN GÜVEN BANDI */
+/* 4) ALT SABİT / YÜZEN GÜVEN BANDI (Sol Alta Hizalı & Sınıflar Renginde) */
 .widescreen-floating-trust-card {
-  background: rgba(255, 255, 255, 0.9);
+  align-self: flex-start;
+  width: auto;
+  max-width: clamp(340px, 48vw, 680px);
+  margin: 4px 0 clamp(8px, 1.5vh, 16px) 0;
+  background: linear-gradient(135deg, #701A75 0%, #4A044E 50%, #3B0764 100%) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 2px solid rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid #C026D3 !important;
   border-radius: 20px !important;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
-  padding: clamp(10px, 1.2vh, 14px) clamp(20px, 2vw, 36px);
-  width: calc(100% - clamp(24px, 4vw, 64px));
-  max-width: 100%;
-  margin: 4px auto clamp(8px, 1.5vh, 16px) auto;
+  box-shadow: 0 8px 24px rgba(74, 4, 78, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+  padding: clamp(8px, 1.1vh, 12px) clamp(16px, 1.5vw, 24px);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: clamp(12px, 1.5vw, 20px);
   box-sizing: border-box;
   flex-shrink: 0;
 }
@@ -8479,37 +8481,40 @@ input:checked + .slider:before {
 .trust-left-wrap {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .trust-3d-book-icon {
-  width: 44px;
-  height: 44px;
+  width: clamp(32px, 3vw, 42px);
+  height: clamp(32px, 3vw, 42px);
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .trust-lead-text {
-  font-size: clamp(1rem, 1.1vw, 1.15rem);
-  color: #334155;
-  line-height: 1.2;
+  font-size: clamp(0.9rem, 1vw, 1.05rem);
+  color: rgba(255, 255, 255, 0.92) !important;
+  line-height: 1.25;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .trust-lead-text strong {
-  color: #0F172A;
+  color: #FFFFFF !important;
   font-weight: 900;
 }
 
 .trust-right-tag {
-  background: #DCFCE7;
-  color: #065F46;
-  font-size: clamp(0.82rem, 0.9vw, 0.92rem);
-  font-weight: 800;
+  background: rgba(192, 38, 211, 0.3) !important;
+  border: 1px solid #E879F9 !important;
+  color: #FFFFFF !important;
+  font-size: clamp(0.78rem, 0.85vw, 0.88rem);
+  font-weight: 850;
   border-radius: 9999px;
-  padding: 6px 16px;
+  padding: 5px 14px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 2px 8px rgba(192, 38, 211, 0.3);
   white-space: nowrap;
 }
 
