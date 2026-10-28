@@ -2832,6 +2832,184 @@ body:has(#viewDuel.active) .app-topbar {
 /* --------------------------------------------------------------------------
    DİNAMİK ALT KATEGORİ SEKMELERİ (SUBCATEGORY TABS)
    -------------------------------------------------------------------------- */
+/* ==========================================================================
+   TÜRKİYE YÜZYILI MAARİF MODELİ (2026) İLK OKUMA YAZMA SES PANELLERİ
+   ========================================================================== */
+.maarif-reading-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.maarif-groups-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.maarif-group-tab {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1.5px solid rgba(203, 213, 225, 0.85) !important;
+  color: #1E293B !important;
+  font-size: 0.88rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 0 rgba(148, 163, 184, 0.5), 0 4px 10px rgba(0, 0, 0, 0.05);
+  user-select: none;
+}
+
+.maarif-group-tab:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 rgba(148, 163, 184, 0.6), 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.maarif-group-tab:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(148, 163, 184, 0.6);
+}
+
+.maarif-group-tab.active {
+  background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%) !important;
+  color: #FFFFFF !important;
+  border-color: #38BDF8 !important;
+  box-shadow: 0 4px 0 #0369A1, 0 8px 20px rgba(14, 165, 233, 0.4) !important;
+  transform: translateY(-1px) scale(1.02);
+}
+
+.maarif-group-tab.tab-general.active {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%) !important;
+  border-color: #FB923C !important;
+  box-shadow: 0 4px 0 #C2410C, 0 8px 20px rgba(234, 88, 12, 0.4) !important;
+}
+
+/* 3D Harf Kartları Rayı (Letter Rail) */
+.maarif-letters-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(4, 43, 51, 0.55);
+  border: 1.5px solid rgba(6, 182, 212, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.maarif-letter-chip {
+  min-width: 64px;
+  height: 58px;
+  padding: 6px 14px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  color: #0F172A;
+  font-size: 1.35rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 0 #94A3B8, 0 6px 12px rgba(0, 0, 0, 0.08);
+  user-select: none;
+}
+
+.maarif-letter-chip:hover {
+  transform: translateY(-3px) scale(1.05);
+  border-color: #38BDF8;
+  box-shadow: 0 7px 0 #0284C7, 0 10px 20px rgba(14, 165, 233, 0.25);
+}
+
+.maarif-letter-chip:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #0284C7;
+}
+
+.maarif-letter-chip.active {
+  background: linear-gradient(135deg, #FF7A00 0%, #EA580C 100%) !important;
+  color: #FFFFFF !important;
+  border-color: #FDBA74 !important;
+  box-shadow: 0 5px 0 #9A3412, 0 8px 24px rgba(234, 88, 12, 0.5) !important;
+  transform: translateY(-2px) scale(1.08);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.maarif-letter-chip .letter-sub-order {
+  font-size: 0.65rem;
+  font-weight: 800;
+  opacity: 0.75;
+}
+
+/* Kümülatif Öğrenilen Sesler Bilgi Rozeti */
+.maarif-cumulative-badge {
+  background: rgba(11, 43, 54, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(34, 211, 238, 0.45);
+  border-radius: 14px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: #E2E8F0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.maarif-cumulative-badge strong {
+  color: #38BDF8;
+}
+
+.cumulative-sound-chips {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.snd-chip {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snd-chip.active-chip {
+  background: #FF7A00;
+  border-color: #FED7AA;
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(255, 122, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.snd-count-tag {
+  color: #FBBF24;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
 .subcategory-section {
   display: flex;
   flex-direction: column;
