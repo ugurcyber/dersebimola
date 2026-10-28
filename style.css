@@ -101,7 +101,15 @@ h1, h2, h3, h4, h5, h6 {
    Göz yormayan, ferah buz mavisi / kırık beyaz zemin (#F8FAFC)
    ========================================================================== */
 .bg-mesh {
-  display: none !important;
+  display: block !important;
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 50% 20%, rgba(6, 182, 212, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 85% 75%, rgba(10, 147, 150, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 80%, rgba(4, 43, 51, 0.4) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Soluk pastel desenleri ve dikkat dağıtıcı öğeleri kaldır */
@@ -287,11 +295,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden !important;
-  background-color: #62B3F9 !important;
-  background-image: url('assets/background/sky-hills-bg.webp') !important;
-  background-repeat: no-repeat !important;
-  background-position: center bottom !important;
-  background-size: cover !important;
+  background: linear-gradient(180deg, #042B33 0%, #064E59 38%, #086675 70%, #03272E 100%) !important;
   background-attachment: fixed !important;
 }
 
@@ -7962,14 +7966,16 @@ input:checked + .slider:before {
 }
 
 .topbar-action-pill.pill-gamemode {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%) !important;
+  border: 1.5px solid #FDBA74 !important;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
   color: #FFFFFF;
 }
 
 .topbar-action-pill.pill-gamemode.is-solo {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, #0A9396 0%, #005F73 100%) !important;
+  border: 1.5px solid #22D3EE !important;
+  box-shadow: 0 4px 14px rgba(10, 147, 150, 0.4) !important;
 }
 
 .topbar-action-pill.pill-login {
@@ -7978,18 +7984,21 @@ input:checked + .slider:before {
 }
 
 .topbar-action-pill.pill-share {
-  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, #0A9396 0%, #005F73 100%) !important;
+  border: 1.5px solid #22D3EE !important;
+  box-shadow: 0 4px 14px rgba(10, 147, 150, 0.4) !important;
 }
 
 .topbar-action-pill.pill-addquiz {
-  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%) !important;
+  border: 1.5px solid #FDBA74 !important;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
 }
 
 .topbar-action-pill.pill-settings {
-  background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
-  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+  background: linear-gradient(135deg, #00A896 0%, #028090 100%) !important;
+  border: 1.5px solid #00F5D4 !important;
+  box-shadow: 0 4px 14px rgba(2, 128, 144, 0.4) !important;
 }
 
 .topbar-btn-menu {
@@ -8026,7 +8035,8 @@ input:checked + .slider:before {
 
 /* 2) TAM GENİŞLİK TURUNCU UYARI BANDI */
 .desktop-alert-banner {
-  background: linear-gradient(90deg, #EA580C 0%, #F97316 50%, #EA580C 100%);
+  background: linear-gradient(90deg, #9A3412 0%, #C2410C 20%, #EA580C 50%, #C2410C 80%, #9A3412 100%) !important;
+  border: 1.5px solid #FB923C !important;
   border-radius: 14px;
   padding: 8px 24px;
   text-align: center;
@@ -8034,7 +8044,7 @@ input:checked + .slider:before {
   width: calc(100% - clamp(24px, 4vw, 64px));
   max-width: 100%;
   margin: 2px auto 8px auto;
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  box-shadow: 0 4px 16px rgba(194, 65, 12, 0.4) !important;
   cursor: pointer;
   user-select: none;
   flex-shrink: 0;
@@ -8213,10 +8223,11 @@ input:checked + .slider:before {
   font-family: 'Poppins', 'Nunito', sans-serif;
   font-size: clamp(2rem, 3.2vw, 3.5rem);
   font-weight: 900;
-  color: #1E293B;
+  color: #FFFFFF !important;
   line-height: 1.15;
   margin: 0;
   letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .stage-main-title span {
@@ -8233,22 +8244,22 @@ input:checked + .slider:before {
 }
 
 .stage-bubbly-3d .word-derse {
-  color: #38BDF8;
-  -webkit-text-stroke: 2.2px #0C4A6E;
-  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+  color: #00F5D4;
+  -webkit-text-stroke: 2.2px #042B33;
+  text-shadow: 0 4px 0 #042B33, 0 8px 20px rgba(0, 245, 212, 0.45);
 }
 
 .stage-bubbly-3d .word-bi {
-  color: #FBBF24;
-  -webkit-text-stroke: 2.2px #0C4A6E;
-  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+  color: #FB923C;
+  -webkit-text-stroke: 2.2px #7C2D12;
+  text-shadow: 0 4px 0 #7C2D12, 0 8px 20px rgba(251, 146, 60, 0.45);
   margin: 0 6px;
 }
 
 .stage-bubbly-3d .word-mola {
-  color: #38BDF8;
-  -webkit-text-stroke: 2.2px #0C4A6E;
-  text-shadow: 0 4px 0 #0C4A6E, 0 8px 18px rgba(12, 74, 110, 0.35);
+  color: #00F5D4;
+  -webkit-text-stroke: 2.2px #042B33;
+  text-shadow: 0 4px 0 #042B33, 0 8px 20px rgba(0, 245, 212, 0.45);
 }
 
 .stage-sparkle {
@@ -8277,11 +8288,11 @@ input:checked + .slider:before {
 }
 
 .stage-btn-start-3d {
-  background: linear-gradient(180deg, #FF7A00 0%, #FA5A00 100%);
-  border: 2.5px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(180deg, #F97316 0%, #EA580C 45%, #C2410C 100%) !important;
+  border: 2.5px solid #FDBA74 !important;
   border-radius: 9999px;
-  box-shadow: 0 8px 0 #C2410C, 0 18px 36px rgba(250, 90, 0, 0.45);
-  color: #FFFFFF;
+  box-shadow: 0 8px 0 #9A3412, 0 18px 36px rgba(234, 88, 12, 0.55) !important;
+  color: #FFFFFF !important;
   font-weight: 900;
   font-size: clamp(1.3rem, 1.8vw, 1.65rem);
   padding: clamp(14px, 2vh, 18px) clamp(48px, 4vw, 72px);
@@ -8295,13 +8306,14 @@ input:checked + .slider:before {
 }
 
 .stage-btn-start-3d:hover {
+  background: linear-gradient(180deg, #FB923C 0%, #F97316 45%, #EA580C 100%) !important;
   transform: translateY(-2px);
-  box-shadow: 0 10px 0 #C2410C, 0 22px 42px rgba(250, 90, 0, 0.5);
+  box-shadow: 0 10px 0 #9A3412, 0 22px 42px rgba(234, 88, 12, 0.65) !important;
 }
 
 .stage-btn-start-3d:active {
   transform: translateY(3px);
-  box-shadow: 0 4px 0 #C2410C, 0 8px 16px rgba(250, 90, 0, 0.4);
+  box-shadow: 0 4px 0 #9A3412, 0 8px 16px rgba(234, 88, 12, 0.45) !important;
 }
 
 /* Sağ Sütun: Moli & 6 Uçuşan Rozet */
