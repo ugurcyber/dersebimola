@@ -8097,7 +8097,7 @@ input:checked + .slider:before {
   position: relative;
 }
 
-/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı (Lila Panel & Lila Sınıf Seçenekleri) */
+/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı (Referans Görsel: Zengin Mor/Mürdüm & Fuşya Tasarım) */
 .stage-grades-sidebar {
   width: clamp(210px, 16vw, 260px);
   min-width: 195px;
@@ -8106,19 +8106,19 @@ input:checked + .slider:before {
   gap: clamp(5px, 0.9vh, 9px);
   flex-shrink: 0;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 2px solid rgba(192, 132, 252, 0.65);
+  background: rgba(59, 7, 100, 0.45) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(192, 38, 211, 0.5) !important;
   border-radius: 22px;
   padding: clamp(7px, 1.1vh, 12px) clamp(8px, 0.8vw, 12px);
-  box-shadow: 0 10px 30px -5px rgba(147, 51, 234, 0.18), 0 4px 14px rgba(168, 85, 247, 0.1);
+  box-shadow: 0 12px 35px -5px rgba(59, 7, 100, 0.4), 0 4px 16px rgba(192, 38, 211, 0.2) !important;
   box-sizing: border-box;
 }
 
 .stage-grade-card {
-  background: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 50%, #DDD6FE 100%) !important;
-  border: 2px solid #C084FC !important;
+  background: linear-gradient(135deg, #701A75 0%, #4A044E 50%, #3B0764 100%) !important;
+  border: 2px solid #C026D3 !important;
   border-radius: 16px;
   padding: clamp(6px, 0.95vh, 10px) 12px;
   display: flex;
@@ -8126,16 +8126,16 @@ input:checked + .slider:before {
   gap: 12px;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.16) !important;
+  box-shadow: 0 4px 14px rgba(74, 4, 78, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
   transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .stage-grade-card:hover {
-  background: linear-gradient(135deg, #E9D5FF 0%, #DDD6FE 40%, #C4B5FD 100%) !important;
-  border-color: #A855F7 !important;
+  background: linear-gradient(135deg, #86198F 0%, #581C87 50%, #4A044E 100%) !important;
+  border-color: #E879F9 !important;
   transform: translateX(4px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(147, 51, 234, 0.28) !important;
+  box-shadow: 0 8px 24px rgba(192, 38, 211, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
 }
 
 .stage-grade-card:active {
@@ -8149,7 +8149,7 @@ input:checked + .slider:before {
 .card-grade4,
 .card-duels,
 .card-english {
-  border: 2px solid #C084FC !important;
+  border: 2px solid #C026D3 !important;
 }
 
 .grade-icon-cube {
@@ -8170,8 +8170,9 @@ input:checked + .slider:before {
 .grade-card-label {
   font-size: clamp(1rem, 1.05vw, 1.15rem);
   font-weight: 850;
-  color: #1E1B4B;
+  color: #FFFFFF !important;
   letter-spacing: -0.2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .grade-multiline-label {
@@ -8180,7 +8181,12 @@ input:checked + .slider:before {
   line-height: 1.15;
   font-size: clamp(0.92rem, 1vw, 1.05rem);
   font-weight: 850;
-  color: #1E1B4B;
+  color: #FFFFFF !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.grade-multiline-label span {
+  color: #FFFFFF !important;
 }
 
 /* Orta Sütun: Başlık & Eylem */
