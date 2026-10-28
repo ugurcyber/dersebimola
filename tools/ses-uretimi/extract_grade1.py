@@ -138,6 +138,65 @@ life_lines = [
 ]
 lines_by_section['1. Sınıf - Hayat Bilgisi Genel Havuz Soruları'] = life_lines
 
+# 11. Maarif Modeli (2026) İlk Okuma Yazma Etkinlikleri
+node_script = """
+const fs = require('fs');
+const content = fs.readFileSync('app.js', 'utf8');
+const vm = require('vm');
+const sandbox = { window: {}, console };
+vm.createContext(sandbox);
+const s = content.indexOf('const MAARIF_2026_CONFIG = {');
+const e = content.indexOf('function getLearnedLettersUpTo');
+const slice = content.slice(s, e);
+vm.runInContext(slice.replace('const MAARIF_2026_CONFIG', 'var MAARIF_2026_CONFIG'), sandbox);
+
+const map = {
+  'a': 'a!', 'e': 'e!', 'ı': 'ı!', 'i': 'i!', 'o': 'o!', 'ö': 'ö!', 'u': 'u!', 'ü': 'ü!',
+  'b': 'be!', 'c': 'ce!', 'ç': 'çe!', 'd': 'de!', 'f': 'fe!', 'g': 'ge!', 'ğ': 'yumuşak ge!',
+  'h': 'he!', 'j': 'je!', 'k': 'ke!', 'l': 'le!', 'm': 'me!', 'n': 'ne!', 'p': 'pe!',
+  'r': 're!', 's': 'se!', 'ş': 'şe!', 't': 'te!', 'v': 've!', 'y': 'ye!', 'z': 'ze!'
+};
+
+const lines = [];
+for (const l of sandbox.MAARIF_2026_CONFIG.letterOrder) {
+  lines.push('Hangisinin adında ' + map[l] + ' sesi vardır?');
+  lines.push('Büyük ' + map[l] + ' harfinin küçük yazılışı hangisidir?');
+  lines.push('Küçük ' + map[l] + ' harfinin büyük yazılışı hangisidir?');
+
+  const data = sandbox.MAARIF_2026_CONFIG.letters[l];
+  if (!data) continue;
+  const pool = [...(data.soundWords || []), ...(data.noSoundWords || [])];
+  for (const item of pool) {
+    lines.push('\x22' + item.word + '\x22 adında ' + map[l] + ' sesi var mı?');
+  }
+  for (const item of (data.soundWords || [])) {
+    lines.push('\x22' + item.word + '\x22 sözcüğünde ' + map[l] + ' sesi neresindedir?');
+  }
+}
+
+const wordsSet = new Set();
+for (const l of sandbox.MAARIF_2026_CONFIG.letterOrder) {
+  const data = sandbox.MAARIF_2026_CONFIG.letters[l];
+  if (!data || !data.cumulativeWords) continue;
+  for (const w of data.cumulativeWords) {
+    wordsSet.add(w.word.toLowerCase('tr-TR'));
+  }
+}
+for (const w of wordsSet) {
+  lines.push(w + ' kelimesini oluştur.');
+  lines.push('Duyduğun kelimeyi yakala: ' + w + '!');
+  lines.push(w + '!');
+}
+lines.push('Cümledeki eksik kelimeyi bul.');
+
+process.stdout.write(JSON.stringify([...new Set(lines)]));
+"""
+
+import subprocess, json
+res = subprocess.run(['node', '-e', node_script], capture_output=True, encoding='utf-8', check=True)
+maarif_lines = json.loads(res.stdout)
+lines_by_section['1. Sınıf - Maarif Modeli (2026) İlk Okuma Yazma Etkinlikleri'] = maarif_lines
+
 # Write to 1-sinif.txt
 out_path = Path('tools/ses-uretimi/metinler/1-sinif.txt')
 out_path.parent.mkdir(parents=True, exist_ok=True)

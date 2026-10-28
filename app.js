@@ -1057,6 +1057,7 @@
   }
 
   const audio = new SoundEngine();
+  window.__DERSE_BI_MOLA_AUDIO__ = audio;
 
   // Google TTS (Ses motoru) başlatma fonksiyonunu sayfa yüklendikten (window.onload) sonraya ertele (defer)
   if (document.readyState === 'complete') {
@@ -2104,13 +2105,25 @@
     ];
   }
 
-  window.derseBiMolaSpeakText = function(text) {
-    if (window.__DERSE_BI_MOLA_AUDIO__ && typeof window.__DERSE_BI_MOLA_AUDIO__.speakQuestion === 'function') {
-      window.__DERSE_BI_MOLA_AUDIO__.speakQuestion(text);
+  function getMaarifLetterSoundName(letter) {
+    const l = (letter || '').toLowerCase('tr-TR');
+    const map = {
+      'a': 'a!', 'e': 'e!', 'ı': 'ı!', 'i': 'i!', 'o': 'o!', 'ö': 'ö!', 'u': 'u!', 'ü': 'ü!',
+      'b': 'be!', 'c': 'ce!', 'ç': 'çe!', 'd': 'de!', 'f': 'fe!', 'g': 'ge!', 'ğ': 'yumuşak ge!',
+      'h': 'he!', 'j': 'je!', 'k': 'ke!', 'l': 'le!', 'm': 'me!', 'n': 'ne!', 'p': 'pe!',
+      'r': 're!', 's': 'se!', 'ş': 'şe!', 't': 'te!', 'v': 've!', 'y': 'ye!', 'z': 'ze!'
+    };
+    return map[l] || `${l}!`;
+  }
+
+  window.derseBiMolaSpeakText = function(text, onEnded) {
+    if (window.__DERSE_BI_MOLA_AUDIO__ && typeof window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText === 'function') {
+      window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText(text, onEnded);
     } else if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'tr-TR';
+      if (onEnded) u.onend = onEnded;
       window.speechSynthesis.speak(u);
     }
   };
@@ -2853,6 +2866,7 @@
       const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
       const upper = data.upper;
       const lower = data.letter;
+      const soundPhonetic = getMaarifLetterSoundName(activeL);
       const learned = getLearnedLettersUpTo(activeL);
       const learnedWords = getAllCumulativeWordsUpTo(activeL);
       const learnedSentences = getAllCumulativeSentencesUpTo(activeL);
@@ -2870,8 +2884,8 @@
           ].sort(() => 0.5 - Math.random());
 
           return {
-            question: `Hangisinin adında <strong>"${upper}"</strong> sesi VARDIR?`,
-            spokenText: `Hangisinin adında ${upper} sesi vardır?`,
+            question: `Hangisinin adında <strong>"${upper}"</strong> sesi vardır?`,
+            spokenText: `Hangisinin adında ${soundPhonetic} sesi vardır?`,
             options,
             correct: correctChoice,
             explanation: `Tebrikler! "${target.word}" sözcüğünde "${upper}" sesi vardır! ${target.emoji}👏`
@@ -2885,12 +2899,12 @@
 
           return {
             question: `"${item.word} ${item.emoji}" görselinin adında <strong>"${upper}"</strong> sesi var mı?`,
-            spokenText: `${item.word} adında ${upper} sesi var mı?`,
+            spokenText: `"${item.word}" adında ${soundPhonetic} sesi var mı?`,
             options: ['✅ Evet, Var', '❌ Hayır, Yok'],
             correct: correctChoice,
             explanation: isYes
-              ? `Doğru! "${item.word}" sözcüğünde "${upper}" sesi bulunur! ${item.emoji}👏`
-              : `Doğru! "${item.word}" sözcüğünde "${upper}" sesi yoktur! ${item.emoji}👏`
+              ? `Tebrikler! "${item.word}" sözcüğünde "${upper}" sesi bulunur! ${item.emoji}👏`
+              : `Tebrikler! "${item.word}" sözcüğünde "${upper}" sesi yoktur! ${item.emoji}👏`
           };
         }
       } else if (gameType === 'maarif_position') {
@@ -2906,10 +2920,10 @@
 
         return {
           question: `"${item.word} ${item.emoji}" sözcüğünde <strong>"${upper}"</strong> sesi neresindedir?`,
-          spokenText: `${item.word} sözcüğünde ${upper} sesi neresindedir?`,
+          spokenText: `"${item.word}" sözcüğünde ${soundPhonetic} sesi neresindedir?`,
           options: ['🟢 Başta', '🟡 Ortada', '🔴 Sonda'],
           correct: correctChoice,
-          explanation: `Harika kulak! "${item.word}" sözcüğünde "${upper}" sesi ${item.position} yer alır! ${item.emoji}👏`
+          explanation: `Tebrikler! "${item.word}" sözcüğünde "${upper}" sesi ${item.position} yer alır! ${item.emoji}👏`
         };
       } else if (gameType === 'maarif_case_match') {
         // 3) Büyük-Küçük Harf Eşleştirme & Avı
@@ -2920,8 +2934,8 @@
         if (mode === 'find_lower') {
           const options = [lower, ...dists].sort(() => 0.5 - Math.random());
           return {
-            question: `<strong>"${upper}"</strong> büyük harfinin KÜÇÜK yazılışı hangisidir?`,
-            spokenText: `Büyük ${upper} harfinin küçük yazılışı hangisidir?`,
+            question: `Büyük <strong>"${upper}"</strong> harfinin küçük yazılışı hangisidir?`,
+            spokenText: `Büyük ${soundPhonetic} harfinin küçük yazılışı hangisidir?`,
             options,
             correct: lower,
             explanation: `Tebrikler! "${upper}" büyük harfinin küçüğü "${lower}" harfidir! 🔤👏`
@@ -2930,8 +2944,8 @@
           const upperDists = dists.map(l => l.toUpperCase('tr-TR'));
           const options = [upper, ...upperDists].sort(() => 0.5 - Math.random());
           return {
-            question: `<strong>"${lower}"</strong> küçük harfinin BÜYÜK yazılışı hangisidir?`,
-            spokenText: `Küçük ${lower} harfinin büyük yazılışı hangisidir?`,
+            question: `Küçük <strong>"${lower}"</strong> harfinin büyük yazılışı hangisidir?`,
+            spokenText: `Küçük ${soundPhonetic} harfinin büyük yazılışı hangisidir?`,
             options,
             correct: upper,
             explanation: `Tebrikler! "${lower}" küçük harfinin büyüğü "${upper}" harfidir! 🔤👏`
@@ -2960,7 +2974,7 @@
           `,
           spokenText: `${chosen.word.toLowerCase('tr-TR')} kelimesini oluştur.`,
           correct: chosen.word,
-          explanation: `Muhteşem! Parçaları birleştirip "${chosen.word}" kelimesini tamamladın ve okudun! 🧱👏`,
+          explanation: `Tebrikler! Parçaları birleştirip "${chosen.word}" kelimesini tamamladın ve okudun! 🧱👏`,
           interactiveData: {
             word: chosen.word,
             parts: chosen.parts,
@@ -2972,6 +2986,7 @@
         // 5) Hızlı Okuma ve Kelime Yakalama (Ritimli Okuma)
         const targetWordObj = learnedWords[Math.floor(Math.random() * learnedWords.length)] || { word: 'EL' };
         const targetWord = targetWordObj.word;
+        const targetWordLower = targetWord.toLowerCase('tr-TR');
         const otherWords = learnedWords.filter(w => w.word !== targetWord).map(w => w.word);
         let dists = otherWords.slice().sort(() => 0.5 - Math.random()).slice(0, 2);
         if (dists.length < 2) {
@@ -2980,18 +2995,18 @@
         const options = [targetWord, ...dists].sort(() => 0.5 - Math.random());
 
         return {
-          question: `🔊 Duyduğun kelimeyi yakala!`,
+          question: `Duyduğun kelimeyi yakala!`,
           questionHtml: `
             <div style="display:flex; flex-direction:column; align-items:center; gap:8px;">
               <span style="font-size:2.4rem;">🔊👂</span>
               <div style="font-size:1.3rem; font-weight:900;">Duyduğun kelimeyi yakala:</div>
-              <button type="button" class="btn-sound-replay" onclick="window.derseBiMolaSpeakText && window.derseBiMolaSpeakText('${targetWord}')" style="background:rgba(6,182,212,0.25); border:1.5px solid #22D3EE; color:#fff; border-radius:20px; padding:4px 14px; font-weight:800; cursor:pointer;">🔁 Tekrar Dinle</button>
+              <button type="button" class="btn-sound-replay" onclick="window.derseBiMolaSpeakText && window.derseBiMolaSpeakText('${targetWordLower}!')" style="background:rgba(6,182,212,0.25); border:1.5px solid #22D3EE; color:#fff; border-radius:20px; padding:4px 14px; font-weight:800; cursor:pointer;">🔁 Tekrar Dinle</button>
             </div>
           `,
-          spokenText: targetWord.toLowerCase('tr-TR'),
+          spokenText: `Duyduğun kelimeyi yakala: ${targetWordLower}!`,
           options,
           correct: targetWord,
-          explanation: `Harika okuma refleksi! Doğru kelime: "${targetWord}"! ⭐👏`
+          explanation: `Tebrikler! Doğru okunan kelime: "${targetWord}"! ⭐👏`
         };
       } else if (gameType === 'maarif_sentence_complete') {
         // 6) Cümle Tamamlama
@@ -3005,7 +3020,7 @@
 
         return {
           question: `Cümledeki boşluğu tamamla: <strong>"${item.blankSentence}"</strong>`,
-          spokenText: item.fullText,
+          spokenText: `Cümledeki eksik kelimeyi bul.`,
           options: item.options.slice().sort(() => 0.5 - Math.random()),
           correct: item.missing,
           explanation: `Tebrikler! Cümlemiz: "${item.fullText}" oldu! 📖👏`
