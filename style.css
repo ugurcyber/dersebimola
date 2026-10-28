@@ -7846,6 +7846,7 @@ input:checked + .slider:before {
   }
   .stage-grades-sidebar {
     gap: 3px !important;
+    padding: 4px 6px !important;
   }
   .stage-grade-card {
     padding: 3px 8px !important;
@@ -8096,34 +8097,43 @@ input:checked + .slider:before {
   position: relative;
 }
 
-/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı */
+/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı (Lila Panel & Lila Kart Tasarımı) */
 .stage-grades-sidebar {
   width: clamp(210px, 16vw, 260px);
   min-width: 195px;
   display: flex;
   flex-direction: column;
-  gap: clamp(6px, 1.1vh, 10px);
+  gap: clamp(5px, 0.9vh, 9px);
   flex-shrink: 0;
   z-index: 10;
+  background: linear-gradient(180deg, rgba(245, 243, 255, 0.88) 0%, rgba(237, 233, 254, 0.8) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 2px solid rgba(216, 180, 254, 0.7);
+  border-radius: 22px;
+  padding: clamp(7px, 1.1vh, 12px) clamp(8px, 0.8vw, 12px);
+  box-shadow: 0 10px 30px -5px rgba(139, 92, 246, 0.16), 0 4px 14px rgba(168, 85, 247, 0.08);
+  box-sizing: border-box;
 }
 
 .stage-grade-card {
-  background: #FFFFFF;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 55%, #EDE9FE 100%);
   border-radius: 16px;
-  padding: clamp(7.5px, 1.1vh, 11px) 14px;
+  padding: clamp(6px, 0.95vh, 10px) 12px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease;
+  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.08);
+  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease, background 0.16s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .stage-grade-card:hover {
+  background: linear-gradient(135deg, #FFFFFF 0%, #EDE9FE 40%, #E9D5FF 100%);
   transform: translateX(4px) scale(1.02);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.22);
 }
 
 .stage-grade-card:active {
@@ -8156,7 +8166,7 @@ input:checked + .slider:before {
 .grade-card-label {
   font-size: clamp(1rem, 1.05vw, 1.15rem);
   font-weight: 850;
-  color: #1E293B;
+  color: #1E1B4B;
   letter-spacing: -0.2px;
 }
 
@@ -8166,7 +8176,7 @@ input:checked + .slider:before {
   line-height: 1.15;
   font-size: clamp(0.92rem, 1vw, 1.05rem);
   font-weight: 850;
-  color: #1E293B;
+  color: #1E1B4B;
 }
 
 /* Orta Sütun: Başlık & Eylem */
