@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.2.7">
+  <link rel="stylesheet" href="style.css?v=6.2.8">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -414,14 +414,16 @@
           <section class="subjects-section hide" id="subjectsSection">
             <div class="subjects-section-header">
               <button class="btn-back-to-home" id="btnBackToHome" title="Ana Sayfaya Dön">
-                <span>←</span> Ana Sayfa
+                <span class="back-home-icon">🏠</span> Ana Sayfa
               </button>
               <div class="section-title-wrap">
-                <span class="section-pill-badge">📚 DERSİNİ SEÇ</span>
-                <h2 class="section-title" id="subjectsGradeTitle">1. Sınıf Dersleri</h2>
+                <div class="section-ribbon-banner">
+                  <span class="section-pill-badge">🎗️ DERSİNİ SEÇ 🎗️</span>
+                </div>
+                <h2 class="section-title" id="subjectsGradeTitle">Anasınıfı Dersleri</h2>
                 <p class="section-desc">Eğlenceli düelloya veya pratiğe başlamak için bir ders seç:</p>
               </div>
-              <span class="subjects-count-badge" id="subjectsCountBadge">5 Ders Mevcut</span>
+              <span class="subjects-count-badge" id="subjectsCountBadge">4 Ders Mevcut</span>
             </div>
             <div class="subjects-grid" id="subjectsGrid">
               <!-- Sınıfa göre dinamik üretilen ders kartları (İlk Okuma, Matematik, Türkçe vb.) -->
@@ -1357,6 +1359,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=6.2.7" defer></script>
+  <script src="app.js?v=6.2.8" defer></script>
 </body>
 </html>

@@ -9449,22 +9449,26 @@
     DOM.subjectsGrid.innerHTML = subjects.map(subject => {
       const activeGamesCount = subject.games.filter(gm => gm.active).length;
       return `
-        <div class="subject-card ${subject.colorTheme}" data-subject-id="${subject.id}" role="button" tabindex="0">
-          <div class="subject-card-top">
-            <span class="subject-badge">${replaceEmojisWith3D(subject.badge, 'chip-3d-icon')}</span>
-            <div class="card-top-right-actions">
-              <span class="subject-games-count">${activeGamesCount} Pratik Aktif</span>
-              <button class="card-share-btn" data-share-title="${escapeHtml(subject.name)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş">📲</button>
+        <div class="subject-card ${subject.colorTheme} card-sub-${subject.id}" data-subject-id="${subject.id}" role="button" tabindex="0">
+          <div class="subject-card-left">
+            <div class="subject-icon-wrap">
+              <span class="subject-icon">${replaceEmojisWith3D(subject.icon, 'game-3d-big-icon')}</span>
             </div>
           </div>
-          <div class="subject-icon-wrap">
-            <span class="subject-icon">${replaceEmojisWith3D(subject.icon, 'game-3d-big-icon')}</span>
-          </div>
-          <h3 class="subject-title">${subject.name}</h3>
-          <span class="subject-tagline">${subject.tagline}</span>
-          <p class="subject-desc">${subject.description}</p>
-          <div class="subject-card-footer">
-            <span class="btn-open-subject">Dersi Aç ➔</span>
+          <div class="subject-card-right">
+            <div class="subject-card-top">
+              <span class="subject-badge">${replaceEmojisWith3D(subject.badge, 'chip-3d-icon')}</span>
+              <div class="card-top-right-actions">
+                <span class="subject-games-count">⭐ ${activeGamesCount} Pratik Aktif</span>
+                <button class="card-share-btn" data-share-title="${escapeHtml(subject.name)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş">📲</button>
+              </div>
+            </div>
+            <h3 class="subject-title">${subject.name}</h3>
+            <span class="subject-tagline">${subject.tagline}</span>
+            <p class="subject-desc">${subject.description}</p>
+            <div class="subject-card-footer">
+              <span class="btn-open-subject">Hadi Başla! 🚀</span>
+            </div>
           </div>
         </div>
       `;
