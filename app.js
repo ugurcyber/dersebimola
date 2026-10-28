@@ -6898,6 +6898,13 @@
     modeSwitchContainer: document.getElementById('modeSwitchContainer'),
     btnModeDuel: document.getElementById('btnModeDuel'),
     btnModeSolo: document.getElementById('btnModeSolo'),
+    btnDesktopGameMode: document.getElementById('btnDesktopGameMode'),
+    desktopModeIcon: document.getElementById('desktopModeIcon'),
+    desktopModeText: document.getElementById('desktopModeText'),
+    btnSettingsModeToggle: document.getElementById('btnSettingsModeToggle'),
+    btnStageQuickDuels: document.getElementById('btnStageQuickDuels'),
+    btnModalDuels: document.getElementById('btnModalDuels'),
+    btnSidebarDuels: document.getElementById('btnSidebarDuels'),
     activeContestantsBar: document.getElementById('activeContestantsBar'),
     contestantTagP1: document.getElementById('contestantTagP1'),
     contestantTagP2: document.getElementById('contestantTagP2'),
@@ -9687,6 +9694,20 @@
 
     if (DOM.btnModeDuel) DOM.btnModeDuel.classList.toggle('active', !isSolo);
     if (DOM.btnModeSolo) DOM.btnModeSolo.classList.toggle('active', isSolo);
+
+    if (DOM.btnDesktopGameMode) {
+      DOM.btnDesktopGameMode.classList.toggle('is-solo', isSolo);
+    }
+    if (DOM.desktopModeIcon) {
+      DOM.desktopModeIcon.textContent = isSolo ? '👤' : '⚔️';
+    }
+    if (DOM.desktopModeText) {
+      DOM.desktopModeText.textContent = isSolo ? 'Pratik Modu' : 'Düello Modu';
+    }
+    if (DOM.btnSettingsModeToggle) {
+      DOM.btnSettingsModeToggle.textContent = isSolo ? 'Mod: Pratik 👤' : 'Mod: Düello 👥';
+      DOM.btnSettingsModeToggle.classList.toggle('is-off', isSolo);
+    }
 
     if (isSolo) {
       if (DOM.vsCircle) DOM.vsCircle.style.display = 'none';
@@ -12685,13 +12706,27 @@
 
     // Oyun Modu Seçimi (İki Kişilik Düello vs Tek Kişilik Pratik)
     if (DOM.btnModeDuel) {
-      DOM.btnModeDuel.addEventListener('pointerdown', () => {
+      addTapListener(DOM.btnModeDuel, (e) => {
+        if (e && e.cancelable) e.preventDefault();
         setGameMode('duel');
       });
     }
     if (DOM.btnModeSolo) {
-      DOM.btnModeSolo.addEventListener('pointerdown', () => {
+      addTapListener(DOM.btnModeSolo, (e) => {
+        if (e && e.cancelable) e.preventDefault();
         setGameMode('solo');
+      });
+    }
+    if (DOM.btnDesktopGameMode) {
+      addTapListener(DOM.btnDesktopGameMode, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        setGameMode(state.gameMode === 'duel' ? 'solo' : 'duel');
+      });
+    }
+    if (DOM.btnSettingsModeToggle) {
+      addTapListener(DOM.btnSettingsModeToggle, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        setGameMode(state.gameMode === 'duel' ? 'solo' : 'duel');
       });
     }
 
@@ -13145,13 +13180,30 @@
       });
     });
 
+    function handleQuickDuelsClick() {
+      audio.playClick();
+      setGameMode('duel');
+      setGrade(1);
+      if (typeof selectSubject === 'function') {
+        selectSubject('grade1_extra');
+      }
+      const modalSelectGrade = document.getElementById('modalSelectGrade');
+      if (modalSelectGrade) closeModal(modalSelectGrade);
+    }
+
     const btnStageQuickDuels = document.getElementById('btnStageQuickDuels');
     if (btnStageQuickDuels) {
-      addTapListener(btnStageQuickDuels, (e) => {
-        audio.playClick();
-        setGameMode('duel');
-        setGrade(1);
-      });
+      addTapListener(btnStageQuickDuels, handleQuickDuelsClick);
+    }
+
+    const btnModalDuels = document.getElementById('btnModalDuels');
+    if (btnModalDuels) {
+      addTapListener(btnModalDuels, handleQuickDuelsClick);
+    }
+
+    const btnSidebarDuels = document.getElementById('btnSidebarDuels');
+    if (btnSidebarDuels) {
+      addTapListener(btnSidebarDuels, handleQuickDuelsClick);
     }
 
     const btnStageQuickEnglish = document.getElementById('btnStageQuickEnglish');

@@ -7819,6 +7819,7 @@ input:checked + .slider:before {
 
 @media (max-width: 480px) {
   /* Çok dar telefon ekranlarında hap butonların yazılarını gizleyip simge bırak */
+  .topbar-action-pill.pill-gamemode .pill-text,
   .topbar-action-pill.pill-share .pill-text,
   .topbar-action-pill.pill-addquiz .pill-text,
   .topbar-action-pill.pill-settings .pill-text {
@@ -7957,6 +7958,17 @@ input:checked + .slider:before {
 
 .topbar-action-pill:active {
   transform: scale(0.96);
+}
+
+.topbar-action-pill.pill-gamemode {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  color: #FFFFFF;
+}
+
+.topbar-action-pill.pill-gamemode.is-solo {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
 }
 
 .topbar-action-pill.pill-login {
@@ -8737,6 +8749,36 @@ input:checked + .slider:before {
   transform: translateX(4px);
   color: #ff7a00;
 }
+
+/* Düellolar Özel Sınıf ve Seçim Kartı Stilleri */
+.grade-modal-card.card-grade-duels {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%) !important;
+  border: 2.5px solid #F59E0B !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.15) !important;
+}
+
+.grade-modal-card.card-grade-duels:hover,
+.grade-modal-card.card-grade-duels:active {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%) !important;
+  border-color: #D97706 !important;
+  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.3) !important;
+}
+
+.grade-chip.chip-duels {
+  border-left: 3px solid #F59E0B !important;
+}
+
+.grade-icon-duels {
+  background: #FEF3C7 !important;
+  border: 1.5px solid #FDE68A !important;
+}
+
+/* Ders Başlık Barında Mod Seçici Uyumu */
+.subject-header-nav .mode-switch-container {
+  margin: 0 4px;
+}
+
 
 
 

@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.1.3">
+  <link rel="stylesheet" href="style.css?v=6.2.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -166,6 +166,10 @@
             <span class="grade-icon-box grade-icon-4"><img src="assets/icons/3d/trophy.webp" class="chip-3d-icon" alt="🏆" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">4. Sınıf</span>
           </button>
+          <button class="grade-chip chip-duels" id="btnSidebarDuels" title="Sınıf Düellosu & Zeka Oyunları">
+            <span class="grade-icon-box grade-icon-duels"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="⚡" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="grade-chip-name">Düellolar</span>
+          </button>
         </nav>
       </div>
 
@@ -214,6 +218,10 @@
         </div>
 
         <div class="topbar-unified-actions">
+          <button class="topbar-action-pill pill-gamemode" id="btnDesktopGameMode" type="button" aria-label="Oyun Modu" title="Düello / Pratik Modunu Değiştir">
+            <span class="pill-icon" id="desktopModeIcon">⚔️</span>
+            <span class="pill-text" id="desktopModeText">Düello Modu</span>
+          </button>
           <button class="topbar-action-pill pill-login" id="btnDesktopLogin" type="button" aria-label="Giriş Yap">
             <span class="pill-icon">👤</span>
             <span class="pill-text" id="desktopLoginText">Giriş Yap</span>
@@ -297,6 +305,16 @@
                     <img src="assets/icons/3d/books.webp" class="grade-card-3d-img" alt="4. Sınıf" width="30" height="30" loading="lazy" decoding="async">
                   </div>
                   <span class="grade-card-label">4. Sınıf</span>
+                </div>
+
+                <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Düellolar & Oyunlar">
+                  <div class="grade-icon-cube icon-theme-amber">
+                    <img src="assets/icons/3d/lightning.webp" class="grade-card-3d-img" alt="Düellolar" width="30" height="30" loading="lazy" decoding="async">
+                  </div>
+                  <div class="grade-multiline-label">
+                    <span>Düellolar</span>
+                    <span>&amp; Oyunlar</span>
+                  </div>
                 </div>
 
                 <div class="stage-grade-card card-english" id="btnStageQuickEnglish" role="button" tabindex="0" title="İngilizce">
@@ -426,6 +444,19 @@
               <span class="current-subject-grade" id="currentSubjectGrade">1. Sınıf Konu & Pratik Havuzu</span>
             </div>
           </div>
+
+          <!-- Oyun Modu Seçici (Düello vs Tek Kişilik Pratik) -->
+          <div class="mode-switch-container" id="modeSwitchContainer">
+            <button class="mode-switch-btn active" id="btnModeDuel" data-mode="duel" type="button" title="İki Kişilik Sınıf Düellosu">
+              <span class="mode-icon">👥</span>
+              <span>İki Kişilik Düello</span>
+            </button>
+            <button class="mode-switch-btn" id="btnModeSolo" data-mode="solo" type="button" title="Tek Kişilik Bireysel Pratik">
+              <span class="mode-icon">👤</span>
+              <span>Tek Kişilik Pratik</span>
+            </button>
+          </div>
+
           <span class="games-count-badge" id="gamesCountBadge">1 Pratik Aktif</span>
         </div>
 
@@ -883,6 +914,17 @@
           </div>
           <span class="grade-modal-arrow">→</span>
         </button>
+
+        <button class="grade-modal-card card-grade-duels" id="btnModalDuels" type="button">
+          <div class="grade-modal-icon-wrap">
+            <img src="assets/icons/3d/lightning.webp" class="grade-modal-3d-icon" alt="Düellolar" width="46" height="46" loading="lazy">
+          </div>
+          <div class="grade-modal-info">
+            <span class="grade-modal-name">⚡ Sınıf Düelloları</span>
+            <span class="grade-modal-badge">Fark Bulma, Hızlı Refleks &amp; Stroop</span>
+          </div>
+          <span class="grade-modal-arrow">→</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1246,6 +1288,13 @@
       <div class="settings-modal-body">
         <div class="setting-item-row">
           <div class="setting-item-text">
+            <span class="setting-main-label">⚔️ Oyun Modu (Akıllı Tahta Düellosu)</span>
+            <span class="setting-sub-label">İki kişilik split-screen yarışma veya tek kişilik pratik</span>
+          </div>
+          <button class="setting-btn-toggle" id="btnSettingsModeToggle">Mod: Düello 👥</button>
+        </div>
+        <div class="setting-item-row">
+          <div class="setting-item-text">
             <span class="setting-main-label">🔊 Ses Efektleri</span>
             <span class="setting-sub-label">Doğru, yanlış, tıklama ve konfeti sesleri</span>
           </div>
@@ -1306,6 +1355,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=6.1.3" defer></script>
+  <script src="app.js?v=6.2.0" defer></script>
 </body>
 </html>
