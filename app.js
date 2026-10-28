@@ -12888,6 +12888,16 @@
       btnMobileMenu.addEventListener('click', (e) => e.preventDefault());
     }
 
+    const btnSidebarClose = document.getElementById('btnSidebarClose');
+    if (btnSidebarClose) {
+      btnSidebarClose.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        audio.playClick();
+        closeMobileSidebar();
+      });
+      btnSidebarClose.addEventListener('click', (e) => e.preventDefault());
+    }
+
     if (mobileDrawerBackdrop) {
       mobileDrawerBackdrop.addEventListener('pointerdown', (e) => {
         e.preventDefault();

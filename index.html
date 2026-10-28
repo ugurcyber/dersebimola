@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.2.8">
+  <link rel="stylesheet" href="style.css?v=6.2.9">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -109,21 +109,24 @@
   <!-- ============================================================== -->
   <div class="app-layout">
 
-    <!-- 1) SOL SABİT MENÜ (SIDEBAR - 260px, GECE MAVİSİ #1E1B4B) -->
+    <!-- 1) SAĞ ÇEKMECE MENÜ (OFF-CANVAS SIDEBAR - SAĞDAN AÇILIR) -->
     <aside class="app-sidebar" id="appSidebar">
-      <!-- Moli Maskot, Logo & Konuşma Balonu -->
+      <!-- Moli Maskot, Logo, Konuşma Balonu & Kapatma Butonu -->
       <div class="sidebar-header">
-        <div class="sidebar-brand-card" id="logoBtn" role="button" tabindex="0" title="Derse Bi' Mola - Ana Menü">
-          <div class="sidebar-moli-wrap" id="moliWidget">
-            <div class="moli-avatar-wrap">
-              <div class="moli-antenna-glow"></div>
-              <img src="assets/mascot/moli.webp" class="moli-character-img" id="moliImg" alt="Sevimli Robot Moli" width="48" height="48" loading="lazy" decoding="async">
+        <div class="sidebar-header-top">
+          <div class="sidebar-brand-card" id="logoBtn" role="button" tabindex="0" title="Derse Bi' Mola - Ana Menü">
+            <div class="sidebar-moli-wrap" id="moliWidget">
+              <div class="moli-avatar-wrap">
+                <div class="moli-antenna-glow"></div>
+                <img src="assets/mascot/moli.webp" class="moli-character-img" id="moliImg" alt="Sevimli Robot Moli" width="48" height="48" loading="lazy" decoding="async">
+              </div>
+            </div>
+            <div class="sidebar-brand-info">
+              <span class="sidebar-brand-title">DERSE Bİ' MOLA</span>
+              <span class="sidebar-brand-sub">ETAP & Akıllı Tahta</span>
             </div>
           </div>
-          <div class="sidebar-brand-info">
-            <span class="sidebar-brand-title">DERSE Bİ' MOLA</span>
-            <span class="sidebar-brand-sub">ETAP & Akıllı Tahta</span>
-          </div>
+          <button class="sidebar-close-btn" id="btnSidebarClose" type="button" aria-label="Menüyü Kapat" title="Kapat">✕</button>
         </div>
 
         <!-- Moli Konuşma Balonu -->
@@ -1359,6 +1362,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=6.2.8" defer></script>
+  <script src="app.js?v=6.2.9" defer></script>
 </body>
 </html>
