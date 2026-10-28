@@ -320,11 +320,12 @@ html, body {
   width: 300px !important;
   max-width: 85vw !important;
   height: 100vh !important;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F0F7FF 40%, #E8F3FF 100%) !important;
-  color: #0F172A;
+  background: linear-gradient(180deg, #022026 0%, #064E59 40%, #03272E 100%) !important;
+  color: #FFFFFF !important;
   z-index: 100000 !important;
   transition: left 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  box-shadow: 8px 0 32px rgba(15, 23, 42, 0.28) !important;
+  box-shadow: 8px 0 36px rgba(0, 0, 0, 0.55) !important;
+  border-right: 2px solid rgba(6, 182, 212, 0.4) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
 }
@@ -339,7 +340,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border-bottom: 1.5px solid #DCE7F5;
+  border-bottom: 1.5px solid rgba(6, 182, 212, 0.25);
 }
 
 .sidebar-brand-card {
@@ -348,19 +349,19 @@ html, body {
   gap: 10px;
   padding: 8px 10px;
   border-radius: 16px;
-  background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
+  background: rgba(4, 43, 51, 0.85);
+  border: 1.5px solid rgba(6, 182, 212, 0.4);
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   user-select: none;
   -webkit-user-select: none;
-  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 .sidebar-brand-card:hover {
-  background: #F8FAFC;
-  border-color: #FF6B00;
+  background: rgba(6, 78, 89, 0.95);
+  border-color: #00F5D4;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 107, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(0, 245, 212, 0.25);
 }
 .sidebar-brand-card:active {
   transform: translateY(0);
@@ -463,7 +464,7 @@ html, body {
 .sidebar-brand-sub {
   font-size: 0.66rem;
   font-weight: 700;
-  color: rgba(226, 232, 240, 0.65);
+  color: #99F6E4;
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
@@ -471,11 +472,11 @@ html, body {
 /* Sevimli Moli Konuşma Balonu (Sidebar İçi) */
 .moli-speech-bubble {
   position: relative;
-  background: #ffffff;
-  border: 1.5px solid #fdba74;
+  background: rgba(3, 34, 40, 0.92);
+  border: 1.5px solid #22D3EE;
   border-radius: 12px;
   padding: 6px 10px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -486,7 +487,7 @@ html, body {
 .moli-bubble-text {
   font-size: 0.76rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #FFFFFF;
   line-height: 1.25;
 }
 
@@ -496,9 +497,9 @@ html, body {
   left: 24px;
   width: 10px;
   height: 10px;
-  background: #ffffff;
-  border-left: 1.5px solid #fdba74;
-  border-top: 1.5px solid #fdba74;
+  background: rgba(3, 34, 40, 0.92);
+  border-left: 1.5px solid #22D3EE;
+  border-top: 1.5px solid #22D3EE;
   transform: rotate(45deg);
 }
 
@@ -534,18 +535,19 @@ html, body {
 }
 
 .sidebar-nav-title {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 900;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #64748B;
+  color: #00F5D4 !important;
   margin-bottom: 8px;
   padding-left: 4px;
+  text-shadow: 0 1px 4px rgba(0, 245, 212, 0.3);
 }
 
 .sidebar-nav-divider {
   height: 1px;
-  background: #DCE7F5;
+  background: rgba(6, 182, 212, 0.25);
   margin: 10px 4px 12px 4px;
 }
 
@@ -561,9 +563,9 @@ html, body {
   width: 100%;
   height: 48px;
   border-radius: 14px;
-  background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
-  color: #1E293B;
+  background: linear-gradient(135deg, #0A9396 0%, #005F73 100%) !important;
+  border: 1.5px solid #22D3EE !important;
+  color: #FFFFFF !important;
   font-size: 0.95rem;
   font-weight: 800;
   display: flex;
@@ -573,23 +575,23 @@ html, body {
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-align: left;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 12px rgba(10, 147, 150, 0.35) !important;
   user-select: none;
   -webkit-user-select: none;
   margin-bottom: 2px;
 }
 .sidebar-home-btn:hover {
-  background: #F8FAFC;
-  color: #0F172A;
-  border-color: #CBD5E1;
+  background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%) !important;
+  color: #FFFFFF !important;
+  border-color: #5EEAD4 !important;
   transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 6px 16px rgba(94, 234, 212, 0.4) !important;
 }
 .sidebar-home-btn.active {
-  background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%) !important;
   color: #FFFFFF !important;
-  border: 1.5px solid #FF9248 !important;
-  box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  border: 1.5px solid #FDBA74 !important;
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
   transform: translateX(4px) scale(1.02);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -602,9 +604,9 @@ html, body {
   width: 100%;
   height: 48px;
   border-radius: 14px;
-  background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
-  color: #1E293B;
+  background: linear-gradient(135deg, #701A75 0%, #4A044E 50%, #3B0764 100%) !important;
+  border: 2px solid #C026D3 !important;
+  color: #FFFFFF !important;
   font-size: 0.95rem;
   font-weight: 800;
   display: flex;
@@ -614,30 +616,43 @@ html, body {
   cursor: pointer;
   transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-align: left;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 14px rgba(112, 26, 117, 0.35) !important;
   user-select: none;
   -webkit-user-select: none;
 }
 
 .sidebar-grade-nav .grade-chip:hover {
-  background: #F8FAFC;
-  color: #0F172A;
-  border-color: #CBD5E1;
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  background: linear-gradient(135deg, #86198F 0%, #581C87 100%) !important;
+  color: #FFFFFF !important;
+  border-color: #F0ABFC !important;
+  transform: translateX(4px) scale(1.01);
+  box-shadow: 0 6px 18px rgba(192, 38, 211, 0.5) !important;
 }
 
-/* Aktif Seçilen Sınıf: Moli'nin Canlı Turuncusu (#FF6B00) ile Parlar */
+/* Aktif Seçilen Sınıf: Moli'nin Canlı Fırınlanmış Turuncusu (#F97316) ile Parlar */
 .sidebar-grade-nav .grade-chip.active {
-  background: linear-gradient(135deg, #FF6B00 0%, #EA580C 100%) !important;
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%) !important;
   color: #FFFFFF !important;
-  border: 1.5px solid #FF9248 !important;
-  box-shadow: 0 6px 20px rgba(255, 107, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+  border: 2px solid #FDBA74 !important;
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
   transform: translateX(4px) scale(1.02);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Sınıf İkon Kutuları (Her sınıf için özel canlı pastel renk) */
+.sidebar-grade-nav .grade-chip.chip-duels {
+  background: linear-gradient(135deg, #EA580C 0%, #C2410C 50%, #9A3412 100%) !important;
+  border: 2px solid #FB923C !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4) !important;
+}
+
+.sidebar-grade-nav .grade-chip.chip-duels:hover {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%) !important;
+  border-color: #FDBA74 !important;
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.55) !important;
+}
+
+/* Sınıf İkon Kutuları (Her sınıf için şık yarı saydam cam efekt) */
 .grade-icon-box {
   width: 32px;
   height: 32px;
@@ -648,30 +663,12 @@ html, body {
   flex-shrink: 0;
   font-size: 1.15rem;
   transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 .home-icon-box {
-  background: #EEF2FF;
-  border: 1px solid #C7D2FE;
-}
-.grade-icon-0 {
-  background: #FDF2F8;
-  border: 1px solid #FBCFE8;
-}
-.grade-icon-1 {
-  background: #ECFDF5;
-  border: 1px solid #A7F3D0;
-}
-.grade-icon-2 {
-  background: #F0F9FF;
-  border: 1px solid #BAE6FD;
-}
-.grade-icon-3 {
-  background: #FFFBEB;
-  border: 1px solid #FDE68A;
-}
-.grade-icon-4 {
-  background: #F5F3FF;
-  border: 1px solid #DDD6FE;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 .grade-chip.active .grade-icon-box {
@@ -688,8 +685,8 @@ html, body {
 /* Sol Menünün Alt Kısmı: Öğretmen Araçları */
 .sidebar-footer {
   padding: 16px 14px;
-  border-top: 1.5px solid #DCE7F5;
-  background: rgba(240, 247, 255, 0.95);
+  border-top: 1.5px solid rgba(6, 182, 212, 0.3) !important;
+  background: rgba(2, 32, 38, 0.95) !important;
   display: flex;
   flex-direction: column;
 }
@@ -704,9 +701,7 @@ html, body {
   width: 100%;
   height: 42px;
   border-radius: 12px;
-  background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
-  color: #1E293B;
+  color: #FFFFFF !important;
   font-size: 0.88rem;
   font-weight: 800;
   display: flex;
@@ -716,22 +711,60 @@ html, body {
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 .sidebar-tool-btn:hover {
-  background: #F8FAFC;
-  color: #0F172A;
-  border-color: #CBD5E1;
   transform: translateX(3px);
+  filter: brightness(1.1);
+}
+
+#btnOpenLeaderboard.sidebar-tool-btn {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+  border: 1.5px solid #FBBF24 !important;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35) !important;
+}
+#btnOpenLeaderboard.sidebar-tool-btn:hover {
+  border-color: #FDE68A !important;
+  box-shadow: 0 6px 16px rgba(251, 191, 36, 0.5) !important;
+}
+
+#btnOpenCustomQ.sidebar-tool-btn {
+  background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%) !important;
+  border: 1.5px solid #FB923C !important;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35) !important;
+}
+#btnOpenCustomQ.sidebar-tool-btn:hover {
+  border-color: #FDBA74 !important;
+  box-shadow: 0 6px 16px rgba(251, 146, 60, 0.5) !important;
+}
+
+#btnSidebarShare.sidebar-tool-btn {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  border: 1.5px solid #34D399 !important;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35) !important;
+}
+#btnSidebarShare.sidebar-tool-btn:hover {
+  border-color: #6EE7B7 !important;
+  box-shadow: 0 6px 16px rgba(52, 211, 153, 0.5) !important;
+}
+
+#btnSidebarSettings.sidebar-tool-btn {
+  background: linear-gradient(135deg, #0891B2 0%, #0E7490 100%) !important;
+  border: 1.5px solid #38BDF8 !important;
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.35) !important;
+}
+#btnSidebarSettings.sidebar-tool-btn:hover {
+  border-color: #7DD3FC !important;
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.5) !important;
 }
 
 .sidebar-teacher-btn {
   width: 100%;
   height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
-  border: 1.5px solid #6366f1;
-  color: #ffffff;
+  background: linear-gradient(135deg, #7C3AED 0%, #581C87 100%) !important;
+  border: 1.5px solid #C084FC !important;
+  color: #ffffff !important;
   font-size: 0.9rem;
   font-weight: 900;
   display: flex;
@@ -739,13 +772,14 @@ html, body {
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4) !important;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   user-select: none;
 }
 .sidebar-teacher-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.5);
+  border-color: #DDD6FE !important;
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.55) !important;
   filter: brightness(1.1);
 }
 .sidebar-teacher-btn:active {
@@ -4000,15 +4034,16 @@ input:checked + .slider:before {
 
 .modal-window {
   position: relative;
-  background: #ffffff;
-  border: 2px solid #cbd5e1;
+  background: linear-gradient(180deg, #022026 0%, #064E59 100%) !important;
+  border: 2.5px solid rgba(6, 182, 212, 0.45) !important;
   border-radius: var(--radius-xl);
   padding: 32px 36px;
   width: 100%;
   max-width: 620px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6) !important;
+  color: #FFFFFF !important;
   animation: modalScale 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
   transform: translateZ(0);
@@ -4023,9 +4058,9 @@ input:checked + .slider:before {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: #f1f5f9;
-  border: none;
-  color: var(--text-secondary);
+  background: rgba(4, 43, 51, 0.9) !important;
+  border: 1.5px solid rgba(6, 182, 212, 0.4) !important;
+  color: #FFFFFF !important;
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -4039,8 +4074,10 @@ input:checked + .slider:before {
 }
 
 .modal-close-btn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: #EA580C !important;
+  border-color: #FDBA74 !important;
+  color: #FFFFFF !important;
+  transform: rotate(90deg);
 }
 
 .modal-header {
@@ -4057,13 +4094,13 @@ input:checked + .slider:before {
 .modal-title {
   font-size: 1.6rem;
   font-weight: 900;
-  color: #0f172a;
+  color: #FFFFFF !important;
   margin-bottom: 8px;
 }
 
 .modal-desc {
   font-size: 0.95rem;
-  color: var(--text-secondary);
+  color: #99F6E4 !important;
   line-height: 1.45;
 }
 
@@ -4083,9 +4120,9 @@ input:checked + .slider:before {
 }
 
 .btn-exit-confirm-yes {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: #ffffff;
-  border: none;
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+  color: #ffffff !important;
+  border: 1.5px solid #F87171 !important;
   font-size: 0.95rem;
   font-weight: 800;
   padding: 12px 22px;
@@ -4095,19 +4132,19 @@ input:checked + .slider:before {
   align-items: center;
   gap: 8px;
   font-family: inherit;
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
   transition: all var(--transition-fast);
 }
 
 .btn-exit-confirm-yes:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.5);
 }
 
 .btn-exit-confirm-no {
-  background: #f1f5f9;
-  color: #334155;
-  border: 1.5px solid #cbd5e1;
+  background: linear-gradient(135deg, #0A9396 0%, #005F73 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #22D3EE !important;
   font-size: 0.95rem;
   font-weight: 800;
   padding: 12px 22px;
@@ -4117,12 +4154,15 @@ input:checked + .slider:before {
   align-items: center;
   gap: 8px;
   font-family: inherit;
+  box-shadow: 0 4px 12px rgba(10, 147, 150, 0.35);
   transition: all var(--transition-fast);
 }
 
 .btn-exit-confirm-no:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%) !important;
+  border-color: #5EEAD4 !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
 }
 
 /* Auth Modalı İçeriği */
@@ -4131,10 +4171,10 @@ input:checked + .slider:before {
   flex-direction: column;
   gap: 12px;
   margin-bottom: 24px;
-  background: #f8fafc;
+  background: rgba(3, 34, 40, 0.75) !important;
   padding: 16px;
   border-radius: var(--radius-md);
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid rgba(6, 182, 212, 0.35) !important;
 }
 
 .perk-item {
@@ -4142,7 +4182,7 @@ input:checked + .slider:before {
   align-items: flex-start;
   gap: 12px;
   font-size: 0.92rem;
-  color: #334155;
+  color: #E2E8F0 !important;
 }
 
 .perk-icon {
@@ -4151,7 +4191,7 @@ input:checked + .slider:before {
 }
 
 .perk-info strong {
-  color: #b45309;
+  color: #FDBA74 !important;
 }
 
 .btn-google-login {
@@ -4781,7 +4821,10 @@ input:checked + .slider:before {
   width: 95vw;
   max-height: 92vh;
   padding: 28px 32px;
-  background: #ffffff;
+  background: linear-gradient(180deg, #022026 0%, #064E59 100%) !important;
+  border: 2.5px solid rgba(6, 182, 212, 0.45) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6) !important;
+  color: #FFFFFF !important;
   border-radius: 20px;
 }
 
@@ -4794,13 +4837,14 @@ input:checked + .slider:before {
 
 .quiz-builder-form-pane,
 .quiz-saved-library-pane {
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
+  background: rgba(3, 34, 40, 0.75) !important;
+  border: 1.5px solid rgba(6, 182, 212, 0.3) !important;
   border-radius: 16px;
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .quiz-pane-header {
@@ -4808,13 +4852,13 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 10px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(6, 182, 212, 0.25);
 }
 
 .quiz-pane-title {
   font-size: 1rem;
   font-weight: 800;
-  color: #1e293b;
+  color: #00F5D4 !important;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -4826,9 +4870,9 @@ input:checked + .slider:before {
   font-weight: 800;
   padding: 3px 10px;
   border-radius: 999px;
-  background: #e0f2fe;
-  color: #0284c7;
-  border: 1px solid #bae6fd;
+  background: rgba(6, 182, 212, 0.2) !important;
+  color: #22D3EE !important;
+  border: 1px solid rgba(6, 182, 212, 0.4) !important;
 }
 
 .quiz-builder-form {
@@ -4840,7 +4884,7 @@ input:checked + .slider:before {
 .form-label-bold {
   font-size: 0.88rem;
   font-weight: 800;
-  color: #334155;
+  color: #FFFFFF !important;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -5225,12 +5269,19 @@ input:checked + .slider:before {
 /* Sınıf Ligi Tablosu */
 .leaderboard-modal-window {
   max-width: 650px;
+  background: linear-gradient(180deg, #022026 0%, #064E59 100%) !important;
+  border: 2.5px solid rgba(6, 182, 212, 0.45) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6) !important;
 }
 
 .leaderboard-table-container {
   max-height: 350px;
   overflow-y: auto;
   margin-bottom: 16px;
+  background: rgba(3, 34, 40, 0.6);
+  border-radius: 12px;
+  border: 1px solid rgba(6, 182, 212, 0.25);
 }
 
 .leaderboard-table {
@@ -5241,29 +5292,41 @@ input:checked + .slider:before {
 }
 
 .leaderboard-table th {
-  background: #f1f5f9;
+  background: rgba(3, 34, 40, 0.95) !important;
   padding: 10px 14px;
   font-size: 0.82rem;
-  color: var(--text-secondary);
+  color: #00F5D4 !important;
   text-transform: uppercase;
+  font-weight: 900 !important;
+  border-bottom: 2px solid rgba(6, 182, 212, 0.4) !important;
 }
 
 .leaderboard-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid #e2e8f0;
-  color: #0f172a;
+  border-bottom: 1px solid rgba(6, 182, 212, 0.2) !important;
+  color: #FFFFFF !important;
   font-weight: 800;
 }
 
+.leaderboard-table tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
 .btn-reset-league {
-  background: #fee2e2;
-  color: #dc2626;
-  border: 1px solid #fca5a5;
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #F87171 !important;
+  box-shadow: 0 3px 10px rgba(220, 38, 38, 0.4) !important;
   padding: 8px 16px;
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 800;
   font-family: inherit;
+  transition: transform 0.15s ease;
+}
+.btn-reset-league:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }
 
 /* Global Toast Bildirimi */
@@ -7928,7 +7991,7 @@ input:checked + .slider:before {
 .brand-sub-title {
   font-size: 0.78rem;
   font-weight: 800;
-  color: #1E293B;
+  color: #99F6E4 !important;
   letter-spacing: -0.2px;
   margin-top: 1px;
 }
@@ -7979,8 +8042,9 @@ input:checked + .slider:before {
 }
 
 .topbar-action-pill.pill-login {
-  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  background: linear-gradient(135deg, #7C3AED 0%, #581C87 100%) !important;
+  border: 1.5px solid #C084FC !important;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35) !important;
 }
 
 .topbar-action-pill.pill-share {
@@ -8002,8 +8066,8 @@ input:checked + .slider:before {
 }
 
 .topbar-btn-menu {
-  background: #E0F2FE;
-  border: 2px solid #BAE6FD;
+  background: rgba(6, 78, 89, 0.85) !important;
+  border: 2px solid #22D3EE !important;
   border-radius: 12px;
   width: 42px;
   height: 42px;
@@ -8013,13 +8077,15 @@ input:checked + .slider:before {
   justify-content: center;
   gap: 5px;
   cursor: pointer;
-  box-shadow: 0 3px 10px rgba(186, 230, 253, 0.6);
-  transition: transform 0.15s ease, background 0.15s ease;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35) !important;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
 .topbar-btn-menu:hover {
   transform: translateY(-2px);
-  background: #BAE6FD;
+  background: rgba(10, 147, 150, 0.95) !important;
+  border-color: #00F5D4 !important;
+  box-shadow: 0 6px 16px rgba(0, 245, 212, 0.45) !important;
 }
 
 .topbar-btn-menu:active {
@@ -8029,7 +8095,7 @@ input:checked + .slider:before {
 .topbar-btn-menu .hamburger-bar {
   width: 20px;
   height: 2.8px;
-  background: #0284C7;
+  background: #FFFFFF !important;
   border-radius: 2px;
 }
 
@@ -8605,10 +8671,12 @@ input:checked + .slider:before {
 /* 6) AYARLAR MODALI STİLLERİ */
 .settings-modal-window {
   max-width: 520px;
-  background: #FFFFFF;
+  background: linear-gradient(180deg, #022026 0%, #064E59 100%) !important;
   border-radius: 24px;
   padding: 24px 28px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6) !important;
+  border: 2.5px solid rgba(6, 182, 212, 0.45) !important;
+  color: #FFFFFF !important;
   will-change: transform, opacity;
   transform: translateZ(0);
 }
@@ -8625,10 +8693,11 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  background: #F8FAFC;
-  border: 1.5px solid #E2E8F0;
+  background: rgba(3, 34, 40, 0.75) !important;
+  border: 1.5px solid rgba(6, 182, 212, 0.3) !important;
   border-radius: 16px;
   gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
 }
 
 .setting-item-text {
@@ -8640,36 +8709,38 @@ input:checked + .slider:before {
 .setting-main-label {
   font-size: 1rem;
   font-weight: 800;
-  color: #1E293B;
+  color: #FFFFFF !important;
 }
 
 .setting-sub-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #64748B;
+  color: #99F6E4 !important;
   margin-top: 2px;
 }
 
 .setting-btn-toggle,
 .setting-btn-action {
-  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
-  color: #FFFFFF;
-  border: none;
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #FDBA74 !important;
   border-radius: 9999px;
   padding: 8px 18px;
   font-size: 0.88rem;
   font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 3px 12px rgba(234, 88, 12, 0.4) !important;
   transition: transform 0.12s ease;
   touch-action: manipulation;
   user-select: none;
 }
 
 .setting-btn-toggle.is-off {
-  background: #94A3B8;
-  box-shadow: none;
+  background: #334155 !important;
+  border: 1.5px solid #64748B !important;
+  color: #94A3B8 !important;
+  box-shadow: none !important;
 }
 
 .setting-btn-toggle:active,
@@ -8685,9 +8756,10 @@ input:checked + .slider:before {
   width: min(92vw, 520px) !important;
   padding: 24px 20px !important;
   border-radius: 28px !important;
-  background: #ffffff !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25) !important;
-  border: 3.5px solid #ffeedb !important;
+  background: linear-gradient(180deg, #022026 0%, #064E59 100%) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6) !important;
+  border: 2.5px solid rgba(6, 182, 212, 0.5) !important;
+  color: #FFFFFF !important;
 }
 
 .grade-modal-grid {
@@ -8706,8 +8778,8 @@ input:checked + .slider:before {
 }
 
 .grade-modal-card {
-  background: #f8fafc;
-  border: 2.5px solid #e2e8f0;
+  background: linear-gradient(135deg, #701A75 0%, #4A044E 50%, #3B0764 100%) !important;
+  border: 2px solid #C026D3 !important;
   border-radius: 20px;
   padding: 12px 14px;
   display: flex;
@@ -8718,29 +8790,30 @@ input:checked + .slider:before {
   text-align: left;
   user-select: none;
   touch-action: manipulation;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 14px rgba(112, 26, 117, 0.35) !important;
   font-family: inherit;
+  color: #FFFFFF !important;
 }
 
 .grade-modal-card:hover,
 .grade-modal-card:active {
   transform: translateY(-3px) scale(1.02);
-  border-color: #ff7a00;
-  background: #fff7ed;
-  box-shadow: 0 10px 24px rgba(255, 122, 0, 0.2);
+  background: linear-gradient(135deg, #86198F 0%, #581C87 100%) !important;
+  border-color: #F0ABFC !important;
+  box-shadow: 0 10px 24px rgba(192, 38, 211, 0.5) !important;
 }
 
 .grade-modal-icon-wrap {
   width: 50px;
   height: 50px;
   border-radius: 16px;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.15) !important;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-  border: 2px solid #edf2f7;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 .grade-modal-3d-icon {
@@ -8764,51 +8837,63 @@ input:checked + .slider:before {
 .grade-modal-name {
   font-size: 1.05rem;
   font-weight: 900;
-  color: #1e293b;
+  color: #FFFFFF !important;
   line-height: 1.2;
 }
 
 .grade-modal-badge {
   font-size: 0.72rem;
   font-weight: 700;
-  color: #64748b;
+  color: #F0ABFC !important;
   margin-top: 2px;
 }
 
 .grade-modal-arrow {
   font-size: 1.25rem;
   font-weight: 900;
-  color: #cbd5e1;
+  color: #F0ABFC !important;
   transition: transform 0.2s, color 0.2s;
 }
 
 .grade-modal-card:hover .grade-modal-arrow {
   transform: translateX(4px);
-  color: #ff7a00;
+  color: #FFFFFF !important;
 }
 
 /* Düellolar Özel Sınıf ve Seçim Kartı Stilleri */
 .grade-modal-card.card-grade-duels {
   grid-column: 1 / -1;
-  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%) !important;
-  border: 2.5px solid #F59E0B !important;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.15) !important;
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%) !important;
+  border: 2.5px solid #FDBA74 !important;
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45) !important;
 }
 
 .grade-modal-card.card-grade-duels:hover,
 .grade-modal-card.card-grade-duels:active {
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%) !important;
-  border-color: #D97706 !important;
-  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.3) !important;
+  background: linear-gradient(135deg, #FB923C 0%, #EA580C 100%) !important;
+  border-color: #FED7AA !important;
+  box-shadow: 0 10px 24px rgba(249, 115, 22, 0.6) !important;
+}
+
+.grade-modal-card.card-grade-duels .grade-modal-name {
+  color: #FFFFFF !important;
+}
+
+.grade-modal-card.card-grade-duels .grade-modal-badge {
+  color: #FED7AA !important;
+}
+
+.grade-modal-card.card-grade-duels .grade-modal-arrow {
+  color: #FFEDD5 !important;
 }
 
 .grade-chip.chip-duels {
-  border-left: 3px solid #F59E0B !important;
+  border-left: 3px solid #FDBA74 !important;
 }
 
 .grade-icon-duels {
-  background: #FEF3C7 !important;
-  border: 1.5px solid #FDE68A !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1.5px solid #FDBA74 !important;
 }
 
 /* Ders Başlık Barında Mod Seçici Uyumu */
