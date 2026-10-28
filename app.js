@@ -7572,6 +7572,12 @@
   }
 
   function updateSettingsModalUI() {
+    const btnSettingsModeToggle = document.getElementById('btnSettingsModeToggle');
+    if (btnSettingsModeToggle) {
+      const isSolo = (state.gameMode === 'solo');
+      btnSettingsModeToggle.textContent = isSolo ? 'Mod: Pratik 👤' : 'Mod: Düello 👥';
+      btnSettingsModeToggle.classList.toggle('is-off', isSolo);
+    }
     const btnSettingsSoundToggle = document.getElementById('btnSettingsSoundToggle');
     if (btnSettingsSoundToggle) {
       btnSettingsSoundToggle.textContent = state.soundEnabled ? 'Ses: Açık 🔊' : 'Ses: Kapalı 🔇';
@@ -7600,6 +7606,7 @@
     updateSettingsModalUI();
     openModal(modalSettings);
   }
+  window.openSettingsModal = openSettingsModal;
 
   // Tüm modal kapatma butonları (Hem dokunma hem tıklama gecikmesiz çalışır)
   document.querySelectorAll('[data-close-modal]').forEach(btn => {
