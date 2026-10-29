@@ -4637,84 +4637,201 @@
     get grade2ClocksPool() { return []; },
 
 
-    // 2. SINIF: EŞ VE ZIT ANLAMLILAR ŞAMPİYONASI (45+ KELİME)
-    grade2SynAntPool: [
-      { q: '"Siyah" kelimesinin eş anlamlısı nedir? ⚫', a: 'Kara', d: ['Karanlık', 'Koyu'], exp: 'Siyah ve Kara eş anlamlıdır.' },
-      { q: '"Beyaz" kelimesinin eş anlamlısı nedir? ⚪', a: 'Ak', d: ['Açık', 'Parlak'], exp: 'Beyaz ve Ak eş anlamlıdır.' },
-      { q: '"Kırmızı" kelimesinin eş anlamlısı nedir? 🔴', a: 'Al', d: ['Bordo', 'Pembe'], exp: 'Kırmızı ve Al eş anlamlıdır.' },
-      { q: '"Doktor" kelimesinin eş anlamlısı nedir? 👨‍⚕️', a: 'Hekim', d: ['Hemşire', 'Eczacı'], exp: 'Doktor ve Hekim eş anlamlıdır.' },
-      { q: '"Talebe" kelimesinin eş anlamlısı nedir? 🎒', a: 'Öğrenci', d: ['Öğretmen', 'Müdür'], exp: 'Talebe ve Öğrenci eş anlamlıdır.' },
-      { q: '"Mektep" kelimesinin eş anlamlısı nedir? 🏫', a: 'Okul', d: ['Sınıf', 'Kütüphane'], exp: 'Mektep ve Okul eş anlamlıdır.' },
-      { q: '"Vatan" kelimesinin eş anlamlısı nedir? 🇹🇷', a: 'Yurt', d: ['Şehir', 'Dünya'], exp: 'Vatan ve Yurt eş anlamlıdır.' },
-      { q: '"Cevap" kelimesinin eş anlamlısı nedir? ✍️', a: 'Yanıt', d: ['Soru', 'Mesaj'], exp: 'Cevap ve Yanıt eş anlamlıdır.' },
-      { q: '"Soru" kelimesinin eş anlamlısı nedir? ❓', a: 'Sual', d: ['Cevap', 'Test'], exp: 'Soru ve Sual eş anlamlıdır.' },
-      { q: '"Yıl" kelimesinin eş anlamlısı nedir? 🗓️', a: 'Sene', d: ['Ay', 'Mevsim'], exp: 'Yıl ve Sene eş anlamlıdır.' },
-      { q: '"Zaman" kelimesinin eş anlamlısı nedir? ⏳', a: 'Vakit', d: ['Saat', 'Gün'], exp: 'Zaman ve Vakit eş anlamlıdır.' },
-      { q: '"Kalp" kelimesinin eş anlamlısı nedir? ❤️', a: 'Yürek', d: ['Göğüs', 'Akıl'], exp: 'Kalp ve Yürek eş anlamlıdır.' },
-      { q: '"Nehir" kelimesinin eş anlamlısı nedir? 🌊', a: 'Irmak', d: ['Göl', 'Deniz'], exp: 'Nehir ve Irmak eş anlamlıdır.' },
-      { q: '"Hatıra" kelimesinin eş anlamlısı nedir? 📸', a: 'Anı', d: ['Resim', 'Rüya'], exp: 'Hatıra ve Anı eş anlamlıdır.' },
-      { q: '"Konuk" kelimesinin eş anlamlısı nedir? 🏡', a: 'Misafir', d: ['Ev sahibi', 'Komşu'], exp: 'Konuk ve Misafir eş anlamlıdır.' },
-      { q: '"Şair" kelimesinin eş anlamlısı nedir? 📜', a: 'Ozan', d: ['Yazar', 'Ressam'], exp: 'Şair ve Ozan eş anlamlıdır.' },
-      { q: '"İsim" kelimesinin eş anlamlısı nedir? 🏷️', a: 'Ad', d: ['Soyadı', 'Başlık'], exp: 'İsim ve Ad eş anlamlıdır.' },
-      { q: '"Rüzgar" kelimesinin eş anlamlısı nedir? 💨', a: 'Yel', d: ['Fırtına', 'Boran'], exp: 'Rüzgar ve Yel eş anlamlıdır.' },
-      { q: '"Hediye" kelimesinin eş anlamlısı nedir? 🎁', a: 'Armağan', d: ['Paket', 'Ödül'], exp: 'Hediye ve Armağan eş anlamlıdır.' },
-      { q: '"Fayda" kelimesinin eş anlamlısı nedir? ✨', a: 'Yarar', d: ['Kâr', 'Kazanç'], exp: 'Fayda ve Yarar eş anlamlıdır.' },
-      { q: '"Baş" kelimesinin eş anlamlısı nedir? 🧠', a: 'Kafa', d: ['Boyun', 'Yüz'], exp: 'Baş ve Kafa eş anlamlıdır.' },
-      { q: '"Yaşlı" kelimesinin eş anlamlısı nedir? 👴', a: 'İhtiyar', d: ['Büyük', 'Dedecik'], exp: 'Yaşlı ve İhtiyar eş anlamlıdır.' },
-      { q: '"Görev" kelimesinin eş anlamlısı nedir? 📋', a: 'Vazife', d: ['İş', 'Ödev'], exp: 'Görev ve Vazife eş anlamlıdır.' },
-      { q: '"Lider" kelimesinin eş anlamlısı nedir? 🎖️', a: 'Önder', d: ['Başkan', 'Kaptan'], exp: 'Lider ve Önder eş anlamlıdır.' },
-      { q: '"Millet" kelimesinin eş anlamlısı nedir? 🇹🇷', a: 'Ulus', d: ['Halk', 'Toplum'], exp: 'Millet ve Ulus eş anlamlıdır.' },
-      { q: '"Cümle" kelimesinin eş anlamlısı nedir? 📝', a: 'Tümce', d: ['Kelime', 'Paragraf'], exp: 'Cümle ve Tümce eş anlamlıdır.' },
-      { q: '"Kelime" kelimesinin eş anlamlısı nedir? 📖', a: 'Sözcük', d: ['Harf', 'Hece'], exp: 'Kelime ve Sözcük eş anlamlıdır.' },
-      { q: '"Sonbahar" mevsiminin eş anlamlısı nedir? 🍂', a: 'Güz', d: ['Bahar', 'Kış'], exp: 'Sonbahar ve Güz eş anlamlıdır.' },
-      { q: '"Konut" kelimesinin eş anlamlısı nedir? 🏠', a: 'Ev', d: ['Oda', 'Bina'], exp: 'Konut ve Ev eş anlamlıdır.' },
-      { q: '"Yaş" (ıslak) kelimesinin zıt anlamlısı nedir? 🌧️', a: 'Kuru', d: ['Sert', 'Ilık'], exp: 'Yaş (ıslak) olanın zıttı kurudur.' },
-      { q: '"Cesur" kelimesinin zıt anlamlısı nedir? 🦁', a: 'Korkak', d: ['Zayıf', 'Ürkek'], exp: 'Cesur yüreğin zıttı korkaktır.' },
-      { q: '"Taze" kelimesinin zıt anlamlısı nedir? 🥖', a: 'Bayat', d: ['Çürük', 'Eski'], exp: 'Taze ekmeğin zıttı bayat ekmektir.' },
-      { q: '"Pahalı" kelimesinin zıt anlamlısı nedir? 🏷️', a: 'Ucuz', d: ['Bedava', 'Basit'], exp: 'Pahalının zıttı ucuzdur.' },
-      { q: '"Yaşlı" kelimesinin zıt anlamlısı nedir? 👴', a: 'Genç', d: ['Çocuk', 'Taze'], exp: 'Yaşlının zıttı gençtir.' },
-      { q: '"Erken" kelimesinin zıt anlamlısı nedir? ⏰', a: 'Geç', d: ['Yavaş', 'Sonra'], exp: 'Erken uyanmanın zıttı geç kalmaktır.' },
-      { q: '"Temiz" kelimesinin zıt anlamlısı nedir? 🧼', a: 'Kirli', d: ['Paslı', 'Bozuk'], exp: 'Temizin zıttı kirlidir.' },
-      { q: '"Kolay" kelimesinin zıt anlamlısı nedir? ✨', a: 'Zor', d: ['Ağır', 'Karışık'], exp: 'Kolayın zıttı zordur.' },
-      { q: '"Aydınlık" kelimesinin zıt anlamlısı nedir? 💡', a: 'Karanlık', d: ['Gölge', 'Bulanık'], exp: 'Aydınlığın zıttı karanlıktır.' },
-      { q: '"Barış" kelimesinin zıt anlamlısı nedir? 🕊️', a: 'Savaş', d: ['Kavga', 'Düşmanlık'], exp: 'Barışın zıttı savaştır.' },
-      { q: '"Dost" kelimesinin zıt anlamlısı nedir? 🤝', a: 'Düşman', d: ['Yabancı', 'Kırgın'], exp: 'Dostun zıttı düşmandır.' },
-      { q: '"Zengin" kelimesinin zıt anlamlısı nedir? 💰', a: 'Yoksul / Fakir', d: ['Cimri', 'Muhtaç'], exp: 'Zenginin zıttı yoksul / fakirdir.' },
-      { q: '"Cömert" (eli açık) kelimesinin zıt anlamlısı nedir? 🤲', a: 'Cimri (eli sıkı)', d: ['Kötü', 'Kıskanç'], exp: 'Cömert paylaşır, cimri saklar.' },
-      { q: '"Tatlı" elmanın zıt anlamlısı nedir? 🍎', a: 'Acı', d: ['Tuzlu', 'Ekşi'], exp: 'Tatlının zıttı acıdır.' },
-      { q: '"Alçak" tepenin zıt anlamlısı nedir? 🏕️', a: 'Yüksek', d: ['Derin', 'Uzak'], exp: 'Alçağın zıttı yüksektir.' },
-      { q: '"Geniş" caddenin zıt anlamlısı nedir? 🛣️', a: 'Dar', d: ['Kısa', 'İnce'], exp: 'Geniş caddenin zıttı dar sokaktır.' }
+    // -------------------------------------------------------------
+    // 2. SINIF: 2026 TÜRKİYE YÜZYILI MAARİF MODELİ TÜRKÇE SORU HAVUZLARI
+    // (5 Öğrenme Alanı - Eş/Zıt, Sözlük Sırası & Hece, 5N1K, Cümle, Noktalama + TTS)
+    // -------------------------------------------------------------
+
+    grade2TurkishSynAntPool: [
+      {"q":"\"Siyah\" kelimesinin eş anlamlısı (anlamdaşı) nedir? ⚫","a":"Kara","d":["Karanlık","Koyu"],"exp":"Siyah ve Kara eş anlamlıdır.","spokenText":"Siyah kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Beyaz\" kelimesinin eş anlamlısı nedir? ⚪","a":"Ak","d":["Açık","Parlak"],"exp":"Beyaz ve Ak eş anlamlıdır.","spokenText":"Beyaz kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Kırmızı\" kelimesinin eş anlamlısı nedir? 🔴","a":"Al","d":["Bordo","Pembe"],"exp":"Kırmızı ve Al eş anlamlıdır.","spokenText":"Kırmızı kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Okul\" kelimesinin eş anlamlısı nedir? 🏫","a":"Mektep","d":["Sınıf","Kütüphane"],"exp":"Okul ve Mektep eş anlamlıdır.","spokenText":"Okul kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Öğrenci\" kelimesinin eş anlamlısı nedir? 🎒","a":"Talebe","d":["Öğretmen","Müdür"],"exp":"Öğrenci ve Talebe eş anlamlıdır.","spokenText":"Öğrenci kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Öğretmen\" kelimesinin eş anlamlısı nedir? 👩‍🏫","a":"Muallim","d":["Müdür","Memur"],"exp":"Öğretmen ve Muallim eş anlamlıdır.","spokenText":"Öğretmen kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Yaşlı\" kelimesinin eş anlamlısı nedir? 👴","a":"İhtiyar","d":["Büyük","Dedecik"],"exp":"Yaşlı ve İhtiyar eş anlamlıdır.","spokenText":"Yaşlı kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Doktor\" kelimesinin eş anlamlısı nedir? 👨‍⚕️","a":"Hekim","d":["Hemşire","Eczacı"],"exp":"Doktor ve Hekim eş anlamlıdır.","spokenText":"Doktor kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Rüya\" kelimesinin eş anlamlısı nedir? 🌙","a":"Düş","d":["Uyku","Hayal"],"exp":"Rüya ve Düş eş anlamlıdır.","spokenText":"Rüya kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Ev\" kelimesinin eş anlamlısı nedir? 🏠","a":"Konut","d":["Oda","Bina"],"exp":"Ev ve Konut eş anlamlıdır.","spokenText":"Ev kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Sonbahar\" mevsiminin eş anlamlısı nedir? 🍂","a":"Güz","d":["Bahar","Kış"],"exp":"Sonbahar ve Güz eş anlamlıdır.","spokenText":"Sonbahar kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Kelime\" sözcüğünün eş anlamlısı nedir? 📖","a":"Sözcük","d":["Harf","Hece"],"exp":"Kelime ve Sözcük eş anlamlıdır.","spokenText":"Kelime kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Hediye\" kelimesinin eş anlamlısı nedir? 🎁","a":"Armağan","d":["Paket","Ödül"],"exp":"Hediye ve Armağan eş anlamlıdır.","spokenText":"Hediye kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Vatan\" kelimesinin eş anlamlısı nedir? 🇹🇷","a":"Yurt","d":["Şehir","Dünya"],"exp":"Vatan ve Yurt eş anlamlıdır.","spokenText":"Vatan kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Cevap\" kelimesinin eş anlamlısı nedir? ✍️","a":"Yanıt","d":["Soru","Mesaj"],"exp":"Cevap ve Yanıt eş anlamlıdır.","spokenText":"Cevap kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Soru\" kelimesinin eş anlamlısı nedir? ❓","a":"Sual","d":["Cevap","Test"],"exp":"Soru ve Sual eş anlamlıdır.","spokenText":"Soru kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Yıl\" kelimesinin eş anlamlısı nedir? 🗓️","a":"Sene","d":["Ay","Mevsim"],"exp":"Yıl ve Sene eş anlamlıdır.","spokenText":"Yıl kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Zaman\" kelimesinin eş anlamlısı nedir? ⏳","a":"Vakit","d":["Saat","Gün"],"exp":"Zaman ve Vakit eş anlamlıdır.","spokenText":"Zaman kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Kalp\" organımızın eş anlamlısı nedir? ❤️","a":"Yürek","d":["Göğüs","Akıl"],"exp":"Kalp ve Yürek eş anlamlıdır.","spokenText":"Kalp kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Nehir\" kelimesinin eş anlamlısı nedir? 🌊","a":"Irmak","d":["Göl","Deniz"],"exp":"Nehir ve Irmak eş anlamlıdır.","spokenText":"Nehir kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Hatıra\" kelimesinin eş anlamlısı nedir? 📸","a":"Anı","d":["Resim","Rüya"],"exp":"Hatıra ve Anı eş anlamlıdır.","spokenText":"Hatıra kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Konuk\" kelimesinin eş anlamlısı nedir? 🏡","a":"Misafir","d":["Ev sahibi","Komşu"],"exp":"Konuk ve Misafir eş anlamlıdır.","spokenText":"Konuk kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Şair\" kelimesinin eş anlamlısı nedir? 📜","a":"Ozan","d":["Yazar","Ressam"],"exp":"Şair ve Ozan eş anlamlıdır.","spokenText":"Şair kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"İsim\" kelimesinin eş anlamlısı nedir? 🏷️","a":"Ad","d":["Soyadı","Başlık"],"exp":"İsim ve Ad eş anlamlıdır.","spokenText":"İsim kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Rüzgar\" kelimesinin eş anlamlısı nedir? 💨","a":"Yel","d":["Fırtına","Boran"],"exp":"Rüzgar ve Yel eş anlamlıdır.","spokenText":"Rüzgar kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Lider\" kelimesinin eş anlamlısı nedir? 🎖️","a":"Önder","d":["Başkan","Kaptan"],"exp":"Lider ve Önder eş anlamlıdır.","spokenText":"Lider kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Millet\" kelimesinin eş anlamlısı nedir? 🇹🇷","a":"Ulus","d":["Halk","Toplum"],"exp":"Millet ve Ulus eş anlamlıdır.","spokenText":"Millet kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Cümle\" kelimesinin eş anlamlısı nedir? 📝","a":"Tümce","d":["Kelime","Paragraf"],"exp":"Cümle ve Tümce eş anlamlıdır.","spokenText":"Cümle kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Fayda\" kelimesinin eş anlamlısı nedir? ✨","a":"Yarar","d":["Kâr","Kazanç"],"exp":"Fayda ve Yarar eş anlamlıdır.","spokenText":"Fayda kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Baş\" kelimesinin eş anlamlısı nedir? 🧠","a":"Kafa","d":["Boyun","Yüz"],"exp":"Baş ve Kafa eş anlamlıdır.","spokenText":"Baş kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Görev\" kelimesinin eş anlamlısı nedir? 📋","a":"Vazife","d":["İş","Ödev"],"exp":"Görev ve Vazife eş anlamlıdır.","spokenText":"Görev kelimesinin eş anlamlısı nedir?"},
+      {"q":"\"Acemi\" kelimesinin zıt (karşıt) anlamlısı nedir? 🛠️","a":"Usta","d":["Çırak","Yeni"],"exp":"Aceminin karşıtı ustadır.","spokenText":"Acemi kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Taze\" ekmeğin zıt anlamlısı nedir? 🥖","a":"Bayat","d":["Çürük","Eski"],"exp":"Taze ekmeğin zıttı bayat ekmektir.","spokenText":"Taze kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Doğru\" cevabın zıt anlamlısı nedir? ✅","a":"Yanlış","d":["Eksik","Yalan"],"exp":"Doğrunun zıttı yanlıştır.","spokenText":"Doğru kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Çalışkan\" karıncanın zıt anlamlısı nedir? 🐜","a":"Tembel","d":["Yavaş","Uykucu"],"exp":"Çalışkanın zıttı tembeldir.","spokenText":"Çalışkan kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Yüksek\" dağın zıt anlamlısı nedir? 🏔️","a":"Alçak","d":["Derin","Kısa"],"exp":"Yükseğin zıttı alçaktır.","spokenText":"Yüksek kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Ucuz\" meyvenin zıt anlamlısı nedir? 🏷️","a":"Pahalı","d":["Bedava","Zengin"],"exp":"Ucuzun zıttı pahalıdır.","spokenText":"Ucuz kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Cesur\" aslanın zıt anlamlısı nedir? 🦁","a":"Korkak","d":["Zayıf","Ürkek"],"exp":"Cesurun zıttı korkaktır.","spokenText":"Cesur kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Temiz\" ellerin zıt anlamlısı nedir? 🧼","a":"Kirli","d":["Islak","Tozlu"],"exp":"Temizin zıttı kirlidir.","spokenText":"Temiz kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Yaşlı\" dedenin zıt anlamlısı nedir? 👴","a":"Genç","d":["Çocuk","Bebek"],"exp":"Yaşlının zıttı gençtir.","spokenText":"Yaşlı kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Erken\" uyanmanın zıt anlamlısı nedir? ⏰","a":"Geç","d":["Yavaş","Hızlı"],"exp":"Erkenin zıttı geçtir.","spokenText":"Erken kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Kolay\" sorunun zıt anlamlısı nedir? ✨","a":"Zor","d":["Ağır","Karışık"],"exp":"Kolayın zıttı zordur.","spokenText":"Kolay kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Aydınlık\" odanın zıt anlamlısı nedir? 💡","a":"Karanlık","d":["Loş","Gölge"],"exp":"Aydınlığın zıttı karanlıktır.","spokenText":"Aydınlık kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Barış\" ortamının zıt anlamlısı nedir? 🕊️","a":"Savaş","d":["Kavga","Düşmanlık"],"exp":"Barışın zıttı savaştır.","spokenText":"Barış kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Dost\" kelimesinin zıt anlamlısı nedir? 🤝","a":"Düşman","d":["Yabancı","Kırgın"],"exp":"Dostun zıttı düşmandır.","spokenText":"Dost kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Zengin\" kelimesinin zıt anlamlısı nedir? 💰","a":"Yoksul (Fakir)","d":["Cimri","Borçlu"],"exp":"Zenginin zıttı yoksuldur.","spokenText":"Zengin kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Cömert\" (eli açık) kelimesinin zıt anlamlısı nedir? 🤲","a":"Cimri (eli sıkı)","d":["Kötü","Kıskanç"],"exp":"Cömerdin zıttı cimridir.","spokenText":"Cömert kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Tatlı\" elmanın zıt anlamlısı nedir? 🍎","a":"Acı","d":["Tuzlu","Ekşi"],"exp":"Tatlının zıttı acıdır.","spokenText":"Tatlı kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Geniş\" caddenin zıt anlamlısı nedir? 🛣️","a":"Dar","d":["İnce","Kısa"],"exp":"Geniş caddenin zıttı dar sokaktır.","spokenText":"Geniş kelimesinin zıt anlamlısı nedir?"},
+      {"q":"\"Yaş\" (ıslak) havlunun zıt anlamlısı nedir? 🌧️","a":"Kuru","d":["Sert","Sıcak"],"exp":"Yaş olanın zıttı kurudur.","spokenText":"Yaş havlunun zıt anlamlısı nedir?"},
+      {"q":"\"Ağır\" kutunun zıt anlamlısı nedir? 📦","a":"Hafif","d":["Küçük","Yumuşak"],"exp":"Ağır olanın zıttı hafiftir.","spokenText":"Ağır kutunun zıt anlamlısı nedir?"},
+      {"q":"\"Sıcak\" çorbanın zıt anlamlısı nedir? 🍲","a":"Soğuk","d":["Ilık","Acı"],"exp":"Sıcağın zıttı soğuktur.","spokenText":"Sıcak çorbanın zıt anlamlısı nedir?"},
+      {"q":"\"Açık\" kapının zıt anlamlısı nedir? 🚪","a":"Kapalı","d":["Kilitli","Kırık"],"exp":"Açığın zıttı kapalıdır.","spokenText":"Açık kapının zıt anlamlısı nedir?"}
     ],
 
-    // 2. SINIF: NOKTALAMA İŞARETLERİ VE YAZIM KURALLARI (26 ÖZGÜN SORU)
-    grade2PunctuationPool: [
-      { q: '"Ali bugün okula gitti( )" Cümlesinin sonuna hangi noktalama işareti konur? ✍️', a: 'Nokta (.)', d: ['Soru işareti (?)', 'Ünlem (!)'], exp: 'Tamamlanmış bitmiş haber cümlelerinin sonuna nokta (.) konur.' },
-      { q: '"Sen de bizimle parka gelecek misin( )" Cümlesinin sonuna hangi noktalama işareti konur? ❓', a: 'Soru işareti (?)', d: ['Nokta (.)', 'Virgül (,)'], exp: 'Soru bildiren cümlelerin sonuna soru işareti (?) konur.' },
-      { q: '"Eyvah, süt döküldü( )" Cümlesinin sonuna hangi noktalama işareti konur? ⚠️', a: 'Ünlem işareti (!)', d: ['Nokta (.)', 'Soru işareti (?)'], exp: 'Korku, heyecan, şaşkınlık bildiren cümlelerin sonuna ünlem işareti (!) konur.' },
-      { q: '"Pazardan elma( ) armut ve muz aldık." Parantez içine hangi işaret gelmelidir? 🍎', a: 'Virgül (,)', d: ['Nokta (.)', 'Kesme işareti (\')'], exp: 'Birbiri ardınca sıralanan eş görevli kelimeler arasına virgül (,) konur.' },
-      { q: '"Ankara( )ya hızlı trenle gittik." Şehir adına gelen eki ayırmak için ne kullanılır? 🏛️', a: 'Kesme işareti (\')', d: ['Virgül (,)', 'Kısa çizgi (-)'], exp: 'Özel isimlere getirilen ekleri ayırmak için kesme işareti (\') kullanılır.' },
-      { q: 'Cümlelerin ilk harfi DAİMA nasıl başlar? ✍️', a: 'Büyük harfle başlar 🔤', d: ['Küçük harfle başlar', 'Fark etmez'], exp: 'Türkçemizde her cümle mutlaka büyük harfle başlar.' },
-      { q: 'Hangisi özel bir isimdir ve ilk harfi daima BÜYÜK yazılmalıdır? 🇹🇷', a: 'Mustafa', d: ['kalem', 'defter'], exp: 'İnsan adları (özel isimler) her zaman büyük harfle başlar.' },
-      { q: 'Şiirlerin her bir dizesi (mısrası) nasıl başlar? 📜', a: 'Büyük harfle başlar', d: ['Küçük harfle başlar', 'İstediğimiz gibi'], exp: 'Şiirlerin her dizesi büyük harfle başlatılır.' },
-      { q: '"Yaşasın, sınavdan 100 aldım( )" Cümlesinin sonuna ne konur? 🎉', a: 'Ünlem işareti (!)', d: ['Soru işareti (?)', 'Nokta (.)'], exp: 'Sevinç ve coşku bildiren cümlelerin sonuna ünlem (!) konur.' },
-      { q: '"Saat kaçta buluşacağız( )" Cümlesinin sonuna ne konur? ⏰', a: 'Soru işareti (?)', d: ['Nokta (.)', 'Ünlem (!)'], exp: 'Saat sorulduğu için soru işareti (?) kullanılır.' },
-      { q: 'Aşağıdaki cümlelerin hangisinde yazım yanlışı YOKTUR? ✅', a: 'Mehmet dün Bursa\'ya gitti.', d: ['mehmet dün bursa\'ya gitti.', 'Mehmet dün bursaya gitti.'], exp: 'Cümle başı ve şehir adı büyük harfle başlar, kesme işaretiyle ek ayrılır.' },
-      { q: '"İmdat, boğuluyorum( )" Cümlesinin sonuna hangi noktalama işareti konur? 🌊', a: 'Ünlem işareti (!)', d: ['Nokta (.)', 'Soru işareti (?)'], exp: 'Acil durum ve yardım çağrılarında ünlem işareti (!) kullanılır.' },
-      { q: '"1( ) sınıf öğrencisiyiz." Sıra bildiren (birinci) sayısının yanına hangi işaret konur? 🥇', a: 'Nokta (.)', d: ['Virgül (,)', 'Soru işareti (?)'], exp: 'Sıra bildirmek için sayıların yanına nokta konur (1. = birinci).' },
-      { q: 'Tarihlerin yazılışında gün, ay ve yıl arasına hangi noktalama işareti konur? 📅', a: 'Nokta (.)', d: ['Soru işareti (?)', 'Ünlem (!)'], exp: 'Örnek: 29.10.1923 şeklinde aralara nokta (.) konur.' },
-      { q: '"Kitabını açtın mı( )" Cümlesinin sonuna hangi işaret gelir? 📖', a: 'Soru işareti (?)', d: ['Nokta (.)', 'Virgül (,)'], exp: 'Soru sorulduğu için soru işareti konur.' },
-      { q: '"Çantamda kalem( ) silgi ve defter var." Boşluğa ne gelmelidir? 🎒', a: 'Virgül (,)', d: ['Nokta (.)', 'Ünlem (!)'], exp: 'Sıralanan eşyalar arasına virgül (,) konur.' },
-      { q: '"Ah( ) ayağım taşa çarptı!" Acı bildiren ünlemden sonra virgül konabilir mi?', a: 'Evet, virgül konur 🥺', d: ['Hayır, hiçbir şey konmaz', 'Sadece nokta konur'], exp: 'Ünlem sözcüğünden sonra virgül konup ünlem işareti cümlenin sonuna bırakılabilir.' },
-      { q: '"Atatürk( )ün hayatını okudum." Boşluğa hangi işaret gelir? 🇹🇷', a: 'Kesme işareti (\')', d: ['Virgül (,)', 'Nokta (.)'], exp: 'Atatürk özel isim olduğu için gelen ek kesme işaretiyle (\') ayrılır.' },
-      { q: 'Satır sonuna sığmayan kelimeleri hecelerinden bölmek için ne kullanılır? ✍️', a: 'Kısa çizgi (-)', d: ['Nokta (.)', 'Virgül (,)'], exp: 'Satır sonuna sığmayan sözcükler hecesinden kısa çizgiyle (-) bölünür.' },
-      { q: '"Türkiye( )nin başkenti Ankara( )dır." Cümlesinde parantezlere ne konur? 🏛️', a: 'Kesme işareti (\')', d: ['Virgül (,)', 'Nokta (.)'], exp: 'Türkiye ve Ankara özel isimlerine gelen ekler kesme işaretiyle ayrılır.' },
-      { q: 'Hangisinin yazımı DOĞRUDUR? 🐶', a: 'Karabaş\'a yemek verdim.', d: ['karabaşa yemek verdim.', 'Karabaşa yemek verdim.'], exp: 'Hayvanlara verdiğimiz isimler de özel isimdir, büyük harfle başlar ve ek kesmeyle ayrılır.' },
-      { q: '"Kiminle konuştun( )" Cümlesinin sonuna ne konur? 📱', a: 'Soru işareti (?)', d: ['Nokta (.)', 'Ünlem (!)'], exp: 'Soru bildirdiği için soru işareti (?) konur.' },
-      { q: 'Cümle içinde konuşma çizgisi (uzun çizgi) nerede kullanılır? 🗣️', a: 'Karşılıklı konuşmaların başında 🗣️', d: ['Cümlenin sonunda', 'Kelime aralarında'], exp: 'Diyaloglarda konuşan kişinin sözü başına uzun çizgi (—) konur.' },
-      { q: 'Hangisi bir soru cümlesidir? ❓', a: 'Ödevini yaptın mı?', d: ['Ödevimi bitirdim.', 'Çok güzel bir gün!'], exp: '"Yaptın mı?" soru bildirmektedir.' },
-      { q: 'Hangisi bir ünlem cümlesidir? ⚡', a: 'Dikkat et, araba geliyor!', d: ['Araba çok hızlı gitti.', 'Araba ne renk?'], exp: 'Uyarı ve heyecan bildiren cümle ünlem cümlesidir.' },
-      { q: '"Bugün hava çok güzel( )" Cümlesinin sonuna ne konur? ☀️', a: 'Nokta (.)', d: ['Soru işareti (?)', 'Virgül (,)'], exp: 'Haber cümlesi olduğu için sonuna nokta (.) konur.' }
+    grade2TurkishAlphabetSyllablePool: [
+      {"q":"\"armut, muz, elma\" sözcüklerinin SÖZLÜK SIRASI (alfabetik) hangisidir? 🍎","a":"armut - elma - muz","d":["elma - armut - muz","muz - armut - elma"],"exp":"İlk harfler: a (armut), e (elma), m (muz) sırasıyla gelir.","spokenText":"Armut, muz, elma kelimelerinin sözlük sırası nasıldır?"},
+      {"q":"\"çanta, çilek, çorap\" sözcüklerinin sözlük sırası nasıldır? 🎒🍓🧦","a":"çanta - çilek - çorap","d":["çilek - çanta - çorap","çorap - çanta - çilek"],"exp":"İlk harfleri aynı (ç), 2. harflere bakarız: a, i, o sırasıyla gelir.","spokenText":"Çanta, çilek, çorap kelimelerinin alfabetik sözlük sırası nedir?"},
+      {"q":"\"baba, balık, bebek\" sözcükleri sözlükte nasıl sıralanır? 👶🐟","a":"baba - balık - bebek","d":["bebek - baba - balık","balık - baba - bebek"],"exp":"İlk iki harfi aynıysa (ba-ba, ba-lık) 3. harfe bakılır; bebek (be) sonra gelir.","spokenText":"Baba, balık, bebek sözcüklerinin sözlük sırası hangisidir?"},
+      {"q":"\"kalem, kedi, kitap\" sözcüklerinin doğru sözlük sırası hangisidir? ✏️🐱📖","a":"kalem - kedi - kitap","d":["kitap - kalem - kedi","kedi - kalem - kitap"],"exp":"İlk harfler k; 2. harfler: a (kalem), e (kedi), i (kitap).","spokenText":"Kalem, kedi, kitap kelimelerinin sözlük sıralaması nasıldır?"},
+      {"q":"\"gözlük, gül, gemi\" sözcükleri sözlükte nasıl sıralanır? 👓🌹🚢","a":"gemi - gözlük - gül","d":["gözlük - gemi - gül","gül - gemi - gözlük"],"exp":"İkinci harflere göre e (gemi), ö (gözlük), ü (gül) sırasıyla gelir.","spokenText":"Gözlük, gül, gemi kelimelerinin sözlük sırası nasıldır?"},
+      {"q":"\"araba, bisiklet, tren\" sözcüklerinin alfabetik sırası hangisidir? 🚗🚲🚂","a":"araba - bisiklet - tren","d":["tren - araba - bisiklet","bisiklet - araba - tren"],"exp":"İlk harfler alfabetik olarak A, B, T sırasındadır.","spokenText":"Araba, bisiklet, tren kelimeleri sözlükte nasıl sıralanır?"},
+      {"q":"\"aslan, kedi, leylek\" sözcüklerinin sözlük sırası hangisidir? 🦁🐱🕊️","a":"aslan - kedi - leylek","d":["kedi - aslan - leylek","leylek - kedi - aslan"],"exp":"İlk harfler A, K, L sırasıyla alfabetiktir.","spokenText":"Aslan, kedi, leylek sözcüklerinin sözlük sırası hangisidir?"},
+      {"q":"\"maymun, sincap, tavşan\" sözcüklerinin sözlük sırası hangisidir? 🐒🐿️🐇","a":"maymun - sincap - tavşan","d":["tavşan - sincap - maymun","sincap - maymun - tavşan"],"exp":"İlk harfler: M (maymun), S (sincap), T (tavşan).","spokenText":"Maymun, sincap, tavşan kelimeleri sözlükte nasıl sıralanır?"},
+      {"q":"Sözlükte \"ayva, kiraz, portakal\" sözcüklerinden hangisi EN ÖNCE gelir? 🍊","a":"Ayva","d":["Kiraz","Portakal"],"exp":"Alfabemizin ilk harfi \"A\" olduğu için Ayva en önce gelir.","spokenText":"Ayva, kiraz, portakal sözcüklerinden hangisi sözlükte en önce gelir?"},
+      {"q":"Sözlükte \"zambak, lale, gül\" sözcüklerinden hangisi EN SONDA yer alır? 🌸","a":"Zambak","d":["Lale","Gül"],"exp":"\"Z\" harfi alfabemizin son harfi olduğu için Zambak en sonda yer alır.","spokenText":"Zambak, lale, gül kelimelerinden hangisi sözlükte en sonda yer alır?"},
+      {"q":"Sözlükte ilk harfleri AYNI olan kelimeleri sıralarken neye bakarız? 🔍","a":"İkinci harflerine bakarız 🔤","d":["Kelimenin uzunluğuna bakarız","Son harfine bakarız"],"exp":"İlk harfleri aynı olan kelimelerin 2. harfine, onlar da aynıysa 3. harfine bakılır.","spokenText":"İlk harfleri aynı olan kelimeleri alfabetik sıralarken neye bakarız?"},
+      {"q":"\"Cumhuriyet\" kelimesi kaç heceden oluşur? 🇹🇷","a":"4 hece (Cüm-hu-ri-yet)","d":["3 hece","5 hece"],"exp":"Cüm-hu-ri-yet kelimesinde 4 ünlü harf (ü, u, i, e) vardır, yani 4 hecelidir.","spokenText":"Cumhuriyet kelimesi kaç hecelidir?"},
+      {"q":"\"Öğretmen\" kelimesi kaç hecelidir? 👩‍🏫","a":"3 hece (Öğ-ret-men)","d":["2 hece","4 hece"],"exp":"Öğ-ret-men 3 hecelidir (ö, e, e ünlüleri).","spokenText":"Öğretmen kelimesi kaç hecelidir?"},
+      {"q":"\"Kitaplık\" kelimesi kaç hecelidir? 📚","a":"3 hece (Ki-tap-lık)","d":["2 hece","4 hece"],"exp":"Ki-tap-lık 3 heceden oluşur.","spokenText":"Kitaplık kelimesi kaç hecelidir?"},
+      {"q":"\"Gözlük\" kelimesi kaç hecelidir? 👓","a":"2 hece (Göz-lük)","d":["1 hece","3 hece"],"exp":"Göz-lük 2 hecelidir.","spokenText":"Gözlük kelimesi kaç hecelidir?"},
+      {"q":"\"Televizyon\" kelimesi kaç hecelidir? 📺","a":"4 hece (Te-le-viz-yon)","d":["3 hece","5 hece"],"exp":"Te-le-viz-yon 4 heceden oluşur.","spokenText":"Televizyon kelimesi kaç hecelidir?"},
+      {"q":"\"Kütüphane\" kelimesi kaç hecelidir? 🏛️","a":"4 hece (Kü-tüp-ha-ne)","d":["3 hece","5 hece"],"exp":"Kü-tüp-ha-ne 4 hecelidir.","spokenText":"Kütüphane kelimesi kaç hecelidir?"},
+      {"q":"\"Papatya\" çiçeğinin adı kaç hecedir? 🌼","a":"3 hece (Pa-pat-ya)","d":["2 hece","4 hece"],"exp":"Pa-pat-ya 3 hecedir.","spokenText":"Papatya kelimesi kaç hecelidir?"},
+      {"q":"Bir kelimedeki hece sayısını en kolay yoldan bulmak için ne yaparız? 💡","a":"Sesli (ünlü) harflerini sayarız 🔤","d":["Sessiz harflerini sayarız","Harfleri ikişer sayarız"],"exp":"Her hecede mutlaka bir sesli harf bulunur; sesli harf sayısı = hece sayısıdır.","spokenText":"Bir kelimenin hece sayısını en kolay nasıl buluruz?"},
+      {"q":"Hangisi TEK heceli bir kelimedir? 🐺","a":"Kurt","d":["Kedi","Köpek"],"exp":"\"Kurt\" kelimesinde sadece bir ünlü harf (u) vardır, tek hecelidir.","spokenText":"Hangisi tek heceli bir kelimedir?"},
+      {"q":"Hangisi İKİ heceli bir kelimedir? 📒","a":"Defter (Def-ter)","d":["Kalemtıraş","Silgi"],"exp":"\"Defter\" iki hecelidir (Def-ter).","spokenText":"Hangisi iki heceli bir kelimedir?"},
+      {"q":"Satır sonuna sığmayan \"ilkokul\" kelimesi doğru nasıl bölünür? 🏫","a":"ilk- / okul","d":["il- / kokul","ilko- / kul"],"exp":"Bileşik kelimeler hecelenirken ulama kuralına göre hecelenir: ilk-o-kul.","spokenText":"Satır sonuna sığmayan ilkokul kelimesi kısa çizgi ile nasıl bölünür?"},
+      {"q":"Satır sonuna sığmayan \"başöğretmen\" kelimesi doğru nasıl bölünür? 🎖️","a":"ba- / şöğretmen veya başöğ- / retmen","d":["baş- / öğretmen","başö- / ğretmen"],"exp":"Doğru heceleme \"ba-şöğ-ret-men\" şeklindedir.","spokenText":"Satır sonuna sığmayan başöğretmen kelimesi hecesinden nasıl bölünür?"},
+      {"q":"Satır sonuna sığmayan \"hanımeli\" çiçeği doğru nasıl bölünür? 🌺","a":"ha- / nımeli veya hanı- / meli değil ha-nı-me-li!","d":["hanım- / eli","han- / ımeli"],"exp":"Birleşik sözcükler \"ha-nı-me-li\" şeklinde hecelenir.","spokenText":"Satır sonuna sığmayan hanımeli kelimesi nasıl bölünür?"},
+      {"q":"Satır sonunda veya satır başında TEK BİR HARF bırakılabilir mi? ⚠️","a":"Hayır, tek harf asla bırakılamaz ❌","d":["Evet, her zaman bırakılabilir","Sadece ünlü harfse bırakılır"],"exp":"Satır sonunda veya başında tek harf bırakılmaz (Örn: \"a- raba\" YANLIŞTIR!).","spokenText":"Satır sonunda veya başında tek bir harf bırakılabilir mi?"},
+      {"q":"Hangisi satır sonuna sığmadığında YANLIŞ bölünmüştür? ❌","a":"a- / rabası (Tek harf satırda kalamaz)","d":["ara- / bası","araba- / sı"],"exp":"Tek harf \"a-\" satır sonunda tek başına bırakılamaz.","spokenText":"Hangisi satır sonuna sığmadığında yanlış bölünmüştür?"},
+      {"q":"Hangisi satır sonuna sığmadığında DOĞRU hecelenerek bölünmüştür? ✅","a":"uçurt- / ma","d":["u- / çurtma","uç- / urtma"],"exp":"\"uçurt-ma\" doğru heceden bölünmüştür; \"u-\" tek harf kalamaz.","spokenText":"Hangisi satır sonuna sığmadığında doğru hecelenerek bölünmüştür?"},
+      {"q":"Satır sonuna sığmayan kelimeleri hecelerinden bölmek için hangi işaret kullanılır? ✍️","a":"Kısa çizgi (-)","d":["Nokta (.)","Virgül (,)"],"exp":"Satır sonuna sığmayan sözcükler kısa çizgi (-) ile hecesinden bölünür.","spokenText":"Satır sonuna sığmayan kelimeleri bölmek için hangi noktalama işareti kullanılır?"}
     ],
+
+    grade2TurkishReading5N1KPool: [
+      {"q":"Metin: \"Mert, pazar sabahı dedesiyle birlikte göl kenarına balık tutmaya gitti. Kovalarına üç tane kırmızı balık koydular.\"\nSoru: Mert balık tutmaya NE ZAMAN gitmiştir? 🎣","a":"Pazar sabahı","d":["Cumartesi akşamı","Pazartesi öğleden sonra"],"exp":"Metinde \"Mert, pazar sabahı dedesiyle gitti\" denilmektedir.","spokenText":"Metni dinle: Mert, pazar sabahı dedesiyle göl kenarına balık tutmaya gitti. Mert balık tutmaya ne zaman gitmiştir?"},
+      {"q":"Metin: \"Küçük kedi Pamuk, yüksek çınar ağacının dalında mahsur kaldı. İtfaiyeci amca merdivenle tırmanıp Pamuk'u kucağına aldı.\"\nSoru: Pamuk'u ağaçtan KİM kurtardı? 🐱","a":"İtfaiyeci amca 🚒","d":["Bahçıvan","Mahalle bakkalı"],"exp":"Pamuk'u merdivenle tırmanıp kurtaran itfaiyeci amcadır.","spokenText":"Küçük kedi Pamuk çınar ağacında mahsur kaldı. İtfaiyeci amca merdivenle tırmanıp Pamuk'u kurtardı. Pamuk'u kim kurtardı?"},
+      {"q":"Metin: \"Ece, okul kütüphanesinden aldığı masal kitabını kimseyi rahatsız etmemek için sessizce okudu.\"\nSoru: Ece kitabı NASIL okudu? 📖","a":"Sessizce","d":["Şarkı söyleyerek","Bağırarak"],"exp":"Metinde Ece'nin kitabı sessizce okuduğu belirtilmiştir.","spokenText":"Ece, kütüphaneden aldığı kitabı kimseyi rahatsız etmemek için sessizce okudu. Ece kitabı nasıl okudu?"},
+      {"q":"Metin: \"Ali, dışarıda şiddetli yağmur yağdığı için teneffüste bahçeye çıkamadı.\"\nSoru: Ali bahçeye NİÇİN çıkamadı? 🌧️","a":"Şiddetli yağmur yağdığı için","d":["Uykusu geldiği için","Zili duymadığı için"],"exp":"Ali dışarıda yağmur yağdığı için bahçeye çıkamamıştır.","spokenText":"Ali, dışarıda şiddetli yağmur yağdığı için teneffüste bahçeye çıkamadı. Ali bahçeye niçin çıkamadı?"},
+      {"q":"Metin: \"Selin, okuldan sonra resim yarışması için rengarenk bir doğa resmi çizdi.\"\nSoru: Selin NE çizmiştir? 🎨","a":"Doğa resmi","d":["Uzay gemisi","Araba"],"exp":"Metinde Selin'in doğa resmi çizdiği yazmaktadır.","spokenText":"Selin, okuldan sonra resim yarışması için rengarenk bir doğa resmi çizdi. Selin ne çizmiştir?"},
+      {"q":"Metin: \"Göçmen kuşlar sonbahar gelip havalar soğuyunca sıcak ülkelere doğru göç ederler.\"\nSoru: Kuşlar NEREYE doğru göç ederler? 🕊️","a":"Sıcak ülkelere","d":["Buzullara","Karlı dağlara"],"exp":"Kuşlar soğuktan korunmak için sıcak ülkelere uçar.","spokenText":"Göçmen kuşlar sonbaharda sıcak ülkelere doğru göç ederler. Kuşlar nereye doğru göç ederler?"},
+      {"q":"Metin: \"Emre sabah erkenden uyandı. Elini yüzünü yıkadı, kahvaltısını yaptı. En sonunda çantasını alıp okula gitti.\"\nSoru: Olayların oluş sırasına göre Emre EN SON ne yapmıştır? 🎒","a":"Çantasını alıp okula gitmiştir","d":["Uyanmıştır","Kahvaltı yapmıştır"],"exp":"Oluş sırasına göre en son yapılan eylem okula gitmektir.","spokenText":"Emre sabah uyandı, elini yüzünü yıkadı, kahvaltısını yaptı ve en sonunda çantasını alıp okula gitti. Emre en son ne yapmıştır?"},
+      {"q":"Metin: \"Ağaçlar çiçek açar, kuşlar neşeyle cıvıldaşır, kelebekler uçar ve her yer yemyeşil olur.\"\nSoru: Bu kısa metne en uygun BAŞLIK hangisidir? 🌱","a":"İlkbaharın Gelişi 🌸","d":["Kış Eğlencesi ❄️","Çöl Hayatı 🏜️"],"exp":"Çiçekler, kelebekler ve yeşillik ilkbahar mevsimini anlatır.","spokenText":"Ağaçlar çiçek açar, kuşlar cıvıldaşır, kelebekler uçar. Bu metne en uygun başlık hangisidir?"},
+      {"q":"Metin: \"Barış, sokakta bacağı incinmiş minik köpeği görünce hemen veterinere götürdü. Veteriner köpeğin bacağını sardı.\"\nSoru: Barış köpeği NEREYE götürmüştür? 🐕","a":"Veteriner kliniğine","d":["Markete","Parka"],"exp":"Yaralı köpeğin tedavisi için veterinere götürmüştür.","spokenText":"Barış sokakta yaralı köpeği görünce veterinere götürdü. Barış köpeği nereye götürmüştür?"},
+      {"q":"Metin: \"Kerem dişlerini düzenli fırçalamayı unuttuğu için dişi çok ağrıdı.\"\nSoru: Kerem'in dişi NİÇİN ağrımıştır? 🦷","a":"Dişlerini fırçalamayı unuttuğu için","d":["Çok su içtiği için","Erken uyuduğu için"],"exp":"Kerem dişlerini fırçalamadığı için dişi ağrımıştır.","spokenText":"Kerem dişlerini fırçalamayı unuttuğu için dişi çok ağrıdı. Kerem'in dişi niçin ağrımıştır?"},
+      {"q":"Metin: \"Zeynep, doğum günü partisi için annesiyle birlikte nefis bir çilekli pasta yaptı.\"\nSoru: Zeynep pastayı KİMLE birlikte yaptı? 🎂","a":"Annesiyle birlikte","d":["Öğretmeniyle","Komşusuyla"],"exp":"Zeynep pastayı annesiyle birlikte yapmıştır.","spokenText":"Zeynep doğum günü için annesiyle çilekli pasta yaptı. Zeynep pastayı kimle birlikte yaptı?"},
+      {"q":"Metin: \"Deniz, ders başlamadan önce sırasının altında kaybettiği kırmızı silgisini bulunca çok sevindi.\"\nSoru: Deniz silgisini NEREDE buldu? 🔍","a":"Sırasının altında","d":["Çantasının cebinde","Öğretmen masasında"],"exp":"Metinde \"sırasının altında buldu\" ifadesi yer alır.","spokenText":"Deniz kaybettiği kırmızı silgisini sırasının altında buldu. Deniz silgisini nerede buldu?"},
+      {"q":"Metin: \"Can, sabah saat sekizde okul servisinin geldiğini görünce hemen kapıya koştu.\"\nSoru: Okul servisi NE ZAMAN geldi? ⏰","a":"Sabah saat sekizde","d":["Öğlen saat birde","Akşam saat beşte"],"exp":"Metinde sabah saat sekiz olarak belirtilmiştir.","spokenText":"Can sabah saat sekizde okul servisinin geldiğini gördü. Okul servisi ne zaman geldi?"},
+      {"q":"Metin: \"Ayşe, soğuk kış gününde pencerenin önüne konan minik kuşa ekmek kırıntıları ve buğday verdi.\"\nSoru: Ayşe kuşa NE vermiştir? 🐦","a":"Ekmek kırıntıları ve buğday","d":["Peynir ve zeytin","Meyve suyu"],"exp":"Ayşe kuşa ekmek kırıntısı ve buğday vermiştir.","spokenText":"Ayşe pencerenin önüne konan kuşa ekmek kırıntıları ve buğday verdi. Ayşe kuşa ne verdi?"},
+      {"q":"Metin: \"Tavşan hızına çok güvendiği için yol kenarında uyuyakaldı, azimli kaplumbağa ise hiç durmadan yürüyüp yarışı kazandı.\"\nSoru: Yarışı KİM kazandı? 🐢","a":"Azimli kaplumbağa 🐢","d":["Hızlı tavşan 🐇","Orman faresi 🐭"],"exp":"Durmadan yürüyen azimli kaplumbağa yarışı kazanmıştır.","spokenText":"Tavşan yol kenarında uyuyakaldı, azimli kaplumbağa hiç durmadan yürüyüp yarışı kazandı. Yarışı kim kazandı?"},
+      {"q":"Metin: \"Önce tohumu toprağa ektik, sonra can suyu verdik, en sonunda yeşil filizler açtı.\"\nSoru: Olayların oluş sırasına göre EN BAŞTA ne yapılmıştır? 🌱","a":"Tohum toprağa ekilmiştir","d":["Can suyu verilmiştir","Filizler çıkmıştır"],"exp":"İlk adım tohumun toprağa ekilmesidir.","spokenText":"Önce tohumu toprağa ektik, sonra can suyu verdik, en sonunda filizler açtı. İlk başta ne yapılmıştır?"},
+      {"q":"Metin: \"Yağmur dindikten sonra gökyüzünde rengarenk pırıl pırıl bir gökkuşağı belirdi.\"\nSoru: Gökkuşağı NE ZAMAN belirdi? 🌈","a":"Yağmur dindikten sonra","d":["Güneş doğmadan önce","Gece yarısı"],"exp":"Metinde yağmur dindikten sonra belirdiği ifade edilir.","spokenText":"Yağmur dindikten sonra gökyüzünde rengarenk bir gökkuşağı belirdi. Gökkuşağı ne zaman belirdi?"},
+      {"q":"Metin: \"Karıncalar kış mevsimine hazırlık yapmak için yuvalarına durmadan yiyecek taşırlar.\"\nSoru: Karıncalar yuvalarına NİÇİN yiyecek taşırlar? 🐜","a":"Kış mevsimine hazırlık yapmak için","d":["Oyun oynamak için","Yuvalarını süslemek için"],"exp":"Karıncalar kışa hazırlık amacıyla yiyecek toplarlar.","spokenText":"Karıncalar kış mevsimine hazırlık yapmak için yuvalarına durmadan yiyecek taşırlar. Karıncalar niçin yiyecek taşırlar?"},
+      {"q":"Metin: \"Güneş yavaşça batarken gökyüzü turuncuya boyandı ve serin bir akşam rüzgarı esti.\"\nSoru: Güneş NASIL batmıştır? 🌅","a":"Yavaşça","d":["Aniden","Gürültüyle"],"exp":"Güneşin yavaşça battığı belirtilmiştir.","spokenText":"Güneş yavaşça batarken gökyüzü turuncuya boyandı. Güneş nasıl batmıştır?"},
+      {"q":"Metin: \"Defne, ödevini bitirince odasındaki oyuncakları topladı ve annesine sofrayı kurmada yardım etti.\"\nSoru: Defne odasını NE ZAMAN topladı? 🧸","a":"Ödevini bitirince","d":["Sabah uyanınca","Okula gitmeden önce"],"exp":"Defne ödevini bitirdikten sonra odasını toplamıştır.","spokenText":"Defne, ödevini bitirince odasındaki oyuncakları topladı. Defne odasını ne zaman topladı?"},
+      {"q":"Metin: \"Ormandaki tüm sevimli hayvanlar bilge baykuşun anlattığı masalı dinlemek için büyük çınarın altına toplandı.\"\nSoru: Hayvanlar KİMİ dinlemek için toplandı? 🦉","a":"Bilge baykuşu 🦉","d":["Kurnaz tilkiyi","Hızlı tavşanı"],"exp":"Hayvanlar bilge baykuşun masalını dinlemek için toplanmıştır.","spokenText":"Ormandaki tüm hayvanlar bilge baykuşun anlattığı masalı dinlemek için toplandı. Hayvanlar kimi dinlemek için toplandı?"},
+      {"q":"Metin: \"Burak her gün en az yirmi sayfa kitap okur. Kitap okudukça yeni bilgiler öğrenir ve hayal gücü gelişir.\"\nSoru: Bu metnin ANA DÜŞÜNCESİ (konusu) nedir? 📖","a":"Kitap okumanın yararları 💡","d":["Erken uyanmanın önemi","Spor yapmanın faydası"],"exp":"Metin kitap okumanın insana kazandırdığı faydaları anlatır.","spokenText":"Burak her gün yirmi sayfa kitap okur. Kitap okudukça bilgisi ve hayal gücü artar. Bu metnin konusu nedir?"}
+    ],
+
+    grade2TurkishSentenceLogicPool: [
+      {"q":"\"okula - Ali - gitti - sabah\" sözcükleriyle kurulan ANLAMLI ve KURALLI cümle hangisidir? 🎒","a":"Ali sabah okula gitti.","d":["Gitti Ali okula sabah.","Sabah gitti okula Ali."],"exp":"Kurallı cümlede iş, oluş bildiren kelime (yüklem) cümlenin sonunda yer alır.","spokenText":"Okula, Ali, gitti, sabah kelimeleriyle kurulan anlamlı ve kurallı cümle hangisidir?"},
+      {"q":"\"kitap - Zeynep - okudu - akşam\" sözcükleriyle kurulan kurallı cümle hangisidir? 📖","a":"Zeynep akşam kitap okudu.","d":["Okudu Zeynep kitap akşam.","Akşam okudu Zeynep kitap."],"exp":"\"Okudu\" iş bildiren kelime olduğu için cümlenin sonunda olmalıdır.","spokenText":"Kitap, Zeynep, okudu, akşam sözcükleriyle kurulan kurallı cümle hangisidir?"},
+      {"q":"\"yaptı - resim - güzel - Ayşe\" sözcükleriyle kurulan kurallı cümle hangisidir? 🎨","a":"Ayşe güzel resim yaptı.","d":["Yaptı Ayşe güzel resim.","Güzel yaptı Ayşe resim."],"exp":"Kurallı cümlede yapılan işi bildiren \"yaptı\" sözcüğü sonda bulunur.","spokenText":"Yaptı, resim, güzel, Ayşe sözcükleriyle kurulan kurallı cümle hangisidir?"},
+      {"q":"\"uçtu - gökyüzünde - kuşlar\" sözcükleriyle kurulan kurallı cümle hangisidir? 🐦","a":"Kuşlar gökyüzünde uçtu.","d":["Uçtu kuşlar gökyüzünde.","Gökyüzünde uçtu kuşlar."],"exp":"Hareket bildiren \"uçtu\" kelimesi cümlenin sonunda yer alır.","spokenText":"Uçtu, gökyüzünde, kuşlar sözcükleriyle kurulan kurallı cümle hangisidir?"},
+      {"q":"\"pazardan - elma - aldık - taze\" karışık kelimeleriyle kurulan kurallı cümle hangisidir? 🍎","a":"Pazardan taze elma aldık.","d":["Aldık pazardan taze elma.","Taze aldık pazardan elma."],"exp":"\"Aldık\" eylemi cümlenin en sonunda yer alır.","spokenText":"Pazardan, elma, aldık, taze kelimeleriyle kurulan kurallı cümle hangisidir?"},
+      {"q":"Kurallı bir cümlede iş, oluş veya hareket bildiren kelime cümlenin NERESİNDE yer alır? 📝","a":"Cümlenin sonunda yer alır ✍️","d":["Cümlenin başında yer alır","Cümlenin tam ortasında yer alır"],"exp":"Türkçemizde kurallı cümlelerin yüklemi (eylemi) daima cümlenin sonundadır.","spokenText":"Kurallı bir cümlede iş veya hareket bildiren kelime cümlenin neresinde yer alır?"},
+      {"q":"\"Hava çok soğuk olduğu için ...\" cümlesi hangisiyle tamamlanırsa ANLAMLI bir sebep-sonuç cümlesi olur? ❄️","a":"... kalın montunu giydi. 🧥","d":["... dondurma yemeye gitti.","... denize yüzmeye gitti."],"exp":"Soğuk havanın sonucu kalın mont giymektir.","spokenText":"Hava çok soğuk olduğu için cümlesi hangisiyle tamamlanırsa anlamlı bir sebep sonuç cümlesi olur?"},
+      {"q":"\"Dersine düzenli çalıştığı için ...\" cümlesi nasıl tamamlanmalıdır? 📚","a":"... sınavdan yüksek not aldı. 💯","d":["... dersi dinlemedi.","... kalemini kaybetti."],"exp":"Düzenli çalışmanın sonucu başarıdır.","spokenText":"Dersine düzenli çalıştığı için cümlesi mantıklı nasıl tamamlanır?"},
+      {"q":"\"Alarm çalmadığı için ...\" cümlesi en uygun nasıl tamamlanır? ⏰","a":"... sabah uyanmakta gecikti.","d":["... erkenden okula vardı.","... kahvaltısını iki kez yaptı."],"exp":"Alarm çalmayınca uyanmak gecikir.","spokenText":"Alarm çalmadığı için cümlesi nasıl tamamlanmalıdır?"},
+      {"q":"\"Karnı çok acıktığı için ...\" cümlesi en uygun hangisiyle tamamlanır? 🥪","a":"... hemen mutfağa koşup yemek yedi.","d":["... dışarı çıkıp koştu.","... kitap okumaya başladı."],"exp":"Acıkmanın mantıklı sonucu yemek yemektir.","spokenText":"Karnı çok acıktığı için cümlesi nasıl tamamlanır?"},
+      {"q":"Aşağıdaki cümlelerden hangisi bir SEBEP-SONUÇ cümlesidir? ☔","a":"Yağmur yağdığı için şemsiyesini açtı.","d":["Yarın arkadaşlarımla parkta oynayacağım.","Mavi kazağımı çok beğeniyorum."],"exp":"Yağmur yağması sebep, şemsiye açmak ise sonuçtur.","spokenText":"Aşağıdaki cümlelerden hangisi bir sebep sonuç cümlesidir?"},
+      {"q":"\"Gözleri bozulduğu için ...\" cümlesinin mantıklı sonucu hangisidir? 👓","a":"... doktora gidip gözlük takmaya başladı.","d":["... müzik dinledi.","... koşu yarışına katıldı."],"exp":"Göz bozulunca göz doktoruna gidilir ve gözlük takılır.","spokenText":"Gözleri bozulduğu için cümlesinin mantıklı sonucu hangisidir?"},
+      {"q":"Aşağıdaki kelimelerden hangisi ÇOĞUL bir kelimedir? 🌳","a":"Ağaçlar","d":["Orman","Fidan"],"exp":"\"-lar\" çoğul ekini alan \"Ağaçlar\" birden fazla ağacı belirtir.","spokenText":"Aşağıdaki kelimelerden hangisi çoğul bir kelimedir?"},
+      {"q":"Aşağıdaki kelimelerden hangisi TEKİL bir kelimedir? ✏️","a":"Kalem","d":["Defterler","Silgiler"],"exp":"Kalem çoğul eki almamıştır, tek bir varlığı gösterir.","spokenText":"Aşağıdaki kelimelerden hangisi tekil bir kelimedir?"},
+      {"q":"\"Öğrenci\" kelimesine çoğul eki gelirse nasıl yazılır? 🎒","a":"Öğrenciler","d":["Öğrencilar","Öğrencil"],"exp":"İnce ünlüyle bittiği için \"-ler\" eki gelir: Öğrenciler.","spokenText":"Öğrenci kelimesine çoğul eki gelirse nasıl yazılır?"},
+      {"q":"\"Çiçek\" kelimesinin çoğul hali hangisidir? 🌸","a":"Çiçekler","d":["Çiçeklar","Çiçek"],"exp":"Çiçek sözcüğünün çoğulu \"Çiçekler\"dir.","spokenText":"Çiçek kelimesinin çoğul hali hangisidir?"},
+      {"q":"\"Elma\" kelimesinin çoğul hali hangisidir? 🍎","a":"Elmalar","d":["Elmaler","Elmas"],"exp":"Kalın ünlü içerdiği için \"-lar\" eki alır: Elmalar.","spokenText":"Elma kelimesinin çoğul hali hangisidir?"},
+      {"q":"Aşağıdakilerden hangisi birden çok varlığı ifade eder? 🐦","a":"Kuşlar 🐦🐦","d":["Güneş ☀️","Bulut ☁️"],"exp":"\"Kuşlar\" çoğuldur, kuş birden fazladır.","spokenText":"Hangisi birden çok varlığı ifade eder?"},
+      {"q":"Soru eki olan \"mı, mi, mu, mü\" nasıl yazılır? ✍️","a":"Kendisinden önceki kelimeden DAİMA AYRI yazılır ✍️","d":["Kelimeye bitişik yazılır","Kesme işaretiyle birleştirilir"],"exp":"Soru eki mı/mi/mu/mü her zaman kendinden önceki kelimeden ayrı yazılır.","spokenText":"Soru eki olan mı, mi, mu, mü nasıl yazılır?"},
+      {"q":"Aşağıdaki cümlelerin hangisinde soru ekinin yazımı DOĞRUDUR? ❓","a":"Sen de bizimle gelecek misin?","d":["Sen de bizimle gelecekmisin?","Sen de bizimle gelecek mis in?"],"exp":"\"misin\" soru eki kelimeden ayrı yazılır: \"gelecek misin?\"","spokenText":"Aşağıdaki cümlelerin hangisinde soru ekinin yazımı doğrudur?"},
+      {"q":"Hangisinde soru eki DOĞRU yazılmıştır? 📖","a":"Ödevini bitirdin mi?","d":["Ödevini bitirdinmi?","Ödevinimi bitirdin?"],"exp":"\"bitirdin mi?\" şeklinde ayrı yazılmalıdır.","spokenText":"Hangisinde soru eki doğru yazılmıştır?"},
+      {"q":"Hangisinde yazım YANLIŞI vardır? ❌","a":"Bugün sinemaya gidiyormuyuz?","d":["Bugün okula gittin mi?","Kitabını okudun mu?"],"exp":"\"gidiyor muyuz?\" şeklinde \"muyuz\" ayrı yazılmalıydı.","spokenText":"Hangisinde soru ekinin yazımında yanlışlık yapılmıştır?"}
+    ],
+
+    grade2TurkishPunctuationSpellingPool: [
+      {"q":"\"Ali bugün okula gitti( )\" Cümlesinin sonuna hangi noktalama işareti konur? ✍️","a":"Nokta (.)","d":["Soru işareti (?)","Ünlem (!)"],"exp":"Tamamlanmış haber cümlelerinin sonuna nokta (.) konur.","spokenText":"Ali bugün okula gitti cümlesinin sonuna hangi işaret konur?"},
+      {"q":"\"2( ) sınıf öğrencisiyiz.\" Sıra bildiren (ikinci) sayısının yanına hangi işaret konur? 🥇","a":"Nokta (.)","d":["Virgül (,)","Soru işareti (?)"],"exp":"Sıra bildirmek için sayıların yanına nokta konur (2. = ikinci).","spokenText":"Sıra bildiren sayının yanına hangi işaret konur?"},
+      {"q":"Tarihlerin yazılışında gün, ay ve yıl arasına hangi noktalama işareti konur? 📅","a":"Nokta (.)","d":["Soru işareti (?)","Ünlem (!)"],"exp":"Örnek: 29.10.1923 şeklinde aralara nokta (.) konur.","spokenText":"Tarihlerin yazılışında gün, ay ve yıl arasına ne konur?"},
+      {"q":"\"Bugün hava pırıl pırıl ve çok güzel( )\" Cümlesinin sonuna ne konur? ☀️","a":"Nokta (.)","d":["Soru işareti (?)","Virgül (,)"],"exp":"Haber cümlesi olduğu için sonuna nokta (.) konur.","spokenText":"Bugün hava çok güzel cümlesinin sonuna ne konur?"},
+      {"q":"\"Sen de bizimle parka gelecek misin( )\" Cümlesinin sonuna hangi noktalama işareti konur? ❓","a":"Soru işareti (?)","d":["Nokta (.)","Virgül (,)"],"exp":"Soru bildiren cümlelerin sonuna soru işareti (?) konur.","spokenText":"Sen de bizimle parka gelecek misin cümlesinin sonuna ne konur?"},
+      {"q":"\"Saat kaçta buluşacağız( )\" Cümlesinin sonuna ne konur? ⏰","a":"Soru işareti (?)","d":["Nokta (.)","Ünlem (!)"],"exp":"Saat sorulduğu için soru işareti (?) kullanılır.","spokenText":"Saat kaçta buluşacağız cümlesinin sonuna ne konur?"},
+      {"q":"\"Kitabını açtın mı( )\" Cümlesinin sonuna hangi işaret gelir? 📖","a":"Soru işareti (?)","d":["Nokta (.)","Virgül (,)"],"exp":"Soru sorulduğu için soru işareti konur.","spokenText":"Kitabını açtın mı cümlesinin sonuna hangi işaret konur?"},
+      {"q":"\"Kiminle konuştun( )\" Cümlesinin sonuna ne konur? 📱","a":"Soru işareti (?)","d":["Nokta (.)","Ünlem (!)"],"exp":"Soru bildirdiği için soru işareti (?) konur.","spokenText":"Kiminle konuştun cümlesinin sonuna ne konur?"},
+      {"q":"Hangisi bir soru cümlesidir? ❓","a":"Ödevini yaptın mı?","d":["Ödevimi bitirdim.","Çok güzel bir gün!"],"exp":"\"Yaptın mı?\" soru bildirmektedir.","spokenText":"Hangisi bir soru cümlesidir?"},
+      {"q":"\"Eyvah, süt döküldü( )\" Cümlesinin sonuna hangi noktalama işareti konur? ⚠️","a":"Ünlem işareti (!)","d":["Nokta (.)","Soru işareti (?)"],"exp":"Korku, heyecan, şaşkınlık bildiren cümlelerin sonuna ünlem işareti (!) konur.","spokenText":"Eyvah süt döküldü cümlesinin sonuna ne konur?"},
+      {"q":"\"Yaşasın, sınavdan 100 aldım( )\" Cümlesinin sonuna ne konur? 🎉","a":"Ünlem işareti (!)","d":["Soru işareti (?)","Nokta (.)"],"exp":"Sevinç ve coşku bildiren cümlelerin sonuna ünlem (!) konur.","spokenText":"Yaşasın sınavdan yüz aldım cümlesinin sonuna ne konur?"},
+      {"q":"\"İmdat, boğuluyorum( )\" Cümlesinin sonuna hangi noktalama işareti konur? 🌊","a":"Ünlem işareti (!)","d":["Nokta (.)","Soru işareti (?)"],"exp":"Acil durum ve yardım çağrılarında ünlem işareti (!) kullanılır.","spokenText":"İmdat boğuluyorum cümlesinin sonuna ne konur?"},
+      {"q":"Hangisi bir ünlem cümlesidir? ⚡","a":"Dikkat et, araba geliyor!","d":["Araba çok hızlı gitti.","Araba ne renk?"],"exp":"Uyarı ve heyecan bildiren cümle ünlem cümlesidir.","spokenText":"Hangisi bir ünlem cümlesidir?"},
+      {"q":"\"Pazardan elma( ) armut ve muz aldık.\" Parantez içine hangi işaret gelmelidir? 🍎","a":"Virgül (,)","d":["Nokta (.)","Kesme işareti (')"],"exp":"Birbiri ardınca sıralanan eş görevli kelimeler arasına virgül (,) konur.","spokenText":"Pazardan elma, armut ve muz aldık cümlesinde boşluğa ne gelir?"},
+      {"q":"\"Çantamda kalem( ) silgi ve defter var.\" Boşluğa ne gelmelidir? 🎒","a":"Virgül (,)","d":["Nokta (.)","Ünlem (!)"],"exp":"Sıralanan eşyalar arasına virgül (,) konur.","spokenText":"Çantamda kalem silgi ve defter var cümlesinde araya ne konur?"},
+      {"q":"\"Ah( ) ayağım taşa çarptı!\" Acı bildiren ünlemden sonra virgül konabilir mi? 🥺","a":"Evet, virgül konur 🥺","d":["Hayır, hiçbir şey konmaz","Sadece nokta konur"],"exp":"Ünlem sözcüğünden sonra virgül konup ünlem işareti cümlenin sonuna bırakılabilir.","spokenText":"Ah ayağım taşa çarptı cümlesinde ahtan sonra virgül konabilir mi?"},
+      {"q":"\"Ankara( )ya hızlı trenle gittik.\" Şehir adına gelen eki ayırmak için ne kullanılır? 🏛️","a":"Kesme işareti (')","d":["Virgül (,)","Kısa çizgi (-)"],"exp":"Özel isimlere getirilen ekleri ayırmak için kesme işareti (') kullanılır.","spokenText":"Ankaraya hızlı trenle gittik cümlesinde şehir adına gelen eki ayırmak için ne kullanılır?"},
+      {"q":"\"Kedimiz Pamuk( )un aşılarını yaptırdık.\" Hayvan adlarına gelen eki ayırmak için ne kullanılır? 🐱","a":"Kesme işareti (')","d":["Virgül (,)","Nokta (.)"],"exp":"Hayvanlara verilen özel isimlere gelen ekler kesme işaretiyle (') ayrılır.","spokenText":"Kedimiz Pamukun aşılarını yaptırdık cümlesinde hangi işaret kullanılır?"},
+      {"q":"\"Atatürk( )ün hayatını okudum.\" Boşluğa hangi işaret gelir? 🇹🇷","a":"Kesme işareti (')","d":["Virgül (,)","Nokta (.)"],"exp":"Atatürk özel isim olduğu için gelen ek kesme işaretiyle (') ayrılır.","spokenText":"Atatürkün hayatını okudum cümlesinde boşluğa ne gelir?"},
+      {"q":"\"29 Ekim Cumhuriyet Bayramı( )nı coşkuyla kutladık.\" Boşluğa ne konur? 🎈","a":"Kesme işareti (')","d":["Nokta (.)","Kısa çizgi (-)"],"exp":"Milli ve dini bayram adlarına gelen ekler kesme işaretiyle ayrılır.","spokenText":"Cumhuriyet Bayramını kutladık cümlesinde bayram adına gelen ek neyle ayrılır?"},
+      {"q":"\"Türkiye( )nin başkenti Ankara( )dır.\" Cümlesinde parantezlere ne konur? 🏛️","a":"Kesme işareti (')","d":["Virgül (,)","Nokta (.)"],"exp":"Türkiye ve Ankara özel isimlerine gelen ekler kesme işaretiyle ayrılır.","spokenText":"Türkiyenin başkenti Ankaradır cümlesinde ekleri neyle ayırırız?"},
+      {"q":"Hangisinin yazımı DOĞRUDUR? 🐶","a":"Karabaş'a yemek verdim.","d":["karabaşa yemek verdim.","Karabaşa yemek verdim."],"exp":"Hayvanlara verdiğimiz isimler de özel isimdir, büyük harfle başlar ve ek kesmeyle ayrılır.","spokenText":"Hangisinin yazımı doğrudur?"},
+      {"q":"Cümlelerin ilk harfi DAİMA nasıl başlar? ✍️","a":"Büyük harfle başlar 🔤","d":["Küçük harfle başlar","Fark etmez"],"exp":"Türkçemizde her cümle mutlaka büyük harfle başlar.","spokenText":"Cümlelerin ilk harfi daima nasıl başlar?"},
+      {"q":"Hangisi özel bir isimdir ve ilk harfi daima BÜYÜK yazılmalıdır? 🇹🇷","a":"Mustafa","d":["kalem","defter"],"exp":"İnsan adları (özel isimler) her zaman büyük harfle başlar.","spokenText":"Hangisi özel bir isimdir ve ilk harfi daima büyük yazılmalıdır?"},
+      {"q":"Şiirlerin her bir dizesi (mısrası) nasıl başlar? 📜","a":"Büyük harfle başlar","d":["Küçük harfle başlar","İstediğimiz gibi"],"exp":"Şiirlerin her dizesi büyük harfle başlatılır.","spokenText":"Şiirlerin her bir dizesi nasıl başlar?"},
+      {"q":"Aşağıdaki cümlelerin hangisinde yazım yanlışı YOKTUR? ✅","a":"Mehmet dün Bursa'ya gitti.","d":["mehmet dün bursa'ya gitti.","Mehmet dün bursaya gitti."],"exp":"Cümle başı ve şehir adı büyük harfle başlar, kesme işaretiyle ek ayrılır.","spokenText":"Hangi cümlede yazım yanlışı yoktur?"},
+      {"q":"Satır sonuna sığmayan kelimeleri hecelerinden bölmek için ne kullanılır? ✍️","a":"Kısa çizgi (-)","d":["Nokta (.)","Virgül (,)"],"exp":"Satır sonuna sığmayan sözcükler hecesinden kısa çizgiyle (-) bölünür.","spokenText":"Satır sonuna sığmayan kelimeleri bölmek için ne kullanılır?"},
+      {"q":"Cümle içinde konuşma çizgisi (uzun çizgi) nerede kullanılır? 🗣️","a":"Karşılıklı konuşmaların başında 🗣️","d":["Cümlenin sonunda","Kelime aralarında"],"exp":"Diyaloglarda konuşan kişinin sözü başına uzun çizgi (—) konur.","spokenText":"Konuşma çizgisi nerede kullanılır?"}
+    ],
+
+    // 2. Sınıf Türkçe Karma Üreteci (5 Öğrenme Alanından Dengeli Çekim)
+    generateGrade2TurkishKarma() {
+      const topic = Math.floor(Math.random() * 5);
+      if (topic === 0) return this.drawFromPool(this.grade2TurkishSynAntPool, "grade2TurkishSynAntPool");
+      if (topic === 1) return this.drawFromPool(this.grade2TurkishAlphabetSyllablePool, "grade2TurkishAlphabetSyllablePool");
+      if (topic === 2) return this.drawFromPool(this.grade2TurkishReading5N1KPool, "grade2TurkishReading5N1KPool");
+      if (topic === 3) return this.drawFromPool(this.grade2TurkishSentenceLogicPool, "grade2TurkishSentenceLogicPool");
+      return this.drawFromPool(this.grade2TurkishPunctuationSpellingPool, "grade2TurkishPunctuationSpellingPool");
+    },
+
+    // 2. SINIF BÜYÜK KARMA DÜELLO (Hayat Bilgisi, Matematik, Türkçe)
+    generateGrade2GrandDuel() {
+      const subjectIdx = Math.floor(Math.random() * 3);
+      if (subjectIdx === 0) return this.generateGrade2MathKarma();
+      if (subjectIdx === 1) return this.generateGrade2TurkishKarma();
+      return this.generateGrade2LifeScienceKarma();
+    },
+
+    // Geriye dönük uyumluluk takma adları
+    get grade2SynAntPool() { return this.grade2TurkishSynAntPool; },
+    get grade2PunctuationPool() { return this.grade2TurkishPunctuationSpellingPool; },
+    get grade2TurkishPool() { return this.grade2TurkishSynAntPool; },
 
 // -------------------------------------------------------------
 // 2. SINIF: 2026 TÜRKİYE YÜZYILI MAARİF MODELİ HAYAT BİLGİSİ SORU HAVUZLARI
@@ -8169,22 +8286,28 @@
       } else if (gameType === 'math_2_karma') {
         const raw = this.generateGrade2MathKarma();
         return this.buildQuestionItem(raw, '🏆 2. Sınıf Matematik Karma Düello');
+      // --- 2. SINIF: 2026 MAARİF MODELİ TÜRKÇE 5 ÖĞRENME ALANI ---
       } else if (gameType === 'turkish_syn_ant_2') {
-        const raw = this.drawFromPool(this.grade2SynAntPool, "grade2SynAntPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '✨ Eş ve Zıt Anlam Şampiyonası');
-      } else if (gameType === 'turkish_punctuation_2') {
-        const raw = this.drawFromPool(this.grade2PunctuationPool, "grade2PunctuationPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '✍️ Noktalama & Yazım Kuralları');
+        const raw = this.drawFromPool(this.grade2TurkishSynAntPool, "grade2TurkishSynAntPool");
+        return this.buildQuestionItem(raw, '✨ Eş ve Zıt Anlam Avcısı');
+      } else if (gameType === 'turkish_alphabet_syllable_2') {
+        const raw = this.drawFromPool(this.grade2TurkishAlphabetSyllablePool, "grade2TurkishAlphabetSyllablePool");
+        return this.buildQuestionItem(raw, '🔤 Sözlük Sırası & Doğru Hece Bölme');
+      } else if (gameType === 'turkish_reading_5n1k_2') {
+        const raw = this.drawFromPool(this.grade2TurkishReading5N1KPool, "grade2TurkishReading5N1KPool");
+        return this.buildQuestionItem(raw, '🔍 5N1K Dedektifi & Metin Anlama');
+      } else if (gameType === 'turkish_sentence_logic_2') {
+        const raw = this.drawFromPool(this.grade2TurkishSentenceLogicPool, "grade2TurkishSentenceLogicPool");
+        return this.buildQuestionItem(raw, '🧱 Kurallı Cümle İnşası');
+      } else if (gameType === 'turkish_punctuation_spelling_2' || gameType === 'turkish_punctuation_2') {
+        const raw = this.drawFromPool(this.grade2TurkishPunctuationSpellingPool, "grade2TurkishPunctuationSpellingPool");
+        return this.buildQuestionItem(raw, '✍️ Noktalama & Yazım Ustası');
+      } else if (gameType === 'turkish_2_karma') {
+        const raw = this.generateGrade2TurkishKarma();
+        return this.buildQuestionItem(raw, '📚 2. Sınıf Türkçe Karma Düello');
+      } else if (gameType === 'grade2_grand_duel') {
+        const raw = this.generateGrade2GrandDuel();
+        return this.buildQuestionItem(raw, '🏆 2. Sınıf Büyük Karma Düello');
       // --- 2. SINIF: 2026 MAARİF MODELİ HAYAT BİLGİSİ 6 ÖĞRENME ALANI ---
       } else if (gameType === 'lifescience_school_2') {
         const raw = this.drawFromPool(this.grade2LifeScienceSchoolPool, "grade2LifeScienceSchoolPool");
@@ -8390,32 +8513,8 @@
           const raw = this.generateGrade1TurkishKarma();
           return this.buildQuestionItem(raw, '📚 1. Sınıf Türkçe Karma');
         } else if (g === 2) {
-          const r = Math.random();
-          if (r < 0.4) {
-            const raw = this.drawFromPool(this.grade2TurkishPool, "grade2TurkishPool");
-            return this.buildQuestionItem({
-              question: raw.q,
-              correct: raw.a,
-              distractors: raw.d,
-              explanation: raw.exp
-            }, '📚 Türkçe & Sözcük Düellosu');
-          } else if (r < 0.7) {
-            const raw = this.drawFromPool(this.grade2SynAntPool, "grade2SynAntPool");
-            return this.buildQuestionItem({
-              question: raw.q,
-              correct: raw.a,
-              distractors: raw.d,
-              explanation: raw.exp
-            }, '✨ Eş ve Zıt Anlam Şampiyonası');
-          } else {
-            const raw = this.drawFromPool(this.grade2PunctuationPool, "grade2PunctuationPool");
-            return this.buildQuestionItem({
-              question: raw.q,
-              correct: raw.a,
-              distractors: raw.d,
-              explanation: raw.exp
-            }, '✍️ Noktalama & Yazım Kuralları');
-          }
+          const raw = this.generateGrade2TurkishKarma();
+          return this.buildQuestionItem(raw, '📚 2. Sınıf Türkçe Karma');
         } else if (g === 3) {
           const r = Math.random();
           if (r < 0.5) {
@@ -9558,7 +9657,14 @@
     lifescience_home_family_2: '🏡 Evimizde Hayat',
     lifescience_country_culture_2: '🇹🇷 Ülkemizde Hayat',
     lifescience_nature_environment_2: '🌿 Doğada Hayat',
-    lifescience_2_karma: '🏆 2. Sınıf Hayat Bilgisi Karma'
+    lifescience_2_karma: '🏆 2. Sınıf Hayat Bilgisi Karma',
+    turkish_syn_ant_2: '✨ Eş & Zıt Anlam',
+    turkish_alphabet_syllable_2: '🔤 Sözlük & Hece',
+    turkish_reading_5n1k_2: '🔍 5N1K & Anlama',
+    turkish_sentence_logic_2: '🧱 Kurallı Cümle',
+    turkish_punctuation_spelling_2: '✍️ Noktalama & Yazım',
+    turkish_2_karma: '🏆 2. Sınıf Türkçe Karma',
+    grade2_grand_duel: '🏆 2. Sınıf Büyük Karma'
   };
 
   function getCurrentGameObject() {
@@ -9625,8 +9731,14 @@
       math_2_karma: '2. Sınıf Matematik Büyük Karma Düello',
       math_multiplication_2: 'Hızlı Çarpma Başlangıcı',
       math_clock_2: 'Zamanı Ölçme ve Saatler',
-      turkish_syn_ant_2: 'Eş ve Zıt Anlamlılar Şampiyonası',
+      turkish_syn_ant_2: 'Eş ve Zıt Anlam Avcısı (Kelime Düellosu)',
+      turkish_alphabet_syllable_2: 'Sözlük Sırası & Doğru Hece Bölme Atölyesi',
+      turkish_reading_5n1k_2: '5N1K Dedektifi & Metin Anlama',
+      turkish_sentence_logic_2: 'Kurallı Cümle İnşası',
+      turkish_punctuation_spelling_2: 'Noktalama & Yazım Ustası Düellosu',
       turkish_punctuation_2: 'Noktalama İşaretleri ve Yazım Kuralları',
+      turkish_2_karma: '2. Sınıf Türkçe Karma Düello',
+      grade2_grand_duel: '2. Sınıf Büyük Karma Düello',
       lifescience_school_2: 'Okulda Empati & İş Birliği Düellosu',
       lifescience_health_2: 'Mevsim Tabakları & Sağlık Koruyucusu',
       lifescience_safety_2: 'Güvenli Adımlar & Acil Durum Avcısı',
@@ -10755,48 +10867,87 @@
         name: 'Türkçe',
         icon: '📚',
         colorTheme: 'theme-turkish',
-        tagline: 'Eş & Zıt Anlamlılar',
-        description: 'Zengin kelime hazinesi, eş/zıt anlam şampiyonası ve noktalama işaretleri! ✍️',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Eş ve zıt anlamlı kelimeler, sözlük sırası ve heceleme, 5N1K okuduğunu anlama, kurallı cümle inşası ve noktalama ustası! ✍️📖🦉',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'syn_ant', label: '✨ Eş & Zıt Anlam' },
-          { id: 'punctuation', label: '✍️ Noktalama & Yazım' }
+          { id: 'all', label: '🌟 Tüm Konular / Karma Düello' },
+          { id: 'syn_ant', label: '✨ Tema 1: Sözcükte Anlam (Eş & Zıt)' },
+          { id: 'alphabet_syllable', label: '🔤 Tema 2: Harf, Hece & Sözlük Sırası' },
+          { id: 'reading_5n1k', label: '🔍 Tema 3: Okuduğunu Anlama & 5N1K' },
+          { id: 'sentence_logic', label: '🧱 Tema 4: Cümle Bilgisi & Anlamlı Cümle' },
+          { id: 'punctuation_spelling', label: '✍️ Tema 5: Yazım Kuralları & Noktalama' }
         ],
         games: [
           {
             id: 'turkish_syn_ant_2',
             active: true,
-            title: 'Eş ve Zıt Anlamlılar Şampiyonası',
+            title: 'Eş ve Zıt Anlam Avcısı (Kelime Düellosu)',
             icon: '✨',
             badge: '✨ Eş & Zıt Anlam',
-            featureTag: '⭐ 45+ Kelime',
-            description: 'Al-kırmızı, beyaz-ak gibi eş anlamlılar ve geniş zıt anlam havuzunda yarış! ✨🏆',
+            featureTag: '⭐ 50+ Kelime Hazinesi',
+            description: 'Siyah-kara, beyaz-ak, mektep-okul ve acemi-usta, taze-bayat kelime düellosu!',
             tags: ['✨ Eş Anlamlılar', '🔄 Zıt Anlamlılar', '📚 Zengin Sözlük'],
             btnText: 'Düelloyu Başlat',
             topic: 'syn_ant'
           },
           {
-            id: 'turkish_punctuation_2',
+            id: 'turkish_alphabet_syllable_2',
             active: true,
-            title: 'Noktalama İşaretleri ve Yazım Kuralları',
-            icon: '✍️',
-            badge: '✍️ Noktalama',
-            featureTag: '⭐ 26 Özgün Soru',
-            description: 'Nokta, soru işareti, ünlem, kesme işareti ve özel isimlerin büyük harfle yazılışı! ✍️❓',
-            tags: ['❓ Soru & Ünlem', '🛑 Nokta & Virgül', '🔤 Büyük Harfler'],
+            title: 'Sözlük Sırası & Doğru Hece Bölme Atölyesi',
+            icon: '🔤',
+            badge: '🔤 Sözlük & Hece',
+            featureTag: '📏 Hece & Alfabetik Sıra',
+            description: '3 kelimelik alfabetik sözlük sırası, ünlü harf kuralıyla hece sayısı ve satır sonu kısa çizgi bölme ustası!',
+            tags: ['🔤 Sözlük Sırası', '🔢 Hece Sayısı', '➖ Satır Sonu Bölme', '📖 Ünlü Harf Kuralı'],
             btnText: 'Düelloyu Başlat',
-            topic: 'punctuation'
+            topic: 'alphabet_syllable'
           },
           {
-            id: 'turkish',
+            id: 'turkish_reading_5n1k_2',
             active: true,
-            title: 'Hızlı Türkçe & Sözcük Düellosu (Karma)',
+            title: '5N1K Dedektifi & Metin Anlama',
+            icon: '🔍',
+            badge: '🔍 5N1K & Anlama',
+            featureTag: '🕵️ 5N1K Soruları',
+            description: 'Kısa, eğlenceli metinlerle Kim, Ne, Nerede, Ne zaman, Nasıl, Niçin dedektifliği ve oluş sırası!',
+            tags: ['🕵️ 5N1K Soruları', '📖 Okuduğunu Anlama', '⏳ Olayların Oluş Sırası', '🎯 Başlık & Konu'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reading_5n1k'
+          },
+          {
+            id: 'turkish_sentence_logic_2',
+            active: true,
+            title: 'Kurallı Cümle İnşası',
+            icon: '🧱',
+            badge: '🧱 Kurallı Cümle',
+            featureTag: '⚡ Cümle & Soru Eki',
+            description: 'Karışık kelimelerden kurallı cümle oluşturma, sebep-sonuç tamamlama, tekil-çoğul ve mi soru eki ayrı yazımı!',
+            tags: ['🧱 Anlamlı & Kurallı', '🌧️ Sebep-Sonuç', '👥 -lar/-ler Çoğul Eki', '❓ mı/mi Soru Eki'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'sentence_logic'
+          },
+          {
+            id: 'turkish_punctuation_spelling_2',
+            active: true,
+            title: 'Noktalama & Yazım Ustası Düellosu',
+            icon: '✍️',
+            badge: '✍️ Noktalama & Yazım',
+            featureTag: '🛑 Nokta, Virgül, Kesme',
+            description: 'Nokta, virgül, soru, ünlem, kesme işareti ve büyük harflerin doğru kullanımı (insan, şehir, bayram)!',
+            tags: ['🛑 Nokta & Virgül', '❓ Soru & Ünlem', "✂️ Kesme İşareti (')", '🔤 Büyük Harfler'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'punctuation_spelling'
+          },
+          {
+            id: 'turkish_2_karma',
+            active: true,
+            title: '2. Sınıf Türkçe Karma Düello',
             icon: '🦉',
-            badge: '🚀 Karma Türkçe',
-            featureTag: '🔍 Sözcük Avı',
-            description: 'Eş/zıt anlam, noktalama ve yazım kurallarından oluşan süper karma yarışma! 🎯',
-            tags: ['✨ Eş Anlamlılar', '🔄 Zıt Anlamlılar', '✏️ Yazım Kuralları'],
+            badge: '🏆 2. Sınıf Türkçe Karma',
+            featureTag: '🌟 5 Alan Genel Tekrar',
+            description: 'Tüm 2. sınıf Türkçe öğrenme alanlarından harmanlanan akıllı tahta sınıf yarışması!',
+            tags: ['✨ Eş/Zıt Anlam', '🔤 Sözlük & Hece', '🔍 5N1K', '🧱 Cümle Bilgisi', '✍️ Noktalama'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
@@ -10902,6 +11053,32 @@
             description: 'Tüm 2. sınıf Hayat Bilgisi temalarından rastgele ve dengeli sorularla akıllı tahta düellosu!',
             tags: ['🏫 Okulumuz', '🍎 Sağlık', '🚦 Güvenlik', '🏡 Evimiz', '🇹🇷 Ülkemiz', '🌿 Doğa'],
             btnText: 'Düelloyu Başlat',
+            topic: 'all'
+          }
+        ]
+      },
+      {
+        id: 'grade2_grand_duel',
+        name: '🏆 2. Sınıf Büyük Karma Düello',
+        icon: '🏆',
+        colorTheme: 'theme-science',
+        tagline: 'Tüm Dersler Şampiyonası',
+        description: 'Hayat Bilgisi, Matematik ve Türkçe 2026 Maarif Modelinin tüm derslerinden karma büyük yarışma! 🏆🌟',
+        badge: '🌟 Süper Şampiyona',
+        topics: [
+          { id: 'all', label: '🌟 Tüm Dersler Karma' }
+        ],
+        games: [
+          {
+            id: 'grade2_grand_duel',
+            active: true,
+            title: '2. Sınıf Büyük Karma Düello (Tüm Dersler)',
+            icon: '🏆',
+            badge: '🏆 Büyük Şampiyona',
+            featureTag: '⭐ 3 Ders Harmanı',
+            description: 'Hayat Bilgisi, Matematik ve Türkçe konularından dengeli sorularla sınıfının şampiyonu sen ol! 🥇🎯',
+            tags: ['🧮 Matematik', '📚 Türkçe', '🌱 Hayat Bilgisi', '🏆 Süper Düello'],
+            btnText: 'Büyük Düelloyu Başlat',
             topic: 'all'
           }
         ]
