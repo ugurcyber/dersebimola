@@ -8220,29 +8220,98 @@
     }, duration);
   }
 
-  // Mobil ve Akıllı Tahta Dokunmatik Tap Yöneticisi (Çift tetiklemeyi önler, gecikmesiz çalışır)
+  // -------------------------------------------------------------
+  // MOBİL & DOKUNMATİK EKRAN ETKİLEŞİM VE GHOST CLICK GÜVENLİK SİSTEMİ
+  // Çok hızlı algılama, sürükleme/kaydırma sırasında yanlış açılma ve
+  // ekran geçişlerinde ardışık tıklamaları (bleed-through) engeller.
+  // -------------------------------------------------------------
+  let globalInteractionLockUntil = 0;
+  let lastGlobalTapTime = 0;
+
+  function lockInteractions(ms = 380) {
+    globalInteractionLockUntil = Math.max(globalInteractionLockUntil, Date.now() + ms);
+  }
+
+  function isInteractionLocked() {
+    return Date.now() < globalInteractionLockUntil;
+  }
+
+  // Global Ghost Click & Rapid Tap Shield (Tüm sayfada geçiş anındaki sahte/art arda tıklamaları yutar)
+  document.addEventListener('click', (e) => {
+    if (isInteractionLocked()) {
+      if (e && e.cancelable) e.preventDefault();
+      if (e && e.stopPropagation) e.stopPropagation();
+      if (e && e.stopImmediatePropagation) e.stopImmediatePropagation();
+    }
+  }, true);
+
+  // Mobil ve Akıllı Tahta Güvenli Dokunmatik Tap Yöneticisi
   function addTapListener(el, callback) {
     if (!el) return;
-    let lastTrigger = 0;
-    const run = (e) => {
-      const now = Date.now();
-      if (now - lastTrigger < 320) return;
-      lastTrigger = now;
-      callback(e);
-    };
+
+    let startX = 0;
+    let startY = 0;
+    let isScroll = false;
+    let isPointerDown = false;
+
     el.addEventListener('pointerdown', (e) => {
-      if (e.button === 0 || e.pointerType === 'touch' || e.pointerType === 'pen') {
-        run(e);
+      // Sadece ana tıklama (sol tık / tek parmak dokunma)
+      if (e.button !== undefined && e.button !== 0) return;
+      isPointerDown = true;
+      isScroll = false;
+      startX = e.clientX || 0;
+      startY = e.clientY || 0;
+    }, { passive: true });
+
+    el.addEventListener('pointermove', (e) => {
+      if (!isPointerDown) return;
+      const dx = Math.abs((e.clientX || 0) - startX);
+      const dy = Math.abs((e.clientY || 0) - startY);
+      // Parmağı 8px'den fazla kaydırdıysa bu bir kaydırma (scroll) hareketidir, tıklama iptal edilir
+      if (dx > 8 || dy > 8) {
+        isScroll = true;
       }
-    });
+    }, { passive: true });
+
+    el.addEventListener('pointerup', () => {
+      isPointerDown = false;
+    }, { passive: true });
+
+    el.addEventListener('pointercancel', () => {
+      isPointerDown = false;
+      isScroll = false;
+    }, { passive: true });
+
     el.addEventListener('click', (e) => {
-      if (e && e.cancelable) e.preventDefault();
-      run(e);
+      // 1) Kullanıcı sayfayı kaydırıyorsa tıklama çalıştırma
+      if (isScroll) {
+        if (e && e.cancelable) e.preventDefault();
+        return;
+      }
+
+      // 2) Ekran geçiş kilidi aktifse sahte/ardışık tıklamayı yut
+      if (isInteractionLocked()) {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
+        return;
+      }
+
+      // 3) Global tıklama debounce (çift tetikleme ve çok hızlı tıklama engeli)
+      const now = Date.now();
+      if (now - lastGlobalTapTime < 280) {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
+        return;
+      }
+      lastGlobalTapTime = now;
+
+      callback(e);
     });
   }
 
   function openModal(modalEl) {
     if (!modalEl) return;
+    lockInteractions(350);
     audio.playClick();
     modalEl.classList.remove('hide');
   }
@@ -8591,6 +8660,7 @@
 
   function closeModal(modalEl) {
     if (!modalEl) return;
+    lockInteractions(350);
     audio.playClick();
     modalEl.classList.add('hide');
   }
@@ -10500,15 +10570,11 @@
 
     // Paylaşım Butonu Dinleyicileri (Kart Tıklamasını Engeller)
     DOM.subjectsGrid.querySelectorAll('.card-share-btn').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      addTapListener(btn, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
         const title = btn.getAttribute('data-share-title') || 'Ders';
         shareActivity(title);
-      });
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
       });
     });
 
@@ -10526,6 +10592,7 @@
 
   // Ders Seçildiğinde 2. Kademeye (Oyunlar & Konular) Geç
   function selectSubject(subjectId) {
+    lockInteractions(400);
     const g = state.currentGrade;
     const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
     const subject = subjects.find(s => s.id === subjectId) || subjects[0];
@@ -10572,6 +10639,7 @@
 
   // "← Tüm Dersler" Butonuna Basıldığında 1. Kademeye Dönüş
   function returnToSubjectsList() {
+    lockInteractions(400);
     state.currentSection = 'subjects';
     state.currentSubject = null;
     state.currentCategory = 'all';
@@ -10610,8 +10678,7 @@
 
     // Sekme Tıklama Dinleyicileri
     DOM.subcategoryTabs.querySelectorAll('.subcat-pill').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btn, (e) => {
         const catId = btn.getAttribute('data-cat-id');
         if (state.currentCategory === catId) return;
 
@@ -10698,15 +10765,11 @@
 
     // Paylaşım Butonu Dinleyicileri (Kart Tıklamasını Engeller)
     DOM.gamesGrid.querySelectorAll('.card-share-btn').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      addTapListener(btn, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
         const title = btn.getAttribute('data-share-title') || 'Oyun';
         shareActivity(title);
-      });
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
       });
     });
 
@@ -10752,8 +10815,7 @@
 
     // Sekme tıklama dinleyicileri
     DOM.maarifGroupsNav.querySelectorAll('.maarif-group-tab').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btn, (e) => {
         const gid = btn.getAttribute('data-group-id');
         audio.playClick();
         if (gid === 'general') {
@@ -10802,8 +10864,7 @@
       }).join('');
 
       DOM.maarifLettersRail.querySelectorAll('.maarif-letter-chip').forEach(chip => {
-        chip.addEventListener('pointerdown', (e) => {
-          e.preventDefault();
+        addTapListener(chip, (e) => {
           const letter = chip.getAttribute('data-letter');
           if (state.activeMaarifLetter === letter) return;
           audio.playClick();
@@ -10999,15 +11060,11 @@
 
     // Paylaşım butonu dinleyicileri
     DOM.gamesGrid.querySelectorAll('.card-share-btn').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      addTapListener(btn, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
         const title = btn.getAttribute('data-share-title') || 'Oyun';
         shareActivity(title);
-      });
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
       });
     });
 
@@ -11081,6 +11138,7 @@
    * Ana Sayfa (Karşılama Vitrini) Ekranını Açar
    */
   function openHomePage() {
+    lockInteractions(400);
     state.currentSection = 'home';
     state.currentSubject = null;
     state.currentCategory = 'all';
@@ -11101,6 +11159,7 @@
   }
 
   function setGrade(gradeNumber) {
+    lockInteractions(400);
     state.currentGrade = parseInt(gradeNumber, 10);
     state.currentSubject = null;
     state.currentCategory = 'all';
@@ -11318,8 +11377,7 @@
       `).join('');
 
       DOM.todayChipsList.querySelectorAll('[data-remove-today]').forEach(btn => {
-        btn.addEventListener('pointerdown', (e) => {
-          e.preventDefault();
+        addTapListener(btn, (e) => {
           const name = btn.getAttribute('data-remove-today');
           removeStudentFromToday(name);
         });
@@ -11761,8 +11819,7 @@
     `).join('');
 
     DOM.stagedChipsList.querySelectorAll('[data-remove-staged]').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btn, (e) => {
         const index = parseInt(btn.getAttribute('data-remove-staged'), 10);
         removeStagedQuestion(index);
       });
@@ -11822,8 +11879,7 @@
 
     // "🚀 Tahtada Oynat" Dinleyicileri
     DOM.savedQuizzesList.querySelectorAll('[data-play-quiz-id]').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btn, (e) => {
         const quizId = btn.getAttribute('data-play-quiz-id');
         startCustomQuiz(quizId);
       });
@@ -11831,8 +11887,7 @@
 
     // "🗑️ Sil" Dinleyicileri
     DOM.savedQuizzesList.querySelectorAll('[data-del-quiz-id]').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btn, (e) => {
         const quizId = btn.getAttribute('data-del-quiz-id');
         deleteCustomQuiz(quizId);
       });
@@ -11957,6 +12012,7 @@
   }
 
   function startDuel(gameType) {
+    lockInteractions(500);
     state.currentGameType = gameType;
     state.matchStartTime = Date.now();
     state.player1.score = 0;
@@ -12044,6 +12100,7 @@
    * Lobiye Kesin ve Güvenli Dönüş (Tüm state, ses ve sayaçları anında sıfırlar)
    */
   function returnToLobby() {
+    lockInteractions(400);
     // 1) Sesleri ve konuşmayı anında tamamen durdur
     audio.stopAllAudio();
     if ('speechSynthesis' in window) {
@@ -12629,6 +12686,10 @@
   function attachInstantTouch(el, callback) {
     let lastTime = 0;
     const onTrigger = (e) => {
+      if (isInteractionLocked()) {
+        if (e && e.cancelable) e.preventDefault();
+        return;
+      }
       const now = Date.now();
       if (now - lastTime < 280) return;
       lastTime = now;
@@ -13846,7 +13907,7 @@
     // Ana Sayfa Vitrini: Dev Sınıf Kartları (🎈 Anasınıfı, 1., 2., 3., 4. Sınıf)
     if (DOM.homeGradeCards) {
       DOM.homeGradeCards.forEach(card => {
-        card.addEventListener('pointerdown', () => {
+        addTapListener(card, () => {
           const g = card.getAttribute('data-grade');
           if (g !== null && g !== undefined) {
             setGrade(g);
@@ -13858,7 +13919,7 @@
     // Ana Sayfa Vitrini: Hızlı Başlat Oyun Kartları (🔥 Sınıfların Favori Düelloları)
     if (DOM.homePopularCards) {
       DOM.homePopularCards.forEach(card => {
-        card.addEventListener('pointerdown', () => {
+        addTapListener(card, () => {
           const quickGame = card.getAttribute('data-quick-game');
           if (quickGame) {
             if (quickGame === 'firstreading' && state.currentGrade > 1) {
@@ -13873,8 +13934,8 @@
 
     // Ana Sayfa Hero "Hemen Başla" Butonu (Sınıf Seçim Kartlarına Akıcı Kaydır)
     if (DOM.btnHeroStart) {
-      DOM.btnHeroStart.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(DOM.btnHeroStart, (e) => {
+        if (e && e.cancelable) e.preventDefault();
         audio.playClick();
         const section = document.querySelector('.home-section-container');
         if (section) {
@@ -13884,12 +13945,12 @@
     }
 
     // Lobi Hızlı Öğrenci Değiştir
-    if (DOM.btnQuickDraw) DOM.btnQuickDraw.addEventListener('pointerdown', openPickerModal);
+    if (DOM.btnQuickDraw) addTapListener(DOM.btnQuickDraw, openPickerModal);
 
     // Hedef Puan Seçicileri
     if (DOM.targetScoreBtns) {
       DOM.targetScoreBtns.forEach(btn => {
-        btn.addEventListener('pointerdown', () => {
+        addTapListener(btn, () => {
           audio.playClick();
           DOM.targetScoreBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
@@ -13919,7 +13980,7 @@
 
     // Düello İçi Anlık Sunucu Sesi Butonu (HUD)
     if (DOM.btnToggleAnnouncerDuel) {
-      DOM.btnToggleAnnouncerDuel.addEventListener('pointerdown', () => {
+      addTapListener(DOM.btnToggleAnnouncerDuel, () => {
         toggleAnnouncerVoice();
       });
     }
@@ -13936,20 +13997,20 @@
 
     // Düello İçi Soru Sesli Okuma Butonları (HUD & Her İki Oyuncu Kartı)
     if (DOM.btnHudReadQuestion) {
-      DOM.btnHudReadQuestion.addEventListener('pointerdown', e => {
-        e.preventDefault();
+      addTapListener(DOM.btnHudReadQuestion, e => {
+        if (e && e.cancelable) e.preventDefault();
         readCurrentQuestion(true);
       });
     }
     if (DOM.btnReadAloudP1) {
-      DOM.btnReadAloudP1.addEventListener('pointerdown', e => {
-        e.preventDefault();
+      addTapListener(DOM.btnReadAloudP1, e => {
+        if (e && e.cancelable) e.preventDefault();
         readCurrentQuestion(true);
       });
     }
     if (DOM.btnReadAloudP2) {
-      DOM.btnReadAloudP2.addEventListener('pointerdown', e => {
-        e.preventDefault();
+      addTapListener(DOM.btnReadAloudP2, e => {
+        if (e && e.cancelable) e.preventDefault();
         readCurrentQuestion(true);
       });
     }
@@ -13957,17 +14018,16 @@
     // Düello Kontrolleri: Çıkış butonuna basıldığı an beklemeden ve onay sormadan anında lobiye dön
     const handleExitAction = (e) => {
       if (e) {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         e.stopPropagation();
       }
       returnToLobby();
     };
     if (DOM.btnExitDuel) {
-      DOM.btnExitDuel.addEventListener('pointerdown', handleExitAction);
-      DOM.btnExitDuel.addEventListener('click', handleExitAction);
+      addTapListener(DOM.btnExitDuel, handleExitAction);
     }
     if (DOM.btnSkipQuestion) {
-      DOM.btnSkipQuestion.addEventListener('pointerdown', () => {
+      addTapListener(DOM.btnSkipQuestion, () => {
         audio.playClick();
         state.questionNumber += 1;
         loadNextQuestion();
@@ -13975,7 +14035,7 @@
     }
 
     if (DOM.btnToggleSolutionNow) {
-      DOM.btnToggleSolutionNow.addEventListener('pointerdown', () => {
+      addTapListener(DOM.btnToggleSolutionNow, () => {
         audio.playClick();
         if (state.currentQuestion) {
           DOM.solutionText.textContent = state.currentQuestion.explanation;
@@ -13985,7 +14045,7 @@
     }
 
     if (DOM.btnCloseSolution) {
-      DOM.btnCloseSolution.addEventListener('pointerdown', () => {
+      addTapListener(DOM.btnCloseSolution, () => {
         audio.playClick();
         DOM.solutionPopup.classList.add('hide');
       });
@@ -13993,14 +14053,14 @@
 
     // Modal Çıkış Onayı Dinleyicileri (Mobilde anında ve takılmasız çıkış)
     if (DOM.btnConfirmExitYes) {
-      DOM.btnConfirmExitYes.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(DOM.btnConfirmExitYes, (e) => {
+        if (e && e.cancelable) e.preventDefault();
         returnToLobby();
       });
     }
     if (DOM.btnConfirmExitNo) {
-      DOM.btnConfirmExitNo.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(DOM.btnConfirmExitNo, (e) => {
+        if (e && e.cancelable) e.preventDefault();
         closeModal(DOM.modalConfirmExit);
       });
     }
@@ -14025,18 +14085,18 @@
     }
 
     // Çarkıfelek Kura & Sınıf Yönetimi Butonları
-    if (DOM.btnSpinWheel) DOM.btnSpinWheel.addEventListener('pointerdown', spinStudentWheel);
-    if (DOM.btnApplySelectedStudents) DOM.btnApplySelectedStudents.addEventListener('pointerdown', applySelectedStudents);
-    if (DOM.btnSaveRoster) DOM.btnSaveRoster.addEventListener('pointerdown', saveClassRoster);
-    if (DOM.btnResetRoster) DOM.btnResetRoster.addEventListener('pointerdown', resetDefaultRoster);
-    if (DOM.btnClearRoster) DOM.btnClearRoster.addEventListener('pointerdown', clearClassRoster);
-    if (DOM.btnBackToStage) DOM.btnBackToStage.addEventListener('pointerdown', () => switchPickerView('stage'));
-    if (DOM.btnPickerModeSingle) DOM.btnPickerModeSingle.addEventListener('pointerdown', () => setPickerMode('single'));
-    if (DOM.btnPickerModeDuel) DOM.btnPickerModeDuel.addEventListener('pointerdown', () => setPickerMode('duel'));
-    if (DOM.btnPickerTabRoster) DOM.btnPickerTabRoster.addEventListener('pointerdown', () => switchPickerView('roster'));
-    if (DOM.btnAddTodaySelected) DOM.btnAddTodaySelected.addEventListener('pointerdown', addCurrentWinnerToToday);
-    if (DOM.btnSpeakStudentName) DOM.btnSpeakStudentName.addEventListener('pointerdown', speakCurrentWinnerName);
-    if (DOM.btnResetTodaySelected) DOM.btnResetTodaySelected.addEventListener('pointerdown', resetTodaySelected);
+    if (DOM.btnSpinWheel) addTapListener(DOM.btnSpinWheel, spinStudentWheel);
+    if (DOM.btnApplySelectedStudents) addTapListener(DOM.btnApplySelectedStudents, applySelectedStudents);
+    if (DOM.btnSaveRoster) addTapListener(DOM.btnSaveRoster, saveClassRoster);
+    if (DOM.btnResetRoster) addTapListener(DOM.btnResetRoster, resetDefaultRoster);
+    if (DOM.btnClearRoster) addTapListener(DOM.btnClearRoster, clearClassRoster);
+    if (DOM.btnBackToStage) addTapListener(DOM.btnBackToStage, () => switchPickerView('stage'));
+    if (DOM.btnPickerModeSingle) addTapListener(DOM.btnPickerModeSingle, () => setPickerMode('single'));
+    if (DOM.btnPickerModeDuel) addTapListener(DOM.btnPickerModeDuel, () => setPickerMode('duel'));
+    if (DOM.btnPickerTabRoster) addTapListener(DOM.btnPickerTabRoster, () => switchPickerView('roster'));
+    if (DOM.btnAddTodaySelected) addTapListener(DOM.btnAddTodaySelected, addCurrentWinnerToToday);
+    if (DOM.btnSpeakStudentName) addTapListener(DOM.btnSpeakStudentName, speakCurrentWinnerName);
+    if (DOM.btnResetTodaySelected) addTapListener(DOM.btnResetTodaySelected, resetTodaySelected);
     if (DOM.chkExcludeToday) {
       DOM.chkExcludeToday.addEventListener('change', () => {
         state.excludeTodaySelected = DOM.chkExcludeToday.checked;
@@ -14046,10 +14106,10 @@
 
     // Özel Sınav Oluşturucu & Soru Bankası Butonları
     if (DOM.btnQuizAddQuestion) {
-      DOM.btnQuizAddQuestion.addEventListener('pointerdown', handleQuizAddQuestion);
+      addTapListener(DOM.btnQuizAddQuestion, handleQuizAddQuestion);
     }
     if (DOM.btnQuizSaveQuiz) {
-      DOM.btnQuizSaveQuiz.addEventListener('pointerdown', handleQuizSaveQuiz);
+      addTapListener(DOM.btnQuizSaveQuiz, handleQuizSaveQuiz);
     }
     document.querySelectorAll('input[name="quizCorrectRadio"]').forEach(radio => {
       radio.addEventListener('change', updateQuizRadioRowHighlights);
@@ -14083,8 +14143,8 @@
 
     // Sevimli Maskot Moli Dokunma / Tıklama
     if (DOM.moliWidget) {
-      DOM.moliWidget.addEventListener('pointerdown', (e) => {
-        e.stopPropagation();
+      addTapListener(DOM.moliWidget, (e) => {
+        if (e && e.stopPropagation) e.stopPropagation();
         audio.playClick();
         if (state.currentView === 'duel') {
           exitDuel();
@@ -14096,43 +14156,35 @@
 
     // Ders Listesine Geri Dönüş Butonu (1. Kademeye Dönüş)
     if (DOM.btnBackToSubjects) {
-      DOM.btnBackToSubjects.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(DOM.btnBackToSubjects, (e) => {
+        if (e && e.cancelable) e.preventDefault();
         returnToSubjectsList();
       });
     }
 
     // Zafer Ekranı Butonları
-    if (DOM.btnRematchSame) DOM.btnRematchSame.addEventListener('pointerdown', handleRematchSame);
-    if (DOM.btnSelectNewStudents) DOM.btnSelectNewStudents.addEventListener('pointerdown', handleSelectNewStudentsFromVictory);
-    if (DOM.btnBackToLobby) DOM.btnBackToLobby.addEventListener('pointerdown', handleBackToLobby);
+    if (DOM.btnRematchSame) addTapListener(DOM.btnRematchSame, handleRematchSame);
+    if (DOM.btnSelectNewStudents) addTapListener(DOM.btnSelectNewStudents, handleSelectNewStudentsFromVictory);
+    if (DOM.btnBackToLobby) addTapListener(DOM.btnBackToLobby, handleBackToLobby);
     if (DOM.btnShareVictoryWhatsApp) {
-      DOM.btnShareVictoryWhatsApp.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      addTapListener(DOM.btnShareVictoryWhatsApp, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
         handleShareVictoryWhatsApp();
-      });
-      DOM.btnShareVictoryWhatsApp.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
       });
     }
     if (DOM.btnCopyVictoryLink) {
-      DOM.btnCopyVictoryLink.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      addTapListener(DOM.btnCopyVictoryLink, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
         handleCopyVictoryLink();
-      });
-      DOM.btnCopyVictoryLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
       });
     }
 
     // Üst Bar ve Sol Menü Paylaş Butonları
     const handleGeneralShare = (e) => {
       if (e) {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         e.stopPropagation();
       }
       shareContent({
@@ -14143,25 +14195,19 @@
       });
     };
     if (DOM.btnSidebarShare) {
-      DOM.btnSidebarShare.addEventListener('pointerdown', handleGeneralShare);
-      DOM.btnSidebarShare.addEventListener('click', (e) => e.preventDefault());
+      addTapListener(DOM.btnSidebarShare, handleGeneralShare);
     }
     if (DOM.btnTopbarShare) {
-      DOM.btnTopbarShare.addEventListener('pointerdown', handleGeneralShare);
-      DOM.btnTopbarShare.addEventListener('click', (e) => e.preventDefault());
+      addTapListener(DOM.btnTopbarShare, handleGeneralShare);
     }
 
     // Ana Sayfa Vitrini Popüler Oyun Kartlarındaki Paylaş Butonları
     document.querySelectorAll('.home-popular-card .card-share-btn').forEach(btn => {
-      btn.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      addTapListener(btn, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
         const title = btn.getAttribute('data-share-title') || 'Oyun';
         shareActivity(title);
-      });
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
       });
     });
 
@@ -14180,26 +14226,21 @@
     const appSidebar = document.getElementById('appSidebar');
 
     if (btnMobileLogin) {
-      btnMobileLogin.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnMobileLogin, (e) => {
         audio.playClick();
         handleAuthClick();
       });
-      btnMobileLogin.addEventListener('click', (e) => e.preventDefault());
     }
 
     if (btnMobileNoticeBanner) {
-      btnMobileNoticeBanner.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnMobileNoticeBanner, (e) => {
         audio.playClick();
         handleAuthClick();
       });
-      btnMobileNoticeBanner.addEventListener('click', (e) => e.preventDefault());
     }
 
     if (btnMobileShare) {
-      btnMobileShare.addEventListener('pointerdown', handleGeneralShare);
-      btnMobileShare.addEventListener('click', (e) => e.preventDefault());
+      addTapListener(btnMobileShare, handleGeneralShare);
     }
 
     const closeMobileSidebar = () => {
@@ -14210,7 +14251,7 @@
 
     const toggleMobileSidebar = (e) => {
       if (e) {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         e.stopPropagation();
       }
       audio.playClick();
@@ -14224,40 +14265,34 @@
     };
 
     if (btnMobileMenu) {
-      btnMobileMenu.addEventListener('pointerdown', toggleMobileSidebar);
-      btnMobileMenu.addEventListener('click', (e) => e.preventDefault());
+      addTapListener(btnMobileMenu, toggleMobileSidebar);
     }
 
     const btnSidebarClose = document.getElementById('btnSidebarClose');
     if (btnSidebarClose) {
-      btnSidebarClose.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnSidebarClose, (e) => {
         audio.playClick();
         closeMobileSidebar();
       });
-      btnSidebarClose.addEventListener('click', (e) => e.preventDefault());
     }
 
     if (mobileDrawerBackdrop) {
-      mobileDrawerBackdrop.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(mobileDrawerBackdrop, (e) => {
         closeMobileSidebar();
       });
-      mobileDrawerBackdrop.addEventListener('click', (e) => e.preventDefault());
     }
 
     // Mobil menüdeki herhangi bir öğeye tıklandığında çekmeceyi otomatik kapat
     if (appSidebar) {
       appSidebar.querySelectorAll('.sidebar-item, .grade-chip, .sidebar-home-btn, .sidebar-sub-item').forEach(el => {
-        el.addEventListener('pointerdown', () => {
+        addTapListener(el, () => {
           setTimeout(closeMobileSidebar, 150);
         });
       });
     }
 
     if (btnMobileLogo) {
-      btnMobileLogo.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnMobileLogo, (e) => {
         audio.playClick();
         if (state.currentView === 'duel') {
           exitDuel();
@@ -14267,12 +14302,10 @@
           handleMoliClick();
         }
       });
-      btnMobileLogo.addEventListener('click', (e) => e.preventDefault());
     }
 
     if (btnMobileHeroStart) {
-      btnMobileHeroStart.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnMobileHeroStart, (e) => {
         audio.playClick();
         const section = document.querySelector('.home-section-container');
         if (section) {
@@ -14281,12 +14314,10 @@
           setGrade(1);
         }
       });
-      btnMobileHeroStart.addEventListener('click', (e) => e.preventDefault());
     }
 
     if (btnMobileQuickClasses) {
-      btnMobileQuickClasses.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnMobileQuickClasses, (e) => {
         audio.playClick();
         const section = document.querySelector('.home-section-container');
         if (section) {
@@ -14295,12 +14326,10 @@
           setGrade(1);
         }
       });
-      btnMobileQuickClasses.addEventListener('click', (e) => e.preventDefault());
     }
 
     if (btnMobileQuickDuels) {
-      btnMobileQuickDuels.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnMobileQuickDuels, (e) => {
         audio.playClick();
         setGameMode('duel');
         const section = document.querySelector('.home-popular-grid') || document.querySelector('.home-section-container');
@@ -14308,26 +14337,23 @@
           section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
-      btnMobileQuickDuels.addEventListener('click', (e) => e.preventDefault());
     }
 
     // Mobil Hızlı Liste Çipleri
     document.querySelectorAll('.mobile-quick-list-section .quick-list-chip').forEach(chip => {
-      chip.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(chip, (e) => {
         const gradeAttr = chip.getAttribute('data-grade');
         if (gradeAttr !== null && gradeAttr !== undefined) {
           setGrade(gradeAttr);
         }
       });
-      chip.addEventListener('click', (e) => e.preventDefault());
     });
 
     // Mobil Moli Maskotu ve Rozet Etkileşimleri
     const mobileMoliMascot = document.querySelector('.mobile-moli-mascot-wrap');
     if (mobileMoliMascot) {
-      mobileMoliMascot.addEventListener('pointerdown', (e) => {
-        e.stopPropagation();
+      addTapListener(mobileMoliMascot, (e) => {
+        if (e && e.stopPropagation) e.stopPropagation();
         audio.playClick();
         handleMoliClick();
       });
@@ -14335,7 +14361,7 @@
 
     const pillBadgeMath = document.querySelector('.pill-badge-math');
     if (pillBadgeMath) {
-      pillBadgeMath.addEventListener('pointerdown', () => {
+      addTapListener(pillBadgeMath, () => {
         audio.playCorrect();
         showToast('🧮 4 + 5 = 9! Matematik harika!');
       });
@@ -14343,7 +14369,7 @@
 
     const pillBadgeLetters = document.querySelector('.pill-badge-letters');
     if (pillBadgeLetters) {
-      pillBadgeLetters.addEventListener('pointerdown', () => {
+      addTapListener(pillBadgeLetters, () => {
         audio.playClick();
         showToast('🔤 A B C - Harfleri öğrenmeye hazır mısın?');
       });
@@ -14351,7 +14377,7 @@
 
     const badgeTrophy = document.querySelector('.badge-circle-trophy');
     if (badgeTrophy) {
-      badgeTrophy.addEventListener('pointerdown', () => {
+      addTapListener(badgeTrophy, () => {
         audio.playFanfare();
         openLeaderboardModal();
       });
@@ -14359,7 +14385,7 @@
 
     const badgeBalloon = document.querySelector('.badge-circle-balloon');
     if (badgeBalloon) {
-      badgeBalloon.addEventListener('pointerdown', () => {
+      addTapListener(badgeBalloon, () => {
         audio.playPop();
         if (typeof launchConfetti === 'function') launchConfetti();
       });
@@ -14367,7 +14393,7 @@
 
     const pillBadgePoints = document.querySelector('.pill-badge-points');
     if (pillBadgePoints) {
-      pillBadgePoints.addEventListener('pointerdown', () => {
+      addTapListener(pillBadgePoints, () => {
         audio.playCorrect();
         showToast('⭐ +10 Puan Kazandın! Tebrikler!');
       });
@@ -14375,7 +14401,7 @@
 
     const pillBadgeReady = document.querySelector('.pill-badge-ready');
     if (pillBadgeReady) {
-      pillBadgeReady.addEventListener('pointerdown', () => {
+      addTapListener(pillBadgeReady, () => {
         audio.playClick();
         showToast('🤖 Moli seninle oynamaya hazır!');
       });
@@ -14386,8 +14412,7 @@
     // =========================================================================
     const btnDesktopHome = document.getElementById('btnDesktopHome');
     if (btnDesktopHome) {
-      btnDesktopHome.addEventListener('pointerdown', (e) => {
-        e.preventDefault();
+      addTapListener(btnDesktopHome, (e) => {
         audio.playClick();
         if (state.currentView === 'duel') {
           exitDuel();
@@ -14397,7 +14422,6 @@
           handleMoliClick();
         }
       });
-      btnDesktopHome.addEventListener('click', e => e.preventDefault());
     }
 
     const btnDesktopLogin = document.getElementById('btnDesktopLogin');
