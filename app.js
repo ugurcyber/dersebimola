@@ -3375,352 +3375,619 @@
     ],
 
     // -------------------------------------------------------------
-    // 1. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİ
+    // 1. SINIF: 2026 TÜRKİYE YÜZYILI MAARİF MODELİ SORU HAVUZLARI VE MOTORLARI
+    // (Hayat Bilgisi 5 Tema, Matematik 5 Konu <= 20, Türkçe 3 Konu + TTS Sesli Okuma)
     // -------------------------------------------------------------
-    generateGrade1Math() {
-      const type = Math.floor(Math.random() * 3);
-      if (type === 0) {
-        // 20'ye kadar basit toplama
-        const a = Math.floor(Math.random() * 11) + 2; // 2..12
-        const b = Math.floor(Math.random() * (20 - a)) + 1;
-        const ans = a + b;
-        return {
-          question: `${a} + ${b} = ?`,
-          correct: ans.toString(),
-          distractors: [
-            (ans + (Math.random() > 0.5 ? 1 : 2)).toString(),
-            Math.max(1, ans - (Math.random() > 0.5 ? 1 : 2)).toString()
-          ],
-          explanation: `${a} sayısına ${b} eklediğimizde sonuç ${ans} olur.`
-        };
-      } else if (type === 1) {
-        // 20'ye kadar basit çıkarma
-        const a = Math.floor(Math.random() * 12) + 8; // 8..19
-        const b = Math.floor(Math.random() * (a - 2)) + 1;
-        const ans = a - b;
-        return {
-          question: `${a} - ${b} = ?`,
-          correct: ans.toString(),
-          distractors: [
-            (ans + 1).toString(),
-            Math.max(0, ans - 1).toString()
-          ],
-          explanation: `${a} sayısından ${b} geriye doğru saydığımızda ${ans} kalır.`
-        };
-      } else {
-        // Ritmik sayma (2'şer, 5'er, 10'ar)
-        const step = [2, 5, 10][Math.floor(Math.random() * 3)];
-        const start = step;
-        const s1 = start;
-        const s2 = start + step;
-        const s3 = start + step * 2;
-        const ans = start + step * 3;
-        return {
-          question: `${s1} - ${s2} - ${s3} - ?`,
-          correct: ans.toString(),
-          distractors: [(ans + step).toString(), (ans - 1).toString()],
-          explanation: `Sayılar ${step}'şer ritmik olarak artmaktadır. ${s3}'ten sonra ${ans} gelir.`
-        };
-      }
-    },
 
-    // 1. SINIF: RİTMİK SAYMA DİNAMİK ÜRETECİ (SINIRSIZ SORU)
-    generateGrade1Rhythmic() {
-      const mode = Math.floor(Math.random() * 4);
-      if (mode === 0) {
-        // 2'şer ileri sayma (2..20)
-        const step = 2;
-        const start = [2, 4, 6, 8, 10, 12, 14][Math.floor(Math.random() * 7)];
-        const s1 = start;
-        const s2 = s1 + step;
-        const s3 = s2 + step;
-        const ans = s3 + step;
-        return {
-          question: `${s1} - ${s2} - ${s3} - ?`,
-          correct: ans.toString(),
-          distractors: [(ans + 2).toString(), (ans - 1).toString()],
-          explanation: `Sayılar 2'şer ritmik olarak artmaktadır. ${s3}'ten sonra ${ans} gelir.`
-        };
-      } else if (mode === 1) {
-        // 5'er ileri veya geri sayma (5..50)
-        const isReverse = Math.random() > 0.5;
-        const step = 5;
-        if (isReverse) {
-          const start = [50, 45, 40, 35, 30, 25, 20][Math.floor(Math.random() * 7)];
-          const s1 = start;
-          const s2 = s1 - step;
-          const s3 = s2 - step;
-          const ans = s3 - step;
-          return {
-            question: `${s1} - ${s2} - ${s3} - ?`,
-            correct: ans.toString(),
-            distractors: [(ans - 5).toString(), (ans + 5).toString()],
-            explanation: `Sayılar 5'er geriye doğru sayılmaktadır. ${s3}'ten sonra ${ans} gelir.`
-          };
-        } else {
-          const start = [5, 10, 15, 20, 25, 30][Math.floor(Math.random() * 6)];
-          const s1 = start;
-          const s2 = s1 + step;
-          const s3 = s2 + step;
-          const ans = s3 + step;
-          return {
-            question: `${s1} - ${s2} - ${s3} - ?`,
-            correct: ans.toString(),
-            distractors: [(ans + 5).toString(), (ans - 5).toString()],
-            explanation: `Sayılar 5'er ileriye doğru artmaktadır. ${s3}'ten sonra ${ans} gelir.`
-          };
-        }
-      } else if (mode === 2) {
-        // 10'ar ileri veya geri sayma (10..100)
-        const isReverse = Math.random() > 0.5;
-        const step = 10;
-        if (isReverse) {
-          const start = [100, 90, 80, 70, 60, 50][Math.floor(Math.random() * 6)];
-          const s1 = start;
-          const s2 = s1 - step;
-          const s3 = s2 - step;
-          const ans = s3 - step;
-          return {
-            question: `${s1} - ${s2} - ${s3} - ?`,
-            correct: ans.toString(),
-            distractors: [(ans - 10).toString(), (ans + 10).toString()],
-            explanation: `Sayılar 10'ar geriye doğru azalmaktadır. ${s3}'ten sonra ${ans} gelir.`
-          };
-        } else {
-          const start = [10, 20, 30, 40, 50, 60, 70][Math.floor(Math.random() * 7)];
-          const s1 = start;
-          const s2 = s1 + step;
-          const s3 = s2 + step;
-          const ans = s3 + step;
-          return {
-            question: `${s1} - ${s2} - ${s3} - ?`,
-            correct: ans.toString(),
-            distractors: [(ans + 10).toString(), (ans - 10).toString()],
-            explanation: `Sayılar 10'ar ileriye doğru artmaktadır. ${s3}'ten sonra ${ans} gelir.`
-          };
-        }
-      } else {
-        // Ortadaki eksik sayıyı bulma (2'şer veya 5'er)
-        const step = Math.random() > 0.5 ? 2 : 5;
-        const start = step * (Math.floor(Math.random() * 4) + 1);
-        const s1 = start;
-        const ans = s1 + step;
-        const s3 = ans + step;
-        const s4 = s3 + step;
-        return {
-          question: `${s1} - ? - ${s3} - ${s4}`,
-          correct: ans.toString(),
-          distractors: [(ans + 1).toString(), (ans - 1).toString()],
-          explanation: `Ritmik sayma kuralına (${step}'er artış) göre eksik bırakılan sayı ${ans}'dir.`
-        };
-      }
-    },
+    // --- 1. DERS: HAYAT BİLGİSİ (2026 Maarif Modeli 5 Tema) ---
 
-    // 1. SINIF: GEOMETRİK ŞEKİLLER VE PARALARIMIZ (25 ÖZGÜN SORU)
-    grade1ShapesAndMoneyPool: [
-      { q: 'Hangi geometrik şeklin 4 kenarı, 4 köşesi vardır ve tüm kenar uzunlukları birbirine EŞİTTİR?', a: 'Kare 🟦', d: ['Üçgen 🔺', 'Çember ⚪'], exp: 'Karenin 4 eşit kenarı ve 4 dik köşesi vardır.' },
-      { q: '3 kenarı ve 3 köşesi olan geometrik şekil hangisidir?', a: 'Üçgen 🔺', d: ['Kare 🟦', 'Dikdörtgen 🚪'], exp: 'Üçgenin 3 kenarı ve 3 köşesi bulunur.' },
-      { q: 'Hiç köşesi ve kenarı olmayan, yuvarlak geometrik şekil hangisidir?', a: 'Çember ⚪', d: ['Kare 🟦', 'Üçgen 🔺'], exp: 'Çember yuvarlaktır, kenarı ve köşesi yoktur.' },
-      { q: '2 uzun ve 2 kısa kenarı olan, karşılıklı kenarları eşit şekil hangisidir?', a: 'Dikdörtgen 🚪', d: ['Kare 🟦', 'Üçgen 🔺'], exp: 'Dikdörtgenin 4 kenarı ve 4 köşesi vardır, karşılıklı kenarları eşittir.' },
-      { q: 'En büyük madeni paramız hangisidir?', a: '1 Türk Lirası (1 TL) 🪙', d: ['50 Kuruş 🪙', '25 Kuruş 🪙'], exp: 'Madeni paralarımızın en büyüğü 1 TL\'dir.' },
-      { q: '1 Türk Lirası (1 TL) kaç kuruşa eşittir?', a: '100 Kuruş 🪙', d: ['50 Kuruş 🪙', '10 Kuruş 🪙'], exp: '1 TL = 100 Kuruştur.' },
-      { q: 'En küçük kağıt paramız hangisidir?', a: '5 TL 💵', d: ['10 TL 💵', '20 TL 💵'], exp: 'Kağıt paralarımızın en küçük değerli olanı 5 TL\'dir.' },
-      { q: '2 tane 50 Kuruş bir araya gelirse kaç TL eder?', a: '1 TL 🪙', d: ['2 TL 🪙', '75 Kuruş 🪙'], exp: '50 Kuruş + 50 Kuruş = 100 Kuruş = 1 TL eder.' },
-      { q: 'Tanesi 5 TL olan kalemden 2 tane alırsak toplam kaç TL öderiz?', a: '10 TL 💵', d: ['8 TL 💵', '15 TL 💵'], exp: '5 + 5 = 10 TL öderiz.' },
-      { q: 'Cebinde 20 TL olan Can, 8 TL\'ye defter alırsa kaç TL parası kalır?', a: '12 TL 💵', d: ['10 TL 💵', '14 TL 💵'], exp: '20 - 8 = 12 TL kalır.' },
-      { q: 'Oyun zarı 🎲 hangi geometrik şekle benzer?', a: 'Kare 🟦', d: ['Üçgen 🔺', 'Çember ⚪'], exp: 'Zarın her bir yüzeyi kare şeklindedir.' },
-      { q: 'Sınıf kapımız veya yazı tahtamız hangi geometrik şekle benzer?', a: 'Dikdörtgen 🚪', d: ['Çember ⚪', 'Üçgen 🔺'], exp: 'Kapı ve yazı tahtası iki uzun iki kısa kenarlı dikdörtgendir.' },
-      { q: 'Futbol topu ⚽ veya madeni para hangi geometrik şekle benzer?', a: 'Çember ⚪', d: ['Kare 🟦', 'Üçgen 🔺'], exp: 'Madeni para ve top yuvarlaktır, çembere benzer.' },
-      { q: 'Trafikteki tehlike uyarı levhaları ⚠️ genellikle hangi şekildedir?', a: 'Üçgen 🔺', d: ['Çember ⚪', 'Kare 🟦'], exp: 'Uyarı levhaları çoğunlukla üçgen şeklindedir.' },
-      { q: 'Hangisi bir madeni (demir) paradır?', a: '50 Kuruş 🪙', d: ['50 TL 💵', '100 TL 💵'], exp: '50 Kuruş madeni paramızdır, 50 TL kağıt paradır.' },
-      { q: 'Bir kare ile bir üçgenin köşe sayıları toplamı kaçtır? (4 + 3)', a: '7 köşe ✨', d: ['6 köşe ✨', '8 köşe ✨'], exp: 'Karenin 4, üçgenin 3 köşesi vardır. 4 + 3 = 7 eder.' },
-      { q: 'Tanesi 2 TL olan simitten 3 tane alan Elif kaç TL öder?', a: '6 TL 💵', d: ['5 TL 💵', '8 TL 💵'], exp: '2 + 2 + 2 = 6 TL öder.' },
-      { q: 'Hangisi paramızın resmi simgesidir?', a: '₺ (Türk Lirası) 🪙', d: ['$ (Dolar)', '€ (Euro)'], exp: 'Paramızın simgesi ₺ (Türk Lirası) simgesidir.' },
-      { q: 'Üçgenin kaç kenarı vardır?', a: '3 kenar 🔺', d: ['4 kenar 🟦', '0 kenar ⚪'], exp: 'Üçgenin 3 adet kenarı bulunur.' },
-      { q: 'Çemberin kaç köşesi vardır?', a: '0 (Köşesi yoktur) ⚪', d: ['1 köşe', '4 köşe'], exp: 'Çember yuvarlak olduğu için köşesi yoktur.' },
-      { q: '4 tane 5 TL kağıt para toplam kaç TL eder?', a: '20 TL 💵', d: ['15 TL 💵', '25 TL 💵'], exp: '5 + 5 + 5 + 5 = 20 TL eder.' },
-      { q: '10 TL parası olan Mehmet, 4 TL\'ye toka aldı. Geriye kaç TL\'si kaldı?', a: '6 TL 💵', d: ['5 TL 💵', '7 TL 💵'], exp: '10 - 4 = 6 TL para üstü alır.' },
-      { q: 'Dikdörtgenin kaç köşesi vardır?', a: '4 köşe 🚪', d: ['3 köşe 🔺', '2 köşe'], exp: 'Dikdörtgenin 4 köşesi ve 4 kenarı vardır.' },
-      { q: '2 tane 10 TL kağıt para toplam kaç TL eder?', a: '20 TL 💵', d: ['15 TL 💵', '30 TL 💵'], exp: '10 + 10 = 20 TL eder.' },
-      { q: 'Hangisinin kenar sayısı DİĞERLERİNDEN DAHA AZDIR?', a: 'Üçgen (3 kenar) 🔺', d: ['Kare (4 kenar) 🟦', 'Dikdörtgen (4 kenar) 🚪'], exp: 'Üçgenin 3 kenarı varken, kare ve dikdörtgenin 4 kenarı vardır.' }
+    // Tema 1: Ben ve Okulum (22 Özgün Soru)
+    grade1LifeScienceSchoolPool: [
+      { q: 'Sınıfta öğretmenimizden veya arkadaşımızdan söz isterken ne yaparız? ✋', spokenText: 'Sınıfta söz hakkı almak için ne yaparız?', a: 'Parmak kaldırırız ✋', d: ['Bağırarak konuşuruz 🗣️', 'Ayağa kalkıp gezeriz 🚶‍♂️'], exp: 'Söz hakkı almak için nezaketle parmak kaldırırız.' },
+      { q: 'Arkadaşımız bize boya kalemini ödünç verdiğinde hangi nezaket sözünü söyleriz? 🤝', spokenText: 'Arkadaşımız bize kalem verdiğinde ne deriz?', a: 'Teşekkür ederim 🙏', d: ['Özür dilerim 🥺', 'Güle güle 👋'], exp: 'Bize iyilik yapan veya yardım eden birine "Teşekkür ederim" deriz.' },
+      { q: 'İstemeden bir arkadaşımıza çarptığımızda hangi sihirli sözü söylemeliyiz? 🥺', spokenText: 'İstemeden arkadaşımıza çarptığımızda ne söyleriz?', a: 'Özür dilerim 🤝', d: ['Teşekkür ederim 🙏', 'Rica ederim 😊'], exp: 'Hata yaptığımızda veya birine çarptığımızda "Özür dilerim" deriz.' },
+      { q: 'Birinden silgisini ödünç isterken cümlemize hangi nazik kelimeyle başlarız? ✨', spokenText: 'Birinden silgi isterken hangi nazik kelimeyi kullanırız?', a: 'Lütfen ✨', d: ['Hemen ver 😠', 'Bana borçlusun!'], exp: 'Bir şey rica ederken daima "Lütfen" kelimesini kullanırız.' },
+      { q: 'Sabah okula geldiğimizde öğretmenimize ve arkadaşlarımıza nasıl selam veririz? ☀️', spokenText: 'Sabah okula geldiğimizde nasıl selam veririz?', a: 'Günaydın! ☀️', d: ['İyi geceler! 🌙', 'Güle güle! 👋'], exp: 'Sabah karşılaştığımız kişilere "Günaydın" diyerek selam veririz.' },
+      { q: 'Akşam okuldan ayrılırken öğretmenimize ve arkadaşlarımıza ne deriz? 👋', spokenText: 'Okuldan ayrılırken ne deriz?', a: 'İyi günler, hoşça kalın! 👋', d: ['Günaydın! ☀️', 'Tünaydın! 🌤️'], exp: 'Ayrılırken "İyi günler" veya "Hoşça kalın" diyerek vedalaşırız.' },
+      { q: 'Okul koridorlarında ve merdivenlerde nasıl yürümeliyiz? 🚶‍♂️', spokenText: 'Okul koridorlarında ve merdivenlerde nasıl yürümeliyiz?', a: 'Sakin ve sağdan yürümeliyiz 🚶‍♂️', d: ['Hızla koşarak yarışmalıyız 🏃‍♂️', 'Merdiven korkuluğundan kaymalıyız 🎢'], exp: 'Kazaları önlemek için koridor ve merdivenlerde sağdan ve yavaş yürürüz.' },
+      { q: 'Okul kütüphanesinde kitap okurken nasıl davranmalıyız? 📚', spokenText: 'Okul kütüphanesinde nasıl davranmalıyız?', a: 'Sessiz olmalı ve kitapları korumalıyız 🤫', d: ['Yüksek sesle şarkı söylemeliyiz 🎶', 'Top oynamalıyız ⚽'], exp: 'Kütüphanede herkesin ders çalışabilmesi için sessizlik kuralına uyarız.' },
+      { q: 'Okulumuzun idari işlerini yöneten ve okulu idare eden kişi kimdir? 🏫', spokenText: 'Okulumuzun yöneticisi kimdir?', a: 'Okul Müdürü 👔', d: ['Bahçıvan 🌻', 'Şoför 🚌'], exp: 'Okulun yönetiminden okul müdürü sorumludur.' },
+      { q: 'Bize okuma yazma, sayılar ve güzel davranışlar öğreten kişi kimdir? 👨‍🏫', spokenText: 'Bize okuma yazma ve güzel bilgiler öğreten kimdir?', a: 'Öğretmenimiz 👨‍🏫', d: ['Doktor 🩺', 'Aşçı 🍳'], exp: 'Sınıfta bize rehberlik eden ve öğreten kişi öğretmenimizdir.' },
+      { q: 'Ders zili çaldığında ne yapmalıyız? 🔔', spokenText: 'Ders zili çaldığında ne yapmalıyız?', a: 'Hemen sınıfımıza girip sıramıza oturmalıyız 📚', d: ['Bahçede oyun oynamaya devam etmeliyiz ⚽', 'Okul dışına çıkmalıyız 🚪'], exp: 'Zil çalınca derse zamanında başlamak için sınıfımıza geçeriz.' },
+      { q: 'Çöplerimizi nereye atmalıyız? 🗑️', spokenText: 'Çöplerimizi nereye atmalıyız?', a: 'Çöp kutusuna 🗑️', d: ['Sıramızın altına 📦', 'Pencereden bahçeye 🌳'], exp: 'Çöpler daima çöp kutusuna atılır, sınıfımız temiz tutulur.' },
+      { q: 'Arkadaşımızın sınavdan yüksek not aldığını görünce hangi duyguyu hissederiz? 😊', spokenText: 'Arkadaşımız başarılı olduğunda hangi duyguyu hissederiz?', a: 'Mutluluk ve sevinç 😊', d: ['Kıskançlık ve öfke 😠', 'Korku 😨'], exp: 'Arkadaşlarımızın başarısıyla sevinir ve mutlu oluruz.' },
+      { q: 'En sevdiği oyuncağı kaybolan bir çocuk genellikle hangi duyguyu hisseder? 😢', spokenText: 'Oyuncağı kaybolan çocuk hangi duyguyu hisseder?', a: 'Üzüntü 😢', d: ['Kahkaha 😄', 'Gurur 🦁'], exp: 'Sevdiğimiz bir şeyi kaybettiğimizde üzüntü duyarız.' },
+      { q: 'Sınıfımızdaki eşyaları ve sıraları nasıl kullanmalıyız? 🏫', spokenText: 'Sınıfımızdaki eşyaları ve sıraları nasıl kullanmalıyız?', a: 'Özenle koruyup temiz tutmalıyız ✨', d: ['Üzerine boya ile resim çizmeliyiz 🖍️', 'Sıraların üzerine çıkıp zıplamalıyız 👟'], exp: 'Okul eşyaları ortak malımızdır, özenle koruruz.' },
+      { q: 'Okulda bir arkadaşımız düşüp incindiğinde ne yapmalıyız? 🤝', spokenText: 'Arkadaşımız düşüp incindiğinde ne yapmalıyız?', a: 'Hemen öğretmenimize haber verip yardım etmeliyiz 🤝', d: ['Ona gülüp yanından kaçmalıyız 🏃‍♂️', 'Görmezden gelmeliyiz 🙈'], exp: 'Zor durumda olan arkadaşımıza yardım eder ve öğretmenimize söyleriz.' },
+      { q: 'Öğretmenimiz ders anlatırken nasıl dinlemeliyiz? 👂', spokenText: 'Öğretmenimiz ders anlatırken nasıl dinlemeliyiz?', a: 'Dikkatle ve sözünü kesmeden 👂', d: ['Arkadaşımızla fısıldaşarak 🗣️', 'Uyumaya çalışarak 😴'], exp: 'Dersi iyi öğrenmek için öğretmenimizi dikkatle dinleriz.' },
+      { q: 'Okul lavabolarını kullandıktan sonra ne yapmalıyız? 🚰', spokenText: 'Okul lavabolarını kullandıktan sonra ne yapmalıyız?', a: 'Musluğu kapatıp ellerimizi kurulamalıyız 🚰', d: ['Musluğu sonuna kadar açık bırakmalıyız 💧', 'Suyu yerlere saçmalıyız 💦'], exp: 'Su tasarrufu ve temizlik için musluğu kapatırız.' },
+      { q: 'Arkadaşımız bize bir şey ikram ettiğinde ama istemiyorsak ne deriz? 🍬', spokenText: 'Bize ikram edilen bir şeyi istemiyorsak ne deriz?', a: '"Hayır, teşekkür ederim." 🙏', d: ['"İğrenç bu, al başına çal!" 😠', 'Yere atarız ❌'], exp: 'Kibarca reddederken "Hayır, teşekkür ederim" deriz.' },
+      { q: 'Okul bahçesinde oyun oynarken kurallara neden uyarız? ⚽', spokenText: 'Bahçede oyun oynarken kurallara neden uyarız?', a: 'Adil ve güvenli oynamak için 🤝', d: ['Sadece kendimiz kazanmak için 🏆', 'Arkadaşımızı kızdırmak için 😠'], exp: 'Oyun kuralları adalet ve barış içinde eğlenmemizi sağlar.' },
+      { q: 'Okulda temizlik ve hijyeni sağlayan değerli personele ne ad verilir? 🧹', spokenText: 'Okulda temizliği sağlayan görevli kimdir?', a: 'Temizlik Görevlisi 🧹', d: ['Pilot ✈️', 'Kaptan ⚓'], exp: 'Okul görevlileri okulumuzun tertemiz ve sağlıklı olmasını sağlar.' },
+      { q: 'Sınıfta arkadaşımızın boya kalemini kullanmak istediğimizde ilk ne yaparız? ✏️', spokenText: 'Arkadaşımızın boya kalemini almadan önce ne yaparız?', a: 'Kibarca izin isteriz 🤝', d: ['Haber vermeden gizlice alırız 🚫', 'Zorla elinden çekeriz 😠'], exp: 'Başkasına ait bir eşyayı kullanmadan önce mutlaka izin istenir.' }
     ],
 
-    // 1. SINIF: ZIT ANLAMLI KELİMELER HAVUZU (35+ KELİME)
-    grade1AntonymsPool: [
-      { q: '"Büyük" kelimesinin zıt anlamlısı nedir? 🐘', a: 'Küçük 🐁', d: ['Geniş', 'İri'], exp: 'Büyük ve Küçük birbirinin tam karşıtıdır.' },
-      { q: '"Uzun" kelimesinin zıt anlamlısı nedir? 🦒', a: 'Kısa', d: ['İnce', 'Düz'], exp: 'Uzun boyun zıttı kısa boydur.' },
-      { q: '"Sıcak" kelimesinin zıt anlamlısı nedir? ☀️', a: 'Soğuk ❄️', d: ['Ilık', 'Buz'], exp: 'Sıcak havanın zıttı soğuk havadır.' },
-      { q: '"Hızlı" kelimesinin zıt anlamlısı nedir? 🐆', a: 'Yavaş 🐢', d: ['Durgun', 'Sakin'], exp: 'Çita hızlıdır, kaplumbağa ise yavaştır.' },
-      { q: '"Açık" kelimesinin zıt anlamlısı nedir? 🚪', a: 'Kapalı', d: ['Koyu', 'Kilitli'], exp: 'Açık kapının zıttı kapalı kapıdır.' },
-      { q: '"Dolu" kelimesinin zıt anlamlısı nedir? 🥛', a: 'Boş', d: ['Yarım', 'Temiz'], exp: 'Dolu bardağın karşıtı boş bardaktır.' },
-      { q: '"Gece" kelimesinin zıt anlamlısı nedir? 🌙', a: 'Gündüz ☀️', d: ['Akşam', 'Sabah'], exp: 'Gece karanlıktır, gündüz aydınlıktır.' },
-      { q: '"Ağır" kelimesinin zıt anlamlısı nedir? 🪨', a: 'Hafif 🪶', d: ['Küçük', 'Yumuşak'], exp: 'Taş ağırdır, kuş tüyü hafiftir.' },
-      { q: '"Ön" kelimesinin zıt anlamlısı nedir? 🚗', a: 'Arka', d: ['Yan', 'Üst'], exp: 'Ön tarafın karşıtı arka taraftır.' },
-      { q: '"Sert" kelimesinin zıt anlamlısı nedir? 🧱', a: 'Yumuşak 🧸', d: ['İnce', 'Kırılgan'], exp: 'Tuğla serttir, oyuncak ayı yumuşaktır.' },
-      { q: '"Aşağı" kelimesinin zıt anlamlısı nedir? ⬇️', a: 'Yukarı ⬆️', d: ['İleri', 'Geri'], exp: 'Aşağı bakmanın zıttı yukarı bakmaktır.' },
-      { q: '"Taze" kelimesinin zıt anlamlısı nedir? 🥖', a: 'Bayat', d: ['Çürük', 'Eski'], exp: 'Taze ekmeğin zıttı bayat ekmektir.' },
-      { q: '"Temiz" kelimesinin zıt anlamlısı nedir? 🧼', a: 'Kirli', d: ['Islak', 'Tozlu'], exp: 'Temiz ellerin karşıtı kirli ellerdir.' },
-      { q: '"Acı" biberin zıt anlamlısı nedir? 🌶️', a: 'Tatlı 🍯', d: ['Ekşi', 'Tuzlu'], exp: 'Acı biberin tat olarak zıttı tatlı baldır.' },
-      { q: '"İyi" kelimesinin zıt anlamlısı nedir? 😇', a: 'Kötü 😈', d: ['Zayıf', 'Çirkin'], exp: 'İyi kalplinin zıttı kötü davranmaktır.' },
-      { q: '"Siyah" kelimesinin zıt anlamlısı nedir? ⚫', a: 'Beyaz ⚪', d: ['Gri', 'Koyu'], exp: 'Siyahın karşıtı beyaz renktir.' },
-      { q: '"Doğru" cevabın zıt anlamlısı nedir? ✅', a: 'Yanlış ❌', d: ['Eksik', 'Yalan'], exp: 'Doğru seçeneğin zıttı yanlış seçenektir.' },
-      { q: '"Islak" kelimesinin zıt anlamlısı nedir? 🌧️', a: 'Kuru ☀️', d: ['Nemli', 'Sıcak'], exp: 'Yağmurda ıslanan elbise güneşte kurur.' },
-      { q: '"Şişman" kelimesinin zıt anlamlısı nedir? 🐻', a: 'Zayıf', d: ['Küçük', 'Kısa'], exp: 'Şişmanın zıttı zayıftır.' },
-      { q: '"Zor" sorunun zıt anlamlısı nedir? 🧩', a: 'Kolay ✨', d: ['Basit', 'Kısa'], exp: 'Zor bulmacanın zıttı kolay bulmacadır.' },
-      { q: '"Neşeli" kelimesinin zıt anlamlısı nedir? 😄', a: 'Üzgün 😢', d: ['Kızgın', 'Yorgun'], exp: 'Neşeli gülümsemenin zıttı üzgün durmaktır.' },
-      { q: '"İç" kelimesinin zıt anlamlısı nedir? 📦', a: 'Dış', d: ['Üst', 'Alt'], exp: 'Kutunun içi ve dışı birbirine zıttır.' },
-      { q: '"Uzak" kelimesinin zıt anlamlısı nedir? 🗺️', a: 'Yakın 🏡', d: ['Hızlı', 'Büyük'], exp: 'Uzak memleketin zıttı yakın mesafedir.' },
-      { q: '"Genç" kelimesinin zıt anlamlısı nedir? 👦', a: 'Yaşlı 👴', d: ['Büyük', 'Yorgun'], exp: 'Genç delikanlının zıttı yaşlı dededir.' },
-      { q: '"Zengin" kelimesinin zıt anlamlısı nedir? 💰', a: 'Fakir / Yoksul', d: ['Cimri', 'Tutam'], exp: 'Zenginin zıttı fakir / yoksul demektir.' },
-      { q: '"Cesur" kahramanın zıt anlamlısı nedir? 🦁', a: 'Korkak 🐭', d: ['Küçük', 'Çelimsiz'], exp: 'Cesur olmanın karşıtı korkak davranmaktır.' },
-      { q: '"Giriş" kapısının zıt anlamlısı nedir? 🚪', a: 'Çıkış 🚶‍♂️', d: ['Açılış', 'Dönüş'], exp: 'Giriş kapısının zıttı çıkış kapısıdır.' },
-      { q: '"Gülmek" eyleminin zıt anlamlısı nedir? 😊', a: 'Ağlamak 😭', d: ['Susmak', 'Kızmak'], exp: 'Gülmenin zıttı ağlamaktır.' },
-      { q: '"Gelmek" fiilinin zıt anlamlısı nedir? 🏃‍♂️', a: 'Gitmek 🚶‍♂️', d: ['Koşmak', 'Durmak'], exp: 'Okula gelmenin zıttı okuldan gitmektir.' },
-      { q: '"Almak" kelimesinin zıt anlamlısı nedir? 🎁', a: 'Vermek 🤲', d: ['Satmak', 'Koymak'], exp: 'Hediye almanın karşıtı hediye vermektir.' },
-      { q: '"Başlamak" eyleminin zıt anlamlısı nedir? 🏁', a: 'Bitirmek 🏆', d: ['Durmak', 'Bölmek'], exp: 'Derse başlamanın zıttı dersi bitirmektir.' },
-      { q: '"Yüksek" dağın zıt anlamlısı nedir? 🏔️', a: 'Alçak 🏕️', d: ['Düz', 'Kısa'], exp: 'Yüksek tepenin zıttı alçak tepedir.' },
-      { q: '"Yeni" eşyanın zıt anlamlısı nedir? ✨', a: 'Eski 📦', d: ['Kırık', 'Kirli'], exp: 'Yeni ayakkabının zıttı eski ayakkabıdır.' },
-      { q: '"Aydınlık" odanın zıt anlamlısı nedir? 💡', a: 'Karanlık 🌑', d: ['Dar', 'Koyu'], exp: 'Aydınlık gündüzün zıttı karanlık gecedir.' },
-      { q: '"Kalın" kitabın zıt anlamlısı nedir? 📚', a: 'İnce 📖', d: ['Hafif', 'Dar'], exp: 'Kalın kitabın zıttı ince kitaptır.' }
+    // Tema 2: Sağlığım ve Güvenliğim (22 Özgün Soru)
+    grade1LifeScienceHealthTrafficPool: [
+      { q: 'Yemeklerden önce ve sonra ellerimizi ne ile yıkamalıyız? 🧼', spokenText: 'Yemekten önce ve sonra ellerimizi ne ile yıkamalıyız?', a: 'Su ve sabunla en az 20 saniye 🧼', d: ['Sadece suyla ıslatıp geçeriz 💧', 'Peçeteyle silip geçeriz 🧻'], exp: 'Mikroplardan korunmak için eller su ve sabunla iyice yıkanır.' },
+      { q: 'Dişlerimizin çürümemesi için günde en az kaç kez fırçalamalıyız? 🪥', spokenText: 'Dişlerimizi günde kaç kez fırçalamalıyız?', a: 'Günde 2 kez (sabah ve akşam) 🪥', d: ['Haftada 1 kez 📅', 'Hiç fırçalamamalıyız ❌'], exp: 'Sabah kahvaltıdan sonra ve akşam yatmadan önce dişler fırçalanır.' },
+      { q: 'Kemiklerimizin ve dişlerimizin güçlenmesini sağlayan kalsiyum deposu içecek hangisidir? 🥛', spokenText: 'Kemiklerimizi güçlendiren kalsiyum deposu içecek hangisidir?', a: 'Süt 🥛', d: ['Kola ve asitli gazoz 🥤', 'Şekerli şurup 🍬'], exp: 'Süt kemik ve diş sağlığı için en temel doğal besindir.' },
+      { q: 'Trafikte yayaların karşıdan karşıya güvenle geçmesi için yola çizilen beyaz çizgilere ne denir? 🦓', spokenText: 'Yayaların karşıdan karşıya geçtiği beyaz çizgili yola ne denir?', a: 'Yaya geçidi 🚶‍♂️', d: ['Bisiklet yolu 🚲', 'Tren rayı 🚂'], exp: 'Yaya geçidi yayaların güvenle karşıya geçmesini sağlar.' },
+      { q: 'Trafik ışığında YAYALAR için KIRMIZI ışık yandığında ne yapmalıyız? 🛑', spokenText: 'Trafik ışığı kırmızı yandığında ne yapmalıyız?', a: 'Kaldırımda durup beklemeliyiz 🛑', d: ['Hızla yola fırlamalıyız 🏃‍♂️', 'Gözümüzü kapatıp geçmeliyiz 🙈'], exp: 'Kırmızı ışıkta yayalar ve araçlar kesinlikle durur.' },
+      { q: 'Trafik ışığında YAYALAR için YEŞİL ışık yandığında ne yapmalıyız? 🟢', spokenText: 'Yeşil ışık yandığında ne yapmalıyız?', a: 'Yolu kontrol ederek dikkatle geçmeliyiz 🚶‍♂️', d: ['Yere oturup beklemeliyiz 🛑', 'Geriye doğru koşmalıyız 🔙'], exp: 'Yeşil ışık yandığında önce sola sonra sağa bakıp güvenle geçeriz.' },
+      { q: 'Ülkemizde ambulans, polis ve itfaiye gibi TÜM acil durumlar için aranan tek numara kaçtır? 🚑🚒🚓', spokenText: 'Tüm acil durumlar için aranan acil yardım numarası kaçtır?', a: '112 (Bir Bir İki) 📞', d: ['155 📞', '100 📞'], exp: 'Türkiye\'de tüm acil durumlar tek çatı altında 112 numarasında toplanmıştır.' },
+      { q: 'Arabada veya okul servisinde yolculuk yaparken güvenliğimiz için ilk ne takarız? 🛡️', spokenText: 'Arabada veya serviste ilk ne takarız?', a: 'Emniyet kemeri 🛡️', d: ['Güneş gözlüğü 🕶️', 'Kulaklık 🎧'], exp: 'Emniyet kemeri ani frenlerde ve sarsıntılarda hayat kurtarır.' },
+      { q: 'Hangisi sağlığımıza ZARARLI olan abur cubur bir yiyecektir? 🚫', spokenText: 'Hangisi sağlığımıza zararlı olan abur cuburdur?', a: 'Aşırı yağlı cips ve asitli gazoz 🥤', d: ['Taze elma ve havuç 🍎🥕', 'Haşlanmış yumurta 🥚'], exp: 'Cips ve asitli içecekler obeziteye ve diş çürüğüne yol açar.' },
+      { q: 'Yoğun araç trafiğinin aktığı yollarda yayaların yukarıdan geçmesini sağlayan köprüye ne denir? 🌉', spokenText: 'Yayaların yukarıdan geçtiği köprüye ne denir?', a: 'Üst geçit 🌉', d: ['Deniz iskelesi 🚢', 'Kaydırak 🎢'], exp: 'Üst geçit ve alt geçitler yayalar için en güvenli yoldur.' },
+      { q: 'Tanımadığımız biri bize çikolata veya oyuncak vermek isterse ne yapmalıyız? 🛑', spokenText: 'Tanımadığımız biri bize hediye vermek isterse ne yapmalıyız?', a: 'Asla kabul etmeyip ailemizin yanına gitmeliyiz 🛑', d: ['Hemen alıp onunla gitmeliyiz 🏃‍♂️', 'Teşekkür edip hemen yemeliyiz 🍫'], exp: 'Güvenliğimiz için tanımadığımız kişilerden hiçbir şey almayız.' },
+      { q: 'Vücudumuzun su ihtiyacını karşılamak için günde bolca ne içmeliyiz? 💧', spokenText: 'Vücudumuz için günde bolca ne içmeliyiz?', a: 'Temiz su 💧', d: ['Gazoz 🥤', 'Koyu çay ☕'], exp: 'Su yaşamsal sıvımızdır, her gün yeterli su içmeliyiz.' },
+      { q: 'Oyun oynamak için aşağıdaki alanlardan hangisi GÜVENLİDİR? 🛝', spokenText: 'Oyun oynamak için hangisi güvenli bir alandır?', a: 'Çocuk parkı ve okul bahçesi 🛝🌳', d: ['İnşaat alanı 🏗️', 'Trafiğe açık cadde 🚗'], exp: 'Parklar ve okul bahçeleri çocuklar için güvenli oyun alanlarıdır.' },
+      { q: 'Hapşırırken veya öksürürken mikropların yayılmaması için ne yapmalıyız? 🤧', spokenText: 'Hapşırırken ağzımızı ne ile kapatmalıyız?', a: 'Mendil veya dirseğimizin içiyle kapatmalıyız 🧻', d: ['Arkadaşımızın yüzüne doğru üflemeliyiz 💨', 'Elimizin içiyle kapatıp her yere sürmeliyiz ✋'], exp: 'Mendil veya dirsek içi kullanımı mikropların bulaşmasını engeller.' },
+      { q: 'Kişisel temizliğimiz için haftada en az kaç kez banyo yapmalıyız? 🚿', spokenText: 'Kişisel temizliğimiz için haftada en az kaç kez banyo yapmalıyız?', a: 'En az 2 kez 🚿', d: ['Yılda 1 kez 📅', 'Hiç yapmamalıyız 🚫'], exp: 'Düzenli banyo yapmak cilt sağlığımız ve ferahlığımız için şarttır.' },
+      { q: 'Göz sağlığımızı korumak için tablet veya televizyona nasıl bakmalıyız? 📱', spokenText: 'Gözlerimizi korumak için ekrana nasıl bakmalıyız?', a: 'Belirli mesafeden ve sınırlı süreyle ⏳', d: ['Karanlıkta gözümüzün dibine sokarak 🌑', 'Bütün gün aralıksız 📱'], exp: 'Ekranlara çok yakından ve uzun bakmak gözlerimizi yorar.' },
+      { q: 'Güne zinde başlamak için en önemli ana öğün hangisidir? 🍳', spokenText: 'Günün en önemli öğünü hangisidir?', a: 'Sabah kahvaltısı 🍳', d: ['Gece yarısı atıştırması 🌙', 'Öğleden sonra cipsi 🍟'], exp: 'Kahvaltı büyüme ve derse odaklanma için en kritik öğündür.' },
+      { q: 'Evde elektrik prizlerine yabancı cisim sokmak neden çok tehlikelidir? 🔌⚡', spokenText: 'Elektrik prizlerine dokunmak neden tehlikelidir?', a: 'Elektrik çarpabilir ⚡', d: ['Işıklar daha çok yanar 💡', 'Tehlikeli değildir ✅'], exp: 'Prizler ölümcül elektrik akımı taşır, asla cisim sokulmaz.' },
+      { q: 'Gözlerimizin daha iyi ve sağlıklı görmesi için hangi sebzeyi tüketmeliyiz? 🥕', spokenText: 'Gözlerimiz için çok faydalı olan sebze hangisidir?', a: 'Havuç 🥕', d: ['Lolipop şeker 🍭', 'Patates kızartması 🍟'], exp: 'Havuç bol miktarda A vitamini içerir ve gözlerimizi korur.' },
+      { q: 'Tırnaklarımız uzadığında ne yapmalıyız? ✂️', spokenText: 'Tırnaklarımız uzadığında ne yapmalıyız?', a: 'Büyüklerimizden yardım alarak temizce kesmeliyiz ✂️', d: ['Dişlerimizle kemirmeliyiz 😬', 'Uzamasına izin vermeliyiz 💅'], exp: 'Uzayan tırnakların arasına mikrop dolar, düzenli kesilmelidir.' },
+      { q: 'Pencerelerden veya balkondan aşağıya doğru ne yapmamalıyız? 🏢', spokenText: 'Pencereden veya balkondan ne yapmamalıyız?', a: 'Asla sarkmamalı ve tırmanmamalıyız ⚠️', d: ['Hava almamalıyız 🌬️', 'Dışarı bakmamalıyız 👀'], exp: 'Düşme tehlikesine karşı pencere ve balkon korkuluklarından sarkılmaz.' },
+      { q: 'Kış mevsiminde soğuktan ve gripten korunmak için bol bol ne tüketmeliyiz? 🍊', spokenText: 'Kışın gripten korunmak için hangi meyveleri tüketmeliyiz?', a: 'Portakal ve mandalina (C Vitamini) 🍊', d: ['Dondurma 🍦', 'Buzlu içecek 🧊'], exp: 'Portakal ve mandalina kışın vücut direncimizi artıran vitamin depolarıdır.' }
     ],
 
-    // 1. SINIF: HECE SAYISI VE HARF BİLGİSİ DİNAMİK ÜRETECİ
-    generateGrade1SyllablesAndLetters() {
+    // Tema 3: Ailem ve Toplum (20 Özgün Soru)
+    grade1LifeScienceFamilyHomePool: [
+      { q: 'Babamızın annesine ne ad veririz? 👵', spokenText: 'Babamızın annesine ne ad veririz?', a: 'Babaanne 👵', d: ['Anneanne 👵', 'Teyze 👩'], exp: 'Babamızın annesi babaanne, annemizin annesi anneannedir.' },
+      { q: 'Annemizin annesine ne ad veririz? 👵', spokenText: 'Annemizin annesine ne ad veririz?', a: 'Anneanne 👵', d: ['Babaanne 👵', 'Hala 👩'], exp: 'Annemizin annesi anneannedir.' },
+      { q: 'Annemizin kız kardeşine ne ad veririz? 👩', spokenText: 'Annemizin kız kardeşine ne ad veririz?', a: 'Teyze 👩', d: ['Hala 👩', 'Yenge 👩'], exp: 'Annemizin kız kardeşi teyzemizdir.' },
+      { q: 'Babamızın kız kardeşine ne ad veririz? 👩', spokenText: 'Babamızın kız kardeşine ne ad veririz?', a: 'Hala 👩', d: ['Teyze 👩', 'Dayı 👨'], exp: 'Babamızın kız kardeşi halamızdır.' },
+      { q: 'Annemizin erkek kardeşine ne ad veririz? 👨', spokenText: 'Annemizin erkek kardeşine ne ad veririz?', a: 'Dayı 👨', d: ['Amca 👨', 'Dede 👴'], exp: 'Annemizin erkek kardeşi dayımızdır.' },
+      { q: 'Babamızın erkek kardeşine ne ad veririz? 👨', spokenText: 'Babamızın erkek kardeşine ne ad veririz?', a: 'Amca 👨', d: ['Dayı 👨', 'Enişte 👨'], exp: 'Babamızın erkek kardeşi amcamızdır.' },
+      { q: 'Evde oyun oynadıktan sonra oyuncaklarımızı kim toplamalıdır? 🧸', spokenText: 'Oyuncakları kim toplamalıdır?', a: 'Kendimiz toplamalıyız 👦👧', d: ['Sadece annemiz toplamalıdır 👩', 'Yerde dağınık kalmalıdır ❌'], exp: 'Her çocuk kendi odasını ve oyuncaklarını toplama sorumluluğuna sahiptir.' },
+      { q: 'Kaybolduğumuzda veya acil bir durumda güvenlik görevlilerine söyleyebilmek için neyi ezbere bilmeliyiz? 📍', spokenText: 'Kaybolduğumuzda neyi ezbere bilmeliyiz?', a: 'Ev adresimizi ve ailemizin telefon numarasını 📍📞', d: ['Tuttuğumuz futbol takımını ⚽', 'En sevdiğimiz çizgi filmi 📺'], exp: 'Ev adresi ve veli telefonu güvenlik için mutlaka öğrenilmelidir.' },
+      { q: 'Apartmanda yaşarken komşularımızı rahatsız etmemek için ne yapmalıyız? 🏢', spokenText: 'Komşularımızı rahatsız etmemek için ne yaparız?', a: 'Evde koşup zıplamamalı ve yüksek ses çıkarmamalıyız 🤫', d: ['Gece yarısı davul çalmalıyız 🥁', 'Merdivenlerde bağırmalıyız 📢'], exp: 'Komşuluk hakkı için gürültü yapmamaya özen gösteririz.' },
+      { q: 'Sabah komşumuzla merdivende karşılaştığımızda ne deriz? 🤝', spokenText: 'Sabah komşumuzla karşılaştığımızda ne deriz?', a: 'Günaydın, hayırlı sabahlar! ☀️', d: ['Hiç bakmadan koşarız 🏃‍♂️', 'Kapıyı yüzüne çarparız 🚪'], exp: 'Komşularımıza selam verip güler yüz gösteririz.' },
+      { q: 'Akşam yemeği sofrası kurulurken ailemize nasıl yardımcı olabiliriz? 🍽️', spokenText: 'Yemek sofrası kurulurken nasıl yardım edebiliriz?', a: 'Ekmek sepetini veya peçeteleri masaya taşıyarak 🥖', d: ['Sıcak tencereleri tek başımıza kaldırarak ⚠️', 'Oturup bağırmalıyız 😠'], exp: 'Kırılmayacak ve güvenli eşyaları sofraya taşımak güzel bir yardımlaşmadır.' },
+      { q: 'Aile içinde kararlar alınırken her bireyin ne hakkı vardır? 👨‍👩‍👧', spokenText: 'Aile içinde herkesin ne hakkı vardır?', a: 'Fikrini söyleme ve söz hakkı 🗣️', d: ['Sadece bağırma hakkı 📢', 'Hiç konuşmama zorunluluğu 🤐'], exp: 'Mutlu bir ailede herkesin görüşüne saygı duyulur.' },
+      { q: 'Akşam yatarken aile bireylerimize ne dileriz? 🌙', spokenText: 'Akşam yatarken sevdiklerimize ne dileriz?', a: 'İyi geceler ve tatlı rüyalar 🌙', d: ['Günaydın ☀️', 'Tünaydın 🌤️'], exp: 'Uyumadan önce ev halkına "İyi geceler" dileriz.' },
+      { q: 'Akrabalarımız arasında babamızın babasına veya annemizin babasına ne deriz? 👴', spokenText: 'Babamızın veya annemizin babasına ne deriz?', a: 'Dede (Büyükbaba) 👴', d: ['Amca 👨', 'Dayı 👨'], exp: 'Büyükbabamıza Dede deriz.' },
+      { q: 'Teyzemizin veya amcamızın çocukları bizim neyimiz olur? 👦👧', spokenText: 'Teyzemizin veya amcamızın çocukları bizim neyimiz olur?', a: 'Kuzenimiz 🤝', d: ['Kardeşimiz', 'Torunumuz'], exp: 'Akraba çocukları bizim kuzenlerimizdir.' },
+      { q: 'Evimizde elektrik veya su faturası geldiğinde bütçemizi korumak için ne yapmalıyız? 💡💧', spokenText: 'Evde faturaları azaltmak için ne yapmalıyız?', a: 'Gereksiz yanan ışıkları ve muslukları kapatmalıyız 💡❌', d: ['Her odaya fazladan lamba takmalıyız 💡', 'Bütün muslukları açmalıyız 💦'], exp: 'Tasarruf aile bütçemizi ve doğamızı korur.' },
+      { q: 'Yaşlı veya hasta bir komşumuz olduğunda ne yapmalıyız? 👵', spokenText: 'Yaşlı bir komşumuz olduğunda ne yaparız?', a: 'Hallerini hatırlarını sorup gerekirse yardım ederiz 🤝', d: ['Kapı ziline basıp kaçarız 🏃‍♂️', 'Pencerelerine taş atarız ❌'], exp: 'Büyüklere ve hastalara yardım etmek en güzel erdemdir.' },
+      { q: 'Evdeki kişisel eşyalarımızı (çanta, defter, giysi) nasıl tutmalıyız? 🎒', spokenText: 'Kişisel eşyalarımızı nasıl tutmalıyız?', a: 'Düzenli ve yerli yerinde 🎒✨', d: ['Odanın ortasına fırlatılmış halde 🧹', 'Dolabın arkasına tıkılmış halde 📦'], exp: 'Düzenli olmak aradığımızı kolayca bulmamızı sağlar.' },
+      { q: 'Yemek yerken ağzımızda lokma varken ne yapmamalıyız? 🍽️', spokenText: 'Ağzımızda lokma varken ne yapmamalıyız?', a: 'Konuşmamalıyız 🤐', d: ['Çiğnememeliyiz', 'Yutmamalıyız'], exp: 'Görgü kuralı olarak lokma yutulduktan sonra konuşulur.' },
+      { q: 'Büyüklerimiz bir konu hakkında konuşurken sözlerini kesmek istersek ne deriz? 🗣️', spokenText: 'Büyüklerin sözünü keserken ne deriz?', a: '"Özür dilerim, bölebilir miyim?" ✨', d: ['"Susun dinleyin beni!" 😠', 'Çığlık atarız 📢'], exp: 'Kibarca izin isteyerek söze başlarız.' }
+    ],
+
+    // Tema 4: Yaşadığım Yer ve Ülkem (20 Özgün Soru)
+    grade1LifeScienceCountryFlagPool: [
+      { q: 'Şanlı Türk bayrağımızın üzerinde hangi simgeler yer alır? 🇹🇷', spokenText: 'Türk bayrağımızın üzerinde hangi simgeler vardır?', a: 'Beyaz Hilal (Ay) ve Yıldız 🌙⭐', d: ['Güneş ve Bulut ☀️☁️', 'Çiçek ve Kuş 🌸🕊️'], exp: 'Bayrağımız al kırmızı zemin üzerine beyaz hilal ve yıldızdan oluşur.' },
+      { q: 'İstiklal Marşımızın yazarı olan büyük milli şairimiz kimdir? 📜', spokenText: 'İstiklal Marşımızın şairi kimdir?', a: 'Mehmet Akif Ersoy ✍️', d: ['Nasreddin Hoca 🧙‍♂️', 'Keloğlan 👦'], exp: 'İstiklal Marşımızı milli şairimiz Mehmet Akif Ersoy yazmıştır.' },
+      { q: 'Milli Marşımız söylenirken ve bayrak göndere çekilirken nasıl durmalıyız? 🇹🇷', spokenText: 'İstiklal Marşı söylenirken nasıl durmalıyız?', a: 'Hazır ol vaziyetinde dimdik ve saygıyla 🇹🇷', d: ['Arkadaşımızla şakalaşarak 🤼', 'Yere oturup dinlenerek 🛋️'], exp: 'Bayrağımıza ve marşımıza saygımızı hazır ol duruşuyla gösteririz.' },
+      { q: 'Türkiye Cumhuriyeti\'nin kurucusu ve ilk Cumhurbaşkanı kimdir? 🇹🇷', spokenText: 'Cumhuriyetimizin kurucusu kimdir?', a: 'Gazi Mustafa Kemal Atatürk 🇹🇷', d: ['Fatih Sultan Mehmet 👑', 'Ali Kuşçu 🔭'], exp: 'Kurtuluş Savaşımızın lideri ve Cumhuriyetimizin kurucusu Atatürk\'tür.' },
+      { q: 'Mustafa Kemal Atatürk hangi şehirde dünyaya gelmiştir? 🏡', spokenText: 'Atatürk hangi şehirde doğmuştur?', a: 'Selanik 🏡', d: ['İstanbul 🕌', 'Ankara 🏛️'], exp: 'Atatürk 1881 yılında Selanik\'te pembe boyalı evde doğmuştur.' },
+      { q: 'Atatürk\'ün çok sevdiği annesinin adı nedir? 👵', spokenText: 'Atatürk\'ün annesinin adı nedir?', a: 'Zübeyde Hanım 👵', d: ['Makbule Hanım 👩', 'Fatma Hanım 👩'], exp: 'Atatürk\'ün annesi Zübeyde Hanım, babası Ali Rıza Efendi\'dir.' },
+      { q: 'Atatürk\'ün kabrinin bulunduğu Anıtkabir hangi şehrimizdedir? 🏛️', spokenText: 'Anıtkabir hangi şehrimizdedir?', a: 'Ankara (Başkentimiz) 🏛️', d: ['İzmir 🏖️', 'Antalya 🌴'], exp: 'Anıtkabir başkentimiz Ankara\'da yer alır.' },
+      { q: 'Atatürk\'ün çocuklara armağan ettiği milli bayramımız hangisidir? 🎈', spokenText: 'Çocuklara armağan edilen milli bayram hangisidir?', a: '23 Nisan Ulusal Egemenlik ve Çocuk Bayramı 🎈', d: ['29 Ekim Cumhuriyet Bayramı 🇹🇷', '30 Ağustos Zafer Bayramı 🎖️'], exp: '23 Nisan dünyada çocuklara armağan edilen tek çocuk bayramıdır.' },
+      { q: 'Cumhuriyetimizin ilan edildiği ve coşkuyla kutladığımız milli bayramımız hangisidir? 🇹🇷', spokenText: 'Cumhuriyet Bayramı hangi gün kutlanır?', a: '29 Ekim Cumhuriyet Bayramı 🇹🇷', d: ['1 Ocak Yılbaşı ❄️', '19 Mayıs Gençlik Bayramı 🏃‍♂️'], exp: '29 Ekim 1923\'te Cumhuriyet ilan edilmiştir.' },
+      { q: 'Türkiye Cumhuriyeti\'nin başkenti neresidir? 🇹🇷', spokenText: 'Ülkemizin başkenti neresidir?', a: 'Ankara 🏛️', d: ['İstanbul 🌉', 'Bursa 🏔️'], exp: 'Türkiye Cumhuriyeti\'nin başkenti Ankara\'dır.' },
+      { q: 'Dini bayramlarımızda (Ramazan ve Kurban) ailece ne yaparız? 🍬', spokenText: 'Dini bayramlarımızda ne yaparız?', a: 'Büyüklerimizi ziyaret eder, el öper ve paylaşırız 🍬🤝', d: ['Kapıları kilitleyip kimseyle görüşmeyiz 🚪', 'Kavga ederiz 😠'], exp: 'Dini bayramlar sevgi, yardımlaşma ve büyükleri ziyaret günleridir.' },
+      { q: 'Kurtuluş Savaşı\'nın başladığı gün olan 19 Mayıs hangi bayramımızdır? 🏃‍♂️', spokenText: '19 Mayıs hangi bayramdır?', a: 'Atatürk\'ü Anma, Gençlik ve Spor Bayramı 🏃‍♂️', d: ['Zafer Bayramı 🎖️', 'Kurban Bayramı 🐑'], exp: '19 Mayıs gençlere ve spora adanmış milli bayramımızdır.' },
+      { q: 'Ordumuzun büyük zafer kazandığı 30 Ağustos hangi bayram olarak kutlanır? 🎖️', spokenText: '30 Ağustos hangi bayramdır?', a: '30 Ağustos Zafer Bayramı 🎖️', d: ['23 Nisan Çocuk Bayramı 🎈', 'Cumhuriyet Bayramı 🇹🇷'], exp: '30 Ağustos şanlı ordumuzun Zafer Bayramı\'dır.' },
+      { q: 'İstiklal Marşımızın ilk kelimesi hangisidir? 📜', spokenText: 'İstiklal Marşımızın ilk kelimesi nedir?', a: 'Korkma! 🇹🇷', d: ['Dur! 🛑', 'Dinle! 👂'], exp: 'İstiklal Marşımız "Korkma, sönmez bu şafaklarda yüzen al sancak" mısrasıyla başlar.' },
+      { q: 'Yaşadığımız çevrede tarihi camileri, müzeleri ve kaleleri nasıl koruruz? 🏰', spokenText: 'Tarihi yerleri ve eserleri nasıl koruruz?', a: 'Zarar vermeden gezer ve temiz tutarız ✨', d: ['Duvarlarına yazı yazarız 🖍️', 'Taşlarını sökeriz ❌'], exp: 'Tarihi eserler milletimizin ortak mirasıdır.' },
+      { q: 'Atatürk\'ün kız kardeşinin adı nedir? 👩', spokenText: 'Atatürk\'ün kız kardeşinin adı nedir?', a: 'Makbule Hanım 👩', d: ['Zübeyde Hanım 👵', 'Sabiha Gökçen ✈️'], exp: 'Atatürk\'ün kız kardeşi Makbule Hanım\'dır.' },
+      { q: 'Bayrağımızın kırmızı rengi neyi temsil eder? 🇹🇷', spokenText: 'Bayrağımızın kırmızı rengi neyi temsil eder?', a: 'Şehitlerimizin kahramanlığını ve kanını 🇹🇷', d: ['Gül bahçesini 🌹', 'Domates tarlasını 🍅'], exp: 'Bayrağımızdaki al renk vatan uğruna can veren şehitlerimizi simgeler.' },
+      { q: 'Ülkemizin haritadaki genel şekli neye benzer? 🗺️', spokenText: 'Ülkemizin haritadaki şekli neye benzer?', a: 'Bir dikdörtgene benzer 🚪', d: ['Tam bir yuvarlağa ⚪', 'Üçgene 🔺'], exp: 'Türkiye haritası doğudan batıya uzanan bir dikdörtgeni andırır.' },
+      { q: 'Farklı ülkelerden gelen misafir çocuklara nasıl davranmalıyız? 🌍', spokenText: 'Farklı ülkelerden gelen çocuklara nasıl davranmalıyız?', a: 'Misafirperver ve sevgi dolu 🤝', d: ['Dışlayıp alay etmeliyiz 😠', 'Konuşmamalıyız ❌'], exp: 'Türk milleti misafirperverdir, herkese sevgiyle kucak açar.' },
+      { q: 'Milli marşımız toplam kaç kıtadan oluşur? 📜', spokenText: 'İstiklal Marşı kaç kıtadır?', a: '10 kıtadan oluşur (Okulda ilk 2 kıtası söylenir) 📜', d: ['20 kıta', '5 kıta'], exp: 'İstiklal Marşımız 10 kıtadır, törenlerde ilk iki kıtası coşkuyla okunur.' }
+    ],
+
+    // Tema 5: Doğa ve Çevre (20 Özgün Soru)
+    grade1LifeScienceNatureRecyclingPool: [
+      { q: 'Kullanılmış kağıt, karton ve defterleri nereye atmalıyız? 📦♻️', spokenText: 'Eski kağıt ve kartonları nereye atmalıyız?', a: 'Mavi Kağıt Geri Dönüşüm Kutusuna ♻️', d: ['Sokağa yere 🍂', 'Dereye veya denize 🌊'], exp: 'Kağıtları geri dönüştürerek ağaçların kesilmesini önleriz.' },
+      { q: 'Kullanılmış plastik şişeleri ve su kaplarını nereye atmalıyız? 🧴♻️', spokenText: 'Plastik şişeleri nereye atmalıyız?', a: 'Sarı Plastik Geri Dönüşüm Kutusuna ♻️', d: ['Ormana 🌲', 'Yere ❌'], exp: 'Plastikler doğada yüzlerce yıl yok olmaz, geri dönüştürülmelidir.' },
+      { q: 'Bitmiş pilleri normal çöpe atmak yerine nereye atmalıyız? 🔋', spokenText: 'Bitmiş pilleri nereye atmalıyız?', a: 'Atık Pil Toplama Kutusuna 🔋', d: ['Evdeki normal çöp kovasına 🗑️', 'Toprağa gömmeliyiz 🌱'], exp: 'Pillerdeki kimyasallar toprağa ve suya zarar verir, atık pil kutusuna atılır.' },
+      { q: 'Dişlerimizi fırçalarken su tasarrufu yapmak için ne yapmalıyız? 🚰', spokenText: 'Diş fırçalarken su tasarrufu için ne yapmalıyız?', a: 'Musluğu kapalı tutmalıyız 🚰', d: ['Suyu boşa akıtmalıyız 💧', 'Hortumla su tutmalıyız 💦'], exp: 'Diş fırçalarken musluğu kapatmak tonlarca suyu kurtarır.' },
+      { q: 'Gündüz güneş varken aydınlık odada elektrik tasarrufu için ne yaparız? 💡', spokenText: 'Gündüz aydınlık odada ne yaparız?', a: 'Lambaları söndürürüz 💡❌', d: ['Bütün ışıkları açarız 💡💡', 'Televizyonu açık bırakıp gideriz 📺'], exp: 'Gereksiz yanan lambaları söndürerek enerji tasarrufu sağlarız.' },
+      { q: 'Ağaçların çiçek açtığı, kuşların cıvıldadığı ve havaların ısınmaya başladığı mevsim hangisidir? 🌸', spokenText: 'Ağaçların çiçek açtığı ilkbahar mevsimi hangisidir?', a: 'İlkbahar 🌸', d: ['Kış ❄️', 'Sonbahar 🍂'], exp: 'İlkbaharda doğa uyanır ve çiçekler açar.' },
+      { q: 'Havanın en sıcak olduğu, ince tişört giyilip denize girilen mevsim hangisidir? ☀️', spokenText: 'En sıcak mevsim hangisidir?', a: 'Yaz ☀️', d: ['Kış ❄️', 'Sonbahar 🍂'], exp: 'Yaz mevsimi yılın en sıcak mevsimidir.' },
+      { q: 'Ağaçların yapraklarını döktüğü, rüzgarlı ve okulların açıldığı mevsim hangisidir? 🍂', spokenText: 'Yaprakların döküldüğü mevsim hangisidir?', a: 'Sonbahar 🍂', d: ['İlkbahar 🌸', 'Yaz ☀️'], exp: 'Sonbaharda havalar serinler ve sararan yapraklar dökülür.' },
+      { q: 'Kar yağan, kardan adam yapılan ve kalın montlar giyilen soğuk mevsim hangisidir? ⛄', spokenText: 'Kar yağan soğuk mevsim hangisidir?', a: 'Kış ❄️', d: ['Yaz ☀️', 'İlkbahar 🌸'], exp: 'Kışın hava çok soğur, kar yağar ve kalın giyiniriz.' },
+      { q: 'Sokaktaki sevimli kedi ve köpekler için özellikle sıcak yaz günlerinde kapımızın önüne ne koymalıyız? 🐱🐶', spokenText: 'Sokak hayvanları için kapımızın önüne ne koymalıyız?', a: 'Bir kap temiz su ve mama 🥣💧', d: ['Taş ve sopa 🚫', 'Çöp poşeti 🗑️'], exp: 'Sokak hayvanlarının su ve besin ihtiyacına yardım ederiz.' },
+      { q: 'Park ve bahçelerdeki rengarenk çiçekleri ve fidanları nasıl koruruz? 🌷', spokenText: 'Çiçekleri nasıl koruruz?', a: 'Koparmadan sever, gerekirse sularız 🌷💧', d: ['Hepsini kökünden koparırız ❌', 'Üstlerinde zıplarız 👞'], exp: 'Çiçekler dalında güzeldir, asla koparılmaz.' },
+      { q: 'Bir yılda toplam kaç mevsim yaşanır? 🌍', spokenText: 'Bir yılda kaç mevsim vardır?', a: '4 Mevsim (İlkbahar, Yaz, Sonbahar, Kış) 🍂', d: ['2 Mevsim', '12 Mevsim'], exp: 'Bir yılda 4 mevsim vardır.' },
+      { q: 'Yağmurlu havalarda ıslanmamak için yanımıza ne alırız? ☔', spokenText: 'Yağmur yağınca ne alırız?', a: 'Şemsiye ve yağmurluk ☔', d: ['Güneş gözlüğü 🕶️', 'Yelpaze 🪭'], exp: 'Yağmurdan şemsiye ile korunuruz.' },
+      { q: 'Cam şişe ve kavanozları doğaya atmak yerine nereye atmalıyız? 🍾♻️', spokenText: 'Cam şişeleri nereye atmalıyız?', a: 'Yeşil Cam Geri Dönüşüm Kutusuna ♻️', d: ['Kumsala veya ormana 🏖️', 'Pencereden dışarı 🚪'], exp: 'Cam atıklar yangın çıkarabilir, mutlaka cam kumbarasına atılmalıdır.' },
+      { q: 'Evdeki bitkilerimizi büyütmek için onlara ne vermeliyiz? 🌱', spokenText: 'Bitkileri büyütmek için ne vermeliyiz?', a: 'Güneş ışığı ve yeterli su ☀️💧', d: ['Kola ve meyve suyu 🥤', 'Çikolata 🍫'], exp: 'Bitkiler su ve güneş ışığı ile beslenir.' },
+      { q: 'Ağaç dikmek doğamıza ne kazandırır? 🌲', spokenText: 'Ağaç dikmek doğaya ne kazandırır?', a: 'Temiz hava ve bol oksijen 🌲💨', d: ['Hava kirliliği', 'Toz ve duman'], exp: 'Ağaçlar dünyamızın akciğerleridir, havayı temizler.' },
+      { q: 'Hangi davranış doğaya ZARAR verir? 🚫', spokenText: 'Hangi davranış doğaya zarar verir?', a: 'Piknikten sonra çöpleri ormanda bırakmak 🗑️', d: ['Fidan dikmek 🌱', 'Kuşlara yem vermek 🐦'], exp: 'Doğaya çöp bırakmak orman yangınlarına ve kirliliğe yol açar.' },
+      { q: 'Kışın dışarı çıkarken hangi giysileri tercih ederiz? 🧣', spokenText: 'Kışın hangi giysileri giyeriz?', a: 'Kalın mont, bere ve atkı 🧤', d: ['Mayo ve şort 🩳', 'Kısa kollu tişört 👕'], exp: 'Soğuk kış günlerinde kalın giyinerek hastalıklardan korunuruz.' },
+      { q: 'Denize veya akarsulara çöp atmak hangi canlılara zarar verir? 🐟', spokenText: 'Denize çöp atmak kime zarar verir?', a: 'Balıklara ve tüm deniz canlılarına 🐟🐢', d: ['Hiçbir canlıya zarar vermez', 'Sadece uçaklara'], exp: 'Su kirliliği denizdeki tüm canlıların yaşamını tehdit eder.' },
+      { q: 'Hangisi çevre dostu bir ulaşım aracıdır? 🚲', spokenText: 'Hangisi havayı kirletmeyen çevre dostu araçtır?', a: 'Bisiklet 🚲', d: ['Eski duman çıkaran kamyon 🚛', 'Uçak ✈️'], exp: 'Bisiklet yakıt tüketmez, havayı kirletmez ve sağlıklıdır.' }
+    ],
+
+    // Hayat Bilgisi 5 Tema Karma Motoru
+    generateGrade1LifeScienceKarma() {
+      const themeIdx = Math.floor(Math.random() * 5);
+      if (themeIdx === 0) return this.drawFromPool(this.grade1LifeScienceSchoolPool, "grade1LifeScienceSchoolPool");
+      if (themeIdx === 1) return this.drawFromPool(this.grade1LifeScienceHealthTrafficPool, "grade1LifeScienceHealthTrafficPool");
+      if (themeIdx === 2) return this.drawFromPool(this.grade1LifeScienceFamilyHomePool, "grade1LifeScienceFamilyHomePool");
+      if (themeIdx === 3) return this.drawFromPool(this.grade1LifeScienceCountryFlagPool, "grade1LifeScienceCountryFlagPool");
+      return this.drawFromPool(this.grade1LifeScienceNatureRecyclingPool, "grade1LifeScienceNatureRecyclingPool");
+    },
+
+
+    // --- 2. DERS: MATEMATİK (2026 Maarif Modeli 5 Konu - KESİN SINIR <= 20) ---
+
+    // Konu 1: Nesnelerin Geometrisi ve Uzamsal İlişkiler
+    generateGrade1SpatialGeo() {
       const mode = Math.floor(Math.random() * 3);
       if (mode === 0) {
-        // Hece sayısı bulma
-        const words = [
-          { word: 'KİTAP', count: 2, syllables: 'Kİ-TAP' },
-          { word: 'ÇANTA', count: 2, syllables: 'ÇAN-TA' },
-          { word: 'OKUL', count: 2, syllables: 'O-KUL' },
-          { word: 'KALEM', count: 2, syllables: 'KA-LEM' },
-          { word: 'ELMA', count: 2, syllables: 'EL-MA' },
-          { word: 'ARABA', count: 3, syllables: 'A-RA-BA' },
-          { word: 'KELEBEK', count: 3, syllables: 'KE-LE-BEK' },
-          { word: 'PAPAĞAN', count: 3, syllables: 'PA-PA-ĞAN' },
-          { word: 'DOMATES', count: 3, syllables: 'DO-MA-TES' },
-          { word: 'MERDİVEN', count: 3, syllables: 'MER-Dİ-VEN' },
-          { word: 'ŞEMSİYE', count: 3, syllables: 'ŞEM-Sİ-YE' },
-          { word: 'BİLGİSAYAR', count: 4, syllables: 'BİL-Gİ-SA-YAR' },
-          { word: 'TELEVİZYON', count: 4, syllables: 'TE-LE-VİZ-YON' },
-          { word: 'CUMHURİYET', count: 4, syllables: 'CUM-HU-Rİ-YET' },
-          { word: 'KÜTÜPHANE', count: 3, syllables: 'KÜ-TÜP-HA-NE' }
+        // Geometrik Şekil Özellikleri (Üçgen, Kare, Dikdörtgen, Çember)
+        const shapes = [
+          { q: '3 kenarı ve 3 köşesi olan geometrik şekil hangisidir? 🔺', spoken: 'Üç kenarı ve üç köşesi olan geometrik şekil hangisidir?', a: 'Üçgen 🔺', d: ['Kare 🟦', 'Dikdörtgen 🚪'], exp: 'Üçgenin 3 kenarı ve 3 köşesi vardır.' },
+          { q: '4 kenarı, 4 köşesi olan ve tüm kenar uzunlukları birbirine EŞİT şekil hangisidir? 🟦', spoken: 'Dört kenarı eşit olan geometrik şekil hangisidir?', a: 'Kare 🟦', d: ['Üçgen 🔺', 'Çember ⚪'], exp: 'Karenin 4 kenarı eşittir ve 4 köşesi vardır.' },
+          { q: '2 uzun ve 2 kısa kenarı olan, 4 köşeli şekil hangisidir? 🚪', spoken: 'İki uzun ve iki kısa kenarı olan şekil hangisidir?', a: 'Dikdörtgen 🚪', d: ['Kare 🟦', 'Üçgen 🔺'], exp: 'Dikdörtgenin karşılıklı kenarları eşittir: 2 uzun, 2 kısa.' },
+          { q: 'Hiç köşesi ve düz kenarı olmayan, yuvarlak şekil hangisidir? ⚪', spoken: 'Köşesi ve kenarı olmayan yuvarlak şekil hangisidir?', a: 'Çember ⚪', d: ['Kare 🟦', 'Üçgen 🔺'], exp: 'Çember yuvarlaktır, köşesi ve kenarı yoktur.' },
+          { q: 'Karenin kaç adet köşesi vardır? 🟦', spoken: 'Karenin kaç köşesi vardır?', a: '4 köşe 🟦', d: ['3 köşe 🔺', '0 köşe ⚪'], exp: 'Karenin 4 köşesi ve 4 kenarı bulunur.' },
+          { q: 'Üçgenin kaç adet kenarı vardır? 🔺', spoken: 'Üçgenin kaç kenarı vardır?', a: '3 kenar 🔺', d: ['4 kenar 🟦', '2 kenar'], exp: 'Üçgen 3 kenardan oluşur.' },
+          { q: 'Çemberin kaç adet köşesi vardır? ⚪', spoken: 'Çemberin kaç köşesi vardır?', a: '0 (Köşesi yoktur) ⚪', d: ['1 köşe', '4 köşe'], exp: 'Çember yuvarlaktır, hiç köşesi yoktur.' }
         ];
-        const item = words[Math.floor(Math.random() * words.length)];
+        const item = shapes[Math.floor(Math.random() * shapes.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else if (mode === 1) {
+        // Günlük Hayattaki Eşyaların Şekli
+        const items = [
+          { q: 'Sınıfımızdaki yazı tahtası veya kapı hangi şekle benzer? 🚪', spoken: 'Yazı tahtası veya sınıf kapısı hangi şekle benzer?', a: 'Dikdörtgen 🚪', d: ['Çember ⚪', 'Üçgen 🔺'], exp: 'Yazı tahtası 2 uzun 2 kısa kenarlı dikdörtgendir.' },
+          { q: 'Oyun zarı 🎲 veya hediye kutusu hangi geometrik şekle benzer?', spoken: 'Oyun zarı hangi geometrik şekle benzer?', a: 'Kare 🟦', d: ['Üçgen 🔺', 'Çember ⚪'], exp: 'Zarın her yüzeyi karedir.' },
+          { q: 'Futbol topu ⚽ veya madeni 1 TL paramız hangi şekle benzer?', spoken: 'Futbol topu veya madeni paramız hangi şekle benzer?', a: 'Çember / Daire ⚪', d: ['Kare 🟦', 'Üçgen 🔺'], exp: 'Madeni para ve top yuvarlaktır, çembere benzer.' },
+          { q: 'Trafikteki tehlike uyarı levhaları ⚠️ hangi şekildedir?', spoken: 'Trafikteki tehlike uyarı levhası hangi şekildedir?', a: 'Üçgen 🔺', d: ['Kare 🟦', 'Çember ⚪'], exp: 'Uyarı levhaları çoğunlukla üçgendir.' },
+          { q: 'Bir dilim pizza 🍕 genellikle hangi geometrik şekle benzer?', spoken: 'Bir dilim pizza hangi şekle benzer?', a: 'Üçgen 🔺', d: ['Kare 🟦', 'Dikdörtgen 🚪'], exp: 'Pizza dilimi 3 köşeli üçgene benzer.' }
+        ];
+        const item = items[Math.floor(Math.random() * items.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else {
+        // Uzamsal İlişkiler (Üstünde-Altında, İçinde-Dışında, Sağında-Solunda, Arasında, Yüksek-Alçak)
+        const spatialItems = [
+          { q: 'Elma masanın ÜSTÜNDE 🍎, çanta masanın ALTINDA 🎒 duruyor. Masanın ÜSTÜNDE ne vardır?', spoken: 'Masanın üstünde ne vardır?', a: 'Elma 🍎', d: ['Çanta 🎒', 'Kalem ✏️'], exp: 'Elma masanın üstündedir.' },
+          { q: 'Kedi kutunun İÇİNDE 🐱, köpek kutunun DIŞINDA 🐶 duruyor. Kutunun İÇİNDE kim vardır?', spoken: 'Kutunun içinde kim vardır?', a: 'Kedi 🐱', d: ['Köpek 🐶', 'Kuş 🐦'], exp: 'Kedi kutunun içindedir.' },
+          { q: 'Ağacın SAĞINDA sincap 🐿️, SOLUNDA tavşan 🐰 var. Ağacın SAĞINDA kim vardır?', spoken: 'Ağacın sağında kim vardır?', a: 'Sincap 🐿️', d: ['Tavşan 🐰', 'Kedi 🐱'], exp: 'Sincap ağacın sağ tarafındadır.' },
+          { q: 'Ali ile Ayşe\'nin TAM ARASINDA Can duruyor. Ortada duran kimdir? 👦', spoken: 'Ali ile Ayşe\'nin tam arasında kim duruyor?', a: 'Can 👦', d: ['Ali 👦', 'Ayşe 👧'], exp: 'İki kişinin arasında Can durmaktadır.' },
+          { q: 'Uçak gökyüzünde YÜKSEKTE ✈️, karınca yerde ALÇAKTA 🐜 yürüyor. Hangisi DAHA YÜKSEKTEDİR?', spoken: 'Hangisi daha yüksektedir?', a: 'Uçak ✈️', d: ['Karınca 🐜', 'İkisi de aynı'], exp: 'Uçak gökyüzünde daha yüksekte uçar.' }
+        ];
+        const item = spatialItems[Math.floor(Math.random() * spatialItems.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      }
+    },
+
+    // Konu 2: Sayılar ve Nicelikler (1-20 Arası, Onluk-Birlik, Ritmik Sayma)
+    generateGrade1NumbersQuantities() {
+      const mode = Math.floor(Math.random() * 4);
+      if (mode === 0) {
+        // Onluk ve Birlik Kavramı (10-19)
+        const units = Math.floor(Math.random() * 10); // 0..9
+        const num = 10 + units;
+        if (Math.random() > 0.5) {
+          return {
+            question: '1 Onluk ve ' + units + ' Birlikten oluşan sayı kaçtır? 📦',
+            spokenText: 'Bir onluk ve ' + units + ' birlikten oluşan sayı kaçtır?',
+            correct: num.toString(),
+            distractors: [(num > 10 ? num - 1 : 12).toString(), (num < 19 ? num + 1 : 18).toString()],
+            explanation: '1 Onluk = 10, ' + units + ' Birlik = ' + units + '. Toplam 10 + ' + units + ' = ' + num + ' eder.'
+          };
+        } else {
+          return {
+            question: '"' + num + '" sayısında kaç ONLUK ve kaç BİRLİK vardır? 📦',
+            spokenText: num + ' sayısında kaç onluk ve kaç birlik vardır?',
+            correct: '1 Onluk, ' + units + ' Birlik',
+            distractors: [units + ' Onluk, 1 Birlik', '2 Onluk, ' + units + ' Birlik'],
+            explanation: num + ' sayısı 1 onluk (10) ve ' + units + ' birlikten oluşur.'
+          };
+        }
+      } else if (mode === 1) {
+        // Sayı Karşılaştırması (Büyük-Küçük, 1..20)
+        const n1 = Math.floor(Math.random() * 16) + 3; // 3..18
+        let n2 = Math.floor(Math.random() * 16) + 3;
+        while (n2 === n1) n2 = Math.floor(Math.random() * 16) + 3;
+        const wantBigger = Math.random() > 0.5;
+        const correct = wantBigger ? Math.max(n1, n2) : Math.min(n1, n2);
+        const wrong = wantBigger ? Math.min(n1, n2) : Math.max(n1, n2);
         return {
-          question: `"${item.word}" sözcüğü kaç hecelidir? 📖`,
-          spokenText: `"${item.word.toLowerCase('tr-TR')}" sözcüğü kaç hecelidir?`,
-          correct: `${item.count} hece`,
-          distractors: [`${item.count + 1} hece`, `${Math.max(1, item.count - 1)} hece`],
-          explanation: `"${item.word}" kelimesi ${item.syllables} şeklinde ayrılır ve ${item.count} hecelidir.`
+          question: wantBigger ? 'Hangisi DİĞERİNDEN DAHA BÜYÜKTÜR? (' + n1 + ' mi, ' + n2 + ' mi?) 🔢' : 'Hangisi DİĞERİNDEN DAHA KÜÇÜKTÜR? (' + n1 + ' mi, ' + n2 + ' mi?) 🔢',
+          spokenText: wantBigger ? n1 + ' ile ' + n2 + ' sayılarından hangisi daha büyüktür?' : n1 + ' ile ' + n2 + ' sayılarından hangisi daha küçüktür?',
+          correct: correct.toString(),
+          distractors: [wrong.toString(), (correct === 20 ? 19 : correct + 1).toString()],
+          explanation: wantBigger ? correct + ' sayısı ' + wrong + ' sayısından daha büyüktür.' : correct + ' sayısı ' + wrong + ' sayısından daha küçüktür.'
+        };
+      } else if (mode === 2) {
+        // Sıra Sayıları (1., 2., 3., 4., 5.)
+        const ordinals = [
+          { q: 'Koşu yarışında en önde bitiş çizgisine ulaşan kaçıncı olur? 🥇', spoken: 'Yarışta en önde bitişe ulaşan kaçıncı olur?', a: '1. (Birinci) 🥇', d: ['2. (İkinci) 🥈', '3. (Üçüncü) 🥉'], exp: 'En öndeki kişi 1. (birinci) olur.' },
+          { q: 'Yarışı 1. bitirenin hemen arkasından gelen kişi kaçıncı olur? 🥈', spoken: 'Birincinin hemen arkasındaki kaçıncı olur?', a: '2. (İkinci) 🥈', d: ['3. (Üçüncü) 🥉', '1. (Birinci) 🥇'], exp: 'Birinciden hemen sonra gelen 2. (ikinci) olur.' },
+          { q: '14 sayısından hemen ÖNCE gelen sayı kaçtır? 🔢', spoken: '14 sayısından hemen önce gelen sayı kaçtır?', a: '13', d: ['15', '12'], exp: '14\'ten bir önce 13 gelir.' },
+          { q: '17 sayısından hemen SONRA gelen sayı kaçtır? 🔢', spoken: '17 sayısından hemen sonra gelen sayı kaçtır?', a: '18', d: ['16', '19'], exp: '17\'den bir sonra 18 gelir.' }
+        ];
+        const item = ordinals[Math.floor(Math.random() * ordinals.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else {
+        // 1. Sınıf Ritmik Sayma (2'şer en çok 20, 5'er en çok 50, 10'ar en çok 100)
+        const rhythmType = Math.floor(Math.random() * 3);
+        if (rhythmType === 0) {
+          // 2'şer ileri sayma (2..20)
+          const start = [2, 4, 6, 8, 10, 12, 14][Math.floor(Math.random() * 7)];
+          const s1 = start, s2 = s1 + 2, s3 = s2 + 2, ans = s3 + 2;
+          return {
+            question: s1 + ' - ' + s2 + ' - ' + s3 + ' - ? (2\'şer ileri sayma)',
+            spokenText: s1 + ', ' + s2 + ', ' + s3 + '... İkişer sayarken sıradaki sayı kaçtır?',
+            correct: ans.toString(),
+            distractors: [(ans + 2).toString(), (ans - 1).toString()],
+            explanation: 'Sayılar 2\'şer artmaktadır. ' + s3 + '\'ten sonra ' + ans + ' gelir.'
+          };
+        } else if (rhythmType === 1) {
+          // 5'er ileri sayma (5..50)
+          const start = [5, 10, 15, 20, 25, 30, 35][Math.floor(Math.random() * 7)];
+          const s1 = start, s2 = s1 + 5, s3 = s2 + 5, ans = s3 + 5;
+          return {
+            question: s1 + ' - ' + s2 + ' - ' + s3 + ' - ? (5\'er ileri sayma)',
+            spokenText: s1 + ', ' + s2 + ', ' + s3 + '... Beşer sayarken sıradaki sayı kaçtır?',
+            correct: ans.toString(),
+            distractors: [(ans + 5).toString(), (ans - 5).toString()],
+            explanation: 'Sayılar 5\'er artmaktadır. ' + s3 + '\'ten sonra ' + ans + ' gelir.'
+          };
+        } else {
+          // 10'ar ileri veya geri sayma (10..100)
+          const start = [10, 20, 30, 40, 50, 60, 70][Math.floor(Math.random() * 7)];
+          const s1 = start, s2 = s1 + 10, s3 = s2 + 10, ans = s3 + 10;
+          return {
+            question: s1 + ' - ' + s2 + ' - ' + s3 + ' - ? (10\'ar ileri sayma)',
+            spokenText: s1 + ', ' + s2 + ', ' + s3 + '... Onar sayarken sıradaki sayı kaçtır?',
+            correct: ans.toString(),
+            distractors: [(ans + 10).toString(), (ans - 10).toString()],
+            explanation: 'Sayılar 10\'ar artmaktadır. ' + s3 + '\'ten sonra ' + ans + ' gelir.'
+          };
+        }
+      }
+    },
+
+    // Konu 3: İşlemlerden Cebirsel Düşünmeye (Toplama, Çıkarma, Örüntü - KESİN TOPLAM <= 20)
+    generateGrade1OperationsPatterns() {
+      const mode = Math.floor(Math.random() * 4);
+      if (mode === 0) {
+        // Toplamı 20'yi geçmeyen Doğal Sayılarla Toplama
+        const a = Math.floor(Math.random() * 11) + 2; // 2..12
+        const maxB = 20 - a;
+        const b = Math.floor(Math.random() * Math.min(8, maxB)) + 1; // 1..maxB
+        const ans = a + b;
+        return {
+          question: a + ' + ' + b + ' = ? ➕',
+          spokenText: a + ' artı ' + b + ' kaç eder?',
+          correct: ans.toString(),
+          distractors: [(ans + 1).toString(), (ans > 1 ? ans - 1 : ans + 2).toString()],
+          explanation: a + ' sayısına ' + b + ' eklediğimizde ' + ans + ' elde ederiz.'
         };
       } else if (mode === 1) {
-        // Ünlü (Sesli) Harf Tanıma
-        const vowels = ['A', 'E', 'I', 'İ', 'O', 'Ö', 'U', 'Ü'];
-        const consonants = ['B', 'C', 'D', 'F', 'G', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'V', 'Y', 'Z'];
-        const targetVowel = vowels[Math.floor(Math.random() * vowels.length)];
-        const shuffledCons = [...consonants].sort(() => 0.5 - Math.random());
+        // 20'ye kadar Sayılarla Çıkarma (Eksiltme)
+        const a = Math.floor(Math.random() * 13) + 7; // 7..19
+        const b = Math.floor(Math.random() * (a - 2)) + 1; // 1..a-2
+        const ans = a - b;
         return {
-          question: 'Aşağıdakilerden hangisi bir SESLİ (ÜNLÜ) harftir? 🔤',
-          spokenText: 'Aşağıdakilerden hangisi bir sesli harftir?',
-          correct: targetVowel,
-          distractors: [shuffledCons[0], shuffledCons[1]],
-          explanation: `Alfabemizdeki ünlü harfler: A, E, I, İ, O, Ö, U, Ü. "${targetVowel}" bir ünlü harftir.`
+          question: a + ' - ' + b + ' = ? ➖',
+          spokenText: a + ' eksi ' + b + ' kaç eder?',
+          correct: ans.toString(),
+          distractors: [(ans + 1).toString(), Math.max(0, ans - 1).toString()],
+          explanation: a + ' sayısından ' + b + ' geriye doğru saydığımızda ' + ans + ' kalır.'
+        };
+      } else if (mode === 2) {
+        // Zihinden 10'a Tamamlama
+        const a = Math.floor(Math.random() * 9) + 1; // 1..9
+        const complement = 10 - a;
+        return {
+          question: a + ' sayısına kaç eklersek sonuç 10 olur? 🔟',
+          spokenText: a + ' sayısına kaç eklersek sonuç on olur?',
+          correct: complement.toString(),
+          distractors: [(complement + 1).toString(), Math.max(1, complement - 1).toString()],
+          explanation: a + ' + ' + complement + ' = 10 eder.'
         };
       } else {
-        // Sözcükteki sesli harf sayısı
-        const words = [
-          { word: 'OKUL', vowels: 'O, U', count: 2 },
-          { word: 'KALEM', vowels: 'A, E', count: 2 },
-          { word: 'KİTAPLIK', vowels: 'İ, A, I', count: 3 },
-          { word: 'TÜRKİYE', vowels: 'Ü, İ, E', count: 3 },
-          { word: 'ARABA', vowels: 'A, A, A', count: 3 },
-          { word: 'GÜNEŞ', vowels: 'Ü, E', count: 2 }
+        // Şekil ve Basit Sayı Örüntüleri
+        const patternType = Math.floor(Math.random() * 3);
+        if (patternType === 0) {
+          return {
+            question: '🔺 🟦 🔺 🟦 🔺 ? (Sıradaki şekil hangisidir?) 🧩',
+            spokenText: 'Üçgen, kare, üçgen, kare, üçgen... Sıradaki şekil hangisidir?',
+            correct: '🟦 (Kare)',
+            distractors: ['🔺 (Üçgen)', '⚪ (Çember)'],
+            explanation: 'Örüntü bir üçgen, bir kare şeklinde ilerlemektedir. Sıradaki şekil mavidir (kare).'
+          };
+        } else if (patternType === 1) {
+          return {
+            question: '🍎 🍌 🍎 🍌 🍎 ? (Sıradaki meyve hangisidir?) 🍎🍌',
+            spokenText: 'Elma, muz, elma, muz, elma... Sıradaki meyve hangisidir?',
+            correct: '🍌 (Muz)',
+            distractors: ['🍎 (Elma)', '🍓 (Çilek)'],
+            explanation: 'Örüntü elma-muz sırasıyla gitmektedir. Elmadan sonra muz gelir.'
+          };
+        } else {
+          return {
+            question: '1 - 3 - 5 - 7 - ? (Kurala göre eksik sayı kaçtır?) 🔢',
+            spokenText: '1, 3, 5, 7... Sıradaki sayı kaçtır?',
+            correct: '9',
+            distractors: ['8', '10'],
+            explanation: 'Sayılar ikişer ikişer artan bir örüntü oluşturmaktadır. 7 + 2 = 9 eder.'
+          };
+        }
+      }
+    },
+
+    // Konu 4: Ölçme, Paralarımız ve Zaman (Saatler, TL & Kuruş, Karış-Adım)
+    generateGrade1MeasureMoneyTime() {
+      const mode = Math.floor(Math.random() * 4);
+      if (mode === 0) {
+        // Saatler (Tam ve Yarım Saatler)
+        const hour = Math.floor(Math.random() * 11) + 1; // 1..11
+        const isHalf = Math.random() > 0.5;
+        if (isHalf) {
+          return {
+            question: 'Akrep ' + hour + ' ile ' + (hour + 1) + ' arasında, yelkovan 6\'yı gösterirken saat kaçtır? ⏰',
+            spokenText: 'Akrep ' + hour + ' ile ' + (hour + 1) + ' arasında, yelkovan altıyı gösterirken saat kaçtır?',
+            correct: 'Saat ' + hour + ' buçuk ⏰',
+            distractors: ['Saat ' + hour + ' ⏰', 'Saat ' + (hour + 1) + ' ⏰'],
+            explanation: 'Yelkovan 6\'nın üzerindeyken saat "buçuk" (yarım saat) demektir. Saat ' + hour + ' buçuktur.'
+          };
+        } else {
+          return {
+            question: 'Akrep ' + hour + '\'i, yelkovan tam 12\'yi gösterirken saat kaçtır? ⏰',
+            spokenText: 'Akrep ' + hour + ' üzerinde, yelkovan tam 12 üzerinde olduğunda saat kaçtır?',
+            correct: 'Saat ' + hour + ' (Tam saat) ⏰',
+            distractors: ['Saat ' + hour + ' buçuk ⏰', 'Saat ' + (hour === 12 ? 1 : hour + 1) + ' ⏰'],
+            explanation: 'Yelkovan 12\'nin üzerindeyken saat tam saati gösterir: Saat ' + hour + '.'
+          };
+        }
+      } else if (mode === 1) {
+        // Paralarımız (TL ve Kuruşlar)
+        const moneyQuestions = [
+          { q: '1 Türk Lirası (1 TL) kaç kuruşa eşittir? 🪙', spoken: '1 Türk Lirası kaç kuruşa eşittir?', a: '100 Kuruş 🪙', d: ['50 Kuruş 🪙', '10 Kuruş 🪙'], exp: '1 TL = 100 Kuruştur.' },
+          { q: 'En büyük madeni (demir) paramız hangisidir? 🪙', spoken: 'En büyük madeni paramız hangisidir?', a: '1 Türk Lirası (1 TL) 🪙', d: ['50 Kuruş 🪙', '25 Kuruş 🪙'], exp: 'Madeni paralarımızın en büyüğü 1 TL\'dir.' },
+          { q: 'En küçük değerli kağıt paramız hangisidir? 💵', spoken: 'En küçük değerli kağıt paramız hangisidir?', a: '5 TL 💵', d: ['10 TL 💵', '20 TL 💵'], exp: 'Kağıt paralarımızın en küçüğü 5 TL\'dir.' },
+          { q: '2 tane 50 Kuruş bir araya gelirse kaç TL eder? 🪙', spoken: 'İki tane elli kuruş bir araya gelirse kaç lira eder?', a: '1 TL 🪙', d: ['2 TL 🪙', '75 Kuruş 🪙'], exp: '50 Kr + 50 Kr = 100 Kr = 1 TL eder.' },
+          { q: '2 tane 10 TL kağıt para toplam kaç TL eder? 💵', spoken: 'İki tane on lira kağıt para kaç lira eder?', a: '20 TL 💵', d: ['15 TL 💵', '30 TL 💵'], exp: '10 + 10 = 20 TL eder.' },
+          { q: 'Kumbarasında 12 TL olan Efe\'ye dedesi 5 TL harçlık verdi. Efe\'nin kaç TL\'si oldu? 🪙', spoken: 'Kumbarasında 12 lirası olan Efe\'ye dedesi 5 lira verirse kaç lirası olur?', a: '17 TL 💵', d: ['15 TL 💵', '18 TL 💵'], exp: '12 + 5 = 17 TL olur.' },
+          { q: 'Tanesi 4 TL olan kalemden 2 tane alan Zeynep kaç TL öder? ✏️', spoken: 'Tanesi 4 lira olan kalemden iki tane alan Zeynep kaç lira öder?', a: '8 TL 💵', d: ['6 TL 💵', '10 TL 💵'], exp: '4 + 4 = 8 TL öder.' }
         ];
-        const item = words[Math.floor(Math.random() * words.length)];
+        const item = moneyQuestions[Math.floor(Math.random() * moneyQuestions.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else if (mode === 2) {
+        // Standart Olmayan Ölçüler ve Sıvı Ölçme
+        const measures = [
+          { q: 'Parmaklarımızı yana doğru açtığımızda başparmak ile serçeparmak arasındaki mesafeye ne denir? ✋', spoken: 'Başparmak ile serçeparmak arasındaki mesafeye ne ad verilir?', a: 'Karış ✋', d: ['Adım 👟', 'Kulaç 👐'], exp: 'Açılmış el parmakları arasındaki mesafeye karış denir.' },
+          { q: 'Yürürken iki ayağımızın açıklığı arasındaki mesafeye ne denir? 🚶‍♂️', spoken: 'Yürürken iki ayağımız arasındaki mesafeye ne ad verilir?', a: 'Adım 👟', d: ['Karış ✋', 'Parmak ☝️'], exp: 'Yürürken atılan mesafeye adım denir.' },
+          { q: 'İki kolumuzu iki yana doğru sonuna kadar açtığımızda oluşan uzunluğa ne denir? 👐', spoken: 'İki kolumuzu iki yana açtığımızda oluşan mesafeye ne ad verilir?', a: 'Kulaç 👐', d: ['Ayak 🦶', 'Karış ✋'], exp: 'İki kolun iki yana açık mesafesi kulaçtır.' },
+          { q: 'İçinde hiç su kalmamış bir bardağa ne denir? 🥛', spoken: 'İçinde hiç su olmayan bardağa ne denir?', a: 'Boş bardak 🥛', d: ['Dolu bardak 🥛', 'Yarım bardak 🥛'], exp: 'İçinde sıvı olmayan kap boştur.' },
+          { q: 'Çizgisine kadar su ile doldurulmuş bir bardağa ne denir? 🥛', spoken: 'Tamamen su doldurulmuş bardağa ne denir?', a: 'Dolu bardak 🥛', d: ['Boş bardak 🥛', 'Yarım bardak 🥛'], exp: 'Ağzına kadar sıvıyla kaplanmış kap doludur.' }
+        ];
+        const item = measures[Math.floor(Math.random() * measures.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else {
+        // Zaman Kavramları (Günler, Aylar, Dün-Bugün-Yarın)
+        const timeItems = [
+          { q: 'Bir haftada toplam kaç gün vardır? 📅', spoken: 'Bir haftada kaç gün vardır?', a: '7 gün 📅', d: ['5 gün', '10 gün'], exp: 'Bir hafta 7 gündür (Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar).' },
+          { q: 'Bir yılda toplam kaç ay vardır? 📅', spoken: 'Bir yılda kaç ay vardır?', a: '12 ay 📅', d: ['4 ay', '10 ay'], exp: 'Bir takvim yılında 12 ay bulunur.' },
+          { q: 'Bugün GÜNLERDEN PAZARTESİ ise YARIN hangi gündür? ☀️', spoken: 'Bugün günlerden Pazartesi ise yarın hangi gündür?', a: 'Salı ☀️', d: ['Çarşamba', 'Pazar'], exp: 'Pazartesi gününden sonra Salı gelir.' },
+          { q: 'Bugün GÜNLERDEN ÇARŞAMBA ise DÜN hangi gündü? 📅', spoken: 'Bugün Çarşamba ise dün hangi gündü?', a: 'Salı 📅', d: ['Pazartesi', 'Perşembe'], exp: 'Çarşamba gününden bir önceki gün Salı\'dır.' }
+        ];
+        const item = timeItems[Math.floor(Math.random() * timeItems.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      }
+    },
+
+    // Konu 5: Veriden Olasılığa (Tablo ve Grafik Dedektifi)
+    generateGrade1DataTables() {
+      const mode = Math.floor(Math.random() * 3);
+      if (mode === 0) {
+        // Meyve Tablosu (3 Kategori)
+        const apples = Math.floor(Math.random() * 4) + 4; // 4..7
+        const bananas = Math.floor(Math.random() * 3) + 2; // 2..4
+        const strawberries = Math.floor(Math.random() * 3) + 1; // 1..3
+        const qType = Math.floor(Math.random() * 3);
+        if (qType === 0) {
+          return {
+            question: '📊 [Tablo: Elma: ' + apples + ' tane 🍎 | Muz: ' + bananas + ' tane 🍌 | Çilek: ' + strawberries + ' tane 🍓]\nTabloya göre EN ÇOK hangi meyveden vardır? 🔍',
+            spokenText: 'Elma ' + apples + ', muz ' + bananas + ', çilek ' + strawberries + ' tane. Tabloya göre en çok hangi meyve vardır?',
+            correct: 'Elma (' + apples + ' tane) 🍎',
+            distractors: ['Muz (' + bananas + ' tane) 🍌', 'Çilek (' + strawberries + ' tane) 🍓'],
+            explanation: apples + ' sayısı ' + bananas + ' ve ' + strawberries + '\'ten daha büyüktür. En çok elma vardır.'
+          };
+        } else if (qType === 1) {
+          return {
+            question: '📊 [Tablo: Elma: ' + apples + ' 🍎 | Muz: ' + bananas + ' 🍌 | Çilek: ' + strawberries + ' 🍓]\nTabloya göre EN AZ hangi meyveden vardır? 🔍',
+            spokenText: 'Elma ' + apples + ', muz ' + bananas + ', çilek ' + strawberries + ' tane. Tabloya göre en az hangi meyve vardır?',
+            correct: 'Çilek (' + strawberries + ' tane) 🍓',
+            distractors: ['Elma (' + apples + ' tane) 🍎', 'Muz (' + bananas + ' tane) 🍌'],
+            explanation: strawberries + ' sayısı diğerlerinden küçüktür. En az çilek vardır.'
+          };
+        } else {
+          const diff = apples - bananas;
+          return {
+            question: '📊 [Tablo: Elma: ' + apples + ' 🍎 | Muz: ' + bananas + ' 🍌]\nElmaların sayısı muzlardan KAÇ FAZLADIR? 🍎➖🍌',
+            spokenText: 'Elma ' + apples + ', muz ' + bananas + ' tane. Elmalar muzlardan kaç fazladır?',
+            correct: diff.toString(),
+            distractors: [(diff + 1).toString(), Math.max(1, diff - 1).toString()],
+            explanation: apples + ' - ' + bananas + ' = ' + diff + ' fazladır.'
+          };
+        }
+      } else if (mode === 1) {
+        // Oyuncak Tablosu (Araba, Top, Ayıcık)
+        const cars = 5, balls = 3, bears = 4;
+        const total = cars + balls + bears;
         return {
-          question: `"${item.word}" kelimesinde kaç tane sesli (ünlü) harf vardır? 🔤`,
-          spokenText: `"${item.word.toLowerCase('tr-TR')}" kelimesinde kaç tane sesli harf vardır?`,
-          correct: item.count.toString(),
-          distractors: [(item.count + 1).toString(), Math.max(1, item.count - 1).toString()],
-          explanation: `"${item.word}" sözcüğündeki sesli harfler (${item.vowels}) toplam ${item.count} tanedir.`
+          question: '📊 [Sepet: 5 Araba 🚗 | 3 Top ⚽ | 4 Oyuncak Ayı 🧸]\nSepette TOPLAM kaç oyuncak vardır? 🧸➕⚽➕🚗',
+          spokenText: 'Sepette 5 araba, 3 top ve 4 oyuncak ayı vardır. Toplam kaç oyuncak vardır?',
+          correct: total + ' oyuncak',
+          distractors: [(total + 2) + ' oyuncak', (total - 2) + ' oyuncak'],
+          explanation: '5 + 3 + 4 = ' + total + ' oyuncak eder.'
+        };
+      } else {
+        // Hayvan Grafiği (Kedi, Köpek, Kuş)
+        return {
+          question: '📊 [Bahçe: 6 Kedi 🐱 | 4 Köpek 🐶 | 2 Kuş 🐦]\nKediler köpeklerden kaç fazladır? (6 - 4) 🐱➖🐶',
+          spokenText: 'Bahçede 6 kedi ve 4 köpek var. Kediler köpeklerden kaç fazladır?',
+          correct: '2',
+          distractors: ['3', '1'],
+          explanation: '6 - 4 = 2 fazladır.'
         };
       }
     },
 
-    // 1. SINIF: OKULUMUZDA VE EVİMİZDE HAYAT (26 ÖZGÜN SORU)
+    // Matematik Tüm Müfredat Karma Motoru
+    generateGrade1MathKarma() {
+      const topicIdx = Math.floor(Math.random() * 5);
+      if (topicIdx === 0) return this.generateGrade1SpatialGeo();
+      if (topicIdx === 1) return this.generateGrade1NumbersQuantities();
+      if (topicIdx === 2) return this.generateGrade1OperationsPatterns();
+      if (topicIdx === 3) return this.generateGrade1MeasureMoneyTime();
+      return this.generateGrade1DataTables();
+    },
+
+
+    // --- 3. DERS: TÜRKÇE (2026 Maarif Modeli - Okuma Anlama, Zıt Kavramlar, Cümle & Noktalama) ---
+
+    // Konu 1: Dinleme ve Görsel Okuma Havuzu (22 Soru)
+    grade1TurkishListeningComprehensionPool: [
+      { q: '🔊 "Ali bahçede sarı köpeğiyle neşeyle top oynuyor."\nBu cümleyi anlatan görsel hangisidir? 🐕⚽', spokenText: 'Ali bahçede sarı köpeğiyle neşeyle top oynuyor. Bu cümleyi anlatan görsel hangisidir?', a: 'Top oynayan çocuk ve sevimli köpek 🐕⚽', d: ['Denizde yüzen balık 🐟', 'Gökyüzünde uçan uçak ✈️'], exp: 'Cümle bahçede köpekle top oynamayı anlatmaktadır.' },
+      { q: '🔊 "Gökyüzünde kara bulutlar belirdi, yağmur başlayınca Elif renkli şemsiyesini açtı."\nElif yağmurdan korunmak için ne yapmıştır? ☔', spokenText: 'Gökyüzünde kara bulutlar belirdi, yağmur başlayınca Elif renkli şemsiyesini açtı. Elif ne yapmıştır?', a: 'Şemsiyesini açmıştır ☔', d: ['Güneş gözlüğü takmıştır 🕶️', 'Denize atlamıştır 🏊‍♀️'], exp: 'Elif yağmurdan korunmak için şemsiyesini açmıştır.' },
+      { q: '🔊 "Küçük kedi Minnoş ağacın tepesine çıktı ama aşağı inemedi. İtfaiyeci merdivenle onu kurtardı."\nKediyi ağaçtan kim kurtarmıştır? 🚒', spokenText: 'Küçük kedi Minnoş ağacın tepesine çıktı ama aşağı inemedi. İtfaiyeci merdivenle onu kurtardı. Kediyi kim kurtarmıştır?', a: 'İtfaiyeci 🚒', d: ['Doktor 🩺', 'Aşçı 🍳'], exp: 'Kedi Minnoş\'u itfaiyeci merdivenle kurtarmıştır.' },
+      { q: '⏳ Olayların oluş sırasına göre ÖNCE hangisi yapılır? 🧼🥪', spokenText: 'Olayların oluş sırasına göre önce hangisi yapılır?', a: 'Eller sabunla yıkanır 🧼', d: ['Yemek afiyetle yenir 🥪', 'Dişler fırçalanır 🪥'], exp: 'Yemek yemeden önce ilk olarak eller su ve sabunla yıkanır.' },
+      { q: '⏳ Fidan yetiştirirken ÖNCE hangisi yapılır? 🌱', spokenText: 'Fidan yetiştirirken ilk önce hangisi yapılır?', a: 'Tohum toprağa ekilir 🌱', d: ['Ağaçtan elma toplanır 🍎', 'Kocaman dallar budanır 🌳'], exp: 'Bitkinin büyümesi için önce tohum toprağa ekilir.' },
+      { q: '🔊 "Sabah horozun ötüşüyle uyanan Ahmet, elini yüzünü yıkayıp kahvaltısını yaptı."\nAhmet\'i sabah kim uyandırmıştır? 🐓', spokenText: 'Sabah horozun ötüşüyle uyanan Ahmet kahvaltısını yaptı. Ahmet\'i kim uyandırmıştır?', a: 'Horozun ötüşü 🐓', d: ['Çalar saat zili ⏰', 'Televizyon sesi 📺'], exp: 'Ahmet horozun ötüşüyle uyanmıştır.' },
+      { q: '🔊 "Zeynep kütüphaneden aldığı resimli masal kitabını sessizce okudu."\nZeynep kütüphanede ne yapmıştır? 📖', spokenText: 'Zeynep kütüphaneden aldığı resimli masal kitabını okudu. Zeynep kütüphanede ne yapmıştır?', a: 'Masal kitabı okumuştur 📖', d: ['Top oynamıştır ⚽', 'Resim boyamıştır 🎨'], exp: 'Zeynep kütüphanede kitap okumuştur.' },
+      { q: '🔊 "Kuşlar sıcak ülkelere uçtu, ağaçlar sarı yapraklarını döktü."\nBu cümle hangi mevsimi anlatmaktadır? 🍂', spokenText: 'Kuşlar sıcak ülkelere uçtu, ağaçlar yapraklarını döktü. Bu cümle hangi mevsimi anlatır?', a: 'Sonbahar 🍂', d: ['Yaz ☀️', 'İlkbahar 🌸'], exp: 'Ağaçların yaprak dökmesi sonbahar mevsiminin özelliğidir.' },
+      { q: '⏳ Okula gitmeden önce ÖNCE hangisi yapılır? 🎒', spokenText: 'Okula gitmeden önce sabah ilk ne yapılır?', a: 'Yataktan kalkıp kahvaltı yapılır 🍳', d: ['Akşam ödevi yapılır 📝', 'Uykudan önce masal dinlenir 🌙'], exp: 'Güne başlarken önce uyanıp besleyici bir kahvaltı yapılır.' },
+      { q: '🔊 "Emre bahçedeki çiçekleri suladı, açan gülleri koklayıp gülümsedi."\nEmre bahçede ne yapmıştır? 🌷', spokenText: 'Emre bahçedeki çiçekleri suladı. Emre ne yapmıştır?', a: 'Çiçekleri sulamıştır 🌷💧', d: ['Çiçekleri koparmıştır ✂️', 'Ağaca tırmanmıştır 🌲'], exp: 'Emre çiçeklere su vererek onları sulamıştır.' },
+      { q: '🔊 "Bembeyaz karlar her yeri kaplayınca çocuklar bahçede kardan adam yaptı."\nÇocuklar kardan adamı hangi mevsimde yapmıştır? ⛄', spokenText: 'Bembeyaz karlar her yeri kaplayınca kardan adam yapıldı. Hangi mevsimdir?', a: 'Kış ❄️', d: ['Yaz ☀️', 'İlkbahar 🌸'], exp: 'Kardan adam kar yağan kış mevsiminde yapılır.' },
+      { q: '🔊 "Güneş açınca denize koşan çocuklar kumdan kale yaptı."\nÇocuklar sahilde ne inşa etmiştir? 🏖️', spokenText: 'Güneş açınca denize koşan çocuklar kumdan ne yapmıştır?', a: 'Kumdan kale 🏰', d: ['Kardan adam ⛄', 'Taş köprü 🌉'], exp: 'Sahilde kumdan kale yapmışlardır.' }
+    ],
+
+    // Dinleme ve Görsel Okuma Üreteci
+    generateGrade1ListeningComprehension() {
+      const item = this.drawFromPool(this.grade1TurkishListeningComprehensionPool, "grade1TurkishListeningComprehensionPool");
+      return {
+        question: item.q,
+        spokenText: item.spokenText || item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
+    },
+
+    // Konu 2: Zıt Kavramlar Havuzu (35+ Kelime)
+    grade1AntonymsPool: [
+      { q: '"Büyük" kelimesinin zıt anlamlısı nedir? 🐘', spokenText: 'Büyük kelimesinin zıt anlamlısı nedir?', a: 'Küçük 🐁', d: ['Geniş', 'İri'], exp: 'Büyük ve Küçük birbirinin zıttıdır.' },
+      { q: '"Uzun" kelimesinin zıt anlamlısı nedir? 🦒', spokenText: 'Uzun kelimesinin zıt anlamlısı nedir?', a: 'Kısa', d: ['İnce', 'Düz'], exp: 'Uzun boyun zıttı kısa boydur.' },
+      { q: '"Sıcak" kelimesinin zıt anlamlısı nedir? ☀️', spokenText: 'Sıcak kelimesinin zıt anlamlısı nedir?', a: 'Soğuk ❄️', d: ['Ilık', 'Buz'], exp: 'Sıcak havanın zıttı soğuk havadır.' },
+      { q: '"Hızlı" kelimesinin zıt anlamlısı nedir? 🐆', spokenText: 'Hızlı kelimesinin zıt anlamlısı nedir?', a: 'Yavaş 🐢', d: ['Durgun', 'Sakin'], exp: 'Çita hızlıdır, kaplumbağa yavaştır.' },
+      { q: '"Açık" kapının zıt anlamlısı nedir? 🚪', spokenText: 'Açık kelimesinin zıt anlamlısı nedir?', a: 'Kapalı 🚪', d: ['Koyu', 'Kilitli'], exp: 'Açık kapının karşıtı kapalıdır.' },
+      { q: '"Dolu" bardağın zıt anlamlısı nedir? 🥛', spokenText: 'Dolu kelimesinin zıt anlamlısı nedir?', a: 'Boş 🥛', d: ['Yarım', 'Temiz'], exp: 'Dolu bardağın karşıtı boş bardaktır.' },
+      { q: '"Gece" kelimesinin zıt anlamlısı nedir? 🌙', spokenText: 'Gece kelimesinin zıt anlamlısı nedir?', a: 'Gündüz ☀️', d: ['Akşam', 'Sabah'], exp: 'Gece karanlık, gündüz aydınlıktır.' },
+      { q: '"Ağır" taşın zıt anlamlısı nedir? 🪨', spokenText: 'Ağır kelimesinin zıt anlamlısı nedir?', a: 'Hafif 🪶', d: ['Küçük', 'Yumuşak'], exp: 'Taş ağırdır, kuş tüyü hafiftir.' },
+      { q: '"Ön" kelimesinin zıt anlamlısı nedir? 🚗', spokenText: 'Ön kelimesinin zıt anlamlısı nedir?', a: 'Arka', d: ['Yan', 'Üst'], exp: 'Ön tarafın karşıtı arka taraftır.' },
+      { q: '"Sert" tuğlanın zıt anlamlısı nedir? 🧱', spokenText: 'Sert kelimesinin zıt anlamlısı nedir?', a: 'Yumuşak 🧸', d: ['İnce', 'Kırılgan'], exp: 'Tuğla serttir, pamuk yumuşaktır.' },
+      { q: '"Aşağı" kelimesinin zıt anlamlısı nedir? ⬇️', spokenText: 'Aşağı kelimesinin zıt anlamlısı nedir?', a: 'Yukarı ⬆️', d: ['İleri', 'Geri'], exp: 'Aşağı ve yukarı birbirinin zıttıdır.' },
+      { q: '"Taze" ekmeğin zıt anlamlısı nedir? 🥖', spokenText: 'Taze kelimesinin zıt anlamlısı nedir?', a: 'Bayat 🥖', d: ['Çürük', 'Eski'], exp: 'Taze ekmeğin zıttı bayat ekmektir.' },
+      { q: '"Temiz" ellerin zıt anlamlısı nedir? 🧼', spokenText: 'Temiz kelimesinin zıt anlamlısı nedir?', a: 'Kirli', d: ['Islak', 'Tozlu'], exp: 'Temiz olmanın karşıtı kirlidir.' },
+      { q: '"Acı" biberin tat olarak zıt anlamlısı nedir? 🌶️', spokenText: 'Acı biberin zıt anlamlısı nedir?', a: 'Tatlı 🍯', d: ['Ekşi', 'Tuzlu'], exp: 'Acının zıttı tatlıdır.' },
+      { q: '"İyi" kalplinin zıt anlamlısı nedir? 😇', spokenText: 'İyi kelimesinin zıt anlamlısı nedir?', a: 'Kötü 😈', d: ['Zayıf', 'Çirkin'], exp: 'İyi ve kötü karşıt kavramlardır.' },
+      { q: '"Siyah" rengin zıt anlamlısı nedir? ⚫', spokenText: 'Siyah kelimesinin zıt anlamlısı nedir?', a: 'Beyaz ⚪', d: ['Gri', 'Koyu'], exp: 'Siyahın karşıtı beyazdır.' },
+      { q: '"Doğru" cevabın zıt anlamlısı nedir? ✅', spokenText: 'Doğru kelimesinin zıt anlamlısı nedir?', a: 'Yanlış ❌', d: ['Eksik', 'Yalan'], exp: 'Doğrunun zıttı yanlıştır.' },
+      { q: '"Islak" giysinin zıt anlamlısı nedir? 🌧️', spokenText: 'Islak kelimesinin zıt anlamlısı nedir?', a: 'Kuru ☀️', d: ['Nemli', 'Sıcak'], exp: 'Islanan giysi güneşte kurur.' },
+      { q: '"Zor" sorunun zıt anlamlısı nedir? 🧩', spokenText: 'Zor kelimesinin zıt anlamlısı nedir?', a: 'Kolay ✨', d: ['Basit', 'Kısa'], exp: 'Zor bulmacanın zıttı kolaydır.' },
+      { q: '"Neşeli" çocuğun zıt anlamlısı nedir? 😄', spokenText: 'Neşeli kelimesinin zıt anlamlısı nedir?', a: 'Üzgün 😢', d: ['Kızgın', 'Yorgun'], exp: 'Neşeli olmanın zıttı üzgün olmaktır.' },
+      { q: '"İç" kelimesinin zıt anlamlısı nedir? 📦', spokenText: 'İç kelimesinin zıt anlamlısı nedir?', a: 'Dış', d: ['Üst', 'Alt'], exp: 'Kutunun içi ve dışı karşıttır.' },
+      { q: '"Uzak" memleketin zıt anlamlısı nedir? 🗺️', spokenText: 'Uzak kelimesinin zıt anlamlısı nedir?', a: 'Yakın 🏡', d: ['Hızlı', 'Geniş'], exp: 'Uzağın zıttı yakındır.' },
+      { q: '"Genç" delikanlının zıt anlamlısı nedir? 👦', spokenText: 'Genç kelimesinin zıt anlamlısı nedir?', a: 'Yaşlı 👴', d: ['Büyük', 'Yorgun'], exp: 'Gencin zıttı yaşlıdır.' },
+      { q: '"Cesur" kahramanın zıt anlamlısı nedir? 🦁', spokenText: 'Cesur kelimesinin zıt anlamlısı nedir?', a: 'Korkak 🐭', d: ['Küçük', 'Zayıf'], exp: 'Cesur olmanın zıttı korkak olmaktır.' },
+      { q: '"Giriş" kapısının zıt anlamlısı nedir? 🚪', spokenText: 'Giriş kelimesinin zıt anlamlısı nedir?', a: 'Çıkış 🚶‍♂️', d: ['Açılış', 'Dönüş'], exp: 'Girişin zıttı çıkıştır.' },
+      { q: '"Gülmek" eyleminin zıt anlamlısı nedir? 😊', spokenText: 'Gülmek kelimesinin zıt anlamlısı nedir?', a: 'Ağlamak 😭', d: ['Susmak', 'Kızmak'], exp: 'Gülmenin zıttı ağlamaktır.' },
+      { q: '"Gelmek" fiilinin zıt anlamlısı nedir? 🏃‍♂️', spokenText: 'Gelmek kelimesinin zıt anlamlısı nedir?', a: 'Gitmek 🚶‍♂️', d: ['Koşmak', 'Durmak'], exp: 'Gelmenin zıttı gitmektir.' },
+      { q: '"Almak" kelimesinin zıt anlamlısı nedir? 🎁', spokenText: 'Almak kelimesinin zıt anlamlısı nedir?', a: 'Vermek 🤲', d: ['Satmak', 'Koymak'], exp: 'Almanın zıttı vermektir.' },
+      { q: '"Yeni" ayakkabının zıt anlamlısı nedir? ✨', spokenText: 'Yeni kelimesinin zıt anlamlısı nedir?', a: 'Eski 📦', d: ['Kırık', 'Tozlu'], exp: 'Yeninin zıttı eskidir.' },
+      { q: '"Aydınlık" odanın zıt anlamlısı nedir? 💡', spokenText: 'Aydınlık kelimesinin zıt anlamlısı nedir?', a: 'Karanlık 🌑', d: ['Dar', 'Koyu'], exp: 'Aydınlığın zıttı karanlıktır.' },
+      { q: '"Kalın" kitabın zıt anlamlısı nedir? 📚', spokenText: 'Kalın kelimesinin zıt anlamlısı nedir?', a: 'İnce 📖', d: ['Hafif', 'Dar'], exp: 'Kalının zıttı incedir.' }
+    ],
+
+    // Konu 3: Anlamlı ve Kurallı Cümle / Temel Noktalama Havuzu (20 Soru)
+    grade1SentencePunctuationPool: [
+      { q: '"Ali okula gitti (  )"\nCümlenin sonuna hangi noktalama işareti gelmelidir? ✍️', spokenText: 'Ali okula gitti. Cümlenin sonuna hangi işaret gelir?', a: 'Nokta (.)', d: ['Soru İşareti (?)', 'Ünlem (!)'], exp: 'Tamamlanmış düz cümlelerin sonuna nokta (.) konur.' },
+      { q: '"Senin adın ne (  )"\nCümlenin sonuna hangi noktalama işareti gelmelidir? ✍️', spokenText: 'Senin adın ne? Cümlenin sonuna hangi işaret gelir?', a: 'Soru İşareti (?)', d: ['Nokta (.)', 'Virgül (,)'], exp: 'Soru soran cümlelerin sonuna soru işareti (?) konur.' },
+      { q: '"Bugün hava çok güzel (  )"\nCümlenin sonuna hangi noktalama işareti gelmelidir? ☀️', spokenText: 'Bugün hava çok güzel. Cümle sonuna hangi işaret gelir?', a: 'Nokta (.)', d: ['Soru İşareti (?)', 'Kesme İşareti (\')'], exp: 'Düz bilgi veren cümlenin sonuna nokta (.) konur.' },
+      { q: '"Kalemimi kim aldı (  )"\nCümlenin sonuna hangi noktalama işareti gelmelidir? ✏️', spokenText: 'Kalemimi kim aldı? Cümlenin sonuna hangi işaret gelir?', a: 'Soru İşareti (?)', d: ['Nokta (.)', 'Kısa Çizgi (-)'], exp: 'Soru sorulduğu için sonuna soru işareti (?) konur.' },
+      { q: '"Saat kaç oldu (  )"\nCümlesinin sonuna hangisi gelmelidir? ⏰', spokenText: 'Saat kaç oldu? Cümlesinin sonuna hangisi gelmelidir?', a: 'Soru İşareti (?)', d: ['Nokta (.)', 'Ünlem (!)'], exp: 'Saat sorulduğu için soru işareti (?) gelir.' },
+      { q: '"Ayşe süt içti (  )"\nCümlesinin sonuna hangisi konmalıdır? 🥛', spokenText: 'Ayşe süt içti. Cümlenin sonuna hangisi konur?', a: 'Nokta (.)', d: ['Soru İşareti (?)', 'İki Nokta (:)'], exp: 'Biten cümlenin sonuna nokta konur.' },
+      { q: 'Cümlelerin İLK HARFİ her zaman nasıl yazılır? 🔤', spokenText: 'Cümlelerin ilk harfi nasıl yazılır?', a: 'Büyük Harfle 🔠', d: ['Küçük Harfle 🔡', 'Rakamla 🔢'], exp: 'Cümleler daima büyük harfle başlar.' },
+      { q: 'İnsan isimleri (Ali, Zeynep, Mehmet) daima nasıl harfle başlar? 👦👧', spokenText: 'İnsan isimleri daima nasıl harfle başlar?', a: 'Büyük Harfle 🔠', d: ['Küçük Harfle 🔡', 'Fark etmez'], exp: 'Özel isimler her zaman büyük harfle başlar.' },
+      { q: 'Karışık verilen sözcüklerden ANLAMLI ve KURALLI cümle hangisidir?\n[okula - gitti - Can] 🎒', spokenText: 'Karışık sözcüklerden doğru cümle hangisidir?', a: 'Can okula gitti. 🎒', d: ['Gitti Can okula.', 'Okula gitti Can.'], exp: 'Kurallı cümlede işi yapan başta (Can), yapılan eylem sonda olur: Can okula gitti.' },
+      { q: 'Karışık verilen sözcüklerden ANLAMLI ve KURALLI cümle hangisidir?\n[kitap - okudu - Elif] 📖', spokenText: 'Karışık sözcüklerden doğru cümle hangisidir?', a: 'Elif kitap okudu. 📖', d: ['Okudu Elif kitap.', 'Kitap Elif okudu.'], exp: 'Kurallı cümle: Elif kitap okudu.' },
+      { q: 'Karışık verilen sözcüklerden ANLAMLI cümle hangisidir?\n[yedi - elma - kırmızı - Kerem] 🍎', spokenText: 'Karışık sözcüklerden doğru cümle hangisidir?', a: 'Kerem kırmızı elma yedi. 🍎', d: ['Yedi Kerem elma.', 'Elma yedi kırmızı Kerem.'], exp: 'Doğru sıralama: Kerem kırmızı elma yedi.' },
+      { q: 'Hangisi bir SORU cümlesidir? ❓', spokenText: 'Hangisi bir soru cümlesidir?', a: 'Ödevini bitirdin mi? ❓', d: ['Ödevimi bitirdim. 📝', 'Okula gidiyorum. 🎒'], exp: '"Ödevini bitirdin mi?" cümlesi cevap bekleyen bir soru cümlesidir.' }
+    ],
+
+    // Cümle & Noktalama Üreteci
+    generateGrade1SentencePunctuation() {
+      const item = this.drawFromPool(this.grade1SentencePunctuationPool, "grade1SentencePunctuationPool");
+      return {
+        question: item.q,
+        spokenText: item.spokenText || item.q,
+        correct: item.a,
+        distractors: item.d,
+        explanation: item.exp
+      };
+    },
+
+    // Türkçe Tüm Konular Karma Motoru
+    generateGrade1TurkishKarma() {
+      const r = Math.random();
+      if (r < 0.35) {
+        return this.generateGrade1ListeningComprehension();
+      } else if (r < 0.70) {
+        const raw = this.drawFromPool(this.grade1AntonymsPool, "grade1AntonymsPool");
+        return {
+          question: raw.q,
+          spokenText: raw.spokenText || raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp
+        };
+      } else {
+        return this.generateGrade1SentencePunctuation();
+      }
+    },
+
+
+    // --- 4. MODÜL: 1. SINIF BÜYÜK KARMA DÜELLO (TÜM DERSLER) ---
+    generateGrade1GrandDuel() {
+      const subjectIdx = Math.floor(Math.random() * 3);
+      if (subjectIdx === 0) return this.generateGrade1MathKarma();
+      if (subjectIdx === 1) return this.generateGrade1TurkishKarma();
+      return this.generateGrade1LifeScienceKarma();
+    },
+
+    // Geriye dönük uyumluluk takma adları
+    generateGrade1Math() { return this.generateGrade1MathKarma(); },
+    generateGrade1Rhythmic() { return this.generateGrade1NumbersQuantities(); },
+    grade1ShapesAndMoneyPool: [
+      { q: 'Hangi geometrik şeklin 4 kenarı, 4 köşesi vardır ve tüm kenarları EŞİTTİR?', a: 'Kare 🟦', d: ['Üçgen 🔺', 'Çember ⚪'], exp: 'Karenin 4 eşit kenarı ve 4 dik köşesi vardır.' },
+      { q: '3 kenarı ve 3 köşesi olan geometrik şekil hangisidir?', a: 'Üçgen 🔺', d: ['Kare 🟦', 'Dikdörtgen 🚪'], exp: 'Üçgenin 3 kenarı ve 3 köşesi bulunur.' },
+      { q: 'En büyük madeni paramız hangisidir?', a: '1 Türk Lirası (1 TL) 🪙', d: ['50 Kuruş 🪙', '25 Kuruş 🪙'], exp: 'Madeni paralarımızın en büyüğü 1 TL\'dir.' },
+      { q: '1 Türk Lirası (1 TL) kaç kuruşa eşittir?', a: '100 Kuruş 🪙', d: ['50 Kuruş 🪙', '10 Kuruş 🪙'], exp: '1 TL = 100 Kuruştur.' }
+    ],
+    generateGrade1SyllablesAndLetters() { return this.generateGrade1SentencePunctuation(); },
     grade1SchoolHomeLifePool: [
       { q: 'Sınıfta öğretmenimizden veya arkadaşımızdan söz isterken ne yaparız? ✋', a: 'Parmak kaldırırız ✋', d: ['Bağırarak konuşuruz', 'Ayağa kalkıp gezeriz'], exp: 'Söz hakkı almak için nezaketle parmak kaldırırız.' },
-      { q: 'Teneffüslerde koridorda ve merdivenlerde nasıl yürümeliyiz? 🚶‍♂️', a: 'Sakin ve sağdan yürümeliyiz 🚶‍♂️', d: ['Koşarak yarış yapmalıyız', 'Merdiven korkuluklarından kaymalıyız'], exp: 'Kazaları önlemek için koridor ve merdivenlerde yavaş ve sağdan yürürüz.' },
-      { q: 'Arkadaşımız bize yardım ettiğinde hangi nezaket sözünü söyleriz? 🤝', a: 'Teşekkür ederim 🙏', d: ['Özür dilerim', 'Rica ederim'], exp: 'Bize yardım eden birine "Teşekkür ederim" deriz.' },
-      { q: 'İstemeden arkadaşımıza çarptığımızda hangi nezaket sözünü söyleriz? 🥺', a: 'Özür dilerim 🤝', d: ['Teşekkürler', 'Güle güle'], exp: 'Hata yaptığımızda ya da birine çarptığımızda "Özür dilerim" deriz.' },
-      { q: 'Sabah okula geldiğimizde öğretmenimize ve arkadaşlarımıza ne deriz? ☀️', a: 'Günaydın! ☀️', d: ['İyi geceler!', 'Güle güle!'], exp: 'Sabah karşılaştığımız kişilere "Günaydın" diyerek selam veririz.' },
-      { q: 'Birinden silgi veya kalem ödünç isterken hangi sihirli kelimeyi kullanırız? ✨', a: 'Lütfen verebilir misin? ✨', d: ['Hemen ver!', 'Bana borçlusun!'], exp: 'Bir şey isterken kibarca "Lütfen" kelimesini kullanırız.' },
-      { q: 'Okul tuvaletlerini kullandıktan sonra ellerimizi ne ile yıkamalıyız? 🧼', a: 'Su ve sabunla 🧼', d: ['Sadece peçeteyle sileriz', 'Yıkamamıza gerek yoktur'], exp: 'Mikroplardan korunmak için ellerimizi su ve sabunla en az 20 saniye yıkarız.' },
-      { q: 'Sıramızı ve sınıfımızı temiz tutmak kimin görevidir? 🏫', a: 'Hepimizin görevidir 🤝', d: ['Sadece temizlik görevlisinin', 'Hiç kimsenin'], exp: 'Ortak yaşam alanımız olan sınıfı hep birlikte temiz tutarız.' },
-      { q: 'Çöplerimizi nereye atmalıyız? 🗑️', a: 'Çöp kutusuna 🗑️', d: ['Sıranın altına', 'Pencereden dışarı'], exp: 'Çöpler daima çöp kutusuna atılır.' },
-      { q: 'Evde kendi odamızı ve oyuncaklarımızı kim toplamalıdır? 🧸', a: 'Kendimiz toplamalıyız 👦', d: ['Sadece annemiz toplamalıdır', 'Hiç toplanmamalıdır'], exp: 'Sorumluluk sahibi çocuklar kendi oyuncaklarını ve odasını toplar.' },
-      { q: 'Tanımadığımız biri bize çikolata veya hediye vermek isterse ne yapmalıyız? 🚫', a: 'Kabul etmeyip ailemize söylemeliyiz 🛑', d: ['Hemen alıp onunla gitmeliyiz', 'Teşekkür edip yemeliyiz'], exp: 'Güvenliğimiz için tanımadığımız kişilerden hiçbir şey almaz ve uzaklaşırız.' },
-      { q: 'Evde pencereden veya balkondan aşağı doğru ne yapmamalıyız? 🏠', a: 'Sarkmamalıyız ⚠️', d: ['Hava almamalıyız', 'Bakmamalıyız'], exp: 'Düşme tehlikesine karşı pencere ve balkonlardan asla sarkılmaz.' },
-      { q: 'Elektrik prizlerine ve kablolara ne yapmamalıyız? 🔌', a: 'Asla dokunmamalı ve cisim sokmamalıyız ⚡', d: ['Oyun oynamalıyız', 'Su dökmeliyiz'], exp: 'Elektrik prizleri çok tehlikelidir, asla yabancı cisim sokulmaz.' },
-      { q: 'Islak ellerle elektrik anahtarına basmak neden tehlikelidir? 💧⚡', a: 'Elektrik çarpabilir ⚡', d: ['Düğme bozulur', 'Işık yanmaz'], exp: 'Su elektriği iletir ve ıslak elle dokunmak elektrik çarpmasına yol açar.' },
-      { q: 'Ders zili çaldığında ne yapmalıyız? 🔔', a: 'Hemen sınıfımıza girip sıramıza oturmalıyız 📚', d: ['Bahçede oynamaya devam etmeliyiz', 'Okuldan dışarı çıkmalıyız'], exp: 'Zil çaldığında derse gecikmeden sınıfımıza geçeriz.' },
-      { q: 'Okul servisindeyken güvenliğimiz için ne yapmalıyız? 🚌', a: 'Emniyet kemerini takıp oturmalıyız 🛡️', d: ['Ayakta gezinmeliyiz', 'Pencereden elimizi çıkarmalıyız'], exp: 'Servis hareket halindeyken emniyet kemeri bağlı şekilde oturulur.' },
-      { q: 'Bayrak töreninde İstiklal Marşı söylenirken nasıl durmalıyız? 🇹🇷', a: 'Hazır ol vaziyetinde ve saygıyla 🇹🇷', d: ['Arkadaşımızla konuşarak', 'Kıpırdayıp oynayarak'], exp: 'Bayrağımıza ve marşımıza saygı için hazır ol vaziyetinde dimdik dururuz.' },
-      { q: 'Okulda bir sorun yaşadığımızda ilk kime haber vermeliyiz? 👨‍🏫', a: 'Öğretmenimize veya nöbetçi öğretmene 👨‍🏫', d: ['Yoldan geçen yabancıya', 'Hiç kimseye'], exp: 'Okuldaki sorunlarımızı öğretmenlerimize iletiriz.' },
-      { q: 'Arkadaşımızın boya kalemini kullanmak istediğimizde ne yaparız? 🖍️', a: 'İzin isteriz 🤝', d: ['Haber vermeden gizlice alırız', 'Zorla elinden kaparız'], exp: 'Başkasına ait bir eşyayı kullanmadan önce mutlaka izin almalıyız.' },
-      { q: 'Yemek yerken ağzımızda lokma varken ne yapmamalıyız? 🍽️', a: 'Konuşmamalıyız 🤐', d: ['Çiğnememeliyiz', 'Yutmamalıyız'], exp: 'Görgü kuralı olarak ağzımızda yemek varken konuşmayız.' },
-      { q: 'Akrabalarımızdan babamızın annesine ne deriz? 👵', a: 'Babaanne 👵', d: ['Anneanne', 'Hala'], exp: 'Babamızın annesi Babaanne, annemizin annesi Anneannedir.' },
-      { q: 'Annemizin kız kardeşine ne deriz? 👩', a: 'Teyze 👩', d: ['Hala', 'Amca'], exp: 'Annemizin kız kardeşi teyzemizdir.' },
-      { q: 'Babamızın erkek kardeşine ne deriz? 👨', a: 'Amca 👨', d: ['Dayı', 'Teyze'], exp: 'Babamızın erkek kardeşi amcamızdır.' },
-      { q: 'Büyüklerimizin konuşması sırasında araya girmemiz gerektiğinde ne deriz? 🗣️', a: '"Özür dilerim, bölebilir miyim?" ✨', d: ['"Susun dinleyin!"', 'Bağırarak konuşuruz'], exp: 'Büyüklerin sözünü keserken kibarca özür dileyip izin isteriz.' },
-      { q: 'Akşam yatarken aile bireylerimize ne dileriz? 🌙', a: 'İyi geceler / Tatlı rüyalar 🌙', d: ['Günaydın', 'Tünaydın'], exp: 'Uyumadan önce sevdiklerimize "İyi geceler" dileriz.' },
-      { q: 'Sınıf kütüphanesinden aldığımız kitabı okuduktan sonra ne yapmalıyız? 📚', a: 'Zamanında ve yıpratmadan geri vermeliyiz 📚', d: ['Eve götürüp saklamalıyız', 'Sayfalarını yırtmalıyız'], exp: 'Kütüphane kitapları ortak maldır, özenle okunup zamanında iade edilir.' }
+      { q: 'Arkadaşımız bize yardım ettiğinde hangi nezaket sözünü söyleriz? 🤝', a: 'Teşekkür ederim 🙏', d: ['Özür dilerim', 'Rica ederim'], exp: 'Bize yardım eden birine "Teşekkür ederim" deriz.' }
     ],
-
-    // 1. SINIF: SAĞLIKLI HAYAT VE MEVSİMLER (26 ÖZGÜN SORU)
     grade1HealthSeasonsPool: [
-      { q: 'Yemeklerden önce ve sonra mikroplardan korunmak için ne yaparız? 🧼', a: 'Ellerimizi su ve sabunla yıkarız 🧼', d: ['Hemen uyuruz', 'Oyun oynarız'], exp: 'Ellerimiz gün boyu kirlenir, yemekten önce ve sonra mutlaka sabunla yıkanmalıdır.' },
-      { q: 'Dişlerimizin çürümemesi için günde en az kaç kez fırçalamalıyız? 🪥', a: 'Günde 2 kez (Sabah ve Akşam) 🪥', d: ['Haftada 1 kez', 'Hiç fırçalamamalıyız'], exp: 'Diş sağlığı için sabah kahvaltıdan sonra ve gece yatmadan önce fırçalarız.' },
-      { q: 'Kemiklerimizin ve dişlerimizin güçlü olması için her gün ne içmeliyiz? 🥛', a: 'Süt 🥛', d: ['Gazoz', 'Kola'], exp: 'Süt kalsiyum deposudur, kemiklerimizi güçlendirir.' },
-      { q: 'Güne zinde ve enerjik başlamak için sabahları ne yapmalıyız? 🍳', a: 'Dengeli kahvaltı yapmalıyız 🍳', d: ['Sadece cips yemeliyiz', 'Aç karnına okula gitmeliyiz'], exp: 'Kahvaltı günün en önemli öğünüdür; yumurta, peynir, süt içerir.' },
-      { q: 'Hangi besin grubu sağlığımız için ZARARLIDIR? 🚫', a: 'Aşırı şekerli ve gazlı içecekler 🥤', d: ['Taze elma ve havuç 🍎', 'Balık ve yoğurt 🐟'], exp: 'Asitli içecekler ve aşırı şeker dişlerimizi çürütür, sağlığımızı bozar.' },
-      { q: 'Vücudumuzun susuz kalmaması için günde bol bol ne içmeliyiz? 💧', a: 'Temiz su 💧', d: ['Meyve suyu kutusu', 'Çay'], exp: 'Su yaşam kaynağımızdır, her gün yeterli su içmeliyiz.' },
-      { q: 'Hapşırırken veya öksürürken ağzımızı ne ile kapatmalıyız? 🤧', a: 'Tek kullanımlık mendil veya dirsek içiyle 🧻', d: ['Elimizin ayasıyla', 'Kapatmamıza gerek yoktur'], exp: 'Mikropların etrafa yayılmaması için peçete veya dirsek içimizle kapatırız.' },
-      { q: 'Ağaçların yaprak açtığı, çiçeklerin açtığı ve havaların ısındığı mevsim hangisidir? 🌸', a: 'İlkbahar 🌸', d: ['Kış ❄️', 'Sonbahar 🍂'], exp: 'İlkbaharda doğa uyanır, çiçekler açar, kuşlar öter.' },
-      { q: 'Havanın en sıcak olduğu, denize girilen ve dondurma yenilen mevsim hangisidir? ☀️', a: 'Yaz ☀️', d: ['Kış ❄️', 'İlkbahar 🌸'], exp: 'Yaz mevsimi yılın en sıcak mevsimidir.' },
-      { q: 'Ağaçların yapraklarını döktüğü, rüzgarlı ve okulların açıldığı mevsim hangisidir? 🍂', a: 'Sonbahar 🍂', d: ['İlkbahar 🌸', 'Yaz ☀️'], exp: 'Sonbaharda sararan yapraklar dökülür ve okullar başlar.' },
-      { q: 'Havanın en soğuk olduğu, kar yağdığı ve kardan adam yapılan mevsim hangisidir? ⛄', a: 'Kış ❄️', d: ['Yaz ☀️', 'İlkbahar 🌸'], exp: 'Kış mevsiminde havalar çok soğur, kar yağar ve kalın giyiniriz.' },
-      { q: 'Bir yılda toplam kaç mevsim vardır? 🌍', a: '4 mevsim (İlkbahar, Yaz, Sonbahar, Kış) 🍂', d: ['2 mevsim', '12 mevsim'], exp: 'Bir yılda 4 mevsim vardır: İlkbahar, Yaz, Sonbahar, Kış.' },
-      { q: 'Kış mevsiminde dışarı çıkarken nasıl giyinmeliyiz? 🧣', a: 'Kalın mont, bere ve eldiven giymeliyiz 🧤', d: ['Şort ve tişört giymeliyiz', 'Terlikle çıkmalıyız'], exp: 'Üşütüp hasta olmamak için kışın kalın yünlü giysiler tercih ederiz.' },
-      { q: 'Yaz mevsiminde Güneş\'in yakıcı ışınlarından korunmak için ne takarız? 🧢', a: 'Güneş şapkası ve gözlük 🧢', d: ['Yün atkı ve bere 🧣', 'Kalın eldiven 🧤'], exp: 'Yazın başımıza güneş geçmemesi için şapka takarız.' },
-      { q: 'Hangisi C vitamini deposu olan bir kış meyvesidir? 🍊', a: 'Portakal ve Mandalina 🍊', d: ['Karpuz 🍉', 'Kiraz 🍒'], exp: 'Portakal ve mandalina kışın bizi gripten koruyan vitamin depolarıdır.' },
-      { q: 'Gözlerimizin sağlıklı görmesi için hangi sebzeyi tüketmek çok faydalıdır? 🥕', a: 'Havuç 🥕', d: ['Şeker', 'Çikolata'], exp: 'Havuç bol A vitamini içerir ve gözlerimizi korur.' },
-      { q: 'Geceleri sağlıklı büyümek için vaktinde ne yapmalıyız? 😴', a: 'Erken yatıp uyumalıyız 😴', d: ['Gece geç saatlere kadar televizyon izlemeliyiz', 'Bilgisayar oynamalıyız'], exp: 'Büyüme hormonu uykuda salgılanır, çocuklar erken uyumalıdır.' },
-      { q: 'Tırnaklarımız uzadığında ne yapmalıyız? ✂️', a: 'Büyüklerimizden yardım alarak temizce kesmeliyiz ✂️', d: ['Tırnaklarımızı dişlerimizle yemeliyiz', 'Uzamasına izin vermeliyiz'], exp: 'Uzayan tırnakların altında mikrop birikir, düzenli kesilmelidir.' },
-      { q: 'Saçlarımızın ve vücudumuzun temiz olması için haftada en az kaç kez banyo yapmalıyız? 🚿', a: 'En az 2 kez 🚿', d: ['Yılda 1 kez', 'Hiç yapmamalıyız'], exp: 'Kişisel temizlik için düzenli banyo yapmak çok önemlidir.' },
-      { q: 'Meyve ve sebzeleri yemeden önce mutlaka ne yapmalıyız? 🍎', a: 'Bol temiz suyla yıkamalıyız 💧', d: ['Hemen kabuğuyla yıkamadan yemeliyiz', 'Tozunu silip yemeliyiz'], exp: 'Üzerindeki toz ve tarım ilaçlarından arındırmak için meyveleri yıkarız.' },
-      { q: 'Kardan adam ⛄ hangi mevsimde yapılabilir?', a: 'Kış ❄️', d: ['Yaz ☀️', 'İlkbahar 🌸'], exp: 'Kardan adam sadece kar yağan kış mevsiminde yapılır.' },
-      { q: 'Deniz ve kum mevsimi hangi mevsimdir? 🏖️', a: 'Yaz ☀️', d: ['Kış ❄️', 'Sonbahar 🍂'], exp: 'Yazın hava sıcak olduğu için denize girilir.' },
-      { q: 'Yağmur yağdığında ıslanmamak için yanımıza ne alırız? ☔', a: 'Şemsiye ☔', d: ['Güneş kremi', 'Yelpaze'], exp: 'Yağmurdan korunmak için şemsiye ve yağmurluk kullanırız.' },
-      { q: 'Gözlerimizin yorulmaması için tablete ve ekrana nasıl bakmalıyız? 📱', a: 'Günde kısa süre ve belirli mesafeden ⏳', d: ['Karanlıkta çok yakından saatlerce', 'Hiç bırakmadan'], exp: 'Ekranlara çok yakından ve uzun süre bakmak göz sağlığını bozar.' },
-      { q: 'Spor yapmak ve bahçede koşup oynamak vücudumuza ne kazandırır? ⚽', a: 'Sağlık ve güç kazandırır 💪', d: ['Bizi tembelleştirir', 'Hastalandırır'], exp: 'Hareket etmek kalbimizi, kaslarımızı ve kemiklerimizi güçlendirir.' },
-      { q: 'Hasta olduğumuzda iyileşmek için kime gideriz? 🩺', a: 'Doktora 👨‍⚕️', d: ['Bakkala', 'Terziye'], exp: 'Hastalıklarımızı teşhis ve tedavi eden sağlık uzmanı doktordur.' }
+      { q: 'Yemeklerden önce ve sonra ellerimizi ne ile yıkamalıyız? 🧼', a: 'Su ve sabunla 🧼', d: ['Sadece peçeteyle', 'Yıkamamıza gerek yoktur'], exp: 'Mikroplardan korunmak için ellerimizi su ve sabunla en az 20 saniye yıkarız.' }
     ],
-
     grade1TurkishPool: [
-      { q: '"Büyük" kelimesinin zıt anlamlısı nedir?', a: 'Küçük', d: ['İri', 'Geniş'], exp: 'Büyük ve Küçük birbirinin tam karşıtı olan zıt kavramlardır.', audioKey: 'q_zit_buyuk' },
-      { q: '"Uzun" kelimesinin zıt anlamlısı nedir?', a: 'Kısa', d: ['İnce', 'Düz'], exp: 'Uzun boyun zıttı kısa boydur.', audioKey: 'q_zit_uzun' },
-      { q: '"Sıcak" kelimesinin zıt anlamlısı nedir?', a: 'Soğuk', d: ['Ilık', 'Buz'], exp: 'Sıcak havanın zıttı soğuk havadır.', audioKey: 'q_zit_sicak' },
-      { q: '"Hızlı" kelimesinin zıt anlamlısı nedir?', a: 'Yavaş', d: ['Durgun', 'Sakin'], exp: 'Tavşan hızlıdır, kaplumbağa ise yavaştır.', audioKey: 'q_zit_hizli' },
-      { q: '"Açık" kelimesinin zıt anlamlısı nedir?', a: 'Kapalı', d: ['Koyu', 'Kilitli'], exp: 'Açık kapının karşıtı kapalı kapıdır.', audioKey: 'q_zit_acik' },
-      { q: '"Dolu" kelimesinin zıt anlamlısı nedir?', a: 'Boş', d: ['Yarım', 'Temiz'], exp: 'Dolu bardağın karşıtı boş bardaktır.', audioKey: 'q_zit_dolu' },
-      { q: '"Gece" kelimesinin zıt anlamlısı nedir?', a: 'Gündüz', d: ['Akşam', 'Sabah'], exp: 'Güneş battığında gece, doğduğunda gündüz olur.', audioKey: 'q_zit_gece' },
-      { q: '"Ağır" kelimesinin zıt anlamlısı nedir?', a: 'Hafif', d: ['Küçük', 'Yumuşak'], exp: 'Fil ağırdır, kuş tüyü ise hafiftir.', audioKey: 'q_zit_agir' },
-      { q: '"Ön" kelimesinin zıt anlamlısı nedir?', a: 'Arka', d: ['Yan', 'Üst'], exp: 'Ön tarafın zıttı arka taraftır.', audioKey: 'q_zit_on' },
-      { q: 'Hangisi bir sesli (ünlü) harftir?', a: 'A', d: ['B', 'K'], exp: 'Alfabemizdeki ünlü harfler: A, E, I, İ, O, Ö, U, Ü.', audioKey: 'q_harf_sesli' },
-      { q: '"KALEM" kelimesi kaç harflidir?', a: '5', d: ['4', '6'], exp: 'K-A-L-E-M kelimesi 5 harften oluşur.', audioKey: 'q_harf_kalem' },
-      { q: 'Hangi hayvan havada uçar?', a: 'Kuş', d: ['Kedi', 'Balık'], exp: 'Kuşların kanatları vardır ve uçabilirler.', audioKey: 'q_kus_ucan' }
+      { q: '"Büyük" kelimesinin zıt anlamlısı nedir? 🐘', a: 'Küçük 🐁', d: ['Geniş', 'İri'], exp: 'Büyük ve Küçük birbirinin zıttıdır.' }
     ],
 
     // -------------------------------------------------------------
@@ -6637,7 +6904,14 @@
 
     // Şıkları rastgele karıştırarak A, B, C, D formatında sun (Ezber Bozan Fisher-Yates)
     buildQuestionItem(qData, category) {
-      const allOpts = (qData.options && qData.options.length) ? qData.options : [qData.correct, ...(qData.distractors || [])];
+      if (!qData) return null;
+      const question = qData.question || qData.q;
+      const correct = qData.correct !== undefined ? qData.correct : qData.a;
+      const distractors = qData.distractors || qData.d || [];
+      const explanation = qData.explanation !== undefined ? qData.explanation : qData.exp;
+      const spokenText = qData.spokenText || qData.spoken || (qData.englishWord ? qData.englishWord : null);
+
+      const allOpts = (qData.options && qData.options.length) ? qData.options : [correct, ...distractors];
       const options = (qData.options && qData.options.length) ? qData.options : this.fisherYatesShuffle(allOpts);
 
       let questionHtml = qData.questionHtml;
@@ -6648,23 +6922,22 @@
             <span class="en-big-word">${replaceEmojisWith3D(qData.englishWord, 'inline-3d-icon')}</span>
             <span class="en-audio-hint">🔊 Doğru telaffuzu dinle</span>
           </div>
-          <div class="en-question-subtext">${replaceEmojisWith3D(qData.question, 'q-3d-item')}</div>
+          <div class="en-question-subtext">${replaceEmojisWith3D(question, 'q-3d-item')}</div>
         `;
       }
 
       return {
-        question: qData.question,
-        questionHtml: questionHtml || (qData.question ? qData.question.replace(/\n/g, '<br>') : ''),
+        question: question,
+        questionHtml: questionHtml || (question ? question.replace(/\n/g, '<br>') : ''),
         options: options,
-        correct: qData.correct,
-        explanation: qData.explanation,
-        category: category,
+        correct: correct,
+        explanation: explanation,
+        category: qData.category || category,
         audioKey: qData.audioKey || null,
         englishWord: qData.englishWord || null,
         lang: qData.lang || (qData.englishWord ? 'en' : 'tr'),
-        spokenText: qData.spokenText || qData.englishWord || null,
+        spokenText: spokenText,
         type: qData.type || 'standard',
-        category: qData.category || category,
         visualCards: qData.visualCards || (qData.interactiveData ? qData.interactiveData.cards : null),
         interactiveData: qData.interactiveData || null
       };
@@ -7018,7 +7291,7 @@
 
       // Standart derslerde her 4. soruda bir derse uygun Doğru/Yanlış veya Dokun-Eşleştir interaktif molası
       const isStandardSubject = ['math', 'turkish', 'english', 'lifescience', 'science', 'social'].includes(gameType);
-      if (parseInt(grade, 10) > 0 && isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
+      if (parseInt(grade, 10) > 1 && isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
         let catFilter = gameType;
         if (gameType === 'social') catFilter = 'lifescience';
         if (Math.random() < 0.5) {
@@ -7140,45 +7413,64 @@
         } else {
           return this.buildQuestionItem(this.generateSyllableBuilderQuestion(), '🔤 Hece Birleştirme Atölyesi');
         }
-      } else if (gameType === 'math_rhythmic_1') {
-        return this.buildQuestionItem(this.generateFloatingBalloonQuestion(1, 'rhythmic'), '🎈 Ritmik Sayma Balonları');
-      } else if (gameType === 'turkish_antonyms_1') {
-        return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'antonyms'), '🧠 Zıt Anlam Hafıza Kartları');
-      } else if (gameType === 'math_shapes_money_1') {
-        const raw = this.drawFromPool(this.grade1ShapesAndMoneyPool, "grade1ShapesAndMoneyPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🪙 Geometrik Şekiller & Paralarımız');
+      // --- 1. SINIF: 2026 MAARİF MODELİ ÖĞRENME ALANLARI VE OYUNLARI ---
+      } else if (gameType === 'lifescience_school_1') {
+        const raw = this.drawFromPool(this.grade1LifeScienceSchoolPool, "grade1LifeScienceSchoolPool");
+        return this.buildQuestionItem(raw, '🏫 Ben ve Okulum');
+      } else if (gameType === 'lifescience_health_traffic_1') {
+        const raw = this.drawFromPool(this.grade1LifeScienceHealthTrafficPool, "grade1LifeScienceHealthTrafficPool");
+        return this.buildQuestionItem(raw, '🧼 Sağlığım ve Güvenliğim');
+      } else if (gameType === 'lifescience_family_home_1') {
+        const raw = this.drawFromPool(this.grade1LifeScienceFamilyHomePool, "grade1LifeScienceFamilyHomePool");
+        return this.buildQuestionItem(raw, '🏡 Ailem ve Toplum');
+      } else if (gameType === 'lifescience_country_flag_1') {
+        const raw = this.drawFromPool(this.grade1LifeScienceCountryFlagPool, "grade1LifeScienceCountryFlagPool");
+        return this.buildQuestionItem(raw, '🇹🇷 Yaşadığım Yer ve Ülkem');
+      } else if (gameType === 'lifescience_nature_recycling_1') {
+        const raw = this.drawFromPool(this.grade1LifeScienceNatureRecyclingPool, "grade1LifeScienceNatureRecyclingPool");
+        return this.buildQuestionItem(raw, '🌿 Doğa ve Çevre');
+      } else if (gameType === 'lifescience_1_karma' || gameType === 'lifescience_school_home_1' || gameType === 'lifescience_health_seasons_1') {
+        const raw = this.generateGrade1LifeScienceKarma();
+        return this.buildQuestionItem(raw, '🌱 Hayat Bilgisi Karma Düello');
+      } else if (gameType === 'math_spatial_geo_1') {
+        const raw = this.generateGrade1SpatialGeo();
+        return this.buildQuestionItem(raw, '📐 Geometri & Uzamsal');
+      } else if (gameType === 'math_numbers_quantities_1' || gameType === 'math_rhythmic_1') {
+        const raw = this.generateGrade1NumbersQuantities();
+        return this.buildQuestionItem(raw, '🔢 Sayılar & Nicelikler (1-20)');
+      } else if (gameType === 'math_operations_patterns_1') {
+        const raw = this.generateGrade1OperationsPatterns();
+        return this.buildQuestionItem(raw, '➕➖ Toplama, Çıkarma & Örüntü');
+      } else if (gameType === 'math_measure_money_time_1' || gameType === 'math_shapes_money_1') {
+        const raw = this.generateGrade1MeasureMoneyTime();
+        return this.buildQuestionItem(raw, '⏰ Ölçme, Saat & Paralarımız');
+      } else if (gameType === 'math_data_tables_1') {
+        const raw = this.generateGrade1DataTables();
+        return this.buildQuestionItem(raw, '📊 Grafik Dedektifi');
+      } else if (gameType === 'math_1_karma') {
+        const raw = this.generateGrade1MathKarma();
+        return this.buildQuestionItem(raw, '🧮 1. Sınıf Matematik Karma');
+      } else if (gameType === 'turkish_listen_comprehend_1') {
+        const raw = this.generateGrade1ListeningComprehension();
+        return this.buildQuestionItem(raw, '🎧 Dinleme ve Görsel Okuma');
       } else if (gameType === 'turkish_antonyms_1') {
         const raw = this.drawFromPool(this.grade1AntonymsPool, "grade1AntonymsPool");
         return this.buildQuestionItem({
           question: raw.q,
           correct: raw.a,
           distractors: raw.d,
-          explanation: raw.exp
-        }, '🔄 Zıt Anlamlı Kelimeler Avı');
-      } else if (gameType === 'turkish_syllables_letters_1') {
-        const raw = this.generateGrade1SyllablesAndLetters();
-        return this.buildQuestionItem(raw, '🔤 Hece Sayısı ve Harf Bilgisi');
-      } else if (gameType === 'lifescience_school_home_1') {
-        const raw = this.drawFromPool(this.grade1SchoolHomeLifePool, "grade1SchoolHomeLifePool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🏫 Okulumuzda ve Evimizde Hayat');
-      } else if (gameType === 'lifescience_health_seasons_1') {
-        const raw = this.drawFromPool(this.grade1HealthSeasonsPool, "grade1HealthSeasonsPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🧼 Sağlıklı Hayat ve Mevsimler');
+          explanation: raw.exp,
+          spokenText: raw.spokenText || raw.q
+        }, '🔄 Zıt Kavramlar Düellosu');
+      } else if (gameType === 'turkish_sentence_punctuation_1' || gameType === 'turkish_syllables_letters_1') {
+        const raw = this.generateGrade1SentencePunctuation();
+        return this.buildQuestionItem(raw, '✍️ Cümle Kurucu & Noktalama');
+      } else if (gameType === 'turkish_1_karma') {
+        const raw = this.generateGrade1TurkishKarma();
+        return this.buildQuestionItem(raw, '📚 1. Sınıf Türkçe Karma');
+      } else if (gameType === 'grade1_grand_duel') {
+        const raw = this.generateGrade1GrandDuel();
+        return this.buildQuestionItem(raw, '🏆 1. Sınıf Büyük Karma Düello');
       } else if (gameType === 'math_place_value_2') {
         const raw = this.generateGrade2PlaceValue();
         return this.buildQuestionItem(raw, '📦 100\'e Kadar Sayılar & Basamak Değeri');
@@ -7389,10 +7681,7 @@
           else if (r < 0.75) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0, 'math'), '🎈 Sayı Balonları');
           else return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Sayma & Eşleştirme');
         } else if (g === 1) {
-          const r = Math.random();
-          if (r < 0.40) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(1, 'math'), '🎈 Sayı & Toplama Balonları');
-          else if (r < 0.70) return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'math'), '🧠 Toplama Eşleştirme Kartları');
-          else raw = this.generateGrade1Math();
+          raw = this.generateGrade1MathKarma();
         } else if (g === 2) {
           const r = Math.random();
           if (r < 0.45) raw = this.generateGrade2Math();
@@ -7415,10 +7704,8 @@
           else if (r < 0.75) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(0), '🎈 Balon Avı');
           else return this.buildQuestionItem(this.generateMemoryGridQuestion(0), '🧠 Hafıza Kartları');
         } else if (g === 1) {
-          const r = Math.random();
-          if (r < 0.40) return this.buildQuestionItem(this.generateFloatingBalloonQuestion(1, 'reading'), '🎈 Harf & Sözcük Balonları');
-          else if (r < 0.70) return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'antonyms'), '🧠 Zıt Anlam Hafıza Kartları');
-          else return this.buildQuestionItem(this.generateMemoryGridQuestion(1, 'letters'), '🧠 Harf Eşleştirme Kartları');
+          const raw = this.generateGrade1TurkishKarma();
+          return this.buildQuestionItem(raw, '📚 1. Sınıf Türkçe Karma');
         } else if (g === 2) {
           const r = Math.random();
           if (r < 0.4) {
@@ -7487,17 +7774,8 @@
         }
       } else if (gameType === 'lifescience') {
         if (g === 1) {
-          const r = Math.random();
-          if (r < 0.34) {
-            const raw = this.drawFromPool(this.lifeSciencePool, "lifeSciencePool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌱 Hayat Bilgisi');
-          } else if (r < 0.67) {
-            const raw = this.drawFromPool(this.grade1SchoolHomeLifePool, "grade1SchoolHomeLifePool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🏫 Okulumuzda ve Evimizde Hayat');
-          } else {
-            const raw = this.drawFromPool(this.grade1HealthSeasonsPool, "grade1HealthSeasonsPool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧼 Sağlıklı Hayat ve Mevsimler');
-          }
+          const raw = this.generateGrade1LifeScienceKarma();
+          return this.buildQuestionItem(raw, '🌱 Hayat Bilgisi Karma Düello');
         } else if (g === 2) {
           const r = Math.random();
           if (r < 0.34) {
@@ -8577,7 +8855,23 @@
     reflex: '⚡ Hızlı Refleks',
     true_false: '✅ Doğru / Yanlış',
     matching: '🎯 Dokun & Eşleştir',
-    firstreading: '🔤 İlk Okuma Yazma'
+    firstreading: '🔤 İlk Okuma Yazma',
+    math_spatial_geo_1: '📐 Geometri & Uzamsal',
+    math_numbers_quantities_1: '🔢 Sayılar (1-20)',
+    math_operations_patterns_1: '➕➖ İşlemler & Örüntü',
+    math_measure_money_time_1: '⏰ Ölçme, Saat & Para',
+    math_data_tables_1: '📊 Grafik Dedektifi',
+    math_1_karma: '🧮 Matematik Karma',
+    turkish_listen_comprehend_1: '🎧 Dinleme & Anlama',
+    turkish_sentence_punctuation_1: '✍️ Cümle & Noktalama',
+    turkish_1_karma: '🦉 Türkçe Karma',
+    lifescience_school_1: '🏫 Ben ve Okulum',
+    lifescience_health_traffic_1: '🧼 Sağlık & Güvenlik',
+    lifescience_family_home_1: '🏡 Ailem ve Toplum',
+    lifescience_country_flag_1: '🇹🇷 Yaşadığım Yer & Ülkem',
+    lifescience_nature_recycling_1: '🌿 Doğa ve Çevre',
+    lifescience_1_karma: '🌱 Hayat Bilgisi Karma',
+    grade1_grand_duel: '🏆 1. Sınıf Büyük Karma'
   };
 
   function getCurrentGameObject() {
@@ -8614,6 +8908,22 @@
       maarif_sentence_complete: 'Cümle Kurma ve Tamamlama',
       math: 'Matematik',
       math_rhythmic_1: 'Ritmik Sayma Düellosu',
+      math_spatial_geo_1: 'Şekilleri Yakala & Neredeyim?',
+      math_numbers_quantities_1: 'Onluk-Birlik Atölyesi & Ritmik Sayma Treni',
+      math_operations_patterns_1: 'Matematik Düellosu & Örüntü Ustası',
+      math_measure_money_time_1: 'Saat Kaç & Kumbaram',
+      math_data_tables_1: 'Grafik Dedektifi',
+      math_1_karma: 'Matematik Süper Karma Düello',
+      turkish_listen_comprehend_1: 'Dinle, Anla ve Resmi Bul!',
+      turkish_sentence_punctuation_1: 'Cümle Kurucu & Noktalama Avcısı',
+      turkish_1_karma: 'Türkçe Süper Karma Düello',
+      lifescience_school_1: 'Doğru Davranışı Seç & Okul Rehberi',
+      lifescience_health_traffic_1: 'Sağlık Sepeti & Güvenli Yol',
+      lifescience_family_home_1: 'Mutlu Evim & Sorumluluklarım',
+      lifescience_country_flag_1: 'Milli Değerlerimiz & Bayramlarımız',
+      lifescience_nature_recycling_1: 'Doğa Dostu & Geri Dönüşüm Avcısı',
+      lifescience_1_karma: 'Hayat Bilgisi Karma Düello',
+      grade1_grand_duel: '1. Sınıf Büyük Karma Düello',
       math_shapes_money_1: 'Geometrik Şekiller ve Paralarımız',
       turkish_antonyms_1: 'Zıt Anlamlı Kelimeler Avı',
       turkish_syllables_letters_1: 'Hece Sayısı ve Harf Bilgisi',
@@ -9272,51 +9582,89 @@
         name: 'Matematik',
         icon: '🧮',
         colorTheme: 'theme-math',
-        tagline: 'Sayılar & İşlemler',
-        description: '20\'ye kadar toplama, çıkarma ve neşeli ritmik sayma! ➕➖',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: '20\'ye kadar işlemler, onluk-birlik, geometrik şekiller, saatler ve grafikler! ➕➖🪙',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'rhythmic', label: '🔢 Ritmik Sayma' },
-          { id: 'addition', label: '➕ Toplama & Çıkarma' },
-          { id: 'shapes_money', label: '🪙 Şekil & Para' }
+          { id: 'all', label: '🌟 Tüm Konular / Karma Düello' },
+          { id: 'spatial_geo', label: '📐 Geometri & Uzamsal' },
+          { id: 'numbers_quantities', label: '🔢 Sayılar & Nicelikler (1-20)' },
+          { id: 'operations_patterns', label: '➕ Toplama, Çıkarma & Örüntü' },
+          { id: 'measure_money_time', label: '⏰ Ölçme, Saat & Paralarımız' },
+          { id: 'data_tables', label: '📊 Grafik Dedektifi' }
         ],
         games: [
           {
-            id: 'math_rhythmic_1',
+            id: 'math_spatial_geo_1',
             active: true,
-            title: 'Ritmik Sayma Düellosu',
+            title: 'Şekilleri Yakala & Neredeyim?',
+            icon: '📐',
+            badge: '📐 Geometri & Uzamsal',
+            featureTag: '🟦 Şekil & Konum',
+            description: 'Üçgen, kare, dikdörtgen, çember ve uzamsal konumları (üstünde, altında, sağında, solunda) keşfet! 🔺🟦',
+            tags: ['🔺 Üçgen, Kare, Çember', '📍 İçinde & Dışında', '↔️ Sağında & Solunda', '🎯 Kenar & Köşe'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'spatial_geo'
+          },
+          {
+            id: 'math_numbers_quantities_1',
+            active: true,
+            title: 'Onluk-Birlik Atölyesi & Ritmik Sayma Treni',
             icon: '🔢',
-            badge: '🔢 Ritmik Sayma',
-            featureTag: '♾️ Sınırsız Soru',
-            description: '2\'şer, 5\'er ve 10\'ar ileri-geri say, eksik sayıları şimşek gibi yakala! 🔢⚡',
-            tags: ['🔢 2-5-10\'ar Sayma', '🎯 Eksik Sayı', '♾️ Dinamik Soru'],
+            badge: '🔢 Sayılar (1-20)',
+            featureTag: '📦 Onluk & Birlik',
+            description: '1-20 arası nesne sayma, onluk-birlik blokları, az-çok karşılaştırma, sıra sayıları ve ritmik sayma! 🚂🔢',
+            tags: ['📦 Onluk & Birlik', '🔢 1-20 Sayılar', '🚂 Ritmik Sayma', '🥇 Sıra Sayıları'],
             btnText: 'Düelloyu Başlat',
-            topic: 'rhythmic'
+            topic: 'numbers_quantities'
           },
           {
-            id: 'math',
+            id: 'math_operations_patterns_1',
             active: true,
-            title: 'Toplama ve Çıkarma Kampı',
+            title: 'Matematik Düellosu & Örüntü Ustası',
+            icon: '➕',
+            badge: '➕➖ İşlemler & Örüntü',
+            featureTag: '⚡ Toplam ≤ 20',
+            description: 'Toplamı 20\'ye kadar olan doğal sayılarla toplama, 20\'den çıkarma ve şekil-sayı örüntüleri! ➕➖🧩',
+            tags: ['➕ Doğal Toplama (≤20)', '➖ Eksiltme & Fark', '🔟 10\'a Tamamlama', '🧩 Örüntü Kuralı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'operations_patterns'
+          },
+          {
+            id: 'math_measure_money_time_1',
+            active: true,
+            title: 'Saat Kaç & Kumbaram',
+            icon: '⏰',
+            badge: '⏰ Ölçme & Para',
+            featureTag: '🪙 TL & Saatler',
+            description: 'Tam ve yarım saatler, dün-bugün-yarın takvim, paralarımız (TL ve Kuruş) ve standart olmayan ölçüler! ⏰🪙',
+            tags: ['⏰ Tam & Yarım Saat', '🪙 TL & Kuruşlar', '📅 Günler & Aylar', '📏 Karış & Adım'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'measure_money_time'
+          },
+          {
+            id: 'math_data_tables_1',
+            active: true,
+            title: 'Grafik Dedektifi',
+            icon: '📊',
+            badge: '📊 Tablo Okuma',
+            featureTag: '🔍 Görsel Dedektif',
+            description: 'Basit nesne ve şekil grafiklerini oku, en çok ve en az olanı bulup soruları çöz! 📊🔍',
+            tags: ['📊 Nesne Grafiği', '🍎 Meyve Tablosu', '🔍 En Çok & En Az', '⚡ Farkı Bul'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'data_tables'
+          },
+          {
+            id: 'math_1_karma',
+            active: true,
+            title: 'Matematik Süper Karma Düello (Tüm Müfredat)',
             icon: '🧮',
-            badge: '🌱 20\'ye Kadar İşlem',
-            featureTag: '⚡ Görsel Destekli',
-            description: '20\'ye kadar doğal sayılarla görsel destekli hızlı toplama ve çıkarma antrenmanı! ➕➖',
-            tags: ['➕ Doğal Toplama', '➖ Geriye Çıkarma', '🎯 Hızlı İşlem'],
+            badge: '🌟 Süper Karma',
+            featureTag: '🏆 MEB Şampiyonası',
+            description: 'Tüm 1. sınıf matematik kazanımlarını harmanlayan genel tekrar ve akıllı tahta sınıf düellosu! 🧮⚡',
+            tags: ['🔢 Sayılar (1-20)', '➕ Toplama & Çıkarma', '⏰ Saat & Para', '🏆 Süper Düello'],
             btnText: 'Düelloyu Başlat',
-            topic: 'addition'
-          },
-          {
-            id: 'math_shapes_money_1',
-            active: true,
-            title: 'Geometrik Şekiller ve Paralarımız',
-            icon: '🪙',
-            badge: '🪙 Şekil & Para',
-            featureTag: '⭐ 25+ Özgün Soru',
-            description: 'Kare, üçgen, çember, dikdörtgen ve TL madeni-kağıt paralarımızı tanı! 🪙🟦',
-            tags: ['🟦 Kare & Üçgen & Çember', '🪙 TL & Kuruş', '🛍️ Alışveriş'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'shapes_money'
+            topic: 'all'
           }
         ]
       },
@@ -9325,48 +9673,61 @@
         name: 'Türkçe',
         icon: '📚',
         colorTheme: 'theme-turkish',
-        tagline: 'Sözcükler & Anlam',
-        description: 'Zıt kavramlar, kelime bilgisi, harfler ve hece yapıları! 🦉📖',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Dinleme ve görsel anlama, zıt kavramlar, kurallı cümleler ve temel noktalama işaretleri! 🦉📖',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'antonyms', label: '🔄 Zıt Anlam' },
-          { id: 'syllables', label: '🔤 Harf & Hece' }
+          { id: 'all', label: '🌟 Tüm Konular / Karma Düello' },
+          { id: 'listen_comprehend', label: '🎧 Dinleme & Görsel Okuma' },
+          { id: 'antonyms', label: '🔄 Zıt Kavramlar' },
+          { id: 'sentence_punctuation', label: '✍️ Cümle & Noktalama' }
         ],
         games: [
           {
+            id: 'turkish_listen_comprehend_1',
+            active: true,
+            title: 'Dinle, Anla ve Resmi Bul!',
+            icon: '🎧',
+            badge: '🎧 Dinleme & Anlama',
+            featureTag: '🔊 TTS Destekli',
+            description: 'Sesli okunan cümleyi dinle, anlatan doğru görseli bul veya olayları oluş sırasına (Önce-Sonra) koy! 🎧🖼️',
+            tags: ['🎧 Sesli Dinleme', '🖼️ Görsel Eşleştirme', '⏳ Önce - Sonra', '🦉 Anlama Becerisi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'listen_comprehend'
+          },
+          {
             id: 'turkish_antonyms_1',
             active: true,
-            title: 'Zıt Anlamlı Kelimeler Avı',
+            title: 'Zıt Kavramlar Düellosu',
             icon: '🔄',
             badge: '🔄 Zıt Anlam',
             featureTag: '⭐ 35+ Kelime',
-            description: 'Büyük-küçük, uzun-kısa, sıcak-soğuk gibi zıt anlamlı sözcükleri roket gibi yakala! 🔄🚀',
-            tags: ['🔄 Karşıt Kavramlar', '⚡ Hızlı Eşleştirme', '🦉 Zengin Havuz'],
+            description: 'Büyük-küçük, uzun-kısa, sıcak-soğuk, açık-kapalı gibi 1. sınıf temel zıt kavramlarını şimşek gibi yakala! 🔄⚡',
+            tags: ['🔄 Karşıt Kavramlar', '⚡ Hızlı Eşleştirme', '🐘 Büyük - Küçük', '🥛 Dolu - Boş'],
             btnText: 'Düelloyu Başlat',
             topic: 'antonyms'
           },
           {
-            id: 'turkish_syllables_letters_1',
+            id: 'turkish_sentence_punctuation_1',
             active: true,
-            title: 'Hece Sayısı ve Harf Bilgisi',
-            icon: '🔤',
-            badge: '🔤 Harf & Hece',
-            featureTag: '♾️ Dinamik Soru',
-            description: 'Sözcüklerin kaç heceli olduğunu bul, ünlü (sesli) harfleri dedektif gibi avla! 🔤🔍',
-            tags: ['📖 Hece Sayma', '🔤 Ünlü Harfler (A-E-I-İ...)', '🔍 Dedektif'],
+            title: 'Cümle Kurucu & Noktalama Avcısı',
+            icon: '✍️',
+            badge: '✍️ Cümle & Noktalama',
+            featureTag: '✍️ Nokta & Soru',
+            description: 'Karışık kelimelerden anlamlı cümle kur, cümle sonuna Nokta (.) mı yoksa Soru İşareti (?) mi geleceğini bul! ✍️🎯',
+            tags: ['✍️ Anlamlı Cümle', '🎯 Nokta (.) & Soru (?)', '🔠 Büyük Harf Kuralı', '✨ Kelime Sıralama'],
             btnText: 'Düelloyu Başlat',
-            topic: 'syllables'
+            topic: 'sentence_punctuation'
           },
           {
-            id: 'turkish',
+            id: 'turkish_1_karma',
             active: true,
-            title: 'Hızlı Türkçe & Kelime Avı (Karma)',
+            title: 'Türkçe Süper Karma Düello (Tüm Konular)',
             icon: '🦉',
-            badge: '🌱 Karma Türkçe',
-            featureTag: '🏆 Süper Düello',
-            description: 'Zıt kavramlar, ünlü harfler ve hece sayılarından oluşan büyük karma yarışma! 🦉',
-            tags: ['🔄 Zıt Anlam', '🔤 Ünlü Harfler', '📖 Hece Sayısı'],
+            badge: '🌟 Süper Karma',
+            featureTag: '🏆 Büyük Yarışma',
+            description: 'Görsel okuma, temel sözcük anlamı, zıt kavramlar ve cümle kurma konularından oluşan karma düello! 🦉📚',
+            tags: ['🎧 Görsel Okuma', '🔄 Zıt Kavramlar', '✍️ Cümle & Noktalama', '🏆 Büyük Düello'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
@@ -9377,49 +9738,114 @@
         name: 'Hayat Bilgisi',
         icon: '🌱',
         colorTheme: 'theme-lifescience',
-        tagline: 'Okulumuz & Sağlığımız',
-        description: 'Okul kuralları, nezaket, kişisel bakım, dengeli beslenme ve mevsimler! 🏫🧼',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Ben ve okulum, sağlığım, ailem, ülkem, doğa ve çevre 2026 Maarif öğrenme alanları! 🏫🧼🇹🇷',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'school_home', label: '🏫 Okulda & Evde Hayat' },
-          { id: 'health_seasons', label: '🧼 Sağlık & Mevsimler' }
+          { id: 'all', label: '🌟 Hayat Bilgisi Karma Düello' },
+          { id: 'school', label: '🏫 Tema 1: Ben ve Okulum' },
+          { id: 'health_traffic', label: '🧼 Tema 2: Sağlığım ve Güvenliğim' },
+          { id: 'family_home', label: '🏡 Tema 3: Ailem ve Toplum' },
+          { id: 'country_flag', label: '🇹🇷 Tema 4: Yaşadığım Yer ve Ülkem' },
+          { id: 'nature_recycling', label: '🌿 Tema 5: Doğa ve Çevre' }
         ],
         games: [
           {
-            id: 'lifescience_school_home_1',
+            id: 'lifescience_school_1',
             active: true,
-            title: 'Okulumuzda ve Evimizde Hayat',
+            title: 'Doğru Davranışı Seç & Okul Rehberi',
             icon: '🏫',
-            badge: '🏫 Okul & Ev',
-            featureTag: '⭐ 26 Özgün Soru',
-            description: 'Okul kuralları, nezaket sözcükleri, aile bireyleri ve güvenli davranışları öğren! 🏫🏡',
-            tags: ['🏫 Okul Kuralları', '🤝 Nezaket Sözleri', '🏡 Aile Yaşamı'],
+            badge: '🏫 Ben ve Okulum',
+            featureTag: '🤝 Okul & Nezaket',
+            description: 'Okul ortamı, sınıf kuralları, okul çalışanları, duygularımız ve nezaket ifadeleri (lütfen, teşekkürler, özür dilerim)! 🏫🤝',
+            tags: ['🏫 Sınıf Kuralları', '🤝 Nezaket Sözleri', '😊 Duygularımız', '👨‍🏫 Okul Çalışanları'],
             btnText: 'Düelloyu Başlat',
-            topic: 'school_home'
+            topic: 'school'
           },
           {
-            id: 'lifescience_health_seasons_1',
+            id: 'lifescience_health_traffic_1',
             active: true,
-            title: 'Sağlıklı Hayat ve Mevsimler',
+            title: 'Sağlık Sepeti & Güvenli Yol',
             icon: '🧼',
-            badge: '🧼 Sağlık & Doğa',
-            featureTag: '⭐ 26 Özgün Soru',
-            description: 'Kişisel bakım, el yıkama, dengeli beslenme ve 4 mevsimin harika özellikleri! 🧼🍂',
-            tags: ['🧼 Kişisel Bakım', '🍎 Dengeli Beslenme', '🍂 4 Mevsim'],
+            badge: '🧼 Sağlık & Güvenlik',
+            featureTag: '🚦 Trafik & Sağlık',
+            description: 'Kişisel bakım, sağlıklı beslenme, temel trafik kuralları (yaya geçidi, trafik ışıkları), acil durum (112) ve güvenli alanlar! 🧼🚦',
+            tags: ['🧼 Kişisel Bakım', '🍎 Sağlıklı Beslenme', '🚦 Trafik Kuralları', '🚑 112 Acil'],
             btnText: 'Düelloyu Başlat',
-            topic: 'health_seasons'
+            topic: 'health_traffic'
           },
           {
-            id: 'lifescience',
+            id: 'lifescience_family_home_1',
             active: true,
-            title: 'Hayat Bilgisi Bilgi Yarışı (Karma)',
-            icon: '🌱',
-            badge: '🌱 Karma Pratik',
-            featureTag: '⭐ Yaşam Becerisi',
-            description: 'Okulda, evde, sağlıkta ve doğada doğru davranışları en hızlı sen bil! 🏫🧼',
-            tags: ['🏫 Okul Kuralları', '🧼 Kişisel Bakım', '🚦 Güvenli Hayat'],
+            title: 'Mutlu Evim & Sorumluluklarım',
+            icon: '🏡',
+            badge: '🏡 Ailem ve Toplum',
+            featureTag: '🤝 Ev & Sorumluluk',
+            description: 'Aile bireyleri, akrabalık, evdeki görev ve sorumluluklar, ev adresimiz, komşuluk ve yardımlaşma! 🏡❤️',
+            tags: ['👨‍👩‍👧 Aile Bireyleri', '🏡 Ev Sorumlulukları', '📍 Ev Adresi', '🤝 Komşuluk & Yardım'],
             btnText: 'Düelloyu Başlat',
+            topic: 'family_home'
+          },
+          {
+            id: 'lifescience_country_flag_1',
+            active: true,
+            title: 'Milli Değerlerimiz & Bayramlarımız',
+            icon: '🇹🇷',
+            badge: '🇹🇷 Yaşadığım Yer & Ülkem',
+            featureTag: '🇹🇷 Bayrak & Atatürk',
+            description: 'Şanlı bayrağımız, İstiklal Marşımız, Atatürk\'ün hayatı ve milli-dini bayramlarımız (29 Ekim, 23 Nisan vb.)! 🇹🇷🕊️',
+            tags: ['🇹🇷 Türk Bayrağı', '🎶 İstiklal Marşı', '⭐ Atatürk\'ün Hayatı', '🎉 Milli Bayramlar'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'country_flag'
+          },
+          {
+            id: 'lifescience_nature_recycling_1',
+            active: true,
+            title: 'Doğa Dostu & Geri Dönüşüm Avcısı',
+            icon: '🌿',
+            badge: '🌿 Doğa ve Çevre',
+            featureTag: '♻️ Geri Dönüşüm',
+            description: '4 mevsim ve kıyafet seçimi, hayvanları-bitkileri koruma, geri dönüşüm, su ve elektrik tasarrufu! 🌍♻️',
+            tags: ['🍂 4 Mevsim', '♻️ Geri Dönüşüm', '💧 Su Tasarrufu', '🐾 Canlıları Koruma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'nature_recycling'
+          },
+          {
+            id: 'lifescience_1_karma',
+            active: true,
+            title: 'Hayat Bilgisi Karma Düello (Tüm Konular)',
+            icon: '🌱',
+            badge: '🌟 Süper Karma',
+            featureTag: '⭐ Tüm Müfredat',
+            description: '5 temanın tamamından dengeli ve rastgele sorular çeken genel tekrar ve akıllı tahta sınıf düellosu! 🏫🧼🇹🇷',
+            tags: ['🏫 Okul & Nezaket', '🧼 Sağlık & Trafik', '🏡 Aile & Toplum', '🇹🇷 Milli Değerler'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
+          }
+        ]
+      },
+      {
+        id: 'grade1_grand_duel',
+        name: '🏆 1. Sınıf Büyük Karma Düello',
+        icon: '🏆',
+        colorTheme: 'theme-science',
+        tagline: 'Tüm Dersler Şampiyonası',
+        description: 'İlk Okuma, Türkçe, Matematik ve Hayat Bilgisi 2026 Maarif Modelinin tüm derslerinden karma büyük yarışma! 🏆🌟',
+        badge: '🌟 Süper Şampiyona',
+        topics: [
+          { id: 'all', label: '🌟 Tüm Dersler Karma' }
+        ],
+        games: [
+          {
+            id: 'grade1_grand_duel',
+            active: true,
+            title: '1. Sınıf Büyük Karma Düello (Tüm Dersler)',
+            icon: '🏆',
+            badge: '🏆 Büyük Şampiyona',
+            featureTag: '⭐ 4 Ders Harmanı',
+            description: 'Matematik, Türkçe, Hayat Bilgisi ve Okuma-Anlama sorularıyla sınıfının şampiyonu sen ol! 🥇🎯',
+            tags: ['🧮 Matematik', '📚 Türkçe', '🌱 Hayat Bilgisi', '🏆 Süper Düello'],
+            btnText: 'Büyük Düelloyu Başlat',
             topic: 'all'
           }
         ]
@@ -14853,6 +15279,8 @@
   window.speechKey = speechKey;
   window.normalizeSpeechText = normalizeSpeechText;
   window.loadSpeechIndex = loadSpeechIndex;
+  window.GRADE_SUBJECTS_CONFIG = GRADE_SUBJECTS_CONFIG;
+  window.QuestionEngine = QuestionEngine;
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {
