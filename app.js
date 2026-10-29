@@ -1329,8 +1329,19 @@
           { word: 'Süt', emoji: '🥛', hasSound: false },
           { word: 'Fil', emoji: '🐘', hasSound: false }
         ],
-        cumulativeWords: [],
-        cumulativeSentences: []
+        cumulativeWords: [
+          { word: 'A', parts: ['A'], distractors: ['a'], icon: '🅰️' },
+          { word: 'a', parts: ['a'], distractors: ['A'], icon: '🔤' },
+          { word: 'Aa', parts: ['A', 'a'], distractors: ['a'], icon: '🅰️' },
+          { word: 'aA', parts: ['a', 'A'], distractors: ['A'], icon: '🔤' },
+          { word: 'AA', parts: ['A', 'A'], distractors: ['a'], icon: '🗣️' },
+          { word: 'AAA', parts: ['A', 'A', 'A'], distractors: ['A'], icon: '📣' }
+        ],
+        cumulativeSentences: [
+          { sentence: 'A a a!', blankSentence: 'A a _____!', missing: 'a', options: ['a', 'A', 'Aa'], fullText: 'A a a!' },
+          { sentence: 'A A A!', blankSentence: 'A A _____!', missing: 'A', options: ['A', 'a', 'Aa'], fullText: 'A A A!' },
+          { sentence: 'A, a, a!', blankSentence: '_____, a, a!', missing: 'A', options: ['A', 'a', 'Aa'], fullText: 'A, a, a!' }
+        ]
       },
       'n': {
         letter: 'n', upper: 'N', group: 'g1', groupName: '1. Grup (ANETİL)',
@@ -2137,19 +2148,24 @@
   function filterAllowedWords(selectedLetter, pool) {
     const normSelected = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
     const targetIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(normSelected);
-    if (targetIdx <= 0) {
-      // 1. Harf 'a' (indeks 0): Tek bir ünlü harfle hece/kelime birleştirilemez!
-      return [];
-    }
+    if (targetIdx === -1) return [];
 
     let rawPool = pool;
     if (!Array.isArray(rawPool)) {
       rawPool = [];
-      for (let i = 0; i <= targetIdx; i++) {
-        const l = MAARIF_2026_CONFIG.letterOrder[i];
-        const data = MAARIF_2026_CONFIG.letters[l];
+      if (targetIdx === 0) {
+        // 1. Ses 'a': Büyük-küçük A harf ve ses birleştirme parçaları
+        const data = MAARIF_2026_CONFIG.letters['a'];
         if (data && Array.isArray(data.cumulativeWords)) {
           rawPool.push(...data.cumulativeWords);
+        }
+      } else {
+        for (let i = 1; i <= targetIdx; i++) {
+          const l = MAARIF_2026_CONFIG.letterOrder[i];
+          const data = MAARIF_2026_CONFIG.letters[l];
+          if (data && Array.isArray(data.cumulativeWords)) {
+            rawPool.push(...data.cumulativeWords);
+          }
         }
       }
     }
@@ -2169,7 +2185,7 @@
 
         const safeDistractors = validDistractors.length > 0
           ? validDistractors
-          : learnedLettersUpper.filter(l => !item.parts || !item.parts.includes(l)).slice(0, 2);
+          : (targetIdx === 0 ? ['a'] : learnedLettersUpper.filter(l => !item.parts || !item.parts.includes(l)).slice(0, 2));
 
         filtered.push({
           ...item,
@@ -2186,19 +2202,23 @@
   function filterAllowedSentences(selectedLetter, pool) {
     const normSelected = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
     const targetIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(normSelected);
-    if (targetIdx < 3) {
-      // Cümle tamamlama 4. harf olan 't' (indeks 3) ve sonrasında açılır
-      return [];
-    }
+    if (targetIdx === -1) return [];
 
     let rawPool = pool;
     if (!Array.isArray(rawPool)) {
       rawPool = [];
-      for (let i = 0; i <= targetIdx; i++) {
-        const l = MAARIF_2026_CONFIG.letterOrder[i];
-        const data = MAARIF_2026_CONFIG.letters[l];
+      if (targetIdx === 0) {
+        const data = MAARIF_2026_CONFIG.letters['a'];
         if (data && Array.isArray(data.cumulativeSentences)) {
           rawPool.push(...data.cumulativeSentences);
+        }
+      } else {
+        for (let i = 0; i <= targetIdx; i++) {
+          const l = MAARIF_2026_CONFIG.letterOrder[i];
+          const data = MAARIF_2026_CONFIG.letters[l];
+          if (data && Array.isArray(data.cumulativeSentences)) {
+            rawPool.push(...data.cumulativeSentences);
+          }
         }
       }
     }
@@ -11056,8 +11076,8 @@
     const learnedStr = learned.map(l => l.toUpperCase('tr-TR')).join(', ');
     const letterIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
 
-    const isSyllableUnlocked = letterIdx >= 1; // 2. ses 'n' ve sonrası
-    const isSentenceUnlocked = letterIdx >= 3; // 4. ses 't' ve sonrası
+    const isSyllableUnlocked = true; // 1. Sınıf 1. Grup "A" sesi ve tüm harflerde açık
+    const isSentenceUnlocked = true; // 1. Sınıf 1. Grup "A" sesi ve tüm harflerde açık
 
     const games = [
       {
@@ -11096,14 +11116,13 @@
         icon: '🧱',
         badge: '🧱 Kümülatif Birleştirme',
         featureTag: '🧩 Renkli Küpler',
-        description: isSyllableUnlocked
-          ? `Sadece öğrenilen (${learnedStr}) ses küplerine dokunarak anlamlı kelimeler inşa et! 🏗️`
-          : `🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!`,
-        tags: isSyllableUnlocked
-          ? ['🧱 Küp Birleştir', '📖 Kümülatif Hece', '🔊 Sesli Okuma']
-          : ['🔒 "N" Sesinde Açılır', '🧱 Hece Birleştirme'],
-        active: isSyllableUnlocked,
-        lockedNotice: "🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!"
+        description: letterIdx === 0
+          ? `Küp parçalarına dokunarak büyük ve küçük "A - a" seslerini oluştur ve birleştir! 🧱`
+          : `Sadece öğrenilen (${learnedStr}) ses küplerine dokunarak anlamlı kelimeler inşa et! 🏗️`,
+        tags: letterIdx === 0
+          ? ['🧱 Küp Birleştir', '🔤 "A - a" Ses İnşası', '🔊 Sesli Okuma']
+          : ['🧱 Küp Birleştir', '📖 Kümülatif Hece', '🔊 Sesli Okuma'],
+        active: true
       },
       {
         id: 'maarif_speed_read',
@@ -11111,14 +11130,11 @@
         icon: '⚡',
         badge: '🚀 Ritimli Okuma',
         featureTag: '⚡ Sesli Refleks',
-        description: isSyllableUnlocked
-          ? `Öğrenilen (${learnedStr}) sesleriyle kurulan kelimeyi dinle ve doğru kartı hızla yakala! 📖⭐`
-          : `🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!`,
-        tags: isSyllableUnlocked
-          ? ['🔊 Edge-TTS Sesli Okuma', '📖 Hızlı Okuma', '⭐ Ritimli Pratik']
-          : ['🔒 "N" Sesinde Açılır', '⭐ Kelime Oluşturma'],
-        active: isSyllableUnlocked,
-        lockedNotice: "🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!"
+        description: letterIdx === 0
+          ? `Duyduğun "A" sesini dinle ve doğru kartı hızla yakala! 📖⭐`
+          : `Öğrenilen (${learnedStr}) sesleriyle kurulan kelimeyi dinle ve doğru kartı hızla yakala! 📖⭐`,
+        tags: ['🔊 Edge-TTS Sesli Okuma', '📖 Hızlı Okuma', '⭐ Ritimli Pratik'],
+        active: true
       },
       {
         id: 'maarif_sentence_complete',
@@ -11126,20 +11142,11 @@
         icon: '📚',
         badge: '📖 Anlamlı Cümle',
         featureTag: '🧩 Boşluk Doldur',
-        description: isSentenceUnlocked
-          ? `Öğrenilen kelimelerle oluşturulan kısa cümlelerdeki eksik kelimeyi yerine koy ve cümleyi tamamla! 📝`
-          : (letterIdx < 1
-              ? `🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!`
-              : `Bu oyun 4. ses olan "T t" harfinden itibaren anlamlı kısa cümlelerle açılır! 🔒`),
-        tags: isSentenceUnlocked
-          ? ['📖 Kısa Cümle', '💡 Anlam Bütünlüğü', '🎯 Boşluk Tamamla']
-          : (letterIdx < 1
-              ? ['🔒 "N" Sesinde Açılır', '📝 Cümle Kurma']
-              : ['🔒 "T" Sesinde Açılır', '📝 Cümle Kurma']),
-        active: isSentenceUnlocked,
-        lockedNotice: letterIdx < 1
-          ? "🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!"
-          : "🔒 4. ses olan 'T' harfiyle açılır!"
+        description: letterIdx === 0
+          ? `Eğlenceli tekerlemedeki eksik "A" sesini yerine koy ve tamamla! 📝`
+          : `Öğrenilen kelimelerle oluşturulan kısa cümlelerdeki eksik kelimeyi yerine koy ve cümleyi tamamla! 📝`,
+        tags: ['📖 Kısa Cümle', '💡 Anlam Bütünlüğü', '🎯 Boşluk Tamamla'],
+        active: true
       }
     ];
 
@@ -12145,16 +12152,6 @@
   }
 
   function startDuel(gameType) {
-    if (state.currentGrade === 1 && state.currentSubject === 'firstreading' && !state.isMaarifGeneral) {
-      const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
-      const lIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
-      if (lIdx === 0 && (gameType === 'maarif_syllable_build' || gameType === 'maarif_speed_read' || gameType === 'maarif_sentence_complete')) {
-        if (typeof showToast === 'function') {
-          showToast("🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!");
-        }
-        return;
-      }
-    }
     lockInteractions(500);
     state.currentGameType = gameType;
     state.matchStartTime = Date.now();
