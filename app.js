@@ -6527,35 +6527,134 @@
       return [...this.grade3ScienceForceMotionPool, ...this.grade3ScienceMatterStatesPool];
     },
 
-    // 3. SINIF: YÖNLERİMİZ, KROKİ VE TÜKETİCİ HAKLARI (26 ÖZGÜN SORU)
-    grade3CompassConsumerPool: [
-      { q: 'Pusulanın renkli (kırmızı) ibresi daima hangi ana yönü gösterir? 🧭', a: 'Kuzey 🧭', d: ['Güney', 'Doğu'], exp: 'Pusula ibresinin renkli ucu Dünya\'nın manyetik kuzeyini gösterir.' },
-      { q: 'Güneş\'in sabahları doğduğu yöne sağ kolumuzu uzatırsak, ÖNÜMÜZ hangi yönü gösterir? ☀️', a: 'Kuzey 🧭', d: ['Güney', 'Batı'], exp: 'Sağ kol Doğu, sol kol Batı olduğunda önümüz Kuzey, arkamız Güney olur.' },
-      { q: 'Geceleri bulutsuz bir havada daima Kuzeyi gösteren parlak yıldız hangisidir? ⭐', a: 'Kutup Yıldızı (Demirkazık) ⭐', d: ['Çoban Yıldızı', 'Kuyruklu Yıldız'], exp: 'Kutup Yıldızı gökyüzünde daima Kuzey yönünü işaret eder.' },
-      { q: 'Ormanda kaybolan bir izci ağaç gövdelerindeki ve taşlardaki YOSUNLARA bakarak hangi yönü bulur? 🌲', a: 'Kuzey (Yosunlu taraf) 🌲', d: ['Güney', 'Doğu'], exp: 'Güneş görmeyen ve nemli kalan kuzey taraflarında yosunlar oluşur.' },
-      { q: 'Karınca yuvalarının ağzı ve çıkarılan toprak tepecikleri hangi yönü gösterir? 🐜', a: 'Yuva ağzı GÜNEYİ, toprak yığını KUZEYİ gösterir 🐜', d: ['Yuva ağzı kuzeyi gösterir', 'Doğuyu gösterir'], exp: 'Karıncalar rüzgardan korunmak için yuva girişlerini güneye doğru açarlar.' },
-      { q: 'Kuzey ile Doğu arasındaki ARA YÖN hangisidir? 🧭', a: 'Kuzeydoğu 🧭', d: ['Güneydoğu', 'Kuzeybatı'], exp: 'Kuzey ile Doğu arasındaki ara yön Kuzeydoğudur.' },
-      { q: 'Güney ile Batı arasındaki ARA YÖN hangisidir? 🧭', a: 'Güneybatı 🧭', d: ['Kuzeybatı', 'Güneydoğu'], exp: 'Güney ve Batı arasındaki ara yöne Güneybatı denir.' },
-      { q: 'Bir yerin KUŞ BAKIŞI görünüşünün ölçüsüz, kaba taslak çizimine ne ad verilir? 🗺️', a: 'Kroki 🗺️', d: ['Harita', 'Plan'], exp: 'Ölçeksiz, kaba taslak kuş bakışı çizimlere kroki denir.' },
-      { q: 'Krokilerde sokakları, binaları ve parkları daha kolay bulabilmek için hangisi kullanılır? 🏷️', a: 'Semboller ve sokak isimleri 🏷️', d: ['Gerçek fotoğraflar', 'Büyük resimler'], exp: 'Krokilerde basit geometrik çizimler ve isimler yer alır.' },
-      { q: 'Marketten yiyecek satın alırken sağlığımız için İLK ÖNCE nereye bakmalıyız? 🥛', a: 'Son Kullanma Tarihine (SKT) 📅', d: ['Paketin süsüne', 'Rengine'], exp: 'Tarihi geçmiş ürünler zehirlenmeye yol açabilir; mutlaka SKT incelenmelidir.' },
-      { q: 'Bir ürün üzerinde "TSE" damgasının bulunması ne anlama gelir? 🛡️', a: 'Ürünün Türk Standartlarına uygun ve kaliteli olduğunu 🛡️', d: ['Ürünün bedava olduğunu', 'İthal edildiğini'], exp: 'TSE, Türk Standartları Enstitüsü güvencesidir.' },
-      { q: 'Alışveriş yaptıktan sonra satıcıdan mutlaka ne istemeliyiz? 🧾', a: 'Fiş veya Fatura 🧾', d: ['Poşet', 'Çikolata'], exp: 'Fiş/fatura alışveriş belgesidir, tüketici hakkını korur ve devlete vergi kazandırır.' },
-      { q: 'Satın aldığımız bozuk veya ayıplı bir ürünü değiştirmek için satıcıya ne ile gitmeliyiz? 🧾', a: 'Ürün ve alışveriş fişiyle birlikte 🧾', d: ['Sadece ürünle', 'Kutusu olmadan'], exp: 'Alışveriş fişi olmadan ürün iadesi veya değişimi yapılamaz.' },
-      { q: 'Tüketici haklarımızı korumak ve şikayette bulunmak için arayabileceğimiz ALO Tüketici Hattı hangisidir? 📞', a: 'ALO 175 📞', d: ['ALO 112', 'ALO 182'], exp: 'ALO 175 Tüketici Danışma Hattı vatandaşlara destek verir.' },
-      { q: '"Komşu komşunun külüne muhtaçtır" atasözü hangi önemli değeri vurgular? 🏡', a: 'Komşuluk dayanışması ve yardımlaşmayı 🤝', d: ['Para biriktirmeyi', 'Tembellik yapmayı'], exp: 'Komşular en zor günlerde birbirlerinin yardımına koşar.' },
-      { q: 'Güneş akşamları hangi ana yönden batar? 🌅', a: 'Batı 🌅', d: ['Doğu', 'Kuzey'], exp: 'Güneş Doğu\'dan doğar, Batı\'dan batar.' },
-      { q: 'Toplam kaç tane ANA YÖN vardır? 🧭', a: '4 ana yön (Kuzey, Güney, Doğu, Batı) 🧭', d: ['2 ana yön', '8 ana yön'], exp: '4 ana yön ve 4 ara yön olmak üzere yönlerimiz belirlenir.' },
-      { q: 'Yangın söndürme, can kurtarma ve afetlerde görev alan fedakar meslek hangisidir? 🚒', a: 'İtfaiyeci 🚒', d: ['Mimar', 'Bankacı'], exp: 'İtfaiyeciler canları pahasına yangınları söndürür ve kurtarma yapar.' },
-      { q: 'Hastalıkları teşhis ve tedavi eden, sağlığımızı koruyan meslek hangisidir? 🩺', a: 'Doktor 🩺', d: ['Mühendis', 'Avukat'], exp: 'Doktorlar ve sağlık çalışanları şifa dağıtır.' },
-      { q: 'Gereksiz yere yanan lambaları kapatmak, diş fırçalarken suyu kapatmak hangi davranıştır? 💡', a: 'Bilinçli tasarruf 💡', d: ['Cimrilik', 'İsraf'], exp: 'Kaynakları gerektiği kadar tüketmeye tasarruf denir.' },
-      { q: 'Geri dönüşümü olan maddeleri çöpe atmak yerine geri dönüşüm kutusuna atmak neye katkı sağlar? ♻️', a: 'Doğanın korunmasına ve ülke ekonomisine 🌍', d: ['Çöp miktarının artmasına', 'Zaman kaybına'], exp: 'Geri dönüşüm ağaçları, suyu ve doğal kaynakları kurtarır.' },
-      { q: 'Evimizin krokisini çizerken eşyaları hangi açıdan görmüş gibi çizeriz? 📐', a: 'Kuş bakışı (Tam üstten) 📐', d: ['Yandan', 'Alttan'], exp: 'Krokiler daima kuş bakışı açıyla çizilir.' },
-      { q: 'Elektronik eşyalar aldığımızda garanti kapsamından yararlanmak için satıcıya neyi onaylatmalıyız? 📄', a: 'Garanti Belgesini 📄', d: ['Fiyat etiketini', 'Kullanım kılavuzunu'], exp: 'Garanti belgesi kaşelenip imzalanmalıdır.' },
-      { q: 'Cami minarelerindeki şerefelerin kapısı genellikle hangi yönü gösterir? 🕌', a: 'Güney (Kıble yönü) 🕌', d: ['Kuzey', 'Batı'], exp: 'Ülkemizde minare şerefe kapıları güneye (kıbleye) bakar.' },
-      { q: 'Öğrencilere yeni bilgiler öğreten, onları geleceğe hazırlayan kutsal meslek hangisidir? 👨‍🏫', a: 'Öğretmen 👨‍🏫', d: ['Pilot', 'Kaptan'], exp: 'Öğretmenler nesilleri yetiştirir.' },
-      { q: 'Aşağıdakilerden hangisi bir İSTEK değil, temel İHTİYAÇTIR? 🍞', a: 'Ekmek ve su 🍞💧', d: ['Pahalı oyuncak robot 🤖', 'Video oyunu 🎮'], exp: 'Beslenme ve su yaşamsal temel ihtiyaçtır.' }
+    // -------------------------------------------------------------
+    // 3. SINIF: 2026 TÜRKİYE YÜZYILI MAARİF MODELİ HAYAT BİLGİSİ SORU HAVUZLARI
+    // (6 Öğrenme Alanı - Okul/Meslek, Ev/Bütçe, Sağlık/Tüketici, Trafik/Güvenlik, Yönetim, Doğa/Yön + TTS)
+    // -------------------------------------------------------------
+
+    grade3LifeScienceSchoolProfessionsPool: [
+      {"q":"Binaların, evlerin ve köprülerin planını ve projesini çizen meslek hangisidir? 🏛️","a":"Mimar 🏛️","d":["Doktor 🩺","Aşçı 👨‍🍳"],"exp":"Mimarlar güvenli, estetik ve kullanışlı yapıların plan ve projelerini çizerler.","spokenText":"Binaların ve evlerin plan ve projesini çizen meslek hangisidir?"},
+      {"q":"Bir yerin KUŞ BAKIŞI (tam üstten) görünüşünün ölçeksiz, kaba taslak çizimine ne denir? 📐","a":"Kroki 🗺️","d":["Harita","Plan"],"exp":"Ölçeksiz, kaba taslak kuş bakışı çizimlere kroki denir.","spokenText":"Bir yerin kuş bakışı görünüşünün kaba taslak çizimine ne denir?"},
+      {"q":"Sınıfımızın krokisini çizerken sıraları, öğretmen masasını ve kapıyı göstermek için ne kullanırız? 🏷️","a":"Basit geometrik şekiller ve semboller 🏷️","d":["Büyük ve renkli fotoğraflar","Gerçek boyutlu çizimler"],"exp":"Krokilerde eşyalar ve mekanlar semboller ve geometrik çizimlerle temsil edilir.","spokenText":"Sınıf krokisi çizerken eşyaları göstermek için ne kullanırız?"},
+      {"q":"Kedi, köpek, koyun ve inek gibi hayvanların hastalıklarını tedavi eden ve aşılarını yapan meslek hangisidir? 🐾","a":"Veteriner 🐾","d":["Mimar","Eczacı"],"exp":"Veteriner hekimler hayvan sağlığı ve tedavisiyle ilgilenen uzmanlardır.","spokenText":"Hayvanların hastalıklarını tedavi eden meslek hangisidir?"},
+      {"q":"Yangınları söndüren, sel ve kaza gibi afetlerde can kurtaran fedakar meslek çalışanları kimlerdir? 🚒","a":"İtfaiyeci 🚒","d":["Kütüphaneci","Terzi"],"exp":"İtfaiyeciler yangın söndürme ve acil kurtarma görevlerini yürütürler.","spokenText":"Yangınları söndüren ve afetlerde can kurtaran meslek hangisidir?"},
+      {"q":"Arkadaşımızın sahip olduğu bir başarıyı veya güzel bir davranışını görünce ne yapmalıyız? 👏","a":"Onu içtenlikle tebrik etmeli ve takdir etmeliyiz 👏","d":["Onu kıskanıp küsmeliyiz","Görmezden gelmeliyiz"],"exp":"Arkadaşlarımızın başarısını tebrik etmek arkadaşlık bağlarını güçlendirir.","spokenText":"Arkadaşımızın bir başarısını görünce nasıl davranmalıyız?"},
+      {"q":"Okulda bir sorun yaşadığımızda veya bir istekte bulunmak istediğimizde bunu nasıl ifade etmeliyiz? 🗳️","a":"Dilek kutusunu kullanarak veya öğretmenimizle nezaketle konuşarak 🗳️","d":["Bağırıp öfkelenerek","Eşyalara zarar vererek"],"exp":"Demokratik ortamlarda istek ve şikayetler nezaketle ve dilek kutusu yoluyla iletilir.","spokenText":"Okulda istek veya şikayetlerimizi nasıl ifade etmeliyiz?"},
+      {"q":"Tarlalarda toprağı işleyen, sebze ve meyveleri yetiştirerek soframıza ulaştıran meslek hangisidir? 🌾","a":"Çiftçi 🌾","d":["Mühendis","Avukat"],"exp":"Çiftçiler tarımsal üretim yaparak besinlerimizi yetiştirirler.","spokenText":"Sebze ve meyveleri yetiştiren meslek hangisidir?"},
+      {"q":"Grup ve takım çalışmalarında başarılı olmak için en çok hangisine ihtiyaç duyarız? 🤝","a":"İş birliği, saygı ve dayanışmaya 🤝","d":["Sadece kendi dediğini yaptırmaya","Görev almaktan kaçınmaya"],"exp":"Grup çalışmalarında iş birliği ve görev paylaşımı başarıyı getirir.","spokenText":"Grup çalışmalarında başarılı olmak için neye ihtiyaç duyarız?"},
+      {"q":"Hak ve adaleti savunarak mahkemelerde insanları savunan meslek hangisidir? ⚖️","a":"Avukat ⚖️","d":["Mimar","Kaptan"],"exp":"Avukatlar adalet önünde kişi haklarını savunurlar.","spokenText":"Mahkemelerde insanları savunan meslek hangisidir?"},
+      {"q":"Okulumuzdaki Kızılay kulübünün temel amacı nedir? 🩸","a":"Yardımlaşma, dayanışma ve afet bilinci geliştirmek 🤝","d":["Sadece spor müsabakaları yapmak","Kitap satmak"],"exp":"Kızılay kulübü öğrencilere yardımlaşma ve acil durumlarda destek olma bilinci aşılar.","spokenText":"Okuldaki Kızılay kulübünün temel amacı nedir?"},
+      {"q":"Bir arkadaşımızın sırrını başkalarına anlatmak arkadaşlık ilişkilerini nasıl etkiler? 💔","a":"Güveni kırar ve arkadaşlığa zarar verir 💔","d":["Arkadaşlığı çok güçlendirir","Hiçbir etkisi olmaz"],"exp":"Arkadaşlıkta dürüstlük ve sır tutma güvenin temelidir.","spokenText":"Arkadaşımızın sırrını başkasına söylemek arkadaşlığı nasıl etkiler?"},
+      {"q":"Kendimizin geliştirmesi gereken yönlerini fark edip çalışmak bize ne kazandırır? 📈","a":"Daha başarılı ve öz güvenli olmamızı sağlar 🌟","d":["Üzülüp ders çalışmayı bırakmamızı sağlar","Zaman kaybettirir"],"exp":"Eksiklerimizi bilip üzerinde çalışmak kişisel gelişimimizi sağlar.","spokenText":"Geliştirmemiz gereken yönlerimizi fark etmek bize ne kazandırır?"},
+      {"q":"Yol, köprü, baraj, makine ve bilgisayar yazılımları tasarlayan meslek hangisidir? 💻","a":"Mühendis 💻","d":["Aşçı","Berber"],"exp":"Mühendisler teknik projeler ve yeni teknolojiler üretirler.","spokenText":"Köprü, makine ve yazılımlar tasarlayan meslek hangisidir?"},
+      {"q":"Okul kurallarına uymak okulumuzda neyi sağlar? 🏫","a":"Huzurlu, adil ve güvenli bir öğrenme ortamı 🛡️","d":["Derslerin çok sıkıcı olmasını","Teneffüslerin iptal edilmesini"],"exp":"Kurallar herkesin güvenli ve huzurlu bir ortamda eğitim almasını sağlar.","spokenText":"Okul kurallarına uymak neyi sağlar?"}
     ],
+
+    grade3LifeScienceHomeBudgetPool: [
+      {"q":"Geçmişte büyüklerimizin oynadığı geleneksel sokak oyunlarına hangisi örnektir? 🎲","a":"Seksek, saklambaç ve çelik çomak 🎲","d":["Tablet video oyunları","Sanal gerçeklik oyunları"],"exp":"Seksek, saklambaç, körebe ve çelik çomak geçmişten gelen geleneksel oyunlarımızdır.","spokenText":"Büyüklerimizin çocukken oynadığı geleneksel oyunlara hangisi örnektir?"},
+      {"q":"\"Komşu komşunun külüne muhtaçtır\" atasözü hangi önemli değeri vurgular? 🏡","a":"Komşuluk dayanışması ve yardımlaşmasını 🤝","d":["Cimrilik yapmayı","Kimseyle konuşmamayı"],"exp":"Komşular en zor anlarda birbirlerinin yardımına koşar.","spokenText":"Komşu komşunun külüne muhtaçtır atasözü neyi vurgular?"},
+      {"q":"Aşağıdakilerden hangisi evde üzerimize düşen sorumluluklardan biridir? 🛏️","a":"Odamızı toplamak ve yatağımızı düzeltmek 🛏️","d":["Bütün gün televizyon izlemek","Çöpleri odanın ortasına atmak"],"exp":"Odamızı ve çalışma masamızı düzenli tutmak kendi sorumluluğumuzdur.","spokenText":"Evde üzerimize düşen sorumluluklardan biri hangisidir?"},
+      {"q":"Evdeki su ve elektrik gibi kaynakları tasarruflu kullanmak için hangisini yapmalıyız? 💡","a":"Diş fırçalarken musluğu kapatmak ve gereksiz lambaları söndürmek 💡","d":["Musluğu sonuna kadar açık bırakmak","Bütün odaların ışıklarını açık tutmak"],"exp":"Gereksiz tüketimi önlemek kaynaklarımızı korur ve aile bütçesine katkı sağlar.","spokenText":"Evdeki kaynakları tasarruflu kullanmak için ne yapmalıyız?"},
+      {"q":"Günlük ve haftalık plan yapmanın bize en büyük faydası nedir? ⏰","a":"Zamanımızı verimli kullanmak ve derslerimize, oyunumuza vakit ayırmak ⏰","d":["Bizi çok yorması","Oyun oynamayı tamamen yasaklaması"],"exp":"Planlı yaşamak işlerimizi zamanında bitirip dinlenmemize olanak tanır.","spokenText":"Günlük ve haftalık plan yapmanın en büyük faydası nedir?"},
+      {"q":"Aile bütçemizi korumak için alışveriş yaparken hangisine ÖNCELİK vermeliyiz? 🛒","a":"Temel ihtiyaçlarımıza (Beslenme, sağlık vb.) 🍞","d":["Pahalı oyuncaklara ve isteklere","Sadece süs eşyalarına"],"exp":"Alışverişte her zaman ihtiyaçlar isteklere göre önceliklidir.","spokenText":"Aile bütçesini korumak için hangisine öncelik vermeliyiz?"},
+      {"q":"Harçlıklarımızın bir kısmını kumbaraya atmak bize hangi alışkanlığı kazandırır? 🪙","a":"Tasarruf yapma ve birikim bilincini 🪙","d":["İsraf yapmayı","Borçlanmayı"],"exp":"Düzenli para biriktirmek gelecekteki hedeflerimiz için tasarruf bilinci kazandırır.","spokenText":"Harçlığımızın bir kısmını kumbarada biriktirmek bize ne kazandırır?"},
+      {"q":"Apartmanda yaşarken komşularımızı rahatsız etmemek için hangisine dikkat etmeliyiz? 🔇","a":"Geç saatlerde yüksek ses çıkarmamak ve gürültü yapmamak 🔇","d":["Merdivenlerde koşup bağırmak","Kapı önlerine çöp yığmak"],"exp":"Ortak yaşam alanlarında gürültü yapmamak komşuluk hakkına saygıdır.","spokenText":"Komşularımızı rahatsız etmemek için neye dikkat etmeliyiz?"},
+      {"q":"Evde artan bayat ekmekleri çöpe atmak yerine ne yapabiliriz? 🥖","a":"Yumurta veya köfte harcında kullanarak değerlendirebiliriz 🥖","d":["Hemen çöpe fırlatmalıyız","Balkondan aşağı saçmalıyız"],"exp":"Bayat ekmekleri yemeklerde değerlendirmek ekmek israfını önler.","spokenText":"Bayat ekmekleri israf etmemek için ne yapabiliriz?"},
+      {"q":"Geçmişte uzaktaki akrabalarla iletişim mektupla sağlanırken, günümüzde nasıl sağlanmaktadır? 📱","a":"Akıllı telefon ve görüntülü internet aramalarıyla 📱","d":["Sadece dumanla","Güvercinlerle"],"exp":"Teknolojinin gelişmesiyle anlık ve görüntülü iletişim yaygınlaşmıştır.","spokenText":"Günümüzde uzaktaki yakınlarımızla iletişim en çok nasıl sağlanır?"},
+      {"q":"Evimizin bulunduğu yeri tarif etmek ve bulmayı kolaylaştırmak için ne çizebiliriz? 🗺️","a":"Kroki 🗺️","d":["Portre resmi","Karikatür"],"exp":"Evimizin çevresini kuş bakışı gösteren basit bir kroki yön bulmayı kolaylaştırır.","spokenText":"Evimizin yerini tarif etmek için ne çizebiliriz?"},
+      {"q":"Aşağıdakilerden hangisi bir İSTEK değil, yaşamsal bir İHTİYAÇTIR? 💧","a":"Temiz içme suyu ve kışlık mont 💧🧥","d":["En son model akıllı saat ⌚","Video oyun konsolu 🎮"],"exp":"Su ve giyinme yaşamak için zorunlu temel ihtiyaçtır.","spokenText":"Hangisi yaşamsal bir temel ihtiyaçtır?"},
+      {"q":"Soğuk kış günlerinde evdeki ısı kaybını önlemek ve doğalgazdan tasarruf etmek için ne yapılmalıdır? 🌡️","a":"Kapı ve pencerelerin yalıtımına dikkat edilmelidir 🏠","d":["Kombi sonuna kadar açıkken pencereler açılmalıdır","Peteklerin üzeri kalın örtülerle kapatılmalıdır"],"exp":"Isı yalıtımı yakıt tasarrufu sağlar ve evi sıcak tutar.","spokenText":"Kışın doğalgazdan tasarruf etmek için ne yapılmalıdır?"},
+      {"q":"Aile bireyleri arasında kararlar alınırken hangisi demokratik bir tutumdur? 👨‍👩‍👧","a":"Bütün aile üyelerinin fikrini dinleyip ortak karar almak 🤝","d":["Sadece bir kişinin istediğini zorla yaptırması","Kimsenin fikrini sormamak"],"exp":"Aile meclisinde herkesin düşüncesini dinlemek demokratik ve sevgi dolu bir tutumdur.","spokenText":"Ailede karar alınırken hangi tutum demokratiktir?"},
+      {"q":"Kullanılmayan cep telefonu şarj aletini prizde takılı bırakmak neye sebep olur? ⚡","a":"Gereksiz elektrik tüketimine ve güvenlik riskine ⚡","d":["Telefonun kendi kendine şarj olmasına","Elektrik faturasının düşmesine"],"exp":"Prizde unutulan adaptörler az da olsa elektrik harcamaya devam eder.","spokenText":"Şarj aletini prizde takılı bırakmak neye yol açar?"}
+    ],
+
+    grade3LifeScienceHealthConsumerPool: [
+      {"q":"Marketten süt, yoğurt veya peynir alırken paket üzerinde İLK ÖNCE nereye bakmalıyız? 🥛","a":"Son Kullanma Tarihine (SKT) 📅","d":["Paketin resmine","Fiyat etiketinin rengine"],"exp":"Tarihi geçmiş süt ürünleri tüketildiğinde ciddi gıda zehirlenmesine yol açabilir.","spokenText":"Paketli yiyecek alırken ilk önce nereye bakmalıyız?"},
+      {"q":"Satın aldığımız ürünlerin üzerinde \"TSE\" damgasının bulunması neyi kanıtlar? 🛡️","a":"Ürünün Türk Standartlarına uygun, kaliteli ve güvenli olduğunu 🛡️","d":["Ürünün bedava olduğunu","Yurt dışından ithal geldiğini"],"exp":"TSE (Türk Standartları Enstitüsü) damgası ürünün sağlık ve kalite denetiminden geçtiğini gösterir.","spokenText":"Ürünün üzerindeki TSE damgası ne anlama gelir?"},
+      {"q":"Alışveriş yaptıktan sonra satıcıdan mutlaka neyi istemeli ve saklamalıyız? 🧾","a":"Fiş veya Faturayı 🧾","d":["Fazladan poşet","Şekerleme"],"exp":"Fiş ve fatura alışveriş belgesidir; ayıplı mal iadesinde kanıttır ve vergi geliri sağlar.","spokenText":"Alışveriş yaptıktan sonra satıcıdan mutlaka ne istemeliyiz?"},
+      {"q":"Satın aldığımız ayakkabı veya oyuncak bozuk/defolu çıktığında ne yapmalıyız? 📦","a":"Faturamız veya fişimizle birlikte mağazaya gidip değişim istemeliyiz 🧾","d":["Hemen çöpe atmalıyız","Hiçbir şey yapmamalıyız"],"exp":"Bilinçli tüketici hakkını arar ve alışveriş fişiyle ürünü iade veya değişim ettirir.","spokenText":"Satın aldığımız ürün ayıplı çıkarsa ne yapmalıyız?"},
+      {"q":"Tüketici hakları konusunda destek almak ve şikayette bulunmak için hangi hattı ararız? 📞","a":"ALO 175 Tüketici Danışma Hattı 📞","d":["ALO 112","ALO 182"],"exp":"ALO 175 Tüketici Danışma Hattı haklarımızı korumada yardımcı olur.","spokenText":"Tüketici hakları danışma hattı numarası kaçtır?"},
+      {"q":"Kış mevsiminde sağlığımızı ve bağışıklığımızı korumak için hangi meyve ve sebzeleri tüketmeliyiz? 🍊","a":"Portakal, mandalina, kivi, ıspanak ve lahana 🍊🥦","d":["Karpuz, kavun ve şeftali 🍉","Dondurma ve buzlu içecekler"],"exp":"C vitamini deposu olan narenciye ve kış sebzeleri mevsiminde tüketilmelidir.","spokenText":"Kışın bağışıklığımızı güçlendirmek için hangi meyveleri yemeliyiz?"},
+      {"q":"Günde en az iki kez dişlerimizi fırçalamak hangi sağlık sorununu önler? 🦷","a":"Diş çürüklerini ve diş eti hastalıklarını 🦷","d":["Saç dökülmesini","Göz yorgunluğunu"],"exp":"Düzenli diş fırçalamak plak oluşumunu ve çürükleri engeller.","spokenText":"Düzenli diş fırçalamak neyi önler?"},
+      {"q":"Aşırı şekerli, yağlı ve hazır (fast-food) yiyeceklerle beslenmek hangi sağlık sorununa yol açar? 🍔","a":"Obezite ve kalp-damar rahatsızlıklarına ⚠️","d":["Boyun çok hızlı uzamasına","Dişlerin parlamasına"],"exp":"Dengesiz ve aşırı kalorili beslenme obeziteye sebep olur.","spokenText":"Aşırı yağlı ve hazır gıdalarla beslenmek hangi soruna yol açar?"},
+      {"q":"Okul tuvaletleri ve parklar gibi ortak kullanım alanlarında hijyeni sağlamak için ne yapmalıyız? 🧼","a":"Sifonu çekmeli, çöpleri kutuya atmalı ve ellerimizi sabunla yıkamalıyız 🧼","d":["Suyu sürekli açık bırakmalıyız","Yere çöp atmalıyız"],"exp":"Ortak alanları temiz kullanmak bulaşıcı hastalıkların yayılmasını önler.","spokenText":"Okul tuvaleti gibi ortak alanlarda hijyen için ne yapmalıyız?"},
+      {"q":"Tırnak temizliği ve bakımında el tırnakları ve ayak tırnakları nasıl kesilmelidir? ✂️","a":"El tırnakları kavisli (yuvarlak), ayak tırnakları düz kesilmelidir ✂️","d":["Hepsi sivri kesilmelidir","Hiç kesilmemelidir"],"exp":"Tırnak batmasını önlemek için ayak tırnakları düz kesilmelidir.","spokenText":"Tırnak keserken el ve ayak tırnakları nasıl kesilmelidir?"},
+      {"q":"Konserve kutusunun kapağı şişmiş veya ambalajı delinmiş bir yiyeceği ne yapmalıyız? 🥫","a":"Asla satın almamalı ve yememeliyiz, bozulmuş olabilir ⚠️","d":["Pişirip hemen yemeliyiz","Tadına bakıp karar vermeliyiz"],"exp":"Kapağı şişmiş konservelerde ölümcül zehirli bakteriler üremiş olabilir.","spokenText":"Kapağı şişmiş bir konservede ne yapılmalıdır?"},
+      {"q":"Vücudumuzun sağlıklı gelişmesi için günde kaç saat düzenli uyumalıyız? 🛌","a":"9 - 10 saat 🛌","d":["3 - 4 saat","15 - 16 saat"],"exp":"Büyüme hormonları uykuda salgılanır, 3. sınıf çocukları için 9-10 saat uyku gereklidir.","spokenText":"İlkokul çağındaki çocuklar günde kaç saat uyumalıdır?"},
+      {"q":"Gıda ürünlerinin arkasındaki \"İçindekiler\" bölümünü okumak özellikle kimler için hayatidir? 🔍","a":"Besin alerjisi olan bireyler için ⚠️","d":["Sadece market sahipleri için","Hiç kimse için gerekmez"],"exp":"Fındık, süt, gluten alerjisi olanlar içerik etiketini mutlaka kontrol etmelidir.","spokenText":"İçindekiler bölümünü okumak özellikle kimler için çok önemlidir?"},
+      {"q":"Yemek yemeden önce ve tuvaletten çıktıktan sonra ellerimizi en az kaç saniye sabunlamalıyız? 🧼","a":"En az 20 saniye bol su ve sabunla 🧼","d":["Sadece 2 saniye su değdirerek","Sabun kullanmadan"],"exp":"Mikropların ölmesi için eller 20 saniye boyunca parmak aralarıyla birlikte sabunlanmalıdır.","spokenText":"Ellerimizi sabunla en az kaç saniye yıkamalıyız?"},
+      {"q":"Yemek israfını önlemek için tabağımıza ne kadar yemek almalıyız? 🍽️","a":"Yiyebileceğimiz kadar 🍽️","d":["Tabağı tepeleme doldurmalıyız","Yarısını dökecek kadar almalıyız"],"exp":"Tabağa yiyebileceğimiz kadar yemek almak besin israfını önler.","spokenText":"Yemek israfını önlemek için tabağımıza ne kadar yemek almalıyız?"}
+    ],
+
+    grade3LifeScienceSafetyTrafficPool: [
+      {"q":"Mavi zemin üzerinde el ele tutuşan iki çocuk figürü olan trafik levhası neyi bildirir? 🚸","a":"Okul Geçidini 🚸","d":["Bisiklet Giremez","Otoyol Başlangıcı"],"exp":"Bu levha okul geçidini gösterir; sürücüler yavaşlamalı, yayalara yol vermelidir.","spokenText":"İki çocuk figürü bulunan trafik levhası neyi bildirir?"},
+      {"q":"Kırmızı üçgen veya daire içinde bisiklet resmi olan ve üzerinde kırmızı çizgi bulunan levha nedir? 🚫🚲","a":"Bisiklet Giremez 🚫","d":["Bisiklet Yolu","Mecburi Bisiklet Yolu"],"exp":"Kırmızı yasaklama levhaları o yola bisikletin giremeyeceğini bildirir.","spokenText":"Üzerinde kırmızı çizgi olan bisiklet levhası neyi bildirir?"},
+      {"q":"Karşıdan karşıya geçerken trafik lambası yoksa en güvenli yer neresidir? 🦓","a":"Yaya geçidi, alt geçit veya üst geçit 🦓","d":["Virajlı ve dar yollar","Arabaların hızla geçtiği yerler"],"exp":"Yaya geçitleri, alt ve üst geçitler yayalar için en güvenli noktalardır.","spokenText":"Trafik lambası olmayan yollarda en güvenli geçiş yerleri nerelerdir?"},
+      {"q":"Karşıdan karşıya geçerken adımlarımızı nasıl kontrol etmeliyiz? 👀","a":"Önce sola, sonra sağa, tekrar sola bakıp hızlı adımlarla geçmeliyiz 👀","d":["Koşarak gözümüz kapalı geçmeliyiz","Sadece sağa bakmalıyız"],"exp":"Trafik kuralına göre: Sol ➔ Sağ ➔ Sol kontrol edilip dikkatlice geçilir.","spokenText":"Karşıdan karşıya geçerken sırasıyla nereye bakmalıyız?"},
+      {"q":"Otomobilde seyahat ederken arka koltukta otursak bile mutlaka ne takmalıyız? 🚗","a":"Emniyet kemeri 🛡️","d":["Kask","Güneş gözlüğü"],"exp":"Emniyet kemeri olası kaza anında fırlamayı ve yaralanmayı önler.","spokenText":"Otomobilde seyahat ederken mutlaka ne takmalıyız?"},
+      {"q":"Ülkemizde ambulans, itfaiye, polis ve jandarma gibi tüm acil durumlar için aranan TEK numara kaçtır? 🚨","a":"112 Acil Çağrı Merkezi 🚨","d":["155","110"],"exp":"Türkiye'de tüm acil yardım hatları 112 numarası altında birleştirilmiştir.","spokenText":"Tüm acil durumlar için aranan tek numara kaçtır?"},
+      {"q":"Deprem sarsıntısı başladığında sınıfta veya evde yapmamız gereken EN DOĞRU hareket nedir? 🛡️","a":"Çök - Kapan - Tutun pozisyonu almak 🛡️","d":["Merdivenlere koşmak ve asansöre binmek","Pencereden dışarı atlamak"],"exp":"Sağlam bir eşyanın yanında Çök-Kapan-Tutun yaparak başımızı korumalıyız.","spokenText":"Deprem anında yapmamız gereken en doğru hareket nedir?"},
+      {"q":"Yangın anında odada duman varsa dışarı çıkarken nasıl hareket etmeliyiz? 🌫️","a":"Ağzımızı ıslak mendille kapatıp yer seviyesinde eğilerek/emekleyerek 🌫️","d":["Ayakta dikilerek derin derin nefes almalıyız","Dolabın içine saklanmalıyız"],"exp":"Duman ve zehirli gazlar tavana yükselir; tabanda temiz hava bulunur.","spokenText":"Dumanlı bir ortamda yangından kaçarken nasıl ilerlemeliyiz?"},
+      {"q":"Parkta veya sokakta tanımadığımız bir yabancı bize çikolata verip arabasına binmemizi söylerse ne yapmalıyız? 🛑","a":"Asla kabul etmemeli, yüksek sesle \"HAYIR!\" deyip güvenli yere koşmalıyız 🛑","d":["Hemen arabasına binmeliyiz","Çikolatayı alıp teşekkür etmeliyiz"],"exp":"Tanımadığımız kişilerin tekliflerini reddetmeli ve hemen büyüklerimizden yardım istemeliyiz.","spokenText":"Yabancı biri arabasına binmemizi isterse ne yapmalıyız?"},
+      {"q":"Okul koridorlarında ve merdivenlerde hızla koşmak ne tür kazalara yol açabilir? ⚠️","a":"Çarpışma, düşme ve kırık-çıkık yaralanmalarına ⚠️","d":["Dersleri daha erken bitirmeye","Sağlığımızın güçlenmesine"],"exp":"Koridorlarda koşmak diğer arkadaşlarımıza çarpmamıza ve yaralanmalara neden olur.","spokenText":"Okul merdivenlerinde koşmak ne tür tehlikelere yol açar?"},
+      {"q":"Evde temizlik maddeleri ve ilaçlar nerede saklanmalıdır? 🔒","a":"Çocukların ulaşamayacağı kilitli ve yüksek dolaplarda 🔒","d":["Mutfak masasının üzerinde","Oyuncak sepetinde"],"exp":"Zehirlenme kazalarını önlemek için ilaç ve deterjanlar kilitli tutulmalıdır.","spokenText":"İlaç ve temizlik maddeleri nerede saklanmalıdır?"},
+      {"q":"Deprem sonrasında binayı terk ederken asansörü kullanmak neden TEHLİKELİDİR? 🛗","a":"Elektrikler kesilebilir ve asansör boşluğunda mahsur kalınabilir 🛗","d":["Asansör çok yavaş iner","Asansör ücretlidir"],"exp":"Afet anlarında asansörler asla kullanılmaz, merdivenler tercih edilir.","spokenText":"Depremde asansör kullanmak neden tehlikelidir?"},
+      {"q":"Gece yürüyüş yaparken sürücülerin bizi uzaktan fark edebilmesi için nasıl giyinmeliyiz? 🦺","a":"Açık renkli veya reflektörlü (parlayan) kıyafetler 🦺","d":["Tamamen kapkara kıyafetler","Gözlük takarak"],"exp":"Açık renk ve reflektörlü giysiler araç farı altında parlayarak fark edilmeyi sağlar.","spokenText":"Gece yürürken sürücülerin bizi görmesi için nasıl giyinmeliyiz?"},
+      {"q":"112 Acil Çağrı Merkezini gereksiz yere arayıp meşgul etmek neden suçtur ve yanlıştır? 🚨","a":"Gerçekten ölüm kalım savaşı veren hastaların yardım almasını engeller 🚨","d":["Telefon faturasını artırır","Sadece komik olduğu için"],"exp":"112 hayati bir hattır; meşgul etmek başkalarının hayatına mal olabilir.","spokenText":"112 acil hattını meşgul etmek neden çok yanlıştır?"},
+      {"q":"Sıcak ütüye, fırına veya kaynayan çaydanlığa dokunmak hangi kazaya yol açar? 🔥","a":"Ciltte ağır yanıklara 🔥","d":["Elektrik çarpmasına","Zehirlenmeye"],"exp":"Sıcak yüzeylerle temas derin cilt yanıklarına sebep olur.","spokenText":"Sıcak çaydanlık veya ütüye dokunmak neye yol açar?"}
+    ],
+
+    grade3LifeScienceCountryLeadersPool: [
+      {"q":"İlimizdeki en yetkili mülki amir olan ve devleti ilde temsil eden yönetici kimdir? 🏛️","a":"Vali 🏛️","d":["Muhtar","Kaymakam"],"exp":"İlleri vali yönetir; vali devlet (Cumhurbaşkanı) tarafından atanır.","spokenText":"İldeki en yetkili yönetici kimdir?"},
+      {"q":"İlçemizdeki en yetkili devlet yöneticisi (mülki idare amiri) kimdir? 🏢","a":"Kaymakam 🏢","d":["Vali","Bakan"],"exp":"İlçelerin yönetiminden kaymakam sorumludur.","spokenText":"İlçedeki en yetkili devlet yöneticisi kimdir?"},
+      {"q":"Köy veya mahallemizde halkın oylarıyla seçilen yerel yönetici kimdir? 🗳️","a":"Muhtar 🗳️","d":["Kaymakam","Vali"],"exp":"Köy ve mahalleleri seçimle göreve gelen muhtarlar yönetir.","spokenText":"Mahalle veya köyde seçimle iş başına gelen yönetici kimdir?"},
+      {"q":"Şehrimizde yol, temizlik, su, park ve ulaşım gibi belediye hizmetlerini yürüten yönetici kimdir? 🚍","a":"Belediye Başkanı 🚍","d":["Emniyet Müdürü","Okul Müdürü"],"exp":"Belediye başkanları halk tarafından seçilir ve çevre/altyapı hizmetlerini yürütür.","spokenText":"Şehirdeki temizlik, yol ve su hizmetlerini hangi yönetici yürütür?"},
+      {"q":"Halkın kendi yöneticilerini seçim yoluyla kendisinin belirlediği yönetim şekline ne denir? 🇹🇷","a":"Cumhuriyet 🇹🇷","d":["Krallık","Monarşi"],"exp":"Cumhuriyet milli egemenliğe dayanan, halkın kendi kendini yönettiği rejimdir.","spokenText":"Halkın yöneticilerini kendisinin seçtiği yönetim şekline ne denir?"},
+      {"q":"İstiklal Marşı'mızın yazarı, vatan şairimiz kimdir? 📜","a":"Mehmet Akif Ersoy 📜","d":["Nazım Hikmet","Yahya Kemal"],"exp":"Mehmet Akif Ersoy Kurtuluş Savaşı'nda milletimize İstiklal Marşı'nı hediye etmiştir.","spokenText":"İstiklal Marşı'mızın yazarı milli şairimiz kimdir?"},
+      {"q":"Türkiye'nin ilk yerli uçağını tasarlayıp üreten, ilk sivil havacılık okulunu kuran kahraman pilotumuz kimdir? ✈️","a":"Vecihi Hürkuş ✈️","d":["Nuri Demirağ","Hezarfen Ahmet Çelebi"],"exp":"Vecihi Hürkuş Türk havacılık tarihinin en önemli öncülerindendir.","spokenText":"Türkiye'nin ilk sivil uçağını tasarlayan ünlü havacımız kimdir?"},
+      {"q":"DNA onarımı alanındaki üstün başarılarıyla Nobel Kimya Ödülü'nü kazanan Türk bilim insanı kimdir? 🧪","a":"Prof. Dr. Aziz Sancar 🧪","d":["Cahit Arf","Oktay Sinanoğlu"],"exp":"Aziz Sancar 2015 Nobel Kimya Ödülü'nü kazanarak ülkemizi gururlandırmıştır.","spokenText":"Nobel Kimya Ödülü'nü kazanan dünyaca ünlü Türk bilim insanımız kimdir?"},
+      {"q":"Olimpiyatlarda kendi ağırlığının 3 katından fazlasını kaldırarak rekorlar kıran efsane haltercimiz (\"Cep Herkülü\") kimdir? 🏋️‍♂️","a":"Naim Süleymanoğlu 🏋️‍♂️","d":["Halil Mutlu","Rıza Kayaalp"],"exp":"Naim Süleymanoğlu dünya ve olimpiyat şampiyonu efsanevi sporcumuzdur.","spokenText":"Cep Herkülü lakaplı dünya rekortmeni efsane haltercimiz kimdir?"},
+      {"q":"Türkiye'nin ilk kadın arkeoloğu olup Perge ve Side antik kentlerini gün ışığına çıkaran öncümüz kimdir? 🏺","a":"Jale İnan 🏺","d":["Afet İnan","Halet Çambel"],"exp":"Prof. Dr. Jale İnan tarihi eserlerimizin korunması ve kazılmasında büyük öncüdür.","spokenText":"Türkiye'nin ilk kadın arkeoloğu kimdir?"},
+      {"q":"Rize ve Karadeniz bölgesinde çay tarımını başlatıp geliştiren, \"Çayın Babası\" olarak bilinen ziraatçı kimdir? 🍵","a":"Zihni Derin 🍵","d":["Vecihi Hürkuş","Mehmet Akif"],"exp":"Zihni Derin Karadeniz bölgesine çayı getirerek halkın geçim kaynağı olmasını sağlamıştır.","spokenText":"Türkiye'de çay tarımını başlatan ziraat uzmanı kimdir?"},
+      {"q":"Kapadokya'da rüzgar ve yağmurun tüfleri aşındırmasıyla oluşan eşsiz doğal güzelliklerimiz hangisidir? 🏜️","a":"Peri Bacaları 🏜️","d":["Pamukkale Travertenleri","Düden Şelalesi"],"exp":"Peri bacaları Nevşehir Kapadokya bölgesindeki dünyaca ünlü doğal harikalardır.","spokenText":"Kapadokya'da oluşan dünyaca ünlü doğal güzelliğimiz hangisidir?"},
+      {"q":"Denizli ilimizde bulunan, kireçli sıcak suların oluşturduğu beyaz basamaklı doğal güzellik hangisidir? ⚪","a":"Pamukkale Travertenleri ⚪","d":["Manavgat Şelalesi","Damlatas Mağarası"],"exp":"Pamukkale travertenleri beyaz teraslarıyla ülkemizin simge doğal zenginliğidir.","spokenText":"Denizli'de bulunan beyaz basamaklı doğal güzelliğimiz hangisidir?"},
+      {"q":"Atatürk'ün Çanakkale ve Kurtuluş Savaşı'nda düşmanın planlarını önceden tahmin etmesi onun hangi özelliğini gösterir? 🎖️","a":"İleri görüşlülüğünü 🎖️","d":["Sanatseverliğini","Aceleciliğini"],"exp":"Atatürk gelecekteki olayları doğru tahmin eden eşsiz bir ileri görüşlülüğe sahipti.","spokenText":"Atatürk'ün olayları önceden tahmin edebilmesi hangi özelliğini gösterir?"},
+      {"q":"Parktaki banklara, okul sıralarına ve otobüs duraklarına zarar vermemek neden bir vatandaşlık görevidir? 🌳","a":"Bunlar tüm milletin vergileriyle yapılan ortak milli servettir 🇹🇷","d":["Sadece ceza almaktan korktuğumuz için","Eski eşyalar oldukları için"],"exp":"Ortak kullanım alanları hepimizin malıdır; korumak milli bir ödevdir.","spokenText":"Ortak kullanım alanlarına ve eşyalara zarar vermemek neden vatandaşlık görevidir?"}
+    ],
+
+    grade3LifeScienceNatureDirectionsPool: [
+      {"q":"Pusulanın renkli (kırmızı) ibresi daima hangi ana yönü gösterir? 🧭","a":"Kuzey 🧭","d":["Güney","Doğu"],"exp":"Pusula ibresinin renkli ucu Dünya'nın manyetik kuzeyini gösterir.","spokenText":"Pusulanın renkli ibresi daima hangi yönü gösterir?"},
+      {"q":"Güneş'in doğduğu yöne SAĞ KOLUMUZU uzatırsak, ÖNÜMÜZ hangi ana yönü gösterir? ☀️","a":"Kuzey 🧭","d":["Güney","Batı"],"exp":"Sağ kol Doğu, sol kol Batı olduğunda önümüz Kuzey, arkamız Güney olur.","spokenText":"Güneşin doğduğu yöne sağ kolumuzu uzatırsak önümüz nereyi gösterir?"},
+      {"q":"Geceleri bulutsuz ve açık bir havada gökyüzünde daima KUZEYİ gösteren parlak yıldız hangisidir? ⭐","a":"Kutup Yıldızı (Demirkazık) ⭐","d":["Çoban Yıldızı","Kuyruklu Yıldız"],"exp":"Kutup Yıldızı gökyüzünde yer değiştirmeden daima kuzeyi işaret eder.","spokenText":"Geceleri daima kuzey yönünü gösteren parlak yıldız hangisidir?"},
+      {"q":"Ormanda yönünü kaybeden bir izci ağaçların ve taşların YOSUNLU tarafına bakarak hangi yönü bulur? 🌲","a":"Kuzey (Yosunlu taraf) 🌲","d":["Güney","Doğu"],"exp":"Kuzey tarafı güneş görmediği ve nemli kaldığı için yosun tutar.","spokenText":"Ağaç gövdelerinin ve taşların yosunlu tarafı hangi yönü gösterir?"},
+      {"q":"Karınca yuvalarının giriş ağzı hangi yöne bakar? 🐜","a":"Güney yönüne (Toprak yığını kuzeydedir) 🐜","d":["Kuzey yönüne","Batı yönüne"],"exp":"Karıncalar rüzgardan korunmak için yuva kapılarını güneye doğru açarlar.","spokenText":"Karınca yuvalarının giriş ağzı hangi yönü gösterir?"},
+      {"q":"Cami minarelerinde ezan okunan yer olan şerefenin kapısı daima hangi yöne açılır? 🕌","a":"Güney yönüne (Kıbleye) 🕌","d":["Kuzey yönüne","Doğu yönüne"],"exp":"Ülkemizde cami minarelerinin şerefe kapıları güneye, yani kıbleye bakar.","spokenText":"Cami minarelerindeki şerefe kapısı hangi yöne bakar?"},
+      {"q":"Ülkemizde Şanlıurfa Birecik'te koruma altına alınan, nesli tükenme tehlikesindeki kuş türü hangisidir? 🪶","a":"Kelaynak Kuşları 🪶","d":["Leylek","Kaya Kartalı"],"exp":"Kelaynaklar dünyada sayılı kalan ve Birecik'te üretme istasyonunda korunan kuşlardır.","spokenText":"Şanlıurfa Birecik'te korunan nesli tehlikedeki kuş türü hangisidir?"},
+      {"q":"Akdeniz sahillerinde (Dalyan, İztuzu kumsalı) yumurtlayan ve koruma altında olan deniz canlısı hangisidir? 🐢","a":"Caretta Caretta (İribaş Deniz Kaplumbağası) 🐢","d":["Yunus Balığı 🐬","Mavi Balina 🐋"],"exp":"Caretta carettalar nesli tükenme tehlikesi nedeniyle koruma altındadır.","spokenText":"Dalyan sahillerinde yumurtlayan koruma altındaki deniz kaplumbağası hangisidir?"},
+      {"q":"Kullanılmış kağıt ve kartonları geri dönüşüm kutusuna atmak doğada neyi kurtarır? 🌲","a":"Ağaçların kesilmesini önler 🌲","d":["Göllerin taşmasını sağlar","Havanın soğumasını sağlar"],"exp":"1 ton kağıdın geri dönüştürülmesi yaklaşık 17 ağacın kesilmesini engeller.","spokenText":"Kağıtları geri dönüştürmek doğada neyi kurtarır?"},
+      {"q":"Bitkiler fotosentez yaparak havaya hangi hayati gazı verirler? 🌿","a":"Oksijen 🌿","d":["Karbondioksit","Doğalgaz"],"exp":"Ormanlar ve bitkiler Dünya'mızın oksijen fabrikalarıdır.","spokenText":"Bitkiler havaya hangi gazı verirler?"},
+      {"q":"Piknik yaptıktan sonra ormanda cam şişe veya kırık cam parçaları bırakmak neden çok tehlikelidir? 🔥","a":"Güneş ışığını mercek gibi odaklayıp orman yangını çıkarabilir 🔥","d":["Ağaçların büyümesini hızlandırır","Kuşların yuva yapmasını sağlar"],"exp":"Cam kırıkları güneş ışığını toplayarak kuru otları tutuşturur ve yangın başlatır.","spokenText":"Ormanda cam şişe bırakmak neden yangın tehlikesi oluşturur?"},
+      {"q":"Güneş akşamları hangi ana yönden batar? 🌅","a":"Batı 🌅","d":["Doğu","Kuzey"],"exp":"Güneş Doğu'dan doğar, Batı'dan batar.","spokenText":"Güneş akşamları hangi yönden batar?"},
+      {"q":"Çay ve fındık tarımı ülkemizde en çok hangi bölgemizde yapılır? 🍵","a":"Karadeniz Bölgesi (Bol yağışlı ve ılıman) 🍵","d":["İç Anadolu Bölgesi","Güneydoğu Anadolu"],"exp":"Çay ve fındık bol yağış ve nem istediği için Karadeniz'de yetişir.","spokenText":"Çay ve fındık en çok hangi bölgemizde yetişir?"},
+      {"q":"Denizlere ve nehirlere dökülen plastik atıklar deniz canlılarını nasıl etkiler? 🌊🐢","a":"Balık ve kaplumbağaların yutarak zehirlenmesine ve ölmesine yol açar ⚠️","d":["Denizleri daha temiz yapar","Balıkların büyümesini sağlar"],"exp":"Plastik atıklar deniz canlıları için ölümcül bir kirliliktir.","spokenText":"Plastik atıklar deniz canlılarını nasıl etkiler?"},
+      {"q":"Toplam kaç tane ANA YÖN ve kaç tane ARA YÖN vardır? 🧭","a":"4 ana yön, 4 ara yön vardır (Toplam 8) 🧭","d":["2 ana yön, 2 ara yön","6 ana yön, 6 ara yön"],"exp":"Ana yönler: Kuzey, Güney, Doğu, Batı. Ara yönler: Kuzeydoğu, Kuzeybatı, Güneydoğu, Güneybatı.","spokenText":"Toplam kaç ana yön ve kaç ara yön vardır?"}
+    ],
+
+    // 3. Sınıf Hayat Bilgisi Karma Üreteci (6 Temadan Dengeli Çekim)
+    generateGrade3LifeScienceKarma() {
+      const topic = Math.floor(Math.random() * 6);
+      if (topic === 0) return this.drawFromPool(this.grade3LifeScienceSchoolProfessionsPool, "grade3LifeScienceSchoolProfessionsPool");
+      if (topic === 1) return this.drawFromPool(this.grade3LifeScienceHomeBudgetPool, "grade3LifeScienceHomeBudgetPool");
+      if (topic === 2) return this.drawFromPool(this.grade3LifeScienceHealthConsumerPool, "grade3LifeScienceHealthConsumerPool");
+      if (topic === 3) return this.drawFromPool(this.grade3LifeScienceSafetyTrafficPool, "grade3LifeScienceSafetyTrafficPool");
+      if (topic === 4) return this.drawFromPool(this.grade3LifeScienceCountryLeadersPool, "grade3LifeScienceCountryLeadersPool");
+      return this.drawFromPool(this.grade3LifeScienceNatureDirectionsPool, "grade3LifeScienceNatureDirectionsPool");
+    },
+
+    // Geriye dönük uyumluluk takma adları
+    get grade3CompassConsumerPool() {
+      return [...this.grade3LifeScienceHealthConsumerPool, ...this.grade3LifeScienceNatureDirectionsPool];
+    },
 
     // 3. SINIF: FAMILY MEMBERS, FEELINGS & ABILITIES (30 ÖZGÜN KELİME & SESLİ)
     grade3FamilyFeelingsPool: [
@@ -8503,14 +8602,32 @@
       } else if (gameType === 'science_force_matter_3') {
         const raw = Math.random() < 0.5 ? this.drawFromPool(this.grade3ScienceForceMotionPool, "grade3ScienceForceMotionPool") : this.drawFromPool(this.grade3ScienceMatterStatesPool, "grade3ScienceMatterStatesPool");
         return this.buildQuestionItem(raw, '🧲 Kuvveti Tanıyalım ve Madde');
+      // --- 3. SINIF: 2026 MAARİF MODELİ HAYAT BİLGİSİ 6 ÖĞRENME ALANI ---
+      } else if (gameType === 'lifescience_school_professions_3') {
+        const raw = this.drawFromPool(this.grade3LifeScienceSchoolProfessionsPool, "grade3LifeScienceSchoolProfessionsPool");
+        return this.buildQuestionItem(raw, '🏫 Kroki Okuma & Meslekler Düellosu');
+      } else if (gameType === 'lifescience_home_budget_3') {
+        const raw = this.drawFromPool(this.grade3LifeScienceHomeBudgetPool, "grade3LifeScienceHomeBudgetPool");
+        return this.buildQuestionItem(raw, '🏡 Planlı Yaşam & Bütçe/Tasarruf');
+      } else if (gameType === 'lifescience_health_consumer_3') {
+        const raw = this.drawFromPool(this.grade3LifeScienceHealthConsumerPool, "grade3LifeScienceHealthConsumerPool");
+        return this.buildQuestionItem(raw, '🍎 Bilinçli Tüketici & Sağlıklı Beslenme');
+      } else if (gameType === 'lifescience_safety_traffic_3') {
+        const raw = this.drawFromPool(this.grade3LifeScienceSafetyTrafficPool, "grade3LifeScienceSafetyTrafficPool");
+        return this.buildQuestionItem(raw, '🚦 Trafik Levhaları & Acil Durum Rehberi');
+      } else if (gameType === 'lifescience_country_leaders_3') {
+        const raw = this.drawFromPool(this.grade3LifeScienceCountryLeadersPool, "grade3LifeScienceCountryLeadersPool");
+        return this.buildQuestionItem(raw, '🇹🇷 Vali mi Kaymakam mı? & Öncülerimiz');
+      } else if (gameType === 'lifescience_nature_directions_3') {
+        const raw = this.drawFromPool(this.grade3LifeScienceNatureDirectionsPool, "grade3LifeScienceNatureDirectionsPool");
+        return this.buildQuestionItem(raw, '🧭 Doğada Yön Bulma & Çevre Koruyucusu');
+      } else if (gameType === 'lifescience_3_karma') {
+        const raw = this.generateGrade3LifeScienceKarma();
+        return this.buildQuestionItem(raw, '🌱 3. Sınıf Hayat Bilgisi Karma Düello');
+      // Geriye dönük uyumluluk
       } else if (gameType === 'lifescience_compass_consumer_3') {
-        const raw = this.drawFromPool(this.grade3CompassConsumerPool, "grade3CompassConsumerPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🧭 Yönlerimiz, Kroki ve Tüketici Hakları');
+        const raw = Math.random() < 0.5 ? this.drawFromPool(this.grade3LifeScienceHealthConsumerPool, "grade3LifeScienceHealthConsumerPool") : this.drawFromPool(this.grade3LifeScienceNatureDirectionsPool, "grade3LifeScienceNatureDirectionsPool");
+        return this.buildQuestionItem(raw, '🧭 Yönlerimiz, Kroki ve Tüketici Hakları');
       } else if (gameType === 'english_family_feelings_3') {
         const raw = this.drawFromPool(this.grade3FamilyFeelingsPool, "grade3FamilyFeelingsPool");
         return this.buildQuestionItem({
@@ -8669,14 +8786,8 @@
           const raw = this.generateGrade2LifeScienceKarma();
           return this.buildQuestionItem(raw, '🌟 2. Sınıf Hayat Bilgisi Karma Düello');
         } else if (g === 3) {
-          const r = Math.random();
-          if (r < 0.75) {
-            const raw = this.drawFromPool(this.grade3CompassConsumerPool, "grade3CompassConsumerPool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧭 Yönlerimiz, Kroki & Tüketici');
-          } else {
-            const raw = this.drawFromPool(this.lifeSciencePool, "lifeSciencePool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌱 Hayat Bilgisi');
-          }
+          const raw = this.generateGrade3LifeScienceKarma();
+          return this.buildQuestionItem(raw, '🌱 3. Sınıf Hayat Bilgisi Karma');
         } else {
           let filtered = this.lifeSciencePool.filter(item => !item.grade || item.grade <= g);
           if (filtered.length === 0) filtered = this.lifeSciencePool;
@@ -9773,7 +9884,14 @@
     science_light_sound_3: '💡 Işık ve Ses',
     science_living_environment_3: '🌱 Canlılar & Çevre',
     science_electricity_safety_3: '⚡ Elektrikli Araçlar',
-    science_3_karma: '🏆 3. Sınıf Fen Karma'
+    science_3_karma: '🏆 3. Sınıf Fen Karma',
+    lifescience_school_professions_3: '🏫 Okul & Meslekler',
+    lifescience_home_budget_3: '🏡 Plan & Tasarruf',
+    lifescience_health_consumer_3: '🍎 Tüketici & Sağlık',
+    lifescience_safety_traffic_3: '🚦 Trafik & Güvenlik',
+    lifescience_country_leaders_3: '🇹🇷 Yönetim & Öncüler',
+    lifescience_nature_directions_3: '🧭 Yönler & Doğa',
+    lifescience_3_karma: '🏆 3. Sınıf Hayat Bilgisi Karma'
   };
 
   function getCurrentGameObject() {
@@ -9889,6 +10007,13 @@
       science_3_karma: '3. Sınıf Fen Bilimleri Karma Düello',
       science_earth_senses_3: 'Gezegenimiz Dünya ve Beş Duyumuz',
       science_force_matter_3: 'Kuvveti Tanıyalım ve Madde',
+      lifescience_school_professions_3: 'Kroki Okuma & Meslekler Düellosu',
+      lifescience_home_budget_3: 'Planlı Yaşam & Bütçe/Tasarruf Ustası',
+      lifescience_health_consumer_3: 'Bilinçli Tüketici (SKT/TSE) & Sağlıklı Beslenme',
+      lifescience_safety_traffic_3: 'Trafik Levhaları & Acil Durum Rehberi',
+      lifescience_country_leaders_3: 'Vali mi Kaymakam mı? & Değerlerimiz/Öncülerimiz',
+      lifescience_nature_directions_3: 'Doğada Yön Bulma (Pusula/Yosun) & Çevre Koruyucusu',
+      lifescience_3_karma: '3. Sınıf Hayat Bilgisi Karma Düello',
       lifescience_compass_consumer_3: 'Yönlerimiz, Kroki ve Tüketici Hakları',
       english_family_feelings_3: 'Family Members, Feelings & Abilities',
       math_digits_operations_4: '4, 5, 6 Basamaklı Sayılar ve Dört İşlem',
@@ -11496,36 +11621,100 @@
         name: 'Hayat Bilgisi',
         icon: '🌱',
         colorTheme: 'theme-lifescience',
-        tagline: 'Yönetim, Yönler & Haklarımız',
-        description: 'Ana ve ara yönler, kroki çizimi, tüketici hakları ve toplum bilinci! 🧭🛍️',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Okulda empati ve meslekler, evde planlı yaşam ve tasarruf, bilinçli tüketici, trafik güvenliği, yönetim ve yön bulma! 🏫🏡🍎🚦🏛️🧭',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'compass', label: '🧭 Yönlerimiz & Kroki' },
-          { id: 'consumer', label: '🛍️ Tüketici Hakları' }
+          { id: 'all', label: '🌟 Tüm Temalar / Karma Düello' },
+          { id: 'school', label: '🏫 Tema 1: Okulumuzda Hayat' },
+          { id: 'home', label: '🏡 Tema 2: Evimizde Hayat' },
+          { id: 'health', label: '🍎 Tema 3: Sağlıklı Hayat' },
+          { id: 'safety', label: '🚦 Tema 4: Güvenli Hayat' },
+          { id: 'country', label: '🇹🇷 Tema 5: Ülkemizde Hayat' },
+          { id: 'nature', label: '🧭 Tema 6: Doğada Hayat' }
         ],
         games: [
           {
-            id: 'lifescience_compass_consumer_3',
+            id: 'lifescience_school_professions_3',
             active: true,
-            title: 'Yönlerimiz, Kroki & Tüketici Hakları',
-            icon: '🧭',
-            badge: '26 Özgün Soru',
-            featureTag: '🧭 Pusula & Haklarımız',
-            description: 'Ana/ara yönler, kroki çizimi, bilinçli tüketici hakları ve komşuluk ilişkileri! 🧭🛍️',
-            tags: ['🧭 Ana & Ara Yönler', '🗺️ Kroki Çizimi', '🛍️ Bilinçli Tüketici'],
+            title: 'Kroki Okuma & Meslekler Düellosu',
+            icon: '🏫',
+            badge: '🏫 Okulumuzda Hayat',
+            featureTag: '📐 Kroki & Meslekler',
+            description: 'Sınıf ve okul krokisi okuma, güçlü yönlerimiz, arkadaşlık ilişkileri, sosyal kulüpler ve meslekleri tanıma!',
+            tags: ['📐 Kroki Okuma', '💼 Meslekler', '🤝 Arkadaşlık & Empati', '🗳️ Dilek Kutusu'],
             btnText: 'Düelloyu Başlat',
-            topic: 'compass'
+            topic: 'school'
           },
           {
-            id: 'lifescience',
+            id: 'lifescience_home_budget_3',
             active: true,
-            title: 'Hayat Bilgisi Bilgi Yarışı (Karma)',
+            title: 'Planlı Yaşam & Bütçe/Tasarruf Ustası',
+            icon: '🏡',
+            badge: '🏡 Evimizde Hayat',
+            featureTag: '🪙 Bütçe & Planlı Yaşam',
+            description: 'Geleneksel çocukluk oyunları, komşuluk ilişkileri, evdeki sorumluluklar, elektrik/su tasarrufu ve aile bütçesi!',
+            tags: ['🪙 Aile Bütçesi', '💡 Kaynak Tasarrufu', '⏰ Planlı Yaşam', '🤝 Komşuluk'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'home'
+          },
+          {
+            id: 'lifescience_health_consumer_3',
+            active: true,
+            title: 'Bilinçli Tüketici (SKT/TSE) & Sağlıklı Beslenme',
+            icon: '🍎',
+            badge: '🍎 Sağlıklı Hayat',
+            featureTag: '🛡️ SKT, TSE & Hijyen',
+            description: 'Kişisel bakım, gıdalarda SKT ve TSE damgası kontrolü, fiş/fatura, mevsimine göre dengeli beslenme ve ortak hijyen!',
+            tags: ['📅 Son Kullanma Tarihi', '🛡️ TSE & Fiş/Fatura', '🥦 Mevsiminde Beslenme', '🧼 Ortak Alan Hijyeni'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'health'
+          },
+          {
+            id: 'lifescience_safety_traffic_3',
+            active: true,
+            title: 'Trafik Levhaları & Acil Durum Rehberi',
+            icon: '🚦',
+            badge: '🚦 Güvenli Hayat',
+            featureTag: '🚨 Trafik & 112 Acil',
+            description: 'Trafik işaret ve levhaları, yaya güvenliği, ev/okul kazalarından korunma, deprem/yangın anında 112 ve güvenli adımlar!',
+            tags: ['🚦 Trafik Levhaları', '🚨 112 Acil Çağrı', '🛡️ Çök-Kapan-Tutun', '🛑 Güvenlik ve "Hayır!"'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'safety'
+          },
+          {
+            id: 'lifescience_country_leaders_3',
+            active: true,
+            title: 'Vali mi Kaymakam mı? & Değerlerimiz/Öncülerimiz',
+            icon: '🇹🇷',
+            badge: '🇹🇷 Ülkemizde Hayat',
+            featureTag: '🏛️ Vali, Kaymakam & Öncüler',
+            description: 'Yönetim birimleri (vali, kaymakam, muhtar), cumhuriyet, tarihi/doğal güzelliklerimiz, Atatürk ve Türk öncüleri!',
+            tags: ['🏛️ Vali & Kaymakam', '🗳️ Cumhuriyet', '✈️ Vecihi Hürkuş', '🧪 Aziz Sancar & Naim'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'country'
+          },
+          {
+            id: 'lifescience_nature_directions_3',
+            active: true,
+            title: 'Doğada Yön Bulma (Pusula/Yosun) & Çevre Koruyucusu',
+            icon: '🧭',
+            badge: '🧭 Doğada Hayat',
+            featureTag: '🧭 Pusula, Yosun & Çevre',
+            description: 'Pusula, Kutup Yıldızı, karınca yuvası ve yosunla yön bulma; nesli tükenen canlılar (kelaynak, caretta) ve geri dönüşüm!',
+            tags: ['🧭 Pusula & Yön Bulma', '⭐ Kutup Yıldızı', '🐢 Caretta & Kelaynak', '♻️ Geri Dönüşüm'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'nature'
+          },
+          {
+            id: 'lifescience_3_karma',
+            active: true,
+            title: '3. Sınıf Hayat Bilgisi Karma Düello',
             icon: '🌱',
-            badge: '⚡ Afet & Toplum',
-            featureTag: '🏛️ Vatandaşlık',
-            description: 'Afetlerde doğru davranışlar, mahalle yönetimi ve cumhuriyet! 🏛️🛡️',
-            tags: ['🛡️ Deprem Bilinci', '🏛️ Muhtar & Kaymakam', '🇹🇷 Atatürk İlkeleri'],
+            badge: '🏆 3. Sınıf Hayat Bilgisi Karma',
+            featureTag: '🌟 6 Tema Büyük Tekrar',
+            description: 'Tüm 3. sınıf Hayat Bilgisi temalarından rastgele ve dengeli sorularla sınıf içi genel tekrar düellosu!',
+            tags: ['🏫 Okul', '🏡 Evimiz', '🍎 Sağlık', '🚦 Güvenlik', '🇹🇷 Ülkemiz', '🧭 Doğa'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
