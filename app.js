@@ -3991,799 +3991,651 @@
     ],
 
     // -------------------------------------------------------------
-    // 2. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİ
+    // 2. SINIF MATEMATİK: 2026 MAARİF MODELİ DİNAMİK MOTORLARI VE HAVUZLARI
+    // (100'e Kadar Sayılar, Çarpma Sadece 1-5 ve 10, Bölme <= 20 Kalansız)
     // -------------------------------------------------------------
-    generateGrade2Math() {
-      const r = Math.random();
-      if (r < 0.35) {
-        const item = this.drawFromPool(this.grade2AdditionSubtractionPool, "grade2AdditionSubtractionPool");
-        return { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
-      } else if (r < 0.65) {
-        return this.generateGrade2PlaceValue();
-      } else if (r < 0.85) {
-        return this.generateGrade2Multiplication();
-      } else {
-        const item = this.drawFromPool(this.grade2ClocksPool, "grade2ClocksPool");
-        return { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
-      }
-    },
 
-    grade2AdditionSubtractionPool: [
-      {
-            "q": "25 ile 14 sayılarının toplamı kaçtır? ➕",
-            "a": "39",
-            "d": [
-                  "49",
-                  "37"
-            ],
-            "exp": "25 + 14 = 39 eder."
-      },
-      {
-            "q": "32 ile 27 sayılarının toplamı kaçtır? ➕",
-            "a": "59",
-            "d": [
-                  "69",
-                  "57"
-            ],
-            "exp": "32 + 27 = 59 eder."
-      },
-      {
-            "q": "46 ile 18 sayılarının toplamı kaçtır? ➕",
-            "a": "64",
-            "d": [
-                  "54",
-                  "62"
-            ],
-            "exp": "46 + 18 = 64 eder."
-      },
-      {
-            "q": "54 ile 29 sayılarının toplamı kaçtır? ➕",
-            "a": "83",
-            "d": [
-                  "73",
-                  "85"
-            ],
-            "exp": "54 + 29 = 83 eder."
-      },
-      {
-            "q": "38 ile 25 sayılarının toplamı kaçtır? ➕",
-            "a": "63",
-            "d": [
-                  "53",
-                  "65"
-            ],
-            "exp": "38 + 25 = 63 eder."
-      },
-      {
-            "q": "63 ile 24 sayılarının toplamı kaçtır? ➕",
-            "a": "87",
-            "d": [
-                  "77",
-                  "89"
-            ],
-            "exp": "63 + 24 = 87 eder."
-      },
-      {
-            "q": "47 ile 36 sayılarının toplamı kaçtır? ➕",
-            "a": "83",
-            "d": [
-                  "73",
-                  "81"
-            ],
-            "exp": "47 + 36 = 83 eder."
-      },
-      {
-            "q": "58 ile 15 sayılarının toplamı kaçtır? ➕",
-            "a": "73",
-            "d": [
-                  "63",
-                  "75"
-            ],
-            "exp": "58 + 15 = 73 eder."
-      },
-      {
-            "q": "19 ile 28 sayılarının toplamı kaçtır? ➕",
-            "a": "47",
-            "d": [
-                  "37",
-                  "49"
-            ],
-            "exp": "19 + 28 = 47 eder."
-      },
-      {
-            "q": "45 sayısından 12 çıkarıldığında fark kaç olur? ➖",
-            "a": "33",
-            "d": [
-                  "35",
-                  "23"
-            ],
-            "exp": "45 - 12 = 33 kalır."
-      },
-      {
-            "q": "68 sayısından 25 çıkarıldığında fark kaç olur? ➖",
-            "a": "43",
-            "d": [
-                  "45",
-                  "33"
-            ],
-            "exp": "68 - 25 = 43 kalır."
-      },
-      {
-            "q": "74 sayısından 36 çıkarıldığında fark kaç olur? ➖",
-            "a": "38",
-            "d": [
-                  "48",
-                  "36"
-            ],
-            "exp": "74 - 36 = 38 kalır."
-      },
-      {
-            "q": "85 sayısından 29 çıkarıldığında fark kaç olur? ➖",
-            "a": "56",
-            "d": [
-                  "66",
-                  "54"
-            ],
-            "exp": "85 - 29 = 56 kalır."
-      },
-      {
-            "q": "92 sayısından 45 çıkarıldığında fark kaç olur? ➖",
-            "a": "47",
-            "d": [
-                  "57",
-                  "45"
-            ],
-            "exp": "92 - 45 = 47 kalır."
-      },
-      {
-            "q": "56 sayısından 18 çıkarıldığında fark kaç olur? ➖",
-            "a": "38",
-            "d": [
-                  "48",
-                  "36"
-            ],
-            "exp": "56 - 18 = 38 kalır."
-      },
-      {
-            "q": "63 sayısından 27 çıkarıldığında fark kaç olur? ➖",
-            "a": "36",
-            "d": [
-                  "46",
-                  "34"
-            ],
-            "exp": "63 - 27 = 36 kalır."
-      },
-      {
-            "q": "80 sayısından 34 çıkarıldığında fark kaç olur? ➖",
-            "a": "46",
-            "d": [
-                  "56",
-                  "44"
-            ],
-            "exp": "80 - 34 = 46 kalır."
-      },
-      {
-            "q": "71 sayısından 23 çıkarıldığında fark kaç olur? ➖",
-            "a": "48",
-            "d": [
-                  "58",
-                  "46"
-            ],
-            "exp": "71 - 23 = 48 kalır."
-      },
-      {
-            "q": "3, 6, 9 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "12",
-            "d": [
-                  "11",
-                  "15"
-            ],
-            "exp": "Sayılar 3'er artıyor. 9'dan sonra 12 gelir."
-      },
-      {
-            "q": "12, 15, 18 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "21",
-            "d": [
-                  "20",
-                  "24"
-            ],
-            "exp": "Sayılar 3'er artıyor. 18'den sonra 21 gelir."
-      },
-      {
-            "q": "21, 24, 27 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "30",
-            "d": [
-                  "29",
-                  "33"
-            ],
-            "exp": "Sayılar 3'er artıyor. 27'den sonra 30 gelir."
-      },
-      {
-            "q": "4, 8, 12 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "16",
-            "d": [
-                  "14",
-                  "18"
-            ],
-            "exp": "Sayılar 4'er artıyor. 12'den sonra 16 gelir."
-      },
-      {
-            "q": "16, 20, 24 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "28",
-            "d": [
-                  "26",
-                  "30"
-            ],
-            "exp": "Sayılar 4'er artıyor. 24'ten sonra 28 gelir."
-      },
-      {
-            "q": "28, 32, 36 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "40",
-            "d": [
-                  "38",
-                  "42"
-            ],
-            "exp": "Sayılar 4'er artıyor. 36'dan sonra 40 gelir."
-      },
-      {
-            "q": "5, 10, 15 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "20",
-            "d": [
-                  "18",
-                  "25"
-            ],
-            "exp": "Sayılar 5'er artıyor. 15'ten sonra 20 gelir."
-      },
-      {
-            "q": "20, 25, 30 şeklinde ilerleyen örüntüde sıradaki sayı kaçtır? 🔢",
-            "a": "35",
-            "d": [
-                  "32",
-                  "40"
-            ],
-            "exp": "Sayılar 5'er artıyor. 30'dan sonra 35 gelir."
-      }
-],
-
-    grade2TurkishPool: [
-      { q: '"Siyah" kelimesinin eş anlamlısı nedir?', a: 'Kara', d: ['Karanlık', 'Koyu'], exp: 'Siyah ile Kara aynı anlama gelen eş anlamlı kelimelerdir.' },
-      { q: '"Beyaz" kelimesinin eş anlamlısı nedir?', a: 'Ak', d: ['Açık', 'Parlak'], exp: 'Beyaz bayrak yerine ak bayrak da diyebiliriz.' },
-      { q: '"Kırmızı" kelimesinin eş anlamlısı nedir?', a: 'Al', d: ['Bordo', 'Pembe'], exp: 'Al bayrak göklerde dalgalanıyor cümlesinde "al", kırmızı demektir.' },
-      { q: '"Doktor" kelimesinin eş anlamlısı nedir?', a: 'Hekim', d: ['Hemşire', 'Eczacı'], exp: 'Doktor ve Hekim hastaları tedavi eden meslek için eş anlamlıdır.' },
-      { q: '"Talebe" kelimesinin eş anlamlısı nedir?', a: 'Öğrenci', d: ['Öğretmen', 'Müdür'], exp: 'Eski dilde talebe, günümüzde öğrenci kelimesi kullanılır.' },
-      { q: '"Cevap" kelimesinin eş anlamlısı nedir?', a: 'Yanıt', d: ['Soru', 'Mesaj'], exp: 'Sorunun cevabı ile sorunun yanıtı aynı şeydir.' },
-      { q: '"Mektep" kelimesinin eş anlamlısı nedir?', a: 'Okul', d: ['Sınıf', 'Kütüphane'], exp: 'Mektep, okul kelimesinin eş anlamlısıdır.' },
-      { q: '"Vatan" kelimesinin eş anlamlısı nedir?', a: 'Yurt', d: ['Şehir', 'Dünya'], exp: 'Vatanımız Türkiye, Yurdumuz Türkiye demektir.' },
-      { q: '"Yaşlı" kelimesinin zıt anlamlısı nedir?', a: 'Genç', d: ['Çocuk', 'Taze'], exp: 'Yaşlı bir dedenin zıttı genç bir delikanlıdır.' },
-      { q: '"Taze" kelimesinin zıt anlamlısı nedir?', a: 'Bayat', d: ['Çürük', 'Eski'], exp: 'Taze ekmeğin karşıtı bayat ekmektir.' },
-      { q: '"Pahalı" kelimesinin zıt anlamlısı nedir?', a: 'Ucuz', d: ['Bedava', 'Basit'], exp: 'Fiyatı yüksek olan pahalıdır, düşük olan ucuzdur.' },
-      { q: '"Cesur" kelimesinin zıt anlamlısı nedir?', a: 'Korkak', d: ['Zayıf', 'Ürkek'], exp: 'Cesur yüreğin zıttı korkak davranmaktır.' }
-    ],
-    // 2. SINIF: BASAMAK DEĞERİ VE SAYILAR HAVUZU (26 SORU)
-    grade2PlaceValuePool: [
-      {
-            "q": "3 onluk ve 5 birlikten oluşan sayı kaçtır? 📦",
-            "a": "35",
-            "d": [
-                  "53",
-                  "45"
-            ],
-            "exp": "3 onluk = 30, 5 birlik = 5. Toplam: 35 eder."
-      },
-      {
-            "q": "7 onluk ve 2 birlikten oluşan sayı kaçtır? 📦",
-            "a": "72",
-            "d": [
-                  "27",
-                  "82"
-            ],
-            "exp": "7 onluk = 70, 2 birlik = 2. Toplam: 72 eder."
-      },
-      {
-            "q": "4 onluk ve 9 birlikten oluşan sayı kaçtır? 📦",
-            "a": "49",
-            "d": [
-                  "94",
-                  "59"
-            ],
-            "exp": "4 onluk = 40, 9 birlik = 9. Toplam: 49 eder."
-      },
-      {
-            "q": "6 onluk ve 0 birlikten oluşan sayı kaçtır? 📦",
-            "a": "60",
-            "d": [
-                  "6",
-                  "66"
-            ],
-            "exp": "6 onluk = 60, 0 birlik = 0. Toplam: 60 eder."
-      },
-      {
-            "q": "8 onluk ve 4 birlikten oluşan sayı kaçtır? 📦",
-            "a": "84",
-            "d": [
-                  "48",
-                  "94"
-            ],
-            "exp": "8 onluk = 80, 4 birlik = 4. Toplam: 84 eder."
-      },
-      {
-            "q": "5 onluk ve 8 birlikten oluşan sayı kaçtır? 📦",
-            "a": "58",
-            "d": [
-                  "85",
-                  "68"
-            ],
-            "exp": "5 onluk = 50, 8 birlik = 8. Toplam: 58 eder."
-      },
-      {
-            "q": "2 onluk ve 6 birlikten oluşan sayı kaçtır? 📦",
-            "a": "26",
-            "d": [
-                  "62",
-                  "36"
-            ],
-            "exp": "2 onluk = 20, 6 birlik = 6. Toplam: 26 eder."
-      },
-      {
-            "q": "9 onluk ve 1 birlikten oluşan sayı kaçtır? 📦",
-            "a": "91",
-            "d": [
-                  "19",
-                  "81"
-            ],
-            "exp": "9 onluk = 90, 1 birlik = 1. Toplam: 91 eder."
-      },
-      {
-            "q": "64 sayısındaki 6 rakamının basamak değeri kaçtır? 🔢",
-            "a": "60",
-            "d": [
-                  "6",
-                  "64"
-            ],
-            "exp": "6 rakamı onlar basamağında olduğu için basamak değeri 6 × 10 = 60'tır."
-      },
-      {
-            "q": "85 sayısındaki 5 rakamının basamak değeri kaçtır? 🔢",
-            "a": "5",
-            "d": [
-                  "50",
-                  "85"
-            ],
-            "exp": "5 rakamı birler basamağında olduğu için basamak değeri 5'tir."
-      },
-      {
-            "q": "47 sayısındaki 4 rakamının basamak değeri kaçtır? 🔢",
-            "a": "40",
-            "d": [
-                  "4",
-                  "47"
-            ],
-            "exp": "4 rakamı onlar basamağında yer aldığı için basamak değeri 40'tır."
-      },
-      {
-            "q": "93 sayısındaki 9 rakamının basamak değeri kaçtır? 🔢",
-            "a": "90",
-            "d": [
-                  "9",
-                  "93"
-            ],
-            "exp": "9 rakamı onlar basamağında olduğu için basamak değeri 90'dır."
-      },
-      {
-            "q": "52 sayısındaki 2 rakamının basamak değeri kaçtır? 🔢",
-            "a": "2",
-            "d": [
-                  "20",
-                  "50"
-            ],
-            "exp": "2 rakamı birler basamağında olduğu için basamak değeri 2'dir."
-      },
-      {
-            "q": "38 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
-            "a": "40",
-            "d": [
-                  "30",
-                  "50"
-            ],
-            "exp": "Birler basamağında 8 olduğu için (5 ve üzeri) 40 sayısına yuvarlanır."
-      },
-      {
-            "q": "73 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
-            "a": "70",
-            "d": [
-                  "80",
-                  "60"
-            ],
-            "exp": "Birler basamağında 3 olduğu için (5'ten küçük) 70 sayısına yuvarlanır."
-      },
-      {
-            "q": "55 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
-            "a": "60",
-            "d": [
-                  "50",
-                  "70"
-            ],
-            "exp": "Birler basamağında 5 olduğu için yukarı, yani 60 sayısına yuvarlanır."
-      },
-      {
-            "q": "82 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
-            "a": "80",
-            "d": [
-                  "90",
-                  "70"
-            ],
-            "exp": "Birler basamağında 2 olduğu için 80 sayısına yuvarlanır."
-      },
-      {
-            "q": "64 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
-            "a": "60",
-            "d": [
-                  "70",
-                  "50"
-            ],
-            "exp": "Birler basamağında 4 olduğu için aşağı, yani 60 sayısına yuvarlanır."
-      },
-      {
-            "q": "29 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
-            "a": "30",
-            "d": [
-                  "20",
-                  "40"
-            ],
-            "exp": "Birler basamağında 9 olduğu için 30 sayısına yuvarlanır."
-      },
-      {
-            "q": "45 sayısı en yakın hangi onluğa yuvarlanır? 🎯",
-            "a": "50",
-            "d": [
-                  "40",
-                  "60"
-            ],
-            "exp": "Birler basamağında 5 olduğu için 50 sayısına yuvarlanır."
-      },
-      {
-            "q": "1 deste kalem kaç tanedir? 📦",
-            "a": "10 tane",
-            "d": [
-                  "12 tane",
-                  "8 tane"
-            ],
-            "exp": "1 deste daima 10 tanedir."
-      },
-      {
-            "q": "2 deste silgi toplam kaç tanedir? 📦",
-            "a": "20 tane",
-            "d": [
-                  "24 tane",
-                  "18 tane"
-            ],
-            "exp": "1 deste = 10 tanedir. 2 deste = 2 × 10 = 20 tane eder."
-      },
-      {
-            "q": "3 deste cetvel toplam kaç tanedir? 📦",
-            "a": "30 tane",
-            "d": [
-                  "36 tane",
-                  "25 tane"
-            ],
-            "exp": "3 deste = 3 × 10 = 30 tane eder."
-      },
-      {
-            "q": "1 düzine gül kaç tanedir? 🌹",
-            "a": "12 tane",
-            "d": [
-                  "10 tane",
-                  "15 tane"
-            ],
-            "exp": "1 düzine daima 12 tanedir."
-      },
-      {
-            "q": "2 düzine yumurta toplam kaç tanedir? 🥚",
-            "a": "24 tane",
-            "d": [
-                  "20 tane",
-                  "22 tane"
-            ],
-            "exp": "1 düzine = 12 tanedir. 2 düzine = 2 × 12 = 24 tane eder."
-      },
-      {
-            "q": "1 düzine bardak ile 1 deste bardağın toplamı kaçtır? 🥛",
-            "a": "22 tane",
-            "d": [
-                  "20 tane",
-                  "24 tane"
-            ],
-            "exp": "1 düzine = 12, 1 deste = 10. Toplam: 12 + 10 = 22 tane eder."
-      }
-],
-
+    // 1. Sayılar ve Nicelikler (100'e Kadar Doğal Sayılar)
     generateGrade2PlaceValue() {
-      const item = this.drawFromPool(this.grade2PlaceValuePool, "grade2PlaceValuePool");
-      return {
-        question: item.q,
-        correct: item.a,
-        distractors: item.d,
-        explanation: item.exp
-      };
-    },
+      const mode = Math.floor(Math.random() * 5);
 
-    // 2. SINIF: ÇARPIM TABLOSU VE PROBLEMLER HAVUZU (26 SORU)
-    grade2MultiplicationPool: [
-      {
-            "q": "2 kere 4 işleminin sonucu kaçtır? ✖️",
-            "a": "8",
-            "d": [
-                  "6",
-                  "10"
-            ],
-            "exp": "2 × 4 = 8 eder."
-      },
-      {
-            "q": "3 kere 5 işleminin sonucu kaçtır? ✖️",
-            "a": "15",
-            "d": [
-                  "12",
-                  "18"
-            ],
-            "exp": "3 × 5 = 15 eder."
-      },
-      {
-            "q": "4 kere 3 işleminin sonucu kaçtır? ✖️",
-            "a": "12",
-            "d": [
-                  "10",
-                  "14"
-            ],
-            "exp": "4 × 3 = 12 eder."
-      },
-      {
-            "q": "5 kere 6 işleminin sonucu kaçtır? ✖️",
-            "a": "30",
-            "d": [
-                  "25",
-                  "35"
-            ],
-            "exp": "5 × 6 = 30 eder."
-      },
-      {
-            "q": "2 kere 8 işleminin sonucu kaçtır? ✖️",
-            "a": "16",
-            "d": [
-                  "14",
-                  "18"
-            ],
-            "exp": "2 × 8 = 16 eder."
-      },
-      {
-            "q": "3 kere 7 işleminin sonucu kaçtır? ✖️",
-            "a": "21",
-            "d": [
-                  "18",
-                  "24"
-            ],
-            "exp": "3 × 7 = 21 eder."
-      },
-      {
-            "q": "4 kere 5 işleminin sonucu kaçtır? ✖️",
-            "a": "20",
-            "d": [
-                  "16",
-                  "24"
-            ],
-            "exp": "4 × 5 = 20 eder."
-      },
-      {
-            "q": "5 kere 8 işleminin sonucu kaçtır? ✖️",
-            "a": "40",
-            "d": [
-                  "35",
-                  "45"
-            ],
-            "exp": "5 × 8 = 40 eder."
-      },
-      {
-            "q": "2 kere 9 işleminin sonucu kaçtır? ✖️",
-            "a": "18",
-            "d": [
-                  "16",
-                  "20"
-            ],
-            "exp": "2 × 9 = 18 eder."
-      },
-      {
-            "q": "3 kere 9 işleminin sonucu kaçtır? ✖️",
-            "a": "27",
-            "d": [
-                  "24",
-                  "30"
-            ],
-            "exp": "3 × 9 = 27 eder."
-      },
-      {
-            "q": "4 kere 4 işleminin sonucu kaçtır? ✖️",
-            "a": "16",
-            "d": [
-                  "12",
-                  "20"
-            ],
-            "exp": "4 × 4 = 16 eder."
-      },
-      {
-            "q": "5 kere 5 işleminin sonucu kaçtır? ✖️",
-            "a": "25",
-            "d": [
-                  "20",
-                  "30"
-            ],
-            "exp": "5 × 5 = 25 eder."
-      },
-      {
-            "q": "4 kere 6 işleminin sonucu kaçtır? ✖️",
-            "a": "24",
-            "d": [
-                  "20",
-                  "28"
-            ],
-            "exp": "4 × 6 = 24 eder."
-      },
-      {
-            "q": "5 kere 9 işleminin sonucu kaçtır? ✖️",
-            "a": "45",
-            "d": [
-                  "40",
-                  "50"
-            ],
-            "exp": "5 × 9 = 45 eder."
-      },
-      {
-            "q": "3 kere 6 işleminin sonucu kaçtır? ✖️",
-            "a": "18",
-            "d": [
-                  "15",
-                  "21"
-            ],
-            "exp": "3 × 6 = 18 eder."
-      },
-      {
-            "q": "2 kere 7 işleminin sonucu kaçtır? ✖️",
-            "a": "14",
-            "d": [
-                  "12",
-                  "16"
-            ],
-            "exp": "2 × 7 = 14 eder."
-      },
-      {
-            "q": "4 kere 8 işleminin sonucu kaçtır? ✖️",
-            "a": "32",
-            "d": [
-                  "28",
-                  "36"
-            ],
-            "exp": "4 × 8 = 32 eder."
-      },
-      {
-            "q": "5 kere 7 işleminin sonucu kaçtır? ✖️",
-            "a": "35",
-            "d": [
-                  "30",
-                  "40"
-            ],
-            "exp": "5 × 7 = 35 eder."
-      },
-      {
-            "q": "Günde 2 elma yiyen Ayşe 5 günde toplam kaç elma yer? 🍎",
-            "a": "10 elma",
-            "d": [
-                  "8 elma",
-                  "12 elma"
-            ],
-            "exp": "5 gün × 2 elma = 10 elma eder."
-      },
-      {
-            "q": "Her masada 4 öğrenci oturuyor. 3 masada toplam kaç öğrenci vardır? 🏫",
-            "a": "12 öğrenci",
-            "d": [
-                  "10 öğrenci",
-                  "14 öğrenci"
-            ],
-            "exp": "3 masa × 4 öğrenci = 12 öğrenci eder."
-      },
-      {
-            "q": "Tanesi 5 lira olan defterlerden 4 tane alan Mert satıcıya kaç lira öder? 📚",
-            "a": "20 lira",
-            "d": [
-                  "18 lira",
-                  "25 lira"
-            ],
-            "exp": "4 defter × 5 lira = 20 lira öder."
-      },
-      {
-            "q": "Bir sandalyenin 4 ayağı vardır. 5 sandalyenin toplam kaç ayağı vardır? 🪑",
-            "a": "20 ayak",
-            "d": [
-                  "16 ayak",
-                  "24 ayak"
-            ],
-            "exp": "5 sandalye × 4 ayak = 20 ayak eder."
-      },
-      {
-            "q": "Bir kedinin 4 patisi vardır. 6 kedinin toplam kaç patisi vardır? 🐱",
-            "a": "24 pati",
-            "d": [
-                  "20 pati",
-                  "28 pati"
-            ],
-            "exp": "6 kedi × 4 pati = 24 pati eder."
-      },
-      {
-            "q": "Her gün 3 sayfa kitap okuyan Ali 4 günde toplam kaç sayfa okur? 📖",
-            "a": "12 sayfa",
-            "d": [
-                  "10 sayfa",
-                  "15 sayfa"
-            ],
-            "exp": "4 gün × 3 sayfa = 12 sayfa okur."
-      },
-      {
-            "q": "Bir tabakta 5 kurabiye var. 6 tabakta toplam kaç kurabiye vardır? 🍪",
-            "a": "30 kurabiye",
-            "d": [
-                  "25 kurabiye",
-                  "35 kurabiye"
-            ],
-            "exp": "6 tabak × 5 kurabiye = 30 kurabiye eder."
-      },
-      {
-            "q": "Bir bisikletin 2 tekerleği vardır. 7 bisikletin toplam kaç tekerleği vardır? 🚲",
-            "a": "14 tekerlek",
-            "d": [
-                  "12 tekerlek",
-                  "16 tekerlek"
-            ],
-            "exp": "7 bisiklet × 2 tekerlek = 14 tekerlek eder."
+      if (mode === 0) {
+        // Onluk ve Birlik Modeli
+        const tens = Math.floor(Math.random() * 9) + 1; // 1-9
+        const units = Math.floor(Math.random() * 10);   // 0-9
+        const num = tens * 10 + units;
+        const qType = Math.random() < 0.5;
+
+        if (qType) {
+          const question = `${tens} onluk ve ${units} birlikten oluşan doğal sayı kaçtır? 📦`;
+          const spokenText = `${tens} onluk ve ${units} birlikten oluşan doğal sayı kaçtır?`;
+          const correct = `${num}`;
+          const distractors = [
+            `${units * 10 + tens}`,
+            `${Math.max(10, num + (num > 50 ? -10 : 10))}`
+          ];
+          return { question, spokenText, correct, distractors, explanation: `${tens} onluk (${tens * 10}) + ${units} birlik = ${num} eder.` };
+        } else {
+          const question = `${num} doğal sayısında kaç onluk ve kaç birlik vardır? 🔢`;
+          const spokenText = `${num} sayısında kaç onluk ve kaç birlik vardır?`;
+          const correct = `${tens} onluk, ${units} birlik`;
+          const distractors = [
+            `${units} onluk, ${tens} birlik`,
+            `${tens} onluk, ${(units + 2) % 10} birlik`
+          ];
+          return { question, spokenText, correct, distractors, explanation: `${num} sayısının onlar basamağında ${tens}, birler basamağında ${units} vardır.` };
+        }
+      } else if (mode === 1) {
+        // Basamak Değeri
+        const tens = Math.floor(Math.random() * 9) + 1;
+        const units = Math.floor(Math.random() * 9) + 1;
+        const num = tens * 10 + units;
+        const askTens = Math.random() < 0.5;
+
+        if (askTens) {
+          const question = `${num} sayısındaki "${tens}" rakamının basamak değeri kaçtır? 🎯`;
+          const spokenText = `${num} sayısındaki ${tens} rakamının basamak değeri kaçtır?`;
+          const correct = `${tens * 10}`;
+          const distractors = [`${tens}`, `${units * 10}`];
+          return { question, spokenText, correct, distractors, explanation: `"${tens}" rakamı onlar basamağında olduğu için basamak değeri ${tens} × 10 = ${tens * 10}'dur.` };
+        } else {
+          const question = `${num} sayısındaki "${units}" rakamının basamak değeri kaçtır? 🎯`;
+          const spokenText = `${num} sayısındaki ${units} rakamının basamak değeri kaçtır?`;
+          const correct = `${units}`;
+          const distractors = [`${units * 10}`, `${tens * 10}`];
+          return { question, spokenText, correct, distractors, explanation: `"${units}" rakamı birler basamağında olduğu için basamak değeri ${units} × 1 = ${units}'tir.` };
+        }
+      } else if (mode === 2) {
+        // En Yakın Onluğa Yuvarlama
+        const tens = Math.floor(Math.random() * 9) + 1; // 1-9
+        const units = Math.floor(Math.random() * 9) + 1; // 1-9
+        const num = tens * 10 + units;
+        const rounded = units >= 5 ? (tens + 1) * 10 : tens * 10;
+        const otherTens = units >= 5 ? tens * 10 : (tens + 1) * 10;
+        const thirdTens = (tens > 2 ? tens - 1 : tens + 2) * 10;
+
+        const question = `${num} doğal sayısı en yakın hangi onluğa yuvarlanır? 🎯`;
+        const spokenText = `${num} sayısı en yakın hangi onluğa yuvarlanır?`;
+        const correct = `${rounded}`;
+        const distractors = [`${otherTens}`, `${thirdTens}`];
+        return {
+          question,
+          spokenText,
+          correct,
+          distractors,
+          explanation: `${num} sayısının birler basamağında ${units} vardır. ${units >= 5 ? '5 ve 5\'ten büyük olduğu için bir sonraki onluk olan ' + rounded + '\'a yuvarlanır.' : '5\'ten küçük olduğu için kendi onluğu olan ' + rounded + '\'a yuvarlanır.'}`
+        };
+      } else if (mode === 3) {
+        // Ritmik Sayma (2, 3, 4, 5, 10)
+        const steps = [2, 3, 4, 5, 10];
+        const step = steps[Math.floor(Math.random() * steps.length)];
+        const maxStart = 100 - (step * 4);
+        const start = Math.floor(Math.random() * Math.floor(maxStart / step)) * step + step;
+        const seq = [start, start + step, start + (step * 2), start + (step * 3)];
+        const missingIdx = Math.floor(Math.random() * 4);
+        const ans = seq[missingIdx];
+        const displaySeq = seq.map((val, idx) => idx === missingIdx ? '?' : val).join(' - ');
+
+        const question = `${displaySeq} (${step}'er ileri ritmik saymada "?" yerine kaç gelmelidir? 🚂)`;
+        const spokenText = `${step}'er ileri ritmik saymada soru işareti yerine hangi sayı gelmelidir?`;
+        const correct = `${ans}`;
+        const distractors = [
+          `${ans - step > 0 ? ans - step : ans + (step * 2)}`,
+          `${ans + step <= 100 ? ans + step : ans - (step * 2)}`
+        ];
+        return { question, spokenText, correct, distractors, explanation: `Kural ${step}'er artarak saymaktır. Eksik sayı ${ans}'dir.` };
+      } else {
+        // Deste ve Düzine / Sayı Örüntüsü
+        const pool = [
+          { q: '1 deste kalem ile 1 düzine kalemin toplamı kaç kalem eder? ✏️', spoken: 'Bir deste ile bir düzinenin toplamı kaçtır?', a: '22', d: ['20', '24'], exp: '1 deste = 10, 1 düzine = 12. Toplam: 10 + 12 = 22 eder.' },
+          { q: '3 deste silgi toplam kaç silgi eder? 🧼', spoken: 'Üç deste silgi kaç silgi eder?', a: '30', d: ['20', '36'], exp: '1 deste 10 tanedir. 3 × 10 = 30 silgi eder.' },
+          { q: '2 düzine bardak toplam kaç bardak eder? 🥛', spoken: 'İki düzine bardak kaç bardak eder?', a: '24', d: ['20', '22'], exp: '1 düzine 12 tanedir. 2 × 12 = 24 bardak eder.' },
+          { q: '4 deste fındık, 3 düzine fındıktan kaç fazladır? 🌰', spoken: 'Dört deste fındık, üç düzine fındıktan kaç fazladır?', a: '4', d: ['2', '6'], exp: '4 deste = 40. 3 düzine = 36. Fark: 40 - 36 = 4 fazladır.' },
+          { q: '18 - 22 - 26 - ? Sayı örüntüsünde soru işareti yerine hangi sayı gelmelidir? 🧩', spoken: 'Sayı örüntüsünde soru işareti yerine ne gelmelidir?', a: '30', d: ['28', '32'], exp: 'Örüntü dörder artmaktadır. 26 + 4 = 30 olur.' },
+          { q: '50 - 45 - 40 - ? Geriye doğru beşer azalan örüntüde soru işareti kaçtır? 🧩', spoken: 'Geriye doğru beşer azalan örüntüde soru işareti kaçtır?', a: '35', d: ['30', '38'], exp: 'Örüntü beşer azalmaktadır. 40 - 5 = 35 olur.' }
+        ];
+        const item = pool[Math.floor(Math.random() * pool.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
       }
-],
-
-    generateGrade2Multiplication() {
-      const item = this.drawFromPool(this.grade2MultiplicationPool, "grade2MultiplicationPool");
-      return {
-        question: item.q,
-        correct: item.a,
-        distractors: item.d,
-        explanation: item.exp
-      };
     },
 
-    // 2. SINIF: ZAMANI ÖLÇME VE SAATLER (26 ÖZGÜN SORU)
-    grade2ClocksPool: [
-      { q: 'Saat üzerinde kısa ve kalın olan, saati gösteren kola ne ad verilir? ⏰', a: 'Akrep ⏰', d: ['Yelkovan', 'Saniye ibresi'], exp: 'Kısa kol akreptir ve saati gösterir.' },
-      { q: 'Saat üzerinde uzun olan ve dakikaları gösteren kola ne ad verilir? ⏰', a: 'Yelkovan ⏰', d: ['Akrep', 'Zaman ibresi'], exp: 'Uzun kol yelkovandır ve dakikayı gösterir.' },
-      { q: 'Akrep 4\'ü, yelkovan ise tam 12\'yi gösteriyorsa saat kaçtır? ⏰', a: 'Saat 04:00 (Tam saat) ⏰', d: ['Saat 04:30', 'Saat 12:20'], exp: 'Yelkovan 12\'de iken saat tam saattir (04:00).' },
-      { q: 'Yelkovan tam 6\'nın üzerindeyken saat nasıl okunur? ⏳', a: 'Buçuk (Yarım saat) ⏳', d: ['Tam saat', 'Çeyrek geçiyor'], exp: 'Yelkovan 6\'da iken 30 dakikayı, yani "buçuk" olduğunu gösterir.' },
-      { q: 'Akrep 2 ile 3\'ün tam ortasında, yelkovan 6\'da ise saat kaçtır? ⏰', a: '2 buçuk (02:30) ⏰', d: ['Saat 03:00', 'Saat 06:15'], exp: 'Akrep 2 ile 3 arasında, yelkovan 6\'da ise saat 2 buçuktur.' },
-      { q: '1 saat kaç dakikaya eşittir? ⏳', a: '60 dakika ⏳', d: ['30 dakika', '100 dakika'], exp: '1 saat = 60 dakikadır.' },
-      { q: 'Yarım saat kaç dakikadır? ⏳', a: '30 dakika ⏳', d: ['15 dakika', '45 dakika'], exp: '60 dakikanın yarısı 30 dakikadır.' },
-      { q: 'Çeyrek saat kaç dakikadır? ⏳', a: '15 dakika ⏳', d: ['30 dakika', '20 dakika'], exp: 'Bir saatin çeyreği 15 dakikadır.' },
-      { q: 'Bir gün kaç saattir? 🌍', a: '24 saat 🌍', d: ['12 saat', '48 saat'], exp: 'Dünya\'nın kendi etrafında 1 tam turu 24 saat, yani 1 gündür.' },
-      { q: 'Bir hafta kaç gündür? 📅', a: '7 gün 📅', d: ['5 gün', '10 gün'], exp: 'Bir haftada 7 gün vardır: Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar.' },
-      { q: 'Bir yılda kaç ay vardır? 🗓️', a: '12 ay 🗓️', d: ['10 ay', '4 ay'], exp: 'Ocak ayından Aralık ayına kadar 1 yılda 12 ay vardır.' },
-      { q: 'Bir yılda toplam kaç mevsim vardır? 🍂', a: '4 mevsim 🍂', d: ['12 mevsim', '52 mevsim'], exp: 'İlkbahar, Yaz, Sonbahar, Kış olmak üzere 4 mevsim vardır.' },
-      { q: 'Bir yılda kaç hafta vardır? 📆', a: '52 hafta 📆', d: ['40 hafta', '30 hafta'], exp: 'Bir takvim yılında yaklaşık 52 hafta bulunur.' },
-      { q: 'Haftanın ilk (1.) günü hangisidir? 🗓️', a: 'Pazartesi 🗓️', d: ['Pazar', 'Salı'], exp: 'Haftanın başlangıç günü Pazartesidir.' },
-      { q: 'Haftanın tatil günleri (hafta sonu) hangileridir? 🎈', a: 'Cumartesi ve Pazar 🎈', d: ['Pazartesi ve Salı', 'Perşembe ve Cuma'], exp: 'Cumartesi ve Pazar günleri hafta sonu tatilidir.' },
-      { q: 'Yelkovan 3\'ün üzerindeyken saat nasıl okunur? ⏰', a: 'Çeyrek geçiyor ⏰', d: ['Çeyrek var', 'Buçuk'], exp: 'Yelkovan 3\'te iken 15 dakika geçmektedir (çeyrek geçiyor).' },
-      { q: 'Yelkovan 9\'un üzerindeyken saat nasıl okunur? ⏰', a: 'Çeyrek var ⏰', d: ['Çeyrek geçiyor', 'Tam saat'], exp: 'Yelkovan 9\'da iken bir sonraki saate 15 dakika kalmıştır (çeyrek var).' },
-      { q: 'Saat 03:00\'ten 2 saat sonra saat kaç olur? ⏰', a: '05:00 ⏰', d: ['04:00', '06:00'], exp: '3 + 2 = 5 olur (05:00).' },
-      { q: 'Saat 10:30\'da başlayan 30 dakikalık çizgi film saat kaçta biter? 📺', a: '11:00 📺', d: ['11:30', '12:00'], exp: '10:30 üzerine 30 dakika eklenince saat tam 11:00 olur.' },
-      { q: 'Bir ay yaklaşık olarak kaç haftadır? 📅', a: '4 hafta 📅', d: ['2 hafta', '6 hafta'], exp: 'Bir ayda yaklaşık 4 hafta vardır.' },
-      { q: 'Bir ay genellikle kaç gündür? 🗓️', a: '30 veya 31 gün 🗓️', d: ['15 gün', '40 gün'], exp: 'Aylar takvimde 30 veya 31 gündür (Şubat 28-29 gündür).' },
-      { q: 'Öğleden sonra saat 2:00 dijital saatte nasıl gösterilir? ⏰', a: '14:00 ⏰', d: ['12:00', '16:00'], exp: 'Öğleden sonra 12 + 2 = 14:00 olarak gösterilir.' },
-      { q: 'Öğleden sonra saat 5:00 dijital saatte nasıl gösterilir? ⏰', a: '17:00 ⏰', d: ['15:00', '19:00'], exp: '12 + 5 = 17:00 olarak gösterilir.' },
-      { q: 'Dün Salı ise yarın hangi gün olur? 📅', a: 'Perşembe 📅', d: ['Çarşamba', 'Cuma'], exp: 'Dün Salı ise bugün Çarşambadır, yarın ise Perşembedir.' },
-      { q: 'Pazartesi gününden sonra hangi gün gelir? 🗓️', a: 'Salı 🗓️', d: ['Çarşamba', 'Pazar'], exp: 'Pazartesiden sonra Salı günü gelir.' },
-      { q: 'Akrep ve yelkovanın her ikisi de 12\'nin üzerindeyse saat kaçtır? ⏰', a: '12:00 (Tam on iki) ⏰', d: ['06:00', '12:30'], exp: 'İkisi de 12\'de iken saat tam 12:00\'dir.' }
+    // 2. Toplama ve Çıkarma İşlemleri (100 İçinde)
+    generateGrade2Operations() {
+      const mode = Math.floor(Math.random() * 5);
+
+      if (mode === 0) {
+        // 2 Basamaklı Toplama (Sonuç <= 100)
+        const a = Math.floor(Math.random() * 45) + 15; // 15-59
+        const maxB = 100 - a;
+        const b = Math.floor(Math.random() * (maxB - 10)) + 10;
+        const sum = a + b;
+        const question = `${a} + ${b} işleminin sonucu kaçtır? ➕`;
+        const spokenText = `${a} artı ${b} işleminin sonucu kaçtır?`;
+        const correct = `${sum}`;
+        const distractors = [
+          `${sum - 10 > 0 ? sum - 10 : sum + 5}`,
+          `${sum + (sum % 2 === 0 ? 2 : -2)}`
+        ];
+        return { question, spokenText, correct, distractors, explanation: `${a} + ${b} = ${sum} eder.` };
+      } else if (mode === 1) {
+        // 2 Basamaklı Çıkarma (Onluk bozarak / eldesiz, Eksilen <= 100)
+        const a = Math.floor(Math.random() * 60) + 35; // 35-94
+        const b = Math.floor(Math.random() * (a - 15)) + 12; // < a
+        const diff = a - b;
+        const question = `${a} - ${b} işleminin sonucu kaçtır? ➖`;
+        const spokenText = `${a} eksi ${b} işleminin sonucu kaçtır?`;
+        const correct = `${diff}`;
+        const distractors = [
+          `${diff + 10 <= 100 ? diff + 10 : diff - 5}`,
+          `${diff + (diff % 2 === 0 ? 2 : -2)}`
+        ];
+        return { question, spokenText, correct, distractors, explanation: `${a} - ${b} = ${diff} eder.` };
+      } else if (mode === 2) {
+        // Verilmeyen toplananı bulma (A + ? = C)
+        const a = Math.floor(Math.random() * 40) + 15;
+        const missing = Math.floor(Math.random() * 40) + 12;
+        const total = a + missing;
+
+        const question = `${a} + ? = ${total} işleminde verilmeyen toplanan sayı kaçtır? ❓`;
+        const spokenText = `${a} artı soru işareti eşittir ${total} işleminde verilmeyen sayı kaçtır?`;
+        const correct = `${missing}`;
+        const distractors = [
+          `${missing + 10 <= 100 ? missing + 10 : missing - 5}`,
+          `${missing - 2 > 0 ? missing - 2 : missing + 4}`
+        ];
+        return { question, spokenText, correct, distractors, explanation: `Verilmeyen toplananı bulmak için toplamdan verilen sayı çıkarılır: ${total} - ${a} = ${missing}.` };
+      } else if (mode === 3) {
+        // Zihinden ve Tahmini İşlemler
+        const pool = [
+          { q: '50 + 30 işlemini zihinden yaparsak sonuç kaç olur? 🧠', spoken: '50 artı 30 işlemini zihinden yaparsak sonuç kaç olur?', a: '80', d: ['70', '90'], exp: '5 onluk + 3 onluk = 8 onluk, yani 80 eder.' },
+          { q: '90 - 40 işlemini zihinden yaparsak sonuç kaç olur? 🧠', spoken: '90 eksi 40 işlemini zihinden yaparsak sonuç kaç olur?', a: '50', d: ['40', '60'], exp: '9 onluk - 4 onluk = 5 onluk, yani 50 eder.' },
+          { q: '60 + 20 işleminin sonucu zihinden kaçtır? 🧠', spoken: '60 artı 20 işleminin sonucu kaçtır?', a: '80', d: ['70', '90'], exp: '6 onluk + 2 onluk = 80 eder.' },
+          { q: '80 - 50 işleminin sonucu zihinden kaçtır? 🧠', spoken: '80 eksi 50 işleminin sonucu kaçtır?', a: '30', d: ['20', '40'], exp: '8 onluktan 5 onluk çıkarsa 3 onluk (30) kalır.' },
+          { q: '32 + 49 işleminin tahmini sonucu en yakın onluklara yuvarlanarak kaçtır? 🎯', spoken: '32 artı 49 işleminin tahmini sonucu en yakın onluklara yuvarlanarak kaçtır?', a: '80', d: ['70', '90'], exp: '32 -> 30\'a, 49 -> 50\'ye yuvarlanır. 30 + 50 = 80 olur.' },
+          { q: '71 - 29 işleminin tahmini sonucu en yakın onluklarla kaçtır? 🎯', spoken: '71 eksi 29 işleminin tahmini sonucu kaçtır?', a: '40', d: ['50', '30'], exp: '71 -> 70\'e, 29 -> 30\'a yuvarlanır. 70 - 30 = 40 olur.' }
+        ];
+        const item = pool[Math.floor(Math.random() * pool.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else {
+        // Günlük Hayat Problemleri
+        const problems = [
+          { q: 'Bir otobüste 38 yolcu vardı. İlk durakta 17 yolcu daha bindi. Otobüste kaç yolcu oldu? 🚌', spoken: 'Otobüste 38 yolcu vardı. 17 yolcu daha bindi. Toplam kaç yolcu oldu?', a: '55 yolcu', d: ['45 yolcu', '51 yolcu'], exp: '38 + 17 = 55 yolcu olur.' },
+          { q: 'Ali\'nin 64 lirası vardı. 28 lirasına hikaye kitabı aldı. Ali\'nin kaç lirası kaldı? 📚', spoken: 'Ali\'nin 64 lirası vardı. 28 liraya kitap aldı. Kaç lirası kaldı?', a: '36 lira', d: ['46 lira', '34 lira'], exp: '64 - 28 = 36 lira kalır.' },
+          { q: 'Bir çiftlikte 27 koyun, koyunlardan 15 fazla kuzu vardır. Çiftlikte kaç kuzu vardır? 🐑', spoken: 'Çiftlikte 27 koyun ve 15 fazla kuzu vardır. Kaç kuzu vardır?', a: '42 kuzu', d: ['32 kuzu', '45 kuzu'], exp: '27 + 15 = 42 kuzu vardır.' },
+          { q: 'Ayşe 80 sayfalık kitabın 45 sayfasını okudu. Okunacak kaç sayfa kaldı? 📖', spoken: 'Ayşe 80 sayfalık kitabın 45 sayfasını okudu. Kaç sayfa kaldı?', a: '35 sayfa', d: ['45 sayfa', '25 sayfa'], exp: '80 - 45 = 35 sayfa kalır.' },
+          { q: 'Bir manavda sabah 52 kg elma vardı. Gün boyu 36 kg elma satıldı. Geriye kaç kg elma kaldı? 🍎', spoken: '52 kilo elmanın 36 kilosu satıldı. Geriye kaç kilo elma kaldı?', a: '16 kg', d: ['26 kg', '18 kg'], exp: '52 - 36 = 16 kg elma kalır.' }
+        ];
+        const item = problems[Math.floor(Math.random() * problems.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      }
+    },
+
+    // 3. Çarpma ve Bölme (1-5 ve 10'lar ile Çarpma, 20 İçinde Kalansız Bölme)
+    generateGrade2MultiplicationDivision() {
+      const isMult = Math.random() < 0.65;
+
+      if (isMult) {
+        const mode = Math.floor(Math.random() * 4);
+        if (mode === 0) {
+          // Çarpmanın tekrarlı toplama anlamı
+          const factorA = Math.floor(Math.random() * 4) + 2; // 2-5
+          const factorB = Math.floor(Math.random() * 5) + 1; // 1-5
+          const sumArray = Array(factorA).fill(factorB);
+          const sumStr = sumArray.join(' + ');
+
+          const question = `${sumStr} toplama işlemi çarpma olarak nasıl yazılır? ✖️`;
+          const spokenText = `${sumStr} toplama işlemi çarpma olarak nasıl yazılır?`;
+          const correct = `${factorA} × ${factorB}`;
+          const distractors = [
+            `${factorA + 1} × ${factorB}`,
+            `${factorA} × ${factorB + 1}`
+          ];
+          return { question, spokenText, correct, distractors, explanation: `${factorA} tane ${factorB}'nin toplamı ${factorA} × ${factorB} olarak yazılır.` };
+        } else if (mode === 1) {
+          // 0 ve 1'in Etkisi
+          const pool = [
+            { q: 'Çarpma işleminde "0" (sıfır) hangi elemandır? ✖️', spoken: 'Çarpma işleminde sıfır hangi elemandır?', a: 'Yutan eleman (Sonucu 0 yapar) 🕳️', d: ['Etkisiz eleman', 'Büyüten eleman'], exp: 'Sıfır çarpmada yutan elemandır; ne ile çarpılırsa sonuç sıfır olur.' },
+            { q: 'Çarpma işleminde "1" (bir) hangi elemandır? ✖️', spoken: 'Çarpma işleminde bir hangi elemandır?', a: 'Etkisiz eleman (Sayıyı değiştirmez) ✨', d: ['Yutan eleman', 'Sıfırlayan eleman'], exp: 'Bir çarpmada etkisiz elemandır; sayıyı olduğu gibi korur.' },
+            { q: '9 × 1 işleminin sonucu kaçtır? ✖️', spoken: 'Dokuz kere bir işleminin sonucu kaçtır?', a: '9', d: ['1', '0'], exp: '1 etkisiz elemandır: 9 × 1 = 9 eder.' },
+            { q: '8 × 0 işleminin sonucu kaçtır? ✖️', spoken: 'Sekiz kere sıfır işleminin sonucu kaçtır?', a: '0', d: ['8', '1'], exp: '0 yutan elemandır: 8 × 0 = 0 eder.' }
+          ];
+          const item = pool[Math.floor(Math.random() * pool.length)];
+          return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+        } else {
+          // Çarpım Tablosu (SADECE 1, 2, 3, 4, 5 ve 10'lar!)
+          const validFactors = [1, 2, 3, 4, 5, 10];
+          const a = validFactors[Math.floor(Math.random() * validFactors.length)];
+          const b = Math.floor(Math.random() * 9) + 1; // 1-9
+          const prod = a * b;
+
+          const question = `${a} × ${b} işleminin sonucu kaçtır? ✖️`;
+          const spokenText = `${a} kere ${b} işleminin sonucu kaçtır?`;
+          const correct = `${prod}`;
+          const distractors = [
+            `${prod + a <= 100 ? prod + a : prod - a}`,
+            `${prod - a > 0 ? prod - a : prod + (a * 2)}`
+          ];
+          return { question, spokenText, correct, distractors, explanation: `${a} × ${b} = ${prod} eder.` };
+        }
+      } else {
+        // Bölme İşlemi (SADECE 20 İçinde, Kalansız ve Eşit Paylaştırma)
+        const validDivisions = [
+          { total: 20, div: 4, quo: 5, item: 'elmayı 4 tabağa', unit: 'elma' },
+          { total: 20, div: 5, quo: 4, item: 'balonu 5 çocuğa', unit: 'balon' },
+          { total: 20, div: 2, quo: 10, item: 'cevizi 2 kardeşe', unit: 'ceviz' },
+          { total: 18, div: 2, quo: 9, item: 'kurabiyeyi 2 tabağa', unit: 'kurabiye' },
+          { total: 18, div: 3, quo: 6, item: 'fındığı 3 sincaba', unit: 'fındık' },
+          { total: 16, div: 4, quo: 4, item: 'kalemi 4 kutuya', unit: 'kalem' },
+          { total: 16, div: 2, quo: 8, item: 'sayfayı 2 günde', unit: 'sayfa' },
+          { total: 15, div: 3, quo: 5, item: 'çiçeği 3 vazoya', unit: 'çiçek' },
+          { total: 15, div: 5, quo: 3, item: 'şekeri 5 arkadaşa', unit: 'şeker' },
+          { total: 14, div: 2, quo: 7, item: 'havucu 2 tavşana', unit: 'havuç' },
+          { total: 12, div: 3, quo: 4, item: 'kitabı 3 rafa', unit: 'kitap' },
+          { total: 12, div: 4, quo: 3, item: 'bardağı 4 tepsiye', unit: 'bardak' },
+          { total: 12, div: 2, quo: 6, item: 'armudu 2 sepete', unit: 'armut' },
+          { total: 10, div: 2, quo: 5, item: 'lirayı 2 kumbaraya', unit: 'lira' },
+          { total: 10, div: 5, quo: 2, item: 'cevizi 5 çocuğa', unit: 'ceviz' },
+          { total: 8, div: 2, quo: 4, item: 'çileği 2 tabağa', unit: 'çilek' },
+          { total: 8, div: 4, quo: 2, item: 'balığı 4 akvaryuma', unit: 'balık' },
+          { total: 6, div: 2, quo: 3, item: 'topu 2 fileye', unit: 'top' },
+          { total: 6, div: 3, quo: 2, item: 'kuşu 3 kafese', unit: 'kuş' }
+        ];
+
+        const divItem = validDivisions[Math.floor(Math.random() * validDivisions.length)];
+        const isWordProblem = Math.random() < 0.5;
+
+        if (isWordProblem) {
+          const question = `${divItem.total} ${divItem.item} eşit şekilde paylaştırırsak her birine kaç ${divItem.unit} düşer? ➗`;
+          const spokenText = `${divItem.total} nesne ${divItem.div} gruba eşit paylaştırılırsa her gruba kaç tane düşer?`;
+          const correct = `${divItem.quo} ${divItem.unit}`;
+          const distractors = [
+            `${divItem.quo + 1} ${divItem.unit}`,
+            `${divItem.quo - 1 > 0 ? divItem.quo - 1 : divItem.quo + 2} ${divItem.unit}`
+          ];
+          return { question, spokenText, correct, distractors, explanation: `${divItem.total} ÷ ${divItem.div} = ${divItem.quo} ${divItem.unit} düşer.` };
+        } else {
+          const question = `${divItem.total} ÷ ${divItem.div} işleminin sonucu kaçtır? ➗`;
+          const spokenText = `${divItem.total} bölü ${divItem.div} işleminin sonucu kaçtır?`;
+          const correct = `${divItem.quo}`;
+          const distractors = [
+            `${divItem.quo + 1}`,
+            `${divItem.quo - 1 > 0 ? divItem.quo - 1 : divItem.quo + 2}`
+          ];
+          return { question, spokenText, correct, distractors, explanation: `${divItem.total} sayısının içinde ${divItem.div}, ${divItem.quo} defa vardır.` };
+        }
+      }
+    },
+
+    // 4. Kesirler, Zaman ve Paralarımız
+    generateGrade2FractionsTimeMoney() {
+      const mode = Math.floor(Math.random() * 3);
+
+      if (mode === 0) {
+        // Bütün, Yarım, Çeyrek (1 Bütün = 2 Yarım = 4 Çeyrek)
+        const fractionPool = [
+          { q: '1 bütün ekmek kaç yarım ekmek eder? 🥖', spoken: 'Bir bütün ekmek kaç yarım ekmek eder?', a: '2 yarım', d: ['4 yarım', '1 yarım'], exp: '1 bütün 2 eşit yarımdan oluşur.' },
+          { q: '1 bütün pizzadan kaç adet çeyrek pizza dilimi çıkar? 🍕', spoken: 'Bir bütün pizzadan kaç çeyrek dilim çıkar?', a: '4 çeyrek', d: ['2 çeyrek', '8 çeyrek'], exp: '1 bütün 4 eşit çeyrekten oluşur.' },
+          { q: '4 yarım elma kaç bütün elma eder? 🍎', spoken: 'Dört yarım elma kaç bütün elma eder?', a: '2 bütün', d: ['1 bütün', '4 bütün'], exp: '2 yarım 1 bütün ettiğine göre, 4 yarım 2 bütün eder.' },
+          { q: '8 çeyrek portakal kaç bütün portakal eder? 🍊', spoken: 'Sekiz çeyrek portakal kaç bütün portakal eder?', a: '2 bütün', d: ['4 bütün', '1 bütün'], exp: '4 çeyrek 1 bütündür. 8 çeyrek = 2 bütün portakal eder.' },
+          { q: '6 yarım simit kaç bütün simit eder? 🥯', spoken: 'Altı yarım simit kaç bütün simit eder?', a: '3 bütün', d: ['2 bütün', '4 bütün'], exp: '6 ÷ 2 = 3 bütün simit eder.' },
+          { q: '12 çeyrek pasta kaç bütün pasta eder? 🎂', spoken: 'On iki çeyrek pasta kaç bütün pasta eder?', a: '3 bütün', d: ['4 bütün', '2 bütün'], exp: '12 ÷ 4 = 3 bütün pasta eder.' },
+          { q: '2 bütün elma ile 4 yarım elma toplam kaç bütün elma eder? 🍏', spoken: 'İki bütün ve dört yarım elma toplam kaç bütün elma eder?', a: '4 bütün', d: ['3 bütün', '6 bütün'], exp: '4 yarım = 2 bütün. 2 + 2 = 4 bütün elma eder.' }
+        ];
+        const item = fractionPool[Math.floor(Math.random() * fractionPool.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else if (mode === 1) {
+        // Zamanı Ölçme (Tam, Yarım, Çeyrek Saatler, Takvim)
+        const timePool = [
+          { q: 'Saat üzerinde kısa ve kalın olan kola ne ad verilir? ⏰', spoken: 'Saat üzerindeki kısa kola ne denir?', a: 'Akrep (Saati gösterir) ⏰', d: ['Yelkovan', 'Saniye ibresi'], exp: 'Kısa kol akreptir ve saat başlarını gösterir.' },
+          { q: 'Saat üzerinde uzun olan kola ne ad verilir? ⏰', spoken: 'Saat üzerindeki uzun kola ne denir?', a: 'Yelkovan (Dakikayı gösterir) ⏰', d: ['Akrep', 'Takvim'], exp: 'Uzun kol yelkovandır ve dakikaları gösterir.' },
+          { q: 'Akrep 4\'ü, yelkovan tam 12\'yi gösteriyorsa saat kaçtır? ⏰', spoken: 'Akrep 4\'ü, yelkovan 12\'yi gösteriyorsa saat kaçtır?', a: '04:00 (Tam dört) ⏰', d: ['04:30', '12:20'], exp: 'Yelkovan 12 üzerinde iken tam saattir.' },
+          { q: 'Yelkovan tam 6\'nın üzerindeyken saat nasıl okunur? ⏳', spoken: 'Yelkovan 6 üzerindeyken saat nasıl okunur?', a: 'Buçuk (Yarım saat) ⏳', d: ['Çeyrek geçiyor', 'Tam saat'], exp: 'Yelkovan 6 üzerinde iken yarım saati, yani "buçuk" olduğunu gösterir.' },
+          { q: 'Yelkovan 3\'ün üzerindeyken saat nasıl okunur? ⏰', spoken: 'Yelkovan 3 üzerindeyken saat nasıl okunur?', a: 'Çeyrek geçiyor ⏰', d: ['Çeyrek var', 'Buçuk'], exp: 'Yelkovan 3\'te iken 15 dakika geçmektedir (çeyrek geçiyor).' },
+          { q: 'Yelkovan 9\'un üzerindeyken saat nasıl okunur? ⏰', spoken: 'Yelkovan 9 üzerindeyken saat nasıl okunur?', a: 'Çeyrek var ⏰', d: ['Çeyrek geçiyor', 'Tam saat'], exp: 'Yelkovan 9\'da iken bir sonraki saate 15 dakika kalmıştır (çeyrek var).' },
+          { q: 'Öğleden sonra saat 2:00 dijital saatte nasıl gösterilir? ⏰', spoken: 'Öğleden sonra saat iki dijital saatte nasıl gösterilir?', a: '14:00 ⏰', d: ['12:00', '16:00'], exp: 'Öğleden sonra saatlere 12 eklenir: 12 + 2 = 14:00.' },
+          { q: '1 saat kaç dakikadır? ⏳', spoken: 'Bir saat kaç dakikadır?', a: '60 dakika ⏳', d: ['30 dakika', '100 dakika'], exp: '1 saat 60 dakikadır.' },
+          { q: 'Yarım saat kaç dakikadır? ⏳', spoken: 'Yarım saat kaç dakikadır?', a: '30 dakika ⏳', d: ['15 dakika', '45 dakika'], exp: '60 dakikanın yarısı 30 dakikadır.' },
+          { q: 'Çeyrek saat kaç dakikadır? ⏳', spoken: 'Çeyrek saat kaç dakikadır?', a: '15 dakika ⏳', d: ['30 dakika', '20 dakika'], exp: 'Bir saatin çeyreği (dörtte biri) 15 dakikadır.' },
+          { q: 'Bir yılda kaç mevsim ve kaç ay vardır? 🍂', spoken: 'Bir yılda kaç mevsim ve kaç ay vardır?', a: '4 mevsim, 12 ay 🗓️', d: ['2 mevsim, 10 ay', '4 mevsim, 52 ay'], exp: 'Bir takvim yılında 4 mevsim ve 12 ay bulunur.' },
+          { q: 'Bir hafta kaç gündür? 📅', spoken: 'Bir hafta kaç gündür?', a: '7 gün 📅', d: ['5 gün', '10 gün'], exp: 'Pazartesiden Pazara bir haftada 7 gün vardır.' }
+        ];
+        const item = timePool[Math.floor(Math.random() * timePool.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      } else {
+        // Paralarımız (Lira ve Kuruş Hesapları)
+        const moneyPool = [
+          { q: '1 Türk Lirası (1 TL) kaç Kuruşa eşittir? 🪙', spoken: 'Bir Türk Lirası kaç kuruşa eşittir?', a: '100 Kuruş 🪙', d: ['10 Kuruş', '50 Kuruş'], exp: '1 TL = 100 Kuruştur.' },
+          { q: '2 tane 50 Kuruş toplam kaç Lira eder? 🪙', spoken: 'İki tane 50 kuruş kaç lira eder?', a: '1 TL 🪙', d: ['2 TL', '50 TL'], exp: '50 Kuruş + 50 Kuruş = 100 Kuruş, yani 1 TL eder.' },
+          { q: '4 tane 25 Kuruş toplam kaç Lira eder? 🪙', spoken: 'Dört tane 25 kuruş kaç lira eder?', a: '1 TL 🪙', d: ['4 TL', '2 TL'], exp: '25 + 25 + 25 + 25 = 100 Kuruş = 1 TL eder.' },
+          { q: 'En büyük madeni paramız hangisidir? 🪙', spoken: 'En büyük madeni paramız hangisidir?', a: '1 TL 🪙', d: ['50 Kuruş', '5 TL'], exp: 'Türkiye\'de tedavüldeki en büyük madeni para 1 Türk Lirasıdır.' },
+          { q: 'Kumbarasında 3 tane 10 TL ve 1 tane 20 TL olan Elif\'in toplam kaç lirası vardır? 💰', spoken: 'Kumbarasında üç tane 10 lira ve bir tane 20 lira olanın kaç lirası vardır?', a: '50 TL 💰', d: ['40 TL', '60 TL'], exp: '3 × 10 = 30 TL. 30 + 20 = 50 TL eder.' },
+          { q: 'Fiyatı 35 TL olan kitaba 50 TL veren biri kaç TL para üstü alır? 💵', spoken: '35 liralık kitaba 50 lira veren biri kaç lira para üstü alır?', a: '15 TL', d: ['25 TL', '10 TL'], exp: '50 - 35 = 15 TL para üstü alır.' },
+          { q: 'Tanesi 5 lira olan kalemlerden 4 tane alan Can 50 TL verirse kaç lira para üstü alır? ✏️', spoken: 'Tanesi 5 lira olan kalemlerden 4 tane alan 50 lira verirse para üstü ne kadar alır?', a: '30 TL', d: ['20 TL', '35 TL'], exp: '4 × 5 = 20 TL harcar. 50 - 20 = 30 TL para üstü alır.' }
+        ];
+        const item = moneyPool[Math.floor(Math.random() * moneyPool.length)];
+        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
+      }
+    },
+
+    // 5. Geometri ve Simetri (20 Özgün Soru)
+    grade2GeometrySolidsPool: [
+      {
+        q: 'Tüm yüzleri birbirine eşit 6 karesel bölgeden oluşan, 8 köşesi ve 12 ayrıtı olan geometrik cisim hangisidir? 🎲',
+        spokenText: 'Tüm yüzleri eşit 6 kareden oluşan, 8 köşesi olan geometrik cisim hangisidir?',
+        a: 'Küp 🎲',
+        d: ['Silindir 🥫', 'Koni 🍦'],
+        exp: 'Küpün 6 karesel yüzü, 8 köşesi ve 12 ayrıtı vardır (Örn: zeka küpü, tavla zarı).'
+      },
+      {
+        q: 'Bir kibrit kutusu, ayakkabı kutusu veya tuğla hangi geometrik cisme benzer? 📦',
+        spokenText: 'Kibrit kutusu veya tuğla hangi geometrik cisme benzer?',
+        a: 'Dikdörtgen Prizma 📦',
+        d: ['Küre ⚽', 'Koni 🍦'],
+        exp: 'Tüm yüzleri dikdörtgen olan üç boyutlu cisim dikdörtgen prizmadır.'
+      },
+      {
+        q: 'Tabanları daire olan, eğri bir yan yüzeyi bulunan, köşesi ve ayrıtı OLMAYAN cisim hangisidir? 🥫',
+        spokenText: 'Tabanları daire olan, köşesi ve ayrıtı olmayan cisim hangisidir?',
+        a: 'Silindir (Örn: Salça kutusu, pil) 🥫',
+        d: ['Küp 🎲', 'Üçgen prizma ⛺'],
+        exp: 'Silindirin 2 düz dairesel tabanı ve 1 eğri yüzü vardır; köşe ve ayrıtı yoktur.'
+      },
+      {
+        q: 'Dondurma külahı veya doğum günü şapkası hangi geometrik cisme benzer? 🍦',
+        spokenText: 'Dondurma külahı veya parti şapkası hangi cisme benzer?',
+        a: 'Koni 🍦',
+        d: ['Silindir 🥫', 'Küp 🎲'],
+        exp: 'Daire tabanı ve sivri tepesi olan eğri yüzeyli cisim konidir; köşesi ve ayrıtı yoktur.'
+      },
+      {
+        q: 'Futbol topu, portakal veya gezegenimiz Dünya hangi geometrik cisme modeldir? ⚽',
+        spokenText: 'Futbol topu veya portakal hangi geometrik cisme modeldir?',
+        a: 'Küre ⚽',
+        d: ['Küp 🎲', 'Kare prizma 🧊'],
+        exp: 'Küre tek bir eğri yüzeyden oluşur; köşesi ve ayrıtı yoktur.'
+      },
+      {
+        q: 'Kamp çadırı veya evlerin çatısı genellikle hangi geometrik cisme benzer? ⛺',
+        spokenText: 'Kamp çadırı genellikle hangi geometrik cisme benzer?',
+        a: 'Üçgen Prizma ⛺',
+        d: ['Koni 🍦', 'Silindir 🥫'],
+        exp: 'Üçgen prizmanın 2 üçgen tabanı ve 3 dikdörtgen yan yüzü vardır.'
+      },
+      {
+        q: 'Küpün kaç adet köşesi ve kaç adet ayrıtı (kenarı) vardır? 🎲',
+        spokenText: 'Küpün kaç köşesi ve kaç ayrıtı vardır?',
+        a: '8 köşesi, 12 ayrıtı 🎲',
+        d: ['6 köşesi, 8 ayrıtı', '4 köşesi, 6 ayrıtı'],
+        exp: 'Küpün 8 köşesi ve 12 ayrıtı bulunur.'
+      },
+      {
+        q: 'Silindir, koni ve kürenin ortak özelliği nedir? ⚪',
+        spokenText: 'Silindir, koni ve kürenin ortak özelliği nedir?',
+        a: 'Köşelerinin ve ayrıtlarının olmaması ⚪',
+        d: ['Tüm yüzlerinin kare olması', '12 ayrıtlarının olması'],
+        exp: 'Silindir, koni ve kürenin köşe ve ayrıtları yoktur, eğri yüzeyleri vardır.'
+      },
+      {
+        q: 'Bir şekli tam ortasından katladığımızda iki parça üst üste tam çakışıyorsa bu şekle ne denir? 🪞',
+        spokenText: 'Katlandığında iki parça tam çakışıyorsa bu şekle ne denir?',
+        a: 'Simetrik şekil 🪞',
+        d: ['Geometrik cisim', 'Örüntü'],
+        exp: 'Katlandığında iki eş parçaya ayrılan şekiller simetriktir.'
+      },
+      {
+        q: 'Simetrik bir şekli iki eş parçaya ayıran çizgiye ne ad verilir? 📏',
+        spokenText: 'Simetrik bir şekli iki eş parçaya ayıran çizgiye ne ad verilir?',
+        a: 'Simetri doğrusu 📏',
+        d: ['Köşegen', 'Ayrıt'],
+        exp: 'Şekli iki ayna görüntüsüne ayıran çizgiye simetri doğrusu denir.'
+      },
+      {
+        q: 'Bir karenin kaç adet simetri doğrusu vardır? 🟦',
+        spokenText: 'Bir karenin kaç adet simetri doğrusu vardır?',
+        a: '4 adet 🟦',
+        d: ['2 adet', '1 adet'],
+        exp: 'Karenin yatay, dikey ve iki köşegen olmak üzere 4 simetri doğrusu vardır.'
+      },
+      {
+        q: 'Bir dikdörtgenin kaç adet simetri doğrusu vardır? 🚪',
+        spokenText: 'Bir dikdörtgenin kaç adet simetri doğrusu vardır?',
+        a: '2 adet (Yatay ve dikey) 🚪',
+        d: ['4 adet', '1 adet'],
+        exp: 'Dikdörtgenin köşegenleri simetri doğrusu değildir; 2 simetri doğrusu vardır.'
+      },
+      {
+        q: 'Alfabemizdeki hangi harf dikey bir simetri doğrusuna sahiptir? (Katlandığında eşleşir) 🔤',
+        spokenText: 'Hangi harf dikey bir simetri doğrusuna sahiptir?',
+        a: 'A harfi 🅰️',
+        d: ['F harfi', 'P harfi'],
+        exp: 'A harfi ortadan dikey katlandığında sağ ve sol yarıları tam üst üste gelir.'
+      },
+      {
+        q: 'Aşağıdaki hayvanlardan hangisinin vücudu mükemmel bir doğal simetri örneğidir? 🦋',
+        spokenText: 'Hangi hayvanın kanatları doğal bir simetri örneğidir?',
+        a: 'Kelebek 🦋',
+        d: ['Salyangoz 🐌', 'Yengeç 🦀'],
+        exp: 'Kelebeğin sağ ve sol kanatları birbirinin simetri aynasıdır.'
+      },
+      {
+        q: '3 kenarı ve 3 köşesi olan düzlemsel geometrik şekil hangisidir? 🔺',
+        spokenText: '3 kenarı ve 3 köşesi olan geometrik şekil hangisidir?',
+        a: 'Üçgen 🔺',
+        d: ['Kare 🟦', 'Çember ⚪'],
+        exp: 'Üçgen 3 kenar ve 3 köşeden oluşur.'
+      },
+      {
+        q: 'Tüm kenar uzunlukları birbirine EŞİT olan 4 köşeli şekil hangisidir? 🟦',
+        spokenText: 'Tüm kenarları eşit olan 4 köşeli şekil hangisidir?',
+        a: 'Kare 🟦',
+        d: ['Dikdörtgen 🚪', 'Çember ⚪'],
+        exp: 'Karenin 4 kenarı eşit uzunluktadır ve 4 köşesi vardır.'
+      },
+      {
+        q: 'Karşılıklı kenarları eşit (2 uzun, 2 kısa) olan 4 köşeli şekil hangisidir? 🚪',
+        spokenText: 'İki uzun ve iki kısa kenarı olan şekil hangisidir?',
+        a: 'Dikdörtgen 🚪',
+        d: ['Kare 🟦', 'Üçgen 🔺'],
+        exp: 'Dikdörtgenin karşılıklı kenarları birbirine eşittir.'
+      },
+      {
+        q: 'Hiç köşesi ve düz kenarı olmayan yuvarlak şekil hangisidir? ⚪',
+        spokenText: 'Hiç köşesi ve kenarı olmayan yuvarlak şekil hangisidir?',
+        a: 'Çember ⚪',
+        d: ['Kare 🟦', 'Üçgen 🔺'],
+        exp: 'Çember yuvarlaktır, kenarı ve köşesi yoktur.'
+      },
+      {
+        q: 'Kare prizmanın tabanları hangi geometrik şekildedir? 🧊',
+        spokenText: 'Kare prizmanın tabanları hangi şekildedir?',
+        a: 'Kare 🟦',
+        d: ['Üçgen 🔺', 'Daire ⚪'],
+        exp: 'Kare prizmanın alt ve üst tabanları kare, yan yüzleri dikdörtgendir.'
+      },
+      {
+        q: 'Buzdolabı veya çamaşır makinesi kutusu genellikle hangi geometrik cisme örnektir? 🧊',
+        spokenText: 'Buzdolabı genellikle hangi geometrik cisme örnektir?',
+        a: 'Kare Prizma veya Dikdörtgen Prizma 🧊',
+        d: ['Küre ⚽', 'Koni 🍦'],
+        exp: 'Tabanı kare, yüksekliği farklı olan kutular kare prizmadır.'
+      }
     ],
+
+    generateGrade2GeometrySolids() {
+      return this.drawFromPool(this.grade2GeometrySolidsPool, "grade2GeometrySolidsPool");
+    },
+
+    // 6. Ölçme ve Veri (Grafik/Tablo - 20 Özgün Soru)
+    grade2MeasureDataPool: [
+      {
+        q: 'Sınıf tahtasının boyunu, odanın uzunluğunu veya kapının yüksekliğini hangi standart birimle ölçeriz? 🚪',
+        spokenText: 'Kapının boyunu veya oda uzunluğunu hangi standart birimle ölçeriz?',
+        a: 'Metre (m) 📏',
+        d: ['Kilogram (kg)', 'Litre (L)'],
+        exp: 'Büyük uzunluklar standart ölçme birimi olan metre (m) ile ölçülür.'
+      },
+      {
+        q: '1 metre (1 m) kaç santimetreye (cm) eşittir? 📏',
+        spokenText: 'Bir metre kaç santimetreye eşittir?',
+        a: '100 cm 📏',
+        d: ['10 cm', '1000 cm'],
+        exp: '1 metre = 100 santimetredir.'
+      },
+      {
+        q: 'Kalemimizin, silgimizin veya defterimizin boyunu cetvelle hangi birimle ölçmek uygundur? ✏️',
+        spokenText: 'Kalem ve defter boyunu hangi birimle ölçmek uygundur?',
+        a: 'Santimetre (cm) 📏',
+        d: ['Metre (m)', 'Kilogram (kg)'],
+        exp: 'Küçük nesnelerin uzunlukları santimetre ile cetvel kullanılarak ölçülür.'
+      },
+      {
+        q: 'Boyu 1 metre 35 cm olan bir çocuğun boyu toplam kaç santimetredir? 📏',
+        spokenText: '1 metre 35 santimetre toplam kaç santimetre eder?',
+        a: '135 cm 📏',
+        d: ['130 cm', '145 cm'],
+        exp: '1 m = 100 cm. 100 + 35 = 135 cm eder.'
+      },
+      {
+        q: '50 cm uzunluğundaki bir kumaşa kaç cm daha eklenirse 1 metre (100 cm) olur? 🧵',
+        spokenText: '50 santimetreye kaç santimetre eklenirse bir metre olur?',
+        a: '50 cm 🧵',
+        d: ['40 cm', '60 cm'],
+        exp: '100 - 50 = 50 cm daha eklenmelidir (yarım metre).'
+      },
+      {
+        q: 'Pazardan elma, patates veya un alırken ağırlıkları hangi birimle tartılır? ⚖️',
+        spokenText: 'Elma veya patatesin ağırlığı hangi birimle tartılır?',
+        a: 'Kilogram (kg) ⚖️',
+        d: ['Metre (m)', 'Santimetre (cm)'],
+        exp: 'Kütle (ağırlık) standart birimi kilogramdır (kg).'
+      },
+      {
+        q: '2 adet yarım kilogramlık un paketi toplam kaç kilogram eder? 🌾',
+        spokenText: 'İki yarım kilogram un kaç kilogram eder?',
+        a: '1 kilogram (1 kg) 🌾',
+        d: ['2 kg', '4 kg'],
+        exp: '2 yarım kilogram = 1 tam kilogram eder.'
+      },
+      {
+        q: 'Aşağıdakilerden hangisi 1 kilogramdan DAHA HAFİFTİR? 🪶',
+        spokenText: 'Hangisi 1 kilogramdan daha hafiftir?',
+        a: 'Bir adet kurşun kalem ✏️',
+        d: ['Büyük bir karpuz 🍉', 'Dolu bir okul çantası 🎒'],
+        exp: 'Kurşun kalem birkaç gramdır, 1 kilogramdan çok daha hafiftir.'
+      },
+      {
+        q: 'Aşağıdakilerden hangisi 1 kilogramdan DAHA AĞIRDIR? 🍉',
+        spokenText: 'Hangisi 1 kilogramdan daha ağırdır?',
+        a: 'Büyük bir kış karpuzu 🍉',
+        d: ['Bir adet silgi 🧼', 'Bir adet elma 🍎'],
+        exp: 'Büyük bir karpuz genellikle 5-10 kilogram gelir.'
+      },
+      {
+        q: 'Çetele tablosunda dört dikey çizgi ve üzerini kesen bir yatay çizgi (卌) hangi sayıyı ifade eder? 📊',
+        spokenText: 'Çetele tablosunda beşli çizgi grubu hangi sayıyı gösterir?',
+        a: '5 (Beş) 📊',
+        d: ['4', '10'],
+        exp: 'Çetele tablosunda her grup 5 çizgiden oluşur.'
+      },
+      {
+        q: 'Çetele tablosundaki çizgilerin sayı rakamlarıyla yazılmış haline ne ad verilir? 📋',
+        spokenText: 'Verilerin sayılarla gösterildiği tabloya ne ad verilir?',
+        a: 'Sıklık Tablosu 📋',
+        d: ['Boy cetveli', 'Nesne listesi'],
+        exp: 'Verilerin sayılarla gösterildiği tabloya sıklık tablosu denir.'
+      },
+      {
+        q: 'Bir nesne grafiğinde her yıldız sembolü 2 kitabı gösteriyorsa, 4 yıldız sembolü kaç kitabı temsil eder? ⭐',
+        spokenText: 'Her yıldız 2 kitabı gösteriyorsa 4 yıldız kaç kitaptır?',
+        a: '8 kitap (4 × 2 = 8) 📚',
+        d: ['6 kitap', '10 kitap'],
+        exp: '4 × 2 = 8 kitap eder.'
+      },
+      {
+        q: 'Grafikteki her gülen yüz 3 öğrenciyi gösteriyorsa, 5 gülen yüz kaç öğrencidir? 😊',
+        spokenText: 'Her gülen yüz 3 öğrenciyi gösteriyorsa 5 gülen yüz kaç öğrencidir?',
+        a: '15 öğrenci (5 × 3 = 15) 👥',
+        d: ['12 öğrenci', '18 öğrenci'],
+        exp: '5 × 3 = 15 öğrenci eder.'
+      },
+      {
+        q: 'Bir sıklık tablosunda: Elma=14, Muz=8, Çilek=18 ise en çok sevilen meyve hangisidir? 🍓',
+        spokenText: 'Elma 14, Muz 8, Çilek 18 ise en çok sevilen meyve hangisidir?',
+        a: 'Çilek (18) 🍓',
+        d: ['Elma (14)', 'Muz (8)'],
+        exp: 'En büyük sayı 18 olduğu için en çok çilek sevilmektedir.'
+      },
+      {
+        q: 'Bir sınıfta 16 öğrenci futbol, 9 öğrenci basketbol seviyorsa, futbol sevenler basketbol sevenlerden kaç fazladır? ⚽',
+        spokenText: '16 futbol ve 9 basketbol varsa futbol sevenler kaç fazladır?',
+        a: '7 öğrenci fazla (16 - 9 = 7) ⚽',
+        d: ['5 öğrenci', '8 öğrenci'],
+        exp: '16 - 9 = 7 fazladır.'
+      },
+      {
+        q: '1 sürahi su ile 4 su bardağı doluyorsa, 3 sürahi su ile kaç su bardağı doldurulabilir? 🥛',
+        spokenText: '1 sürahi 4 bardak dolduruyorsa 3 sürahi kaç bardak doldurur?',
+        a: '12 bardak (3 × 4 = 12) 🥛',
+        d: ['10 bardak', '14 bardak'],
+        exp: '3 × 4 = 12 bardak su dolar.'
+      },
+      {
+        q: 'Aşağıdaki kaplardan hangisi en fazla sıvı alır? 🪣',
+        spokenText: 'Aşağıdaki kaplardan hangisi en fazla sıvı alır?',
+        a: 'Büyük bir su kovası 🪣',
+        d: ['Çay bardağı ☕', 'Çorba kaşığı 🥄'],
+        exp: 'Kovanın hacmi bardak ve kaşıktan çok daha büyüktür.'
+      },
+      {
+        q: 'Aşağıdaki kaplardan hangisi en az sıvı alır? 🥄',
+        spokenText: 'Aşağıdaki kaplardan hangisi en az sıvı alır?',
+        a: 'Çay kaşığı 🥄',
+        d: ['Su bardağı 🥛', 'Sürahi 🫖'],
+        exp: 'Çay kaşığı en küçük sıvı kabıdır.'
+      },
+      {
+        q: '3 metre uzunluğundaki bir ipten 1 metresi kesilirse geriye kaç metre ip kalır? 🧵',
+        spokenText: '3 metre ipten 1 metresi kesilirse kaç metre kalır?',
+        a: '2 metre (3 - 1 = 2) 🧵',
+        d: ['1 metre', '4 metre'],
+        exp: '3 - 1 = 2 metre kalır.'
+      },
+      {
+        q: 'Ali 28 kilogram, kardeşi ise 19 kilogramdır. İki kardeşin toplam ağırlığı kaç kilogramdır? ⚖️',
+        spokenText: '28 kilo ve 19 kilonun toplamı kaç kilogramdır?',
+        a: '47 kg (28 + 19 = 47) ⚖️',
+        d: ['37 kg', '49 kg'],
+        exp: '28 + 19 = 47 kilogram eder.'
+      }
+    ],
+
+    generateGrade2MeasureData() {
+      return this.drawFromPool(this.grade2MeasureDataPool, "grade2MeasureDataPool");
+    },
+
+    // 2. Sınıf Matematik Büyük Karma Düello (6 Konudan Dengeli Soru Çekimi)
+    generateGrade2MathKarma() {
+      const topicIdx = Math.floor(Math.random() * 6);
+      if (topicIdx === 0) return this.generateGrade2PlaceValue();
+      if (topicIdx === 1) return this.generateGrade2Operations();
+      if (topicIdx === 2) return this.generateGrade2MultiplicationDivision();
+      if (topicIdx === 3) return this.generateGrade2FractionsTimeMoney();
+      if (topicIdx === 4) return this.generateGrade2GeometrySolids();
+      return this.generateGrade2MeasureData();
+    },
+
+    // Geriye Dönük Uyumluluk Fonksiyonları (Legacy Aliases)
+    generateGrade2Math() {
+      return this.generateGrade2MathKarma();
+    },
+    generateGrade2Multiplication() {
+      return this.generateGrade2MultiplicationDivision();
+    },
+    get grade2AdditionSubtractionPool() { return []; },
+    get grade2PlaceValuePool() { return []; },
+    get grade2MultiplicationPool() { return []; },
+    get grade2ClocksPool() { return []; },
+
 
     // 2. SINIF: EŞ VE ZIT ANLAMLILAR ŞAMPİYONASI (45+ KELİME)
     grade2SynAntPool: [
@@ -8295,20 +8147,28 @@
       } else if (gameType === 'grade1_grand_duel') {
         const raw = this.generateGrade1GrandDuel();
         return this.buildQuestionItem(raw, '🏆 1. Sınıf Büyük Karma Düello');
+      // --- 2. SINIF: 2026 MAARİF MODELİ MATEMATİK 6 ÖĞRENME ALANI ---
       } else if (gameType === 'math_place_value_2') {
         const raw = this.generateGrade2PlaceValue();
-        return this.buildQuestionItem(raw, '📦 100\'e Kadar Sayılar & Basamak Değeri');
-      } else if (gameType === 'math_multiplication_2') {
-        const raw = this.generateGrade2Multiplication();
-        return this.buildQuestionItem(raw, '✖️ Hızlı Çarpma Başlangıcı');
-      } else if (gameType === 'math_clock_2') {
-        const raw = this.drawFromPool(this.grade2ClocksPool, "grade2ClocksPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '⏰ Zamanı Ölçme ve Saatler');
+        return this.buildQuestionItem(raw, '🔢 Sayılar ve Nicelikler (100\'e Kadar)');
+      } else if (gameType === 'math_operations_2') {
+        const raw = this.generateGrade2Operations();
+        return this.buildQuestionItem(raw, '➕➖ Toplama ve Çıkarma (100 İçinde)');
+      } else if (gameType === 'math_multiplication_division_2' || gameType === 'math_multiplication_2') {
+        const raw = this.generateGrade2MultiplicationDivision();
+        return this.buildQuestionItem(raw, '✖️➗ Çarpma ve Bölme (1-5 & 10)');
+      } else if (gameType === 'math_fractions_time_money_2' || gameType === 'math_clock_2') {
+        const raw = this.generateGrade2FractionsTimeMoney();
+        return this.buildQuestionItem(raw, '🍰 Kesirler, Zaman ve Paralarımız');
+      } else if (gameType === 'math_geometry_solids_2') {
+        const raw = this.generateGrade2GeometrySolids();
+        return this.buildQuestionItem(raw, '📐 Geometri ve Simetri');
+      } else if (gameType === 'math_measure_data_2') {
+        const raw = this.generateGrade2MeasureData();
+        return this.buildQuestionItem(raw, '📊 Ölçme ve Veri (Grafik/Tablo)');
+      } else if (gameType === 'math_2_karma') {
+        const raw = this.generateGrade2MathKarma();
+        return this.buildQuestionItem(raw, '🏆 2. Sınıf Matematik Karma Düello');
       } else if (gameType === 'turkish_syn_ant_2') {
         const raw = this.drawFromPool(this.grade2SynAntPool, "grade2SynAntPool");
         return this.buildQuestionItem({
@@ -8513,14 +8373,7 @@
         } else if (g === 1) {
           raw = this.generateGrade1MathKarma();
         } else if (g === 2) {
-          const r = Math.random();
-          if (r < 0.45) raw = this.generateGrade2Math();
-          else if (r < 0.70) raw = this.generateGrade2PlaceValue();
-          else if (r < 0.85) raw = this.generateGrade2Multiplication();
-          else {
-            const item = this.drawFromPool(this.grade2ClocksPool, "grade2ClocksPool");
-            raw = { question: item.q, correct: item.a, distractors: item.d, explanation: item.exp };
-          }
+          raw = this.generateGrade2MathKarma();
         } else if (g === 3) {
           raw = this.generateGrade3Math();
         } else {
@@ -9693,6 +9546,12 @@
     lifescience_nature_recycling_1: '🌿 Doğa ve Çevre',
     lifescience_1_karma: '🌱 Hayat Bilgisi Karma',
     grade1_grand_duel: '🏆 1. Sınıf Büyük Karma',
+    math_operations_2: '➕➖ Toplama & Çıkarma',
+    math_multiplication_division_2: '✖️➗ Çarpma & Bölme',
+    math_fractions_time_money_2: '🍰 Kesir, Saat & Para',
+    math_geometry_solids_2: '📐 Geometri & Cisimler',
+    math_measure_data_2: '📊 Ölçme & Veri',
+    math_2_karma: '🏆 2. Sınıf Matematik Karma',
     lifescience_school_2: '🏫 Okulumuzda Hayat',
     lifescience_health_2: '🍎 Sağlıklı Hayat',
     lifescience_safety_2: '🚦 Güvenli Hayat',
@@ -9757,7 +9616,13 @@
       turkish_syllables_letters_1: 'Hece Sayısı ve Harf Bilgisi',
       lifescience_school_home_1: 'Okulumuzda ve Evimizde Hayat',
       lifescience_health_seasons_1: 'Sağlıklı Hayat ve Mevsimler',
-      math_place_value_2: '100\'e Kadar Sayılar ve Basamak Değeri',
+      math_place_value_2: 'Basamak Değeri & Onluğa Yuvarlama Ustası',
+      math_operations_2: 'Hızlı İşlem & Kayıp Sayı Düellosu',
+      math_multiplication_division_2: 'Çarpım Kahramanı (1-5 & 10\'lar) & Eşit Paylaştır',
+      math_fractions_time_money_2: 'Bütün-Yarım-Çeyrek & Saat/Kumbara Atölyesi',
+      math_geometry_solids_2: 'Geometrik Cisim Avcısı & Simetri Aynası',
+      math_measure_data_2: 'Metre-Kilogram & Grafik Dedektifi',
+      math_2_karma: '2. Sınıf Matematik Büyük Karma Düello',
       math_multiplication_2: 'Hızlı Çarpma Başlangıcı',
       math_clock_2: 'Zamanı Ölçme ve Saatler',
       turkish_syn_ant_2: 'Eş ve Zıt Anlamlılar Şampiyonası',
@@ -10786,64 +10651,102 @@
         name: 'Matematik',
         icon: '🧮',
         colorTheme: 'theme-math',
-        tagline: 'İki Basamaklı İşlemler & Çarpma',
-        description: '100\'e kadar sayılar, basamak değeri, hızlı çarpma ve saatler! 📦⏰',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: '100\'e kadar sayılar, eldeli toplama, onluk bozarak çıkarma, 1-5 & 10 çarpım tablosu, kesirler, saatler ve grafikler! ➕➖✖️⏰',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'place_value', label: '📦 Basamak Değeri' },
-          { id: 'multiplication', label: '✖️ Hızlı Çarpma' },
-          { id: 'clocks', label: '⏰ Zaman & Saat' },
-          { id: 'two_digits', label: '⚡ 2 Basamak' }
+          { id: 'all', label: '🌟 Tüm Konular / Karma Düello' },
+          { id: 'numbers', label: '🔢 Sayılar ve Nicelikler (100\'e Kadar)' },
+          { id: 'operations', label: '➕➖ Toplama ve Çıkarma' },
+          { id: 'mult_div', label: '✖️➗ Çarpma ve Bölme (1-5 & 10)' },
+          { id: 'fractions_time_money', label: '🍰 Kesirler, Saat & Paralarımız' },
+          { id: 'geometry', label: '📐 Geometri ve Simetri' },
+          { id: 'measure_data', label: '📊 Ölçme ve Grafik Dedektifi' }
         ],
         games: [
           {
             id: 'math_place_value_2',
             active: true,
-            title: '100\'e Kadar Sayılar ve Basamak Değeri',
+            title: 'Basamak Değeri & Onluğa Yuvarlama Ustası',
             icon: '📦',
-            badge: '📦 Basamak Değeri',
-            featureTag: '♾️ Dinamik Soru',
-            description: 'Onluk ve birliklere ayır, basamak değerini bul, en yakın onluğa yuvarla! 📦🎯',
-            tags: ['📦 Onluk & Birlik', '🎯 En Yakın Onluk', '📦 Deste & Düzine'],
+            badge: '🔢 Sayılar (1-100)',
+            featureTag: '📦 Onluk & Birlik',
+            description: '100\'e kadar sayılar, basamak değeri, en yakın onluğa yuvarlama ve ritmik sayma treni!',
+            tags: ['📦 Onluk & Birlik', '🎯 Basamak Değeri', '🔄 Onluğa Yuvarlama', '🚂 Ritmik Sayma'],
             btnText: 'Düelloyu Başlat',
-            topic: 'place_value'
+            topic: 'numbers'
           },
           {
-            id: 'math_multiplication_2',
+            id: 'math_operations_2',
             active: true,
-            title: 'Hızlı Çarpma Başlangıcı',
+            title: 'Hızlı İşlem & Kayıp Sayı Düellosu',
+            icon: '➕',
+            badge: '➕➖ Toplama & Çıkarma',
+            featureTag: '⚡ Eldeli & Onluk Bozma',
+            description: '100 içinde eldeli toplama, onluk bozarak çıkarma, kayıp toplananı bulma ve zihinden işlemler!',
+            tags: ['➕ Eldeli Toplama', '➖ Onluk Bozma', '❓ Kayıp Sayıyı Bul', '🧠 Zihinden İşlem'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'operations'
+          },
+          {
+            id: 'math_multiplication_division_2',
+            active: true,
+            title: 'Çarpım Kahramanı (1-5 & 10\'lar) & Eşit Paylaştır',
             icon: '✖️',
-            badge: '✖️ Çarpım Tablosu',
-            featureTag: '⚡ 2-3-4-5 Katları',
-            description: '2, 3, 4 ve 5\'lerle çarpım tablosu düellosu! Hızlıca çarp, puanları topla! ✖️🚀',
-            tags: ['✖️ 2, 3, 4, 5 Katları', '🎯 Tekrarlı Toplama', '🍎 Çarpma Problemleri'],
+            badge: '✖️➗ Çarpma & Bölme',
+            featureTag: '🎯 1-5 ve 10 Katları',
+            description: '1, 2, 3, 4, 5 ve 10\'lar çarpım tablosu, tekrarlı toplama ve 20 içinde eşit paylaştırma/bölme!',
+            tags: ['✖️ Çarpım Tablosu (1-5, 10)', '➗ Eşit Paylaştırma (≤20)', '🍎 Çarpma Problemleri', '🐿️ Kalansız Bölme'],
             btnText: 'Düelloyu Başlat',
-            topic: 'multiplication'
+            topic: 'mult_div'
           },
           {
-            id: 'math_clock_2',
+            id: 'math_fractions_time_money_2',
             active: true,
-            title: 'Zamanı Ölçme ve Saatler',
+            title: 'Bütün-Yarım-Çeyrek & Saat/Kumbara Atölyesi',
             icon: '⏰',
-            badge: '⏰ Zaman & Saat',
-            featureTag: '⭐ 26 Özgün Soru',
-            description: 'Tam, yarım ve çeyrek saatleri oku; gün, hafta, ay ve mevsim ilişkilerini bil! ⏰📅',
-            tags: ['⏰ Akrep & Yelkovan', '⏳ Tam-Yarım-Çeyrek', '📅 Gün-Hafta-Ay'],
+            badge: '🍰 Kesir, Saat & Para',
+            featureTag: '⏰ Tam/Yarım/Çeyrek',
+            description: 'Bütün-yarım-çeyrek modelleri, tam-yarım-çeyrek saatler, takvim ve TL-Kuruş hesaplamaları!',
+            tags: ['🍰 Bütün, Yarım, Çeyrek', '⏰ Saat Okuma', '🪙 TL & Kuruş', '📅 Takvim & Zaman'],
             btnText: 'Düelloyu Başlat',
-            topic: 'clocks'
+            topic: 'fractions_time_money'
           },
           {
-            id: 'math',
+            id: 'math_geometry_solids_2',
             active: true,
-            title: 'Kafa Kafaya Matematik (2 Basamaklı İşlemler)',
-            icon: '🧮',
-            badge: '🚀 2 Basamaklı İşlem',
-            featureTag: '⚡ Hızlı İşlem',
-            description: 'İki basamaklı çılgın işlemler, eldeli toplama ve onluk bozarak çıkarma! ⚡',
-            tags: ['⚡ 2 Basamak', '➕ Eldeli Toplama', '➖ Onluk Bozma'],
+            title: 'Geometrik Cisim Avcısı & Simetri Aynası',
+            icon: '📐',
+            badge: '📐 Geometri & Cisimler',
+            featureTag: '🎲 Küp, Prizma, Silindir',
+            description: 'Küp, prizma, silindir, koni, küre özellikleri, temel şekiller ve simetri doğrusu!',
+            tags: ['🎲 Geometrik Cisimler', '🪞 Simetri Doğrusu', '🔺 Yüz, Köşe, Ayrıt', '🟦 Düzlemsel Şekiller'],
             btnText: 'Düelloyu Başlat',
-            topic: 'two_digits'
+            topic: 'geometry'
+          },
+          {
+            id: 'math_measure_data_2',
+            active: true,
+            title: 'Metre-Kilogram & Grafik Dedektifi',
+            icon: '📊',
+            badge: '📊 Ölçme & Veri',
+            featureTag: '📏 m, cm, kg & Tablo',
+            description: 'Metre ve santimetre ile uzunluk ölçme, kilogram tartma, çetele-sıklık tablosu ve nesne grafiği!',
+            tags: ['📏 Metre & Santimetre', '⚖️ Kilogram ile Tartma', '📊 Çetele & Sıklık', '🔍 Grafik Okuma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'measure_data'
+          },
+          {
+            id: 'math_2_karma',
+            active: true,
+            title: '2. Sınıf Matematik Büyük Karma Düello',
+            icon: '🧮',
+            badge: '🏆 2. Sınıf Matematik Karma',
+            featureTag: '🌟 6 Konu Genel Tekrar',
+            description: 'Tüm 2. sınıf matematik konularından rastgele sorularla kafa kafaya yarış!',
+            tags: ['🔢 Sayılar', '➕ İşlemler', '✖️ Çarpma/Bölme', '⏰ Zaman & Para', '📐 Geometri', '📊 Grafikler'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'all'
           }
         ]
       },
