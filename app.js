@@ -6376,65 +6376,156 @@
       { q: '"Sen de bizimle kitap okumak ister misin( )" Cümle sonuna ne konur? 📖', a: 'Soru İşareti (?) 📖', d: ['Nokta (.)', 'Ünlem (!)'], exp: 'Soru eylemi içerdiği için soru işareti konur.' }
     ],
 
-    // 3. SINIF: GEZEGENİMİZ DÜNYA VE BEŞ DUYUMUZ (26 ÖZGÜN SORU)
-    grade3EarthSensesPool: [
-      { q: 'Eski zamanlarda Dünya\'nın düz bir tepsi gibi olduğunu sananların aksine, Dünya\'nın küre şeklinde olduğunu kanıtlayan ünlü denizci kimdir? ⛵', a: 'Macellan ⛵', d: ['Piri Reis', 'Kristof Kolomb'], exp: 'Macellan sürekli batıya yelken açarak başladığı yere dönmüş ve Dünya\'nın yuvarlaklığını ispatlamıştır.' },
-      { q: 'Dünyamızın uzaydan bakıldığında "Mavi Gezegen" olarak görünmesinin temel sebebi nedir? 🌍', a: 'Yüzeyinin yaklaşık 3/4\'ünün sularla kaplı olması 🌊', d: ['Gökyüzünün mavi olması', 'Kutupların buz olması'], exp: 'Dünya yüzeyinin yaklaşık 4\'te 3\'ü deniz ve okyanus sularından oluştuğu için mavi görünür.' },
-      { q: 'Dünyamızı saran ve içinde nefes aldığımız gaz katmanına ne ad verilir? 🌬️', a: 'Hava Katmanı (Atmosfer) 🌬️', d: ['Su Katmanı (Hidrosfer)', 'Taş Küre (Litosfer)'], exp: 'Dünyayı çepeçevre kuşatan gaz kalkanına atmosfer (hava küre) denir.' },
-      { q: 'Üzerinde yaşadığımız, dağların, ovaların ve toprakların bulunduğu katman hangisidir? 🏔️', a: 'Kara Katmanı (Taş Küre / Litosfer) 🏔️', d: ['Ateş Küre (Magma)', 'Hava Küre'], exp: 'İnsanların ve karadaki canlıların üzerinde yaşadığı katman yer kabuğu (taş küre)dir.' },
-      { q: 'Yanardağlardan çıkan lavların kaynağı olan aşırı sıcak erimiş kayaç katmanına ne denir? 🌋', a: 'Magma Katmanı (Ateş Küre / Pirosfer) 🌋', d: ['Çekirdek', 'Hava Katmanı'], exp: 'Taş kürenin altındaki erimiş kızgın lav tabakası ateş küredir.' },
-      { q: 'Dünya\'nın en iç merkezinde bulunan, en sıcak ve en ağır katman hangisidir? 🟡', a: 'Çekirdek (Ağır Küre / Barisfer) 🟡', d: ['Taş Küre', 'Su Küre'], exp: 'Gezegenimizin tam kalbinde yer alan en yoğun ve en sıcak katman çekirdektir.' },
-      { q: 'Görme duyusu organımız hangisidir? 👁️', a: 'Göz 👁️', d: ['Burun', 'Kulak'], exp: 'Gözümüz ışık yardımıyla çevremizi görmemizi sağlar.' },
-      { q: 'Göz sağlığımızı korumak için hangisini yapmamalıyız? ❌', a: 'Televizyon ve tablete çok yakından bakmak ❌', d: ['Yeterli ışıkta kitap okumak', 'Havuç gibi vitaminli besinler yemek'], exp: 'Ekrana yakından bakmak gözleri yorar ve görme kusurlarına yol açabilir.' },
-      { q: 'İşitme duyusu organımız hangisidir? 👂', a: 'Kulak 👂', d: ['Dil', 'Deri'], exp: 'Kulak ses dalgalarını algılayarak beynimize iletir.' },
-      { q: 'Kulağımızı temizlerken sivri uçlu cisimler sokarsak hangi hassas yapımız zarar görebilir? ⚠️', a: 'Kulak Zarı 👂', d: ['Göz Bebeği', 'Burun Kemiği'], exp: 'Sivri cisimler kulak zarını delerek işitme kaybına neden olabilir.' },
-      { q: 'Koku alma ve solunum duyusu organımız hangisidir? 👃', a: 'Burun 👃', d: ['Ağız', 'Deri'], exp: 'Burun hem nefes alıp havayı süzer hem de kokuları algılar.' },
-      { q: 'Burun içindeki mukus tabakası ve kılların en önemli görevi nedir? 🛡️', a: 'Havayı ısıtıp nemlendirmek ve tozları filtrelemek 🛡️', d: ['Sadece koku almak', 'Ses çıkarmak'], exp: 'Burnumuz akciğerlere giden havayı ısıtır, nemlendirir ve tozları tutar.' },
-      { q: 'Tat alma duyusu organımız hangisidir? 👅', a: 'Dil 👅', d: ['Dudak', 'Yanak'], exp: 'Dilimizin üzerindeki tat tomurcukları tatları ayırt etmemizi sağlar.' },
-      { q: 'Dilimiz temel olarak hangi tatları algılayabilir? 🍯🍋', a: 'Tatlı, tuzlu, ekşi ve acı 👅', d: ['Sıcak ve soğuk', 'Sert ve yumuşak'], exp: 'Dilimiz tatlı, tuzlu, ekşi ve acı tatları beynimize iletir.' },
-      { q: 'Bütün vücudumuzu kaplayan, dokunma duyusu organımız hangisidir? 🖐️', a: 'Deri 🖐️', d: ['Kas', 'Kemik'], exp: 'Deri vücudumuzun dış yüzeyini kaplar, sıcak-soğuk, sert-yumuşak hissini verir.' },
-      { q: 'Grip veya nezle olduğumuzda yemeklerin tadını iyi alamamamızın sebebi nedir? 🍲', a: 'Koku ve tat alma duyularının birlikte çalışması 👃👅', d: ['Dilin küçülmesi', 'Dişlerin ağrıması'], exp: 'Tat duyusu ile koku alma duyusu birlikte çalışır; burnumuz tıkalıyken tatları tam alamayız.' },
-      { q: 'Limon yerken yüzümüzü buruşturmamıza sebep olan tat hangisidir? 🍋', a: 'Ekşi 🍋', d: ['Tatlı', 'Acı'], exp: 'Limon ekşi bir tada sahiptir.' },
-      { q: 'Hangisi duyu organlarımızdan birisi DEĞİLDİR? 🧠', a: 'Kalp ❤️', d: ['Göz 👁️', 'Deri 🖐️'], exp: 'Göz, kulak, burun, dil ve deri 5 duyu organımızdır; kalp ise dolaşım organıdır.' },
-      { q: 'Güneş ışınlarının zararlı etkilerinden derimizi korumak için yazın ne kullanmalıyız? 🧴', a: 'Güneş kremi ve şapka 🧴', d: ['Kalın kazak', 'Gözlük bandı'], exp: 'Güneş kremi ve şapka cildi zararlı ultraviyole ışınlardan korur.' },
-      { q: 'Görme engelli bireylerin okuyabilmesi için geliştirilen kabartmalı alfabeye ne ad verilir? 📖', a: 'Braille (Kabartma) Alfabesi 📖', d: ['Mors Alfabesi', 'Romen Alfabesi'], exp: 'Görme engelliler dokunma duyusuyla Braille kabartma alfabesini okurlar.' },
-      { q: 'Çok sıcak bir çaydanlığa dokunduğumuzda elimizi anında çekmemizi sağlayan duyu organımız hangisidir? 🖐️', a: 'Deri 🖐️', d: ['Göz', 'Burun'], exp: 'Deri sıcaklığı hisseder ve tehlikeye karşı beynimize sinyal gönderir.' },
-      { q: 'Hangisi Dünya\'mızın katmanlarından birisi DEĞİLDİR? 🪐', a: 'Halka Katmanı 🪐', d: ['Taş Küre', 'Su Küre'], exp: 'Satürn gibi gezegenlerde halka vardır, Dünya\'da halka katmanı yoktur.' },
-      { q: 'Çok yüksek sesli ortamlarda çalışan işçiler kulaklarını korumak için ne takmalıdır? 🎧', a: 'Koruyucu kulaklık 🎧', d: ['Güneş gözlüğü', 'Kask'], exp: 'Koruyucu kulaklıklar kulak zarını şiddetli ses hasarından korur.' },
-      { q: 'Aşağıdaki maddelerden hangisini koklamak burnumuza ve sağlığımıza CİDDİ ZARAR verir? ☠️', a: 'Çamaşır suyu ve kimyasal deterjanlar ☠️', d: ['Papatya çiçeği 🌼', 'Nane yaprağı 🌿'], exp: 'Kimyasal temizlik maddelerini koklamak solunum yollarına ve akciğerlere zehirli zarar verir.' },
-      { q: 'Okyanuslar, denizler, göller ve yer altı suları Dünya\'nın hangi katmanını oluşturur? 🌊', a: 'Su Katmanı (Hidrosfer) 🌊', d: ['Hava Katmanı', 'Ateş Katmanı'], exp: 'Yeryüzündeki tüm su kaynakları su katmanını (su küre) meydana getirir.' },
-      { q: 'Gözümüzün rengini veren renkli kısma ne ad verilir? 👁️', a: 'İris 👁️', d: ['Göz bebeği', 'Göz kapağı'], exp: 'Gözün kahverengi, mavi, yeşil olan renkli kısmına iris denir.' }
+    // -------------------------------------------------------------
+    // 3. SINIF: 2026 TÜRKİYE YÜZYILI MAARİF MODELİ FEN BİLİMLERİ SORU HAVUZLARI
+    // (7 Öğrenme Alanı - Dünya, Duyular, Kuvvet, Madde, Işık/Ses, Canlılar, Elektrik + TTS)
+    // -------------------------------------------------------------
+
+    grade3SciencePlanetLayersPool: [
+      {"q":"Eski zamanlarda Dünya'nın düz bir tepsi gibi olduğunu sananların aksine, sürekli batıya yelken açarak Dünya'nın küreye benzediğini kanıtlayan ünlü denizci kimdir? ⛵","a":"Macellan ⛵","d":["Kristof Kolomb","Piri Reis"],"exp":"Macellan sürekli batıya giderek başladığı yere dönmüş ve Dünya'nın küre şeklinde olduğunu kanıtlamıştır.","spokenText":"Dünya'nın küre şeklinde olduğunu yelken açarak kanıtlayan ünlü denizci kimdir?"},
+      {"q":"Uzaktan kıyıya yaklaşan bir geminin ÖNCE bacası ve dumanı, sonra direkleri, en son ise gövdesi görünür. Bu durum neyin kanıtıdır? 🚢","a":"Dünya'nın yuvarlak (küre) şeklinde olduğunun 🌍","d":["Denizin çok derin olduğunun","Geminin çok hızlı gittiğinin"],"exp":"Dünya küre şeklinde olduğu için yaklaşan cisimlerin önce en yüksek kısımları ufukta belirir.","spokenText":"Ufuktan yaklaşan geminin önce bacasının görülmesi neyin kanıtıdır?"},
+      {"q":"Dünyamızın uzaydan bakıldığında \"Mavi Gezegen\" olarak adlandırılmasının temel sebebi nedir? 🌍","a":"Yüzeyinin yaklaşık 3/4'ünün sularla kaplı olması 🌊","d":["Gökyüzünün mavi olması","Kutuplarda buzullar olması"],"exp":"Dünya yüzeyinin yaklaşık 4'te 3'ü sularla, 4'te 1'i karalarla kaplıdır.","spokenText":"Dünyamız uzaydan bakıldığında niçin Mavi Gezegen olarak görünür?"},
+      {"q":"Dünya'mızın en iç merkezinde bulunan, EN SICAK ve EN AĞIR katmanı hangisidir? 🟡","a":"Çekirdek (Ağır Küre / Barisfer) 🟡","d":["Manto (Ateş Küre)","Yer Kabuğu (Taş Küre)"],"exp":"Dünya'nın merkezinde yer alan çekirdek en sıcak ve en yoğun katmandır.","spokenText":"Dünya'nın en iç merkezinde bulunan en sıcak ve en ağır katmanı hangisidir?"},
+      {"q":"Yanardağlardan fışkıran erimiş kızgın lavların kaynağı olan ateş katmanına ne denir? 🌋","a":"Manto (Ateş Küre / Magma) 🌋","d":["Çekirdek","Yer Kabuğu"],"exp":"Taş kürenin hemen altında erimiş akkor haldeki kayaçlardan oluşan magma tabakası mantodur.","spokenText":"Yanardağlardan çıkan lavların kaynağı olan kızgın katman hangisidir?"},
+      {"q":"İnsanların, hayvanların ve bitkilerin üzerinde yaşadığı, dağlar ve ovalardan oluşan katman hangisidir? 🏔️","a":"Yer Kabuğu (Taş Küre / Litosfer) 🏔️","d":["Ateş Küre","Hava Küre"],"exp":"Canlıların üzerinde hayatını sürdürdüğü katı dış tabakaya yer kabuğu (taş küre) denir.","spokenText":"Canlıların üzerinde yaşadığı dağlar ve ovalardan oluşan katman hangisidir?"},
+      {"q":"Okyanuslar, denizler, göller, nehirler ve yer altı suları Dünya'nın hangi katmanını oluşturur? 🌊","a":"Su Katmanı (Su Küre / Hidrosfer) 🌊","d":["Hava Katmanı","Taş Küre"],"exp":"Yeryüzündeki tüm su kaynakları su katmanını meydana getirir.","spokenText":"Okyanuslar, denizler ve göller Dünya'nın hangi katmanını oluşturur?"},
+      {"q":"Dünyamızı çepeçevre saran, içinde soluduğumuz oksijenin bulunduğu gaz kalkanına ne denir? 🌬️","a":"Hava Katmanı (Hava Küre / Atmosfer) 🌬️","d":["Su Küre","Ateş Küre"],"exp":"Dünya'yı saran gaz tabakası atmosferdir; bizi Güneş'in zararlı ışınlarından da korur.","spokenText":"Dünyamızı saran ve soluduğumuz havayı içeren gaz katmanına ne denir?"},
+      {"q":"Dünya'nın katmanlarının İÇTEN DIŞA doğru doğru sıralanışı hangisidir? 🎯","a":"Çekirdek ➔ Manto ➔ Yer Kabuğu ➔ Su Küre ➔ Hava Küre","d":["Yer Kabuğu ➔ Manto ➔ Çekirdek","Hava Küre ➔ Su Küre ➔ Manto"],"exp":"En içeride çekirdek, sonra manto, en dışta ise yer kabuğu, sular ve atmosfer yer alır.","spokenText":"Dünya'nın katmanlarının içten dışa doğru sıralanışı nasıldır?"},
+      {"q":"Dünya yüzeyinde karalar mı yoksa sular mı daha geniş alan kaplar? 🌊","a":"Sular çok daha fazla alan kaplar (Yaklaşık 3/4) 🌊","d":["Karalar daha fazladır","Karalar ve sular eşittir"],"exp":"Dünya yüzeyinin yaklaşık dörtte üçü su, dörtte biri karadır.","spokenText":"Dünya yüzeyinde karalar mı yoksa sular mı daha çok yer kaplar?"},
+      {"q":"Eski Türk-İslam bilgini olup Dünya'nın küre şeklinde olduğunu ve döndüğünü asırlar önce savunan bilim insanı kimdir? 📜","a":"Biruni 📜","d":["İbn-i Sina","Ali Kuşçu"],"exp":"Biruni, Dünya'nın çapını ve küre biçimini o dönemin imkanlarıyla gerçeğe çok yakın hesaplamıştır.","spokenText":"Dünya'nın küre biçiminde olduğunu asırlar önce savunan Türk-İslam bilgini kimdir?"},
+      {"q":"Yağmur, kar, rüzgar gibi hava olayları Dünya'nın hangi katmanında gerçekleşir? 🌧️","a":"Hava Katmanı (Atmosfer) 🌬️","d":["Taş Küre","Ateş Küre"],"exp":"Tüm meteorolojik hava olayları atmosfer tabakasında meydana gelir.","spokenText":"Yağmur, kar ve rüzgar Dünya'nın hangi katmanında gerçekleşir?"},
+      {"q":"Ay tutulması sırasında Dünya'nın Ay üzerine düşen gölgesi hangi şekildedir? 🌕","a":"Daire (Yuvarlak) şeklindedir 🌑","d":["Kare şeklindedir","Üçgen şeklindedir"],"exp":"Ay tutulmasında Dünya'nın gölgesi daire biçimindedir, bu da Dünya'nın küre olduğunu kanıtlar.","spokenText":"Ay tutulması sırasında Dünya'nın Ay üzerine düşen gölgesi hangi şekildedir?"},
+      {"q":"Aşağıdakilerden hangisi Dünya'mızın katmanlarından biri DEĞİLDİR? 🪐","a":"Halka Katmanı 🪐","d":["Taş Küre","Ateş Küre"],"exp":"Dünya'nın Satürn gibi halka katmanı yoktur.","spokenText":"Hangisi Dünya'mızın katmanlarından biri değildir?"},
+      {"q":"Yer kabuğu okyanus ve deniz tabanlarında mı yoksa yüksek dağlarda mı daha incedir? 🏔️","a":"Okyanus diplerinde daha incedir 🌊","d":["Dağların tepesinde daha incedir","Her yerde aynı kalınlıktadır"],"exp":"Yer kabuğu yüksek dağlarda kalın, derin okyanus tabanlarında ise daha incedir.","spokenText":"Yer kabuğu okyanus diplerinde mi yoksa dağlarda mı daha incedir?"}
     ],
 
-    // 3. SINIF: KUVVETİ TANIYALIM VE MADDE (26 ÖZGÜN SORU)
-    grade3ForceMatterPool: [
-      { q: 'Duran bir topa ayağımızla vurduğumuzda topa hangi kuvveti uygularız? ⚽', a: 'İtme kuvveti ⚽', d: ['Çekme kuvveti', 'Durdurma kuvveti'], exp: 'Bir cismi kendimizden uzaklaştırmak için itme kuvveti uygularız.' },
-      { q: 'Masanın çekmecesini açmak için çekmeceye hangi kuvveti uygularız? 🚪', a: 'Çekme kuvveti 🚪', d: ['İtme kuvveti', 'Döndürme kuvveti'], exp: 'Bir cismi kendimize doğru yaklaştırmak için çekme kuvveti uygularız.' },
-      { q: 'Hareket halindeki bir bisikletin frenine bastığımızda bisiklette ne gözlenir? 🚲', a: 'Yavaşlama ve durma 🛑', d: ['Hızlanma', 'Yön değiştirme'], exp: 'Fren kuvveti sürtünme oluşturarak hareketi yavaşlatır ve durdurur.' },
-      { q: 'Uygulanan kuvvet ortadan kalktığında eski haline DÖNEBİLEN maddelere ne ad verilir? 🧽', a: 'Esnek Madde 🧽', d: ['Berk (Sert) Madde', 'Kırılgan Madde'], exp: 'Sünger ve paket lastiği sıkılınca şekil değiştirir, bırakılınca eski haline döner.' },
-      { q: 'Aşağıdakilerden hangisi ESNEK bir maddedir? 🎈', a: 'Paket lastiği 🎈', d: ['Taş 🪨', 'Cam bardak 🥛'], exp: 'Paket lastiği çekilip bırakıldığında eski haline döner, esnektir.' },
-      { q: 'Kuvvet uygulandığında kolayca kırılan ve eski haline dönemeyen maddelere ne denir? 🥛', a: 'Kırılgan Madde 🥛', d: ['Esnek Madde', 'Sıvı Madde'], exp: 'Cam, porselen ve ayna kırılgan maddelerdir.' },
-      { q: 'Maddenin katı, sıvı ve gaz olmak üzere kaç temel hali vardır? 🧊💧💨', a: '3 hali vardır 🧊💧💨', d: ['2 hali', '5 hali'], exp: 'Maddeler doğada katı, sıvı ve gaz olmak üzere 3 temel halde bulunur.' },
-      { q: 'Belirli bir şekli olan ve dışarıdan kuvvet uygulanmadıkça şeklini koruyan maddeler hangi haldedir? 🪨', a: 'Katı Madde 🪨', d: ['Sıvı Madde 💧', 'Gaz Madde 💨'], exp: 'Taş, masa, kalem gibi maddeler katıdır ve belirli şekilleri vardır.' },
-      { q: 'Belirli bir şekli olmayan, akışkan olan ve bulunduğu kabın şeklini alan maddeler hangi haldedir? 💧', a: 'Sıvı Madde 💧', d: ['Katı Madde 🪨', 'Gaz Madde 💨'], exp: 'Su, süt, meyve suyu ve zeytinyağı sıvıdır; kabın şeklini alır.' },
-      { q: 'Bulunduğu odanın veya kabın her yerine hızla yayılan maddeler hangi haldedir? 💨', a: 'Gaz Madde 💨', d: ['Katı Madde 🪨', 'Sıvı Madde 💧'], exp: 'Hava, su buharı ve parfüm kokusu gazdır; bulunduğu ortama hızla yayılır.' },
-      { q: 'Buzluktan çıkarılan buz küpünün oda sıcaklığında eriyerek suya dönüşmesi hangi hal değişimidir? 🧊➡️💧', a: 'Katı halden sıvı hale geçiş (Erime) 💧', d: ['Donma', 'Buharlaşma'], exp: 'Buz ısı alarak erir ve katı halden sıvı hale geçer.' },
-      { q: 'Çaydanlıkta kaynayan suyun buharlaşarak havaya karışması hangi hal değişimidir? 💧➡️💨', a: 'Sıvı halden gaz hale geçiş (Buharlaşma) 💨', d: ['Donma', 'Erime'], exp: 'Sıvı su kaynayınca gaz (su buharı) haline dönüşür.' },
-      { q: 'Direksiyonu çevirdiğimizde arabaya hangi kuvvet etkisini uygulamış oluruz? 🚗', a: 'Döndürme ve yön değiştirme 🚗', d: ['Sadece yavaşlatma', 'Sadece durdurma'], exp: 'Direksiyonu çevirmek döndürme etkisi yaratarak aracın yönünü değiştirir.' },
-      { q: 'Sallanan beşik veya lunaparktaki salıncak hangi hareketi yapar? 🎠', a: 'Sallanma hareketi 🎠', d: ['Hızlanma hareketi', 'Dönme hareketi'], exp: 'İleri geri gidip gelen salıncak sallanma hareketi yapar.' },
-      { q: 'Aşağıdakilerden hangisi PÜRÜZSÜZ bir yüzeye örnektir? 🪞', a: 'Cam ayna 🪞', d: ['Ağaç kabuğu 🪵', 'Zımpara kağıdı'], exp: 'Ayna ve cam yüzeyler son derece pürüzsüz ve kaygandır.' },
-      { q: 'Aşağıdakilerden hangisi KOKULU bir maddedir? 🌸', a: 'Gül kolonyası 🌸', d: ['Saf içme suyu 💧', 'Cam bardak 🥛'], exp: 'Gül kolonyası etrafa güçlü koku yayan bir maddedir.' },
-      { q: 'Topacın veya saatin yelkovanının yaptığı hareket hangisidir? ⏰', a: 'Dönme hareketi 🔄', d: ['Sallanma hareketi', 'Yavaşlama hareketi'], exp: 'Kendi ekseni etrafında tur atan cisimler dönme hareketi yapar.' },
-      { q: 'Futbol maçında kalecinin gelen şutu tutması kuvvetin hangi etkisine örnektir? 🧤', a: 'Durdurma etkisi 🧤', d: ['Hızlandırma etkisi', 'Şekil verme etkisi'], exp: 'Kaleci hareket halindeki topu yakalayarak durdurur.' },
-      { q: 'Oyun hamuruna elimizle bastırdığımızda hamurda ne değişir? 🧸', a: 'Şekli değişir (Şekil değiştirme) 🧸', d: ['Rengi tamamen uçar', 'Tadı değişir'], exp: 'Kuvvet hamur ve sünger gibi maddelerde şekil değişikliği yapar.' },
-      { q: 'Aşağıdakilerden hangisi BERK (SERT) bir maddedir? 🧱', a: 'Tuğla ve demir 🧱', d: ['Pamuk ☁️', 'Yün kazak 🧶'], exp: 'Tuğla ve demir kolay şekil değiştirmeyen sert (berk) maddelerdir.' },
-      { q: 'Aşağıdakilerden hangisi bir GAZ maddedir? 🎈', a: 'Balonun içindeki hava 💨', d: ['Süt 🥛', 'Elma 🍎'], exp: 'Hava gaz halindeki bir maddedir.' },
-      { q: 'Rüzgarın ağaç yapraklarını sallaması kuvvetin hangi türüne örnektir? 🍃', a: 'Havanın itme kuvveti 🍃', d: ['Çekme kuvveti', 'Mıknatıs kuvveti'], exp: 'Rüzgar hareket eden havanın uyguladığı itme kuvvetidir.' },
-      { q: 'Yere düşen cam şişenin kırılması kuvvetin hangi sonucudur? 💥', a: 'Kırılma ve şekil değişikliği 💥', d: ['Esneklik', 'Donma'], exp: 'Kırılgan maddeler darbe alınca kırılır.' },
-      { q: 'Kışın yağan kar taneleri suyun hangi halidir? ❄️', a: 'Katı hali ❄️', d: ['Sıvı hali', 'Gaz hali'], exp: 'Kar ve dolu suyun katılaşmış halidir.' },
-      { q: 'Pürüzlü bir yüzeyde yürürken kayıp düşme ihtimalimiz neden daha azdır? 👟', a: 'Sürtünme daha fazla olduğu için 👟', d: ['Hava soğuk olduğu için', 'Yer yumuşak olduğu için'], exp: 'Pürüzlü yüzeyler sürtünmeyi artırarak tutunmayı kolaylaştırır.' },
-      { q: 'Mıknatısın çiviyi çekmesi kuvvetin hangi türüne örnektir? 🧲', a: 'Temassız çekme kuvveti 🧲', d: ['İtme kuvveti', 'Döndürme kuvveti'], exp: 'Mıknatıs dokunmadan uzaktan bile manyetik çekme kuvveti uygulayabilir.' }
+    grade3ScienceSensesPool: [
+      {"q":"Çevremizdeki varlıkların rengini, şeklini ve büyüklüğünü algılamamızı sağlayan duyu organımız hangisidir? 👁️","a":"Göz 👁️","d":["Kulak 👂","Burun 👃"],"exp":"Görme duyusu organımız gözdür.","spokenText":"Cisimlerin rengini ve şeklini algılamamızı sağlayan duyu organımız hangisidir?"},
+      {"q":"Gözümüze gelen ışık miktarını ayarlayan ve gözün ortasındaki küçük siyah deliğe ne ad verilir? 👁️","a":"Göz bebeği 👁️","d":["İris","Göz kapağı"],"exp":"Göz bebeği karanlıkta büyür, aydınlıkta küçülerek ışığı ayarlar.","spokenText":"Gözün ortasındaki ışığa göre büyüyüp küçülen siyah noktaya ne ad verilir?"},
+      {"q":"Göz sağlığımızı korumak için aşağıdakilerden hangisini YAPMAMALIYIZ? ❌","a":"Televizyon ve telefon ekranına çok yakından bakmak ❌","d":["Yeterli ve dengeli ışıkta kitap okumak","Gözümüzü temiz tutmak"],"exp":"Ekranlara çok yakından bakmak gözleri yorar ve görme bozukluğuna yol açabilir.","spokenText":"Göz sağlığımızı korumak için hangisini yapmamalıyız?"},
+      {"q":"Çevremizdeki sesleri algılamamızı ve dengemizi korumamızı sağlayan duyu organımız hangisidir? 👂","a":"Kulak 👂","d":["Dil 👅","Deri 🖐️"],"exp":"Kulak hem işitme hem de vücut dengesini sağlama organımızdır.","spokenText":"Çevremizdeki sesleri algılamamızı ve dengemizi sağlayan organ hangisidir?"},
+      {"q":"Kulağımızı temizlerken sivri uçlu sert cisimler sokarsak hangi hassas yapı delinebilir? ⚠️","a":"Kulak zarı 👂","d":["Göz kapağı","Dil ucu"],"exp":"Sivri cisimler kulak zarını zedeleyerek işitme kaybına sebep olabilir.","spokenText":"Kulağımıza sivri cisim sokarsak hangi hassas yapımız zarar görür?"},
+      {"q":"Koku alma ve solunum duyusu organımız hangisidir? 👃","a":"Burun 👃","d":["Ağız","Kulak"],"exp":"Burun hem nefes aldığımız havayı süzer hem de kokuları beynimize iletir.","spokenText":"Koku alma ve solunum organımız hangisidir?"},
+      {"q":"Burun içindeki kılların ve mukus tabakasının en önemli görevi nedir? 🛡️","a":"Havayı ısıtmak, nemlendirmek ve tozları tutmak 🛡️","d":["Sadece ses çıkarmak","Yiyecekleri çiğnemek"],"exp":"Burnumuz akciğerlere giden havayı ısıtır, nemlendirir ve tozlardan arındırır.","spokenText":"Burun içindeki kılların ve nemli yapının en önemli görevi nedir?"},
+      {"q":"Yiyeceklerin tadını almamızı ve konuşurken sesleri çıkarmamızı sağlayan duyu organımız hangisidir? 👅","a":"Dil 👅","d":["Dudak","Yanak"],"exp":"Dilimiz üzerindeki tat tomurcukları sayesinde tatları ayırt ederiz.","spokenText":"Yiyeceklerin tadını almamızı sağlayan duyu organımız hangisidir?"},
+      {"q":"Dilimiz temel olarak hangi tatları algılayabilir? 🍯🍋","a":"Tatlı, tuzlu, ekşi ve acı 👅","d":["Sıcak ve soğuk","Sert ve yumuşak"],"exp":"Dilimiz tatlı, tuzlu, ekşi ve acı olmak üzere dört temel tadı algılar.","spokenText":"Dilimiz temel olarak hangi tatları algılar?"},
+      {"q":"Nezle veya grip olduğumuzda yemeklerin tadını iyi alamamamızın sebebi nedir? 🍲","a":"Koku ve tat alma duyularının birlikte çalışması 👃👅","d":["Dilin küçülmesi","Dişlerin zayıflaması"],"exp":"Tat alma duyusu koku alma ile ortak çalışır; koku alamayınca tat da eksik algılanır.","spokenText":"Grip olunca yemeklerin tadını iyi alamamamızın sebebi nedir?"},
+      {"q":"Vücudumuzu tamamen örten, sıcak-soğuk, sert-yumuşak hissini veren duyu organımız hangisidir? 🖐️","a":"Deri 🖐️","d":["Kas","Kemik"],"exp":"Deri dokunma organımızdır ve vücudumuzu dış etkenlere karşı korur.","spokenText":"Vücudumuzu kaplayan ve dokunma hissini veren duyu organımız hangisidir?"},
+      {"q":"Görme engelli bireylerin dokunarak kitap okumasını sağlayan kabartmalı yazı sistemine ne ad verilir? 📖","a":"Braille (Kabartma) Alfabesi 📖","d":["Mors Alfabesi","Romen Alfabesi"],"exp":"Braille alfabesi görme engellilerin parmak uçlarıyla dokunarak okuduğu sistemdir.","spokenText":"Görme engellilerin dokunarak okuduğu kabartmalı alfabeye ne denir?"},
+      {"q":"Aşağıdaki kimyasal maddelerden hangisini koklamak veya tadına bakmak ÇOK TEHLİKELİDİR? ☠️","a":"Çamaşır suyu ve tuz ruhu ☠️","d":["Papatya çiçeği 🌼","Nane çayı 🌿"],"exp":"Kimyasal temizlik ürünlerini koklamak veya tatmak zehirlenmeye yol açar.","spokenText":"Hangi kimyasal maddeleri koklamak veya tatmak çok tehlikelidir?"},
+      {"q":"Çok yüksek sesli inşaat veya fabrika ortamlarında çalışanlar kulaklarını korumak için ne takmalıdır? 🎧","a":"Koruyucu kulaklık 🎧","d":["Güneş gözlüğü","Kask"],"exp":"Yüksek sesten kaynaklanan işitme kaybını önlemek için koruyucu kulaklık kullanılır.","spokenText":"Çok gürültülü ortamlarda çalışanlar kulaklarını korumak için ne kullanmalıdır?"},
+      {"q":"Yazın güneşin zararlı ultraviyole ışınlarından derimizi korumak için hangisini yapmalıyız? 🧴","a":"Güneş koruyucu krem sürmek ve şapka takmak 🧴","d":["Gözlerimizi kapatmak","Kalın yün kazak giymek"],"exp":"Güneş kremi ve şapka derimizi güneş yanıklarından ve zararlı ışınlardan korur.","spokenText":"Güneşin zararlı ışınlarından derimizi korumak için ne yapmalıyız?"}
     ],
+
+    grade3ScienceForceMotionPool: [
+      {"q":"Duran bir futbol topuna ayağımızla vurduğumuzda topa hangi kuvveti uygularız? ⚽","a":"İtme kuvveti ⚽","d":["Çekme kuvveti","Döndürme kuvveti"],"exp":"Bir cismi kendimizden ileriye doğru hareket ettirmek için itme kuvveti uygulanır.","spokenText":"Futbol topuna ayağımızla vurduğumuzda hangi kuvveti uygularız?"},
+      {"q":"Masanın çekmecesini kendimize doğru açmak için çekmeceye hangi kuvveti uygularız? 🚪","a":"Çekme kuvveti 🚪","d":["İtme kuvveti","Bükme kuvveti"],"exp":"Bir nesneyi kendimize yaklaştırmak için çekme kuvveti uygularız.","spokenText":"Masa çekmecesini açmak için hangi kuvveti uygularız?"},
+      {"q":"Hareket halindeki bir bisikletin frenine bastığımızda bisiklette hangi hareket değişimi gözlenir? 🚲","a":"Yavaşlama ve durma 🛑","d":["Hızlanma","Dönme"],"exp":"Fren sıkıldığında sürtünme kuvveti bisikleti yavaşlatır ve durdurur.","spokenText":"Bisikletin frenine basıldığında hangi hareket gerçekleşir?"},
+      {"q":"Pistten havalanmak için kalkışa geçen bir uçak hangi hareketi yapar? 🛫","a":"Hızlanma hareketi 🛫","d":["Yavaşlama hareketi","Sallanma hareketi"],"exp":"Kalkış yapan uçak hızını sürekli artırır, yani hızlanma hareketi yapar.","spokenText":"Kalkışa geçen bir uçak hangi hareketi yapar?"},
+      {"q":"Parktaki salıncakta sallanan bir çocuk veya duvar saatinin sarkacı hangi hareketi yapar? 🎠","a":"Sallanma hareketi 🎠","d":["Dönme hareketi","Hızlanma hareketi"],"exp":"İleri ve geri düzenli gidip gelme hareketi sallanmadır.","spokenText":"Salıncakta sallanan bir çocuk hangi hareketi yapar?"},
+      {"q":"Dönme dolap, rüzgar türbini pervanesi ve topaç hangi hareketi yapar? 🎡","a":"Dönme hareketi 🔄","d":["Sallanma hareketi","Yavaşlama hareketi"],"exp":"Bir merkez etrafında tur atan varlıklar dönme hareketi yapar.","spokenText":"Dönme dolap ve topaç hangi hareketi yapar?"},
+      {"q":"Virajlı bir yolda direksiyonu çeviren şoför arabaya hangi hareket etkisini kazandırır? 🚗","a":"Yön değiştirme hareketi 🚗","d":["Durdurma hareketi","Sallanma hareketi"],"exp":"Viraj dönülürken cismin hareket yönü değişir.","spokenText":"Virajı dönen bir araba hangi hareketi yapar?"},
+      {"q":"Raketle gelen tenis topuna vurduğumuzda top hangi hareketi yapar? 🎾","a":"Yön değiştirme ve hızlanma 🎾","d":["Sallanma","Durma"],"exp":"Raket topa ters yönde kuvvet uygulayarak yönünü değiştirir.","spokenText":"Raketle vurulan tenis topunda hangi hareket gözlenir?"},
+      {"q":"Oyun hamuruna veya süngere elimizle bastırdığımızda kuvvetin hangi etkisini görürüz? 🧸","a":"Şekil değiştirme etkisi 🧸","d":["Hızlanma etkisi","Dönme etkisi"],"exp":"Kuvvet cisimlerin şeklini değiştirebilir.","spokenText":"Oyun hamuruna bastırdığımızda kuvvetin hangi etkisi görülür?"},
+      {"q":"Aşağıdaki durumlardan hangisi HAREKETLİ cisimlerin sebep olabileceği bir TEHLİKEDİR? ⚠️","a":"Dağdan hızla yuvarlanan kar kütlesi (Çığ) ❄️","d":["Rafta duran kitap","Yerde duran top"],"exp":"Hızla hareket eden çığ, kaya ve sel kütleleri büyük tehlike oluşturur.","spokenText":"Hangisi hareketli cisimlerin sebep olabileceği bir tehlikedir?"},
+      {"q":"Mıknatısın toplu iğneleri veya demir çivileri kendine çekmesi hangi kuvvet türüdür? 🧲","a":"Temas gerektirmeyen çekme kuvveti 🧲","d":["İtme kuvveti","Sallama kuvveti"],"exp":"Manyetik kuvvet uzaktan dokunmadan çekme kuvveti uygulayabilir.","spokenText":"Mıknatısın demir çivileri çekmesi hangi kuvvettir?"},
+      {"q":"Aşağıdakilerden hangisi bir İTME kuvveti örneğidir? 🛒","a":"Markette alışveriş arabasını ileri doğru sürmek 🛒","d":["Kuyudan kova çekmek 🪣","Yerdeki çantayı yukarı kaldırmak 🎒"],"exp":"Arabayı kendimizden uzaklaştırmak itme kuvvetidir.","spokenText":"Hangisi bir itme kuvveti örneğidir?"},
+      {"q":"Aşağıdakilerden hangisi bir ÇEKME kuvveti örneğidir? 🪢","a":"Halat çekme oyununda ipi kendine doğru asılmak 🪢","d":["Bebek arabasını itmek 👶","Duvara çivi çakmak 🔨"],"exp":"İpi kendine doğru çekmek çekme kuvvetidir.","spokenText":"Hangisi bir çekme kuvveti örneğidir?"},
+      {"q":"Çalışır durumdaki bir vantilatörün pervanesine elimizi yaklaştırmak neden tehlikelidir? 🌀","a":"Hızlı dönen parçalar parmağımızı yaralayabilir ⚠️","d":["Odanın havası bozulur","Vantilatör hemen donar"],"exp":"Hızlı dönen mekanik pervanelere dokunmak ciddi yaralanmalara neden olur.","spokenText":"Çalışan vantilatör pervanesine dokunmak neden tehlikelidir?"},
+      {"q":"Futbol maçında kalecinin sert gelen şutu yakalaması kuvvetin hangi etkisine örnektir? 🧤","a":"Hareket eden cismi durdurma etkisi 🧤","d":["Cismi hızlandırma","Cismi döndürme"],"exp":"Kaleci topu yakalayarak hareketini durdurur.","spokenText":"Kalecinin gelen topu yakalaması kuvvetin hangi etkisine örnektir?"}
+    ],
+
+    grade3ScienceMatterStatesPool: [
+      {"q":"Kuvvet uygulandığında şekli değişen, kuvvet kalktığında ESKİ HALİNE DÖNEN maddelere ne denir? 🧽","a":"Esnek Madde 🧽","d":["Kırılgan Madde","Sert Madde"],"exp":"Sünger ve paket lastiği esnek maddelere örnektir.","spokenText":"Kuvvet kalktığında eski haline dönebilen maddelere ne denir?"},
+      {"q":"Darbe aldığında veya yere düştüğünde kolayca parçalanan maddelere ne ad verilir? 🥛","a":"Kırılgan Madde 🥛","d":["Esnek Madde","Pürüzsüz Madde"],"exp":"Cam, porselen ve ayna kırılgan maddelerdir.","spokenText":"Darbe aldığında kolayca parçalanan maddelere ne ad verilir?"},
+      {"q":"Aşağıdaki maddelerden hangisi ESNEK bir maddedir? 🎈","a":"Paket lastiği 🎈","d":["Cam bardak 🥛","Tahta cetvel 📏"],"exp":"Paket lastiği çekilip bırakıldığında eski şekline geri döner.","spokenText":"Hangisi esnek bir maddedir?"},
+      {"q":"Belirli bir şekli olan ve dışarıdan kuvvet uygulanmadıkça şeklini koruyan maddeler hangi haldedir? 🪨","a":"Katı Madde 🪨","d":["Sıvı Madde 💧","Gaz Madde 💨"],"exp":"Taş, masa, kitap gibi maddeler katıdır ve belirli şekilleri vardır.","spokenText":"Belirli bir şekli olan ve şeklini koruyan maddeler hangi haldedir?"},
+      {"q":"Belirli bir şekli olmayan, akışkan olan ve konulduğu KABIN ŞEKLİNİ ALAN maddeler hangi haldedir? 💧","a":"Sıvı Madde 💧","d":["Katı Madde 🪨","Gaz Madde 💨"],"exp":"Su, süt, meyve suyu ve zeytinyağı sıvıdır.","spokenText":"Belirli bir şekli olmayıp akışkan olan maddeler hangi haldedir?"},
+      {"q":"Belirli bir şekli olmayıp bulunduğu odanın veya kabın HER YERİNE HIZLA YAYILAN maddeler hangi haldedir? 💨","a":"Gaz Madde 💨","d":["Katı Madde 🪨","Sıvı Madde 💧"],"exp":"Hava, su buharı ve gazlar ortamın tamamına yayılır.","spokenText":"Bulunduğu ortama hızla yayılan maddeler hangi haldedir?"},
+      {"q":"Buzluktan çıkarılan buz küpünün oda sıcaklığında suya dönüşmesi hangi hal değişimidir? 🧊➡️💧","a":"Katı halden sıvı hale geçiş (Erime) 💧","d":["Donma","Buharlaşma"],"exp":"Buz ısı alarak erir ve sıvı suya dönüşür.","spokenText":"Buzun eriyerek suya dönüşmesi hangi hal değişimidir?"},
+      {"q":"Çaydanlıkta kaynayan suyun buharlaşarak havaya karışması hangi hal değişimidir? 💧➡️💨","a":"Sıvı halden gaz hale geçiş (Buharlaşma) 💨","d":["Donma","Erime"],"exp":"Sıvı su ısı alarak gaz (su buharı) haline geçer.","spokenText":"Suyun buharlaşarak havaya karışması hangi hal değişimidir?"},
+      {"q":"Aşağıdaki maddelerden hangisi PÜRÜZSÜZ bir yüzeye sahiptir? 🪞","a":"Cam ayna 🪞","d":["Ağaç kabuğu 🪵","Zımpara kağıdı"],"exp":"Cam ve ayna yüzeyleri kaygan ve son derece pürüzsüzdür.","spokenText":"Hangisi pürüzsüz bir yüzeye sahiptir?"},
+      {"q":"Aşağıdaki maddelerden hangisi KOKULU bir maddedir? 🌸","a":"Limon kolonyası 🌸","d":["Saf içme suyu 💧","Demir çivi 🔩"],"exp":"Kolonya etrafa güçlü koku yayan bir maddedir.","spokenText":"Hangisi kokulu bir maddedir?"},
+      {"q":"Aşağıdakilerden hangisi BERK (SERT) bir maddedir? 🧱","a":"Tuğla ve demir 🧱","d":["Pamuk yastık ☁️","Yün kazak 🧶"],"exp":"Tuğla ve demir kolay bükülmeyen sert (berk) maddelerdir.","spokenText":"Hangisi sert yani berk bir maddedir?"},
+      {"q":"Şişirilmiş bir uçan balonun içindeki madde hangi haldedir? 🎈","a":"Gaz halindedir (Helyum/Hava) 💨","d":["Sıvı halindedir","Katı halindedir"],"exp":"Balonun içini dolduran hava gaz halindedir.","spokenText":"Balonun içindeki hava maddenin hangi halindedir?"},
+      {"q":"Kışın donarak göl yüzeyinde oluşan buz tabakası suyun hangi halidir? ❄️","a":"Katı hali ❄️","d":["Sıvı hali","Gaz hali"],"exp":"Buz suyun katılaşmış halidir.","spokenText":"Buz suyun hangi halidir?"},
+      {"q":"Tuz, şeker ve un gibi küçük taneli katı maddeler sıvılara hangi yönden BENZER? 🧂","a":"Konuldukları kabın şeklini alabilirler 🧂","d":["Akışkan sıvı olurlar","Uçup odaya yayılırlar"],"exp":"Küçük taneli katılar (tuz, pirinç vb.) kabın şeklini alsalar da taneleri katıdır.","spokenText":"Tuz ve un gibi küçük taneli katılar sıvılara hangi yönden benzer?"},
+      {"q":"Evdeki deterjan, çamaşır suyu veya yapıştırıcı gibi kimyasal maddelere ne yapmalıyız? ⚠️","a":"Asla koklamamalı, tatmamalı ve çıplak elle dokunmamalıyız ⚠️","d":["Tadına bakıp anlamalıyız","Koklayarak ayırt etmeliyiz"],"exp":"Bilinmeyen ve kimyasal maddeler zehirlenmeye sebep olabileceği için tehlikelidir.","spokenText":"Deterjan ve çamaşır suyu gibi maddelere karşı nasıl davranmalıyız?"}
+    ],
+
+    grade3ScienceLightSoundPool: [
+      {"q":"Çevremizdeki varlıkları görebilmemiz için aşağıdakilerden hangisi KESİNLİKLE gereklidir? 💡","a":"Işık 💡","d":["Ses","Rüzgar"],"exp":"Gözümüz ancak cisimlerden yansıyan ışık sayesinde görme olayını gerçekleştirir.","spokenText":"Çevremizdeki varlıkları görebilmemiz için kesinlikle ne gereklidir?"},
+      {"q":"Zifiri karanlık, hiçbir ışığın olmadığı bir odada gözlerimiz ne kadar alışırsa alışsın görebilir miyiz? 🌑","a":"Hayır, hiç ışık yoksa asla göremeyiz 🌑","d":["Evet, biraz bekleyince her şeyi görürüz","Sadece beyaz cisimleri görürüz"],"exp":"Görme olayının gerçekleşmesi için ortamda mutlaka en azından az bir ışık bulunmalıdır.","spokenText":"Hiç ışık olmayan zifiri karanlık bir odada görebilir miyiz?"},
+      {"q":"İnsanlar tarafından üretilmeyen, doğada kendiliğinden ışık yayan kaynaklara ne denir? ☀️","a":"Doğal Işık Kaynağı ☀️","d":["Yapay Işık Kaynağı 💡","Geçici Işık Kaynağı"],"exp":"Güneş, yıldızlar ve şimşek doğal ışık kaynaklarıdır.","spokenText":"Kendiliğinden ışık yayan doğal kaynaklara ne denir?"},
+      {"q":"Gündüzleri Dünya'mızı aydınlatan ve ısıtan EN BÜYÜK DOĞAL ışık kaynağımız hangisidir? ☀️","a":"Güneş ☀️","d":["Ay 🌙","Kutup Yıldızı ⭐"],"exp":"Güneş Dünya'mızın temel doğal ısı ve ışık kaynağıdır.","spokenText":"Dünya'mızı aydınlatan en büyük doğal ışık kaynağı hangisidir?"},
+      {"q":"İnsanlar tarafından sonradan üretilen ışık kaynaklarına ne ad verilir? 💡","a":"Yapay Işık Kaynağı 💡","d":["Doğal Işık Kaynağı ☀️","Tükenmez Işık Kaynağı"],"exp":"Ampul, mum, fener, trafik lambası yapay ışık kaynaklarıdır.","spokenText":"İnsanlar tarafından üretilen ışık kaynaklarına ne denir?"},
+      {"q":"Aşağıdakilerden hangisi DOĞAL bir ışık kaynağıdır? 🪲","a":"Ateş böceği 🪲","d":["El feneri 🔦","Mum 🕯️"],"exp":"Ateş böceği kendi vücudunda ışık üreten canlı bir doğal ışık kaynağıdır.","spokenText":"Hangisi doğal bir ışık kaynağıdır?"},
+      {"q":"Geceleri gökyüzünde parlayan AY bir ışık kaynağı mıdır? 🌙","a":"Hayır, Güneş'ten aldığı ışığı yansıtır 🌙","d":["Evet, doğal ışık kaynağıdır","Evet, yapay ışık kaynağıdır"],"exp":"Ay bir ışık kaynağı değildir; ayna gibi Güneş'ten gelen ışığı yansıtır.","spokenText":"Ay bir ışık kaynağı mıdır?"},
+      {"q":"Ses nasıl yayılır? 📢","a":"Suya atılan taş gibi her yöne dalgalar halinde 🌊📢","d":["Sadece dümdüz ileriye doğru","Sadece yukarıya doğru"],"exp":"Ses titreşimlerden oluşur ve kaynaktan her yöne dairesel dalgalar halinde yayılır.","spokenText":"Ses çevremize nasıl yayılır?"},
+      {"q":"Aşağıdakilerden hangisi DOĞAL bir ses kaynağıdır? 🐦","a":"Kuş cıvıltısı ve şelale sesi 🐦🌊","d":["Araba kornası 🚗","Flüt sesi 🎶"],"exp":"Canlıların ve doğanın çıkardığı sesler doğal ses kaynaklarıdır.","spokenText":"Hangisi doğal bir ses kaynağıdır?"},
+      {"q":"Aşağıdakilerden hangisi YAPAY bir ses kaynağıdır? 🎸","a":"Gitar ve ambulans sireni 🎸🚑","d":["Gök gürültüsü ⚡","Köpek havlaması 🐕"],"exp":"İnsanların ürettiği alet ve araçların sesleri yapay sestir.","spokenText":"Hangisi yapay bir ses kaynağıdır?"},
+      {"q":"Bir ses kaynağından UZAKLAŞTIKÇA sesin şiddetinde ne değişir? 📉","a":"Sesin şiddeti azalır (daha az duyulur) 📉","d":["Sesin şiddeti artar","Hiç değişmez"],"exp":"Ses kaynağından uzaklaştıkça ses dalgaları yayılır ve şiddeti azalır.","spokenText":"Ses kaynağından uzaklaştıkça sesin şiddeti nasıl değişir?"},
+      {"q":"Kulaklıkla çok yüksek sesle müzik dinlemek hangi organımıza kalıcı zarar verebilir? 🎧","a":"Kulağımıza (İşitme kaybı) 👂","d":["Gözümüze","Burnumuza"],"exp":"Yüksek şiddetteki sesler kulak zarına ve işitme hücrelerine zarar verir.","spokenText":"Yüksek sesle müzik dinlemek hangi organımıza zarar verir?"},
+      {"q":"Aşağıdakilerden hangisi ışık kaynağı olmadığı halde üzerine düşen ışığı YANSITAN bir maddedir? 🪞","a":"Trafik reflektörü ve ayna 🪞","d":["Güneş ☀️","Yanan mum 🕯️"],"exp":"Reflektör ve ayna ışık üretmez, gelen ışığı yansıtır.","spokenText":"Hangisi ışık kaynağı olmayıp ışığı yansıtan bir maddedir?"},
+      {"q":"Şimşek çakması ve gök gürültüsü sırasında hangisi ÖNCE gözlenir? ⚡","a":"Önce şimşeğin ışığı görülür ⚡ (Işık sesten hızlıdır)","d":["Önce gök gürültüsü duyulur","İkisi aynı anda duyulup görülür"],"exp":"Işık sesten çok daha hızlı yayıldığı için önce şimşeğin ışığını görürüz.","spokenText":"Şimşek çakmasında ışık mı önce gelir yoksa ses mi?"},
+      {"q":"Göz sağlığımız için ders çalışırken masa lambası ışığı nereye yönelmelidir? 📖","a":"Doğrudan göze değil, çalışma masasına ve kitaba 📖","d":["Doğrudan gözümüzün içine","Tavana"],"exp":"Işığın doğrudan göze gelmesi gözü kamaştırır ve yorar; kitaba gelmelidir.","spokenText":"Ders çalışırken masa lambası ışığı nereye gelmelidir?"}
+    ],
+
+    grade3ScienceLivingEnvironmentPool: [
+      {"q":"Aşağıdaki varlıklardan hangisi CANLI bir varlıktır? 🌻","a":"Ayçiçeği bitkisi 🌻","d":["Taş 🪨","Su bardağı 🥛"],"exp":"Bitkiler büyür, beslenir ve çoğalır; canlı varlıklardır.","spokenText":"Aşağıdaki varlıklardan hangisi canlı bir varlıktır?"},
+      {"q":"Aşağıdakilerden hangisi CANSIZ bir varlıktır? 🪨","a":"Toprak ve kayaçlar 🪨","d":["Sincap 🐿️","Çam ağacı 🌲"],"exp":"Toprak ve taşlar beslenmez ve büyümez, cansız varlıklardır.","spokenText":"Hangisi cansız bir varlıktır?"},
+      {"q":"Aşağıdakilerden hangisi TÜM CANLILARIN ortak özelliklerinden biridir? 🌱","a":"Büyüme, beslenme ve çoğalma 🌱","d":["Uçabilme","Konuşabilme"],"exp":"Büyüme, beslenme, boşaltım, solunum ve çoğalma tüm canlıların ortak özelliğidir.","spokenText":"Hangisi tüm canlıların ortak özelliklerinden biridir?"},
+      {"q":"Bitkiler kendi besinlerini üretebilmek için yapraklarıyla neyi kullanırlar? ☀️","a":"Güneş ışığı, su ve karbondioksit ☀️🌿","d":["Meyve suyu","Sadece süt"],"exp":"Bitkiler güneş ışığı yardımıyla fotosentez yaparak kendi besinlerini üretir.","spokenText":"Bitkiler besin üretebilmek için neyi kullanırlar?"},
+      {"q":"Bir tohumun çimlenerek filizlenmesi için aşağıdakilerden hangisi ŞARTTIR? 🌱","a":"Su (nem), oksijen (hava) ve uygun sıcaklık 💧🌡️","d":["Sadece karanlık ortam","Aşırı soğuk"],"exp":"Tohumun uyanıp filizlenmesi için su, hava ve uygun sıcaklık şarttır.","spokenText":"Bir tohumun çimlenmesi için hangileri gereklidir?"},
+      {"q":"Bir fasulye bitkisinin yaşam döngüsünün DOĞRU sıralanışı hangisidir? 🫘","a":"Tohum ➔ Çimlenme (Filiz) ➔ Genç Bitki ➔ Olgun Bitki (Çiçek/Meyve) 🌸","d":["Meyve ➔ Tohum ➔ Ağaç","Filiz ➔ Tohum ➔ Çiçek"],"exp":"Bitkiler tohumdan çimlenerek genç bitkiye ve çiçek açan olgun bitkiye dönüşür.","spokenText":"Bir bitkinin yaşam döngüsünün doğru sırası nasıldır?"},
+      {"q":"İnsan eli değmeden, doğada kendiliğinden oluşmuş alanlara ne ad verilir? 🌲","a":"Doğal Çevre (Orman, Deniz, Göl) 🌲🌊","d":["Yapay Çevre (Park, Akvaryum)","Şehir Çevresi"],"exp":"Ormanlar, dağlar ve denizler doğal çevreye örnektir.","spokenText":"İnsan eli değmeden kendiliğinden oluşmuş ortamlara ne denir?"},
+      {"q":"İnsanlar tarafından planlanarak inşa edilen çevrelere ne ad verilir? 🏙️","a":"Yapay Çevre 🏙️","d":["Doğal Çevre","Yaban Hayatı"],"exp":"Şehir parkları, binalar, akvaryumlar ve barajlar yapay çevredir.","spokenText":"İnsanlar tarafından inşa edilen çevrelere ne ad verilir?"},
+      {"q":"Aşağıdakilerden hangisi YAPAY bir çevreye örnektir? 🐠","a":"Evdeki balık akvaryumu 🐠","d":["Van Gölü 🌊","Belgrad Ormanı 🌲"],"exp":"Akvaryum ve hayvanat bahçeleri insan yapımı yapay çevredir.","spokenText":"Hangisi yapay bir çevre örneğidir?"},
+      {"q":"Doğayı ve çevremizi korumak için aşağıdakilerden hangisini YAPMALIYIZ? ♻️","a":"Atıkları kağıt, cam, plastik olarak geri dönüşüme atmak ♻️","d":["Pilleri ve çöpleri toprağa gömmek","Ağaçları kesmek"],"exp":"Geri dönüşüm doğal kaynakları korur ve çevre kirliliğini önler.","spokenText":"Çevremizi korumak için hangisini yapmalıyız?"},
+      {"q":"Bitkiler hayvanlar gibi yer değiştiremeseler de nasıl HAREKET ederler? 🌻","a":"Güneşe doğru yönelerek veya kökleriyle suya uzanarak 🌻","d":["Hiçbir hareket yapamazlar","Geceleri yürürler"],"exp":"Bitkiler güneşe yönelme gibi durum değiştirme hareketleri yaparlar.","spokenText":"Bitkiler nasıl hareket ederler?"},
+      {"q":"Canlıların vücutlarındaki zararlı ve atık maddeleri dışarı atmasına ne denir? 💧","a":"Boşaltım (Terleme, yaprak dökümü vb.) 💧","d":["Solunum","Çoğalma"],"exp":"Terleme, idrar ve bitkilerde yaprak dökümü birer boşaltım şeklidir.","spokenText":"Canlıların zararlı atıkları vücutlarından atmasına ne denir?"},
+      {"q":"Aşağıdakilerden hangisi DOĞAL bir çevre örneğidir? 🏞️","a":"Karasu Şelalesi ve orman 🏞️","d":["Çocuk oyun parkı 🛝","Alışveriş merkezi 🏬"],"exp":"Şelaleler ve ormanlar doğanın kendiliğinden oluşturduğu alanlardır.","spokenText":"Hangisi doğal bir çevre örneğidir?"},
+      {"q":"Küstüm otunun dokunulduğunda yapraklarını kapatması canlıların hangi özelliğidir? 🌿","a":"Uyarılara tepki verme 🌿","d":["Büyüme","Beslenme"],"exp":"Küstüm otu dokunma uyarısına tepki vererek yapraklarını kapatır.","spokenText":"Küstüm otunun dokununca yapraklarını kapatması hangi özelliktir?"},
+      {"q":"Ormanların yok edilmesi hangi canlıların yaşamını doğrudan TEHDİT EDER? 🌲🐾","a":"Ormanda yaşayan tüm hayvan ve bitkilerin yaşamını 🐾","d":["Sadece uzaydaki göktaşlarını","Sadece robotları"],"exp":"Ormanlar binlerce hayvan ve bitki türünün doğal yaşam alanıdır.","spokenText":"Ormanların yok edilmesi hangi canlıların yaşamını tehdit eder?"}
+    ],
+
+    grade3ScienceElectricitySafetyPool: [
+      {"q":"Evimizdeki buzdolabı, çamaşır makinesi ve fırın hangi elektrik kaynağı ile çalışır? 🔌","a":"Şehir elektriği (Priz) 🔌","d":["Küçük pil 🔋","Güneş pili"],"exp":"Yüksek elektrik gücü gerektiren büyük ev aletleri prizdeki şehir elektriğiyle çalışır.","spokenText":"Buzdolabı ve çamaşır makinesi hangi elektrik kaynağıyla çalışır?"},
+      {"q":"Duvar saati, televizyon kumandası ve el feneri hangi elektrik kaynağı ile çalışır? 🔋","a":"Pil 🔋","d":["Akü 🚗","Şehir elektriği"],"exp":"Taşınabilir küçük cihazlar düşük voltajlı pillerle çalışır.","spokenText":"Kumanda ve duvar saati hangi elektrik kaynağı ile çalışır?"},
+      {"q":"Otomobil, otobüs ve motosikletlerin motorunu çalıştırmak ve farlarını yakmak için ne kullanılır? 🚗","a":"Akü 🚗","d":["İnce kalem pil","Şehir elektriği"],"exp":"Motorlu taşıtların elektrik kaynağı aküdür.","spokenText":"Otomobillerin motorunu ve farlarını çalıştıran elektrik kaynağı nedir?"},
+      {"q":"Cep telefonu, tablet ve dizüstü bilgisayarlar hangi elektrik kaynağı ile çalışır? 📱","a":"Batarya (Şarj edilebilir piller) 📱","d":["Akü","Sadece şehir elektriği"],"exp":"Akıllı cihazlar tekrar tekrar şarj edilebilen bataryalarla çalışır.","spokenText":"Cep telefonu ve tabletler hangi elektrik kaynağı ile çalışır?"},
+      {"q":"Aşağıdaki araçlardan hangisi ISINMA amacıyla kullanılan bir elektrikli araçtır? ♨️","a":"Elektrikli soba ve ısıtıcı ♨️","d":["Buzdolabı 🧊","Vantilatör 🌀"],"exp":"Elektrikli sobalar elektrik enerjisini ısı enerjisine dönüştürür.","spokenText":"Hangisi ısınma amacıyla kullanılan elektrikli bir araçtır?"},
+      {"q":"Aşağıdaki araçlardan hangisi AYDINLATMA amacıyla kullanılan bir elektrikli araçtır? 💡","a":"Masa lambası ve avize 💡","d":["Ütü 👔","Mikser 🥣"],"exp":"Lambalar ve avizeler ortamı aydınlatmak için kullanılır.","spokenText":"Hangisi aydınlatma amacıyla kullanılan bir araçtır?"},
+      {"q":"Aşağıdaki araçlardan hangisi TEMİZLİK ve EV İŞLERİNDE kullanılan bir elektrikli araçtır? 🧹","a":"Elektrikli süpürge ve çamaşır makinesi 🧹","d":["Televizyon 📺","Radyo 📻"],"exp":"Süpürge ve çamaşır makinesi ev temizliğinde kullanılan araçlardır.","spokenText":"Hangisi temizlik amacıyla kullanılan bir elektrikli araçtır?"},
+      {"q":"Biten atık pilleri çöpe veya toprağa atmak neden ÇOK ZARARLIDIR? ☠️","a":"İçindeki zehirli kimyasallar toprağa ve yer altı sularına karışır ☠️","d":["Hemen patlayarak ses çıkarırlar","Piller hiçbir zarar vermez"],"exp":"Atık piller cıva ve kurşun gibi ağır metaller içerir, toprağı ve suyu zehirler.","spokenText":"Biten pilleri çöpe atmak neden çok zararlıdır?"},
+      {"q":"Kullanım ömrü bitmiş atık pilleri nereye atmalıyız? 🗑️","a":"Kırmızı Atık Pil Toplama Kutusuna (TAP) 🪫","d":["Normal çöp tenekesine","Denize veya göle"],"exp":"Atık piller özel atık pil kutularında toplanarak geri dönüştürülmelidir.","spokenText":"Kullanım ömrü bitmiş pilleri nereye atmalıyız?"},
+      {"q":"Elektrik prizlerine ve anahtarlarına ISLAK ELLE dokunursak ne olabilir? ⚡","a":"Elektrik çarpabilir çünkü ıslak el elektriği iletir ⚡","d":["Priz hemen bozulur","Hiçbir şey olmaz"],"exp":"Su elektriği ilettiği için ıslak elle dokunmak ölümcül elektrik çarpmasına yol açabilir.","spokenText":"Islak elle elektrik prizlerine dokunursak ne olabilir?"},
+      {"q":"Elektrik prizlerine sivri uçlu metal teller veya çiviler sokulması neden tehlikelidir? ⚠️","a":"Elektrik akımı vücudumuza geçip çarpar ⚠️","d":["Prizin rengi solar","Elektrik faturası artar"],"exp":"Metaller elektrik iletkenidir; prize sokulduklarında akım doğrudan insana geçer.","spokenText":"Elektrik prizlerine metal cisim sokmak neden tehlikelidir?"},
+      {"q":"Kablosu yıpranmış veya plastik kılıfı soyulmuş bir elektrikli aleti ne yapmalıyız? 🔌","a":"Fişini çekmeli ve yetkili bir tamirciye onartmalıyız 🔌","d":["Kullanmaya devam etmeliyiz","Üzerine su dökmeliyiz"],"exp":"Soyulmuş kablolar yangına ve elektrik çarpmasına sebep olabilir.","spokenText":"Kablosu soyulmuş bir elektrikli aleti görünce ne yapmalıyız?"},
+      {"q":"Sokakta kopup yere düşmüş bir elektrik teli gördüğümüzde ilk yapmamız gereken nedir? 🚨","a":"Asla yaklaşmamalı, büyüklerimize ve elektrik arızaya haber vermeliyiz 🚨","d":["Yerden tutup kenara çekmeliyiz","Üzerine basıp geçmeliyiz"],"exp":"Kopuk elektrik tellerinde yüksek gerilim vardır, kesinlikle yaklaşılmamalıdır.","spokenText":"Kopmuş bir elektrik teli gördüğümüzde ne yapmalıyız?"},
+      {"q":"Aşağıdaki araçlardan hangisi HABERLEŞME amacıyla kullanılan bir elektrikli alettir? 📱","a":"Televizyon, telefon ve bilgisayar 📱💻","d":["Elektrikli şofben 🚿","Saç kurutma makinesi 💇"],"exp":"Telefon ve bilgisayar bilgi alma ve iletişim araçlarıdır.","spokenText":"Hangisi haberleşme amacıyla kullanılan bir elektrikli araçtır?"},
+      {"q":"Elektrikli aletleri prizden çıkarırken kablosundan asılarak değil, nasıl tutarak çekmeliyiz? 🔌","a":"Fişin plastik gövdesinden tutarak çekmeliyiz 🔌","d":["Kablodan sertçe asılmalıyız","Ayağımızla basmalıyız"],"exp":"Kablodan asılmak kablo içindeki telleri koparabilir ve kısa devreye yol açabilir.","spokenText":"Elektrikli aletleri prizden çıkarırken nasıl çekmeliyiz?"}
+    ],
+
+    // 3. Sınıf Fen Bilimleri Karma Üreteci (7 Üniteden Dengeli Çekim)
+    generateGrade3ScienceKarma() {
+      const topic = Math.floor(Math.random() * 7);
+      if (topic === 0) return this.drawFromPool(this.grade3SciencePlanetLayersPool, "grade3SciencePlanetLayersPool");
+      if (topic === 1) return this.drawFromPool(this.grade3ScienceSensesPool, "grade3ScienceSensesPool");
+      if (topic === 2) return this.drawFromPool(this.grade3ScienceForceMotionPool, "grade3ScienceForceMotionPool");
+      if (topic === 3) return this.drawFromPool(this.grade3ScienceMatterStatesPool, "grade3ScienceMatterStatesPool");
+      if (topic === 4) return this.drawFromPool(this.grade3ScienceLightSoundPool, "grade3ScienceLightSoundPool");
+      if (topic === 5) return this.drawFromPool(this.grade3ScienceLivingEnvironmentPool, "grade3ScienceLivingEnvironmentPool");
+      return this.drawFromPool(this.grade3ScienceElectricitySafetyPool, "grade3ScienceElectricitySafetyPool");
+    },
+
+    // Geriye dönük uyumluluk takma adları
+    get grade3EarthSensesPool() {
+      return [...this.grade3SciencePlanetLayersPool, ...this.grade3ScienceSensesPool];
+    },
+    get grade3ForceMatterPool() {
+      return [...this.grade3ScienceForceMotionPool, ...this.grade3ScienceMatterStatesPool];
+    },
 
     // 3. SINIF: YÖNLERİMİZ, KROKİ VE TÜKETİCİ HAKLARI (26 ÖZGÜN SORU)
     grade3CompassConsumerPool: [
@@ -8380,22 +8471,38 @@
           distractors: raw.d,
           explanation: raw.exp
         }, '✍️ Noktalama, Yazım Kuralları & 5N1K');
+      // --- 3. SINIF: 2026 MAARİF MODELİ FEN BİLİMLERİ 7 ÖĞRENME ALANI ---
+      } else if (gameType === 'science_planet_layers_3') {
+        const raw = this.drawFromPool(this.grade3SciencePlanetLayersPool, "grade3SciencePlanetLayersPool");
+        return this.buildQuestionItem(raw, '🌍 Dünya\'nın Katmanları & Gezegen Keşfi');
+      } else if (gameType === 'science_senses_3') {
+        const raw = this.drawFromPool(this.grade3ScienceSensesPool, "grade3ScienceSensesPool");
+        return this.buildQuestionItem(raw, '👂 Beş Duyu Dedektifi');
+      } else if (gameType === 'science_force_motion_3') {
+        const raw = this.drawFromPool(this.grade3ScienceForceMotionPool, "grade3ScienceForceMotionPool");
+        return this.buildQuestionItem(raw, '🧲 İtme mi Çekme mi? & Hareket Türleri');
+      } else if (gameType === 'science_matter_states_3') {
+        const raw = this.drawFromPool(this.grade3ScienceMatterStatesPool, "grade3ScienceMatterStatesPool");
+        return this.buildQuestionItem(raw, '🧊 Katı-Sıvı-Gaz Avcısı & Madde Özellikleri');
+      } else if (gameType === 'science_light_sound_3') {
+        const raw = this.drawFromPool(this.grade3ScienceLightSoundPool, "grade3ScienceLightSoundPool");
+        return this.buildQuestionItem(raw, '💡 Doğal mı Yapay mı? (Işık ve Ses)');
+      } else if (gameType === 'science_living_environment_3') {
+        const raw = this.drawFromPool(this.grade3ScienceLivingEnvironmentPool, "grade3ScienceLivingEnvironmentPool");
+        return this.buildQuestionItem(raw, '🌱 Canlı-Cansız Sınıflandır & Çevre');
+      } else if (gameType === 'science_electricity_safety_3') {
+        const raw = this.drawFromPool(this.grade3ScienceElectricitySafetyPool, "grade3ScienceElectricitySafetyPool");
+        return this.buildQuestionItem(raw, '⚡ Elektrik Kaynakları & Güvenli Kullanım');
+      } else if (gameType === 'science_3_karma') {
+        const raw = this.generateGrade3ScienceKarma();
+        return this.buildQuestionItem(raw, '🔬 3. Sınıf Fen Bilimleri Karma Düello');
+      // Geriye dönük uyumluluk
       } else if (gameType === 'science_earth_senses_3') {
-        const raw = this.drawFromPool(this.grade3EarthSensesPool, "grade3EarthSensesPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🌍 Gezegenimiz Dünya ve Beş Duyumuz');
+        const raw = Math.random() < 0.5 ? this.drawFromPool(this.grade3SciencePlanetLayersPool, "grade3SciencePlanetLayersPool") : this.drawFromPool(this.grade3ScienceSensesPool, "grade3ScienceSensesPool");
+        return this.buildQuestionItem(raw, '🌍 Gezegenimiz Dünya ve Beş Duyumuz');
       } else if (gameType === 'science_force_matter_3') {
-        const raw = this.drawFromPool(this.grade3ForceMatterPool, "grade3ForceMatterPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🧲 Kuvveti Tanıyalım ve Madde');
+        const raw = Math.random() < 0.5 ? this.drawFromPool(this.grade3ScienceForceMotionPool, "grade3ScienceForceMotionPool") : this.drawFromPool(this.grade3ScienceMatterStatesPool, "grade3ScienceMatterStatesPool");
+        return this.buildQuestionItem(raw, '🧲 Kuvveti Tanıyalım ve Madde');
       } else if (gameType === 'lifescience_compass_consumer_3') {
         const raw = this.drawFromPool(this.grade3CompassConsumerPool, "grade3CompassConsumerPool");
         return this.buildQuestionItem({
@@ -8584,14 +8691,8 @@
         }
       } else if (gameType === 'science') {
         if (g === 3) {
-          const r = Math.random();
-          if (r < 0.5) {
-            const raw = this.drawFromPool(this.grade3EarthSensesPool, "grade3EarthSensesPool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌍 Gezegenimiz & Duyularımız');
-          } else {
-            const raw = this.drawFromPool(this.grade3ForceMatterPool, "grade3ForceMatterPool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🧲 Kuvvet ve Madde');
-          }
+          const raw = this.generateGrade3ScienceKarma();
+          return this.buildQuestionItem(raw, '🔬 3. Sınıf Fen Bilimleri Karma');
         } else if (g === 4) {
           const r = Math.random();
           if (r < 0.5) {
@@ -9664,7 +9765,15 @@
     turkish_sentence_logic_2: '🧱 Kurallı Cümle',
     turkish_punctuation_spelling_2: '✍️ Noktalama & Yazım',
     turkish_2_karma: '🏆 2. Sınıf Türkçe Karma',
-    grade2_grand_duel: '🏆 2. Sınıf Büyük Karma'
+    grade2_grand_duel: '🏆 2. Sınıf Büyük Karma',
+    science_planet_layers_3: '🌍 Dünya & Katmanlar',
+    science_senses_3: '👂 Beş Duyumuz',
+    science_force_motion_3: '🧲 Kuvvet & Hareket',
+    science_matter_states_3: '🧊 Maddenin Halleri',
+    science_light_sound_3: '💡 Işık ve Ses',
+    science_living_environment_3: '🌱 Canlılar & Çevre',
+    science_electricity_safety_3: '⚡ Elektrikli Araçlar',
+    science_3_karma: '🏆 3. Sınıf Fen Karma'
   };
 
   function getCurrentGameObject() {
@@ -9770,6 +9879,14 @@
       math_fractions_shapes_3: 'Kesirler ve Geometrik Cisimler',
       turkish_homonyms_figurative_3: 'Eş Sesli Kelimeler ve Mecaz Anlam',
       turkish_punctuation_5n1k_3: 'Noktalama, Yazım Kuralları ve 5N1K',
+      science_planet_layers_3: 'Dünya\'nın Katmanları & Gezegen Keşfi',
+      science_senses_3: 'Beş Duyu Dedektifi',
+      science_force_motion_3: 'İtme mi Çekme mi? & Hareket Türleri Düellosu',
+      science_matter_states_3: 'Katı-Sıvı-Gaz Avcısı & Madde Özellikleri',
+      science_light_sound_3: 'Doğal mı Yapay mı? (Işık ve Ses Düellosu)',
+      science_living_environment_3: 'Canlı-Cansız Sınıflandır & Doğal/Yapay Çevre',
+      science_electricity_safety_3: 'Elektrik Kaynakları & Güvenli Kullanım',
+      science_3_karma: '3. Sınıf Fen Bilimleri Karma Düello',
       science_earth_senses_3: 'Gezegenimiz Dünya ve Beş Duyumuz',
       science_force_matter_3: 'Kuvveti Tanıyalım ve Madde',
       lifescience_compass_consumer_3: 'Yönlerimiz, Kroki ve Tüketici Hakları',
@@ -11419,48 +11536,113 @@
         name: 'Fen Bilimleri',
         icon: '🔬',
         colorTheme: 'theme-science',
-        tagline: 'Dünya, Duyular & Kuvvet',
-        description: 'Dünyamızın katmanları, duyu organlarımız, kuvvet ve maddenin halleri! 🌍🧲',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Dünya\'nın katmanları, 5 duyumuz, kuvvet ve hareket, katı-sıvı-gaz, ışık ve ses, canlılar dünyası ve elektrik! 🌍👂🧲🧊💡🌱⚡',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'earth_senses', label: '🌍 Dünya & Duyularımız' },
-          { id: 'force_matter', label: '🧲 Kuvvet & Maddenin Halleri' }
+          { id: 'all', label: '🌟 Tüm Üniteler / Karma Düello' },
+          { id: 'planet_layers', label: '🌍 Ünite 1: Gezegenimizi Tanıyalım' },
+          { id: 'senses', label: '👂 Ünite 2: Beş Duyumuz' },
+          { id: 'force_motion', label: '🧲 Ünite 3: Kuvveti Tanıyalım' },
+          { id: 'matter_states', label: '🧊 Ünite 4: Maddeyi Tanıyalım' },
+          { id: 'light_sound', label: '💡 Ünite 5: Çevremizdeki Işık ve Sesler' },
+          { id: 'living_environment', label: '🌱 Ünite 6: Canlılar Dünyasına Yolculuk' },
+          { id: 'electricity_safety', label: '⚡ Ünite 7: Elektrikli Araçlar' }
         ],
         games: [
           {
-            id: 'science_earth_senses_3',
+            id: 'science_planet_layers_3',
             active: true,
-            title: 'Gezegenimiz Dünya ve Beş Duyumuz',
+            title: 'Dünya\'nın Katmanları & Gezegen Keşfi',
             icon: '🌍',
-            badge: '26 Özgün Soru',
-            featureTag: '🌍 Katmanlar & Duyular',
-            description: 'Dünya\'nın katmanları, 5 duyu organımız, görevleri ve organ sağlığı! 🌍👂',
-            tags: ['🌍 Dünya\'nın Katmanları', '👂 5 Duyu Organı', '👁️ Göz & Kulak Sağlığı'],
+            badge: '🌍 Gezegenimiz',
+            featureTag: '🪐 Çekirdek, Manto, Taş Küre',
+            description: 'Dünya\'nın küre şekli, kanıtları, içten dışa katmanları (çekirdek, manto, yer kabuğu) ve kara-su oranları!',
+            tags: ['🌍 Dünya\'nın Şekli', '🌋 Manto & Magma', '🟡 Çekirdek', '🌊 Karalar & Sular'],
             btnText: 'Düelloyu Başlat',
-            topic: 'earth_senses'
+            topic: 'planet_layers'
           },
           {
-            id: 'science_force_matter_3',
+            id: 'science_senses_3',
             active: true,
-            title: 'Kuvveti Tanıyalım ve Madde',
+            title: 'Beş Duyu Dedektifi',
+            icon: '👂',
+            badge: '👂 5 Duyumuz',
+            featureTag: '👁️ Göz, Kulak, Burun, Dil, Deri',
+            description: 'Göz, kulak, burun, dil ve deri görevleri, duyu ilişkileri ve organ sağlığını koruma kuralları!',
+            tags: ['👁️ Görme & İşitme', '👃 Koku & Tat', '🖐️ Dokunma & Deri', '🛡️ Duyu Sağlığı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'senses'
+          },
+          {
+            id: 'science_force_motion_3',
+            active: true,
+            title: 'İtme mi Çekme mi? & Hareket Türleri Düellosu',
             icon: '🧲',
-            badge: '26 Özgün Soru',
-            featureTag: '⚡ Kuvvet & Haller',
-            description: 'İtme-çekme kuvveti, hareket türleri, maddenin katı-sıvı-gaz halleri! 🧲🧊',
-            tags: ['🧲 İtme & Çekme Kuvveti', '🧊 Maddenin 3 Hali', '🧽 Esnek & Berk Madde'],
+            badge: '🧲 Kuvvet & Hareket',
+            featureTag: '⚡ Hızlanma, Yavaşlama, Yön',
+            description: 'İtme-çekme kuvveti, hızlanma, yavaşlama, sallanma, dönme ve hareketli cisimlerin oluşturabileceği tehlikeler!',
+            tags: ['🛒 İtme & Çekme', '🛑 Hızlanma & Yavaşlama', '🔄 Dönme & Sallanma', '⚠️ Hareket Tehlikeleri'],
             btnText: 'Düelloyu Başlat',
-            topic: 'force_matter'
+            topic: 'force_motion'
           },
           {
-            id: 'science',
+            id: 'science_matter_states_3',
             active: true,
-            title: 'Fen Bilimleri Laboratuvarı (Karma)',
+            title: 'Katı-Sıvı-Gaz Avcısı & Madde Özellikleri',
+            icon: '🧊',
+            badge: '🧊 Maddeyi Tanıyalım',
+            featureTag: '💧 Katı, Sıvı, Gaz & Nitelikler',
+            description: 'Sert-yumuşak, esnek-kırılgan, pürüzlü-pürüzsüz maddeler, maddenin 3 temel hali ve kimyasal güvenlik!',
+            tags: ['🧊 Katı, Sıvı, Gaz', '🧽 Esnek & Berk', '🥛 Kırılgan Madde', '⚠️ Kimyasal Güvenlik'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'matter_states'
+          },
+          {
+            id: 'science_light_sound_3',
+            active: true,
+            title: 'Doğal mı Yapay mı? (Işık ve Ses Düellosu)',
+            icon: '💡',
+            badge: '💡 Işık ve Ses',
+            featureTag: '☀️ Doğal & Yapay Kaynaklar',
+            description: 'Işığın görmedeki rolü, doğal/yapay ışık ve ses kaynakları, sesin yayılması, şiddeti ve işitme sağlığı!',
+            tags: ['☀️ Doğal Işık', '💡 Yapay Işık', '📢 Sesin Yayılması', '🎧 İşitme Sağlığı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'light_sound'
+          },
+          {
+            id: 'science_living_environment_3',
+            active: true,
+            title: 'Canlı-Cansız Sınıflandır & Doğal/Yapay Çevre',
+            icon: '🌱',
+            badge: '🌱 Canlılar Dünyası',
+            featureTag: '🌻 7 Ortak Özellik & Döngü',
+            description: 'Canlı-cansız varlıklar, canlıların 7 ortak özelliği, bitkinin yaşam döngüsü, doğal/yapay çevre ve doğa koruma!',
+            tags: ['🐾 Canlı ve Cansız', '🌿 Canlıların Özellikleri', '🫘 Bitki Yaşam Döngüsü', '🏞️ Doğal/Yapay Çevre'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'living_environment'
+          },
+          {
+            id: 'science_electricity_safety_3',
+            active: true,
+            title: 'Elektrik Kaynakları & Güvenli Kullanım',
+            icon: '⚡',
+            badge: '⚡ Elektrikli Araçlar',
+            featureTag: '🔌 Priz, Pil, Akü, Batarya',
+            description: 'Elektrikli aletlerin kullanım amaçları, şehir elektriği, pil, akü, batarya, atık pil tehlikesi ve elektrik güvenliği!',
+            tags: ['🔌 Şehir Elektriği', '🔋 Pil, Akü, Batarya', '🪫 Atık Pil Bilinci', '⚡ Elektrik Çarpması'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'electricity_safety'
+          },
+          {
+            id: 'science_3_karma',
+            active: true,
+            title: '3. Sınıf Fen Bilimleri Karma Düello',
             icon: '🔬',
-            badge: '⚡ Fen & Doğa',
-            featureTag: '🌍 Bilim Kaşifi',
-            description: 'Dünyanın şekli, 5 duyu organı, itme-çekme ve maddenin halleri! 🌍🧲',
-            tags: ['🌍 Dünyanın Şekli', '👂 5 Duyu Organı', '🧲 İtme & Çekme'],
+            badge: '🏆 3. Sınıf Fen Karma',
+            featureTag: '🌟 7 Ünite Büyük Tekrar',
+            description: 'Tüm 3. sınıf Fen Bilimleri ünitelerinden rastgele ve dengeli sorularla büyük sınıf içi düello!',
+            tags: ['🌍 Dünya', '👂 Duyular', '🧲 Kuvvet', '🧊 Madde', '💡 Işık/Ses', '🌱 Canlılar', '⚡ Elektrik'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
