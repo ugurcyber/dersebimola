@@ -4864,65 +4864,889 @@
       { q: '"Bugün hava çok güzel( )" Cümlesinin sonuna ne konur? ☀️', a: 'Nokta (.)', d: ['Soru işareti (?)', 'Virgül (,)'], exp: 'Haber cümlesi olduğu için sonuna nokta (.) konur.' }
     ],
 
-    // 2. SINIF: GÜVENLİ HAYAT VE TRAFİK (26 ÖZGÜN SORU)
-    grade2TrafficSafeLifePool: [
-      { q: 'Trafik ışığında KIRMIZI ışık yandığında araçlar ve yayalar ne yapmalıdır? 🔴', a: 'Durmalıdır 🛑', d: ['Geçmelidir', 'Hızlanmalıdır'], exp: 'Kırmızı ışık daima "DUR" anlamına gelir.' },
-      { q: 'Trafik ışığında SARI ışık yandığında ne yapılır? 🟡', a: 'Hazırlanılır ⚠️', d: ['Hemen koşulur', 'Geri dönülür'], exp: 'Sarı ışık durmaya veya geçmeye hazırlık aşamasıdır.' },
-      { q: 'Trafik ışığında YEŞİL ışık yandığında ne yapılır? 🟢', a: 'Dikkatle geçilir 🚶‍♂️', d: ['Beklenir', 'Durulur'], exp: 'Yeşil ışık yolu kontrol ederek geç anlamına gelir.' },
-      { q: 'Karşıdan karşıya geçerken caddenin neresinden geçmeliyiz? 🚦', a: 'Yaya ve okul geçidinden 🚶‍♂️', d: ['Arabaların arasından koşarak', 'Virajın köşesinden'], exp: 'Trafikte güvenli geçiş yerleri yaya geçitleri, alt ve üst geçitlerdir.' },
-      { q: 'Ülkemizde acil durumlarda (Ambulans, İtfaiye, Polis) hangi TEK numara aranır? 🚑', a: '112 Acil Çağrı Merkezi 🚑', d: ['155', '110'], exp: 'Tüm acil yardım hatları 112 numarası altında birleştirilmiştir.' },
-      { q: 'Otomobilde seyahat ederken güvenliğimiz için mutlaka ne takmalıyız? 🛡️', a: 'Emniyet kemeri 🛡️', d: ['Kulaklık', 'Güneş gözlüğü'], exp: 'Emniyet kemeri kaza anında bizi araç içinde tutarak hayat kurtarır.' },
-      { q: '12 yaşından küçük çocuklar otomobilde nereye oturmalıdır? 🚗', a: 'Arka koltuğa ve çocuk koltuğuna 👶', d: ['Ön koltuğa', 'Sürücünün kucağına'], exp: 'Güvenlik kurallarına göre çocuklar mutlaka arka koltukta oturmalıdır.' },
-      { q: 'Deprem sarsıntısı anında bina içindeysek hangi hayat kurtaran hareketi yaparız? 🛡️', a: 'Çök - Kapan - Tutun 🛡️', d: ['Merdivenlerden koşarak inmek', 'Balkondan aşağı atlamak'], exp: 'Sağlam bir eşyanın yanında Çök-Kapan-Tutun pozisyonu en güvenli harekettir.' },
-      { q: 'Deprem ve acil durumlar sırasında kesinlikle hangisi KULLANILMAZ? 🚫', a: 'Asansör 🛗', d: ['Merdiven', 'Işıldak'], exp: 'Depremde elektrik kesilebilir veya asansör boşluğa düşebilir; asansör asla kullanılmaz.' },
-      { q: 'Evimizde ve okulumuzda olası afetlere karşı önceden ne hazırlamalıyız? 🎒', a: 'Deprem ve Afet Çantası 🎒', d: ['Piknik sepeti', 'Oyuncak kutusu'], exp: 'Afet çantasında su, düdük, el feneri ve ilk yardım malzemeleri bulunur.' },
-      { q: 'Okul servisi durmadan önce ne yapmamalıyız? 🚌', a: 'Ayağa kalkmamalı ve kapıya yönelmemeliyiz 🛑', d: ['Çantamızı tutmamalıyız', 'Oturmamalıyız'], exp: 'Servis tamamen durup kapı açılmadan ayağa kalkılmaz.' },
-      { q: 'Bisiklet, kaykay veya paten sürerken başımızı korumak için ne takmalıyız? 🚴', a: 'Kask ve dizlik 🪖', d: ['Güneş şapkası', 'Kulaklık'], exp: 'Düşmelere karşı kask, dizlik ve dirseklik takmak zorunludur.' },
-      { q: 'Yaya kaldırımı olmayan yollarda yayalar nereden yürümelidir? 🚶‍♂️', a: 'Yolun solundaki banketten (gelen aracı görerek) 🚶‍♂️', d: ['Yolun tam ortasından', 'Sağ taraftan araçlara arkasını dönerek'], exp: 'Kaldırımsız yollarda gelen trafiği görebilmek için sol banketten yürünür.' },
-      { q: 'Trafik polisinin kollarını iki yana açması ne anlama gelir? 👮‍♂️', a: 'Kolların gösterdiği yöndeki araçlara geç, diğerlerine dur 🚦', d: ['Herkes koşsun', 'Tüm araçlar dursun'], exp: 'Trafik polisi işaretleri ışıklardan ve levhalardan önceliklidir.' },
-      { q: 'Evde yangın çıktığında ve duman dolduğunda nasıl ilerlemeliyiz? 🔥', a: 'Yere yakın emekleyerek ve ıslak bezle ağzımızı kapatarak 🧯', d: ['Ayakta koşarak', 'Dolaba saklanarak'], exp: 'Zehirli duman yukarı yükselir, temiz hava yerde kalır; emekleyerek çıkılır.' },
-      { q: '112 Acil Çağrı numarasını gereksiz yere meşgul etmek neden suç ve tehlikelidir? 🚑', a: 'Gerçekten yardıma ihtiyacı olanların hayatı tehlikeye girer ⚠️', d: ['Telefon faturası kabarır', 'Şarjımız biter'], exp: '112 hattı sadece gerçek hayati tehlikelerde aranmalıdır.' },
-      { q: 'Trafikte ambulans veya itfaiyenin siren çalarak gelmesi durumunda ne yapılır? 🚑', a: 'Araçlar fermuar sistemiyle sağa ve sola açılarak yol verir 🛣️', d: ['Önlerine geçilir', 'Yol verilmez'], exp: 'Geçiş üstünlüğü olan ambulans ve itfaiyeye derhal yol açılır.' },
-      { q: 'Üzerinde yürüyen çocuk resmi olan trafik levhası neyi bildirir? 🚸', a: 'Okul geçidini (Hızını azalt) 🚸', d: ['Park alanını', 'Bisiklet yolunu'], exp: 'Okul geçidi levhası sürücülerin yavaşlaması gerektiğini bildirir.' },
-      { q: 'Kırmızı daire içinde bisiklet resmi ve üstünde kırmızı çizgi ne demektir? 🚫', a: 'Bisiklet giremez 🚫', d: ['Bisiklet yolu', 'Bisiklet parkı'], exp: 'Kırmızı yuvarlak yasaklama levhasıdır; bisiklet giremez demektir.' },
-      { q: 'Yolculuk sırasında taşıtların camından dışarı ne yapmamalıyız? 🚗', a: 'Elimizi, kolumuzu veya başımızı çıkarmamalıyız 🛑', d: ['Dışarıya bakmamalıyız', 'Nefes almamalıyız'], exp: 'Camdan kol veya baş çıkarmak çok ağır kazalara yol açabilir.' },
-      { q: 'Fırtınalı ve şimşekli havalarda açık alanda neyin altına SIĞINILMAZ? ⚡', a: 'Tek başına duran uzun ağaçların altına 🌳', d: ['Güvenli bir binanın içine', 'Bir evin içine'], exp: 'Yıldırım sivri ve tek duran yüksek ağaçlara düşme eğilimindedir.' },
-      { q: 'Sel baskını tehlikesi olduğunda nereye doğru çıkılmalıdır? 🌊', a: 'Yüksek ve güvenli yerlere 🏔️', d: ['Bodrum katlara', 'Dere yataklarına'], exp: 'Sel sularından kaçınmak için yüksek yerlere çıkılır.' },
-      { q: 'Evimizde gaz kaçağı veya gaz kokusu hissettiğimizde ilk ne yapmalıyız? ⚠️', a: 'Pencereleri açıp ortamı havalandırmalı, düğmelere dokunmamalıyız 🪟', d: ['Çakmak yakmalıyız', 'Işıkları açıp kapamalıyız'], exp: 'Kıvılcım patlamaya yol açabilir; hemen havalandırılıp vana kapatılır.' },
-      { q: 'Trafikte yayaların güvenle karşıya geçmesini sağlayan köprülere ne denir? 🌉', a: 'Üst geçit 🌉', d: ['Otoyol', 'Tünel'], exp: 'Yayaların yolu üstten güvenle geçtiği köprülere üst geçit denir.' },
-      { q: 'Yolun altından yayaların geçtiği tünel biçimindeki geçitlere ne denir? 🚇', a: 'Alt geçit 🚇', d: ['Kaldırım', 'Bariyer'], exp: 'Yolun altından güvenli geçiş sağlayan yer alt geçittir.' },
-      { q: 'Araç durduktan sonra kapıyı açarken neden önce aynaya bakmalıyız? 🚪', a: 'Arkadan gelen bisikletli veya arabayı görüp çarpmamak için 🚴', d: ['Saçımızı düzeltmek için', 'Dışarısı aydınlık mı diye bakmak için'], exp: 'Kapı açılmadan önce arkadan araç gelip gelmediği kontrol edilir.' }
+// -------------------------------------------------------------
+// 2. SINIF: 2026 TÜRKİYE YÜZYILI MAARİF MODELİ HAYAT BİLGİSİ SORU HAVUZLARI
+// (6 Öğrenme Alanı - Her Temada 20 Özgün, Eğitici Soru + TTS Sesli Okuma)
+// -------------------------------------------------------------
+
+    // Tema 1: Ben ve Okulum (Okulumuzda Hayat - 20 Soru)
+    grade2LifeScienceSchoolPool: [
+      {
+        q: 'Sınıfımızdaki arkadaşlarımızın boy, saç rengi veya ilgi alanlarının farklı olması neyi gösterir? 🤝',
+        spokenText: 'Arkadaşlarımızın boy veya ilgi alanlarının farklı olması neyi gösterir?',
+        a: 'Bireysel farklılıklarımızı ve zenginliğimizi 🤝',
+        d: ['Kusurlu olduğumuzu ❌', 'Birbirimizle tartışmamız gerektiğini 😠'],
+        exp: 'Her birey özeldir; fiziksel ve kişisel farklılıklarımız sınıfımızın zenginliğidir.'
+      },
+      {
+        q: 'Gözlük veya işitme cihazı kullanan bir arkadaşımıza karşı nasıl davranmalıyız? 👓',
+        spokenText: 'Gözlük veya işitme cihazı kullanan arkadaşımıza nasıl davranmalıyız?',
+        a: 'Saygılı, anlayışlı ve destekleyici 🤝',
+        d: ['Onunla alay etmeliyiz 🚫', 'Oyunlara almamalıyız ❌'],
+        exp: 'Bireysel farklılıklara ve özel ihtiyaçlara daima saygı ve empati gösteririz.'
+      },
+      {
+        q: 'Okul lavabosunda ellerimizi sabunlarken musluğu açık bırakmak neye sebep olur? 🚰',
+        spokenText: 'Ellerimizi sabunlarken musluğu açık bırakmak neye sebep olur?',
+        a: 'Su israfına ve kaynakların tükenmesine 💧',
+        d: ['Daha temiz olmamıza ✨', 'Sabunun köpürmesine 🫧'],
+        exp: 'Eller sabunlanırken musluk kapatılarak su tasarrufu sağlanır.'
+      },
+      {
+        q: 'Gündüz hava güneşli ve sınıfımız aydınlıkken lambaları açık bırakmak nedir? 💡',
+        spokenText: 'Gündüz sınıf aydınlıkken lambaları açık bırakmak nedir?',
+        a: 'Elektrik israfıdır 💡',
+        d: ['Doğru bir davranıştır ✅', 'Daha iyi görmemizi sağlar 👀'],
+        exp: 'Gündüz yeterli gün ışığı varsa lambalar kapatılarak enerji tasarrufu yapılır.'
+      },
+      {
+        q: 'Grup çalışmalarında başarılı olmak için grup üyeleri arasında ne olmalıdır? 👥',
+        spokenText: 'Grup çalışmalarında başarılı olmak için ne olmalıdır?',
+        a: 'İş birliği, yardımlaşma ve adil görev paylaşımı 🤝',
+        d: ['Sadece bir kişinin dediklerinin yapılması 👑', 'Kavga ve kıskançlık 😠'],
+        exp: 'Grup çalışmalarında herkes sorumluluk alır ve birbirini destekler.'
+      },
+      {
+        q: 'Grup arkadaşımızın fikrine katılmadığımızda bunu nasıl ifade etmeliyiz? 🗣️',
+        spokenText: 'Grup arkadaşımızın fikrine katılmadığımızda bunu nasıl söyleriz?',
+        a: 'Kibarca ve saygılı bir dille fikrimizi söyleyerek 💬',
+        d: ['Ona bağırıp kaba sözler söyleyerek 😠', 'Gruptan hemen ayrılarak 🚪'],
+        exp: 'Farklı fikirlere saygı duyar, kendi düşüncemizi nezaketle dile getiririz.'
+      },
+      {
+        q: 'Kendimizi arkadaşımızın yerine koyup onun duygularını anlamaya çalışmaya ne denir? 💖',
+        spokenText: 'Kendimizi başkasının yerine koyup duygularını anlamaya ne denir?',
+        a: 'Empati kurmak 💖',
+        d: ['Övünmek 🦚', 'Görmezden gelmek 🙈'],
+        exp: 'Empati, başkalarının duygularını ve hissettiklerini anlamaktır.'
+      },
+      {
+        q: 'Arkadaşımıza duygumuzu anlatırken suçlayıcı olmak yerine kırıcı olmadan kendimizi ifade etmeye ne denir? 🗣️',
+        spokenText: 'Kırıcı olmadan kendimizi ifade etmeye hangi dil denir?',
+        a: '"Ben" dili kullanmak 💬',
+        d: ['Lakap takmak 🚫', 'İnatlaşmak 😤'],
+        exp: '"Ben" dili suçlayıcı değil, duyguyu yapıcı bir şekilde ifade etmeyi sağlar.'
+      },
+      {
+        q: 'Okul çantamızı hazırlarken nelere dikkat etmeliyiz? 🎒',
+        spokenText: 'Okul çantamızı hazırlarken nelere dikkat etmeliyiz?',
+        a: 'Haftalık ders programına göre gerekenleri koymaya 📅',
+        d: ['Evdeki tüm oyuncak ve kitapları doldurmaya 🧸', 'Hiçbir ders kitabını almamaya 🚫'],
+        exp: 'Ders programına göre çanta hazırlamak gereksiz yükten ve omurga eğriliğinden korur.'
+      },
+      {
+        q: 'Okul çantasının aşırı ağır olması vücudumuzda ne gibi bir soruna yol açabilir? 🎒',
+        spokenText: 'Okul çantasının aşırı ağır olması vücudumuzda neye yol açar?',
+        a: 'Sırt ve omurga sağlığımızın bozulmasına 🦴',
+        d: ['Daha hızlı koşmamıza 🏃‍♂️', 'Boyumuzun aniden uzamasına 🦒'],
+        exp: 'Ağır çantalar sırt ağrılarına ve duruş bozukluklarına sebep olur.'
+      },
+      {
+        q: 'Sınıftaki sıraları, yazı tahtasını ve panoları nasıl kullanmalıyız? 🏫',
+        spokenText: 'Sınıftaki sıraları ve eşyaları nasıl kullanmalıyız?',
+        a: 'Temiz, özenli ve koruyarak ✨',
+        d: ['Üzerine boya ve yazılar çizerek ✍️', 'Sıraların üzerine basıp zıplayarak 👟'],
+        exp: 'Okul eşyaları ortak malımızdır, korunarak sonraki öğrencilere temiz bırakılmalıdır.'
+      },
+      {
+        q: 'Teneffüste arkadaşımız yere düşüp canı yandığında hangi empati davranışı doğrudur? 🤝',
+        spokenText: 'Arkadaşımız yere düşüp canı yandığında ne yapmalıyız?',
+        a: 'Hemen yanına gidip yardım etmek ve teselli etmek 🤝',
+        d: ['Gülüp alay etmek 😄', 'Hiç umursamadan koşmaya devam etmek 🏃‍♂️'],
+        exp: 'Zor durumda olan arkadaşımıza yardımcı olmak empati ve dostluk gereğidir.'
+      },
+      {
+        q: 'Tuvalet kağıdı ve sıvı sabunu okulda kullanırken nasıl davranmalıyız? 🧼',
+        spokenText: 'Sıvı sabun ve tuvalet kağıdını nasıl kullanmalıyız?',
+        a: 'Yalnızca ihtiyacımız kadar tasarruflu kullanmalıyız 🌿',
+        d: ['Bütün sabunu lavaboya boşaltmalıyız 🧴', 'Kağıtları top yapıp fırlatmalıyız 🧻'],
+        exp: 'Okul hijyen malzemeleri tasarruflu kullanılmalıdır.'
+      },
+      {
+        q: 'Sınıf içi kuralların belirlenmesinde kimler söz hakkına sahiptir? 🏫',
+        spokenText: 'Sınıf içi kuralların belirlenmesinde kimler söz hakkına sahiptir?',
+        a: 'Öğretmenimiz ve tüm sınıf arkadaşları birlikte 🤝',
+        d: ['Yalnızca en uzun boylu öğrenciler 🦒', 'Sadece okul bekçisi 🔑'],
+        exp: 'Kurallar tüm sınıfın katılımıyla demokratik şekilde belirlenir ve uygulanır.'
+      },
+      {
+        q: 'Bir arkadaşımızın kalemtraşına ihtiyacımız olduğunda izin istemeden çantasına el uzatmak doğru mudur? ✏️',
+        spokenText: 'Arkadaşımızın eşyasını izin almadan almak doğru mudur?',
+        a: 'Hayır, mutlaka kibarca izin istemeliyiz ❌',
+        d: ['Evet, çaktırmadan alabiliriz ✅', 'Farketmez, geri koyarız 📦'],
+        exp: 'Başkasına ait bir eşyayı kullanmadan önce mutlaka izin alınmalıdır.'
+      },
+      {
+        q: 'Hangi arkadaşlık davranışı okulda güven ve huzuru artırır? 🤝',
+        spokenText: 'Hangi davranış okulda güven ve huzuru artırır?',
+        a: 'Dürüst, güvenilir ve adil olmak 🌟',
+        d: ['Yalan söylemek ve sırları yaymak 🤫', 'Sadece oyun kazananlarla arkadaş olmak 🏆'],
+        exp: 'Dürüstlük ve güven arkadaşlık ilişkilerinin temel direğidir.'
+      },
+      {
+        q: 'Öğretmenimiz ders anlatırken veya bir arkadaşımız konuşurken ne yapmalıyız? 👂',
+        spokenText: 'Öğretmenimiz ders anlatırken ne yapmalıyız?',
+        a: 'Sözünü kesmeden dikkatle dinlemeliyiz 👂',
+        d: ['Arkadaşımıza kağıt fırlatmalıyız 📜', 'Yüksek sesle şarkı söylemeliyiz 🎶'],
+        exp: 'İletişimde en önemli kural dinleme nezaketidir.'
+      },
+      {
+        q: 'Okul koridorlarında nöbetçi öğretmen veya çalışan birine rastladığımızda ne yaparız? 👋',
+        spokenText: 'Okul koridorlarında bir görevliye rastladığımızda ne deriz?',
+        a: 'Güleryüzle selam verir ve "Kolay gelsin" deriz 👋',
+        d: ['Koşup yanlarından hızla geçeriz 🏃‍♂️', 'Görmezden gelip başımızı çeviririz 🙈'],
+        exp: 'Okul personeline ve öğretmenlere selam vermek nezaket kuralıdır.'
+      },
+      {
+        q: 'Sınıfta fikir ayrılığı yaşadığımızda sorunu çözmenin en medeni yolu nedir? 🕊️',
+        spokenText: 'Fikir ayrılığı yaşadığımızda sorunu nasıl çözmeliyiz?',
+        a: 'Konuşarak ve birbirimizi dinleyerek uzlaşmak 🤝',
+        d: ['Küsip günlerce konuşmamak 🤐', 'Kavga edip bağırışmak 😠'],
+        exp: 'Sorunlar diyalog ve uzlaşma yoluyla barışçıl çözülür.'
+      },
+      {
+        q: 'Okulumuzun spor salonundaki topları ve malzemeleri kullandıktan sonra ne yapmalıyız? ⚽',
+        spokenText: 'Okuldaki spor malzemelerini kullandıktan sonra ne yapmalıyız?',
+        a: 'Düzenli bir şekilde yerine koyup teslim etmeliyiz 📦',
+        d: ['Bahçede yağmurun altında bırakmalıyız 🌧️', 'Topları patlatmalıyız 💥'],
+        exp: 'Kullanılan ortak araç gereçler düzenli biçimde yerine kaldırılır.'
+      }
     ],
 
-    // 2. SINIF: ÜLKEMİZ VE KÜLTÜRÜMÜZ (26 ÖZGÜN SORU)
-    grade2CultureAndCountryPool: [
-      { q: 'Şanlı Türk bayrağımızın rengi hangi renktir ve üzerindeki semboller nelerdir? 🇹🇷', a: 'Al (Kırmızı) zemin üzerine beyaz Hilal ve Yıldız 🌙⭐', d: ['Mavi zemin üzerine Güneş', 'Sarı zemin üzerine Kartal'], exp: 'Bayrağımız şehitlerimizin kanını temsil eden al zemin üzerinde hilal ve yıldız taşır.' },
-      { q: 'İstiklal Marşımızın şairi (yazarı) kimdir? 📜', a: 'Mehmet Akif Ersoy 🇹🇷', d: ['Osman Zeki Üngör', 'Mustafa Kemal Atatürk'], exp: 'İstiklal Marşımızın şairi Mehmet Akif Ersoy\'dur.' },
-      { q: 'İstiklal Marşımızın bestecisi (müziğini yapan) kimdir? 🎶', a: 'Osman Zeki Üngör 🎼', d: ['Mehmet Akif Ersoy', 'Aşık Veysel'], exp: 'Marşımızın bestecisi Osman Zeki Üngör\'dür.' },
-      { q: 'Mustafa Kemal Atatürk hangi şehirde doğmuştur? 🏛️', a: 'Selanik 🏛️', d: ['İstanbul', 'Ankara'], exp: 'Atatürk 1881 yılında Selanik\'te doğmuştur.' },
-      { q: 'Atatürk\'ün annesinin adı nedir? 👩', a: 'Zübeyde Hanım 👩', d: ['Makbule Hanım', 'Sabiha Hanım'], exp: 'Atatürk\'ün saygıdeğer annesi Zübeyde Hanım\'dır.' },
-      { q: 'Atatürk\'ün babasının adı nedir? 👨', a: 'Ali Rıza Efendi 👨', d: ['Hasan Tahsin', 'Enver Paşa'], exp: 'Atatürk\'ün babası Ali Rıza Efendi\'dir.' },
-      { q: 'Atatürk\'ün anıt mezarı olan Anıtkabir hangi şehrimizdedir? 🏛️', a: 'Ankara 🏛️', d: ['İstanbul', 'İzmir'], exp: 'Anıtkabir başkentimiz Ankara\'dadır.' },
-      { q: '23 Nisan günü hangi bayramı coşkuyla kutlarız? 🎈', a: 'Ulusal Egemenlik ve Çocuk Bayramı 🎈', d: ['Cumhuriyet Bayramı', 'Zafer Bayramı'], exp: 'Atatürk 23 Nisan\'ı dünya çocuklarına armağan etmiştir.' },
-      { q: '29 Ekim günü hangi bayramı kutlarız? 🇹🇷', a: 'Cumhuriyet Bayramı 🇹🇷', d: ['Gençlik ve Spor Bayramı', 'Çocuk Bayramı'], exp: '29 Ekim 1923\'te Cumhuriyet ilan edilmiştir.' },
-      { q: '19 Mayıs günü hangi bayramı kutlarız? 🏃‍♂️', a: 'Atatürk\'ü Anma, Gençlik ve Spor Bayramı ⚡', d: ['Zafer Bayramı', 'Demokrasi Bayramı'], exp: 'Atatürk Samsun\'a çıkarak Kurtuluş Savaşı\'nı 19 Mayıs\'ta başlatmıştır.' },
-      { q: '30 Ağustos günü hangi bayramı kutlarız? 🎖️', a: 'Zafer Bayramı 🎖️', d: ['Cumhuriyet Bayramı', 'Çocuk Bayramı'], exp: 'Kurtuluş Savaşı\'nın büyük zaferle sonuçlandığı gündür.' },
-      { q: 'Türkiye Cumhuriyeti\'nin başkenti neresidir? 🏛️', a: 'Ankara 🏛️', d: ['İstanbul', 'Bursa'], exp: 'Ülkemizin başkenti Ankara\'dır.' },
-      { q: 'Dini bayramlarımız hangileridir? 🍬', a: 'Ramazan Bayramı ve Kurban Bayramı 🍬', d: ['23 Nisan ve 29 Ekim', 'Yılbaşı ve Bahar Bayramı'], exp: 'Dini bayramlarımız Ramazan ve Kurban Bayramıdır.' },
-      { q: 'Bayramlarda büyüklerimizin elini öpmek ve akrabaları ziyaret etmek neyi pekiştirir? 🤝', a: 'Sevgi, saygı ve birlikteliği 🤝', d: ['Kavga etmeyi', 'Yalnız kalmayı'], exp: 'Bayramlar sevgi, yardımlaşma ve dayanışma günleridir.' },
-      { q: 'Hangisi kültürümüze ait geleneksel bir içecektir? ☕', a: 'Türk Kahvesi ve Ayran 🥛', d: ['Gazoz', 'Kola'], exp: 'Ayran ve Türk kahvesi köklü kültürel mirasımızdır.' },
-      { q: 'Geleneksel gölge oyunumuzun sevimli iki kahramanı kimdir? 🎭', a: 'Karagöz ve Hacivat 🎭', d: ['Keloğlan ve Cüce', 'Nasreddin Hoca ve Eşeği'], exp: 'Karagöz ve Hacivat geleneksel gölge tiyatromuzun ustalarıdır.' },
-      { q: 'Fıkralarıyla hem güldüren hem düşündüren tarihi bilgemiz kimdir? 🫏', a: 'Nasreddin Hoca 🫏', d: ['Evliya Çelebi', 'Keloğlan'], exp: 'Nasreddin Hoca eşeğe ters binen bilge halk kahramanımızdır.' },
-      { q: 'Hangisi milli marşımız okunurken takınmamız gereken doğru tutumdur? 🇹🇷', a: 'Kıpırdamadan hazır ol vaziyetinde durmak ve eşlik etmek 🇹🇷', d: ['Arkadaşımızla sohbet etmek', 'Telefonla oynamak'], exp: 'İstiklal Marşı\'na saygı milletimizin bağımsızlığına saygıdır.' },
-      { q: 'Atatürk nerede hayata gözlerini yummuştur? 🏛️', a: 'İstanbul Dolmabahçe Sarayı 🏛️', d: ['Selanik', 'Anıtkabir'], exp: 'Atatürk 10 Kasım 1938\'de Dolmabahçe Sarayı\'nda vefat etmiştir.' },
-      { q: 'Her yıl 10 Kasım saat 09:05\'te sirenler çaldığında ne yaparız? ⏳', a: '1 dakikalık saygı duruşuna geçeriz 🇹🇷', d: ['Şarkı söyleriz', 'Oyun oynarız'], exp: '10 Kasım Atatürk\'ü Anma Günü\'nde derin saygıyla saygı duruşunda bulunuruz.' },
-      { q: 'Hangisi Türk mutfağının geleneksel ve dünyaca meşhur bir tatlısıdır? 🥮', a: 'Baklava ve Aşure 🥮', d: ['Pizza', 'Kruvasan'], exp: 'Baklava ve aşure geleneksel tatlılarımızdır.' },
-      { q: 'Kültürümüzde askere giden gençlere veya düğünlerde geline ne yakılır? 🌿', a: 'Kına 🌿', d: ['Boya', 'Çamur'], exp: 'Kına yakmak köklü bir Türk geleneğidir.' },
-      { q: 'Atatürk\'ün kız kardeşinin adı nedir? 👧', a: 'Makbule Hanım 👧', d: ['Zübeyde Hanım', 'Latife Hanım'], exp: 'Atatürk\'ün kız kardeşi Makbule (Atadan) Hanım\'dır.' },
-      { q: 'Türkiye Büyük Millet Meclisi (TBMM) hangi şehirde açılmıştır? 🏛️', a: 'Ankara 🏛️', d: ['Selanik', 'Samsun'], exp: 'TBMM 23 Nisan 1920\'de Ankara\'da açılmıştır.' },
-      { q: 'Düğünlerimizde ve bayramlarımızda davul ve zurna eşliğinde oynanan oyunlara ne denir? 🥁', a: 'Halk Oyunları (Halay, Zeybek, Horon) 💃', d: ['Bale', 'Modern dans'], exp: 'Halay, zeybek, horon zengin halk oyunlarımızdır.' },
-      { q: 'Farklı kültürlerden ve ülkelerden gelen insanlara karşı nasıl davranmalıyız? 🤝', a: 'Hoşgörülü, misafirperver ve saygılı 🤝', d: ['Kaba ve dışlayıcı', 'Düşmanca'], exp: 'Milletimiz köklü bir misafirperverlik ve hoşgörü kültürüne sahiptir.' }
+    // Tema 2: Sağlığım ve Güvenliğim (Sağlıklı Hayat - 20 Soru)
+    grade2LifeScienceHealthPool: [
+      {
+        q: 'Vücudumuzun sağlıklı büyüyüp gelişmesi için her besin grubundan yeteri kadar tüketmeye ne denir? 🥗',
+        spokenText: 'Her besin grubundan yeteri kadar tüketmeye ne denir?',
+        a: 'Dengeli ve yeterli beslenme 🥗',
+        d: ['Abur cubur beslenme 🍟', 'Tek tip beslenme 🍔'],
+        exp: 'Vücudun tüm vitamin ve mineralleri alması için dengeli beslenmek gerekir.'
+      },
+      {
+        q: 'Güne enerjik başlamak, zihnimizi açmak ve dersi iyi anlamak için en önemli ana öğün hangisidir? 🍳',
+        spokenText: 'Günün en önemli ana öğünü hangisidir?',
+        a: 'Sabah kahvaltısı 🍳',
+        d: ['Gece atıştırmalığı 🌙', 'Öğleden sonra cipsi 🍟'],
+        exp: 'Sabah kahvaltısı metabolizmayı çalıştıran ve odaklanmayı sağlayan en kritik öğündür.'
+      },
+      {
+        q: 'Kış mevsiminde soğuk algınlığından korunmak için hangi mevsim meyvelerini tüketmeliyiz? 🍊',
+        spokenText: 'Kış mevsiminde hangi meyveleri tüketmeliyiz?',
+        a: 'Portakal, mandalina ve nar 🍊',
+        d: ['Karpuz ve şeftali 🍉', 'Çilek ve kiraz 🍓'],
+        exp: 'Kışın bol C vitamini içeren portakal ve mandalina tüketilir.'
+      },
+      {
+        q: 'Yaz mevsiminde bol sulu ve taze olarak yetişen sebze ve meyveler hangileridir? 🍉',
+        spokenText: 'Yaz mevsiminde hangi sebze ve meyveler yetişir?',
+        a: 'Karpuz, domates ve salatalık 🍉🥒',
+        d: ['Kestane ve portakal 🌰🍊', 'Pırasa ve lahana 🥬'],
+        exp: 'Karpuz ve domates yaz güneşinde doğal olarak olgunlaşan yaz ürünleridir.'
+      },
+      {
+        q: 'Meyve ve sebzeleri neden mevsiminde tüketmeliyiz? 🥦',
+        spokenText: 'Meyve ve sebzeleri neden mevsiminde tüketmeliyiz?',
+        a: 'Daha taze, vitaminli ve katkısız oldukları için 🥦✨',
+        d: ['Pahalı oldukları için 💰', 'Tatsız oldukları için ❌'],
+        exp: 'Mevsiminde yetişen besinlerin besin değeri yüksektir ve doğaldır.'
+      },
+      {
+        q: 'Mikroplardan ve bulaşıcı hastalıklardan korunmanın en kolay ve etkili yolu nedir? 🧼',
+        spokenText: 'Mikroplardan korunmanın en etkili yolu nedir?',
+        a: 'Ellerimizi su ve sabunla en az 20 saniye yıkamak 🧼',
+        d: ['Elimizi elbisemize sürmek 👕', 'Sadece ıslak mendille silmek 🧻'],
+        exp: 'Sabun ve su ile 20 saniye yıkamak mikropları yok eder.'
+      },
+      {
+        q: 'Hapşırırken veya öksürürken mikropların yayılmaması için ne yapmalıyız? 🤧',
+        spokenText: 'Hapşırırken mikropların yayılmaması için ne yapmalıyız?',
+        a: 'Ağzımızı tek kullanımlık mendil veya dirsek içiyle kapatmalıyız 🧻',
+        d: ['Arkadaşımızın yüzüne doğru dönmeliyiz 💨', 'Elimizin içine hapşırıp her yere sürmeliyiz 🚪'],
+        exp: 'Mendil veya dirsek içi kullanımı solunum yolu mikroplarının yayılmasını önler.'
+      },
+      {
+        q: 'Bizi tehlikeli hastalıklardan koruyan ve vücudumuza bağışıklık kazandıran sağlık uygulaması nedir? 💉',
+        spokenText: 'Bizi hastalıklardan koruyan sağlık uygulaması nedir?',
+        a: 'Aşı olmak 🛡️',
+        d: ['Çikolata yemek 🍫', 'Ağrı kesici yutmak 💊'],
+        exp: 'Aşılar bağışıklık sistemini mikroplara karşı eğiterek hayat kurtarır.'
+      },
+      {
+        q: 'Hastaneye veya doktora gittiğimizde neden korkmamalıyız? 👨‍⚕️',
+        spokenText: 'Hastaneye veya doktora gittiğimizde neden korkmamalıyız?',
+        a: 'Çünkü doktor ve hemşireler sağlığımız için bize yardım eder 🩺',
+        d: ['Çünkü bize ceza verirler 🚫', 'Korkmalıyız çünkü can yakarlar ❌'],
+        exp: 'Sağlık çalışanları bizim dostumuzdur ve bizi iyileştirmek için çalışırlar.'
+      },
+      {
+        q: 'Dişlerimizin çürümesini önlemek ve diş etlerimizi korumak için ne yapmalıyız? 🪥',
+        spokenText: 'Dişlerimizi korumak için ne yapmalıyız?',
+        a: 'Günde en az iki kez fırçalamalı ve diş hekimine kontrole gitmeliyiz 🪥',
+        d: ['Sürekli lolipop şeker yemeliyiz 🍭', 'Yılda bir kez fırçalamalıyız 📅'],
+        exp: 'Düzenli fırçalama ve 6 ayda bir diş kontrolü diş sağlığı için şarttır.'
+      },
+      {
+        q: '2. sınıf öğrencisinin sağlıklı büyümesi ve gelişmesi için günde yaklaşık kaç saat uyuması gerekir? 🛌',
+        spokenText: '2. sınıf öğrencisi günde kaç saat uyumalıdır?',
+        a: '9 - 10 saat 😴',
+        d: ['3 - 4 saat 🥱', '15 saat 💤'],
+        exp: 'Büyüme hormonları uykuda salgılanır, bu yaşta 9-10 saat kaliteli uyku gerekir.'
+      },
+      {
+        q: 'Kemiklerimizin ve kaslarımızın güçlü olması, zinde hissetmemiz için ne yapmalıyız? 🏃‍♂️',
+        spokenText: 'Kemik ve kaslarımızın güçlü olması için ne yapmalıyız?',
+        a: 'Düzenli spor ve egzersiz yapmalıyız ⚽🏃‍♀️',
+        d: ['Bütün gün televizyon karşısında hareketsiz yatmalıyız 📺', 'Ağır yük taşımalıyız 🏋️‍♂️'],
+        exp: 'Fiziksel aktivite kemik yoğunluğunu artırır ve kalbi güçlendirir.'
+      },
+      {
+        q: 'Paketli gıdaların üzerindeki Son Kullanma Tarihine (SKT) neden dikkat etmeliyiz? 📅',
+        spokenText: 'Son kullanma tarihine neden dikkat etmeliyiz?',
+        a: 'Tarihi geçmiş bozuk besinler zehirlenmeye yol açabilir ⚠️',
+        d: ['Paketin rengini öğrenmek için 🎨', 'Fiyatını hesaplamak için 💰'],
+        exp: 'Son kullanma tarihi geçmiş ürünler sağlığa zararlıdır ve tüketilmez.'
+      },
+      {
+        q: 'Pazardan veya manavdan aldığımız meyve ve sebzeleri yemeden önce ne yapmalıyız? 🍎',
+        spokenText: 'Meyve ve sebzeleri yemeden önce ne yapmalıyız?',
+        a: 'Bol temiz su ile iyice yıkamalıyız 💧',
+        d: ['Hemen kabuğuyla tozlu tozlu yemeliyiz 🍎', 'Güneşte bekletmeliyiz ☀️'],
+        exp: 'Üzerindeki toz ve tarım ilacı kalıntılarından arındırmak için bol suyla yıkanır.'
+      },
+      {
+        q: 'Vücudumuzun su ihtiyacını karşılamak için günde yaklaşık ne kadar su tüketmeliyiz? 💧',
+        spokenText: 'Günde yaklaşık ne kadar su tüketmeliyiz?',
+        a: 'Günde 6 - 8 bardak temiz su 💧',
+        d: ['Hiç su içmeyip asitli gazoz içmeliyiz 🥤', 'Haftada 1 bardak 🥛'],
+        exp: 'Su hayat kaynağıdır, her gün yeterli su içilmelidir.'
+      },
+      {
+        q: 'Hangi besin grubu kemiklerimizi ve dişlerimizi güçlendiren kalsiyum içerir? 🥛',
+        spokenText: 'Kemiklerimizi güçlendiren kalsiyum hangi besinlerde bulunur?',
+        a: 'Süt, yoğurt, peynir ve ayran 🧀',
+        d: ['Cips ve şekerleme 🍭', 'Hazır bulyon ve ketçap 🥫'],
+        exp: 'Süt ve süt ürünleri kalsiyum deposudur, boy uzamasını destekler.'
+      },
+      {
+        q: 'Gece geç saatlere kadar tabletle oynamak vücudumuza nasıl zarar verir? 📱',
+        spokenText: 'Gece geç saate kadar tabletle oynamak nasıl zarar verir?',
+        a: 'Uyku düzenimizi bozar, gözlerimizi yorar ve dikkatimizi dağıtır 😵',
+        d: ['Bizi daha dinç yapar ⚡', 'Daha iyi rüya görmemizi sağlar 🌈'],
+        exp: 'Mavi ekran ışığı melatonin hormonunu baskılar ve uyku kalitesini düşürür.'
+      },
+      {
+        q: 'Grip veya nezle olduğumuzda arkadaşlarımıza bulaştırmamak için ne yapmalıyız? 🤒',
+        spokenText: 'Grip olduğumuzda arkadaşlarımıza bulaştırmamak için ne yapmalıyız?',
+        a: 'Evde dinlenmeli, bol sıvı almalı ve maske takmalıyız 😷',
+        d: ['Kalabalık yerlerde herkesle kucaklaşmalıyız 🫂', 'Dondurma yemeliyiz 🍦'],
+        exp: 'Hastalık döneminde dinlenmek ve teması azaltmak bulaşmayı engeller.'
+      },
+      {
+        q: 'Mahallemizde en yakın birinci basamak sağlık hizmeti aldığımız yer neresidir? 🏥',
+        spokenText: 'Mahallemizde en yakın sağlık hizmeti aldığımız yer neresidir?',
+        a: 'Aile Sağlığı Merkezi (Sağlık Ocağı) 🩺',
+        d: ['İtfaiye merkezi 🚒', 'Kütüphane 📚'],
+        exp: 'Rutin kontroller ve aşılar Aile Sağlığı Merkezlerinde yapılır.'
+      },
+      {
+        q: 'Sağlıklı bir tabak oluştururken tabağımızda hangilerinin dengeli bulunması gerekir? 🍽️',
+        spokenText: 'Sağlıklı bir tabakta neler bulunmalıdır?',
+        a: 'Sebze, protein (et/yumurta/bakliyat), süt ürünü ve tahıl 🥦🍗🍞',
+        d: ['Sadece patates kızartması ve mayonez 🍟', 'Sadece şeker ve çikolata 🍬'],
+        exp: 'Farklı besin gruplarını içeren tabak dengeli ve sağlıklı tabaktır.'
+      }
     ],
+
+    // Tema 3: Güvenli Hayat (20 Soru)
+    grade2LifeScienceSafetyPool: [
+      {
+        q: 'Okul servisinde seyahat ederken ilk yapmamız gereken güvenlik kuralı nedir? 🚌',
+        spokenText: 'Okul servisinde ilk yapmamız gereken güvenlik kuralı nedir?',
+        a: 'Emniyet kemerimizi takıp yerimize oturmak 🛡️',
+        d: ['Servis içinde ayakta dans etmek 💃', 'Camdan kafamızı çıkarmak 🪟'],
+        exp: 'Serviste emniyet kemeri ani frenlerde savrulmamızı ve yaralanmamızı önler.'
+      },
+      {
+        q: 'Okul servisi şoförünün dikkatini dağıtmamak için nasıl davranmalıyız? 🚌',
+        spokenText: 'Servis şoförünün dikkatini dağıtmamak için nasıl davranmalıyız?',
+        a: 'Yüksek sesle bağırmamalı ve şoförle gereksiz konuşmamalıyız 🤫',
+        d: ['Kornaya basmaya çalışmalıyız 📢', 'Şoförün gözünü kapatmalıyız 🙈'],
+        exp: 'Şoförün dikkatinin dağılması büyük trafik kazalarına yol açabilir.'
+      },
+      {
+        q: 'Servisten indikten sonra karşıya geçmek için ne yapmalıyız? 🚸',
+        spokenText: 'Servisten indikten sonra karşıya geçmek için ne yapmalıyız?',
+        a: 'Servis aracının tamamen uzaklaşmasını bekleyip yolu görerek geçmeliyiz 🚶‍♂️',
+        d: ['Hemen servisin önünden veya arkasından kör noktadan yola fırlamalıyız 🏃‍♂️', 'Gözümüz kapalı koşmalıyız 🙈'],
+        exp: 'Büyük araçların önü ve arkası kör noktadır, sürücüler bizi göremez.'
+      },
+      {
+        q: 'Oyun oynamak için aşağıdaki alanlardan hangisi GÜVENLİDİR? 🛝',
+        spokenText: 'Oyun oynamak için aşağıdaki alanlardan hangisi güvenlidir?',
+        a: 'Trafiğe kapalı çocuk parkı ve okul bahçesi 🛝🌳',
+        d: ['İnşaat alanları ve metruk binalar 🏗️', 'İşlek ana caddeler 🚗'],
+        exp: 'Parklar ve okul bahçeleri çocuklar için tasarlanmış güvenli oyun alanlarıdır.'
+      },
+      {
+        q: 'İnşaat alanları veya derin su birikintileri neden oyun için tehlikelidir? ⚠️',
+        spokenText: 'İnşaat alanları neden oyun için tehlikelidir?',
+        a: 'Çivi batması, göçük, boğulma ve düşme tehlikesi olduğu için ⚠️',
+        d: ['Çok kalabalık olduğu için 👥', 'Top oynamak kolay olduğu için ⚽'],
+        exp: 'İnşaatlar ve derin su çukurları ölümcül tehlikeler barındırır.'
+      },
+      {
+        q: 'Kaybolduğumuzda veya acil bir durum olduğunda ezbere bilmemiz gereken en önemli bilgi nedir? 📞',
+        spokenText: 'Kaybolduğumuzda ezbere bilmemiz gereken en önemli bilgi nedir?',
+        a: 'Anne veya babamızın telefon numarası ve ev adresimiz 📱🏠',
+        d: ['En sevdiğimiz çizgi filmin adı 📺', 'Tuttuğumuz takımın marşı ⚽'],
+        exp: 'Ebeveyn telefonunu ve ev adresini bilmek kaybolma anında bize hemen ulaşılmasını sağlar.'
+      },
+      {
+        q: 'Tüm acil yardım ihtiyaçlarında (yangın, kaza, sağlık, asayiş) aranan tek numara hangisidir? 🚑🚒🚓',
+        spokenText: 'Tüm acil yardım ihtiyaçlarında aranan tek numara hangisidir?',
+        a: '112 Acil Çağrı Merkezi 📞',
+        d: ['155 📞', '110 📞'],
+        exp: 'Türkiye\'de polis, jandarma, itfaiye ve ambulans 112 altında toplanmıştır.'
+      },
+      {
+        q: '112 Acil Çağrı Merkezini asılsız yere arayıp meşgul etmek neye sebep olur? 🚨',
+        spokenText: '112 Acil Çağrıyı asılsız meşgul etmek neye sebep olur?',
+        a: 'Gerçekten ölüm kalım savaşı veren insanların yardım alamamasına ⚠️',
+        d: ['Hattın daha hızlı çalışmasına ⚡', 'Telefonumuzun ödül kazanmasına 🏆'],
+        exp: '112\'yi boş yere meşgul etmek suçtur ve insan hayatını tehlikeye atar.'
+      },
+      {
+        q: 'Tanımadığımız biri sokakta bize "Sana oyuncak ve çikolata vereyim, gel" derse ne yapmalıyız? 🛑',
+        spokenText: 'Tanımadığımız biri bize hediye teklif ederse ne yapmalıyız?',
+        a: '"HAYIR!" diyerek hemen uzaklaşmalı ve güvenli bir yetişkine söylemeliyiz 🏃‍♂️',
+        d: ['Hemen teklifi kabul edip arabasına binmeliyiz 🚗', 'Teklif ettiği şekeri yiyip teşekkür etmeliyiz 🍫'],
+        exp: 'Tanımadığımız kişilerden asla yiyecek veya hediye kabul edilmez.'
+      },
+      {
+        q: 'Tanımadığımız biri bizi zorla bir yere götürmeye çalışırsa ne yapmalıyız? 🗣️',
+        spokenText: 'Tanımadığımız biri bizi zorla götürmeye çalışırsa ne yapmalıyız?',
+        a: 'Avazımız çıktığı kadar "İMDAT! SENİ TANIMIYORUM!" diye bağırmalıyız 📢',
+        d: ['Sessizce onunla yürümeliyiz 🚶‍♂️', 'Utanıp yere bakmalıyız 🙈'],
+        exp: 'Çevredekilerin dikkatini çekmek için yüksek sesle bağırıp yardım istenir.'
+      },
+      {
+        q: 'İnternette tablet veya bilgisayar kullanırken tanımadığımız kişilere ne vermemeliyiz? 💻',
+        spokenText: 'İnternette tanımadığımız kişilere hangi bilgileri vermemeliyiz?',
+        a: 'Adımızı, ev adresimizi, okulumuzu ve şifrelerimizi 🔒',
+        d: ['Merhaba dememeliyiz 👋', 'Oyun oynamamalıyız 🎮'],
+        exp: 'İnternette kişisel bilgiler gizli tutulmalı, kimseyle paylaşılmamalıdır.'
+      },
+      {
+        q: 'Günde tablet veya televizyon başında ne kadar zaman geçirmek sağlıklıdır? ⏳',
+        spokenText: 'Günde ekran başında ne kadar zaman geçirmek sağlıklıdır?',
+        a: 'Ailemizin belirlediği süre kadar (en fazla 30-45 dakika) ⏳',
+        d: ['Sabahtan akşama kadar aralıksız 📱', 'Gece yarısına kadar 🌙'],
+        exp: 'Aşırı ekran süresi göz ve beyin sağlığını bozar, bağımlılık yapar.'
+      },
+      {
+        q: 'Evde temizlik deterjanları, çamaşır suyu ve ilaçlar nereye konulmalıdır? 🧴',
+        spokenText: 'Temizlik deterjanları ve ilaçlar nereye konulmalıdır?',
+        a: 'Çocukların erişemeyeceği kilitli ve yüksek dolaplara 🔒',
+        d: ['Mutfak masasının üzerine açıkta 🍽️', 'Yere oyuncakların yanına 🧸'],
+        exp: 'Kimyasallar ve ilaçlar zehirlenmeye sebep olabileceği için kilit altında tutulmalıdır.'
+      },
+      {
+        q: 'Prizlere sivri cisim sokmak veya ıslak elle elektrik anahtarına dokunmak neden tehlikelidir? ⚡',
+        spokenText: 'Prizlere dokunmak neden tehlikelidir?',
+        a: 'Elektrik çarpmasına ve hayati tehlikeye yol açar ⚡',
+        d: ['Işıkların sönmesine sebep olur 💡', 'Eldivenimiz kirlenir 🧤'],
+        exp: 'Elektrik akımı ölümcül olabilir, prizlere ve ıslak anahtarlara dokunulmaz.'
+      },
+      {
+        q: 'Evde yanık veya sıcak su dökülmesi durumunda ilk yapılması gereken nedir? 💧',
+        spokenText: 'Sıcak su dökülmesi veya yanık durumunda ilk ne yapılır?',
+        a: 'Yanan bölgeyi hemen soğuk musluk suyu altında 10-15 dakika tutmak 💧',
+        d: ['Üzerine diş macunu veya salça sürmek 🍅', 'Ateşe yaklaştırmak 🔥'],
+        exp: 'Yanıklara asla salça veya macun sürülmez; temiz akan serin su tutulur.'
+      },
+      {
+        q: 'Bisiklet, paten ve kaykay sürerken kask takmanın temel amacı nedir? 🪖',
+        spokenText: 'Bisiklet sürerken kask takmanın temel amacı nedir?',
+        a: 'Düşme anında başımızı ve beynimizi darbelerden korumak 🪖',
+        d: ['Daha havalı ve süslü görünmek ✨', 'Rüzgarı engellemek 💨'],
+        exp: 'Kask baş yaralanmalarını ve travmaları önleyen en önemli güvenlik aracıdır.'
+      },
+      {
+        q: 'Cadde kenarında yürürken topumuz yola kaçarsa ne yapmalıyız? ⚽',
+        spokenText: 'Topumuz yola kaçarsa ne yapmalıyız?',
+        a: 'Asla yola fırlamamalı, büyüklerimizden yardım istemeliyiz 🛑',
+        d: ['Gözümüzü kapatıp arkasından hemen koşmalıyız 🏃‍♂️', 'Yolun ortasına oturmalıyız 🛑'],
+        exp: 'Topun peşinden aniden yola fırlamak en sık görülen trafik kazası nedenidir.'
+      },
+      {
+        q: 'Toplu taşıma araçlarında (otobüs, metro) yaşlı, hamile ve engellilere ne yapmalıyız? 👵',
+        spokenText: 'Toplu taşımada yaşlı ve hamilelere nasıl davranmalıyız?',
+        a: 'Güleryüzle yer vermeliyiz 🤝',
+        d: ['Görmezden gelip uyuyor numarası yapmalıyız 😴', 'Onları itmeliyiz 🚫'],
+        exp: 'Özel gereksinimli bireylere yer vermek temel bir nezaket ve güvenlik kuralıdır.'
+      },
+      {
+        q: 'Trafik ışığı olmayan bir yolda karşıdan karşıya güvenle nasıl geçilir? 🚶‍♂️',
+        spokenText: 'Trafik ışığı olmayan yolda karşıya nasıl geçilir?',
+        a: 'Önce sola, sonra sağa, tekrar sola bakıp yol boşsa dikkatle 🚶‍♂️',
+        d: ['Direkt koşarak 🏃‍♂️', 'Yalnızca yukarı bakarak ☁️'],
+        exp: 'Güvenli geçiş kuralı: Sol-Sağ-Sol kontrolüdür.'
+      },
+      {
+        q: 'İnternette veya gerçek hayatta bizi rahatsız eden bir durumla karşılaştığımızda ilk kime söylemeliyiz? 👨‍👩‍👧',
+        spokenText: 'Bizi rahatsız eden bir durumla karşılaştığımızda kime söylemeliyiz?',
+        a: 'Anne, baba veya öğretmenimize 👨‍🏫',
+        d: ['Hiç kimseye söylemeyip içimize atmalıyız 🤫', 'Tanımadığımız bir yabancıya 👤'],
+        exp: 'Güvenliğimiz için ailemiz ve öğretmenimiz en doğru rehberdir.'
+      }
+    ],
+
+    // Tema 4: Ailem ve Toplum (Evimizde Hayat - 20 Soru)
+    grade2LifeScienceHomeFamilyPool: [
+      {
+        q: 'Annemizin erkek kardeşine ne ad veririz? 👨',
+        spokenText: 'Annemizin erkek kardeşine ne denir?',
+        a: 'Dayı 👨',
+        d: ['Amca 👨', 'Hala 👩'],
+        exp: 'Annenin erkek kardeşi dayı, babanın erkek kardeşi amcadır.'
+      },
+      {
+        q: 'Babamızın kız kardeşine ne ad verilir? 👩',
+        spokenText: 'Babamızın kız kardeşine ne denir?',
+        a: 'Hala 👩',
+        d: ['Teyze 👩', 'Yenge 👩'],
+        exp: 'Babanın kız kardeşi hala, annenin kız kardeşi teyzedir.'
+      },
+      {
+        q: 'Teyzemizin, dayımızın, amcamızın veya halamızın çocukları bizim neyimiz olur? 👦👧',
+        spokenText: 'Akrabalarımızın çocukları bizim neyimiz olur?',
+        a: 'Kuzenimiz 🤝',
+        d: ['Kardeşimiz 👶', 'Yeğenimiz 🧒'],
+        exp: 'Akraba çocuklarına kuzen denir.'
+      },
+      {
+        q: 'Annemizin annesine ne hitap ederiz? 👵',
+        spokenText: 'Annemizin annesine ne hitap ederiz?',
+        a: 'Anneanne (veya Büyükanne) 👵',
+        d: ['Babaanne 👵', 'Teyze 👩'],
+        exp: 'Annenin annesi anneanne, babanın annesi babaannedir.'
+      },
+      {
+        q: 'Ev adresimizde aşağıdaki bilgilerden hangisinin bulunması ZORUNLUDUR? 🏠',
+        spokenText: 'Ev adresimizde hangisinin bulunması zorunludur?',
+        a: 'İl, ilçe, mahalle, cadde/sokak ve kapı numarası 📍',
+        d: ['En sevdiğimiz meyvenin adı 🍎', 'Evdeki televizyonun markası 📺'],
+        exp: 'Tam adres; il, ilçe, mahalle, sokak, bina ve daire numarasını içerir.'
+      },
+      {
+        q: 'Postacının veya acil servisin evimizi kolayca bulabilmesi için neyi doğru bilmeliyiz? 📬',
+        spokenText: 'Evimizi kolayca bulabilmeleri için neyi bilmeliyiz?',
+        a: 'Ev adresimizi eksiksiz ve doğru bilmeliyiz 🏠',
+        d: ['Evin çatısının rengini 🎨', 'Evdeki halı sayısını 🛋️'],
+        exp: 'Acil durumlarda ve posta gönderilerinde adres hayati önem taşır.'
+      },
+      {
+        q: 'Ailemizde tatile nereye gidileceği veya ev için bir eşya alınacağı zaman ne yapılmalıdır? 👨‍👩‍👧',
+        spokenText: 'Ailede karar alınırken nasıl davranılmalıdır?',
+        a: 'Bütün aile bireylerinin fikri alınarak ortak karar verilmelidir 🤝',
+        d: ['Yalnızca televizyonun sesine göre karar verilmelidir 📺', 'Çocukların fikri hiç sorulmamalıdır ❌'],
+        exp: 'Demokratik ailede herkesin görüşüne değer verilir ve ortak karar alınır.'
+      },
+      {
+        q: 'Aşağıdakilerden hangisi 2. sınıf öğrencisinin evdeki sorumluluklarından biridir? 🛏️',
+        spokenText: 'Hangisi evdeki sorumluluklarımızdan biridir?',
+        a: 'Kendi odasını ve yatağını düzenli tutmak, oyuncaklarını toplamak 🛏️🧸',
+        d: ['Evin elektrik tesisatını tamir etmek ⚡', 'Araba kullanıp alışverişe gitmek 🚗'],
+        exp: 'Çocuklar yaşlarına uygun olarak odasını toplar ve ailesine destek olur.'
+      },
+      {
+        q: 'Yemek saatinde sofranın kurulmasına ve toplanmasına yardım etmek neyin göstergesidir? 🍽️',
+        spokenText: 'Sofranın kurulmasına yardım etmek neyin göstergesidir?',
+        a: 'Evde iş bölümü ve yardımlaşmanın 🤝',
+        d: ['Zorla çalıştırılmanın 🚫', 'Yalnızlığın 😔'],
+        exp: 'İş bölümü evdeki işleri hafifletir ve aile bağlarını güçlendirir.'
+      },
+      {
+        q: 'Aşağıdakilerden hangisi yaşamımızı sürdürmek için ZORUNLU olan temel bir İHTİYAÇTIR? 🍞',
+        spokenText: 'Hangisi yaşam için zorunlu olan temel bir ihtiyaçtır?',
+        a: 'Beslenme, su ve giyinme 🍞💧👕',
+        d: ['Pahalı bir uzaktan kumandalı araba 🏎️', 'Akıllı saat ⌚'],
+        exp: 'İhtiyaçlar karşılanmadığında hayatta kalamayacağımız zorunlu unsurlardır.'
+      },
+      {
+        q: 'Aşağıdakilerden hangisi bir İSTEKTİR (olmasa da hayatımıza devam edebiliriz)? 🎮',
+        spokenText: 'Hangisi olmasa da yaşayabileceğimiz bir istektir?',
+        a: 'Yepyeni bir video oyunu veya paten 🎮🛼',
+        d: ['Kışın giyilecek sıcak tutan mont 🧥', 'Her gün içtiğimiz temiz içme suyu 💧'],
+        exp: 'İstekler zevk ve eğlence içindir; yokluğunda yaşam tehlikeye girmez.'
+      },
+      {
+        q: 'Alışveriş yaparken aile bütçemizi korumak için hangisine ÖNCELİK vermeliyiz? 🛒',
+        spokenText: 'Alışveriş yaparken hangisine öncelik vermeliyiz?',
+        a: 'Önce zorunlu ihtiyaçlarımıza, para kalırsa isteklerimize 📋',
+        d: ['Yalnızca canımızın çektiği oyuncaklara 🧸', 'En pahalı süs eşyalarına 💎'],
+        exp: 'Bütçe yönetiminde altın kural: Önce temel ihtiyaçlar karşılanır.'
+      },
+      {
+        q: 'Harçlıklarımızdan artan paraları kumbarada biriktirmek bize hangi erdemi kazandırır? 💰',
+        spokenText: 'Kumbarada para biriktirmek bize ne kazandırır?',
+        a: 'Tasarruf ve bütçe bilinci 🪙',
+        d: ['Cimrilik ve bencillik ❌', 'Parayı tamamen unutmak 🚫'],
+        exp: 'Tasarruf gelecekteki önemli ihtiyaçlarımız için birikim yapmayı öğretir.'
+      },
+      {
+        q: 'Evde su, elektrik ve doğalgazı tasarruflu kullanmak kime fayda sağlar? 💡',
+        spokenText: 'Evde kaynakları tasarruflu kullanmak kime fayda sağlar?',
+        a: 'Hem aile bütçemize hem de ülkemizin kaynaklarına 🇹🇷💰',
+        d: ['Yalnızca komşumuza 🏡', 'Hiç kimseye fayda sağlamaz ❌'],
+        exp: 'Tasarruf aile ekonomisini güçlendirir ve doğayı korur.'
+      },
+      {
+        q: 'Akrabalarımızı bayramlarda veya özel günlerde ziyaret etmek aile bağlarını nasıl etkiler? 🤝',
+        spokenText: 'Akraba ziyaretleri aile bağlarını nasıl etkiler?',
+        a: 'Sevgi, saygı ve dayanışmayı güçlendirir 💖',
+        d: ['İnsanları birbirinden soğutur ❄️', 'Zaman kaybına yol açar ⏰'],
+        exp: 'Akraba ziyaretleri toplumsal dayanışma ve birlik duygusunu pekiştirir.'
+      },
+      {
+        q: 'Evde kardeşimizle bir oyuncağı paylaşırken nasıl davranmalıyız? 🧸',
+        spokenText: 'Kardeşimizle oyuncak paylaşırken nasıl davranmalıyız?',
+        a: 'Sırayla oynayarak ve adaleti gözeterek 🤝',
+        d: ['Oyuncağı zorla çekip elinden alarak 😠', 'Oyuncağı kırıp yere atarak 💥'],
+        exp: 'Paylaşmak ve sırasını beklemek kardeşlik bağını kuvvetlendirir.'
+      },
+      {
+        q: 'Babanızın erkek kardeşine ne hitap edersiniz? 👨',
+        spokenText: 'Babanızın erkek kardeşine ne denir?',
+        a: 'Amca 👨',
+        d: ['Dayı 👨', 'Enişte 👨'],
+        exp: 'Babanın erkek kardeşi amcadır.'
+      },
+      {
+        q: 'Evimizde yemek piştikten sonra açık unutulan ocağı veya musluğu fark edersek ne yapmalıyız? ⚠️',
+        spokenText: 'Açık unutulan ocağı veya musluğu fark edince ne yapmalıyız?',
+        a: 'Hemen büyüklerimize haber vermeliyiz 👨‍👩‍👧',
+        d: ['Görmezden gelip odamıza gitmeliyiz 🙈', 'Ocakla oynamaya başlamalıyız 🔥'],
+        exp: 'Evdeki tehlikeli durumlarda hemen yetişkinlere haber verilir.'
+      },
+      {
+        q: 'Komşularımız hastalandığında veya bir şeye ihtiyaç duyduğunda ne yapmalıyız? 🍲',
+        spokenText: 'Komşularımız hastalandığında ne yapmalıyız?',
+        a: 'Geçmiş olsun deyip elimizden gelen yardımı yapmalıyız 🤝',
+        d: ['Yüksek sesle müzik açıp rahatsız etmeliyiz 📢', 'Kapılarını tekmelemeliyiz 🚫'],
+        exp: 'Komşuluk ilişkilerinde yardımlaşma ve saygı çok önemlidir.'
+      },
+      {
+        q: 'Alışverişe çıkmadan önce evde ne hazırlamak gereksiz harcamaları önler? 📝',
+        spokenText: 'Gereksiz harcamaları önlemek için ne hazırlamalıyız?',
+        a: 'Alışveriş ihtiyaç listesi hazırlamak 📝',
+        d: ['Boş bir torba almak 🛍️', 'Bütün parayı yanımıza almak 💵'],
+        exp: 'Alışveriş listesi yalnızca ihtiyaç olanların alınmasını sağlayarak israfı önler.'
+      }
+    ],
+
+    // Tema 5: Yaşadığım Yer ve Ülkem (Ülkemizde Hayat - 20 Soru)
+    grade2LifeScienceCountryCulturePool: [
+      {
+        q: 'Harita ve küre üzerinde yaşadığımız güzel ülkenin adı nedir? 🇹🇷',
+        spokenText: 'Yaşadığımız güzel ülkenin adı nedir?',
+        a: 'Türkiye Cumhuriyeti 🇹🇷',
+        d: ['Avrupa 🌍', 'Asya 🗺️'],
+        exp: 'Vatanımız Türkiye Cumhuriyeti Devleti\'dir.'
+      },
+      {
+        q: 'Türkiye Cumhuriyeti\'nin başkenti hangi ilimizdir? 🏛️',
+        spokenText: 'Türkiye Cumhuriyeti\'nin başkenti hangi ilimizdir?',
+        a: 'Ankara 🏛️',
+        d: ['İstanbul 🕌', 'İzmir 🌊'],
+        exp: 'Ülkemizin yönetim merkezi ve başkenti Ankara\'dır.'
+      },
+      {
+        q: 'Mustafa Kemal Atatürk\'ün kabri olan Anıtkabir hangi şehrimizdedir? 🏛️',
+        spokenText: 'Anıtkabir hangi şehrimizdedir?',
+        a: 'Ankara 🏛️',
+        d: ['Selanik 🏛️', 'Çanakkale ⚓'],
+        exp: 'Atatürk\'ün anıt mezarı Anıtkabir başkentimiz Ankara\'dadır.'
+      },
+      {
+        q: 'Atatürk çocukken ilk olarak annesinin isteğiyle hangi okula başlamıştır? 🏫',
+        spokenText: 'Atatürk ilk olarak annesinin isteğiyle hangi okula başlamıştır?',
+        a: 'Mahalle Mektebi 🏫',
+        d: ['Harp Akademisi ⚔️', 'Selanik Lisesi 🎒'],
+        exp: 'Atatürk eğitimine önce Mahalle Mektebinde başlamıştır.'
+      },
+      {
+        q: 'Mustafa Kemal\'e modern yöntemlerle eğitim veren ve babasının istediği okul hangisidir? 📚',
+        spokenText: 'Mustafa Kemal\'e babasının isteğiyle modern eğitim veren okul hangisidir?',
+        a: 'Şemsi Efendi Okulu 🏫',
+        d: ['Askeri İdadi 🎖️', 'Köy Mektebi 🌾'],
+        exp: 'Şemsi Efendi Okulu dönemin çağdaş ve yenilikçi okuludur.'
+      },
+      {
+        q: 'Mustafa\'ya "Kemal" adını hangi dersin öğretmeni üstün başarısından dolayı vermiştir? 📐',
+        spokenText: 'Mustafa\'ya Kemal adını hangi dersin öğretmeni vermiştir?',
+        a: 'Matematik öğretmeni Yüzbaşı Mustafa Bey 📐',
+        d: ['Beden eğitimi öğretmeni 🏃‍♂️', 'Müzik öğretmeni 🎶'],
+        exp: 'Matematik öğretmeni "Senin de adın Mustafa benim de; senin adın Mustafa Kemal olsun" demiştir.'
+      },
+      {
+        q: '29 Ekim günü tüm yurtta coşkuyla kutladığımız en büyük milli bayramımız hangisidir? 🇹🇷',
+        spokenText: '29 Ekim günü kutladığımız en büyük milli bayramımız hangisidir?',
+        a: 'Cumhuriyet Bayramı 🇹🇷',
+        d: ['Zafer Bayramı 🎖️', 'Gençlik Bayramı ⚡'],
+        exp: '29 Ekim 1923\'te Cumhuriyet ilan edilmiştir.'
+      },
+      {
+        q: '23 Nisan günü Atatürk\'ün dünya çocuklarına armağan ettiği bayram hangisidir? 🎈',
+        spokenText: '23 Nisan günü kutlanan bayram hangisidir?',
+        a: 'Ulusal Egemenlik ve Çocuk Bayramı 🎈',
+        d: ['Kurban Bayramı 🍬', 'Öğretmenler Günü 👨‍🏫'],
+        exp: '23 Nisan 1920\'de TBMM açılmış ve çocuk bayramı ilan edilmiştir.'
+      },
+      {
+        q: 'Atatürk\'ün Kurtuluş Savaşı\'nı başlatmak için Samsun\'a ayak bastığı 19 Mayıs\'ta hangi bayramı kutlarız? 🏃‍♂️',
+        spokenText: '19 Mayıs\'ta hangi bayramı kutlarız?',
+        a: 'Atatürk\'ü Anma, Gençlik ve Spor Bayramı ⚡',
+        d: ['Demokrasi Bayramı 🤝', 'Cumhuriyet Bayramı 🇹🇷'],
+        exp: '19 Mayıs 1919 Kurtuluş Savaşı\'nın başlangıç meşalesidir.'
+      },
+      {
+        q: '30 Ağustos günü kahraman ordumuzun kazandığı büyük zaferin bayramı hangisidir? 🎖️',
+        spokenText: '30 Ağustos günü kutlanan bayram hangisidir?',
+        a: 'Zafer Bayramı 🎖️',
+        d: ['Çocuk Bayramı 🎈', 'Yılbaşı 🎄'],
+        exp: '30 Ağustos Başkomutanlık Meydan Muharebesi büyük zaferidir.'
+      },
+      {
+        q: '15 Temmuz günü milletimizin birlik ve beraberliğini andığımız gün hangisidir? 🤝',
+        spokenText: '15 Temmuz günü hangi günü anarız?',
+        a: 'Demokrasi ve Milli Birlik Günü 🇹🇷',
+        d: ['Tiyatro Günü 🎭', 'Bahar Bayramı 🌸'],
+        exp: '15 Temmuz milli birlik ve demokrasi zaferini simgeler.'
+      },
+      {
+        q: 'Aşağıdakilerden hangisi milletçe kutladığımız DİNİ bayramlarımızdan biridir? 🍬',
+        spokenText: 'Aşağıdakilerden hangisi dini bayramlarımızdandır?',
+        a: 'Ramazan Bayramı ve Kurban Bayramı 🍬',
+        d: ['23 Nisan ve 19 Mayıs 🎈', 'Nevruz Bayramı 🌿'],
+        exp: 'Ramazan ve Kurban Bayramı İslam aleminin iki büyük dini bayramıdır.'
+      },
+      {
+        q: 'Karadeniz bölgesinin kemençe eşliğinde coşkuyla oynanan meşhur halk oyunu hangisidir? 💃',
+        spokenText: 'Karadeniz bölgesinin meşhur halk oyunu hangisidir?',
+        a: 'Horon 💃',
+        d: ['Zeybek 🦅', 'Halay 🥁'],
+        exp: 'Horon Karadeniz bölgesine ait hareketli ve neşeli bir halk oyunudur.'
+      },
+      {
+        q: 'Ege bölgesinde efelerin ağırbaşlı ve cesurca oynadığı geleneksel halk oyunu nedir? 🦅',
+        spokenText: 'Ege bölgesinde efelerin oynadığı halk oyunu nedir?',
+        a: 'Zeybek 🦅',
+        d: ['Horon 🌊', 'Vals 🩰'],
+        exp: 'Zeybek Ege\'nin efelerine özgü yiğitlik dansıdır.'
+      },
+      {
+        q: 'Topraklarımızda buğday, pamuk, zeytin ve fındık yetiştirilmesine hangi üretim faaliyeti denir? 🌾',
+        spokenText: 'Topraktan bitkisel ürünler elde etme faaliyetine ne denir?',
+        a: 'Tarım faaliyeti 🌾',
+        d: ['Madencilik ⛏️', 'Sanayi 🏭'],
+        exp: 'Topraktan bitkisel ürünler elde etme işine tarım denir.'
+      },
+      {
+        q: 'İnek, koyun ve keçi gibi hayvanların beslenip süt, et ve yün elde edilmesine ne denir? 🐄',
+        spokenText: 'Hayvanlardan süt ve et elde etme faaliyetine ne denir?',
+        a: 'Hayvancılık 🐄🐑',
+        d: ['Ormancılık 🌲', 'Balıkçılık 🎣'],
+        exp: 'Hayvanların yetiştirilmesi ve ürünlerinden yararlanılması hayvancılıktır.'
+      },
+      {
+        q: 'Milli marşımız İstiklal Marşı söylenirken nasıl durmalıyız? 🇹🇷',
+        spokenText: 'İstiklal Marşı söylenirken nasıl durmalıyız?',
+        a: 'Hazır ol duruşunda kıpırdamadan ve coşkuyla eşlik ederek 🇹🇷',
+        d: ['Ellerimiz cebimizde sakız çiğneyerek 🚫', 'Arkadaşımızla sohbet ederek 🗣️'],
+        exp: 'İstiklal Marşı\'na saygı milletimizin bağımsızlığına ve bayrağına saygıdır.'
+      },
+      {
+        q: 'Ülkemizin üç tarafı hangi denizlerle çevrilidir? 🌊',
+        spokenText: 'Ülkemizin üç tarafı hangi denizlerle çevrilidir?',
+        a: 'Karadeniz, Akdeniz ve Ege Denizi 🌊',
+        d: ['Okyanuslar ve Hazar Denizi 🌊', 'Kutup Denizi 🧊'],
+        exp: 'Türkiye üç tarafı denizlerle (Karadeniz, Ege, Akdeniz) çevrili bir yarımadadır.'
+      },
+      {
+        q: 'Fıkralarıyla tüm dünyada tanınan, eşeğe ters binen bilge halk kahramanımız kimdir? 🫏',
+        spokenText: 'Eşeğe ters binen bilge halk kahramanımız kimdir?',
+        a: 'Nasreddin Hoca 🫏',
+        d: ['Keloğlan 🪓', 'Hacivat 🎭'],
+        exp: 'Nasreddin Hoca fıkralarıyla güldürürken ders veren kültür hazinemizdir.'
+      },
+      {
+        q: 'Geleneksel Türk misafirperverliğinde eve gelen konuğa ilk ne ikram edilir? ☕',
+        spokenText: 'Geleneksel misafirperverliğimizde konuğa ilk ne ikram edilir?',
+        a: 'Güleryüz, kolonya ve Türk kahvesi/çay ☕🍬',
+        d: ['Soğuk su ve tuz 🧂', 'Hiçbir şey ikram edilmez ❌'],
+        exp: 'Kolonya ve kahve Türk misafirperverliğinin en sıcak sembolleridir.'
+      }
+    ],
+
+    // Tema 6: Doğa ve Çevre (Doğada Hayat - 20 Soru)
+    grade2LifeScienceNatureEnvironmentPool: [
+      {
+        q: 'Bir bitkinin büyüyüp yeşermesi için hangilerine mutlaka ihtiyacı vardır? 🌱',
+        spokenText: 'Bir bitkinin büyümesi için nelere ihtiyacı vardır?',
+        a: 'Su, hava, güneş ışığı ve verimli toprak 🌱☀️💧',
+        d: ['Kola, çikolata ve karanlık oda 🍫', 'Plastik torba ve deterjan 🧴'],
+        exp: 'Bitkiler su, güneş ışığı, hava ve toprak ile fotosentez yapar ve büyür.'
+      },
+      {
+        q: 'Doğada kendiliğinden var olan, insanlar tarafından yapılmamış varlıklara ne denir? 🏔️',
+        spokenText: 'Doğada kendiliğinden var olan varlıklara ne denir?',
+        a: 'Doğal unsurlar (Dağ, göl, orman) 🌲',
+        d: ['Beşeri unsurlar (Bina, köprü) 🏢', 'Yapay zeka 🤖'],
+        exp: 'Dağlar, nehirler, denizler ve ormanlar doğal unsurlardır.'
+      },
+      {
+        q: 'Aşağıdakilerden hangisi insanlar tarafından inşa edilmiş BEŞERİ bir unsurdur? 🌉',
+        spokenText: 'Hangisi insanlar tarafından inşa edilmiş beşeri bir unsurdur?',
+        a: 'Köprü, baraj ve gökdelen 🌉🏢',
+        d: ['Deniz ve şelale 🌊', 'Peri bacaları 🏔️'],
+        exp: 'İnsan aklı ve emeğiyle yapılan yapılar beşeri unsurdur.'
+      },
+      {
+        q: 'Kullanılmış kağıt, cam, plastik ve metallerin fabrikalarda yeniden işlenmesine ne denir? ♻️',
+        spokenText: 'Atıkların yeniden işlenerek kazandırılmasına ne denir?',
+        a: 'Geri dönüşüm ♻️',
+        d: ['Çöp biriktirme 🗑️', 'İsraf etme 💸'],
+        exp: 'Geri dönüşüm doğal kaynakları korur ve enerji tasarrufu sağlar.'
+      },
+      {
+        q: 'Geri dönüşüm sayesinde 1 ton atık kağıdın geri kazanılması neyi kurtarır? 🌳',
+        spokenText: '1 ton kağıdın geri dönüştürülmesi neyi kurtarır?',
+        a: '17 adet büyük ağacın kesilmesini önler 🌳✨',
+        d: ['Denizlerin kurumasını 🌊', 'Güneşin batmasını ☀️'],
+        exp: 'Kağıt geri dönüşümü ormanlarımızın yok olmasını engeller.'
+      },
+      {
+        q: 'Tükenmiş atık pilleri çöpe veya toprağa atmak yerine nereye atmalıyız? 🔋',
+        spokenText: 'Tükenmiş atık pilleri nereye atmalıyız?',
+        a: 'Kırmızı atık pil toplama kutularına 🔋📦',
+        d: ['Nehre veya denize 🌊', 'Normal çöp kutusuna 🗑️'],
+        exp: 'Pillerdeki ağır metaller toprağı ve yer altı sularını zehirler; özel pil kutusuna atılır.'
+      },
+      {
+        q: 'Deprem sarsıntısı başladığında sağlam bir eşyanın yanında hangi hayat kurtaran hareketi yaparız? 🛡️',
+        spokenText: 'Deprem sarsıntısı başladığında hangi hareketi yaparız?',
+        a: 'Çök - Kapan - Tutun 🛡️',
+        d: ['Balkondan aşağı atlamak 🏃‍♂️', 'Asansöre binip kaçmak 🛗'],
+        exp: 'Çök-Kapan-Tutun başımızı ve boynumuzu düşen eşyalardan korur.'
+      },
+      {
+        q: 'Deprem anında kesinlikle hangisi KULLANILMAMALIDIR? 🚫',
+        spokenText: 'Deprem anında kesinlikle hangisi kullanılmaz?',
+        a: 'Asansör ve merdivenler 🛗🚫',
+        d: ['Masa kenarı 🪵', 'Sağlam baza yanı 🛏️'],
+        exp: 'Depremde asansör elektrik kesilince kilitlenir veya düşebilir, asla binilmez.'
+      },
+      {
+        q: 'Karlı ve eğimli dağ yamaçlarından büyük kar kütlelerinin aşağıya doğru kaymasına ne ad verilir? ❄️',
+        spokenText: 'Büyük kar kütlelerinin yamaçtan kaymasına ne denir?',
+        a: 'Çığ ❄️',
+        d: ['Heyelan ⛰️', 'Deprem 🌍'],
+        exp: 'Dağlarda biriken kar örtüsünün kopup kaymasına çığ denir.'
+      },
+      {
+        q: 'Şiddetli yağmurlar sonucu toprağın kayarak yamaçtan aşağı sürüklenmesine ne denir? ⛰️',
+        spokenText: 'Toprağın kayarak sürüklenmesine ne denir?',
+        a: 'Heyelan (Toprak kayması) ⛰️',
+        d: ['Fırtına 🌪️', 'Hortum 🌀'],
+        exp: 'Aşırı yağış ve eğim nedeniyle toprağın kaymasına heyelan denir; ağaçlandırma önler.'
+      },
+      {
+        q: 'Güneşli bir günde öğle vakti Güneş\'in doğduğu tarafa sağ kolumuzu uzatırsak, önümüz hangi yönü gösterir? 🧭',
+        spokenText: 'Sağ kolumuzu doğuya uzatırsak önümüz hangi yönü gösterir?',
+        a: 'Kuzey 🧭',
+        d: ['Güney 🧭', 'Batı 🧭'],
+        exp: 'Sağ kol Doğu, sol kol Batı ise önümüz Kuzey, arkamız Güney\'dir.'
+      },
+      {
+        q: 'Doğada yönümüzü bulmak için karınca yuvalarına baktığımızda yuvanın ağzı nereye bakar? 🐜',
+        spokenText: 'Karınca yuvalarının ağzı hangi yöne bakar?',
+        a: 'Güney yönüne (sıcak tarafa) ☀️',
+        d: ['Kuzey yönüne ❄️', 'Batı yönüne 🌅'],
+        exp: 'Karıncalar yuva girişlerini sıcak rüzgarlara yani Güney\'e doğru yaparlar.'
+      },
+      {
+        q: 'Ağaç gövdelerinin ve taşların yosun tutan tarafı daima hangi yönü gösterir? 🌲',
+        spokenText: 'Ağaç gövdelerinin yosun tutan tarafı hangi yönü gösterir?',
+        a: 'Kuzey yönünü (gölge tarafı) 🧭',
+        d: ['Güney yönünü ☀️', 'Doğu yönünü 🌅'],
+        exp: 'Güneş görmeyen nemli taraf Kuzey\'dir; bu yüzden yosunlar Kuzey\'de oluşur.'
+      },
+      {
+        q: 'Bulutsuz bir gecede gökyüzünde daima Kuzey yönünü gösteren parlak yıldız hangisidir? ⭐',
+        spokenText: 'Daima Kuzey yönünü gösteren parlak yıldız hangisidir?',
+        a: 'Kutup Yıldızı (Demirkazık) ⭐',
+        d: ['Kuyruklu Yıldız ☄️', 'Çoban Yıldızı 🌟'],
+        exp: 'Kutup Yıldızı daima Kuzey kutup noktasını gösterir.'
+      },
+      {
+        q: 'Pusulanın renkli (genellikle kırmızı) ibresi serbest bırakıldığında her zaman nereyi gösterir? 🧭',
+        spokenText: 'Pusulanın renkli ibresi her zaman nereyi gösterir?',
+        a: 'Kuzey yönünü 🧭',
+        d: ['Güney yönünü ☀️', 'Batı yönünü 🌅'],
+        exp: 'Pusula ibresi Dünya\'nın manyetik alanı sayesinde Kuzey\'i işaret eder.'
+      },
+      {
+        q: 'Dünya\'nın kendi ekseni etrafında 24 saatte dönmesi sonucunda ne oluşur? 🌍',
+        spokenText: 'Dünya\'nın kendi ekseni etrafında dönmesiyle ne oluşur?',
+        a: 'Gece ve gündüz (1 gün) ☀️🌙',
+        d: ['Mevsimler (1 yıl) 🍂', 'Doğal afetler 🌪️'],
+        exp: 'Dünya kendi etrafında 24 saatte döner ve gece ile gündüz birbirini izler.'
+      },
+      {
+        q: 'Dünya\'nın Güneş\'in etrafında 365 gün 6 saatte dolanması sonucunda ne oluşur? 🌞',
+        spokenText: 'Dünya\'nın Güneş etrafında dolanmasıyla ne oluşur?',
+        a: 'Dört mevsim (1 yıl) 🌸☀️🍂❄️',
+        d: ['Saatler ve dakikalar ⏰', 'Gelgit olayları 🌊'],
+        exp: 'Dünya Güneş etrafında dolanınca İlkbahar, Yaz, Sonbahar, Kış mevsimleri oluşur.'
+      },
+      {
+        q: 'Gezegenimiz Dünya\'nın şekli neye benzer? 🌐',
+        spokenText: 'Gezegenimiz Dünya\'nın şekli neye benzer?',
+        a: 'Kutuplardan hafifçe basık küreye (Geoit) 🌐',
+        d: ['Düz bir tepsiye 🍽️', 'Küp şekline 🧊'],
+        exp: 'Dünya yuvarlaktır; kutuplardan basık, ekvatordan şişkin küre biçimindedir.'
+      },
+      {
+        q: 'Orman yangınlarını ve çevre kirliliğini önlemek için piknik sonrası ne yapmalıyız? 🔥',
+        spokenText: 'Orman yangınlarını önlemek için piknik sonrası ne yapmalıyız?',
+        a: 'Ateşi tamamen söndürmeli ve çöplerimizi yanımıza almalıyız 🧯🗑️',
+        d: ['Cam şişeleri güneşin altında kuru otlara bırakmalıyız 🍾', 'Ateşi yanar halde bırakmalıyız 🔥'],
+        exp: 'Cam kırıkları büyüteç etkisi yaparak orman yangını çıkarır; ateş tamamen söndürülür.'
+      },
+      {
+        q: 'Sokak hayvanlarının sıcak yaz günlerinde susuz kalmaması için ne yapabiliriz? 🐱🐶',
+        spokenText: 'Sokak hayvanlarının susuz kalmaması için ne yapabiliriz?',
+        a: 'Kapımızın önüne bir kap temiz su ve mama koyabiliriz 🥣💧',
+        d: ['Onları kovalayıp taş atmalıyız 🚫', 'Sularını dökmeliyiz ❌'],
+        exp: 'Hayvanları korumak ve bir kap su koymak doğa sevgisi ve merhamet göstergesidir.'
+      }
+    ],
+
+    // 2. Sınıf Hayat Bilgisi Karma Düello Motoru (6 Temadan Dengeli Soru Çekimi)
+    generateGrade2LifeScienceKarma() {
+      const themeIdx = Math.floor(Math.random() * 6);
+      if (themeIdx === 0) return this.drawFromPool(this.grade2LifeScienceSchoolPool, "grade2LifeScienceSchoolPool");
+      if (themeIdx === 1) return this.drawFromPool(this.grade2LifeScienceHealthPool, "grade2LifeScienceHealthPool");
+      if (themeIdx === 2) return this.drawFromPool(this.grade2LifeScienceSafetyPool, "grade2LifeScienceSafetyPool");
+      if (themeIdx === 3) return this.drawFromPool(this.grade2LifeScienceHomeFamilyPool, "grade2LifeScienceHomeFamilyPool");
+      if (themeIdx === 4) return this.drawFromPool(this.grade2LifeScienceCountryCulturePool, "grade2LifeScienceCountryCulturePool");
+      return this.drawFromPool(this.grade2LifeScienceNatureEnvironmentPool, "grade2LifeScienceNatureEnvironmentPool");
+    },
+
+    get grade2TrafficSafeLifePool() { return this.grade2LifeScienceSafetyPool; },
+    get grade2CultureAndCountryPool() { return this.grade2LifeScienceCountryCulturePool; },
+
 
     // 2. SINIF: CLASSROOM OBJECTS, COLORS & NUMBERS (1-20) (26 ÖZGÜN SORU)
     englishSchoolObjectsPool: [
@@ -7501,22 +8325,28 @@
           distractors: raw.d,
           explanation: raw.exp
         }, '✍️ Noktalama & Yazım Kuralları');
-      } else if (gameType === 'lifescience_traffic_2') {
-        const raw = this.drawFromPool(this.grade2TrafficSafeLifePool, "grade2TrafficSafeLifePool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🚦 Güvenli Hayat ve Trafik');
-      } else if (gameType === 'lifescience_culture_2') {
-        const raw = this.drawFromPool(this.grade2CultureAndCountryPool, "grade2CultureAndCountryPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🇹🇷 Ülkemiz ve Kültürümüz');
+      // --- 2. SINIF: 2026 MAARİF MODELİ HAYAT BİLGİSİ 6 ÖĞRENME ALANI ---
+      } else if (gameType === 'lifescience_school_2') {
+        const raw = this.drawFromPool(this.grade2LifeScienceSchoolPool, "grade2LifeScienceSchoolPool");
+        return this.buildQuestionItem(raw, '🏫 Ben ve Okulum (Okulumuzda Hayat)');
+      } else if (gameType === 'lifescience_health_2') {
+        const raw = this.drawFromPool(this.grade2LifeScienceHealthPool, "grade2LifeScienceHealthPool");
+        return this.buildQuestionItem(raw, '🍎 Sağlığım ve Güvenliğim (Sağlıklı Hayat)');
+      } else if (gameType === 'lifescience_safety_2' || gameType === 'lifescience_traffic_2') {
+        const raw = this.drawFromPool(this.grade2LifeScienceSafetyPool, "grade2LifeScienceSafetyPool");
+        return this.buildQuestionItem(raw, '🚦 Güvenli Hayat');
+      } else if (gameType === 'lifescience_home_family_2') {
+        const raw = this.drawFromPool(this.grade2LifeScienceHomeFamilyPool, "grade2LifeScienceHomeFamilyPool");
+        return this.buildQuestionItem(raw, '🏡 Ailem ve Toplum (Evimizde Hayat)');
+      } else if (gameType === 'lifescience_country_culture_2' || gameType === 'lifescience_culture_2') {
+        const raw = this.drawFromPool(this.grade2LifeScienceCountryCulturePool, "grade2LifeScienceCountryCulturePool");
+        return this.buildQuestionItem(raw, '🇹🇷 Yaşadığım Yer ve Ülkem (Ülkemizde Hayat)');
+      } else if (gameType === 'lifescience_nature_environment_2') {
+        const raw = this.drawFromPool(this.grade2LifeScienceNatureEnvironmentPool, "grade2LifeScienceNatureEnvironmentPool");
+        return this.buildQuestionItem(raw, '🌿 Doğa ve Çevre (Doğada Hayat)');
+      } else if (gameType === 'lifescience_2_karma') {
+        const raw = this.generateGrade2LifeScienceKarma();
+        return this.buildQuestionItem(raw, '🌟 2. Sınıf Hayat Bilgisi Karma Düello');
       } else if (gameType === 'english_school_objects_2') {
         const raw = this.drawFromPool(this.englishSchoolObjectsPool, "englishSchoolObjectsPool");
         return this.buildQuestionItem({
@@ -7777,17 +8607,8 @@
           const raw = this.generateGrade1LifeScienceKarma();
           return this.buildQuestionItem(raw, '🌱 Hayat Bilgisi Karma Düello');
         } else if (g === 2) {
-          const r = Math.random();
-          if (r < 0.34) {
-            const raw = this.drawFromPool(this.lifeSciencePool, "lifeSciencePool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌱 Hayat Bilgisi');
-          } else if (r < 0.67) {
-            const raw = this.drawFromPool(this.grade2TrafficSafeLifePool, "grade2TrafficSafeLifePool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🚦 Güvenli Hayat ve Trafik');
-          } else {
-            const raw = this.drawFromPool(this.grade2CultureAndCountryPool, "grade2CultureAndCountryPool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🇹🇷 Ülkemiz ve Kültürümüz');
-          }
+          const raw = this.generateGrade2LifeScienceKarma();
+          return this.buildQuestionItem(raw, '🌟 2. Sınıf Hayat Bilgisi Karma Düello');
         } else if (g === 3) {
           const r = Math.random();
           if (r < 0.75) {
@@ -8871,7 +9692,14 @@
     lifescience_country_flag_1: '🇹🇷 Yaşadığım Yer & Ülkem',
     lifescience_nature_recycling_1: '🌿 Doğa ve Çevre',
     lifescience_1_karma: '🌱 Hayat Bilgisi Karma',
-    grade1_grand_duel: '🏆 1. Sınıf Büyük Karma'
+    grade1_grand_duel: '🏆 1. Sınıf Büyük Karma',
+    lifescience_school_2: '🏫 Okulumuzda Hayat',
+    lifescience_health_2: '🍎 Sağlıklı Hayat',
+    lifescience_safety_2: '🚦 Güvenli Hayat',
+    lifescience_home_family_2: '🏡 Evimizde Hayat',
+    lifescience_country_culture_2: '🇹🇷 Ülkemizde Hayat',
+    lifescience_nature_environment_2: '🌿 Doğada Hayat',
+    lifescience_2_karma: '🏆 2. Sınıf Hayat Bilgisi Karma'
   };
 
   function getCurrentGameObject() {
@@ -8934,6 +9762,13 @@
       math_clock_2: 'Zamanı Ölçme ve Saatler',
       turkish_syn_ant_2: 'Eş ve Zıt Anlamlılar Şampiyonası',
       turkish_punctuation_2: 'Noktalama İşaretleri ve Yazım Kuralları',
+      lifescience_school_2: 'Okulda Empati & İş Birliği Düellosu',
+      lifescience_health_2: 'Mevsim Tabakları & Sağlık Koruyucusu',
+      lifescience_safety_2: 'Güvenli Adımlar & Acil Durum Avcısı',
+      lifescience_home_family_2: 'İstek mi İhtiyaç mı? & Akraba Ağacı',
+      lifescience_country_culture_2: 'Ülkemi Tanıyorum & Bayramlar Düellosu',
+      lifescience_nature_environment_2: 'Doğa Dedektifi & Afet Bilinci',
+      lifescience_2_karma: '2. Sınıf Hayat Bilgisi Karma Düello',
       lifescience_traffic_2: 'Güvenli Hayat ve Trafik',
       lifescience_culture_2: 'Ülkemiz ve Kültürümüz',
       english_school_objects_2: 'Colors, Numbers & Classroom Objects',
@@ -10069,48 +10904,100 @@
         name: 'Hayat Bilgisi',
         icon: '🌱',
         colorTheme: 'theme-lifescience',
-        tagline: 'Güvenli Hayat & Ülkemiz',
-        description: 'Trafik kuralları, 112 acil, Atatürk\'ün hayatı ve milli kültürümüz! 🇹🇷🚦',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Okulda empati, mevsim tabakları, güvenli adımlar, aile bütçesi, vatan sevgisi ve doğa dedektifi! 🏫🍎🚦🏡🇹🇷🌿',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'traffic', label: '🚦 Güvenli Hayat & Trafik' },
-          { id: 'culture', label: '🇹🇷 Ülkemiz ve Kültürümüz' }
+          { id: 'all', label: '🌟 Hayat Bilgisi Karma Düello' },
+          { id: 'school', label: '🏫 Tema 1: Ben ve Okulum' },
+          { id: 'health', label: '🍎 Tema 2: Sağlığım ve Güvenliğim' },
+          { id: 'safety', label: '🚦 Tema 3: Güvenli Hayat' },
+          { id: 'home_family', label: '🏡 Tema 4: Ailem ve Toplum' },
+          { id: 'country_culture', label: '🇹🇷 Tema 5: Yaşadığım Yer ve Ülkem' },
+          { id: 'nature_environment', label: '🌿 Tema 6: Doğa ve Çevre' }
         ],
         games: [
           {
-            id: 'lifescience_traffic_2',
+            id: 'lifescience_school_2',
             active: true,
-            title: 'Güvenli Hayat ve Trafik',
+            title: 'Okulda Empati & İş Birliği Düellosu',
+            icon: '🏫',
+            badge: '🏫 Okulumuzda Hayat',
+            featureTag: '🤝 Empati & Kaynaklar',
+            description: 'Bireysel farklılıklara saygı, okul kaynaklarını özenli kullanma, grup çalışması ve çanta hazırlama!',
+            tags: ['🤝 Empati & Saygı', '💡 Kaynak Tasarrufu', '🎒 Çanta Düzeni', '👥 Grup Çalışması'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'school'
+          },
+          {
+            id: 'lifescience_health_2',
+            active: true,
+            title: 'Mevsim Tabakları & Sağlık Koruyucusu',
+            icon: '🍎',
+            badge: '🍎 Sağlıklı Hayat',
+            featureTag: '🥗 Dengeli Beslenme',
+            description: 'Mevsiminde taze meyve-sebze, dengeli öğünler, kişisel hijyen, düzenli uyku ve spor alışkanlığı!',
+            tags: ['🥦 Mevsim Sebzeleri', '🧼 Temizlik & Hijyen', '🛌 Düzenli Uyku', '🏃‍♂️ Spor & Sağlık'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'health'
+          },
+          {
+            id: 'lifescience_safety_2',
+            active: true,
+            title: 'Güvenli Adımlar & Acil Durum Avcısı',
             icon: '🚦',
-            badge: '🚦 Trafik & Güvenlik',
-            featureTag: '⭐ 26 Özgün Soru',
-            description: 'Trafik levhaları, yaya geçidi, 112 Acil Çağrı, deprem ve doğa olaylarında güvenlik! 🚦🚨',
-            tags: ['🚦 Trafik Işıkları', '🚨 112 Acil Yardım', '🌍 Deprem Bilinci'],
+            badge: '🚦 Güvenli Hayat',
+            featureTag: '🚨 112 Acil & Güvenlik',
+            description: 'Okul servisi kuralları, güvenli oyun alanları, 112 Acil Çağrı, bilinçli ekran kullanımı ve yabancılara hayır deme!',
+            tags: ['🚌 Servis Güvenliği', '📞 112 Acil Çağrı', '🛑 Hayır Deme Becerisi', '📱 Ekran Güvenliği'],
             btnText: 'Düelloyu Başlat',
-            topic: 'traffic'
+            topic: 'safety'
           },
           {
-            id: 'lifescience_culture_2',
+            id: 'lifescience_home_family_2',
             active: true,
-            title: 'Ülkemiz ve Kültürümüz',
+            title: 'İstek mi İhtiyaç mı? & Akraba Ağacı',
+            icon: '🏡',
+            badge: '🏡 Evimizde Hayat',
+            featureTag: '💰 Bütçe & Akrabalık',
+            description: 'Dayı, teyze, hala, amca akraba bağları, ev adresi, istek-ihtiyaç ayrımı, ailede iş bölümü ve tasarruf!',
+            tags: ['🌳 Akraba Bağları', '💡 İstek & İhtiyaç', '📍 Ev Adresimiz', '🤝 Ailede İş Bölümü'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'home_family'
+          },
+          {
+            id: 'lifescience_country_culture_2',
+            active: true,
+            title: 'Ülkemi Tanıyorum & Bayramlar Düellosu',
             icon: '🇹🇷',
-            badge: '🇹🇷 Milli Değerler',
-            featureTag: '⭐ 26 Özgün Soru',
-            description: 'Al bayrağımız, İstiklal Marşımız, Atatürk\'ün hayatı ve milli bayramlarımızı öğren! 🇹🇷❤️',
-            tags: ['🇹🇷 Şanlı Bayrağımız', '🎖️ Mustafa Kemal Atatürk', '🎉 Milli Bayramlar'],
+            badge: '🇹🇷 Ülkemizde Hayat',
+            featureTag: '🗺️ Harita & Bayramlar',
+            description: 'Türkiye haritası, başkent Ankara, Atatürk\'ün öğrenim hayatı, milli ve dini bayramlarımız ile kültürel mirasımız!',
+            tags: ['🇹🇷 Başkent Ankara', '🎖️ Atatürk\'ün Çocukluğu', '🎉 Milli Bayramlar', '🕌 Dini Bayramlar'],
             btnText: 'Düelloyu Başlat',
-            topic: 'culture'
+            topic: 'country_culture'
           },
           {
-            id: 'lifescience',
+            id: 'lifescience_nature_environment_2',
             active: true,
-            title: 'Hayat Bilgisi Bilgi Yarışı (Karma)',
+            title: 'Doğa Dedektifi & Afet Bilinci',
+            icon: '🌿',
+            badge: '🌿 Doğada Hayat',
+            featureTag: '🌍 Afetler & Geri Dönüşüm',
+            description: 'Canlıların yaşam gereksinimleri, doğal ve beşeri unsurlar, geri dönüşüm, afet bilinci ve doğada yön bulma!',
+            tags: ['♻️ Geri Dönüşüm', '🧭 Yön Bulma', '🛡️ Afet Bilinci', '🌍 Dünya\'nın Hareketleri'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'nature_environment'
+          },
+          {
+            id: 'lifescience_2_karma',
+            active: true,
+            title: 'Hayat Bilgisi Büyük Karma Düello',
             icon: '🌱',
-            badge: '🚀 Karma Hayat Bilgisi',
-            featureTag: '💡 Bilinçli Çocuk',
-            description: 'Trafik güvenliği, milli değerler, tasarruf ve çevre bilincinde kafa kafaya yarış! 🇹🇷♻️',
-            tags: ['🚦 Güvenli Hayat', '🇹🇷 Milli Değerler', '💡 Çevre Bilinci'],
+            badge: '🏆 2. Sınıf Karma',
+            featureTag: '🌟 6 Tema Genel Tekrar',
+            description: 'Tüm 2. sınıf Hayat Bilgisi temalarından rastgele ve dengeli sorularla akıllı tahta düellosu!',
+            tags: ['🏫 Okulumuz', '🍎 Sağlık', '🚦 Güvenlik', '🏡 Evimiz', '🇹🇷 Ülkemiz', '🌿 Doğa'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
