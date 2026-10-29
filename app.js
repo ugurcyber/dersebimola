@@ -1329,9 +1329,7 @@
           { word: 'Süt', emoji: '🥛', hasSound: false },
           { word: 'Fil', emoji: '🐘', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'A', parts: ['A'], distractors: ['E'], icon: '🔤' }
-        ],
+        cumulativeWords: [],
         cumulativeSentences: []
       },
       'n': {
@@ -1354,10 +1352,11 @@
         cumulativeWords: [
           { word: 'AN', parts: ['A', 'N'], distractors: ['NA'], icon: '⏳' },
           { word: 'NA', parts: ['N', 'A'], distractors: ['AN'], icon: '🔤' },
-          { word: 'ANA', parts: ['A', 'NA'], distractors: ['AN'], icon: '👩' }
+          { word: 'ANA', parts: ['A', 'NA'], distractors: ['AN'], icon: '👩' },
+          { word: 'NANA', parts: ['NA', 'NA'], distractors: ['AN'], icon: '👶' }
         ],
         cumulativeSentences: [
-          { sentence: 'Ana an.', blankSentence: 'Ana _____.', missing: 'an', options: ['an', 'na', 'a'], fullText: 'Ana an.' }
+          { sentence: 'Ana an.', blankSentence: 'Ana _____.', missing: 'an', options: ['an', 'na', 'ana'], fullText: 'Ana an.' }
         ]
       },
       'e': {
@@ -1378,10 +1377,11 @@
           { word: 'Muz', emoji: '🍌', hasSound: false }
         ],
         cumulativeWords: [
-          { word: 'EN', parts: ['E', 'N'], distractors: ['AN'], icon: '📏' },
-          { word: 'NE', parts: ['N', 'E'], distractors: ['NA'], icon: '❓' },
-          { word: 'NANE', parts: ['NA', 'NE'], distractors: ['EN'], icon: '🌿' },
-          { word: 'ANNE', parts: ['AN', 'NE'], distractors: ['NA'], icon: '❤️' }
+          { word: 'EN', parts: ['E', 'N'], distractors: ['AN', 'NE'], icon: '📏' },
+          { word: 'NE', parts: ['N', 'E'], distractors: ['NA', 'EN'], icon: '❓' },
+          { word: 'ANE', parts: ['A', 'NE'], distractors: ['NA', 'EN'], icon: '👵' },
+          { word: 'ANNE', parts: ['AN', 'NE'], distractors: ['NA', 'EN'], icon: '❤️' },
+          { word: 'NANE', parts: ['NA', 'NE'], distractors: ['EN', 'AN'], icon: '🌿' }
         ],
         cumulativeSentences: [
           { sentence: 'Anne nane.', blankSentence: 'Anne _____.', missing: 'nane', options: ['nane', 'an', 'en'], fullText: 'Anne nane.' },
@@ -1407,19 +1407,23 @@
           { word: 'Kedi', emoji: '🐱', hasSound: false }
         ],
         cumulativeWords: [
-          { word: 'AT', parts: ['A', 'T'], distractors: ['ET'], icon: '🐴' },
-          { word: 'ET', parts: ['E', 'T'], distractors: ['AT'], icon: '🥩' },
-          { word: 'TA', parts: ['T', 'A'], distractors: ['TE'], icon: '🔤' },
-          { word: 'TE', parts: ['T', 'E'], distractors: ['TA'], icon: '🔤' },
-          { word: 'TAT', parts: ['T', 'AT'], distractors: ['ET'], icon: '👅' },
-          { word: 'ATA', parts: ['A', 'TA'], distractors: ['TE'], icon: '🇹🇷' },
-          { word: 'TANE', parts: ['TA', 'NE'], distractors: ['TE'], icon: '🌾' },
-          { word: 'ANTEN', parts: ['AN', 'TEN'], distractors: ['TA'], icon: '📡' }
+          { word: 'AT', parts: ['A', 'T'], distractors: ['ET', 'TA'], icon: '🐴' },
+          { word: 'ET', parts: ['E', 'T'], distractors: ['AT', 'TE'], icon: '🥩' },
+          { word: 'TA', parts: ['T', 'A'], distractors: ['TE', 'NA'], icon: '🔤' },
+          { word: 'TE', parts: ['T', 'E'], distractors: ['TA', 'NE'], icon: '🔤' },
+          { word: 'TAN', parts: ['T', 'AN'], distractors: ['TEN', 'TA'], icon: '🌅' },
+          { word: 'TEN', parts: ['T', 'EN'], distractors: ['TAN', 'TE'], icon: '🧴' },
+          { word: 'NET', parts: ['N', 'ET'], distractors: ['TEN', 'NE'], icon: '🎯' },
+          { word: 'TAT', parts: ['T', 'AT'], distractors: ['ET', 'TA'], icon: '👅' },
+          { word: 'ATA', parts: ['A', 'TA'], distractors: ['TE', 'AN'], icon: '🇹🇷' },
+          { word: 'TANE', parts: ['TA', 'NE'], distractors: ['TE', 'NA'], icon: '🌾' },
+          { word: 'ANTEN', parts: ['AN', 'TEN'], distractors: ['TAN', 'TA'], icon: '📡' },
+          { word: 'NATA', parts: ['NA', 'TA'], distractors: ['TE', 'AN'], icon: '⛵' }
         ],
         cumulativeSentences: [
           { sentence: 'Ata at.', blankSentence: 'Ata _____.', missing: 'at', options: ['at', 'et', 'tat'], fullText: 'Ata at.' },
           { sentence: 'Anne et tat.', blankSentence: 'Anne _____ tat.', missing: 'et', options: ['et', 'at', 'anten'], fullText: 'Anne et tat.' },
-          { sentence: 'Ata tane tane tat.', blankSentence: 'Ata tane _____ tat.', missing: 'tane', options: ['tane', 'anten', 'anne'], fullText: 'Ata tane tane tat.' }
+          { sentence: 'Ata tane tane tat.', blankSentence: 'Ata tane _____ tat.', missing: 'tane', options: ['tane', 'anten', 'ata'], fullText: 'Ata tane tane tat.' }
         ]
       },
       'i': {
@@ -1440,18 +1444,23 @@
           { word: 'Kuş', emoji: '🐦', hasSound: false }
         ],
         cumulativeWords: [
-          { word: 'İN', parts: ['İ', 'N'], distractors: ['AN'], icon: '⬇️' },
-          { word: 'İT', parts: ['İ', 'T'], distractors: ['AT'], icon: '👉' },
-          { word: 'Tİ', parts: ['T', 'İ'], distractors: ['TE'], icon: '🔤' },
-          { word: 'NİNE', parts: ['Nİ', 'NE'], distractors: ['TE'], icon: '👵' },
-          { word: 'İNAT', parts: ['İ', 'NAT'], distractors: ['AN'], icon: '🐐' },
-          { word: 'ETİN', parts: ['E', 'TİN'], distractors: ['TA'], icon: '🥩' },
-          { word: 'ANİ', parts: ['A', 'Nİ'], distractors: ['NE'], icon: '⚡' }
+          { word: 'İN', parts: ['İ', 'N'], distractors: ['AN', 'EN'], icon: '⬇️' },
+          { word: 'İT', parts: ['İ', 'T'], distractors: ['AT', 'ET'], icon: '👉' },
+          { word: 'Nİ', parts: ['N', 'İ'], distractors: ['NE', 'NA'], icon: '🔤' },
+          { word: 'Tİ', parts: ['T', 'İ'], distractors: ['TE', 'TA'], icon: '🔤' },
+          { word: 'NİN', parts: ['N', 'İN'], distractors: ['TİN', 'Nİ'], icon: '🔤' },
+          { word: 'TİN', parts: ['T', 'İN'], distractors: ['NİN', 'Tİ'], icon: '🔤' },
+          { word: 'NİNE', parts: ['Nİ', 'NE'], distractors: ['Tİ', 'NA'], icon: '👵' },
+          { word: 'ANİ', parts: ['A', 'Nİ'], distractors: ['NE', 'Tİ'], icon: '⚡' },
+          { word: 'İNAT', parts: ['İ', 'NAT'], distractors: ['AN', 'AT'], icon: '🐐' },
+          { word: 'ETİ', parts: ['E', 'Tİ'], distractors: ['TE', 'TA'], icon: '🥩' },
+          { word: 'TENİ', parts: ['TE', 'Nİ'], distractors: ['Tİ', 'NE'], icon: '🧴' }
         ],
         cumulativeSentences: [
           { sentence: 'Nine et tat.', blankSentence: 'Nine _____ tat.', missing: 'et', options: ['et', 'it', 'inat'], fullText: 'Nine et tat.' },
           { sentence: 'Ata in.', blankSentence: 'Ata _____.', missing: 'in', options: ['in', 'it', 'et'], fullText: 'Ata in.' },
-          { sentence: 'Nine nane tat.', blankSentence: 'Nine _____ tat.', missing: 'nane', options: ['nane', 'tane', 'anten'], fullText: 'Nine nane tat.' }
+          { sentence: 'Nine nane tat.', blankSentence: 'Nine _____ tat.', missing: 'nane', options: ['nane', 'tane', 'anten'], fullText: 'Nine nane tat.' },
+          { sentence: 'Ata eti tat.', blankSentence: 'Ata _____ tat.', missing: 'eti', options: ['eti', 'teni', 'nine'], fullText: 'Ata eti tat.' }
         ]
       },
       'l': {
@@ -1472,21 +1481,27 @@
           { word: 'Kuş', emoji: '🐦', hasSound: false }
         ],
         cumulativeWords: [
-          { word: 'EL', parts: ['E', 'L'], distractors: ['AL'], icon: '✋' },
-          { word: 'AL', parts: ['A', 'L'], distractors: ['EL'], icon: '🔴' },
-          { word: 'İL', parts: ['İ', 'L'], distractors: ['AL'], icon: '🏙️' },
-          { word: 'LALE', parts: ['LA', 'LE'], distractors: ['TE'], icon: '🌷' },
-          { word: 'ELA', parts: ['E', 'LA'], distractors: ['NA'], icon: '👧' },
-          { word: 'ALİ', parts: ['A', 'Lİ'], distractors: ['Tİ'], icon: '👦' },
-          { word: 'AİLE', parts: ['A', 'İ', 'LE'], distractors: ['NA'], icon: '👨‍👩‍👦' },
-          { word: 'NAL', parts: ['N', 'AL'], distractors: ['EL'], icon: '🐎' },
-          { word: 'TEL', parts: ['T', 'EL'], distractors: ['AL'], icon: '🧶' },
-          { word: 'ATLET', parts: ['AT', 'LET'], distractors: ['NA'], icon: '🏃' },
-          { word: 'TATİL', parts: ['TA', 'TİL'], distractors: ['TE'], icon: '🏖️' }
+          { word: 'EL', parts: ['E', 'L'], distractors: ['AL', 'İL'], icon: '✋' },
+          { word: 'AL', parts: ['A', 'L'], distractors: ['EL', 'LA'], icon: '🔴' },
+          { word: 'İL', parts: ['İ', 'L'], distractors: ['AL', 'Lİ'], icon: '🏙️' },
+          { word: 'LA', parts: ['L', 'A'], distractors: ['LE', 'AL'], icon: '🔤' },
+          { word: 'LE', parts: ['L', 'E'], distractors: ['LA', 'EL'], icon: '🔤' },
+          { word: 'Lİ', parts: ['L', 'İ'], distractors: ['LE', 'İL'], icon: '🔤' },
+          { word: 'TEL', parts: ['T', 'EL'], distractors: ['TAL', 'TE'], icon: '🧶' },
+          { word: 'NAL', parts: ['N', 'AL'], distractors: ['NEL', 'NA'], icon: '🐎' },
+          { word: 'ELA', parts: ['E', 'LA'], distractors: ['LE', 'NA'], icon: '👧' },
+          { word: 'LALE', parts: ['LA', 'LE'], distractors: ['Lİ', 'TE'], icon: '🌷' },
+          { word: 'ALİ', parts: ['A', 'Lİ'], distractors: ['LA', 'Tİ'], icon: '👦' },
+          { word: 'AİLE', parts: ['A', 'İ', 'LE'], distractors: ['LA', 'NA'], icon: '👨‍👩‍👦' },
+          { word: 'ELTİ', parts: ['EL', 'Tİ'], distractors: ['AL', 'TE'], icon: '👩‍🦰' },
+          { word: 'TALAN', parts: ['TA', 'LAN'], distractors: ['TEL', 'TAN'], icon: '🌪️' },
+          { word: 'ATLET', parts: ['AT', 'LET'], distractors: ['AL', 'TET'], icon: '🏃' },
+          { word: 'NANELİ', parts: ['NA', 'NE', 'Lİ'], distractors: ['LE', 'LA'], icon: '🌿' },
+          { word: 'TATİL', parts: ['TA', 'TİL'], distractors: ['TE', 'TEL'], icon: '🏖️' }
         ],
         cumulativeSentences: [
-          { sentence: 'Ali lale al.', blankSentence: 'Ali _____ al.', missing: 'lale', options: ['lale', 'et', 'nal'], fullText: 'Ali lale al.' },
-          { sentence: 'Ela nane al.', blankSentence: 'Ela _____ al.', missing: 'nane', options: ['nane', 'anten', 'lale'], fullText: 'Ela nane al.' },
+          { sentence: 'Ali lale al.', blankSentence: 'Ali _____ al.', missing: 'lale', options: ['lale', 'ela', 'nal'], fullText: 'Ali lale al.' },
+          { sentence: 'Ela nane al.', blankSentence: 'Ela _____ al.', missing: 'nane', options: ['nane', 'atlet', 'lale'], fullText: 'Ela nane al.' },
           { sentence: 'Ali ata nal ilet.', blankSentence: 'Ali ata _____ ilet.', missing: 'nal', options: ['nal', 'tel', 'et'], fullText: 'Ali ata nal ilet.' },
           { sentence: 'Aile tatil et.', blankSentence: 'Aile _____ et.', missing: 'tatil', options: ['tatil', 'atlet', 'lale'], fullText: 'Aile tatil et.' }
         ]
@@ -2075,35 +2090,142 @@
     return MAARIF_2026_CONFIG.letterOrder.slice(0, idx + 1).map(l => l.toUpperCase('tr-TR'));
   }
 
-  function getAllCumulativeWordsUpTo(letter) {
-    const idx = MAARIF_2026_CONFIG.letterOrder.indexOf((letter || 'a').toLowerCase());
-    const words = [];
-    const limit = (idx === -1) ? 0 : idx;
-    for (let i = 0; i <= limit; i++) {
-      const l = MAARIF_2026_CONFIG.letterOrder[i];
-      const data = MAARIF_2026_CONFIG.letters[l];
-      if (data && data.cumulativeWords && data.cumulativeWords.length) {
-        words.push(...data.cumulativeWords);
+  /**
+   * TÜRKİYE YÜZYILI MAARİF MODELİ DİNAMİK KÜMÜLATİF DOĞRULAMA MOTORU
+   * 5 Ses Grubu (ANETİL, OKURIM, ÜSÖYDZ, ÇBGCŞ, PHVĞFJ) için harf indeksine göre
+   * henüz öğrenilmemiş sesleri içeren hece/kelimeleri KESİNLİKLE filtreler ve eler.
+   */
+  function isWordAllowedUpTo(wordOrObj, selectedLetter) {
+    if (!wordOrObj) return false;
+    const normSelected = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
+    const targetIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(normSelected);
+    if (targetIdx === -1) return false;
+
+    // Hedef harfe kadar öğrenilmiş harfler kümesi
+    const allowedSet = new Set(MAARIF_2026_CONFIG.letterOrder.slice(0, targetIdx + 1));
+
+    // Dize (String) kontrolü
+    if (typeof wordOrObj === 'string') {
+      const chars = wordOrObj.toLocaleLowerCase('tr-TR').split('');
+      for (const ch of chars) {
+        if (/[a-zçğıöşü]/i.test(ch)) {
+          const charIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(ch);
+          if (charIdx > targetIdx || (charIdx !== -1 && !allowedSet.has(ch))) {
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
+    // Kelime nesnesi ({ word, parts, distractors }) kontrolü
+    if (typeof wordOrObj === 'object') {
+      if (wordOrObj.word && !isWordAllowedUpTo(wordOrObj.word, selectedLetter)) {
+        return false;
+      }
+      if (Array.isArray(wordOrObj.parts)) {
+        for (const p of wordOrObj.parts) {
+          if (!isWordAllowedUpTo(p, selectedLetter)) return false;
+        }
+      }
+      return true;
+    }
+
+    return false;
+  }
+
+  function filterAllowedWords(selectedLetter, pool) {
+    const normSelected = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
+    const targetIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(normSelected);
+    if (targetIdx <= 0) {
+      // 1. Harf 'a' (indeks 0): Tek bir ünlü harfle hece/kelime birleştirilemez!
+      return [];
+    }
+
+    let rawPool = pool;
+    if (!Array.isArray(rawPool)) {
+      rawPool = [];
+      for (let i = 0; i <= targetIdx; i++) {
+        const l = MAARIF_2026_CONFIG.letterOrder[i];
+        const data = MAARIF_2026_CONFIG.letters[l];
+        if (data && Array.isArray(data.cumulativeWords)) {
+          rawPool.push(...data.cumulativeWords);
+        }
       }
     }
-    return words.length ? words : [{ word: 'A', parts: ['A'], distractors: ['E'], icon: '🔤' }];
+
+    const learnedLettersUpper = MAARIF_2026_CONFIG.letterOrder
+      .slice(0, targetIdx + 1)
+      .map(l => l.toUpperCase('tr-TR'));
+
+    const filtered = [];
+    for (const item of rawPool) {
+      if (!isWordAllowedUpTo(item, normSelected)) continue;
+
+      if (typeof item === 'object' && item !== null) {
+        const validDistractors = Array.isArray(item.distractors)
+          ? item.distractors.filter(d => isWordAllowedUpTo(d, normSelected))
+          : [];
+
+        const safeDistractors = validDistractors.length > 0
+          ? validDistractors
+          : learnedLettersUpper.filter(l => !item.parts || !item.parts.includes(l)).slice(0, 2);
+
+        filtered.push({
+          ...item,
+          distractors: safeDistractors.length ? safeDistractors : [learnedLettersUpper[0]]
+        });
+      } else {
+        filtered.push(item);
+      }
+    }
+
+    return filtered;
+  }
+
+  function filterAllowedSentences(selectedLetter, pool) {
+    const normSelected = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
+    const targetIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(normSelected);
+    if (targetIdx < 3) {
+      // Cümle tamamlama 4. harf olan 't' (indeks 3) ve sonrasında açılır
+      return [];
+    }
+
+    let rawPool = pool;
+    if (!Array.isArray(rawPool)) {
+      rawPool = [];
+      for (let i = 0; i <= targetIdx; i++) {
+        const l = MAARIF_2026_CONFIG.letterOrder[i];
+        const data = MAARIF_2026_CONFIG.letters[l];
+        if (data && Array.isArray(data.cumulativeSentences)) {
+          rawPool.push(...data.cumulativeSentences);
+        }
+      }
+    }
+
+    return rawPool.filter(item => {
+      if (!item) return false;
+      if (item.sentence && !isWordAllowedUpTo(item.sentence, normSelected)) return false;
+      if (item.missing && !isWordAllowedUpTo(item.missing, normSelected)) return false;
+      if (Array.isArray(item.options)) {
+        for (const opt of item.options) {
+          if (!isWordAllowedUpTo(opt, normSelected)) return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  function getAllCumulativeWordsUpTo(letter) {
+    return filterAllowedWords(letter);
   }
 
   function getAllCumulativeSentencesUpTo(letter) {
-    const idx = MAARIF_2026_CONFIG.letterOrder.indexOf((letter || 'a').toLowerCase());
-    const sentences = [];
-    const limit = (idx === -1) ? 0 : idx;
-    for (let i = 0; i <= limit; i++) {
-      const l = MAARIF_2026_CONFIG.letterOrder[i];
-      const data = MAARIF_2026_CONFIG.letters[l];
-      if (data && data.cumulativeSentences && data.cumulativeSentences.length) {
-        sentences.push(...data.cumulativeSentences);
-      }
-    }
-    return sentences.length ? sentences : [
-      { sentence: 'Ata at.', blankSentence: 'Ata _____.', missing: 'at', options: ['at', 'et', 'tat'], fullText: 'Ata at.' }
-    ];
+    return filterAllowedSentences(letter);
   }
+
+  window.filterAllowedWords = filterAllowedWords;
+  window.filterAllowedSentences = filterAllowedSentences;
 
   function getMaarifLetterSoundName(letter) {
     const l = (letter || '').toLowerCase('tr-TR');
@@ -2953,10 +3075,14 @@
         }
       } else if (gameType === 'maarif_syllable_build') {
         // 4) Hece ve Kelime İnşası (Kümülatif Birleştirme)
-        const chosen = learnedWords[Math.floor(Math.random() * learnedWords.length)] || { word: 'EL', parts: ['E', 'L'], distractors: ['A'], icon: '✋' };
+        if (!learnedWords || !learnedWords.length) {
+          // 'a' harfinde hece birleştirme olamaz, harf eşleştirmeye güvenli yönlendir
+          return this.generateMaarifQuestion('maarif_case_match', activeL);
+        }
+        const chosen = learnedWords[Math.floor(Math.random() * learnedWords.length)];
         const allCubes = [
           ...chosen.parts.map(p => ({ text: p, isRequired: true })),
-          ...(chosen.distractors || ['A']).map(d => ({ text: d, isRequired: false }))
+          ...(chosen.distractors || []).map(d => ({ text: d, isRequired: false }))
         ].sort(() => 0.5 - Math.random());
 
         const iconImg = EMOJI_TO_3D[chosen.icon]
@@ -2984,13 +3110,17 @@
         };
       } else if (gameType === 'maarif_speed_read') {
         // 5) Hızlı Okuma ve Kelime Yakalama (Ritimli Okuma)
-        const targetWordObj = learnedWords[Math.floor(Math.random() * learnedWords.length)] || { word: 'EL' };
+        if (!learnedWords || !learnedWords.length) {
+          return this.generateMaarifQuestion('maarif_sound_find', activeL);
+        }
+        const targetWordObj = learnedWords[Math.floor(Math.random() * learnedWords.length)];
         const targetWord = targetWordObj.word;
         const targetWordLower = targetWord.toLowerCase('tr-TR');
         const otherWords = learnedWords.filter(w => w.word !== targetWord).map(w => w.word);
         let dists = otherWords.slice().sort(() => 0.5 - Math.random()).slice(0, 2);
         if (dists.length < 2) {
-          dists = ['AL', 'AT'].filter(w => w !== targetWord).slice(0, 2);
+          const fallbackLetters = learned.filter(w => w !== targetWord);
+          dists = fallbackLetters.slice(0, 2);
         }
         const options = [targetWord, ...dists].sort(() => 0.5 - Math.random());
 
@@ -3010,13 +3140,10 @@
         };
       } else if (gameType === 'maarif_sentence_complete') {
         // 6) Cümle Tamamlama
-        const item = learnedSentences[Math.floor(Math.random() * learnedSentences.length)] || {
-          sentence: 'Ali lale al.',
-          blankSentence: 'Ali _____ al.',
-          missing: 'lale',
-          options: ['lale', 'et', 'nal'],
-          fullText: 'Ali lale al.'
-        };
+        if (!learnedSentences || !learnedSentences.length) {
+          return this.generateMaarifQuestion('maarif_sound_find', activeL);
+        }
+        const item = learnedSentences[Math.floor(Math.random() * learnedSentences.length)];
 
         return {
           question: `Cümledeki boşluğu tamamla: <strong>"${item.blankSentence}"</strong>`,
@@ -8459,12 +8586,12 @@
       }
     }
     const fallbackTitles = {
-      maarif_sound_find: 'Sesi Hisset ve Bul',
+      maarif_sound_find: 'Sesi Hisset / Balon Patlatma',
       maarif_position: 'Başta mı, Ortada mı, Sonda mı?',
-      maarif_case_match: 'Büyük-Küçük Harf Eşleştirme & Avı',
-      maarif_syllable_build: 'Hece ve Kelime İnşası',
-      maarif_speed_read: 'Hızlı Okuma ve Kelime Yakalama',
-      maarif_sentence_complete: 'Cümle Tamamlama',
+      maarif_case_match: 'Büyük-Küçük Harf Eşleştirme',
+      maarif_syllable_build: 'Hece Birleştirme Atölyesi',
+      maarif_speed_read: 'Kelime Oluşturma ve Yakalama',
+      maarif_sentence_complete: 'Cümle Kurma ve Tamamlama',
       math: 'Matematik',
       math_rhythmic_1: 'Ritmik Sayma Düellosu',
       math_shapes_money_1: 'Geometrik Şekiller ve Paralarımız',
@@ -10929,14 +11056,14 @@
     const learnedStr = learned.map(l => l.toUpperCase('tr-TR')).join(', ');
     const letterIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
 
-    const isSyllableUnlocked = letterIdx >= 1; // 'n' ve sonrası
-    const isSentenceUnlocked = letterIdx >= 3; // 't' ve sonrası
+    const isSyllableUnlocked = letterIdx >= 1; // 2. ses 'n' ve sonrası
+    const isSentenceUnlocked = letterIdx >= 3; // 4. ses 't' ve sonrası
 
     const games = [
       {
         id: 'maarif_sound_find',
-        title: 'Sesi Hisset ve Bul',
-        icon: '👂',
+        title: 'Sesi Hisset / Balon Patlatma',
+        icon: '🎈',
         badge: '👂 İşitsel & Görsel Algı',
         featureTag: '⚡ Hızlı Yakala',
         description: `Görseller arasından içinde "${letterUpper}" sesi geçen nesneleri ve sözcükleri yakala! 🎯`,
@@ -10955,7 +11082,7 @@
       },
       {
         id: 'maarif_case_match',
-        title: 'Büyük-Küçük Harf Eşleştirme',
+        title: `Büyük-Küçük Harf Eşleştirme (${letterUpper}-${letterLower})`,
         icon: '🅰️',
         badge: '🔤 Harf Avı',
         featureTag: '⚡ Hızlı Eşleştir',
@@ -10965,48 +11092,54 @@
       },
       {
         id: 'maarif_syllable_build',
-        title: 'Hece ve Kelime İnşası',
+        title: 'Hece Birleştirme Atölyesi',
         icon: '🧱',
         badge: '🧱 Kümülatif Birleştirme',
         featureTag: '🧩 Renkli Küpler',
         description: isSyllableUnlocked
           ? `Sadece öğrenilen (${learnedStr}) ses küplerine dokunarak anlamlı kelimeler inşa et! 🏗️`
-          : `Bu oyun 2. ses olan "N n" harfinden itibaren kümülatif hecelerle açılır! 🔒`,
+          : `🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!`,
         tags: isSyllableUnlocked
           ? ['🧱 Küp Birleştir', '📖 Kümülatif Hece', '🔊 Sesli Okuma']
-          : ['🔒 "N" Sesinde Açılır', '🧱 Hece İnşası'],
+          : ['🔒 "N" Sesinde Açılır', '🧱 Hece Birleştirme'],
         active: isSyllableUnlocked,
-        lockedNotice: '🔒 "N n" sesinde açılır'
+        lockedNotice: "🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!"
       },
       {
         id: 'maarif_speed_read',
-        title: 'Hızlı Okuma ve Kelime Yakalama',
+        title: 'Kelime Oluşturma ve Yakalama',
         icon: '⚡',
         badge: '🚀 Ritimli Okuma',
         featureTag: '⚡ Sesli Refleks',
         description: isSyllableUnlocked
           ? `Öğrenilen (${learnedStr}) sesleriyle kurulan kelimeyi dinle ve doğru kartı hızla yakala! 📖⭐`
-          : `Bu oyun 2. ses olan "N n" harfinden itibaren kümülatif kelimelerle açılır! 🔒`,
+          : `🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!`,
         tags: isSyllableUnlocked
           ? ['🔊 Edge-TTS Sesli Okuma', '📖 Hızlı Okuma', '⭐ Ritimli Pratik']
-          : ['🔒 "N" Sesinde Açılır', '⭐ Kelime Yakala'],
+          : ['🔒 "N" Sesinde Açılır', '⭐ Kelime Oluşturma'],
         active: isSyllableUnlocked,
-        lockedNotice: '🔒 "N n" sesinde açılır'
+        lockedNotice: "🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!"
       },
       {
         id: 'maarif_sentence_complete',
-        title: 'Cümle Tamamlama',
+        title: 'Cümle Kurma ve Tamamlama',
         icon: '📚',
         badge: '📖 Anlamlı Cümle',
         featureTag: '🧩 Boşluk Doldur',
         description: isSentenceUnlocked
           ? `Öğrenilen kelimelerle oluşturulan kısa cümlelerdeki eksik kelimeyi yerine koy ve cümleyi tamamla! 📝`
-          : `Bu oyun 4. ses olan "T t" harfinden itibaren anlamlı kısa cümlelerle açılır! 🔒`,
+          : (letterIdx < 1
+              ? `🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!`
+              : `Bu oyun 4. ses olan "T t" harfinden itibaren anlamlı kısa cümlelerle açılır! 🔒`),
         tags: isSentenceUnlocked
           ? ['📖 Kısa Cümle', '💡 Anlam Bütünlüğü', '🎯 Boşluk Tamamla']
-          : ['🔒 "T" Sesinde Açılır', '📝 Cümle Kurma'],
+          : (letterIdx < 1
+              ? ['🔒 "N" Sesinde Açılır', '📝 Cümle Kurma']
+              : ['🔒 "T" Sesinde Açılır', '📝 Cümle Kurma']),
         active: isSentenceUnlocked,
-        lockedNotice: '🔒 "T t" sesinde açılır'
+        lockedNotice: letterIdx < 1
+          ? "🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!"
+          : "🔒 4. ses olan 'T' harfiyle açılır!"
       }
     ];
 
@@ -12012,6 +12145,16 @@
   }
 
   function startDuel(gameType) {
+    if (state.currentGrade === 1 && state.currentSubject === 'firstreading' && !state.isMaarifGeneral) {
+      const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
+      const lIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
+      if (lIdx === 0 && (gameType === 'maarif_syllable_build' || gameType === 'maarif_speed_read' || gameType === 'maarif_sentence_complete')) {
+        if (typeof showToast === 'function') {
+          showToast("🔒 Hece birleştirme 2. ses olan 'N' harfiyle açılır!");
+        }
+        return;
+      }
+    }
     lockInteractions(500);
     state.currentGameType = gameType;
     state.matchStartTime = Date.now();
