@@ -9779,39 +9779,57 @@
   }
 
   // -------------------------------------------------------------
-  // Mobil & Masaüstü Paylaşım Motoru (Web Share API & WhatsApp)
+  // Doğrudan WhatsApp, Instagram & Bağlantı Paylaşım Motoru
   // -------------------------------------------------------------
-  function shareContent({ title = "Derse Bi' Mola", text = "", url = "https://dersebimola.com", directWhatsApp = false } = {}) {
+  let pendingShareData = {
+    title: "Derse Bi' Mola",
+    text: "🎯 Derse Bi' Mola - İlkokul ve Okul Öncesi Eğitici Oyun & Düello Platformu! Hemen tıkla ve sınıfla oyna: https://dersebimola.com",
+    url: "https://dersebimola.com"
+  };
+
+  function shareViaWhatsApp(shareText) {
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  }
+
+  function shareViaInstagram(shareText) {
+    copyTextToClipboard(shareText).then(() => {
+      audio.playPop();
+      showShareToast("📸 Paylaşım metni kopyalandı! Instagram DM veya Hikayenize yapıştırabilirsiniz ✅");
+    }).catch(() => {});
+    window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+  }
+
+  function shareContent({ title = "Derse Bi' Mola", text = "", url = "https://dersebimola.com", directWhatsApp = false, directInstagram = false } = {}) {
     audio.playClick();
     const shareText = text || `🎯 Derse Bi' Mola - İlkokul ve Okul Öncesi Eğitici Oyun & Düello Platformu! Hemen tıkla ve sınıfla oyna: ${url}`;
-    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+    pendingShareData = { title, text: shareText, url };
 
     if (directWhatsApp) {
-      window.open(whatsappUrl, '_blank');
+      shareViaWhatsApp(shareText);
       return;
     }
 
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-
-    if (isMobile && navigator.share) {
-      navigator.share({
-        title: title,
-        text: shareText,
-        url: url
-      }).catch(err => {
-        if (err && err.name !== 'AbortError') {
-          window.open(whatsappUrl, '_blank');
-        }
-      });
-    } else {
-      // Bilgisayar veya Akıllı Tahta: Panoya kopyala ve şık bildirim göster
-      copyTextToClipboard(shareText).then(() => {
-        audio.playPop();
-        showShareToast("Bağlantı kopyalandı! WhatsApp veya istediğiniz yere yapıştırabilirsiniz ✅");
-      }).catch(() => {
-        window.open(whatsappUrl, '_blank');
-      });
+    if (directInstagram) {
+      shareViaInstagram(shareText);
+      return;
     }
+
+    const modalShare = document.getElementById('modalShare');
+    const shareModalTitle = document.getElementById('shareModalTitle');
+    const shareModalDesc = document.getElementById('shareModalDesc');
+    if (shareModalTitle) {
+      shareModalTitle.textContent = title && title !== "Derse Bi' Mola" ? title : "Arkadaşlarınla Paylaş";
+    }
+    if (shareModalDesc) {
+      shareModalDesc.textContent = "Doğrudan paylaşmak istediğiniz platformu seçin:";
+    }
+    if (modalShare) {
+      openModal(modalShare);
+      return;
+    }
+
+    shareViaWhatsApp(shareText);
   }
 
   function shareActivity(activityName) {
@@ -16079,6 +16097,50 @@
         if (e && e.cancelable) e.preventDefault();
         if (e && e.stopPropagation) e.stopPropagation();
         handleShareVictoryWhatsApp();
+      });
+    }
+    const btnShareVictoryInstagram = document.getElementById('btnShareVictoryInstagram');
+    if (btnShareVictoryInstagram) {
+      addTapListener(btnShareVictoryInstagram, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
+        const text = getVictoryShareMessage();
+        shareContent({
+          title: "Derse Bi' Mola Zafer Skoru",
+          text: text,
+          url: 'https://dersebimola.com',
+          directInstagram: true
+        });
+      });
+    }
+    const btnShareModalWhatsApp = document.getElementById('btnShareModalWhatsApp');
+    if (btnShareModalWhatsApp) {
+      addTapListener(btnShareModalWhatsApp, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        const modalShare = document.getElementById('modalShare');
+        if (modalShare) closeModal(modalShare);
+        shareViaWhatsApp(pendingShareData.text);
+      });
+    }
+    const btnShareModalInstagram = document.getElementById('btnShareModalInstagram');
+    if (btnShareModalInstagram) {
+      addTapListener(btnShareModalInstagram, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        const modalShare = document.getElementById('modalShare');
+        if (modalShare) closeModal(modalShare);
+        shareViaInstagram(pendingShareData.text);
+      });
+    }
+    const btnShareModalCopy = document.getElementById('btnShareModalCopy');
+    if (btnShareModalCopy) {
+      addTapListener(btnShareModalCopy, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        const modalShare = document.getElementById('modalShare');
+        if (modalShare) closeModal(modalShare);
+        copyTextToClipboard(pendingShareData.text).then(() => {
+          audio.playPop();
+          showShareToast("🔗 Bağlantı kopyalandı! İstediğiniz yere yapıştırabilirsiniz ✅");
+        }).catch(() => {});
       });
     }
     if (DOM.btnCopyVictoryLink) {
