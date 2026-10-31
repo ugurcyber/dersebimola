@@ -8362,23 +8362,31 @@ input:checked + .slider:before {
    - Alt Sabit Buzlu Cam Güven Bandı (MEB Müfredatına %100 Uygun - Pardus Uyumlu)
    ========================================================================== */
 
-/* 1) BİRLEŞİK ÜST BAR (UNIFIED TOPBAR) */
+/* 1) BİRLEŞİK ÜST BAR (UNIFIED TOPBAR - FERAH EDTECH BEYAZ/İNCİ TEMA) */
+.app-main-wrapper:has(#homeShowcaseSection:not(.hide)) {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(56, 189, 248, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 82% 24%, rgba(251, 146, 60, 0.15) 0%, transparent 48%),
+    radial-gradient(circle at 50% 88%, rgba(16, 185, 129, 0.10) 0%, transparent 50%),
+    linear-gradient(135deg, #F0F9FF 0%, #F8FAFC 48%, #FFFBEB 100%) !important;
+}
+
 .unified-topbar {
   display: flex !important;
   align-items: center;
   justify-content: space-between;
-  padding: 10px clamp(20px, 3vw, 48px) 6px clamp(20px, 3vw, 48px);
+  padding: 10px clamp(20px, 3vw, 48px) 8px clamp(20px, 3vw, 48px);
   width: 100%;
   max-width: 100%;
   position: relative;
   z-index: 50;
   box-sizing: border-box;
   flex-shrink: 0;
-  background: rgba(11, 43, 54, 0.92) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 2px solid #E2E8F0 !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
 }
 
 .topbar-logo-brand {
@@ -8391,174 +8399,186 @@ input:checked + .slider:before {
 
 .brand-bubbly-logo {
   font-family: 'Poppins', 'Nunito', sans-serif;
-  font-size: clamp(2rem, 2.5vw, 2.4rem);
+  font-size: clamp(1.95rem, 2.35vw, 2.3rem);
   font-weight: 950;
   line-height: 1;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.6px;
   display: flex;
   align-items: center;
 }
 
 .brand-bubbly-logo .logo-mo {
-  color: #FFFFFF;
-  -webkit-text-stroke: 1.2px #FFFFFF;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.6), 0 2px 5px rgba(0, 0, 0, 0.4);
+  color: #0F172A;
+  -webkit-text-stroke: 0.5px #0F172A;
+  text-shadow: 0 2px 0 rgba(15, 23, 42, 0.08);
 }
 
 .brand-bubbly-logo .logo-li {
-  color: #FF7B00;
-  -webkit-text-stroke: 1.2px #E65100;
-  text-shadow: 0 0 12px rgba(255, 123, 0, 0.7), 0 2px 5px rgba(0, 0, 0, 0.4);
+  color: #FF6B00;
+  -webkit-text-stroke: 0.5px #EA580C;
+  text-shadow: 0 2px 0 rgba(234, 88, 12, 0.15);
   margin-left: 1px;
 }
 
 .brand-bubbly-logo .logo-star {
-  font-size: 1.15rem;
-  margin-top: -18px;
-  margin-left: -2px;
-  filter: drop-shadow(0 0 6px #FBBF24);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -12px;
+  margin-left: 3px;
+  filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.35));
 }
 
 .brand-sub-title {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
-  color: #FFFFFF !important;
-  letter-spacing: -0.2px;
-  margin-top: 1px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  color: #475569 !important;
+  letter-spacing: -0.1px;
+  margin-top: 2px;
+  text-shadow: none;
 }
 
 .topbar-unified-actions {
   display: flex;
   align-items: center;
-  gap: clamp(8px, 1vw, 14px);
+  gap: clamp(8px, 0.9vw, 12px);
 }
 
 .topbar-action-pill {
   border: none;
-  border-radius: 9999px;
-  padding: 8px 18px;
-  font-size: clamp(0.88rem, 0.95vw, 0.96rem);
+  border-radius: 14px;
+  padding: 8px 16px;
+  font-size: clamp(0.86rem, 0.92vw, 0.94rem);
   font-weight: 800;
-  color: #FFFFFF;
+  color: #1E293B;
   display: inline-flex;
   align-items: center;
   gap: 7px;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease, background 0.14s ease;
   -webkit-tap-highlight-color: transparent;
+}
+
+.topbar-action-pill .pill-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .topbar-action-pill:hover {
   transform: translateY(-2px);
-  filter: brightness(1.05);
 }
 
 .topbar-action-pill:active {
-  transform: scale(0.96);
+  transform: translateY(2px);
 }
 
-/* Canlı 3D Düello Modu Butonu (Turuncu) */
+/* Canlı 3D Düello Modu Butonu (Tactile Turuncu) */
 .topbar-action-pill.pill-gamemode {
-  background: linear-gradient(180deg, #F97316 0%, #EA580C 100%) !important;
-  border: 1.5px solid #FDBA74 !important;
-  box-shadow: 0 4px 0 #b84a00, 0 6px 14px rgba(234, 88, 12, 0.4) !important;
-  color: #FFFFFF;
+  background: linear-gradient(180deg, #FF7A00 0%, #EA580C 100%) !important;
+  border: 1.5px solid #EA580C !important;
+  border-bottom: 4px solid #C2410C !important;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.22) !important;
+  color: #FFFFFF !important;
 }
 
 .topbar-action-pill.pill-gamemode:active {
-  transform: translateY(2px) scale(0.98);
-  box-shadow: 0 2px 0 #b84a00, 0 3px 8px rgba(234, 88, 12, 0.3) !important;
+  transform: translateY(2px);
+  border-bottom-width: 2px !important;
 }
 
 .topbar-action-pill.pill-gamemode.is-solo {
-  background: linear-gradient(180deg, #0A9396 0%, #005F73 100%) !important;
-  border: 1.5px solid #22D3EE !important;
-  box-shadow: 0 4px 0 #003844, 0 6px 14px rgba(10, 147, 150, 0.4) !important;
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%) !important;
+  border: 1.5px solid #0284C7 !important;
+  border-bottom: 4px solid #0369A1 !important;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.22) !important;
 }
 
-/* Canlı 3D Giriş Yap Butonu (Mor) */
+/* Kurumsal 3D Öğretmen Girişi Butonu (İndigo / Mavi) */
 .topbar-action-pill.pill-login {
-  background: linear-gradient(180deg, #7C3AED 0%, #581C87 100%) !important;
-  border: 1.5px solid #C084FC !important;
-  box-shadow: 0 4px 0 #4c1d95, 0 6px 14px rgba(124, 58, 237, 0.35) !important;
+  background: linear-gradient(180deg, #4F46E5 0%, #4338CA 100%) !important;
+  border: 1.5px solid #4338CA !important;
+  border-bottom: 4px solid #312E81 !important;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2) !important;
+  color: #FFFFFF !important;
 }
 
 .topbar-action-pill.pill-login:active {
-  transform: translateY(2px) scale(0.98);
-  box-shadow: 0 2px 0 #4c1d95, 0 3px 8px rgba(124, 58, 237, 0.3) !important;
+  transform: translateY(2px);
+  border-bottom-width: 2px !important;
 }
 
-/* Sade & Şık Yarı Saydam Cam Butonlar: Paylaş, Soru Ekle, Ayarlar */
+/* Dokunsal (Tactile) Beyaz EdTech Butonları: Paylaş, Soru Ekle, Ayarlar */
 .topbar-action-pill.pill-share,
 .topbar-action-pill.pill-addquiz,
 .topbar-action-pill.pill-settings {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-bottom: 4px solid #94A3B8 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+  color: #334155 !important;
 }
 
 .topbar-action-pill.pill-share:hover,
 .topbar-action-pill.pill-addquiz:hover,
 .topbar-action-pill.pill-settings:hover {
-  background: rgba(255, 255, 255, 0.18) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
+  background: #F8FAFC !important;
+  border-color: #94A3B8 !important;
+  border-bottom-color: #64748B !important;
+  color: #0F172A !important;
   transform: translateY(-2px);
 }
 
 .topbar-btn-menu {
-  background: rgba(6, 78, 89, 0.85) !important;
-  border: 2px solid #22D3EE !important;
-  border-radius: 12px;
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-bottom: 4px solid #94A3B8 !important;
+  border-radius: 14px;
   width: 42px;
   height: 42px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4.5px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.35) !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
   transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
 .topbar-btn-menu:hover {
   transform: translateY(-2px);
-  background: rgba(10, 147, 150, 0.95) !important;
-  border-color: #00F5D4 !important;
-  box-shadow: 0 6px 16px rgba(0, 245, 212, 0.45) !important;
+  background: #F8FAFC !important;
+  border-color: #0EA5E9 !important;
+  border-bottom-color: #0284C7 !important;
 }
 
 .topbar-btn-menu:active {
-  transform: scale(0.94);
+  transform: translateY(2px);
 }
 
 .topbar-btn-menu .hamburger-bar {
-  width: 20px;
-  height: 2.8px;
-  background: #FFFFFF !important;
+  width: 19px;
+  height: 2.5px;
+  background: #1E293B !important;
   border-radius: 2px;
 }
 
-/* 2) ORTA BİLGİ KUTUSU (KİBAR PİLL BANNER) */
+/* 2) KURUMSAL ÖĞRETMEN BİLGİ ÇUBUĞU (POZİTİF & DAVETKAR EDTECH BARI) */
 .desktop-alert-banner {
-  background: rgba(0, 0, 0, 0.38) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  border: 1.5px solid rgba(245, 158, 11, 0.6) !important;
-  border-radius: 12px !important;
-  padding: 6px 20px !important;
+  background: linear-gradient(90deg, #EFF6FF 0%, #FFFFFF 50%, #FFF7ED 100%) !important;
+  border: 1.5px solid #BFDBFE !important;
+  border-bottom: 3px solid #93C5FD !important;
+  border-radius: 9999px !important;
+  padding: 5px 20px !important;
   text-align: center;
-  color: #FFFFFF;
+  color: #1E293B;
   width: auto !important;
-  max-width: min(650px, 92vw) !important;
-  margin: 4px auto 8px auto !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  max-width: min(760px, 94vw) !important;
+  margin: 6px auto 4px auto !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.07) !important;
   cursor: pointer;
   user-select: none;
   display: flex !important;
@@ -8567,51 +8587,66 @@ input:checked + .slider:before {
   gap: 10px;
   flex-shrink: 0;
   box-sizing: border-box;
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .desktop-alert-banner:hover {
-  background: rgba(0, 0, 0, 0.5) !important;
-  border-color: #FBBF24 !important;
+  border-color: #60A5FA !important;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12) !important;
   transform: translateY(-1px);
 }
 
 .desktop-alert-banner:active {
-  transform: scale(0.99);
+  transform: translateY(1px);
 }
 
 .desktop-alert-banner .alert-banner-title {
-  font-size: 0.92rem;
+  font-size: 0.84rem;
   font-weight: 900;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  color: #FDBA74;
+  color: #1D4ED8;
+  background: #DBEAFE;
+  padding: 3px 11px;
+  border-radius: 9999px;
   white-space: nowrap;
 }
 
+.desktop-alert-banner .alert-lock-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
 .desktop-alert-banner .alert-banner-subtitle {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #E2E8F0;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #334155;
   margin: 0;
   white-space: nowrap;
+}
+
+.desktop-alert-banner .alert-banner-subtitle strong {
+  color: #EA580C;
+  font-weight: 800;
+  margin-left: 2px;
 }
 
 @media (max-width: 640px) {
   .desktop-alert-banner {
     flex-direction: column;
+    border-radius: 14px !important;
     gap: 2px;
-    padding: 6px 14px !important;
+    padding: 5px 12px !important;
   }
   .desktop-alert-banner .alert-banner-subtitle {
     white-space: normal;
-    font-size: 0.75rem;
+    font-size: 0.74rem;
   }
 }
 
-/* 3) MASAÜSTÜ / AKILLI TAHTA 3 SÜTUNLU SAHNE (EKRANI TAM KAPLAYAN) */
+/* 3) MASAÜSTÜ / AKILLI TAHTA 3 SÜTUNLU SAHNE (FERAH, AYDINLIK DUOLINGO/TWINKL TEMASI) */
 .home-showcase-section {
   flex: 1;
   display: flex;
@@ -8620,10 +8655,17 @@ input:checked + .slider:before {
   height: calc(100vh - 104px) !important;
   max-height: calc(100vh - 104px) !important;
   overflow: hidden !important;
-  padding: 0 clamp(16px, 2.5vw, 40px) !important;
+  padding: 2px clamp(18px, 2.8vw, 44px) 6px clamp(18px, 2.8vw, 44px) !important;
   margin: 0 !important;
   box-sizing: border-box;
   width: 100%;
+  position: relative;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.14) 0%, transparent 42%),
+    radial-gradient(circle at 85% 28%, rgba(251, 146, 60, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.10) 0%, transparent 45%),
+    linear-gradient(135deg, #F0F9FF 0%, #F8FAFC 48%, #FFFBEB 100%);
+  border-radius: 24px 24px 0 0;
 }
 
 .widescreen-showcase-stage {
@@ -8633,174 +8675,277 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 4px clamp(10px, 1.5vw, 24px);
-  gap: clamp(16px, 2.5vw, 40px);
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 4px clamp(6px, 1vw, 18px);
+  gap: clamp(18px, 2.5vw, 42px);
   box-sizing: border-box;
   position: relative;
 }
 
-/* Sol Sütun: 7 Adet Dikey Sınıf / Ders Kartı (Glassmorphism & Canlı Renk Şeritleri) */
+/* Sol Sütun: 7 Adet Dokunsal (Tactile 3D) Renkli Sınıf ve Ders Kartı */
 .stage-grades-sidebar {
-  width: clamp(210px, 16vw, 260px);
-  min-width: 195px;
+  width: clamp(235px, 18.5vw, 290px);
+  min-width: 220px;
   display: flex;
   flex-direction: column;
-  gap: clamp(5px, 0.9vh, 9px);
+  gap: clamp(5px, 0.85vh, 8px);
   flex-shrink: 0;
   z-index: 10;
-  background: rgba(10, 35, 45, 0.6) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 22px;
-  padding: clamp(7px, 1.1vh, 12px) clamp(8px, 0.8vw, 12px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 2px solid #E2E8F0 !important;
+  border-bottom: 5px solid #CBD5E1 !important;
+  border-radius: 24px;
+  padding: clamp(8px, 1.1vh, 13px) clamp(10px, 0.9vw, 14px);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07) !important;
   box-sizing: border-box;
 }
 
+.sidebar-stage-heading {
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  color: #64748B;
+  padding: 0 6px 2px 6px;
+  text-transform: uppercase;
+}
+
 .stage-grade-card {
-  background: rgba(255, 255, 255, 0.08) !important;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-left: 5px solid transparent !important;
-  border-radius: 14px;
-  padding: clamp(6px, 0.95vh, 10px) 12px;
+  background: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  border-bottom: 4px solid #CBD5E1 !important;
+  border-radius: 16px;
+  padding: clamp(5px, 0.82vh, 9px) 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   cursor: pointer;
   user-select: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
-  transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease, background 0.16s ease, border-color 0.16s ease;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04) !important;
+  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease, background 0.14s ease, border-color 0.14s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .stage-grade-card:hover {
-  background: rgba(255, 255, 255, 0.16) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
-  transform: translateX(4px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.09) !important;
 }
 
 .stage-grade-card:active {
-  transform: scale(0.97);
+  transform: translateY(2px);
 }
 
-/* Sınıf Kartlarının Canlı Renk Şeritleri */
+/* Her Sınıf İçin Canlı Duolingo / Twinkl Tarzı 3D Renk Kodları */
 .stage-grade-card.card-kindergarten {
-  border-left: 5px solid #10b981 !important;
+  background: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+  border-bottom: 4px solid #10B981 !important;
+}
+.stage-grade-card.card-kindergarten:hover {
+  background: #D1FAE5 !important;
 }
 
 .stage-grade-card.card-grade1 {
-  border-left: 5px solid #facc15 !important;
+  background: #FFF1F2 !important;
+  border-color: #FECDD3 !important;
+  border-bottom: 4px solid #F43F5E !important;
+}
+.stage-grade-card.card-grade1:hover {
+  background: #FFE4E6 !important;
 }
 
 .stage-grade-card.card-grade2 {
-  border-left: 5px solid #14b8a6 !important;
+  background: #F0F9FF !important;
+  border-color: #BAE6FD !important;
+  border-bottom: 4px solid #0EA5E9 !important;
+}
+.stage-grade-card.card-grade2:hover {
+  background: #E0F2FE !important;
 }
 
 .stage-grade-card.card-grade3 {
-  border-left: 5px solid #3b82f6 !important;
+  background: #FFFBEB !important;
+  border-color: #FDE68A !important;
+  border-bottom: 4px solid #F59E0B !important;
+}
+.stage-grade-card.card-grade3:hover {
+  background: #FEF3C7 !important;
 }
 
 .stage-grade-card.card-grade4 {
-  border-left: 5px solid #a855f7 !important;
+  background: #F5F3FF !important;
+  border-color: #DDD6FE !important;
+  border-bottom: 4px solid #8B5CF6 !important;
+}
+.stage-grade-card.card-grade4:hover {
+  background: #EDE9FE !important;
 }
 
-/* Düellolar & Oyunlar (Turuncu 3D Vurgu) */
+/* Düellolar & Oyunlar (Canlı Turuncu 3D Vurgu) */
 .stage-grade-card.card-duels {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
-  border: 1.5px solid #fdba74 !important;
-  border-left: 5px solid #ffedd5 !important;
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.45) !important;
+  background: linear-gradient(135deg, #FF7A00 0%, #EA580C 100%) !important;
+  border: 2px solid #EA580C !important;
+  border-bottom: 4px solid #9A3412 !important;
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.25) !important;
 }
 
 .stage-grade-card.card-duels:hover {
-  background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%) !important;
-  border-color: #ffedd5 !important;
+  background: linear-gradient(135deg, #FB923C 0%, #EA580C 100%) !important;
 }
 
-/* İngilizce (Mor-Pembe Gradyan Vurgu) */
+/* İngilizce (İndigo / Kraliyet Mavisi 3D Vurgu) */
 .stage-grade-card.card-english {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%) !important;
-  border: 1.5px solid #f472b6 !important;
-  border-left: 5px solid #fbcfe8 !important;
-  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.45) !important;
+  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%) !important;
+  border: 2px solid #4F46E5 !important;
+  border-bottom: 4px solid #312E81 !important;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.24) !important;
 }
 
 .stage-grade-card.card-english:hover {
-  background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%) !important;
-  border-color: #fbcfe8 !important;
+  background: linear-gradient(135deg, #6366F1 0%, #7C3AED 100%) !important;
 }
 
 .grade-icon-cube {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
+.stage-grade-card.card-duels .grade-icon-cube,
+.stage-grade-card.card-english .grade-icon-cube {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
 .grade-card-3d-img {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
 }
 
-.grade-card-label {
-  font-size: clamp(1rem, 1.05vw, 1.15rem);
-  font-weight: 850;
-  color: #FFFFFF !important;
-  letter-spacing: -0.2px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.grade-multiline-label {
+.grade-card-text-group {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
   line-height: 1.15;
-  font-size: clamp(0.92rem, 1vw, 1.05rem);
-  font-weight: 850;
-  color: #FFFFFF !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.grade-multiline-label span {
+.grade-card-label {
+  font-size: clamp(0.95rem, 1vw, 1.06rem);
+  font-weight: 900;
+  color: #0F172A !important;
+  letter-spacing: -0.2px;
+  text-shadow: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.grade-card-sublabel {
+  font-size: 0.71rem;
+  font-weight: 700;
+  color: #64748B;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stage-grade-card.card-duels .grade-card-label,
+.stage-grade-card.card-english .grade-card-label {
   color: #FFFFFF !important;
 }
 
-/* Orta Sütun: Başlık & Eylem */
+.stage-grade-card.card-duels .grade-card-sublabel {
+  color: #FFEDD5;
+}
+
+.stage-grade-card.card-english .grade-card-sublabel {
+  color: #E0E7FF;
+}
+
+.grade-card-chevron {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #94A3B8;
+  line-height: 1;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.stage-grade-card:hover .grade-card-chevron {
+  transform: translateX(3px);
+  color: #0F172A;
+}
+
+.stage-grade-card.card-duels .grade-card-chevron,
+.stage-grade-card.card-english .grade-card-chevron {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Orta Sütun: Kurumsal Başlık, Değer Önerisi & 3D Eylem */
 .stage-center-content {
   flex: 1;
-  max-width: clamp(520px, 42vw, 800px);
+  max-width: clamp(480px, 40vw, 720px);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 0 clamp(8px, 1.5vw, 24px);
+  padding: 0 clamp(8px, 1.2vw, 20px);
   position: relative;
   z-index: 10;
 }
 
+.stage-kicker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1.5px solid #BAE6FD;
+  border-bottom: 3px solid #7DD3FC;
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-size: clamp(0.76rem, 0.85vw, 0.86rem);
+  font-weight: 800;
+  color: #0369A1;
+  margin-bottom: clamp(10px, 1.6vh, 16px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
+}
+
+.stage-kicker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+}
+
 .stage-heading-block {
   position: relative;
-  display: inline-block;
-  margin-bottom: clamp(12px, 2vh, 20px);
-  padding: 0 clamp(20px, 3vw, 36px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: clamp(10px, 1.8vh, 18px);
+  padding: 0 12px;
 }
 
 .stage-main-title {
   font-family: 'Poppins', 'Nunito', sans-serif;
-  font-size: clamp(2rem, 3.2vw, 3.5rem);
+  font-size: clamp(1.9rem, 3vw, 3.15rem);
   font-weight: 900;
-  color: #FFFFFF !important;
-  line-height: 1.15;
+  color: #0F172A !important;
+  line-height: 1.14;
   margin: 0;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.8px;
+  text-shadow: none;
 }
 
 .stage-main-title span {
@@ -8809,92 +8954,123 @@ input:checked + .slider:before {
 
 .stage-bubbly-3d {
   font-family: 'Poppins', 'Nunito', sans-serif;
-  font-size: clamp(2.6rem, 4.3vw, 4.5rem);
+  font-size: clamp(2.4rem, 4vw, 4.1rem);
   font-weight: 950;
-  letter-spacing: 0.5px;
-  margin-top: 10px;
+  letter-spacing: -0.5px;
+  margin-top: 6px;
   display: inline-block;
+  line-height: 1.08;
 }
 
 .stage-bubbly-3d .word-derse {
-  color: #00F5D4;
-  -webkit-text-stroke: 2.2px #042B33;
-  text-shadow: 0 4px 0 #042B33, 0 8px 20px rgba(0, 245, 212, 0.45);
+  color: #0284C7;
+  -webkit-text-stroke: 0px transparent;
+  text-shadow: 0 4px 0 #BAE6FD, 0 8px 18px rgba(2, 132, 199, 0.18);
 }
 
 .stage-bubbly-3d .word-bi {
-  color: #FB923C;
-  -webkit-text-stroke: 2.2px #7C2D12;
-  text-shadow: 0 4px 0 #7C2D12, 0 8px 20px rgba(251, 146, 60, 0.45);
+  color: #FF6B00;
+  -webkit-text-stroke: 0px transparent;
+  text-shadow: 0 4px 0 #FED7AA, 0 8px 18px rgba(255, 107, 0, 0.22);
   margin: 0 6px;
 }
 
 .stage-bubbly-3d .word-mola {
-  color: #00F5D4;
-  -webkit-text-stroke: 2.2px #042B33;
-  text-shadow: 0 4px 0 #042B33, 0 8px 20px rgba(0, 245, 212, 0.45);
+  color: #0D9488;
+  -webkit-text-stroke: 0px transparent;
+  text-shadow: 0 4px 0 #99F6E4, 0 8px 18px rgba(13, 148, 136, 0.18);
 }
 
-.stage-sparkle {
-  position: absolute;
-  font-size: 2.2rem;
-  color: #FDE047;
-  filter: drop-shadow(0 0 10px rgba(253, 224, 71, 0.9));
-  user-select: none;
-  pointer-events: none;
-}
-
-.stage-sparkle.sparkle-left {
-  top: 6px;
-  left: -8px;
-  animation: pulseSparkle 2.6s ease-in-out infinite alternate;
-}
-
-.stage-sparkle.sparkle-right {
-  top: 32px;
-  right: -8px;
-  animation: pulseSparkle 3s ease-in-out 0.8s infinite alternate;
+.stage-hero-subtitle {
+  font-size: clamp(0.94rem, 1.08vw, 1.12rem);
+  font-weight: 700;
+  color: #475569;
+  max-width: 520px;
+  line-height: 1.45;
+  margin: clamp(8px, 1.4vh, 14px) auto 0 auto;
 }
 
 .stage-cta-container {
-  margin-top: clamp(6px, 1.2vh, 14px);
+  margin-top: clamp(4px, 1vh, 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 /* 3D Dokunsal (Tactile) Basılabilir Oyun Butonu: Hemen Başla */
 .stage-btn-start-3d {
-  background: linear-gradient(180deg, #F97316 0%, #EA580C 45%, #C2410C 100%) !important;
-  border: 2.5px solid #FDBA74 !important;
-  border-radius: 50px !important;
-  box-shadow: 0 6px 0 #b84a00, 0 12px 24px rgba(234, 88, 12, 0.4) !important;
+  background: linear-gradient(180deg, #FF7A00 0%, #EA580C 100%) !important;
+  border: 2px solid #EA580C !important;
+  border-bottom: 6px solid #9A3412 !important;
+  border-radius: 22px !important;
+  box-shadow: 0 12px 26px rgba(234, 88, 12, 0.3) !important;
   color: #FFFFFF !important;
   font-weight: 900;
-  font-size: clamp(1.3rem, 1.8vw, 1.65rem);
-  padding: clamp(14px, 2vh, 18px) clamp(48px, 4vw, 72px);
+  font-size: clamp(1.25rem, 1.65vw, 1.55rem);
+  padding: clamp(13px, 1.8vh, 17px) clamp(42px, 3.8vw, 64px);
   display: inline-flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
+.btn-start-svg-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.22);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .stage-btn-start-3d:hover {
-  background: linear-gradient(180deg, #FB923C 0%, #F97316 45%, #EA580C 100%) !important;
+  background: linear-gradient(180deg, #FB923C 0%, #F97316 100%) !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 0 #b84a00, 0 16px 28px rgba(234, 88, 12, 0.5) !important;
+  box-shadow: 0 16px 32px rgba(234, 88, 12, 0.38) !important;
 }
 
 .stage-btn-start-3d:active {
   transform: translateY(4px) !important;
-  box-shadow: 0 2px 0 #b84a00, 0 4px 10px rgba(234, 88, 12, 0.3) !important;
+  border-bottom-width: 2px !important;
+  box-shadow: 0 4px 10px rgba(234, 88, 12, 0.25) !important;
 }
 
-/* Sağ Sütun: Moli & 6 Uçuşan Rozet */
+.stage-quick-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: #475569;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.quick-stat-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #334155;
+}
+
+.quick-stat-item svg {
+  color: #0EA5E9;
+}
+
+.quick-stat-divider {
+  color: #CBD5E1;
+}
+
+/* Sağ Sütun: Moli Sahne Portalı & Entegre Etkileşim Rozetleri */
 .stage-moli-showcase {
-  width: clamp(420px, 32vw, 560px);
-  min-width: 380px;
-  max-width: 38vw;
+  width: clamp(360px, 28vw, 480px);
+  min-width: 320px;
+  max-width: 34vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8906,92 +9082,167 @@ input:checked + .slider:before {
 .widescreen-moli-arena {
   position: relative;
   width: 100%;
-  height: clamp(340px, 50vh, 460px);
+  height: clamp(320px, 48vh, 430px);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Moli'yi Boşluktan Kurtaran 3D Sahne Portalı */
+.moli-stage-backdrop-ring {
+  position: absolute;
+  width: clamp(240px, 21vw, 310px);
+  height: clamp(240px, 21vw, 310px);
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFFFFF 0%, #E0F2FE 65%, #BAE6FD 100%);
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 16px 40px rgba(2, 132, 199, 0.12), inset 0 4px 16px rgba(56, 189, 248, 0.2);
+  z-index: 1;
+}
+
+.moli-stage-pedestal {
+  position: absolute;
+  bottom: clamp(22px, 4vh, 38px);
+  width: clamp(160px, 14vw, 210px);
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.18) 0%, rgba(15, 23, 42, 0.04) 65%, transparent 80%);
+  z-index: 1;
 }
 
 .widescreen-moli-mascot {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .widescreen-moli-mascot .moli-mascot-img {
-  height: clamp(290px, 43vh, 390px);
+  height: clamp(240px, 37vh, 330px);
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.15));
-  animation: moliFloatGentle 3s ease-in-out infinite alternate;
+  filter: drop-shadow(0 14px 24px rgba(15, 23, 42, 0.16));
+  animation: moliFloatGentle 3.2s ease-in-out infinite alternate;
 }
 
-/* Moli Çevresindeki Yüzen Bilgi Baloncukları (Gölge & Yavaş Süzülme Animasyonu) */
+/* Moli Sahnesine Entegre 3D Dokunsal Rozetler */
 .moli-floating-pill {
   position: absolute;
   background: #FFFFFF;
-  border-radius: 9999px;
-  padding: 8px 18px;
-  font-weight: 900;
-  font-size: 1.02rem;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  border-radius: 16px;
+  padding: 7px 14px;
+  font-weight: 850;
+  font-size: 0.92rem;
   display: flex;
   align-items: center;
-  gap: 7px;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12), 0 10px 22px rgba(0, 0, 0, 0.18) !important;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08) !important;
   z-index: 5;
   user-select: none;
+  cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   animation: pillFloat 4s ease-in-out infinite alternate;
 }
 
 .moli-floating-pill:hover {
-  transform: scale(1.08) !important;
+  transform: translateY(-3px) scale(1.04) !important;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Moli'nin Üst Konuşma Balonu */
+.moli-floating-pill.pill-ready {
+  top: clamp(4px, 1.5vh, 16px);
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFFFFF;
+  border: 2px solid #FED7AA;
+  border-bottom: 4px solid #FDBA74;
+  color: #C2410C;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  animation: pillReadyFloat 3.8s ease-in-out infinite alternate !important;
+}
+
+.moli-floating-pill.pill-ready:hover {
+  transform: translateX(-50%) scale(1.04) !important;
+}
+
+.pill-svg-icon {
+  display: inline-flex;
+  align-items: center;
+  color: #EA580C;
 }
 
 .moli-floating-pill.pill-math {
-  top: clamp(20px, 5vh, 45px);
-  left: clamp(-10px, -1vw, 15px);
-  border: 2px solid #93C5FD;
-  color: #1E3A8A;
+  top: clamp(68px, 11vh, 95px);
+  left: clamp(0px, 0.5vw, 18px);
+  border-color: #BAE6FD;
+  border-bottom-color: #38BDF8;
+  color: #0369A1;
   animation-delay: 0s;
 }
 
 .moli-floating-pill.pill-letters {
-  top: clamp(30px, 6vh, 60px);
-  right: clamp(-10px, -1vw, 15px);
-  border: 2px solid #C4B5FD;
+  top: clamp(68px, 11vh, 95px);
+  right: clamp(0px, 0.5vw, 18px);
+  border-color: #DDD6FE;
+  border-bottom-color: #A78BFA;
   color: #6D28D9;
   animation-delay: 1.2s;
 }
 
 .pill-ico-badge {
-  background: #E2E8F0;
-  color: #475569;
-  font-size: 0.76rem;
+  background: #F1F5F9;
+  color: #334155;
+  font-size: 0.74rem;
   padding: 2px 7px;
-  border-radius: 6px;
-  font-weight: 800;
+  border-radius: 8px;
+  font-weight: 900;
+}
+
+.pill-ico-badge.badge-blue {
+  background: #E0F2FE;
+  color: #0284C7;
+}
+
+.pill-ico-badge.badge-violet {
+  background: #EDE9FE;
+  color: #7C3AED;
+}
+
+.pill-ico-badge.badge-amber {
+  background: #FEF3C7;
+  color: #D97706;
 }
 
 .pill-txt-abc {
-  color: #6D28D9;
-  letter-spacing: 1px;
+  color: #5B21B6;
+  font-weight: 850;
 }
 
 .moli-floating-circle {
   position: absolute;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  height: 42px;
+  border-radius: 14px;
   background: #FFFFFF;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.18) !important;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08) !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.45rem;
+  gap: 6px;
+  padding: 0 12px;
+  font-size: 0.85rem;
+  font-weight: 850;
+  color: #1E293B;
   z-index: 5;
   user-select: none;
   cursor: pointer;
@@ -9000,73 +9251,74 @@ input:checked + .slider:before {
 }
 
 .moli-floating-circle:hover {
-  transform: scale(1.15) !important;
+  transform: scale(1.08) !important;
 }
 
 .moli-floating-circle.circle-trophy {
-  top: clamp(160px, 25vh, 220px);
-  left: clamp(-5px, -0.5vw, 20px);
-  border: 2px solid #FDE68A;
+  bottom: clamp(72px, 12vh, 105px);
+  top: auto;
+  left: clamp(-4px, 0vw, 12px);
+  border-color: #FDE68A;
+  border-bottom-color: #F59E0B;
+  color: #B45309;
   animation-delay: 0.6s;
 }
 
+.circle-pill-label {
+  font-size: 0.82rem;
+  font-weight: 850;
+  color: #B45309;
+}
+
 .moli-floating-circle.circle-balloon {
-  top: clamp(200px, 30vh, 260px);
-  right: clamp(-5px, -0.5vw, 20px);
-  border: 2px solid #FECDD3;
+  bottom: clamp(72px, 12vh, 105px);
+  top: auto;
+  right: clamp(4px, 0.8vw, 20px);
+  width: 42px;
+  padding: 0;
+  border-color: #FECDD3;
+  border-bottom-color: #FB7185;
   animation-delay: 1.8s;
 }
 
 .moli-floating-pill.pill-points {
-  bottom: clamp(45px, 7vh, 75px);
-  left: clamp(-10px, -1vw, 10px);
-  border: 2px solid #FDE68A;
-  color: #B45309;
-  animation-delay: 2.2s;
-}
-
-.moli-floating-pill.pill-ready {
-  bottom: clamp(15px, 3vh, 30px);
-  left: 52%;
-  transform: translateX(-40%);
-  border: 2px solid #FDBA74;
-  color: #C2410C;
-  padding: 8px 22px;
-  font-size: 1.05rem;
-  animation: pillReadyFloat 3.8s ease-in-out 0.9s infinite alternate !important;
-}
-
-.moli-floating-pill.pill-ready:hover {
-  transform: translateX(-40%) scale(1.08) !important;
+  bottom: clamp(8px, 2vh, 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: #FDE68A;
+  border-bottom-color: #F59E0B;
+  color: #92400E;
+  animation: pillReadyFloat 4s ease-in-out 1.2s infinite alternate !important;
 }
 
 @keyframes pillFloat {
   0% { transform: translateY(0); }
-  100% { transform: translateY(-9px); }
+  100% { transform: translateY(-7px); }
 }
 
 @keyframes pillReadyFloat {
-  0% { transform: translateX(-40%) translateY(0); }
-  100% { transform: translateX(-40%) translateY(-8px); }
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-6px); }
 }
 
-/* 4) ALT SABİT / YÜZEN GÜVEN BANDI (Koyu Yarı Saydam Cam & Zümrüt Yeşili Onay Rozeti) */
+/* 4) ALT ORTALANMIŞ KURUMSAL GÜVENCE BANDI (KESİLMEYEN, FERAH 3D ŞERİT) */
 .widescreen-floating-trust-card {
-  align-self: flex-start;
-  width: auto;
-  max-width: clamp(340px, 48vw, 680px);
-  margin: 4px 0 clamp(8px, 1.5vh, 16px) 0;
-  background: rgba(10, 35, 45, 0.75) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(6, 182, 212, 0.35) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
-  padding: clamp(8px, 1.1vh, 12px) clamp(16px, 1.5vw, 24px);
+  align-self: center;
+  width: 100%;
+  max-width: 1220px;
+  margin: 2px auto clamp(6px, 1.2vh, 12px) auto;
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid #E2E8F0 !important;
+  border-bottom: 4px solid #CBD5E1 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06) !important;
+  padding: clamp(7px, 1vh, 11px) clamp(16px, 1.8vw, 26px);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: clamp(12px, 1.5vw, 20px);
+  justify-content: space-between;
+  gap: clamp(12px, 1.5vw, 24px);
   box-sizing: border-box;
   flex-shrink: 0;
 }
@@ -9074,46 +9326,70 @@ input:checked + .slider:before {
 .trust-left-wrap {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  min-width: 0;
 }
 
 .trust-3d-book-icon {
-  width: clamp(32px, 3vw, 42px);
-  height: clamp(32px, 3vw, 42px);
+  width: clamp(26px, 2.2vw, 32px);
+  height: clamp(26px, 2.2vw, 32px);
   object-fit: contain;
   flex-shrink: 0;
 }
 
 .trust-lead-text {
-  font-size: clamp(0.9rem, 1vw, 1.05rem);
-  color: rgba(255, 255, 255, 0.92) !important;
+  font-size: clamp(0.84rem, 0.94vw, 0.96rem);
+  color: #334155 !important;
+  font-weight: 700;
   line-height: 1.25;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: none;
 }
 
 .trust-lead-text strong {
-  color: #FFFFFF !important;
+  color: #0F172A !important;
   font-weight: 900;
+}
+
+.trust-badges-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.trust-feature-pill {
+  background: #F0F9FF;
+  border: 1.5px solid #BAE6FD;
+  color: #0369A1;
+  font-size: clamp(0.74rem, 0.8vw, 0.82rem);
+  font-weight: 850;
+  border-radius: 9999px;
+  padding: 5px 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
 }
 
 /* Belirgin Zümrüt Yeşili Onay Rozeti (#10B981) */
 .trust-right-tag {
-  background: #10b981 !important;
-  border: 1px solid #34d399 !important;
-  color: #FFFFFF !important;
-  font-size: clamp(0.78rem, 0.85vw, 0.88rem);
+  background: #ECFDF5 !important;
+  border: 1.5px solid #6EE7B7 !important;
+  color: #047857 !important;
+  font-size: clamp(0.74rem, 0.8vw, 0.82rem);
   font-weight: 900;
   border-radius: 9999px;
-  padding: 6px 16px;
+  padding: 5px 14px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.45) !important;
+  gap: 5px;
+  box-shadow: none !important;
   white-space: nowrap;
 }
 
 .trust-check-mark {
   font-weight: 900;
+  color: #059669;
 }
 
 /* Sınıflar ve Oyunlar modunda kaydırmayı aç ve boşlukları hizala */

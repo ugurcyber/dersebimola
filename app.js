@@ -13009,7 +13009,7 @@
       DOM.btnDesktopGameMode.classList.toggle('is-solo', isSolo);
     }
     if (DOM.desktopModeIcon) {
-      DOM.desktopModeIcon.textContent = isSolo ? '👤' : '⚔️';
+      DOM.desktopModeIcon.innerHTML = isSolo ? '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>' : '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>';
     }
     if (DOM.desktopModeText) {
       DOM.desktopModeText.textContent = isSolo ? 'Pratik Modu' : 'Düello Modu';
@@ -13140,7 +13140,7 @@
         mobileNoticeBanner.style.display = '';
       }
       if (desktopLoginText) {
-        desktopLoginText.textContent = 'Giriş Yap';
+        desktopLoginText.textContent = 'Öğretmen Girişi';
       }
       if (btnDesktopLogin) {
         btnDesktopLogin.classList.remove('logged-in');

@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.3.0">
+  <link rel="stylesheet" href="style.css?v=6.4.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -215,30 +215,62 @@
       <header class="app-topbar unified-topbar" id="appHeader" aria-label="Ana Menü ve İşlemler">
         <div class="topbar-logo-brand" id="btnDesktopHome" role="button" tabindex="0" title="Derse Bi' Mola Ana Menü">
           <div class="brand-bubbly-logo">
-            <span class="logo-mo">Mo</span><span class="logo-li">li</span><span class="logo-star">⭐</span>
+            <span class="logo-mo">Mo</span><span class="logo-li">li</span>
+            <span class="logo-star" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.9 8.6L22 9.4L16.7 14.2L18.2 21.2L12 17.6L5.8 21.2L7.3 14.2L2 9.4L9.1 8.6L12 2Z" fill="#F59E0B" stroke="#D97706" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </span>
           </div>
-          <div class="brand-sub-title">Derse Bi' Mola</div>
+          <div class="brand-sub-title">Derse Bi' Mola • İlkokul &amp; Akıllı Tahta</div>
         </div>
 
         <div class="topbar-unified-actions">
           <button class="topbar-action-pill pill-gamemode" id="btnDesktopGameMode" type="button" aria-label="Oyun Modu" title="Düello / Pratik Modunu Değiştir">
-            <span class="pill-icon" id="desktopModeIcon">⚔️</span>
+            <span class="pill-icon" id="desktopModeIcon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </span>
             <span class="pill-text" id="desktopModeText">Düello Modu</span>
           </button>
           <button class="topbar-action-pill pill-login" id="btnDesktopLogin" type="button" aria-label="Giriş Yap">
-            <span class="pill-icon">👤</span>
-            <span class="pill-text" id="desktopLoginText">Giriş Yap</span>
+            <span class="pill-icon">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </span>
+            <span class="pill-text" id="desktopLoginText">Öğretmen Girişi</span>
           </button>
           <button class="topbar-action-pill pill-share" id="btnDesktopShare" type="button" aria-label="Paylaş">
-            <span class="pill-icon">🔗</span>
+            <span class="pill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </span>
             <span class="pill-text">Paylaş</span>
           </button>
           <button class="topbar-action-pill pill-addquiz" id="btnDesktopAddQuiz" type="button" aria-label="Soru Ekle">
-            <span class="pill-icon">➕</span>
+            <span class="pill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
             <span class="pill-text">Soru Ekle</span>
           </button>
           <button class="topbar-action-pill pill-settings" id="btnDesktopSettings" type="button" aria-label="Ayarlar" onclick="window.openSettingsModal ? window.openSettingsModal() : (document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.remove('hide'))">
-            <span class="pill-icon">⚙️</span>
+            <span class="pill-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
             <span class="pill-text">Ayarlar</span>
           </button>
           <button class="topbar-btn-menu" id="btnDesktopMenu" type="button" aria-label="Menü" aria-expanded="false">
@@ -249,13 +281,19 @@
         </div>
       </header>
 
-      <!-- TAM GENİŞLİK TURUNCU UYARI BANDI (GİRİŞ YAPILMADI...) -->
+      <!-- KURUMSAL ÖĞRETMEN BİLGİ ÇUBUĞU -->
       <div class="desktop-alert-banner" id="desktopNoticeBanner" role="button" tabindex="0" title="Öğretmen Girişi Yap">
         <div class="alert-banner-title">
-          <span class="alert-lock-icon">🔒</span> Giriş Yapılmadı...
+          <span class="alert-lock-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </span>
+          Öğretmen Paneli
         </div>
         <div class="alert-banner-subtitle">
-          Öğretmenler İçin Sınıf ve Liste Eklemek İçin Lütfen <strong>Giriş Yapın</strong>
+          Sınıf listenizi kaydetmek ve Sınıf Ligi puanlarını takip etmek için <strong>Öğretmen Girişi Yapın →</strong>
         </div>
       </div>
 
@@ -268,125 +306,196 @@
           <!-- ============================================== -->
           <section class="home-showcase-section" id="homeShowcaseSection">
 
-
             <!-- ============================================================== -->
-            <!-- MASAÜSTÜ, AKILLI TAHTA & TABLET VİTRİNİ (GÖRSELDEKİ BİREBİR TASARIM) -->
+            <!-- MASAÜSTÜ, AKILLI TAHTA & TABLET VİTRİNİ (FERAH EDTECH TEMASI)  -->
             <!-- ============================================================== -->
             <div class="widescreen-showcase-stage" id="widescreenShowcaseStage">
-              <!-- SOL SÜTUN: 7 ADET ŞIK SINIF VE DERS KARTI -->
-              <aside class="stage-grades-sidebar">
+              <!-- SOL SÜTUN: 7 ADET DOKUNSAL (TACTILE 3D) SINIF VE DERS KARTI -->
+              <aside class="stage-grades-sidebar" aria-label="Sınıf ve Mod Seçimi">
+                <div class="sidebar-stage-heading">SINIFINI SEÇ</div>
+
                 <div class="stage-grade-card card-kindergarten" data-grade="0" role="button" tabindex="0" title="Anasınıfı">
-                  <div class="grade-icon-cube icon-theme-blue">
+                  <div class="grade-icon-cube icon-theme-mint">
                     <img src="assets/icons/3d/puzzle_piece.webp" class="grade-card-3d-img" alt="Anasınıfı" width="30" height="30" loading="lazy" decoding="async">
                   </div>
-                  <span class="grade-card-label">Anasınıfı</span>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">Anasınıfı</span>
+                    <span class="grade-card-sublabel">Kavramlar • Dikkat</span>
+                  </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
 
                 <div class="stage-grade-card card-grade1" data-grade="1" role="button" tabindex="0" title="1. Sınıf">
-                  <div class="grade-icon-cube icon-theme-red">
+                  <div class="grade-icon-cube icon-theme-coral">
                     <img src="assets/icons/3d/abc_blocks.webp" class="grade-card-3d-img" alt="1. Sınıf" width="30" height="30" loading="lazy" decoding="async">
                   </div>
-                  <span class="grade-card-label">1. Sınıf</span>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">1. Sınıf</span>
+                    <span class="grade-card-sublabel">Okuma • Matematik • HB</span>
+                  </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
 
                 <div class="stage-grade-card card-grade2" data-grade="2" role="button" tabindex="0" title="2. Sınıf">
-                  <div class="grade-icon-cube icon-theme-green">
+                  <div class="grade-icon-cube icon-theme-sky">
                     <img src="assets/icons/3d/abacus.webp" class="grade-card-3d-img" alt="2. Sınıf" width="30" height="30" loading="lazy" decoding="async">
                   </div>
-                  <span class="grade-card-label">2. Sınıf</span>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">2. Sınıf</span>
+                    <span class="grade-card-sublabel">4 Ders • Sesli Sorular</span>
+                  </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
 
                 <div class="stage-grade-card card-grade3" data-grade="3" role="button" tabindex="0" title="3. Sınıf">
-                  <div class="grade-icon-cube icon-theme-orange">
+                  <div class="grade-icon-cube icon-theme-amber">
                     <img src="assets/icons/3d/open_book.webp" class="grade-card-3d-img" alt="3. Sınıf" width="30" height="30" loading="lazy" decoding="async">
                   </div>
-                  <span class="grade-card-label">3. Sınıf</span>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">3. Sınıf</span>
+                    <span class="grade-card-sublabel">5 Ders • Fen &amp; Türkçe</span>
+                  </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
 
                 <div class="stage-grade-card card-grade4" data-grade="4" role="button" tabindex="0" title="4. Sınıf">
-                  <div class="grade-icon-cube icon-theme-crimson">
+                  <div class="grade-icon-cube icon-theme-violet">
                     <img src="assets/icons/3d/books.webp" class="grade-card-3d-img" alt="4. Sınıf" width="30" height="30" loading="lazy" decoding="async">
                   </div>
-                  <span class="grade-card-label">4. Sınıf</span>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">4. Sınıf</span>
+                    <span class="grade-card-sublabel">5 Ders • Sosyal &amp; Fen</span>
+                  </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
 
                 <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Düellolar & Oyunlar">
-                  <div class="grade-icon-cube icon-theme-amber">
+                  <div class="grade-icon-cube icon-theme-duel">
                     <img src="assets/icons/3d/lightning.webp" class="grade-card-3d-img" alt="Düellolar" width="30" height="30" loading="lazy" decoding="async">
                   </div>
-                  <div class="grade-multiline-label">
-                    <span>Düellolar</span>
-                    <span>&amp; Oyunlar</span>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">Düellolar &amp; Oyunlar</span>
+                    <span class="grade-card-sublabel">2 Kişilik Tahta Yarışı</span>
                   </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
 
                 <div class="stage-grade-card card-english" id="btnStageQuickEnglish" role="button" tabindex="0" title="İngilizce">
                   <div class="grade-icon-cube icon-theme-indigo">
                     <img src="assets/icons/3d/globe.webp" class="grade-card-3d-img" alt="İngilizce" width="30" height="30" loading="lazy" decoding="async">
                   </div>
-                  <span class="grade-card-label">İngilizce</span>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">İngilizce</span>
+                    <span class="grade-card-sublabel">Kelime &amp; Dinleme</span>
+                  </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
               </aside>
 
-              <!-- ORTA SÜTUN: BAŞLIK, 3D MARKA VE BÜYÜK TURUNCU BUTON -->
+              <!-- ORTA SÜTUN: KURUMSAL ROZET, BAŞLIK, 3D MARKA, AÇIKLAMA VE BÜYÜK BUTON -->
               <div class="stage-center-content">
+                <div class="stage-kicker-badge">
+                  <span class="stage-kicker-dot"></span>
+                  <span>MEB Yüzyılın Maarif Modeline Uyumlu • Akıllı Tahta &amp; Tablet</span>
+                </div>
+
                 <div class="stage-heading-block">
-                  <span class="stage-sparkle sparkle-left" aria-hidden="true">✨</span>
                   <h1 class="stage-main-title">
-                    <span>Öğrenmenin</span>
-                    <span>En Eğlenceli Yolu!</span>
+                    <span>Sınıf İçi Öğrenmenin</span>
+                    <span>En Keyifli Hali</span>
                   </h1>
                   <div class="stage-bubbly-3d" aria-label="Derse Bi' Mola">
                     <span class="word-derse">DERSE</span>
                     <span class="word-bi">Bİ'</span>
                     <span class="word-mola">MOLA!</span>
                   </div>
-                  <span class="stage-sparkle sparkle-right" aria-hidden="true">✨</span>
+                  <p class="stage-hero-subtitle">
+                    Anasınıfından 4. Sınıfa kadar sesli konu testleri, iki kişilik akıllı tahta düelloları ve eğitici sınıf oyunları.
+                  </p>
                 </div>
 
                 <div class="stage-cta-container">
                   <button class="stage-btn-start-3d" id="btnDesktopHeroStart" type="button" aria-label="Hemen Başla">
-                    <span class="rocket-emoji">🚀</span>
+                    <span class="btn-start-svg-icon" aria-hidden="true">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/>
+                      </svg>
+                    </span>
                     <span class="btn-text">Hemen Başla</span>
                   </button>
+
+                  <div class="stage-quick-stats" aria-label="Platform Özellikleri">
+                    <span class="quick-stat-item">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      Sesli Sorular
+                    </span>
+                    <span class="quick-stat-divider">•</span>
+                    <span class="quick-stat-item">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                      İki Kişilik Düello
+                    </span>
+                    <span class="quick-stat-divider">•</span>
+                    <span class="quick-stat-item">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      Üyeliksiz Oyna
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <!-- SAĞ SÜTUN: MOLI MASKOTU VE 6 UÇUŞAN ROZET -->
+              <!-- SAĞ SÜTUN: MOLI SAHNE PORTALI VE ENTEGRE ETKİLEŞİM ROZETLERİ -->
               <div class="stage-moli-showcase">
                 <div class="widescreen-moli-arena">
+                  <!-- Arka Plan 3D Sahne Halkası & Podyum -->
+                  <div class="moli-stage-backdrop-ring" aria-hidden="true"></div>
+                  <div class="moli-stage-pedestal" aria-hidden="true"></div>
+
+                  <!-- Moli Konuşma Balonu (Üst Merkez - Moli'ye Bağlı) -->
+                  <div class="moli-floating-pill pill-ready" id="btnPillReady" role="button" tabindex="0" title="Moli ile Konuş">
+                    <span class="pill-svg-icon pill-icon-wave" aria-hidden="true">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                    </span>
+                    <span class="pill-txt">Bugün hangi sınıfla yarışıyoruz?</span>
+                  </div>
+
                   <!-- Matematik Rozeti (Sol Üst) -->
-                  <div class="moli-floating-pill pill-math" id="btnPillMath">
-                    <span class="pill-ico">🧮</span>
+                  <div class="moli-floating-pill pill-math" id="btnPillMath" role="button" tabindex="0" title="Matematik Oyunları">
+                    <span class="pill-ico-badge badge-blue">+ −</span>
                     <span class="pill-txt">4 + 5 = 9</span>
                   </div>
 
                   <!-- Harfler Rozeti (Sağ Üst) -->
-                  <div class="moli-floating-pill pill-letters" id="btnPillLetters">
-                    <span class="pill-ico-badge">abc</span>
-                    <span class="pill-txt-abc">A B C</span>
+                  <div class="moli-floating-pill pill-letters" id="btnPillLetters" role="button" tabindex="0" title="Okuma ve Türkçe">
+                    <span class="pill-ico-badge badge-violet">ABC</span>
+                    <span class="pill-txt-abc">Türkçe</span>
                   </div>
 
-                  <!-- Kupa Daire (Orta Sol) -->
-                  <div class="moli-floating-circle circle-trophy" id="btnStageCircleTrophy" role="button" tabindex="0" title="Lider Tablosu">
-                    <span>🏆</span>
+                  <!-- Sınıf Ligi Kupa Rozeti (Sol Alt) -->
+                  <div class="moli-floating-circle circle-trophy" id="btnStageCircleTrophy" role="button" tabindex="0" title="Sınıf Ligi Lider Tablosu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                      <path d="M4 22h16"></path>
+                      <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                      <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                    </svg>
+                    <span class="circle-pill-label">Sınıf Ligi</span>
                   </div>
 
-                  <!-- Balon Daire (Orta Sağ) -->
-                  <div class="moli-floating-circle circle-balloon" id="btnStageCircleBalloon" role="button" tabindex="0" title="Kutlama">
-                    <span>🎈</span>
+                  <!-- Kutlama / Konfeti Rozeti (Sağ Alt) -->
+                  <div class="moli-floating-circle circle-balloon" id="btnStageCircleBalloon" role="button" tabindex="0" title="Kutlama Konfetisi">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
                   </div>
 
-                  <!-- Puan Rozeti (Sol Alt) -->
-                  <div class="moli-floating-pill pill-points" id="btnPillPoints">
-                    <span class="pill-ico">⭐</span>
-                    <span class="pill-txt">+10 Puan</span>
-                  </div>
-
-                  <!-- Hazır mısın? Rozeti (Alt Orta) -->
-                  <div class="moli-floating-pill pill-ready" id="btnPillReady">
-                    <span class="pill-ico">🤖</span>
-                    <span class="pill-txt">Hazır mısın?</span>
+                  <!-- Puan Rozeti (Alt Merkez) -->
+                  <div class="moli-floating-pill pill-points" id="btnPillPoints" role="button" tabindex="0" title="Puan Sistemi">
+                    <span class="pill-ico-badge badge-amber">+10</span>
+                    <span class="pill-txt">Başarı Puanı</span>
                   </div>
 
                   <!-- Moli Maskot Görseli -->
@@ -397,16 +506,22 @@
               </div>
             </div>
 
-            <!-- ALT SABİT / YÜZEN GÜVEN BANDI (MEB MÜFREDATINA %100 UYGUN) -->
+            <!-- ALT ORTALANMIŞ KURUMSAL GÜVENCE BANDI (KESİLMEYEN 4'LÜ ÖZELLİK ŞERİDİ) -->
             <div class="widescreen-floating-trust-card" id="widescreenTrustCard">
               <div class="trust-left-wrap">
-                <img src="assets/icons/3d/books.webp" class="trust-3d-book-icon" alt="MEB Müfredatı" width="22" height="22" loading="lazy" decoding="async">
+                <img src="assets/icons/3d/books.webp" class="trust-3d-book-icon" alt="MEB Müfredatı" width="24" height="24" loading="lazy" decoding="async">
                 <span class="trust-lead-text">
-                  <strong>MEB Müfredatına %100 Uygun</strong> - Kazanımlarla tam uyumlu soru havuzu...
+                  <strong>MEB Müfredatına %100 Uygun</strong> • Kazanımlarla tam uyumlu, seslendirmeli soru ve etkinlik havuzu
                 </span>
               </div>
-              <div class="trust-right-tag">
-                <span class="trust-check-mark">✓</span> GÜVENLİ &amp; PARDUS UYUMLU
+              <div class="trust-badges-group">
+                <span class="trust-feature-pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                  ETAP &amp; Pardus Uyumlu
+                </span>
+                <div class="trust-right-tag">
+                  <span class="trust-check-mark">✓</span> GÜVENLİ &amp; REKLAMSIZ
+                </div>
               </div>
             </div>
           </section>
