@@ -11116,3 +11116,243 @@ input:checked + .slider:before {
   transform: translateY(3px);
   box-shadow: 0 1px 0 #94A3B8;
 }
+
+
+/* ==========================================================================
+   ANA SAYFA RENK UYUMU & SADELEŞTİRİLMİŞ KURUMSAL EDTECH VİTRİNİ (v6.8.0)
+   Tek ve tutarlı renk paleti: Okyanus Mavisi (#0284C7) + Moli Turuncusu (#FF6B00)
+   + Koyu Lacivert (#0F172A) + Saf Beyaz 3D Kartlar (#FFFFFF)
+   ========================================================================== */
+
+/* 1. Gereksiz Üst Uyarı Bandını ve Fazla Yazı Kalabalığını Gizle */
+#desktopNoticeBanner,
+.desktop-alert-banner {
+  display: none !important;
+}
+
+/* 2. Bütünleşik, Kusursuz Ferah Buz Mavisi Arka Plan (Sarı/Yeşil Alacalı Lekeler Kaldırıldı) */
+.app-main-wrapper,
+#viewLobby,
+.app-main-wrapper:has(#homeShowcaseSection:not(.hide)),
+.home-showcase-section {
+  background: linear-gradient(180deg, #EAF4FF 0%, #F4F9FF 55%, #FFFFFF 100%) !important;
+  border-radius: 0 !important;
+}
+
+.home-showcase-section {
+  height: calc(100vh - 72px) !important;
+  max-height: calc(100vh - 72px) !important;
+  padding: 8px clamp(20px, 3vw, 48px) 12px clamp(20px, 3vw, 48px) !important;
+}
+
+/* 3. Üst Bar (Topbar) Renk Uyumu: Yalnızca Mavi, Turuncu ve Beyaz 3D Butonlar */
+.unified-topbar {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-bottom: 2px solid #DBEAFE !important;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.06) !important;
+}
+
+.topbar-action-pill.pill-gamemode {
+  background: linear-gradient(180deg, #FF7A00 0%, #EA580C 100%) !important;
+  border: 1.5px solid #EA580C !important;
+  border-bottom: 4px solid #C2410C !important;
+  color: #FFFFFF !important;
+}
+
+/* Öğretmen Girişi Butonu: Uyumsuz Mor Yerine Kurumsal Okyanus Mavisi */
+.topbar-action-pill.pill-login {
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%) !important;
+  border: 1.5px solid #0284C7 !important;
+  border-bottom: 4px solid #0369A1 !important;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2) !important;
+  color: #FFFFFF !important;
+}
+
+.topbar-action-pill.pill-share,
+.topbar-action-pill.pill-addquiz,
+.topbar-action-pill.pill-settings,
+.topbar-btn-menu {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-bottom: 4px solid #94A3B8 !important;
+  color: #1E293B !important;
+}
+
+.topbar-action-pill.pill-share:hover,
+.topbar-action-pill.pill-addquiz:hover,
+.topbar-action-pill.pill-settings:hover,
+.topbar-btn-menu:hover {
+  background: #F0F9FF !important;
+  border-color: #38BDF8 !important;
+  border-bottom-color: #0284C7 !important;
+  color: #0284C7 !important;
+}
+
+/* 4. Sol Sütun Sınıf Kartları: Gökkuşağı Karmaşası Yerine Saf Beyaz 3D Kartlar */
+.stage-grades-sidebar {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 2px solid #DBEAFE !important;
+  border-bottom: 5px solid #93C5FD !important;
+  box-shadow: 0 12px 30px rgba(2, 132, 199, 0.08) !important;
+  padding: 12px !important;
+  gap: 8px !important;
+}
+
+.stage-grade-card.card-kindergarten,
+.stage-grade-card.card-grade1,
+.stage-grade-card.card-grade2,
+.stage-grade-card.card-grade3,
+.stage-grade-card.card-grade4 {
+  background: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  border-bottom: 4px solid #CBD5E1 !important;
+  padding: 9px 14px !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03) !important;
+}
+
+.stage-grade-card.card-kindergarten:hover,
+.stage-grade-card.card-grade1:hover,
+.stage-grade-card.card-grade2:hover,
+.stage-grade-card.card-grade3:hover,
+.stage-grade-card.card-grade4:hover {
+  background: #F0F9FF !important;
+  border-color: #7DD3FC !important;
+  border-bottom-color: #0284C7 !important;
+}
+
+/* İkon Kutuları İçin Yumuşak ve Uyumlu Tonlar */
+.stage-grade-card .grade-icon-cube {
+  background: #F0F9FF !important;
+  border: 1.5px solid #BAE6FD !important;
+  box-shadow: none !important;
+}
+
+/* Özel Aksiyon Kartları: Düellolar (Moli Turuncusu) & İngilizce (Okyanus Mavisi) */
+.stage-grade-card.card-duels {
+  background: linear-gradient(180deg, #FF7A00 0%, #EA580C 100%) !important;
+  border: 2px solid #EA580C !important;
+  border-bottom: 4px solid #C2410C !important;
+  padding: 9px 14px !important;
+  box-shadow: 0 6px 14px rgba(234, 88, 12, 0.22) !important;
+}
+
+.stage-grade-card.card-english {
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%) !important;
+  border: 2px solid #0284C7 !important;
+  border-bottom: 4px solid #0369A1 !important;
+  padding: 9px 14px !important;
+  box-shadow: 0 6px 14px rgba(2, 132, 199, 0.22) !important;
+}
+
+.stage-grade-card.card-duels .grade-icon-cube,
+.stage-grade-card.card-english .grade-icon-cube {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 5. Orta Sütun: Sadeleştirilmiş Başlık ve 2 Renkli (Mavi & Turuncu) 3D Marka */
+.stage-main-title {
+  color: #0F172A !important;
+  font-size: clamp(2.1rem, 3.2vw, 3.3rem) !important;
+  line-height: 1.15 !important;
+  margin-bottom: 6px !important;
+}
+
+.stage-bubbly-3d {
+  font-size: clamp(2.6rem, 4.3vw, 4.3rem) !important;
+  margin-top: 4px !important;
+}
+
+.stage-bubbly-3d .word-derse,
+.stage-bubbly-3d .word-mola {
+  color: #0284C7 !important;
+  text-shadow: 0 4px 0 #BAE6FD, 0 8px 18px rgba(2, 132, 199, 0.16) !important;
+}
+
+.stage-bubbly-3d .word-bi {
+  color: #FF6B00 !important;
+  text-shadow: 0 4px 0 #FED7AA, 0 8px 18px rgba(255, 107, 0, 0.20) !important;
+}
+
+.stage-cta-container {
+  margin-top: 18px !important;
+}
+
+/* 6. Sağ Sütun: Moli Sahnesi ve Tek Tip Uyumlu Beyaz 3D Rozetler */
+.moli-stage-backdrop-ring {
+  background: radial-gradient(circle, #FFFFFF 0%, #E0F2FE 70%, #BAE6FD 100%) !important;
+  border: 4px solid #FFFFFF !important;
+  box-shadow: 0 14px 36px rgba(2, 132, 199, 0.12) !important;
+}
+
+.moli-floating-pill,
+.moli-floating-circle {
+  background: #FFFFFF !important;
+  border: 2px solid #DBEAFE !important;
+  border-bottom: 4px solid #93C5FD !important;
+  color: #0F172A !important;
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.08) !important;
+}
+
+.moli-floating-pill.pill-math {
+  top: clamp(32px, 6vh, 56px) !important;
+  left: clamp(0px, 0.5vw, 14px) !important;
+}
+
+.moli-floating-pill.pill-letters {
+  top: clamp(38px, 7vh, 64px) !important;
+  right: clamp(0px, 0.5vw, 14px) !important;
+}
+
+.pill-txt-abc {
+  color: #0284C7 !important;
+  font-weight: 900 !important;
+}
+
+.moli-floating-circle.circle-trophy {
+  top: 46% !important;
+  bottom: auto !important;
+  left: clamp(6px, 1vw, 22px) !important;
+  width: 46px !important;
+  height: 46px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+
+.moli-floating-circle.circle-balloon {
+  top: 48% !important;
+  bottom: auto !important;
+  right: clamp(6px, 1vw, 22px) !important;
+  width: 46px !important;
+  height: 46px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+
+.moli-floating-pill.pill-points {
+  bottom: clamp(46px, 7vh, 68px) !important;
+  left: clamp(4px, 0.8vw, 18px) !important;
+  transform: none !important;
+  animation: pillFloat 4s ease-in-out 1.2s infinite alternate !important;
+}
+
+.moli-floating-pill.pill-ready {
+  top: auto !important;
+  bottom: clamp(6px, 1.5vh, 14px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  border-color: #FED7AA !important;
+  border-bottom-color: #FB923C !important;
+  color: #C2410C !important;
+}
+
+/* 7. Alt Güvence Bandı: Kompakt, Sade ve Uyumlu */
+.widescreen-floating-trust-card {
+  max-width: 620px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 2px solid #DBEAFE !important;
+  border-bottom: 4px solid #93C5FD !important;
+  border-radius: 9999px !important;
+  padding: 7px 18px !important;
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.07) !important;
+}
