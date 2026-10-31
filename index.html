@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.6.0">
+  <link rel="stylesheet" href="style.css?v=6.7.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -720,19 +720,36 @@
       </div>
 
       <div class="hud-actions">
-        <button class="hud-btn" id="btnHudReadQuestion" title="Soruyu Sesli Oku">
-          <span>🔊</span> <span>Soruyu Oku</span>
+        <button class="hud-btn hud-read-btn" id="btnHudReadQuestion" title="Soruyu Sesli Oku">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <span>Soruyu Oku</span>
         </button>
-        <button class="hud-btn" id="btnToggleAnnouncerDuel" title="Sunucu Seslendirmesini Aç / Kapat">
-          <span id="announcerHudIcon">🎙️</span>
+        <button class="hud-btn hud-announcer-btn" id="btnToggleAnnouncerDuel" title="Sunucu Seslendirmesini Aç / Kapat">
+          <span id="announcerHudIcon" style="display:inline-flex; align-items:center;">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+          </span>
           <span id="announcerHudText">Sunucu: Açık</span>
         </button>
-        <button class="hud-btn" id="btnToggleSolutionNow" title="Şu anki sorunun çözümünü aç">
-          <span>💡</span> <span>Çözümü Göster</span>
+        <button class="hud-btn hud-solution-btn" id="btnToggleSolutionNow" title="Şu anki sorunun çözümünü aç">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+            <path d="M12 2a7 7 0 0 0-4 12.7c.6.4 1 1.1 1 1.8V17h6v-.5c0-.7.4-1.4 1-1.8A7 7 0 0 0 12 2z"></path>
+          </svg>
+          <span>Çözümü Göster</span>
         </button>
         <button class="hud-btn hud-skip-btn" id="btnSkipQuestion" title="Bu soruyu atla">
           <span>Sonraki Soru</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polygon points="5 4 15 12 5 20 5 4"></polygon>
             <line x1="19" y1="5" x2="19" y2="19"></line>
           </svg>
@@ -755,7 +772,9 @@
         <!-- Oyuncu Üst Bilgi & Puan Barı -->
         <div class="player-hud">
           <div class="player-info">
-            <div class="player-avatar blue-avatar" id="duelP1Avatar">👦</div>
+            <div class="player-avatar blue-avatar" id="duelP1Avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
             <div class="player-labels">
               <span class="team-title" id="duelP1TeamTitle">MAVİ TAKIM</span>
               <span class="player-name" id="duelP1Name">Mavi Oyuncu</span>
@@ -783,7 +802,9 @@
           <div class="question-header-row">
             <div class="question-meta-tag" id="p1QuestionCategory">Soru</div>
             <button class="btn-read-question" id="btnReadAloudP1" type="button" title="Soruyu Sesli Dinle">
-              <span class="read-icon">🔊</span>
+              <span class="read-icon" style="display:inline-flex; align-items:center;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              </span>
               <span class="read-text">Dinle</span>
             </button>
           </div>
@@ -845,7 +866,9 @@
         <!-- Oyuncu Üst Bilgi & Puan Barı -->
         <div class="player-hud">
           <div class="player-info">
-            <div class="player-avatar red-avatar">👧</div>
+            <div class="player-avatar red-avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
             <div class="player-labels">
               <span class="team-title">KIRMIZI TAKIM</span>
               <span class="player-name" id="duelP2Name">Kırmızı Oyuncu</span>
@@ -873,7 +896,9 @@
           <div class="question-header-row">
             <div class="question-meta-tag" id="p2QuestionCategory">Soru</div>
             <button class="btn-read-question" id="btnReadAloudP2" type="button" title="Soruyu Sesli Dinle">
-              <span class="read-icon">🔊</span>
+              <span class="read-icon" style="display:inline-flex; align-items:center;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              </span>
               <span class="read-text">Dinle</span>
             </button>
           </div>
@@ -978,7 +1003,7 @@
       </div>
 
       <p class="victory-congrats" id="victoryCongrats">
-        Harika bir dikkat ve hız mücadelesi oldu! Kazananı ve yarışan tüm arkadaşlarımızı alkışlayalım! 👏
+        Harika bir dikkat ve hız mücadelesi oldu! Kazananı ve yarışan tüm arkadaşlarımızı alkışlayalım!
       </p>
 
       <!-- Butonlar -->
@@ -986,25 +1011,35 @@
         <!-- WhatsApp Skor Paylaşımı & Bağlantı Kopyalama -->
         <div class="victory-share-row">
           <button class="btn-action-whatsapp" id="btnShareVictoryWhatsApp" title="Skoru WhatsApp'ta Paylaş">
-            <span class="action-icon">🟢</span>
+            <span class="action-icon" style="display:inline-flex; align-items:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </span>
             <span>Skoru WhatsApp'tan Paylaş</span>
           </button>
           <button class="btn-action-copy-link" id="btnCopyVictoryLink" title="Skor Bağlantısını Kopyala">
-            <span class="action-icon">🔗</span>
+            <span class="action-icon" style="display:inline-flex; align-items:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            </span>
             <span>Bağlantıyı Kopyala</span>
           </button>
         </div>
 
         <button class="btn-action-primary" id="btnRematchSame">
-          <span class="action-icon">🔄</span>
+          <span class="action-icon" style="display:inline-flex; align-items:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          </span>
           <span>Rövanş Maçı (Aynı Öğrencilerle)</span>
         </button>
         <button class="btn-action-secondary" id="btnSelectNewStudents">
-          <span class="action-icon">🎲</span>
+          <span class="action-icon" style="display:inline-flex; align-items:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </span>
           <span>Yeni Öğrenciler Seç</span>
         </button>
         <button class="btn-action-outline" id="btnBackToLobby">
-          <span class="action-icon">🏠</span>
+          <span class="action-icon" style="display:inline-flex; align-items:center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </span>
           <span>Ana Menüye Dön</span>
         </button>
       </div>
@@ -1569,6 +1604,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=6.6.0" defer></script>
+  <script src="app.js?v=6.7.0" defer></script>
 </body>
 </html>

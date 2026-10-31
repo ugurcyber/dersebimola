@@ -10713,3 +10713,406 @@ input:checked + .slider:before {
 .leaderboard-table tr:nth-child(even) td {
   background: #FFFFFF !important;
 }
+
+
+/* ==========================================================================
+   STEP 3: DÜELLO ARENASI, SORU KARTLARI VE ZAFER EKRANI 3D EDTECH YÜKSELTMESİ
+   ========================================================================== */
+
+/* 1. Düello Üst HUD & Tactile 3D Butonlar */
+.duel-hud {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 3px solid #CBD5E1;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+.hud-btn {
+  border-radius: 12px;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  color: #1E293B;
+  font-weight: 800;
+  box-shadow: 0 3px 0 #CBD5E1;
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease, background 0.15s ease;
+}
+
+.hud-btn:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  box-shadow: 0 4px 0 #94A3B8;
+  transform: translateY(-1px);
+}
+
+.hud-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #94A3B8;
+}
+
+.hud-exit-btn {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-color: #FCA5A5;
+  box-shadow: 0 3px 0 #F87171;
+}
+
+.hud-exit-btn:hover {
+  background: #FEE2E2;
+  border-color: #F87171;
+  box-shadow: 0 4px 0 #EF4444;
+}
+
+.hud-read-btn {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border-color: #93C5FD;
+  box-shadow: 0 3px 0 #60A5FA;
+}
+
+.hud-read-btn:hover {
+  background: #DBEAFE;
+  border-color: #60A5FA;
+  box-shadow: 0 4px 0 #3B82F6;
+}
+
+.hud-solution-btn {
+  background: #FFFBEB;
+  color: #B45309;
+  border-color: #FCD34D;
+  box-shadow: 0 3px 0 #F59E0B;
+}
+
+.hud-solution-btn:hover {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  box-shadow: 0 4px 0 #D97706;
+}
+
+.hud-skip-btn {
+  background: #ECFDF5;
+  color: #047857;
+  border-color: #6EE7B7;
+  box-shadow: 0 3px 0 #10B981;
+}
+
+.hud-skip-btn:hover {
+  background: #D1FAE5;
+  border-color: #34D399;
+  box-shadow: 0 4px 0 #059669;
+}
+
+.hud-grade-badge {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #FFFFFF;
+  border-radius: 999px;
+  box-shadow: 0 2px 0 #B45309;
+}
+
+.hud-game-type {
+  background: #F1F5F9;
+  border: 2px solid #CBD5E1;
+  color: #0F172A;
+  font-weight: 800;
+}
+
+.hud-round-badge {
+  background: #EEF2FF;
+  border: 2px solid #A5B4FC;
+  color: #4338CA;
+  font-weight: 900;
+}
+
+/* 2. Oyuncu Panelleri, Avatar & Skor Barı */
+.blue-player {
+  background:
+    radial-gradient(rgba(37, 99, 235, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 100%);
+  background-size: 24px 24px, 100% 100%;
+}
+
+.red-player {
+  background:
+    radial-gradient(rgba(225, 29, 72, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(180deg, #FFF1F2 0%, #FFE4E6 100%);
+  background-size: 24px 24px, 100% 100%;
+}
+
+.player-avatar {
+  border-radius: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+.blue-avatar {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 0 #1E40AF, 0 6px 14px rgba(37, 99, 235, 0.25);
+}
+
+.red-avatar {
+  background: linear-gradient(135deg, #F43F5E 0%, #BE123C 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 0 #9F1239, 0 6px 14px rgba(225, 29, 72, 0.25);
+}
+
+.player-score-container {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-radius: 999px;
+  box-shadow: 0 3px 0 #CBD5E1, 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.blue-player .player-score-container {
+  border-color: #93C5FD;
+  box-shadow: 0 3px 0 #60A5FA, 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+
+.red-player .player-score-container {
+  border-color: #FDA4AF;
+  box-shadow: 0 3px 0 #FB7185, 0 4px 12px rgba(225, 29, 72, 0.08);
+}
+
+/* 3. 3D Tactile Soru Kartı & Sesli Dinle Butonu */
+.duel-question-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  border: 2.5px solid #CBD5E1;
+  box-shadow: 0 6px 0 #CBD5E1, 0 12px 28px rgba(15, 23, 42, 0.07);
+}
+
+.blue-player .duel-question-card {
+  border-color: #60A5FA;
+  box-shadow: 0 6px 0 #3B82F6, 0 12px 28px rgba(37, 99, 235, 0.10);
+}
+
+.red-player .duel-question-card {
+  border-color: #FB7185;
+  box-shadow: 0 6px 0 #F43F5E, 0 12px 28px rgba(225, 29, 72, 0.10);
+}
+
+.split-arena.solo-mode .blue-player .duel-question-card {
+  border-color: #818CF8;
+  box-shadow: 0 6px 0 #6366F1, 0 14px 32px rgba(79, 70, 229, 0.12);
+}
+
+.btn-read-question {
+  background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
+  color: #FFFFFF;
+  border: 2px solid #0369A1;
+  box-shadow: 0 3px 0 #075985, 0 4px 10px rgba(2, 132, 199, 0.25);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.btn-read-question:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #075985, 0 6px 14px rgba(2, 132, 199, 0.32);
+}
+
+.btn-read-question:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #075985;
+}
+
+/* 4. 3D Tactile Şık Butonları (Duolingo / Twinkl Basılabilir Buton Hissi) */
+.duel-option-btn {
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 2.5px solid #CBD5E1;
+  box-shadow: 0 6px 0 #CBD5E1, 0 8px 18px rgba(15, 23, 42, 0.06);
+  transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.1s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.blue-player .duel-option-btn {
+  border-color: #93C5FD;
+  box-shadow: 0 6px 0 #60A5FA, 0 8px 18px rgba(37, 99, 235, 0.07);
+}
+
+.red-player .duel-option-btn {
+  border-color: #FDA4AF;
+  box-shadow: 0 6px 0 #FB7185, 0 8px 18px rgba(225, 29, 72, 0.07);
+}
+
+.blue-player .duel-option-btn:hover {
+  background: #F8FAFC;
+  border-color: #3B82F6;
+  box-shadow: 0 7px 0 #2563EB, 0 10px 22px rgba(37, 99, 235, 0.14);
+  transform: translateY(-1px);
+}
+
+.red-player .duel-option-btn:hover {
+  background: #FFF1F2;
+  border-color: #F43F5E;
+  box-shadow: 0 7px 0 #E11D48, 0 10px 22px rgba(225, 29, 72, 0.14);
+  transform: translateY(-1px);
+}
+
+.duel-option-btn:active {
+  transform: translateY(4px) !important;
+  box-shadow: 0 2px 0 #64748B !important;
+}
+
+.opt-letter {
+  border-radius: 14px;
+  font-weight: 900;
+}
+
+.blue-player .opt-letter {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 2px solid #93C5FD;
+  box-shadow: 0 3px 0 #60A5FA;
+}
+
+.red-player .opt-letter {
+  background: #FFF1F2;
+  color: #BE123C;
+  border: 2px solid #FDA4AF;
+  box-shadow: 0 3px 0 #FB7185;
+}
+
+.duel-option-btn.correct-choice {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+  border-color: #047857 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 0 #065F46, 0 10px 24px rgba(16, 185, 129, 0.35) !important;
+}
+
+.duel-option-btn.wrong-choice {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+  border-color: #B91C1C !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 0 #991B1B, 0 10px 24px rgba(239, 68, 68, 0.35) !important;
+}
+
+/* 5. VS Rozeti, Çözüm Notu & Ceza Kutusu */
+.divider-vs-badge {
+  background: linear-gradient(135deg, #FF9F1C 0%, #F97316 100%);
+  color: #FFFFFF;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 4px 0 #C2410C, 0 8px 20px rgba(249, 115, 22, 0.35);
+}
+
+.lockout-modal-box {
+  border: 3px solid #EF4444;
+  border-radius: 24px;
+  box-shadow: 0 8px 0 #B91C1C, 0 20px 40px rgba(15, 23, 42, 0.25);
+}
+
+.solution-popup-content {
+  border: 2.5px solid #F59E0B;
+  border-radius: 20px;
+  box-shadow: 0 6px 0 #D97706, 0 16px 36px rgba(15, 23, 42, 0.18);
+}
+
+.solution-close-btn {
+  background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%);
+  border: 2px solid #B45309;
+  box-shadow: 0 3px 0 #92400E;
+  border-radius: 12px;
+}
+
+.solution-close-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #92400E;
+}
+
+/* 6. Maç Sonu Zafer Ekranı (#victoryOverlay) 3D EdTech Kart & Butonlar */
+.victory-card {
+  background: #FFFFFF;
+  border: 3px solid #CBD5E1;
+  border-radius: 28px;
+  box-shadow: 0 10px 0 #94A3B8, 0 24px 60px rgba(15, 23, 42, 0.32);
+}
+
+.victory-subtitle {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: #FFFBEB;
+  border: 2px solid #FDE68A;
+  color: #B45309;
+  font-weight: 900;
+}
+
+.victory-score-box {
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: 22px;
+}
+
+.blue-winner-box {
+  background: #EFF6FF;
+  border: 2px solid #93C5FD;
+  box-shadow: 0 4px 0 #60A5FA;
+}
+
+.red-winner-box {
+  background: #FFF1F2;
+  border: 2px solid #FDA4AF;
+  box-shadow: 0 4px 0 #FB7185;
+}
+
+.btn-action-whatsapp {
+  background: linear-gradient(180deg, #22C55E 0%, #16A34A 100%);
+  border: 2px solid #15803D;
+  box-shadow: 0 4px 0 #166534, 0 6px 16px rgba(22, 163, 74, 0.25);
+  border-radius: 14px;
+}
+
+.btn-action-whatsapp:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #166534;
+}
+
+.btn-action-copy-link {
+  background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
+  border: 2px solid #0369A1;
+  box-shadow: 0 4px 0 #075985, 0 6px 16px rgba(2, 132, 199, 0.25);
+  border-radius: 14px;
+}
+
+.btn-action-copy-link:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #075985;
+}
+
+.btn-action-primary {
+  background: linear-gradient(180deg, #34D399 0%, #10B981 100%);
+  border: 2px solid #059669;
+  box-shadow: 0 5px 0 #047857, 0 8px 20px rgba(16, 185, 129, 0.28);
+  border-radius: 16px;
+}
+
+.btn-action-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #047857;
+}
+
+.btn-action-secondary {
+  background: linear-gradient(180deg, #60A5FA 0%, #2563EB 100%);
+  border: 2px solid #1D4ED8;
+  box-shadow: 0 5px 0 #1E40AF, 0 8px 20px rgba(37, 99, 235, 0.25);
+  border-radius: 16px;
+}
+
+.btn-action-secondary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #1E40AF;
+}
+
+.btn-action-outline {
+  background: #FFFFFF;
+  color: #334155;
+  border: 2px solid #CBD5E1;
+  box-shadow: 0 4px 0 #94A3B8;
+  border-radius: 16px;
+}
+
+.btn-action-outline:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  color: #0F172A;
+}
+
+.btn-action-outline:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #94A3B8;
+}
