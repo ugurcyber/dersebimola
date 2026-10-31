@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.9.0">
+  <link rel="stylesheet" href="style.css?v=7.0.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -207,11 +207,11 @@
             </span>
             <span class="tool-label">Ayarlar</span>
           </button>
-          <button class="teacher-auth-btn sidebar-teacher-btn" id="btnTeacherAuth" title="Öğretmen Girişi / Profil">
+          <button class="teacher-auth-btn sidebar-teacher-btn" id="btnTeacherAuth" title="Öğrenci / Öğretmen Girişi ve Kayıt">
             <span class="auth-icon" id="authIcon" aria-hidden="true">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </span>
-            <span class="auth-text" id="authBtnText">Öğretmen Girişi</span>
+            <span class="auth-text" id="authBtnText">Giriş Yap / Kayıt Ol</span>
           </button>
         </div>
       </div>
@@ -247,14 +247,14 @@
             </span>
             <span class="pill-text" id="desktopModeText">Düello Modu</span>
           </button>
-          <button class="topbar-action-pill pill-login" id="btnDesktopLogin" type="button" aria-label="Giriş Yap">
-            <span class="pill-icon">
+          <button class="topbar-action-pill pill-login" id="btnDesktopLogin" type="button" aria-label="Giriş Yap veya Kayıt Ol" title="Öğrenci / Öğretmen Girişi ve Kayıt">
+            <span class="pill-icon" id="desktopLoginIcon">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
             </span>
-            <span class="pill-text" id="desktopLoginText">Öğretmen Girişi</span>
+            <span class="pill-text" id="desktopLoginText">Giriş Yap</span>
           </button>
           <button class="topbar-action-pill pill-share" id="btnDesktopShare" type="button" aria-label="Paylaş">
             <span class="pill-icon">
@@ -1137,59 +1137,164 @@
     </div>
   </div>
 
-  <!-- MODAL 1: ÖĞRETMEN GİRİŞİ (FREEMIUM KANCASI) -->
+  <!-- MODAL 1: ÇİFT SEKMELİ ÖĞRENCİ & ÖĞRETMEN GİRİŞ / KAYIT SİSTEMİ -->
   <div class="modal-backdrop hide" id="modalAuth">
     <div class="modal-window auth-modal-window">
-      <button class="modal-close-btn" data-close-modal="modalAuth">✕</button>
-      <div class="modal-header">
-        <div class="modal-badge-icon"><img src="assets/icons/3d/crown.webp" style="width:48px; height:48px; vertical-align:middle;" alt="Öğretmen" width="48" height="48" loading="lazy" decoding="async"></div>
-        <h3 class="modal-title">Öğretmen Hesabına Giriş Yap</h3>
-        <p class="modal-desc">
-          Sınıf listenizi bir kez kaydedip her derste tahtaya kalkacak öğrencileri çarkıfelek ile rastgele seçmek, kendi sorularınızı eklemek için ücretsiz giriş yapın!
-        </p>
+      <button class="modal-close-btn" data-close-modal="modalAuth" aria-label="Kapat">✕</button>
+
+      <!-- Aktif Oturum Varsa Gösterilen Üst Bilgi & Çıkış Kartı -->
+      <div class="auth-active-session-bar hide" id="authActiveSessionBox">
+        <div class="active-session-info">
+          <span class="active-session-avatar" id="activeSessionAvatar">🎓</span>
+          <div class="active-session-texts">
+            <span class="active-session-role" id="activeSessionRole">AKTİF HESAP</span>
+            <strong class="active-session-name" id="activeSessionName">Kullanıcı</strong>
+          </div>
+        </div>
+        <button type="button" class="btn-auth-logout" id="btnAuthLogout">Çıkış Yap</button>
       </div>
 
-      <div class="freemium-perks">
-        <div class="perk-item">
-          <span class="perk-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </span>
-          <div class="perk-info">
-            <strong>Kalıcı Sınıf Listesi:</strong> Öğrenci adlarını kaydedin, her derste saniyeler içinde kura çekin.
-          </div>
-        </div>
-        <div class="perk-item">
-          <span class="perk-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </span>
-          <div class="perk-info">
-            <strong>Kendi Sorularınızı Ekleyin:</strong> Kendi ders işleyişinize uygun özel sorularla sınıfınızı yarıştırın.
-          </div>
-        </div>
-        <div class="perk-item">
-          <span class="perk-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-          </span>
-          <div class="perk-info">
-            <strong>Sınıf Ligi Sıralaması:</strong> Kim kaç maç kazandı, sınıfın en dikkatli öğrencileri kimler görün.
-          </div>
-        </div>
+      <!-- Üst 2 Ana Sekme: Öğrenci Girişi | Öğretmen Girişi -->
+      <div class="auth-role-tabs" role="tablist" aria-label="Hesap Türü Seçimi">
+        <button type="button" class="auth-role-tab active" id="authRoleTabStudent" data-auth-role="student" role="tab" aria-selected="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Öğrenci Girişi</span>
+        </button>
+        <button type="button" class="auth-role-tab" id="authRoleTabTeacher" data-auth-role="teacher" role="tab" aria-selected="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+          <span>Öğretmen Girişi</span>
+        </button>
       </div>
 
-      <!-- Simüle Edilmiş Google İle Tek Tıkla Giriş Yap Butonu -->
-      <button class="btn-google-login" id="btnSimulateGoogleLogin">
-        <svg class="google-svg" viewBox="0 0 24 24" width="22" height="22">
-          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/>
-          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-        </svg>
-        <span>Google ile Tek Tıkla Giriş Yap (MEB Uyumlu)</span>
-      </button>
+      <!-- ============================================================== -->
+      <!-- 1. SEKME İÇERİĞİ: ÖĞRENCİ GİRİŞİ & KAYIT OL                     -->
+      <!-- ============================================================== -->
+      <div class="auth-role-pane" id="authPaneStudent">
+        <div class="auth-submode-switch">
+          <button type="button" class="auth-submode-btn active" id="btnStudentSubLogin" data-student-mode="login">Giriş Yap</button>
+          <button type="button" class="auth-submode-btn" id="btnStudentSubRegister" data-student-mode="register">Yeni Kayıt Ol</button>
+        </div>
 
-      <div class="auth-security-note">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Şifre gerekmez. Fatih ağı filtrelerine takılmadan cihazınızda (tarayıcı yerel hafızası) güvenle çalışır.
+        <div class="auth-form-group">
+          <label class="auth-field-label" for="studentAuthNameInput">Adın veya Kullanıcı Adın</label>
+          <input type="text" class="auth-input-field" id="studentAuthNameInput" placeholder="Örn: Ali Yılmaz" maxlength="28" autocomplete="off">
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-field-label">Sınıfını Seç</label>
+          <div class="student-grade-selector" id="studentGradeSelector">
+            <button type="button" class="student-grade-pill" data-student-grade="0">Anasınıfı</button>
+            <button type="button" class="student-grade-pill active" data-student-grade="1">1. Sınıf</button>
+            <button type="button" class="student-grade-pill" data-student-grade="2">2. Sınıf</button>
+            <button type="button" class="student-grade-pill" data-student-grade="3">3. Sınıf</button>
+            <button type="button" class="student-grade-pill" data-student-grade="4">4. Sınıf</button>
+          </div>
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-field-label">Karakterini (Avatarını) Seç</label>
+          <div class="student-avatar-selector" id="studentAvatarSelector">
+            <button type="button" class="student-avatar-pill active" data-student-avatar="🦁" title="Aslan">🦁</button>
+            <button type="button" class="student-avatar-pill" data-student-avatar="🚀" title="Astronot">🚀</button>
+            <button type="button" class="student-avatar-pill" data-student-avatar="🤖" title="Moli Robot">🤖</button>
+            <button type="button" class="student-avatar-pill" data-student-avatar="🦄" title="Tekboynuz">🦄</button>
+            <button type="button" class="student-avatar-pill" data-student-avatar="🦊" title="Tilki">🦊</button>
+            <button type="button" class="student-avatar-pill" data-student-avatar="⭐" title="Yıldız">⭐</button>
+          </div>
+        </div>
+
+        <div class="auth-form-group">
+          <label class="auth-field-label" for="studentAuthPinInput">Şifre / PİN Kodu <span class="auth-optional-tag">(İsteğe Bağlı)</span></label>
+          <input type="password" class="auth-input-field" id="studentAuthPinInput" placeholder="Örn: 1234 (Boş bırakılabilir)" maxlength="16" autocomplete="off">
+        </div>
+
+        <button type="button" class="btn-auth-primary-submit btn-student-submit" id="btnStudentAuthSubmit">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></svg>
+          <span id="studentAuthSubmitText">Öğrenci Olarak Giriş Yap</span>
+        </button>
+
+        <!-- Google ile Öğrenci Girişi -->
+        <div class="auth-divider-row"><span>veya hızlı bağlantı</span></div>
+        <button type="button" class="btn-google-login" id="btnStudentGoogleLogin">
+          <svg class="google-svg" viewBox="0 0 24 24" width="20" height="20">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span>Google ile Öğrenci Girişi Yap</span>
+        </button>
+      </div>
+
+      <!-- ============================================================== -->
+      <!-- 2. SEKME İÇERİĞİ: ÖĞRETMEN GİRİŞİ & KAYIT OL                    -->
+      <!-- ============================================================== -->
+      <div class="auth-role-pane hide" id="authPaneTeacher">
+        <div class="auth-submode-switch">
+          <button type="button" class="auth-submode-btn active" id="btnTeacherSubLogin" data-teacher-mode="login">Giriş Yap</button>
+          <button type="button" class="auth-submode-btn" id="btnTeacherSubRegister" data-teacher-mode="register">Yeni Kayıt Ol</button>
+        </div>
+
+        <!-- Öğretmen Giriş Yap Formu -->
+        <div class="teacher-auth-form-box" id="teacherLoginFormBox">
+          <div class="auth-form-group">
+            <label class="auth-field-label" for="teacherLoginEmail">E-posta Adresi veya Kullanıcı Adı</label>
+            <input type="email" class="auth-input-field" id="teacherLoginEmail" placeholder="ornek@meb.k12.tr veya e-posta adresiniz" autocomplete="email">
+          </div>
+          <div class="auth-form-group">
+            <label class="auth-field-label" for="teacherLoginPassword">Şifre</label>
+            <input type="password" class="auth-input-field" id="teacherLoginPassword" placeholder="Şifrenizi giriniz" autocomplete="current-password">
+          </div>
+          <button type="button" class="btn-auth-primary-submit btn-teacher-submit" id="btnTeacherLoginSubmit">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            <span>Öğretmen Girişi Yap</span>
+          </button>
+        </div>
+
+        <!-- Öğretmen Kayıt Ol Formu -->
+        <div class="teacher-auth-form-box hide" id="teacherRegisterFormBox">
+          <div class="auth-form-row-2col">
+            <div class="auth-form-group">
+              <label class="auth-field-label" for="teacherRegName">Adınız Soyadınız</label>
+              <input type="text" class="auth-input-field" id="teacherRegName" placeholder="Örn: Ayşe Yılmaz" maxlength="40">
+            </div>
+            <div class="auth-form-group">
+              <label class="auth-field-label" for="teacherRegSchool">Okul Adı <span class="auth-optional-tag">(İsteğe Bağlı)</span></label>
+              <input type="text" class="auth-input-field" id="teacherRegSchool" placeholder="Örn: Atatürk İlkokulu" maxlength="50">
+            </div>
+          </div>
+          <div class="auth-form-group">
+            <label class="auth-field-label" for="teacherRegEmail">E-posta Adresi</label>
+            <input type="email" class="auth-input-field" id="teacherRegEmail" placeholder="ornek@meb.k12.tr veya e-posta adresiniz" autocomplete="email">
+          </div>
+          <div class="auth-form-group">
+            <label class="auth-field-label" for="teacherRegPassword">Şifre Belirleyin</label>
+            <input type="password" class="auth-input-field" id="teacherRegPassword" placeholder="En az 4 karakter şifre" autocomplete="new-password">
+          </div>
+          <button type="button" class="btn-auth-primary-submit btn-teacher-submit" id="btnTeacherRegisterSubmit">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            <span>Ücretsiz Öğretmen Hesabı Oluştur</span>
+          </button>
+        </div>
+
+        <div class="auth-divider-row"><span>veya hızlı bağlantı</span></div>
+
+        <!-- Google İle Tek Tıkla Giriş Yap Butonu -->
+        <button type="button" class="btn-google-login" id="btnSimulateGoogleLogin">
+          <svg class="google-svg" viewBox="0 0 24 24" width="20" height="20">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span>Google ile Tek Tıkla Öğretmen Girişi</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1634,6 +1739,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=6.9.0" defer></script>
+  <script src="app.js?v=7.0.0" defer></script>
 </body>
 </html>

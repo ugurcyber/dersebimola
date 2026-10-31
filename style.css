@@ -11491,3 +11491,377 @@ input:checked + .slider:before {
   transform: translateY(3px);
   box-shadow: 0 1px 0 #831843;
 }
+
+
+/* ==========================================================================
+   ÇİFT SEKMELİ ÖĞRENCİ & ÖĞRETMEN GİRİŞ / KAYIT MODALI (3D EDTECH STİLİ)
+   ========================================================================== */
+.auth-modal-window {
+  max-width: 520px !important;
+  width: min(94vw, 520px) !important;
+  padding: 26px 26px 24px 26px !important;
+  background: #FFFFFF !important;
+  border: 3px solid #DBEAFE !important;
+  border-radius: 26px !important;
+  box-shadow: 0 10px 0 #93C5FD, 0 28px 60px rgba(15, 23, 42, 0.25) !important;
+  color: #0F172A !important;
+}
+
+/* Aktif Oturum Üst Bilgi & Çıkış Kutusu */
+.auth-active-session-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #F0FDF4;
+  border: 2px solid #86EFAC;
+  border-bottom: 4px solid #22C55E;
+  border-radius: 16px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  margin-right: 36px;
+}
+
+.active-session-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.active-session-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #BBF7D0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.active-session-texts {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.active-session-role {
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: #15803D;
+  letter-spacing: 0.05em;
+}
+
+.active-session-name {
+  font-size: 0.92rem;
+  font-weight: 900;
+  color: #0F172A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-auth-logout {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1.5px solid #FCA5A5;
+  border-bottom: 3px solid #EF4444;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 850;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.12s ease;
+}
+
+.btn-auth-logout:hover {
+  background: #FEE2E2;
+  transform: translateY(-1px);
+}
+
+.btn-auth-logout:active {
+  transform: translateY(2px);
+}
+
+/* 1. Ana Sekmeler: Öğrenci Girişi | Öğretmen Girişi */
+.auth-role-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: #F1F5F9;
+  padding: 6px;
+  border-radius: 18px;
+  border: 2px solid #E2E8F0;
+  margin-bottom: 14px;
+  margin-top: 4px;
+}
+
+.auth-role-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 12px;
+  border-radius: 13px;
+  border: 2px solid transparent;
+  background: transparent;
+  color: #475569;
+  font-family: inherit;
+  font-size: 0.96rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.auth-role-tab:hover {
+  color: #0F172A;
+}
+
+.auth-role-tab.active[data-auth-role="student"] {
+  background: linear-gradient(180deg, #FF7A00 0%, #EA580C 100%);
+  color: #FFFFFF;
+  border-color: #C2410C;
+  box-shadow: 0 3px 0 #9A3412, 0 4px 12px rgba(234, 88, 12, 0.25);
+}
+
+.auth-role-tab.active[data-auth-role="teacher"] {
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%);
+  color: #FFFFFF;
+  border-color: #0369A1;
+  box-shadow: 0 3px 0 #075985, 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+/* 2. Alt Sekmeler: Giriş Yap | Yeni Kayıt Ol */
+.auth-submode-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.auth-submode-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 2px solid #E2E8F0;
+  border-bottom: 3px solid #CBD5E1;
+  background: #F8FAFC;
+  color: #475569;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 850;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.auth-submode-btn.active {
+  background: #EFF6FF;
+  border-color: #38BDF8;
+  border-bottom-color: #0284C7;
+  color: #0369A1;
+}
+
+/* 3. Form Alanları & Girdiler */
+.auth-role-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  text-align: left;
+}
+
+.teacher-auth-form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.auth-form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 500px) {
+  .auth-form-row-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.auth-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.auth-field-label {
+  font-size: 0.82rem;
+  font-weight: 850;
+  color: #334155;
+}
+
+.auth-optional-tag {
+  font-weight: 700;
+  color: #94A3B8;
+  font-size: 0.74rem;
+}
+
+.auth-input-field {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 13px;
+  border: 2px solid #CBD5E1;
+  background: #F8FAFC;
+  color: #0F172A;
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 700;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-input-field:focus {
+  outline: none;
+  background: #FFFFFF;
+  border-color: #0284C7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.14);
+}
+
+/* 4. Öğrenci Sınıf Seçici 3D Haplar */
+.student-grade-selector {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+@media (max-width: 480px) {
+  .student-grade-selector {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.student-grade-pill {
+  padding: 8px 4px;
+  border-radius: 11px;
+  border: 2px solid #E2E8F0;
+  border-bottom: 3px solid #CBD5E1;
+  background: #FFFFFF;
+  color: #334155;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 850;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.12s ease;
+}
+
+.student-grade-pill:hover {
+  border-color: #93C5FD;
+  background: #F0F9FF;
+}
+
+.student-grade-pill.active {
+  background: #FFF7ED;
+  border-color: #F97316;
+  border-bottom-color: #EA580C;
+  color: #C2410C;
+  transform: translateY(-1px);
+}
+
+/* 5. Öğrenci Avatar Seçici */
+.student-avatar-selector {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.student-avatar-pill {
+  height: 44px;
+  border-radius: 13px;
+  border: 2px solid #E2E8F0;
+  border-bottom: 3px solid #CBD5E1;
+  background: #FFFFFF;
+  font-size: 1.45rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.student-avatar-pill:hover {
+  transform: translateY(-2px);
+  border-color: #93C5FD;
+}
+
+.student-avatar-pill.active {
+  background: #EFF6FF;
+  border-color: #0284C7;
+  border-bottom-color: #0369A1;
+  box-shadow: 0 3px 10px rgba(2, 132, 199, 0.18);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* 6. Birincil Giriş / Kayıt Ol 3D Butonları */
+.btn-auth-primary-submit {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 15px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  margin-top: 2px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.btn-student-submit {
+  background: linear-gradient(180deg, #FF7A00 0%, #EA580C 100%);
+  border: 2px solid #C2410C;
+  box-shadow: 0 4px 0 #9A3412, 0 8px 18px rgba(234, 88, 12, 0.25);
+}
+
+.btn-teacher-submit {
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%);
+  border: 2px solid #0369A1;
+  box-shadow: 0 4px 0 #075985, 0 8px 18px rgba(2, 132, 199, 0.25);
+}
+
+.btn-auth-primary-submit:hover {
+  transform: translateY(-2px);
+}
+
+.btn-auth-primary-submit:active {
+  transform: translateY(2px);
+}
+
+.auth-divider-row {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #94A3B8;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin: 2px 0;
+}
+
+.auth-divider-row::before,
+.auth-divider-row::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1.5px solid #E2E8F0;
+}
+
+.auth-divider-row span {
+  padding: 0 10px;
+}
