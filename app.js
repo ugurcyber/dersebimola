@@ -12464,15 +12464,15 @@
             <div class="subject-card-top">
               <span class="subject-badge">${replaceEmojisWith3D(subject.badge, 'chip-3d-icon')}</span>
               <div class="card-top-right-actions">
-                <span class="subject-games-count">⭐ ${activeGamesCount} Pratik Aktif</span>
-                <button class="card-share-btn" data-share-title="${escapeHtml(subject.name)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş">📲</button>
+                <span class="subject-games-count"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> ${activeGamesCount} Etkinlik Aktif</span>
+                <button class="card-share-btn" data-share-title="${escapeHtml(subject.name)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
               </div>
             </div>
             <h3 class="subject-title">${subject.name}</h3>
             <span class="subject-tagline">${subject.tagline}</span>
             <p class="subject-desc">${subject.description}</p>
             <div class="subject-card-footer">
-              <span class="btn-open-subject">Hadi Başla! 🚀</span>
+              <span class="btn-open-subject">Konuları Aç <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
             </div>
           </div>
         </div>
@@ -12638,7 +12638,7 @@
               <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
               <div class="card-top-right-actions">
                 <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
-                <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş">📲</button>
+                <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
               </div>
             </div>
             <div class="game-visual-icon">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
@@ -12648,7 +12648,7 @@
               ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
             </div>
             <button class="btn-play-game" data-game-id="${game.id}">
-              🎮 ${state.gameMode === 'solo' ? 'Pratiğe Başla' : game.btnText}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></svg> <span>${state.gameMode === 'solo' ? 'Pratiğe Başla' : game.btnText}</span>
             </button>
           </div>
         `;
@@ -12657,7 +12657,7 @@
         return `
           <div class="game-card game-card-upcoming" data-game-id="${game.id}">
             <div class="game-top-meta">
-              <span class="game-category-tag tag-upcoming">🔒 ${game.badge || 'Hazırlanıyor'}</span>
+              <span class="game-category-tag tag-upcoming"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> ${game.badge || 'Hazırlanıyor'}</span>
               <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
             </div>
             <div class="game-visual-icon" style="filter: grayscale(0.5); opacity:0.85;">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
@@ -12667,7 +12667,7 @@
               ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
             </div>
             <button class="btn-play-game btn-upcoming" disabled>
-              🔒 Yakında Aktif
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Yakında Aktif</span>
             </button>
           </div>
         `;
@@ -12820,12 +12820,12 @@
 
     DOM.maarifCumulativeBadge.innerHTML = `
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; width:100%;">
-        <span style="font-size:1.15rem;">📘</span>
-        <span style="font-weight:900; color:#38BDF8;">Seçili Harf: [ ${activeUpper} ${activeL} ]</span>
-        <span style="color:#94A3B8;">|</span>
-        <span style="font-weight:700;">Bu aşamada kullanılan sesler (${upperLearned.length} Ses):</span>
+        <span style="display:inline-flex; align-items:center; color:#0284C7;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+        <span style="font-weight:900; color:#0369A1;">Seçili Ses: [ ${activeUpper} ${activeL} ]</span>
+        <span style="color:#CBD5E1;">|</span>
+        <span style="font-weight:800; color:#334155;">Kümülatif Ses Havuzu (${upperLearned.length} Ses):</span>
         <div class="cumulative-sound-chips">
-          ${upperLearned.map(l => `<span class="snd-chip ${l === activeUpper ? 'active-sound' : ''}">${l}</span>`).join('')}
+          ${upperLearned.map(l => `<span class="snd-chip ${l === activeUpper ? 'active-chip' : ''}">${l}</span>`).join('')}
         </div>
       </div>
     `;
@@ -12927,7 +12927,7 @@
               <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
               <div class="card-top-right-actions">
                 <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
-                <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş">📲</button>
+                <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
               </div>
             </div>
             <div class="game-visual-icon">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
@@ -12937,7 +12937,7 @@
               ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
             </div>
             <button class="btn-play-game" data-game-id="${game.id}">
-              🎮 ${state.gameMode === 'solo' ? 'Pratiğe Başla' : 'Düelloyu Başlat'}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></svg> <span>${state.gameMode === 'solo' ? 'Pratiğe Başla' : 'Düelloyu Başlat'}</span>
             </button>
           </div>
         `;
@@ -12955,7 +12955,7 @@
               ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
             </div>
             <button class="btn-play-game btn-upcoming" disabled>
-              ${game.lockedNotice || '🔒 Yakında Aktif'}
+              ${game.lockedNotice || '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Yakında Aktif</span>'}
             </button>
           </div>
         `;

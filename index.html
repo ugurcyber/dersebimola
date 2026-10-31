@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.4.0">
+  <link rel="stylesheet" href="style.css?v=6.5.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -532,14 +532,26 @@
           <section class="subjects-section hide" id="subjectsSection">
             <div class="subjects-section-header">
               <button class="btn-back-to-home" id="btnBackToHome" title="Ana Sayfaya Dön">
-                <span class="back-home-icon">🏠</span> Ana Sayfa
+                <span class="back-home-icon" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
+                </span>
+                Ana Sayfa
               </button>
               <div class="section-title-wrap">
                 <div class="section-ribbon-banner">
-                  <span class="section-pill-badge">🎗️ DERSİNİ SEÇ 🎗️</span>
+                  <span class="section-pill-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                    </svg>
+                    MÜFREDAT DERSLERİ
+                  </span>
                 </div>
                 <h2 class="section-title" id="subjectsGradeTitle">Anasınıfı Dersleri</h2>
-                <p class="section-desc">Eğlenceli düelloya veya pratiğe başlamak için bir ders seç:</p>
+                <p class="section-desc">Sınıf içi düello veya bireysel pratik başlatmak için bir ders seçin:</p>
               </div>
               <span class="subjects-count-badge" id="subjectsCountBadge">4 Ders Mevcut</span>
             </div>
@@ -555,24 +567,40 @@
         <!-- Ders Başlık & Geri Dönüş Barı -->
         <div class="subject-header-nav">
           <button class="btn-back-to-subjects" id="btnBackToSubjects" title="Ders Listesine Dön">
-            <span>←</span> Tüm Dersler
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5"></path>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Tüm Dersler
           </button>
           <div class="current-subject-badge-wrap">
-            <span class="current-subject-icon" id="currentSubjectIcon">🧮</span>
+            <span class="current-subject-icon" id="currentSubjectIcon"></span>
             <div class="current-subject-text-group">
               <h2 class="current-subject-title" id="currentSubjectTitle">Matematik</h2>
-              <span class="current-subject-grade" id="currentSubjectGrade">1. Sınıf Konu & Pratik Havuzu</span>
+              <span class="current-subject-grade" id="currentSubjectGrade">1. Sınıf Konu &amp; Pratik Havuzu</span>
             </div>
           </div>
 
           <!-- Oyun Modu Seçici (Düello vs Tek Kişilik Pratik) -->
           <div class="mode-switch-container" id="modeSwitchContainer">
             <button class="mode-switch-btn active" id="btnModeDuel" data-mode="duel" type="button" title="İki Kişilik Sınıf Düellosu">
-              <span class="mode-icon">👥</span>
+              <span class="mode-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </span>
               <span>İki Kişilik Düello</span>
             </button>
             <button class="mode-switch-btn" id="btnModeSolo" data-mode="solo" type="button" title="Tek Kişilik Bireysel Pratik">
-              <span class="mode-icon">👤</span>
+              <span class="mode-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
               <span>Tek Kişilik Pratik</span>
             </button>
           </div>
@@ -605,7 +633,9 @@
         <!-- Düello Ayarları ve Hızlı Bilgi -->
         <div class="duel-settings-bar">
           <div class="setting-item">
-            <span class="setting-icon">🎯</span>
+            <span class="setting-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            </span>
             <span class="setting-label">Hedef Puan:</span>
             <div class="target-score-selector" id="targetScoreSelector">
               <button class="score-btn" data-score="3">3 Puan</button>
@@ -615,8 +645,10 @@
           </div>
 
           <div class="setting-item">
-            <span class="setting-icon">💡</span>
-            <span class="setting-label">Her Soruda Pedagojik Çözümü Göster:</span>
+            <span class="setting-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2z"></path></svg>
+            </span>
+            <span class="setting-label">Pedagojik Çözüm Göster:</span>
             <label class="switch">
               <input type="checkbox" id="chkAutoExplanation" checked>
               <span class="slider round"></span>
@@ -624,8 +656,10 @@
           </div>
 
           <div class="setting-item">
-            <span class="setting-icon">🎙️</span>
-            <span class="setting-label">Sunucu & Zafer Seslendirmesi:</span>
+            <span class="setting-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+            </span>
+            <span class="setting-label">Sunucu Seslendirmesi:</span>
             <label class="switch">
               <input type="checkbox" id="chkAnnouncerVoice" checked>
               <span class="slider round"></span>
@@ -633,8 +667,10 @@
           </div>
 
           <div class="setting-item">
-            <span class="setting-icon">🔊</span>
-            <span class="setting-label">Soru Sesli Okuma (Edge-TTS):</span>
+            <span class="setting-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            </span>
+            <span class="setting-label">Soru Sesli Okuma:</span>
             <label class="switch">
               <input type="checkbox" id="chkAutoReadQuestion" checked>
               <span class="slider round"></span>
@@ -642,7 +678,7 @@
           </div>
 
           <div class="setting-info-badge">
-            <span>🖐️ <strong>Tahta Kuralı:</strong> İki öğrenci aynı anda parmakla dokunabilir. Yanlış şıkka basanın ekranı 1.5 sn kilitlenir!</span>
+            <span><strong>Tahta Kuralı:</strong> İki öğrenci aynı anda dokunabilir. Yanlış şıkka basanın ekranı 1.5 sn kilitlenir.</span>
           </div>
         </div>
       </section>
