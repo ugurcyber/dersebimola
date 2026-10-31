@@ -7353,64 +7353,174 @@
       { q: 'Atık pilleri doğaya veya çöpe atmayıp nereye bırakmalıyız? ♻️', a: 'Atık Pil Toplama Kutusuna ♻️', d: ['Denize', 'Toprağa'], exp: 'Pillerdeki ağır kimyasallar toprağa ve yer altı sularına karışmamalıdır.' }
     ],
 
-    // 4. SINIF: BİREY VE TOPLUM & MİLLİ MÜCADELE KAHRAMANLARIMIZ (30 ÖZGÜN SORU)
-    grade4IdentityHeroesPool: [
-      { q: 'Türkiye Cumhuriyeti vatandaşlarının kimlik belgesinde kaç haneli T.C. Kimlik No bulunur? 🪪', a: '11 Haneli 🪪', d: ['10 Haneli', '12 Haneli'], exp: 'T.C. Kimlik numarası 11 haneden oluşur ve her birey için benzersizdir.' },
-      { q: 'Yeni çipli kimlik kartlarımızın üzerindeki küçük elektronik bölüme ne ad verilir? 💳', a: 'Çip (Yonga) 💳', d: ['Barkod', 'Etiket'], exp: 'Çip üzerinde parmak izi gibi güvenli dijital bilgiler saklanır.' },
-      { q: 'Olayların oluş sırasına göre zaman dizinine konulmasına ne ad verilir? ⏳', a: 'Kronoloji ⏳', d: ['Biyografi', 'Otobiyografi'], exp: 'Tarihsel sıralamaya kronoloji denir.' },
-      { q: 'Kendimizi karşımızdaki kişinin yerine koyarak onun duygularını anlama becerisine ne denir? 🤝', a: 'Empati 🤝', d: ['Bencillik', 'Sempati'], exp: 'Empati kurmak toplumda saygı ve hoşgörüyü pekiştirir.' },
-      { q: 'Kurtuluş Savaşı\'mız (Milli Mücadele) Mustafa Kemal Paşa\'nın hangi şehre ayak basmasıyla resmen başlamıştır? 🚢', a: 'Samsun (19 Mayıs 1919) 🚢', d: ['Ankara', 'İzmir'], exp: '19 Mayıs 1919\'da Bandırma Vapuru ile Samsun\'a çıkış kurtuluş meşalesidir.' },
-      { q: 'Kurtuluş Savaşı\'nda Doğu Cephesi Komutanı olan ve yetim çocukların babası sayılan kahramanımız kimdir? 🇹🇷', a: 'Kazım Karabekir Paşa 🇹🇷', d: ['İsmet İnönü', 'Ali Fuat Cebesoy'], exp: 'Kazım Karabekir Doğu Cephesi\'nde Ermenileri mağlup etmiş ve Gümrü Antlaşması\'nı imzalamıştır.' },
-      { q: 'Güney Cephesi\'nde Kahramanmaraş\'ta Fransız işgalcilere ilk kurşunu sıkarak direnişi başlatan kahraman kimdir? 🇹🇷', a: 'Sütçü İmam 🇹🇷', d: ['Şahin Bey', 'Ali Saip Bey'], exp: 'Sütçü İmam Maraş direnişinin bayrak ismidir.' },
-      { q: 'Gaziantep savunmasında düşmana geçit vermemek için canını feda eden kahramanımız kimdir? 🇹🇷', a: 'Şahin Bey 🇹🇷', d: ['Sütçü İmam', 'Hasan Tahsin'], exp: 'Şahin Bey Antep savunmasında kahramanca şehit düşmüştür.' },
-      { q: 'İzmir işgal edildiğinde Kordon\'da düşmana ilk kurşunu sıkarak şehit olan gazeteci kahramanımız kimdir? 🇹🇷', a: 'Hasan Tahsin 🇹🇷', d: ['Yörük Ali Efe', 'İsmet İnönü'], exp: 'Hasan Tahsin Batı Cephesi\'nde milli bilinci ateşlemiştir.' },
-      { q: 'İnebolu\'dan Kastamonu cephesine kağnısıyla mermi taşırken donarak şehit olan kahraman Türk kadını kimdir? 🇹🇷', a: 'Şerife Bacı 🇹🇷', d: ['Nene Hatun', 'Halide Edip'], exp: 'Şerife Bacı bebeği ve cephaneler üzerindeki örtüyü koruyarak şehit olmuştur.' },
-      { q: 'Batı Cephesi\'nde I. ve II. İnönü Savaşlarını kazanan komutanımız kimdir? 🇹🇷', a: 'İsmet İnönü 🇹🇷', d: ['Kazım Karabekir', 'Fevzi Çakmak'], exp: 'İsmet İnönü düşman ordularını durdurmuş ve büyük zaferler kazanmıştır.' },
-      { q: 'Türkiye Büyük Millet Meclisi (TBMM) hangi tarihte Ankara\'da açılmıştır? 🏛️', a: '23 Nisan 1920 🏛️', d: ['19 Mayıs 1919', '29 Ekim 1923'], exp: '23 Nisan 1920 milletin kendi kaderine el koyduğu gündür.' },
-      { q: 'Türkiye Cumhuriyeti hangi tarihte ilan edilmiştir? 🇹🇷', a: '29 Ekim 1923 🇹🇷', d: ['23 Nisan 1920', '30 Ağustos 1922'], exp: '29 Ekim 1923\'te Cumhuriyet resmen ilan edilmiştir.' },
-      { q: 'Düşmanı yurdumuzdan tamamen temizleyen Büyük Taarruz Zaferi hangi gün kazanılmıştır? 🏆', a: '30 Ağustos 1922 🏆', d: ['19 Mayıs', '23 Nisan'], exp: '30 Ağustos Zafer Bayramı olarak coşkuyla kutlanır.' },
-      { q: 'Milli Mücadele\'de Aydın yöresinde düşmana karşı destan yazan efelerin lideri kimdir? 🇹🇷', a: 'Yörük Ali Efe 🇹🇷', d: ['Şahin Bey', 'Sütçü İmam'], exp: 'Yörük Ali Efe Kuva-yı Milliye kahramanıdır.' },
-      { q: 'Kurtuluş Savaşı\'nda Türk milletinin yazdığı kahramanlık destanını ölümsüzleştiren İstiklal Marşımızın şairi kimdir? 📜', a: 'Mehmet Akif Ersoy 📜', d: ['Ziya Gökalp', 'Yahya Kemal'], exp: 'Milli şairimiz Mehmet Akif Ersoy İstiklal Marşı\'nı orduya ve millete armağan etmiştir.' },
-      { q: 'İstiklal Marşı TBMM tarafından hangi tarihte milli marşımız olarak kabul edilmiştir? 📜', a: '12 Mart 1921 📜', d: ['29 Ekim 1923', '23 Nisan 1920'], exp: '12 Mart 1921 İstiklal Marşı\'nın kabul tarihidir.' },
-      { q: 'Her insanın parmak izinin birbirine benzememesi neyi kanıtlar? 🖐️', a: 'Her bireyin eşsiz ve benzersiz olduğunu 🖐️', d: ['İnsanların aynı olduğunu', 'Tesadüf olduğunu'], exp: 'Parmak izi dünyadaki 8 milyar insanın tamamında farklıdır.' },
-      { q: 'Milli kültürümüzü yansıtan aşağıdaki ögelerden hangisi geleneksel bir içeceğimizdir? ☕', a: 'Türk Kahvesi ve Ayran ☕', d: ['Kola', 'Gazoz'], exp: 'Türk kahvesi UNESCO somut olmayan kültürel miras listesindedir.' },
-      { q: 'Kurtuluş Savaşı\'nda cephe gerisindeki kadınların kurduğu cemiyetlerle orduya yardım eden kadın yazarımız kimdir? 📚', a: 'Halide Edib Adıvar 📚', d: ['Sabiha Gökçen', 'Afife Jale'], exp: 'Halide Edip onbaşı ve çavuş rütbeleriyle cephede görev yapmıştır.' },
-      { q: 'T.C. Kimlik Kartımızın arka yüzünde hangi resmi imza alanı ve semboller bulunur? 🪪', a: 'Türk Bayrağı ve güvenlik hologramı 🇹🇷', d: ['Futbol amblemi', 'Banka logosu'], exp: 'Ay yıldız ve özel hologramlar sahteciliği önler.' },
-      { q: 'Aşağıdakilerden hangisi bir halk oyunu türümüz DEĞİLDİR? 💃', a: 'Tango 💃', d: ['Zeybek 🕺', 'Horon 🌊'], exp: 'Zeybek, horon, halay milli danslarımızdır; tango yabancı danstır.' },
-      { q: 'Milli Mücadele\'de düzenli ordu kurulmadan önce halkın oluşturduğu gönüllü direniş birliklerine ne denir? 🇹🇷', a: 'Kuva-yı Milliye (Milli Kuvvetler) 🇹🇷', d: ['Yeniçeri Ocağı', 'Zabıta'], exp: 'Kuva-yı Milliye vatanını savunan sivil halk direnişidir.' },
-      { q: 'Mustafa Kemal Atatürk\'ün nüfus cüzdanında doğum yeri olarak hangi şehir yazar? 🏛️', a: 'Selanik 🏛️', d: ['Ankara', 'İstanbul'], exp: 'Mustafa Kemal 1881 yılında Selanik\'te doğmuştur.' },
-      { q: 'Resmi belgelerde ve sınavlarda kimliğimizi doğrulamak için kimlik kartında neyin olması zorunludur? 📸', a: 'Biyometrik Fotoğraf 📸', d: ['İmza resmi', 'Boy ölçüsü'], exp: 'Biyometrik fotoğraf kimlik doğrulamanın temel şartıdır.' },
-      { q: 'Milli Mücadele\'de Güney Cephesi kahramanlıkları sebebiyle Antep şehrimize TBMM tarafından hangi unvan verilmiştir? 🏅', a: 'Gazi (Gaziantep) 🏅', d: ['Kahraman', 'Şanlı'], exp: 'Antep\'e Gazi, Maraş\'a Kahraman, Urfa\'ya Şanlı unvanı verilmiştir.' }
+    // =========================================================================
+    // 4. SINIF SOSYAL BİLGİLER: MEB / MAARİF MODELİ 7 ÖĞRENME ALANI (105 ÖZGÜN SORU)
+    // =========================================================================
+
+    // 1. ÖĞRENME ALANI: BİREY VE TOPLUM (15 ÖZGÜN SORU)
+    grade4SocialIndividualSocietyPool: [
+      { q: 'Türkiye Cumhuriyeti vatandaşlarının resmi kimlik belgesinde kaç haneli T.C. Kimlik Numarası bulunur? 🪪', a: '11 Haneli 🪪', d: ['9 Haneli', '12 Haneli'], exp: 'T.C. Kimlik Numarası 11 rakamdan oluşur ve her vatandaş için tek ve benzersizdir.', spokenText: 'Türkiye Cumhuriyeti vatandaşlarının kimlik belgesinde kaç haneli kimlik numarası bulunur?' },
+      { q: 'Yeni T.C. Kimlik Kartlarımızın arka yüzünde yer alan, parmak izi ve biyometrik verilerimizin güvenle saklandığı elektronik bölüme ne ad verilir? 💳', a: 'Yonga (Çip) 💳', d: ['Barkod Çizgisi', 'Posta Pulu'], exp: 'Akıllı kimlik kartlarındaki elektronik çip (yonga) kimlik doğrulama bilgilerini güvenle taşır.', spokenText: 'Yeni kimlik kartlarımızın arka yüzündeki elektronik bölüme ne ad verilir?' },
+      { q: 'T.C. Kimlik Kartımızın ön yüzünde aşağıdakilerden hangisi YER ALMAZ? 🔍', a: 'Okul Numaramız ve Kan Grubumuz 🏫', d: ['Seri Numarası ve Son Geçerlilik Tarihi 🪪', 'Doğum Tarihi ve İmza Alanı ✍️'], exp: 'Yeni çipli kimlik kartlarının ön yüzünde okul numarası veya kan grubu yazmaz; kan grubu çip içinde kayıtlıdır.', spokenText: 'Kimlik kartımızın ön yüzünde hangisi yer almaz?' },
+      { q: 'Yeni çipli T.C. Kimlik Kartlarımızın geçerlilik süresi verildiği tarihten itibaren kaç yıldır? 📅', a: '10 Yıl 📅', d: ['1 Yıl', '50 Yıl'], exp: 'Resmi T.C. Kimlik Kartlarının geçerlilik süresi 10 yıldır.', spokenText: 'Yeni çipli kimlik kartlarımızın geçerlilik süresi kaç yıldır?' },
+      { q: 'Yaşamımızdaki önemli olayların (doğum, yürümeye başlama, anaokuluna gitme, ilkokula başlama) oluş sırasına göre dizilmesine ne ad verilir? ⏳', a: 'Kronolojik Sıralama (Kronoloji) ⏳', d: ['Coğrafi Sıralama', 'Alfabetik Sıralama'], exp: 'Olayların geçmişten günümüze tarih sırasıyla dizilmesine kronoloji denir.', spokenText: 'Yaşamımızdaki olayların oluş sırasına göre dizilmesine ne ad verilir?' },
+      { q: 'Aşağıdaki olayları kronolojik sıraya koyduğumuzda hangisi EN ÖNCE gerçekleşmiş olmalıdır? 👶', a: '1. Doğum günümü kutlamam 🎂', d: ['İlkokula başlamam 🎒', '4. sınıfa geçmem 📚'], exp: 'Kronolojik sıralamada 1 yaş doğum günü, ilkokula başlamadan ve 4. sınıfa geçmeden önce gelir.', spokenText: 'Aşağıdaki olayları kronolojik sıraya koyduğumuzda hangisi en önce gerçekleşmiş olmalıdır?' },
+      { q: 'Kendimizi karşımızdaki insanın yerine koyarak onun duygu ve düşüncelerini doğru anlamaya çalışmaya ne denir? 🤝', a: 'Empati (Duygudaşlık) 🤝', d: ['Ön Yargı', 'Bencillik'], exp: 'Empati kurmak insan ilişkilerini güçlendirir ve hoşgörüyü artırır.', spokenText: 'Kendimizi başkasının yerine koyarak onun duygularını anlamaya çalışmaya ne denir?' },
+      { q: 'Doğuştan gelen ve çalışma ile geliştirilebilen resim yapma, bağlama çalma veya hızlı koşma gibi becerilerimize ne ad verilir? 🎨', a: 'Bireysel Yetenek 🎨', d: ['Zorunlu İhtiyaç', 'Resmi Görev'], exp: 'Resim, müzik ve spor gibi alanlarda başarılı olma gücümüze yetenek denir.', spokenText: 'Resim yapma veya müzik aleti çalma gibi becerilerimize ne ad verilir?' },
+      { q: 'Boş zamanlarımızda yapmaktan keyif aldığımız pul biriktirme, satranç oynama veya kitap okuma gibi uğraşlara ne denir? ♟️', a: 'İlgi Alanı (Hobi) ♟️', d: ['Temel İhtiyaç', 'Kimlik Bilgisi'], exp: 'Zevk alarak yöneldiğimiz etkinlikler bizim ilgi alanlarımızdır.', spokenText: 'Boş zamanlarımızda yapmaktan keyif aldığımız uğraşlara ne denir?' },
+      { q: 'Her insanın parmak izinin, göz retinasının ve ses tonunun birbirinden farklı olması neyi kanıtlar? 🖐️', a: 'Bireysel farklılıklarımızı ve her insanın eşsiz olduğunu 🌟', d: ['Herkesin aynı yeteneğe sahip olduğunu', 'İnsanların hiç anlaşamayacağını'], exp: 'Fiziksel ve duygusal özelliklerimiz her bireyin özel ve biricik olduğunu gösterir.', spokenText: 'Her insanın parmak izinin birbirinden farklı olması neyi kanıtlar?' },
+      { q: 'Sınıfımıza yeni gelen ve tekerlekli sandalye kullanan bir arkadaşımıza karşı nasıl davranmalıyız? ♿', a: 'Farklılığına saygı duymalı, oyunlarımıza dahil edip destek olmalıyız 💚', d: ['Onu oyunlarımızın dışında bırakmalıyız', 'Sürekli neden yürüyemediğini sormalıyız'], exp: 'Fiziksel veya bireysel farklılıklara saygı duymak empati ve toplumsal uyumun gereğidir.', spokenText: 'Sınıfımıza yeni gelen ve tekerlekli sandalye kullanan arkadaşımıza nasıl davranmalıyız?' },
+      { q: 'Acıktığımızda yemek yemek, susadığımızda su içmek ve soğuktan korunmak için giyinmek hangi kavramla açıklanır? 🍎', a: 'Temel İhtiyaç 🍎', d: ['Bireysel Yetenek', 'Kronoloji'], exp: 'Beslenme, barınma ve giyinme tüm insanların ortak temel ihtiyaçlarıdır.', spokenText: 'Yemek yemek ve giyinmek hangi kavramla açıklanır?' },
+      { q: 'T.C. Kimlik Kartlarında yer alan fotoğrafın uluslararası standartlara uygun ve yüz hatlarını net gösteren türüne ne denir? 📸', a: 'Biyometrik Fotoğraf 📸', d: ['Manzara Fotoğrafı', 'Karikatür Çizimi'], exp: 'Resmi kimlik ve pasaportlarda biyometrik fotoğraf kullanılır.', spokenText: 'Kimlik kartlarında yer alan standart fotoğrafa ne denir?' },
+      { q: 'Aşağıdakilerden hangisi empati kuran bir öğrencinin kuracağı bir cümledir? 💬', a: '"Kalemini kaybettiğin için üzgün olduğunu anlıyorum, benimkini kullanabilirsin." 💬', d: ['"Bana ne senin kaleminden, dikkat etseydin!"', '"Benim kalemlerim seninkinden daha güzel."'], exp: 'Karşımızdakinin üzüntüsünü anlayıp çözüm sunmak gerçek bir empati örneğidir.', spokenText: 'Aşağıdakilerden hangisi empati kuran bir öğrencinin cümlesidir?' },
+      { q: 'Nüfus cüzdanlarının yerine geçen yeni T.C. Kimlik Kartlarımız hangi bakanlık tarafından vatandaşlara verilir? 🏛️', a: 'İçişleri Bakanlığı (Nüfus ve Vatandaşlık İşleri) 🏛️', d: ['Milli Eğitim Bakanlığı', 'Tarım ve Orman Bakanlığı'], exp: 'Kimlik kartları İçişleri Bakanlığı Nüfus Müdürlükleri tarafından düzenlenir.', spokenText: 'Yeni kimlik kartlarımız hangi bakanlık tarafından verilir?' }
     ],
 
-    // 4. SINIF: İNSANLAR, YERLER VE ÜRETİMDEN TÜKETİME (25 ÖZGÜN SORU)
-    grade4PlacesEconomyPool: [
-      { q: 'Meteoroloji Genel Müdürlüğü tarafından yapılan hava tahmin raporlarında gökyüzünde güneş ve bulut sembolü neyi ifade eder? ⛅', a: 'Parçalı Bulutlu ⛅', d: ['Gök Gürültülü Sağanak', 'Karlı'], exp: 'Güneş ve bulut birlikteyse hava parçalı bulutludur.' },
-      { q: 'Eğimli arazilerde aşırı yağışlar sonucu toprağın büyük kütleler halinde kaymasına ne ad verilir? ⛰️', a: 'Heyelan (Toprak Kayması) ⛰️', d: ['Deprem', 'Erozyon'], exp: 'Karadeniz gibi eğimli ve çok yağış alan bölgelerde heyelan sık görülür.' },
-      { q: 'Dağlık ve dik yamaçlarda biriken kar kütlesinin aşağıya doğru hızla kaymasına ne ad verilir? ❄️', a: 'Çığ ❄️', d: ['Sel', 'Fırtına'], exp: 'Yoğun kar yağışında eğimli yamaçlardan çığ düşebilir.' },
-      { q: 'Aşırı yağmur veya eriyen karlar sebebiyle akarsuların yatağından taşarak etrafı sular altında bırakmasına ne denir? 🌊', a: 'Sel 🌊', d: ['Heyelan', 'Kuraklık'], exp: 'Sel baskınları dere yataklarına ev yapıldığında felakete dönüşür.' },
-      { q: 'Toprağın rüzgar ve sularla süpürülüp yok olmasını önlemek için yapılacak en etkili çalışma nedir? 🌲', a: 'Ağaçlandırma yapmak (Fidan dikmek) 🌲', d: ['Ağaçları kesmek', 'Bina yapmak'], exp: 'Ağaç kökleri toprağı sıkıca tutarak erozyonu önler.' },
-      { q: 'Olası bir depreme karşı evlerimizde mutlaka hazır bulundurmamız gereken çantaya ne denir? 🎒', a: 'Acil Durum ve Deprem Çantası 🎒', d: ['Okul Çantası', 'Piknik Çantası'], exp: 'Deprem çantasında su, fener, düdük, ilk yardım seti ve bisküvi olmalıdır.' },
-      { q: 'Deprem sarsıntısı bittikten sonra binadan tahliye olurken hangisi KESİNLİKLE KULLANILMAMALIDIR? 🚫', a: 'Asansör 🚫', d: ['Merdivenler', 'Yangın çıkışı'], exp: 'Deprem anında elektrik kesilebilir veya asansör boşluğa düşebilir; asansöre binilmez!' },
-      { q: 'Ailemizin belirli bir süre içindeki gelir ve giderlerini gösteren plana ne ad verilir? 💰', a: 'Aile Bütçesi 💰', d: ['Alışveriş Listesi', 'Fatura'], exp: 'Bütçe, gelire göre harcama yapmayı sağlayan finansal plandır.' },
-      { q: 'İnsanın yaşamını sürdürebilmesi için vazgeçilmez olan beslenme, barınma ve giyinmeye ne denir? 🏠', a: 'Temel İhtiyaç 🏠', d: ['Sosyal İstek', 'Lüks Harcama'], exp: 'İhtiyaçlar karşılanmazsa yaşam tehlikeye girer.' },
-      { q: 'Olmasa da yaşayabileceğimiz, ancak sahip olmak istediğimiz (pahalı oyuncak, son model telefon) şeylere ne denir? 🎮', a: 'İstek 🎮', d: ['Zorunlu İhtiyaç', 'Vergi'], exp: 'İstekler ihtiyaçlardan sonra bütçeye göre karşılanmalıdır.' },
-      { q: 'Bilinçli bir tüketici alışverişe çıkmadan önce parasını doğru harcamak için ne hazırlamalıdır? 📝', a: 'İhtiyaç Listesi 📝', d: ['Fotoğraf albümü', 'Hediye kutusu'], exp: 'Alışveriş listesi gereksiz harcamaları ve israfı önler.' },
-      { q: 'Ekmek, su ve elektriğin gereksiz yere fazlaca harcanıp tüketilmesine ne ad verilir? ❌', a: 'İsraf ❌', d: ['Tasarruf', 'Üretim'], exp: 'Kaynakların boş yere harcanması israftır.' },
-      { q: 'Geri dönüştürülebilen 1 ton kağıdın geri kazanılması kaç yetişkin ağacın kesilmesini önler? 🌳', a: 'Yaklaşık 17 ağaç 🌳', d: ['1 ağaç', '100 ağaç'], exp: 'Kağıt geri dönüşümü ormanları korumak için muazzam bir katkıdır.' },
-      { q: 'Ülkemizde afet ve acil durum yönetimini yürüten resmi devlet kurumu hangisidir? 🚨', a: 'AFAD 🚨', d: ['TSE', 'TÜİK'], exp: 'AFAD, Afet ve Acil Durum Yönetimi Başkanlığı\'dır.' },
-      { q: 'Tükettiğimiz domates, buğday ve elma hangi ekonomik faaliyet koluna aittir? 🚜', a: 'Tarım 🚜', d: ['Sanayi', 'Madencilik'], exp: 'Topraktan yetiştirilen bitkisel ürünler tarım sektörüdür.' },
-      { q: 'İnek, koyun ve tavuk besleyerek et, süt ve yumurta elde etme faaliyetine ne denir? 🐮', a: 'Hayvancılık 🐮', d: ['Ormancılık', 'Turizm'], exp: 'Hayvansal besinler hayvancılık faaliyetiyle üretilir.' },
-      { q: 'Fabrikalarda hammaddelerin işlenerek yeni ürünlere dönüştürülmesine ne ad verilir? 🏭', a: 'Sanayi (Üretim) 🏭', d: ['Ticaret', 'Hizmet'], exp: 'Sanayi tesisleri un, kumaş, araba ve eşya üretir.' },
-      { q: 'Doktor, öğretmen, şoför ve avukat gibi doğrudan mal üretmeyip hizmet sunan sektör hangisidir? 💼', a: 'Hizmet Sektörü 💼', d: ['Tarım Sektörü', 'Madencilik'], exp: 'Hizmet sektörü toplumun eğitim, sağlık, ulaşım ihtiyaçlarını karşılar.' },
-      { q: 'Bir ürünün bozulması durumunda satıcının tamir veya değişim garantisi verdiği resmi evrak nedir? 📄', a: 'Garanti Belgesi 📄', d: ['Kullanma kılavuzu', 'Reklam broşürü'], exp: 'Garanti belgesi tüketiciyi arızalara karşı korur.' },
-      { q: 'Alışverişte aldığımız fiş üzerindeki KDV ibaresi devlete ne ödendiğini gösterir? 🏛️', a: 'Vergi (Katma Değer Vergisi) 🏛️', d: ['Bağış', 'Ceza'], exp: 'Vergiler okullar, yollar ve hastaneler olarak millete geri döner.' },
-      { q: 'Deprem sarsıntısı anında başımızı korumak için sağlam bir masanın yanında hangi pozisyonu alırız? 🛡️', a: 'Çök - Kapan - Tutun 🛡️', d: ['Ayağa kalkıp koşmak', 'Pencereden bakmak'], exp: 'Çök-Kapan-Tutun düşen cisimlerden başımızı korur.' },
-      { q: 'Orman yangınlarını yetkililere bildirmek için hangi acil çağrı numarası aranır? 🌲🔥', a: '112 Acil Çağrı (Orman Yangın İhbar) 📞', d: ['155', '182'], exp: 'Artık tüm acil durumlar 112 numarasında birleşmiştir.' },
-      { q: 'Suyun buharlaşarak atmosfere çıkması ve yağmur olarak yeryüzüne geri dönmesine ne ad verilir? 💧', a: 'Su Döngüsü 💧', d: ['Rüzgar akımı', 'Toprak kayması'], exp: 'Su döngüsü Dünya\'daki tatlı su kaynaklarını yeniler.' },
-      { q: 'Tarihi ve doğal güzellikleri görmek için ülkemize gelen turistlerin oluşturduğu gelir kapısına ne ad verilir? 🧳', a: 'Turizm (Bacasız Sanayi) 🧳', d: ['Tarım', 'Madencilik'], exp: 'Turizm ülkemize döviz ve kültürel zenginlik kazandırır.' },
-      { q: 'Aşağıdakilerden hangisi çevre kirliliğini ÖNLEYEN bir davranıştır? 🌱', a: 'Toplu taşıma araçlarını tercih etmek 🌱', d: ['Çöpleri yere atmak', 'Naylon poşetleri yakmak'], exp: 'Toplu taşıma karbon salınımını azaltır.' }
+    // 2. ÖĞRENME ALANI: KÜLTÜR VE MİRAS / MİLLİ MÜCADELE (15 ÖZGÜN SORU)
+    grade4SocialCultureHeroesPool: [
+      { q: 'Aile geçmişimizi öğrenmek için dedemiz ve ninemizle ses veya görüntü kaydı alarak yaptığımız görüşme çalışmasına ne ad verilir? 🎙️', a: 'Sözlü Tarih Çalışması 🎙️', d: ['Coğrafi Gözlem', 'Deney Raporu'], exp: 'Tanıkların anılarını dinleyerek geçmişi kayıt altına almaya sözlü tarih denir.', spokenText: 'Aile geçmişimizi öğrenmek için büyüklerimizle yaptığımız görüşme çalışmasına ne ad verilir?' },
+      { q: 'Aile bireylerini ve geçmiş kuşaklardaki akrabalarımızı dal budak şeklinde gösteren çizelgeye ne denir? 🌳', a: 'Soy Ağacı (Aile Şeceresi) 🌳', d: ['Hava Grafiği', 'Zaman Çizelgesi'], exp: 'Soy ağacı geçmişten bugüne aile bağlarımızı gösterir.', spokenText: 'Aile bireylerini ve geçmiş kuşakları gösteren çizelgeye ne denir?' },
+      { q: 'Ebru sanatı, çinicilik, halı dokumacılığı ve bakırcılık milli kültürümüzün hangi ögesine örnektir? 🏺', a: 'Geleneksel El Sanatlarımız 🏺', d: ['Yabancı Sporlar', 'Modern Teknoloji'], exp: 'Ebru, çini ve halı dokuma nesilden nesile aktarılan el sanatlarımızdır.', spokenText: 'Ebru sanatı ve çinicilik milli kültürümüzün hangi ögesine örnektir?' },
+      { q: 'Ege Bölgesi\'nde kollar kaldırılarak tek başına veya topluca ağır adımlarla oynanan kahramanlık halk oyunumuz hangisidir? 🕺', a: 'Zeybek 🕺', d: ['Horon 🌊', 'Çayda Çıra 🕯️'], exp: 'Zeybek Ege yöresinin, Horon Karadeniz\'in, Çayda Çıra Elazığ\'ın halk oyunudur.', spokenText: 'Ege Bölgesinde oynanan kahramanlık halk oyunumuz hangisidir?' },
+      { q: 'Geçmişten günümüze sokakta ve bahçede arkadaşlarla oynanan geleneksel çocuk oyunlarımızdan biri hangisidir? 🪨', a: 'Beştaş / Körebe / Mendil Kapmaca 🪨', d: ['Bilgisayar Yarışı', 'Sanal Gözlük Oyunu'], exp: 'Beştaş, aşık oyunu, seksek, körebe ve yakan top geleneksel çocuk oyunlarımızdır.', spokenText: 'Geçmişten günümüze oynanan geleneksel çocuk oyunlarımızdan biri hangisidir?' },
+      { q: 'Mustafa Kemal Atatürk\'ün 19 Mayıs 1919\'da Bandırma Vapuru ile hangi şehre çıkmasıyla Milli Mücadele resmen başlamıştır? 🚢', a: 'Samsun 🚢', d: ['İzmir', 'Erzurum'], exp: '19 Mayıs 1919\'da Samsun\'a çıkış Kurtuluş Savaşı\'nın başlangıcıdır.', spokenText: 'Mustafa Kemal Atatürkün on dokuz mayıs bin dokuz yüz on dokuzda hangi şehre çıkmasıyla Milli Mücadele başlamıştır?' },
+      { q: 'Kurtuluş Savaşı\'nda Doğu Cephesi Komutanı olan, Ermenileri yenilgiye uğratarak Gümrü Antlaşması\'nı imzalayan ve yetim çocukları koruyan komutanımız kimdir? 🎖️', a: 'Kazım Karabekir Paşa 🎖️', d: ['İsmet İnönü', 'Yörük Ali Efe'], exp: 'Kazım Karabekir Paşa Doğu Cephesi kahramanımızdır.', spokenText: 'Kurtuluş Savaşında Doğu Cephesi Komutanı olan kahramanımız kimdir?' },
+      { q: 'Güney Cephesi\'nde Fransız işgaline karşı Kahramanmaraş\'ta ilk direniş kıvılcımını ateşleyen milli kahramanımız kimdir? 🇹🇷', a: 'Sütçü İmam 🇹🇷', d: ['Şahin Bey', 'Hasan Tahsin'], exp: 'Sütçü İmam Kahramanmaraş savunmasının sembol kahramanıdır.', spokenText: 'Kahramanmaraşta direniş kıvılcımını ateşleyen milli kahramanımız kimdir?' },
+      { q: '"Düşman cesedimi çiğnemeden Antep\'e giremez!" diyerek Gaziantep savunmasında canını feda eden kahramanımız kimdir? 🛡️', a: 'Şahin Bey 🛡️', d: ['Ali Saip Bey', 'Sütçü İmam'], exp: 'Şahin Bey Kilis-Antep yolunu savunurken kahramanca şehit düşmüştür.', spokenText: 'Gaziantep savunmasında canını feda eden kahramanımız kimdir?' },
+      { q: 'Güney Cephesi\'nde Şanlıurfa halkını örgütleyerek şehri işgalden kurtaran Milli Mücadele kahramanımız kimdir? ⚔️', a: 'Ali Saip Bey (Ursavaş) ⚔️', d: ['Hasan Tahsin', 'Yörük Ali Efe'], exp: 'Ali Saip Bey Urfa savunmasının önderidir.', spokenText: 'Şanlıurfa halkını örgütleyerek şehri işgalden kurtaran kahramanımız kimdir?' },
+      { q: '15 Mayıs 1919\'da İzmir\'in işgaline karşı Kordonboyu\'nda düşmana ilk kurşunu sıkarak şehit olan gazeteci kahramanımız kimdir? 📰', a: 'Hasan Tahsin (Osman Nevres) 📰', d: ['Şahin Bey', 'Kazım Karabekir'], exp: 'Gazeteci Hasan Tahsin İzmir\'de ulusal direniş ruhunu ateşlemiştir.', spokenText: 'İzmirin işgaline karşı ilk kurşunu sıkan gazeteci kahramanımız kimdir?' },
+      { q: '1921 kışında İnebolu\'dan Kastamonu\'ya kağnısıyla cephane taşırken battaniyesini top mermilerine ve bebeğine örterek donup şehit olan kadın kahramanımız kimdir? ❄️', a: 'Şerife Bacı ❄️', d: ['Halime Çavuş', 'Gördesli Makbule'], exp: 'Şerife Bacı fedakar Türk kadınının Kurtuluş Savaşı\'ndaki ölümsüz simgesidir.', spokenText: 'İneboludan Kastamonuya kağnısıyla cephane taşırken şehit olan kadın kahramanımız kimdir?' },
+      { q: 'Saçlarını kazıtıp erkek kılığına girerek Milli Mücadele\'de cepheye mühimmat taşıyan ve savaşlara katılan Kastamonulu kadın kahramanımız kimdir? 🎖️', a: 'Halime Çavuş 🎖️', d: ['Sabiha Gökçen', 'Nene Hatun'], exp: 'Halime Çavuş (Kocabıyık) uzun yıllar erkek kılığında cephede vatan savunmasına katılmıştır.', spokenText: 'Erkek kılığına girerek cepheye mühimmat taşıyan Kastamonulu kadın kahramanımız kimdir?' },
+      { q: 'Batı Cephesi\'nde Aydın ve Nazilli çevresinde Kuva-yı Milliye birlikleriyle düşmana ağır kayıplar verdiren efe kahramanımız kimdir? 🐎', a: 'Yörük Ali Efe 🐎', d: ['Sütçü İmam', 'Ali Saip Bey'], exp: 'Yörük Ali Efe Malgaç Baskını ile Aydın yöresinde destan yazmıştır.', spokenText: 'Aydın çevresinde Kuvayı Milliye birlikleriyle savaşan efe kahramanımız kimdir?' },
+      { q: 'Kurtuluş Savaşı\'nda en şiddetli muharebelerin (I. ve II. İnönü, Eskişehir-Kütahya, Sakarya ve Büyük Taarruz) yaşandığı cephe hangisidir? 🗺️', a: 'Batı Cephesi (Yunan ordusuna karşı) 🗺️', d: ['Doğu Cephesi', 'Güney Cephesi'], exp: 'Batı Cephesi\'nde düzenli ordumuz İsmet İnönü ve Başkomutan Mustafa Kemal Paşa liderliğinde zafer kazanmıştır.', spokenText: 'İnönü, Sakarya ve Büyük Taarruz savaşlarının yaşandığı cephe hangisidir?' }
     ],
+
+    // 3. ÖĞRENME ALANI: İNSANLAR, YERLER VE ÇEVRELER (15 ÖZGÜN SORU)
+    grade4SocialPlacesEnvironmentPool: [
+      { q: 'Pusulada Kuzey (K) ile Doğu (D) ana yönlerinin tam ortasında yer alan ara yön hangisidir? 🧭', a: 'Kuzeydoğu (KD) 🧭', d: ['Güneybatı (GB)', 'Kuzeybatı (KB)'], exp: 'Kuzey ile Doğu arasındaki ara yön Kuzeydoğu\'dur.', spokenText: 'Kuzey ile Doğu ana yönlerinin tam ortasında yer alan ara yön hangisidir?' },
+      { q: 'Sabah güneşin doğduğu yöne sağ kolumuzu uzattığımızda, sol kolumuz ve önümüz sırasıyla hangi yönleri gösterir? ☀️', a: 'Sol kolumuz Batı, önümüz Kuzey 🧭', d: ['Sol kolumuz Güney, önümüz Doğu', 'Sol kolumuz Kuzey, önümüz Batı'], exp: 'Sağ kol Doğu\'yu gösterirken sol kol Batı\'yı, önümüz Kuzey\'i, arkamız Güney\'i gösterir.', spokenText: 'Güneşin doğduğu yöne sağ kolumuzu uzattığımızda sol kolumuz ve önümüz hangi yönleri gösterir?' },
+      { q: 'İnsan eli değmeden doğada kendiliğinden oluşan dağ, göl, nehir ve orman gibi varlıklara ne ad verilir? 🏔️', a: 'Doğal Unsur 🏔️', d: ['Beşeri Unsur', 'Teknolojik Ürün'], exp: 'Doğada kendiliğinden var olan unsurlara doğal unsur denir.', spokenText: 'Doğada kendiliğinden oluşan dağ, göl ve orman gibi varlıklara ne ad verilir?' },
+      { q: 'İnsanlar tarafından ihtiyaçlar doğrultusunda inşa edilen köprü, baraj, bina, tünel ve otoyollara ne ad verilir? 🌉', a: 'Beşeri Unsur 🌉', d: ['Doğal Unsur', 'Yeryüzü Şekli'], exp: 'İnsan aklı ve emeğiyle yapılan yapılara beşeri unsur denir.', spokenText: 'İnsanlar tarafından inşa edilen köprü, baraj ve binalara ne ad verilir?' },
+      { q: 'Çevresine göre alçakta kalmış geniş ve verimli tarım düzlüğüne (Örn: Çukurova, Konya Ovası) hangi yeryüzü şekli denir? 🌾', a: 'Ova 🌾', d: ['Körfez', 'Yarımada'], exp: 'Çevresine göre alçakta bulunan geniş düzlüklere ova denir.', spokenText: 'Çevresine göre alçakta kalmış geniş düzlüklere hangi yeryüzü şekli denir?' },
+      { q: 'Üç tarafı sularla çevrili, bir tarafı ana karaya bağlı olan yeryüzü şekline (Örn: Anadolu Yarımadası) ne ad verilir? 🗺️', a: 'Yarımada 🗺️', d: ['Ada 🏝️', 'Göl 💧'], exp: 'Dört tarafı suyla çevrili kara parçasına ada, üç tarafı suyla çevrili olana yarımada denir.', spokenText: 'Üç tarafı sularla çevrili, bir tarafı karaya bağlı olan yeryüzü şekline ne ad verilir?' },
+      { q: 'Akarsuların yatağını aşındırarak oluşturduğu, iki dağ arasındaki derin ve uzun yarıklara ne ad verilir? 🏞️', a: 'Vadi 🏞️', d: ['Ada', 'Plato'], exp: 'Akarsuların içinde aktığı V veya U biçimli çukurluklara vadi denir.', spokenText: 'Akarsuların yatağını aşındırarak oluşturduğu derin yarıklara ne ad verilir?' },
+      { q: 'Denizin karaların içine doğru sokulmuş büyük ve derin girintilerine (Örn: İzmir Körfezi, İzmit Körfezi) ne denir? ⚓', a: 'Körfez ⚓', d: ['Ova', 'Dağ'], exp: 'Denizin karaya doğru yaptığı büyük girintilere körfez, küçüğüne koy denir.', spokenText: 'Denizin karaların içine doğru sokulmuş büyük girintilerine ne denir?' },
+      { q: 'Hava durumu tablosunda üzerinde kar tanesi olan bulut sembolü hangi hava olayını gösterir? 🌨️', a: 'Kar Yağışlı 🌨️', d: ['Sisli 🌫️', 'Parçalı Bulutlu ⛅'], exp: 'Kar taneli bulut sembolü havanın kar yağışlı olacağını bildirir.', spokenText: 'Üzerinde kar tanesi olan bulut sembolü hangi hava olayını gösterir?' },
+      { q: 'Deprem öncesinde evimizde alınması gereken en önemli güvenlik önlemi aşağıdakilerden hangisidir? 🛠️', a: 'Gardırop, kitaplık ve beyaz eşyaları duvara sabitlemek 🛠️', d: ['Balkon kapılarını kilitlemek', 'Asansörün önüne dolap koymak'], exp: 'Devrilebilecek yüksek eşyaları duvara L demiriyle sabitlemek yaralanmaları önler.', spokenText: 'Deprem öncesinde evimizde alınması gereken en önemli güvenlik önlemi hangisidir?' },
+      { q: 'Bir Deprem ve Acil Durum Çantası içinde aşağıdakilerden hangisinin bulunması ZORUNLU DEĞİLDİR? 🎒', a: 'Ütü ve Televizyon Kumandası 📺', d: ['El Feneri, Düdük ve Pil 🔦', 'Su, Kuru Gıda ve İlk Yardım Çantası 🩹'], exp: 'Deprem çantasında hayatta kalmayı sağlayacak su, kuru gıda, düdük, fener ve ilk yardım malzemeleri bulunur.', spokenText: 'Deprem çantası içinde hangisinin bulunması zorunlu değildir?' },
+      { q: 'Deprem sarsıntısı başladığı anda sağlam bir eşyanın yanında hayat üçgeni oluşturarak hangi hareketi yapmalıyız? 🛡️', a: 'ÇÖK - KAPAN - TUTUN 🛡️', d: ['KOŞ - ZIPLA - BAĞIR', 'ASANSÖRE BİN - İN'], exp: 'Sarsıntı sırasında Çök-Kapan-Tutun pozisyonu başımızı ve boynumuzu korur.', spokenText: 'Deprem sarsıntısı başladığı anda hangi hareketi yapmalıyız?' },
+      { q: 'Deprem sarsıntısı bittikten sonra binadan dışarı çıkarken aşağıdakilerden hangisi KESİNLİKLE YAPILMAMALIDIR? 🚫', a: 'Asansör kullanmak ve balkondan atlamak 🚫', d: ['Gaz ve elektrik vanalarını kapatmak', 'Merdivenlerden sakin ve hızlıca toplanma alanına inmek'], exp: 'Deprem sonrasında elektrik kesintisi ve artçı sarsıntı riski nedeniyle asansör kesinlikle kullanılmaz.', spokenText: 'Deprem sarsıntısı bittikten sonra binadan çıkarken hangisi kesinlikle yapılmamalıdır?' },
+      { q: 'Eğimli yamaçlarda aşırı yağışlar sebebiyle toprağın büyük kütleler halinde aşağı kaymasıyla oluşan doğal afet hangisidir? ⛰️', a: 'Heyelan (Toprak Kayması) ⛰️', d: ['Kuraklık', 'Orman Yangını'], exp: 'Özellikle Karadeniz Bölgesi\'nde dik yamaçlar ve bol yağış nedeniyle heyelan sık görülür.', spokenText: 'Eğimli yamaçlarda toprağın büyük kütleler halinde kaymasıyla oluşan doğal afet hangisidir?' },
+      { q: 'Fiziki haritalarda deniz seviyesine yakın alçak ovalar hangi renkle, yüksek dağlar ise hangi renkle gösterilir? 🗺️', a: 'Ovalar Yeşil, Yüksek Dağlar Kahverengi 🟢🟤', d: ['Ovalar Mavi, Dağlar Sarı', 'Ovalar Kahverengi, Dağlar Yeşil'], exp: 'Fiziki haritalarda yeşil 0-500 m alçak yerleri, sarı-turuncu orta yükseltiyi, kahverengi yüksek dağları, mavi ise suları gösterir.', spokenText: 'Fiziki haritalarda alçak ovalar ve yüksek dağlar hangi renklerle gösterilir?' }
+    ],
+
+    // 4. ÖĞRENME ALANI: BİLİM, TEKNOLOJİ VE TOPLUM (15 ÖZGÜN SORU)
+    grade4SocialScienceTechPool: [
+      { q: 'Aydınlatma araçlarını geçmişten günümüze (eskiden yeniye) doğru sıraladığımızda hangi zaman tüneli doğrudur? 💡', a: 'Meşale ➡️ Kandil ➡️ Gaz Lambası ➡️ Ampul ➡️ LED Lamba 💡', d: ['LED Lamba ➡️ Ampul ➡️ Meşale ➡️ Kandil', 'Ampul ➡️ Gaz Lambası ➡️ Meşale ➡️ LED'], exp: 'İnsanlar ateşten sonra meşale, yağ kandili, gaz lambası, Edison\'un ampulü ve günümüzde tasarruflu LED lambaları kullanmıştır.', spokenText: 'Aydınlatma araçlarını geçmişten günümüze sıraladığımızda hangisi doğrudur?' },
+      { q: 'İletişim araçlarının geçmişten günümüze gelişim sıralaması hangi seçenekte doğru verilmiştir? 📞', a: 'Duman / Güvercin ➡️ Telgraf ➡️ Sabit Telefon ➡️ Akıllı Telefon 📱', d: ['Akıllı Telefon ➡️ Telgraf ➡️ Posta Güvercini', 'Sabit Telefon ➡️ Duman ➡️ İnternet'], exp: 'İletişim duman ve güvercinle başlamış, telgraf, kablolu telefon ve akıllı telefonlarla hızlanmıştır.', spokenText: 'İletişim araçlarının geçmişten günümüze gelişim sıralaması hangisinde doğrudur?' },
+      { q: 'Ulaşım araçlarının tarihsel gelişimini düşündüğümüzde aşağıdakilerden hangisi EN ESKİ ulaşım aracıdır? 🐎', a: 'At Arabası ve Yelkenli Gemi ⛵', d: ['Buharlı Tren 🚂', 'Yüksek Hızlı Tren (YHT) 🚄'], exp: 'Motorun icadından önce hayvan gücü (at arabası) ve rüzgar gücü (yelkenli) kullanılıyordu.', spokenText: 'Aşağıdakilerden hangisi en eski ulaşım aracıdır?' },
+      { q: 'Elektrik ampulünü geliştirerek geceleri evlerin güvenle aydınlatılmasını sağlayan ünlü mucit kimdir? 💡', a: 'Thomas Edison 💡', d: ['Alexander Graham Bell', 'Guglielmo Marconi'], exp: 'Thomas Edison binlerce deney sonunda uzun ömürlü elektrik ampulünü icat etmiştir.', spokenText: 'Elektrik ampulünü geliştiren ünlü mucit kimdir?' },
+      { q: '1876 yılında sesin kablolar aracılığıyla iletilmesini sağlayarak telefonu icat eden bilim insanı kimdir? ☎️', a: 'Alexander Graham Bell ☎️', d: ['Wright Kardeşler', 'Samuel Morse'], exp: 'Alexander Graham Bell telefonu icat ederek iletişimde çığır açmıştır.', spokenText: 'Telefonu icat eden bilim insanı kimdir?' },
+      { q: 'Motorlu ilk uçağı tasarlayıp 1903 yılında gökyüzünde uçmayı başaran mucitler kimlerdir? ✈️', a: 'Wright Kardeşler (Orville ve Wilbur Wright) ✈️', d: ['Lumiere Kardeşler', 'Edison ve Tesla'], exp: 'Wright Kardeşler motorlu havacılığın öncüleridir.', spokenText: 'Motorlu ilk uçağı uçurmayı başaran mucitler kimlerdir?' },
+      { q: 'Tarihte bütün teknolojik icatların ve buluşların ortaya çıkmasındaki EN TEMEL neden aşağıdakilerden hangisidir? 🧠', a: 'İnsanların karşılaştığı sorunları çözme ve ihtiyaçlarını kolayca karşılama isteği 🧠', d: ['Doğayı kirletme isteği', 'Zamanı boşa harcama isteği'], exp: '"İhtiyaçlar icatların anasıdır." İnsanlar hayatı kolaylaştırmak için buluşlar yapmıştır.', spokenText: 'Tarihte teknolojik icatların ortaya çıkmasındaki en temel neden nedir?' },
+      { q: 'Yeni alınan bir teknolojik ürünü (örneğin çamaşır makinesi veya tablet) bozmadan ve güvenli kullanmak için ilk önce neyi okumalıyız? 📖', a: 'Kullanma Kılavuzunu 📖', d: ['Market Fişini', 'Reklam Afişini'], exp: 'Kullanma kılavuzu cihazın nasıl çalıştırılacağını ve güvenlik uyarılarını açıklar.', spokenText: 'Yeni alınan bir teknolojik ürünü güvenli kullanmak için ilk önce neyi okumalıyız?' },
+      { q: 'Bilgisayar, tablet veya televizyon ekranına çok yakından ve saatlerce aralıksız bakmak vücudumuzda hangi sağlık sorunlarına yol açar? 👀', a: 'Göz bozukluğu, duruş (omurga) bozukluğu ve dikkat dağınıklığı ⚠️', d: ['Kasların güçlenmesi', 'Gözlerin daha keskin görmesi'], exp: 'Teknoloji bağımlılığı ve yanlış oturuş göz ve iskelet sağlığına zarar verir.', spokenText: 'Ekrana çok yakından ve saatlerce bakmak hangi sağlık sorunlarına yol açar?' },
+      { q: 'Kullanım ömrü biten eski telefon, bilgisayar, pil ve kablolar (elektronik atıklar / e-atık) ne yapılmalıdır? ♻️', a: 'E-Atık ve Atık Pil Toplama Kutularına verilerek geri dönüştürülmelidir ♻️', d: ['Toprağa gömülmeli veya sobada yakılmalıdır', 'Denize atılmalıdır'], exp: 'Elektronik atıklar ağır metaller içerdiği için doğaya atılmaz, geri dönüşüme verilir.', spokenText: 'Kullanım ömrü biten elektronik atıklar ve piller ne yapılmalıdır?' },
+      { q: 'Matbaayı (modern baskı makinesini) geliştirerek kitapların hızlıca çoğaltılmasını ve bilginin yayılmasını sağlayan mucit kimdir? 📚', a: 'Johannes Gutenberg 📚', d: ['Galileo Galilei', 'Louis Pasteur'], exp: 'Gutenberg hareketli harflerle matbaayı geliştirerek bilimin yayılmasını hızlandırmıştır.', spokenText: 'Matbaayı geliştirerek kitapların çoğaltılmasını sağlayan mucit kimdir?' },
+      { q: 'Kuduz aşısını bularak milyonlarca insanın hayatını kurtaran ünlü bilim insanı kimdir? 💉', a: 'Louis Pasteur 💉', d: ['Isaac Newton', 'Samuel Morse'], exp: 'Fransız bilim insanı Louis Pasteur kuduz aşısını ve pastörizasyon yöntemini bulmuştur.', spokenText: 'Kuduz aşısını bulan ünlü bilim insanı kimdir?' },
+      { q: 'Nokta ve çizgi sinyalleriyle uzak mesafelere mesaj gönderen "Telgraf" cihazını ve alfabesini bulan mucit kimdir? 📟', a: 'Samuel Morse (Mors Alfabesi) 📟', d: ['Graham Bell', 'Thomas Edison'], exp: 'Samuel Morse telgrafı ve kendi adıyla anılan Mors alfabesini icat etmiştir.', spokenText: 'Telgraf cihazını ve Mors alfabesini bulan mucit kimdir?' },
+      { q: 'Gece ders çalışırken göz sağlığımızı korumak için çalışma masamızdaki ışık nereden gelmelidir? 🕯️', a: 'Sağ elle yazıyorsak sol üstten (gölge yapmayacak şekilde) 💡', d: ['Doğrudan gözümüzün içine doğru', 'Tam arkamızdan karanlıkta'], exp: 'Işığın yazı yazan elin ters yönünden gelmesi defter üzerine gölge düşmesini önler.', spokenText: 'Ders çalışırken göz sağlığımızı korumak için ışık nereden gelmelidir?' },
+      { q: 'Buhar gücünü makinelerde kullanarak Sanayi Devrimi\'nin ve buharlı trenlerin başlamasına öncülük eden mucit kimdir? 🚂', a: 'James Watt 🚂', d: ['Wright Kardeşler', 'Marconi'], exp: 'James Watt buhar makinesini geliştirerek ulaşım ve sanayide devrim yapmıştır.', spokenText: 'Buhar makinesini geliştiren mucit kimdir?' }
+    ],
+
+    // 5. ÖĞRENME ALANI: ÜRETİM, DAĞITIM VE TÜKETİM (15 ÖZGÜN SORU)
+    grade4SocialProductionEconomyPool: [
+      { q: 'İnsanların yaşamlarını sürdürebilmeleri için zorunlu olan beslenme, barınma ve giyinmeye "İhtiyaç", eğlence ve lüks arzulara ise ne denir? 🛍️', a: 'İstek 🛍️', d: ['Zorunluluk', 'Bütçe'], exp: 'Önce temel ihtiyaçlarımız karşılanır, bütçemiz kalırsa isteklerimiz alınır.', spokenText: 'Zorunlu olmayan eğlence ve lüks arzulara ne denir?' },
+      { q: 'Ayşe\'nin kışın giymek için mont alması ile yeni çıkan ışıklı oyuncak bebeği almak istemesi nasıl sınıflandırılır? 🧥', a: 'Mont = Temel İhtiyaç, Oyuncak Bebek = İstek 🧥🧸', d: ['Mont = İstek, Oyuncak = İhtiyaç', 'İkisi de zorunlu ihtiyaçtır'], exp: 'Soğuktan korunmak için mont giyinme ihtiyacıdır; oyuncak ise istektir.', spokenText: 'Kışın mont almak ile oyuncak bebek almak nasıl sınıflandırılır?' },
+      { q: 'Buğdayın sofralarımıza ekmek olarak gelene kadar geçtiği "Üretim ➡️ Dağıtım ➡️ Tüketim" ağının doğru sıralaması hangisidir? 🍞', a: 'Tarlada buğday ekimi ➡️ Fabrikada un/fırında ekmek ➡️ Kamyonla markete taşıma ➡️ Sofrada tüketim 🍞', d: ['Markette satış ➡️ Tarlada ekim ➡️ Fırında pişirme', 'Fırında ekmek ➡️ Tarlada buğday ➡️ Sofrada yemek'], exp: 'Hammaddenin yetiştirilmesi ve işlenmesi üretim, taşınması dağıtım, satın alınıp yenmesi tüketimdir.', spokenText: 'Buğdayın sofralarımıza ekmek olarak gelene kadar geçtiği aşamaların doğru sıralaması hangisidir?' },
+      { q: 'Toprağın ekilip biçilmesiyle buğday, pamuk, fındık ve sebze-meyve elde edilmesine hangi ekonomik faaliyet denir? 🚜', a: 'Tarım 🚜', d: ['Madencilik ⛏️', 'Turizm 🏖️'], exp: 'Bitkisel üretim faaliyetlerine tarım denir.', spokenText: 'Toprağın ekilip biçilmesiyle ürün elde edilmesine hangi ekonomik faaliyet denir?' },
+      { q: 'Yer altındaki kömür, bor, demir ve bakır gibi değerli kaynakların çıkarılıp işlenmesine hangi ekonomik faaliyet denir? ⛏️', a: 'Madencilik ⛏️', d: ['Ormancılık 🌲', 'Hayvancılık 🐄'], exp: 'Zonguldak\'ta taş kömürü, Balıkesir/Eskişehir\'de bor çıkarılması madencilik faaliyetidir.', spokenText: 'Yer altındaki kömür ve bor gibi kaynakların çıkarılmasına hangi ekonomik faaliyet denir?' },
+      { q: 'Eğitim (öğretmen), sağlık (doktor), güvenlik (polis) ve ulaşım (şoför) çalışanları hangi ekonomik faaliyet grubunda yer alır? 🩺👨‍🏫', a: 'Hizmet Sektörü 🩺👨‍🏫', d: ['Tarım Sektörü', 'Sanayi Sektörü'], exp: 'Doğrudan eşya üretmeyip topluma bilgi, bakım ve kolaylık sunan meslekler hizmet sektöründedir.', spokenText: 'Öğretmen, doktor ve şoför hangi ekonomik faaliyet grubunda yer alır?' },
+      { q: 'Bilinçli bir tüketici yaptığı her alışverişten sonra satıcıdan mutlaka hangi resmi belgeyi almalıdır? 🧾', a: 'Fiş veya Fatura 🧾', d: ['Kartpostal', 'El İlanı'], exp: 'Fiş veya fatura hem tüketici haklarını korur hem de ödenen KDV vergisinin devlete ulaşmasını sağlar.', spokenText: 'Bilinçli bir tüketici alışverişten sonra satıcıdan mutlaka hangi belgeyi almalıdır?' },
+      { q: 'Satın aldığımız ürünlerin üzerinde bulunan "TSE" damgası bize neyi gösterir? 🛡️', a: 'Türk Standartları Enstitüsü tarafından kalite ve güvenliğinin onaylandığını 🛡️', d: ['Ürünün çok pahalı olduğunu', 'Ürünün son kullanma tarihinin geçtiğini'], exp: 'TSE damgası ürünün standartlara uygun ve güvenli üretildiğini belgeler.', spokenText: 'Ürünlerin üzerindeki T S E damgası bize neyi gösterir?' },
+      { q: 'Aldığımız elektronik eşya veya oyuncakların üzerindeki "CE" işareti ne anlama gelir? 🇪🇺', a: 'Avrupa Birliği sağlık ve güvenlik standartlarına uygun olduğunu ✅', d: ['Ürünün ikinci el olduğunu', 'Ürünün sadece çocuklar için olduğunu'], exp: 'CE işareti ürünün insan sağlığına ve çevreye zarar vermeyeceğini gösterir.', spokenText: 'Ürünlerin üzerindeki C E işareti ne anlama gelir?' },
+      { q: 'Paketli bir süt, yoğurt veya konserve satın alırken ambalajın üzerinde ilk önce hangi tarihe bakmalıyız? 📅', a: 'Son Tüketim Tarihi (STT / SKT) 📅', d: ['Fabrikanın kuruluş yılına', 'Barkod numarasına'], exp: 'Son tüketim tarihi geçmiş gıdalar besin zehirlenmesine yol açar.', spokenText: 'Paketli gıda satın alırken ambalajın üzerinde ilk önce hangi tarihe bakmalıyız?' },
+      { q: 'Birbirini takip eden üç okun üçgen oluşturduğu yeşil sembol (♻️) ürün ambalajlarında ne anlama gelir? ♻️', a: 'Ambalajın Geri Dönüştürülebilir olduğunu ♻️', d: ['Ürünün tehlikeli madde içerdiğini', 'Ürünün dondurulması gerektiğini'], exp: 'Geri dönüşüm logosu kağıt, plastik, cam ve metal ambalajların yeniden kazanılabileceğini gösterir.', spokenText: 'Üç okun üçgen oluşturduğu sembol ambalajlarda ne anlama gelir?' },
+      { q: 'Satın aldığımız ayıplı (bozuk/hatalı) bir ürünü satıcı değiştirmezse hakkımızı aramak için nereye başvurabiliriz? ⚖️', a: 'Tüketici Hakem Heyeti\'ne (veya ALO 175 Tüketici Danışma Hattı\'na) ⚖️', d: ['Meteoroloji Müdürlüğü\'ne', 'Spor Kulübü\'ne'], exp: 'Bilinçli tüketici haklarını Tüketici Hakem Heyeti ve ALO 175 aracılığıyla arar.', spokenText: 'Bozuk bir ürünü satıcı değiştirmezse hakkımızı aramak için nereye başvurabiliriz?' },
+      { q: 'Bir ailenin aylık kazancı (geliri) ile yaptığı harcamaların (giderlerin) dengeli biçimde planlanmasına ne ad verilir? 💰', a: 'Aile Bütçesi 💰', d: ['İsraf Listesi', 'Alışveriş Fişi'], exp: 'Gelir ve gider dengesini gösteren tabloya bütçe denir; gelirden bir miktar da tasarruf ayrılmalıdır.', spokenText: 'Bir ailenin aylık geliri ile giderlerinin dengeli planlanmasına ne ad verilir?' },
+      { q: 'Bayatlayan ekmekleri çöpe atmak yerine köfte harcında, çorbada veya hayvan beslemede değerlendirmek neyi önler? 🥖', a: 'Ekmek ve Gıda İsrafını Önler 🌱', d: ['Tasarrufu azaltır', 'Bütçeye zarar verir'], exp: 'Kaynakları ve besinleri çöpe atmamak israfı önler ve ülke ekonomisini korur.', spokenText: 'Bayatlayan ekmekleri yemeklerde değerlendirmek neyi önler?' },
+      { q: 'Ülkemizde yerli üretimi desteklemek için barkod numarası kaç ile başlayan Türk malı ürünleri tercih etmeliyiz? 🇹🇷', a: '868 veya 869 🇹🇷', d: ['100 veya 101', '999'], exp: 'Barkodu 868 ve 869 ile başlayan ürünler Türkiye\'de tescil edilmiş yerli ürünlerdir.', spokenText: 'Yerli üretimi desteklemek için barkod numarası kaç ile başlayan ürünleri tercih etmeliyiz?' }
+    ],
+
+    // 6. ÖĞRENME ALANI: ETKİN VATANDAŞLIK (15 ÖZGÜN SORU)
+    grade4SocialActiveCitizenshipPool: [
+      { q: 'Birleşmiş Milletler Çocuk Hakları Sözleşmesi\'ne göre kaç yaşına kadar her insan "çocuk" sayılır? 👧👦', a: '18 Yaşına Kadar 👧👦', d: ['10 Yaşına Kadar', '25 Yaşına Kadar'], exp: 'Çocuk Hakları Sözleşmesi\'ne göre 18 yaşın altındaki her birey çocuktur ve hakları güvence altındadır.', spokenText: 'Çocuk Hakları Sözleşmesine göre kaç yaşına kadar her insan çocuk sayılır?' },
+      { q: 'Okula gitmek, sağlık hizmeti almak, oyun oynamak ve güvenli bir ortamda yaşamak çocukların neyidir? 📜', a: 'Temel Çocuk Haklarıdır 📜', d: ['Ceza Kurallarıdır', 'Sadece Yetişkin Haklarıdır'], exp: 'Eğitim, sağlık, yaşama, barınma ve oyun oynama her çocuğun vazgeçilmez hakkıdır.', spokenText: 'Okula gitmek, sağlık hizmeti almak ve oyun oynamak çocukların neyidir?' },
+      { q: 'Odamızı toplamak, derslerimize zamanında çalışmak, okul kurallarına uymak ve çevreyi temiz tutmak hangi kavramla ilgilidir? 🧹', a: 'Sorumluluklarımız (Ödevlerimiz) 🧹', d: ['Bağımsızlık Sembollerimiz', 'Coğrafi Özelliklerimiz'], exp: 'Haklarımızı kullanırken yerine getirmemiz gereken görevlere sorumluluk denir.', spokenText: 'Odamızı toplamak ve derslerimize çalışmak hangi kavramla ilgilidir?' },
+      { q: 'Aile içinde hafta sonu nereye gidileceğine veya ev kurallarına karar verirken en demokratik yöntem hangisidir? 👨‍👩‍👧‍👦', a: 'Tüm aile bireylerinin (çocuklar dahil) fikrini alarak ortak karar vermek 🗳️', d: ['Sadece bir kişinin istediği şeyi zorla yapmak', 'Hiç konuşmadan kura çekmek'], exp: 'Demokratik ailede çocukların da görüş bildirme ve karar alma sürecine katılma hakkı vardır.', spokenText: 'Aile içinde karar verirken en demokratik yöntem hangisidir?' },
+      { q: 'Okullarda öğrencilerin ilgi ve yeteneklerine göre katıldığı Kızılay, Yeşilay, Kütüphanecilik, Müzik ve Tiyatro gibi çalışmalara ne denir? 🎭', a: 'Eğitsel ve Sosyal Kulüp Etkinlikleri 🎭', d: ['Zorunlu Sınavlar', 'Nüfus Sayımı'], exp: 'Eğitsel ve sosyal etkinlikler öz güvenimizi, iş birliğini ve sorumluluk bilincimizi geliştirir.', spokenText: 'Okullarda öğrencilerin katıldığı Kızılay, Yeşilay ve Tiyatro gibi çalışmalara ne denir?' },
+      { q: 'Aşağıdakilerden hangisi Türkiye Cumhuriyeti\'nin bağımsızlık ve egemenlik sembollerinden biri DEĞİLDİR? 🇹🇷', a: 'Okul Zil Sesi 🔔', d: ['Türk Bayrağı ve İstiklal Marşı 🇹🇷', 'Başkent Ankara ve Cumhurbaşkanlığı Forsu 🏛️'], exp: 'Bayrağımız, İstiklal Marşımız, Başkentimiz Ankara, dilimiz Türkçe, Anayasamız ve Türk Lirası bağımsızlık sembollerimizdir.', spokenText: 'Aşağıdakilerden hangisi bağımsızlık sembollerimizden biri değildir?' },
+      { q: 'Cumhurbaşkanlığı Forsu\'nun ortasındaki büyük güneş Türkiye Cumhuriyeti\'ni, etrafındaki 16 yıldız ise neyi temsil eder? ☀️', a: 'Tarihte kurulan 16 Büyük Türk Devletini ⭐', d: ['Ülkemizdeki 16 büyük dağı', '16 coğrafi bölgeyi'], exp: 'Cumhurbaşkanlığı Forsu\'ndaki 16 yıldız tarihteki 16 büyük Türk devletini, ortadaki güneş Türkiye Cumhuriyeti\'ni simgeler.', spokenText: 'Cumhurbaşkanlığı Forsundaki on altı yıldız neyi temsil eder?' },
+      { q: '"Egemenlik, kayıtsız şartsız milletindir!" ilkesiyle Türkiye Büyük Millet Meclisi (TBMM) hangi tarihte açılmıştır? 🏛️', a: '23 Nisan 1920 🏛️', d: ['19 Mayıs 1919', '30 Ağustos 1922'], exp: '23 Nisan 1920\'de Ankara\'da TBMM açılmış ve Atatürk bu günü çocuklara bayram olarak armağan etmiştir.', spokenText: 'Türkiye Büyük Millet Meclisi hangi tarihte açılmıştır?' },
+      { q: 'Milletin kendi kendini seçtiği temsilciler (milletvekilleri) aracılığıyla yönetmesine ne ad verilir? 🗳️', a: 'Ulusal Egemenlik / Cumhuriyet (Demokrasi) 🗳️', d: ['Padişahlık (Monarşi)', 'Krallık'], exp: 'Yönetim yetkisinin millette olmasına ulusal egemenlik denir.', spokenText: 'Milletin kendi kendini seçtiği temsilciler aracılığıyla yönetmesine ne ad verilir?' },
+      { q: 'Bağımsızlık sembolümüz olan İstiklal Marşı\'mızın şairi ve bestecisi hangi seçenekte doğru verilmiştir? 🎼', a: 'Şairi: Mehmet Akif Ersoy — Bestecisi: Osman Zeki Üngör 🎼', d: ['Şairi: Ziya Gökalp — Bestecisi: Cemal Reşit Rey', 'Şairi: Namık Kemal — Bestecisi: Aşık Veysel'], exp: 'İstiklal Marşı\'mızı Mehmet Akif Ersoy yazmış, bugünkü bestesini Osman Zeki Üngör yapmıştır.', spokenText: 'İstiklal Marşımızın şairi ve bestecisi kimdir?' },
+      { q: 'Türkiye Cumhuriyeti\'nin başkenti Ankara hangi tarihte resmen başkent ilan edilmiştir? 🏛️', a: '13 Ekim 1923 🏛️', d: ['29 Ekim 1923', '23 Nisan 1920'], exp: 'Ankara, Cumhuriyet\'in ilanından 16 gün önce, 13 Ekim 1923\'te başkent ilan edilmiştir.', spokenText: 'Başkentimiz Ankara hangi tarihte resmen başkent ilan edilmiştir?' },
+      { q: 'Birleşmiş Milletler bünyesinde dünyadaki çocukların sağlık, eğitim ve beslenme haklarını koruyan uluslararası kuruluş hangisidir? 🌍', a: 'UNICEF (Birleşmiş Milletler Çocuklara Yardım Fonu) 🌍', d: ['AFAD', 'TÜBİTAK'], exp: 'UNICEF dünya genelinde çocuk haklarını ve çocukların refahını koruyan Birleşmiş Milletler kuruluşudur.', spokenText: 'Dünyadaki çocukların haklarını koruyan uluslararası kuruluş hangisidir?' },
+      { q: 'Okul öğrenci meclisi ve sınıf başkanlığı seçimlerinde adayların oy toplaması ve öğrencilerin oy kullanması bize neyi öğretir? 🗳️', a: 'Demokrasi kültürünü, seçme ve seçilme bilincini 🗳️', d: ['Kopya çekmeyi', 'Arkadaşlarımızla küsmeyi'], exp: 'Okul seçimleri demokratik katılımın ilk adımıdır.', spokenText: 'Sınıf başkanlığı seçimlerinde oy kullanmak bize neyi öğretir?' },
+      { q: 'Anayasamıza göre Türkiye Cumhuriyeti\'nin resmi dili aşağıdakilerden hangisidir? 🗣️', a: 'Türkçe 🇹🇷', d: ['İngilizce', 'Almanca'], exp: 'Dilimiz Türkçe, milli birlik ve bağımsızlık sembollerimizden biridir.', spokenText: 'Türkiye Cumhuriyetinin resmi dili hangisidir?' },
+      { q: 'Çocukların yaşlarının ve fiziksel güçlerinin üzerinde ağır işlerde çalıştırılması hangi temel hakkın ihlalidir? 🚫', a: 'Ekonomik Sömürüden Korunma ve Eğitim Hakkı İhlali 🚫', d: ['Oyun Oynamama Sorumluluğu', 'Vergi Ödeme Görevi'], exp: 'Çocuk Hakları Sözleşmesi çocuk işçiliğini yasaklar; çocuğun yeri okul ve oyun alanıdır.', spokenText: 'Çocukların ağır işlerde çalıştırılması hangi hakkın ihlalidir?' }
+    ],
+
+    // 7. ÖĞRENME ALANI: KÜRESEL BAĞLANTILAR (15 ÖZGÜN SORU)
+    grade4SocialGlobalConnectionsPool: [
+      { q: 'Türkiye\'nin batı sınırında (Trakya\'da) yer alan iki Avrupa komşusu ülke hangileridir? 🗺️', a: 'Yunanistan ve Bulgaristan 🇬🇷🇧🇬', d: ['Gürcistan ve İran', 'Irak ve Suriye'], exp: 'Batı sınırımızda Yunanistan (İpsala) ve Bulgaristan (Kapıkule) komşumuzdur.', spokenText: 'Türkiyenin batı sınırında yer alan iki komşu ülke hangileridir?' },
+      { q: 'Türkiye\'nin kuzeydoğusunda yer alan ve Sarp Sınır Kapısı ile geçiş yaptığımız komşu ülke hangisidir? 🇬🇪', a: 'Gürcistan 🇬🇪', d: ['Yunanistan 🇬🇷', 'Suriye 🇸🇾'], exp: 'Artvin ilimizden Sarp Sınır Kapısı ile Gürcistan\'a geçilir.', spokenText: 'Türkiyenin kuzeydoğusunda yer alan ve Sarp Sınır Kapısı ile geçiş yaptığımız komşu ülke hangisidir?' },
+      { q: 'Türkiye\'nin en uzun kara sınırına sahip olduğu güney komşusu hangi ülkedir? 🗺️', a: 'Suriye 🇸🇾', d: ['Bulgaristan 🇧🇬', 'Nahçıvan 🇦🇿'], exp: 'Ülkemizin en uzun kara sınırı güney komşumuz Suriye iledir.', spokenText: 'Türkiyenin en uzun kara sınırına sahip olduğu güney komşusu hangi ülkedir?' },
+      { q: 'Türkiye\'nin en kısa kara sınırına sahip olduğu, Azerbaycan\'a bağlı özerk cumhuriyet olan komşumuz hangisidir? 🇦🇿', a: 'Nahçıvan (Dilucu Sınır Kapısı) 🇦🇿', d: ['İran 🇮🇷', 'Irak 🇮🇶'], exp: 'Iğdır ilimizden Dilucu Sınır Kapısı ile kardeş ülke Azerbaycan\'a bağlı Nahçıvan\'a bağlanırız.', spokenText: 'Türkiyenin en kısa kara sınırına sahip olduğu komşumuz hangisidir?' },
+      { q: 'Türkiye\'nin doğu sınırında yer alan komşularımız hangi seçenekte bir arada doğru verilmiştir? 🧭', a: 'Gürcistan, Ermenistan, Nahçıvan ve İran 🧭', d: ['Yunanistan ve Bulgaristan', 'İtalya ve İspanya'], exp: 'Doğu ve kuzeydoğu sınırımızda Gürcistan, Ermenistan, Nahçıvan ve İran yer alır.', spokenText: 'Türkiyenin doğu sınırında yer alan komşularımız hangileridir?' },
+      { q: 'Edirne\'de bulunan ve Bulgaristan\'a açılan Türkiye\'nin en büyük ve en işlek sınır kapısı hangisidir? 🚛', a: 'Kapıkule Sınır Kapısı 🚛', d: ['Habur Sınır Kapısı', 'Gürbulak Sınır Kapısı'], exp: 'Kapıkule Sınır Kapısı Türkiye\'yi Bulgaristan üzerinden Avrupa\'ya bağlayan en büyük kapımızdır.', spokenText: 'Edirnede bulunan ve Bulgaristana açılan en büyük sınır kapımız hangisidir?' },
+      { q: 'Güney komşumuz Irak ile aramızdaki ticaretin yoğun olarak yapıldığı Şırnak\'taki sınır kapımız hangisidir? 🚚', a: 'Habur Sınır Kapısı 🚚', d: ['İpsala Sınır Kapısı', 'Sarp Sınır Kapısı'], exp: 'Habur Sınır Kapısı Irak ile Türkiye arasındaki en önemli geçiş noktasıdır.', spokenText: 'Irak ile aramızdaki ticaretin yapıldığı sınır kapımız hangisidir?' },
+      { q: 'Geleneksel kıyafeti "Kimono", en ünlü yemeği "Suşi (Sushi)" ve başkenti Tokyo olan ada ülkesi hangisidir? 🇯🇵', a: 'Japonya 🇯🇵', d: ['İtalya 🇮🇹', 'Meksika 🇲🇽'], exp: 'Japonya Doğu Asya\'da yer alan, kiraz çiçekleri (Sakura), kimono ve suşi ile tanınan bir ülkedir.', spokenText: 'Geleneksel kıyafeti Kimono ve başkenti Tokyo olan ülke hangisidir?' },
+      { q: 'Pizza, makarna (spagetti), Venedik gondolları ve Pisa Kulesi ile dünyaca tanınan Akdeniz ülkesi hangisidir? 🇮🇹', a: 'İtalya (Başkenti Roma) 🇮🇹', d: ['Almanya 🇩🇪', 'Rusya 🇷🇺'], exp: 'İtalya çizme şeklindeki yarımadası, Roma Kolezyumu ve Pisa Kulesi ile ünlüdür.', spokenText: 'Pizza, makarna ve Pisa Kulesi ile tanınan Akdeniz ülkesi hangisidir?' },
+      { q: 'Mısır Piramitleri ve Nil Nehri ile ünlü olan ülke hangi kıtada yer alır? 🇪🇬', a: 'Afrika Kıtasında (Mısır) 🇪🇬', d: ['Avrupa Kıtasında', 'Avustralya Kıtasında'], exp: 'Mısır, Kuzey Afrika\'da yer alan ve antik piramitleriyle ünlü bir ülkedir.', spokenText: 'Mısır Piramitleri ve Nil Nehri ile ünlü ülke hangi kıtada yer alır?' },
+      { q: 'Geleneksel geniş kenarlı şapkası "Sombrero" ve baharatlı "Taco" yemeği ile tanınan ülke hangisidir? 🇲🇽', a: 'Meksika 🇲🇽', d: ['Norveç 🇳🇴', 'Finlandiya 🇫🇮'], exp: 'Sombrero şapkası ve Taco Meksika kültürünün simgeleridir.', spokenText: 'Geniş kenarlı şapkası Sombrero ile tanınan ülke hangisidir?' },
+      { q: 'Türk Cumhuriyetlerinde ve Orta Asya\'dan Anadolu\'ya kadar baharın gelişini (21 Mart) kutladığımız ortak kültür bayramımız hangisidir? 🌸', a: 'Nevruz Bayramı 🌸', d: ['Cadılar Bayramı', 'Şükran Günü'], exp: '21 Mart Nevruz Bayramı Türk dünyasında baharın ve bolluğun müjdecisi olarak kutlanır.', spokenText: 'Yirmi bir Martta baharın gelişini kutladığımız ortak kültür bayramımız hangisidir?' },
+      { q: 'Ülkemizde her yıl 23 Nisan\'da dünyanın dört bir yanından gelen çocukların kendi kıyafet ve danslarını sergilediği şenlik neyi güçlendirir? 🌍🤝', a: 'Dünya barışını, kültürler arası dostluk ve hoşgörüyü 🌍🤝', d: ['Ülkeler arasındaki küslüğü', 'Sadece tek bir kültürün üstünlüğünü'], exp: 'Uluslararası 23 Nisan Çocuk Şenliği farklı kültürlerin kardeşçe kaynaşmasını sağlar.', spokenText: 'Yirmi üç Nisanda dünya çocuklarının ülkemizde buluşması neyi güçlendirir?' },
+      { q: 'Farklı ülkelerin yemeklerini, kıyafetlerini ve geleneklerini gördüğümüzde nasıl bir tutum sergilemeliyiz? 🤝', a: 'Farklı kültürlere saygı duymalı, ön yargısız ve hoşgörülü olmalıyız 💚', d: ['Bizim kültürümüzden farklı olduğu için alay etmeliyiz', 'Diğer kültürleri tamamen reddetmeliyiz'], exp: 'Her toplumun kültürü coğrafyasına ve tarihine göre şekillenmiş bir zenginliktir.', spokenText: 'Farklı ülkelerin geleneklerini gördüğümüzde nasıl bir tutum sergilemeliyiz?' },
+      { q: 'Ülkemizin başkenti Ankara\'da bulunan, Türk dilini ve kültürünü kardeş ülkelerle ve dünyayla buluşturan kurumlar hangileridir? 🇹🇷', a: 'TİKA ve Yunus Emre Enstitüsü 🇹🇷', d: ['Meteoroloji ve DSİ', 'Karayolları Genel Müdürlüğü'], exp: 'TİKA (Türk İşbirliği ve Koordinasyon Ajansı) ve Yunus Emre Enstitüsü ülkemizin küresel kültürel bağlarını güçlendirir.', spokenText: 'Türk dilini ve kültürünü dünyayla buluşturan kurumlarımız hangileridir?' }
+    ],
+
+    // 4. Sınıf Sosyal Bilgiler Karma Üreteci (7 Öğrenme Alanından Dengeli Çekim)
+    generateGrade4SocialKarma() {
+      const pools = [
+        this.grade4SocialIndividualSocietyPool,
+        this.grade4SocialCultureHeroesPool,
+        this.grade4SocialPlacesEnvironmentPool,
+        this.grade4SocialScienceTechPool,
+        this.grade4SocialProductionEconomyPool,
+        this.grade4SocialActiveCitizenshipPool,
+        this.grade4SocialGlobalConnectionsPool
+      ];
+      const names = [
+        "grade4SocialIndividualSocietyPool",
+        "grade4SocialCultureHeroesPool",
+        "grade4SocialPlacesEnvironmentPool",
+        "grade4SocialScienceTechPool",
+        "grade4SocialProductionEconomyPool",
+        "grade4SocialActiveCitizenshipPool",
+        "grade4SocialGlobalConnectionsPool"
+      ];
+      const idx = Math.floor(Math.random() * pools.length);
+      return this.drawFromPool(pools[idx], names[idx]);
+    },
+
+    // Geriye dönük uyumluluk havuzları
+    get grade4IdentityHeroesPool() {
+      return [...this.grade4SocialIndividualSocietyPool, ...this.grade4SocialCultureHeroesPool];
+    },
+    get grade4PlacesEconomyPool() {
+      return [...this.grade4SocialPlacesEnvironmentPool, ...this.grade4SocialProductionEconomyPool];
+    },
 
     // 4. SINIF: COUNTRIES, NATIONALITIES, JOBS & ROUTINES (35 ÖZGÜN KELİME & SESLİ)
     grade4CountriesRoutinesPool: [
@@ -8684,22 +8794,37 @@
           distractors: raw.d,
           explanation: raw.exp
         }, '💡 Kuvvet, Mıknatıslar & Devreler');
+      // --- 4. SINIF: MEB / MAARİF MODELİ SOSYAL BİLGİLER 7 ÖĞRENME ALANI ---
+      } else if (gameType === 'social_individual_society_4') {
+        const raw = this.drawFromPool(this.grade4SocialIndividualSocietyPool, "grade4SocialIndividualSocietyPool");
+        return this.buildQuestionItem(raw, '🪪 Kronoloji Ustası & Kimlik/Empati Düellosu');
+      } else if (gameType === 'social_culture_heroes_4') {
+        const raw = this.drawFromPool(this.grade4SocialCultureHeroesPool, "grade4SocialCultureHeroesPool");
+        return this.buildQuestionItem(raw, '🇹🇷 Milli Mücadele Kahramanları & Kültür Mirasımız');
+      } else if (gameType === 'social_places_environment_4') {
+        const raw = this.drawFromPool(this.grade4SocialPlacesEnvironmentPool, "grade4SocialPlacesEnvironmentPool");
+        return this.buildQuestionItem(raw, '🧭 Yönler, Yeryüzü Şekilleri & Deprem Bilinci');
+      } else if (gameType === 'social_science_tech_4') {
+        const raw = this.drawFromPool(this.grade4SocialScienceTechPool, "grade4SocialScienceTechPool");
+        return this.buildQuestionItem(raw, '💡 İcatlar Zaman Tüneli & Teknoloji Dedektifi');
+      } else if (gameType === 'social_production_economy_4') {
+        const raw = this.drawFromPool(this.grade4SocialProductionEconomyPool, "grade4SocialProductionEconomyPool");
+        return this.buildQuestionItem(raw, '🛒 Üretimden Tüketime & Bilinçli Tüketici Avcısı');
+      } else if (gameType === 'social_active_citizenship_4') {
+        const raw = this.drawFromPool(this.grade4SocialActiveCitizenshipPool, "grade4SocialActiveCitizenshipPool");
+        return this.buildQuestionItem(raw, '🏛️ Çocuk Hakları & Bağımsızlık Sembollerimiz');
+      } else if (gameType === 'social_global_connections_4') {
+        const raw = this.drawFromPool(this.grade4SocialGlobalConnectionsPool, "grade4SocialGlobalConnectionsPool");
+        return this.buildQuestionItem(raw, '🌍 Komşu Ülkeler & Dünya Kültürleri Turu');
+      } else if (gameType === 'social_4_karma') {
+        const raw = this.generateGrade4SocialKarma();
+        return this.buildQuestionItem(raw, '🌟 4. Sınıf Sosyal Bilgiler Karma Düello');
       } else if (gameType === 'social_identity_heroes_4') {
         const raw = this.drawFromPool(this.grade4IdentityHeroesPool, "grade4IdentityHeroesPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🇹🇷 Birey, Toplum & Milli Mücadele');
+        return this.buildQuestionItem(raw, '🇹🇷 Birey, Toplum & Milli Mücadele');
       } else if (gameType === 'social_places_economy_4') {
         const raw = this.drawFromPool(this.grade4PlacesEconomyPool, "grade4PlacesEconomyPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🗺️ İnsanlar, Yerler & Üretimden Tüketime');
+        return this.buildQuestionItem(raw, '🗺️ İnsanlar, Yerler & Üretimden Tüketime');
       } else if (gameType === 'english_countries_routines_4') {
         const raw = this.drawFromPool(this.grade4CountriesRoutinesPool, "grade4CountriesRoutinesPool");
         return this.buildQuestionItem({
@@ -8826,14 +8951,8 @@
           }, '🔬 Fen Bilimleri');
         }
       } else if (gameType === 'social') {
-        const r = Math.random();
-        if (r < 0.5) {
-          const raw = this.drawFromPool(this.grade4IdentityHeroesPool, "grade4IdentityHeroesPool");
-          return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🇹🇷 Birey, Toplum & Kahramanlarımız');
-        } else {
-          const raw = this.drawFromPool(this.grade4PlacesEconomyPool, "grade4PlacesEconomyPool");
-          return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🗺️ İnsanlar, Yerler & Üretim');
-        }
+        const raw = this.generateGrade4SocialKarma();
+        return this.buildQuestionItem(raw, '🌟 4. Sınıf Sosyal Bilgiler Karma Düello');
       } else if (gameType === 'english_colors') {
         const raw = this.drawFromPool(this.englishColorsPool, "englishColorsPool");
         return this.buildQuestionItem({
@@ -9909,7 +10028,15 @@
     lifescience_safety_traffic_3: '🚦 Trafik & Güvenlik',
     lifescience_country_leaders_3: '🇹🇷 Yönetim & Öncüler',
     lifescience_nature_directions_3: '🧭 Yönler & Doğa',
-    lifescience_3_karma: '🏆 3. Sınıf Hayat Bilgisi Karma'
+    lifescience_3_karma: '🏆 3. Sınıf Hayat Bilgisi Karma',
+    social_individual_society_4: '🪪 Birey ve Toplum',
+    social_culture_heroes_4: '🇹🇷 Kültür & Milli Mücadele',
+    social_places_environment_4: '🧭 Yerler & Deprem Bilinci',
+    social_science_tech_4: '💡 Bilim & Teknoloji',
+    social_production_economy_4: '🛒 Üretim & Bilinçli Tüketici',
+    social_active_citizenship_4: '🏛️ Çocuk Hakları & Egemenlik',
+    social_global_connections_4: '🌍 Komşu Ülkeler & Kültürler',
+    social_4_karma: '🌟 4. Sınıf Sosyal Bilgiler Karma'
   };
 
   function getCurrentGameObject() {
@@ -10041,6 +10168,14 @@
       turkish_sentences_logic_4: 'Sebep-Sonuç, Amaç-Sonuç ve Yargılar',
       science_crust_nutrition_4: 'Yer Kabuğu, Hareketler ve Besinlerimiz',
       science_circuits_magnets_4: 'Kuvvet, Mıknatıslar ve Basit Devreler',
+      social_individual_society_4: 'Kronoloji Ustası & Kimlik/Empati Düellosu',
+      social_culture_heroes_4: 'Milli Mücadele Kahramanları & Kültür Mirasımız',
+      social_places_environment_4: 'Yönler, Yeryüzü Şekilleri & Deprem Bilinci',
+      social_science_tech_4: 'İcatlar Zaman Tüneli & Teknoloji Dedektifi',
+      social_production_economy_4: 'Üretimden Tüketime & Bilinçli Tüketici Avcısı',
+      social_active_citizenship_4: 'Çocuk Hakları & Bağımsızlık Sembollerimiz',
+      social_global_connections_4: 'Komşu Ülkeler & Dünya Kültürleri Turu',
+      social_4_karma: '4. Sınıf Sosyal Bilgiler Karma Düello',
       social_identity_heroes_4: 'Birey, Toplum ve Milli Mücadele',
       social_places_economy_4: 'İnsanlar, Yerler ve Üretimden Tüketime',
       english_countries_routines_4: 'Countries, Routines & Jobs',
@@ -12220,48 +12355,113 @@
         name: 'Sosyal Bilgiler',
         icon: '🗺️',
         colorTheme: 'theme-social',
-        tagline: 'Tarih, Kültür & Üretim',
-        description: 'Kimlik kartımız, Milli Mücadele, yönler ve bilinçli tüketici hakları! 🪪🧭',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Kimlik ve empati, Milli Mücadele kahramanlarımız, yönler ve deprem bilinci, icatlar zaman tüneli, bilinçli tüketici, çocuk hakları ve komşu ülkeler! 🪪🇹🇷🧭💡🛒🏛️🌍',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'identity_heroes', label: '🇹🇷 Birey & Milli Mücadele' },
-          { id: 'places_economy', label: '🗺️ Yerler & Üretimden Tüketime' }
+          { id: 'all', label: '🌟 Tüm Öğrenme Alanları / Karma' },
+          { id: 'birey_toplum', label: '🪪 1. Birey ve Toplum' },
+          { id: 'kultur_miras', label: '🇹🇷 2. Kültür ve Miras (Milli Mücadele)' },
+          { id: 'insanlar_yerler', label: '🧭 3. İnsanlar, Yerler ve Çevreler' },
+          { id: 'bilim_teknoloji', label: '💡 4. Bilim, Teknoloji ve Toplum' },
+          { id: 'uretim_tuketim', label: '🛒 5. Üretim, Dağıtım ve Tüketim' },
+          { id: 'etkin_vatandaslik', label: '🏛️ 6. Etkin Vatandaşlık' },
+          { id: 'kuresel_baglantilar', label: '🌍 7. Küresel Bağlantılar' }
         ],
         games: [
           {
-            id: 'social_identity_heroes_4',
+            id: 'social_individual_society_4',
             active: true,
-            title: 'Birey, Toplum & Milli Mücadele',
+            title: 'Kronoloji Ustası & Kimlik/Empati Düellosu',
+            icon: '🪪',
+            badge: '🪪 Birey ve Toplum',
+            featureTag: '⏳ Kimlik, Kronoloji & Empati',
+            description: 'Resmi T.C. Kimlik Kartımız (çip, seri no, 11 hane), olayları kronolojik sıraya koyma, bireysel ilgi-ihtiyaç-yeteneklerimiz, empati ve farklılıklara saygı!',
+            tags: ['🪪 T.C. Kimlik Kartı & Çip', '⏳ Kronolojik Sıralama', '🎨 İlgi & Yetenekler', '🤝 Empati ve Saygı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'birey_toplum'
+          },
+          {
+            id: 'social_culture_heroes_4',
+            active: true,
+            title: 'Milli Mücadele Kahramanları & Kültür Mirasımız',
             icon: '🇹🇷',
-            badge: '30 Özgün Soru',
-            featureTag: '🇹🇷 Şanlı Tarihimiz',
-            description: 'T.C. Kimlik belgesi, kronoloji, Milli Mücadele kahramanlarımız ve zaferlerimiz! 🪪🇹🇷',
-            tags: ['🪪 Kimlik Kartımız', '🇹🇷 Kurtuluş Savaşı', '🎖️ Kahramanlarımız'],
+            badge: '🇹🇷 Kültür ve Miras',
+            featureTag: '🎖️ Kurtuluş Savaşı & Kültür',
+            description: 'Sözlü tarih, milli kültür ögelerimiz, geleneksel çocuk oyunları, Milli Mücadele cepheleri (Doğu, Güney, Batı) ve kahramanlarımız (Atatürk, Kazım Karabekir, Sütçü İmam, Şahin Bey, Hasan Tahsin, Şerife Bacı, Halime Çavuş, Ali Saip Bey, Yörük Ali Efe)!',
+            tags: ['🎖️ Milli Mücadele Kahramanları', '🗺️ Doğu-Güney-Batı Cepheleri', '🏺 Milli Kültür & El Sanatları', '🎙️ Aile & Sözlü Tarih'],
             btnText: 'Düelloyu Başlat',
-            topic: 'identity_heroes'
+            topic: 'kultur_miras'
           },
           {
-            id: 'social_places_economy_4',
+            id: 'social_places_environment_4',
             active: true,
-            title: 'İnsanlar, Yerler & Üretimden Tüketime',
+            title: 'Yönler, Yeryüzü Şekilleri & Deprem Bilinci',
             icon: '🧭',
-            badge: '25 Özgün Soru',
-            featureTag: '🛒 Ekonomi & Doğa',
-            description: 'Hava durumu, doğal afetler, yönler, bütçe yönetimi ve israfı önleme! 🧭💰',
-            tags: ['⛅ Hava Durumu & Afetler', '💰 Aile Bütçesi & Tasarruf', '🛒 Üretim & Tüketim'],
+            badge: '🧭 İnsanlar, Yerler ve Çevreler',
+            featureTag: '🏔️ Yeryüzü & Deprem Bilinci',
+            description: 'Ana ve ara yönler (Kuzeydoğu, Güneybatı), doğal ve beşeri unsurlar, hava durumu sembolleri, yeryüzü şekilleri (dağ, ova, vadi, ada, yarımada, körfez), deprem çantası ve Çök-Kapan-Tutun!',
+            tags: ['🧭 Ana ve Ara Yönler', '🏔️ Dağ, Ova, Vadi & Yarımada', '🎒 Deprem Çantası', '🛡️ Çök-Kapan-Tutun'],
             btnText: 'Düelloyu Başlat',
-            topic: 'places_economy'
+            topic: 'insanlar_yerler'
           },
           {
-            id: 'social',
+            id: 'social_science_tech_4',
             active: true,
-            title: 'Sosyal Bilgiler Keşif Düellosu (Karma)',
-            icon: '🗺️',
-            badge: '👑 Keşif & Tarih',
-            featureTag: '🇹🇷 Milli Kültür',
-            description: 'T.C. Kimlik kartı, pusula yönleri, afetler ve Milli Mücadele kahramanları! 🇹🇷🧭',
-            tags: ['🪪 Kimlik Kartı', '🧭 Pusula Yönleri', '🇹🇷 Milli Mücadele'],
+            title: 'İcatlar Zaman Tüneli & Teknoloji Dedektifi',
+            icon: '💡',
+            badge: '💡 Bilim, Teknoloji ve Toplum',
+            featureTag: '⏳ Zaman Tüneli & Mucitler',
+            description: 'Aydınlatma, iletişim ve ulaşım araçlarının geçmişten günümüze gelişimi (zaman tüneli), icatların ortaya çıkış nedenleri, ünlü mucitler ve teknolojiyi doğru kullanma!',
+            tags: ['⏳ Aydınlatma & İletişim Tüneli', '✈️ Mucitler ve İcatlar', '📖 Kullanma Kılavuzu', '♻️ E-Atık & Göz Sağlığı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'bilim_teknoloji'
+          },
+          {
+            id: 'social_production_economy_4',
+            active: true,
+            title: 'Üretimden Tüketime & Bilinçli Tüketici Avcısı',
+            icon: '🛒',
+            badge: '🛒 Üretim, Dağıtım ve Tüketim',
+            featureTag: '🛡️ TSE, CE, Bütçe & Tasarruf',
+            description: 'İstek ve ihtiyaç ayrımı, ekonomik faaliyetler (tarım, sanayi, hizmet, madencilik), buğdaydan ekmeğe üretim-dağıtım-tüketim ağı, fiş/fatura, TSE-CE-Geri Dönüşüm logoları, bütçe ve israfı önleme!',
+            tags: ['🍞 Üretim-Dağıtım-Tüketim', '🛡️ Fiş, Garanti, TSE & CE', '🚜 Ekonomik Faaliyetler', '💰 Bütçe & İsrafı Önleme'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'uretim_tuketim'
+          },
+          {
+            id: 'social_active_citizenship_4',
+            active: true,
+            title: 'Çocuk Hakları & Bağımsızlık Sembollerimiz',
+            icon: '🏛️',
+            badge: '🏛️ Etkin Vatandaşlık',
+            featureTag: '🇹🇷 Çocuk Hakları & 23 Nisan',
+            description: 'Çocuk Hakları Sözleşmesi, hak ve sorumluluklarımız, ailede ve okulda demokratik karar alma, bağımsızlık sembollerimiz (Bayrak, İstiklal Marşı, Başkent, Fors) ve TBMM\'nin açılışı!',
+            tags: ['👧 Çocuk Hakları Sözleşmesi', '🇹🇷 Bağımsızlık Sembollerimiz', '🏛️ 23 Nisan & Ulusal Egemenlik', '🗳️ Demokratik Katılım'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'etkin_vatandaslik'
+          },
+          {
+            id: 'social_global_connections_4',
+            active: true,
+            title: 'Komşu Ülkeler & Dünya Kültürleri Turu',
+            icon: '🌍',
+            badge: '🌍 Küresel Bağlantılar',
+            featureTag: '🗺️ Komşularımız & Kültürler',
+            description: 'Komşu ülkelerimiz (Yunanistan, Bulgaristan, Gürcistan, Ermenistan, Nahçıvan, İran, Irak, Suriye), sınır kapılarımız ve farklı dünya kültürlerinin yemek, giyim ve özel günlerine saygı!',
+            tags: ['🗺️ 8 Komşu Ülkemiz', '🚛 Kapıkule, Sarp & Habur', '🇯🇵🇮🇹 Dünya Kültürleri', '🤝 Hoşgörü ve Empati'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'kuresel_baglantilar'
+          },
+          {
+            id: 'social_4_karma',
+            active: true,
+            title: '4. Sınıf Sosyal Bilgiler Karma Düello',
+            icon: '🌟',
+            badge: '🏆 105 Soru Büyük Karma',
+            featureTag: '🌟 7 Öğrenme Alanı Karma',
+            description: '4. Sınıf Sosyal Bilgiler dersinin 7 öğrenme alanının tamamından rastgele sorular çeken büyük Sosyal Bilgiler yarışması! Hem Tek Kişilik Pratik hem İki Kişilik Düello!',
+            tags: ['🪪 Birey & Kültür', '🧭 Yerler & Teknoloji', '🛒 Ekonomi & Vatandaşlık', '🌍 Küresel Bağlantılar'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
