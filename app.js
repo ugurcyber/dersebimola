@@ -10180,27 +10180,27 @@
     const btnSettingsModeToggle = document.getElementById('btnSettingsModeToggle');
     if (btnSettingsModeToggle) {
       const isSolo = (state.gameMode === 'solo');
-      btnSettingsModeToggle.textContent = isSolo ? 'Mod: Pratik 👤' : 'Mod: Düello 👥';
+      btnSettingsModeToggle.textContent = isSolo ? 'Mod: Pratik' : 'Mod: Düello';
       btnSettingsModeToggle.classList.toggle('is-off', isSolo);
     }
     const btnSettingsSoundToggle = document.getElementById('btnSettingsSoundToggle');
     if (btnSettingsSoundToggle) {
-      btnSettingsSoundToggle.textContent = state.soundEnabled ? 'Ses: Açık 🔊' : 'Ses: Kapalı 🔇';
+      btnSettingsSoundToggle.textContent = state.soundEnabled ? 'Ses: Açık' : 'Ses: Kapalı';
       btnSettingsSoundToggle.classList.toggle('is-off', !state.soundEnabled);
     }
     const btnSettingsAnnouncerToggle = document.getElementById('btnSettingsAnnouncerToggle');
     if (btnSettingsAnnouncerToggle) {
-      btnSettingsAnnouncerToggle.textContent = state.announcerEnabled ? 'Anons: Açık 🎙️' : 'Anons: Kapalı 🔇';
+      btnSettingsAnnouncerToggle.textContent = state.announcerEnabled ? 'Anons: Açık' : 'Anons: Kapalı';
       btnSettingsAnnouncerToggle.classList.toggle('is-off', !state.announcerEnabled);
     }
     const btnSettingsAutoReadToggle = document.getElementById('btnSettingsAutoReadToggle');
     if (btnSettingsAutoReadToggle) {
-      btnSettingsAutoReadToggle.textContent = state.autoReadQuestion ? 'Okuma: Açık 📖' : 'Okuma: Kapalı 🔇';
+      btnSettingsAutoReadToggle.textContent = state.autoReadQuestion ? 'Okuma: Açık' : 'Okuma: Kapalı';
       btnSettingsAutoReadToggle.classList.toggle('is-off', !state.autoReadQuestion);
     }
     const btnSettingsExplanationToggle = document.getElementById('btnSettingsExplanationToggle');
     if (btnSettingsExplanationToggle) {
-      btnSettingsExplanationToggle.textContent = state.showAutoExplanation ? 'Açıklama: Açık 💡' : 'Açıklama: Kapalı 🔇';
+      btnSettingsExplanationToggle.textContent = state.showAutoExplanation ? 'Açıklama: Açık' : 'Açıklama: Kapalı';
       btnSettingsExplanationToggle.classList.toggle('is-off', !state.showAutoExplanation);
     }
   }
@@ -13015,7 +13015,7 @@
       DOM.desktopModeText.textContent = isSolo ? 'Pratik Modu' : 'Düello Modu';
     }
     if (DOM.btnSettingsModeToggle) {
-      DOM.btnSettingsModeToggle.textContent = isSolo ? 'Mod: Pratik 👤' : 'Mod: Düello 👥';
+      DOM.btnSettingsModeToggle.textContent = isSolo ? 'Mod: Pratik' : 'Mod: Düello';
       DOM.btnSettingsModeToggle.classList.toggle('is-off', isSolo);
     }
 
@@ -13111,7 +13111,7 @@
     if (state.teacherSession.isLoggedIn) {
       DOM.btnTeacherAuth.classList.add('logged-in');
       DOM.authBtnText.textContent = state.teacherSession.name || 'Öğretmenim';
-      DOM.authIcon.textContent = '🎓';
+      DOM.authIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>';
       if (mobileLoginBtn) {
         mobileLoginBtn.classList.add('logged-in');
         mobileLoginBtn.innerHTML = '<span>🎓 ' + (state.teacherSession.name || 'Öğretmen') + '</span>';
@@ -13131,7 +13131,7 @@
     } else {
       DOM.btnTeacherAuth.classList.remove('logged-in');
       DOM.authBtnText.textContent = 'Öğretmen Girişi';
-      DOM.authIcon.textContent = '👨‍🏫';
+      DOM.authIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
       if (mobileLoginBtn) {
         mobileLoginBtn.classList.remove('logged-in');
         mobileLoginBtn.innerHTML = '<span class="btn-icon">👤</span> Giriş Yap';

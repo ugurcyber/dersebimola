@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=6.5.0">
+  <link rel="stylesheet" href="style.css?v=6.6.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -123,7 +123,7 @@
             </div>
             <div class="sidebar-brand-info">
               <span class="sidebar-brand-title">DERSE Bİ' MOLA</span>
-              <span class="sidebar-brand-sub">ETAP & Akıllı Tahta</span>
+              <span class="sidebar-brand-sub">ETAP &amp; Akıllı Tahta</span>
             </div>
           </div>
           <button class="sidebar-close-btn" id="btnSidebarClose" type="button" aria-label="Menüyü Kapat" title="Kapat">✕</button>
@@ -131,7 +131,7 @@
 
         <!-- Moli Konuşma Balonu -->
         <div class="moli-speech-bubble" id="moliSpeechBubble">
-          <span class="moli-bubble-text" id="moliBubbleText">Hadi eğlenceye başlayalım! 🚀</span>
+          <span class="moli-bubble-text" id="moliBubbleText">Bugün hangi sınıfla yarışıyoruz?</span>
           <span class="moli-bubble-arrow"></span>
         </div>
       </div>
@@ -140,9 +140,14 @@
       <div class="sidebar-nav-wrap">
         <div class="sidebar-nav-title">MENÜ</div>
         <nav class="grade-nav sidebar-grade-nav" aria-label="Ana Menü ve Sınıf Seviyesi Seçimi">
-          <!-- 🏠 ANA SAYFA BUTONU -->
+          <!-- ANA SAYFA BUTONU -->
           <button class="sidebar-home-btn active" id="btnNavHome" title="Ana Sayfa Vitrini">
-            <span class="grade-icon-box home-icon-box">🏠</span>
+            <span class="grade-icon-box home-icon-box" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </span>
             <span class="grade-chip-name">Ana Sayfa</span>
           </button>
 
@@ -150,7 +155,7 @@
           <div class="sidebar-nav-title">SINIFLAR</div>
 
           <button class="grade-chip" data-grade="0" id="chipGrade0">
-            <span class="grade-icon-box grade-icon-0"><img src="assets/icons/3d/balloon.webp" class="chip-3d-icon" alt="🎈" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="grade-icon-box grade-icon-0"><img src="assets/icons/3d/puzzle_piece.webp" class="chip-3d-icon" alt="Anasınıfı" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">Anasınıfı</span>
           </button>
           <button class="grade-chip" data-grade="1" id="chipGrade1">
@@ -158,20 +163,20 @@
             <span class="grade-chip-name">1. Sınıf</span>
           </button>
           <button class="grade-chip" data-grade="2" id="chipGrade2">
-            <span class="grade-icon-box grade-icon-2"><img src="assets/icons/3d/rocket.webp" class="chip-3d-icon" alt="🚀" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="grade-icon-box grade-icon-2"><img src="assets/icons/3d/abacus.webp" class="chip-3d-icon" alt="2. Sınıf" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">2. Sınıf</span>
           </button>
           <button class="grade-chip" data-grade="3" id="chipGrade3">
-            <span class="grade-icon-box grade-icon-3"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="⚡" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="grade-icon-box grade-icon-3"><img src="assets/icons/3d/open_book.webp" class="chip-3d-icon" alt="3. Sınıf" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">3. Sınıf</span>
           </button>
           <button class="grade-chip" data-grade="4" id="chipGrade4">
-            <span class="grade-icon-box grade-icon-4"><img src="assets/icons/3d/trophy.webp" class="chip-3d-icon" alt="🏆" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="grade-icon-box grade-icon-4"><img src="assets/icons/3d/books.webp" class="chip-3d-icon" alt="4. Sınıf" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">4. Sınıf</span>
           </button>
           <button class="grade-chip chip-duels" id="btnSidebarDuels" title="Sınıf Düellosu & Zeka Oyunları">
-            <span class="grade-icon-box grade-icon-duels"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="⚡" width="22" height="22" loading="lazy" decoding="async"></span>
-            <span class="grade-chip-name">Düellolar</span>
+            <span class="grade-icon-box grade-icon-duels"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="Düellolar" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="grade-chip-name">Düellolar &amp; Oyunlar</span>
           </button>
         </nav>
       </div>
@@ -181,24 +186,32 @@
         <div class="sidebar-nav-title">ÖĞRETMEN VE ARAÇLAR</div>
         <div class="sidebar-tools-list">
           <button class="sidebar-tool-btn" id="btnOpenLeaderboard" title="Sınıf Ligi Puan Tablosu">
-            <span class="tool-icon"><img src="assets/icons/3d/trophy.webp" class="chip-3d-icon" alt="🏆" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="tool-icon"><img src="assets/icons/3d/trophy.webp" class="chip-3d-icon" alt="Sınıf Ligi" width="20" height="20" loading="lazy" decoding="async"></span>
             <span class="tool-label">Sınıf Ligi</span>
           </button>
           <button class="sidebar-tool-btn" id="btnOpenCustomQ" title="Özel Sınav Oluştur & Soru Ekle">
-            <span class="tool-icon">📝</span>
+            <span class="tool-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            </span>
             <span class="tool-label">Kendi Sınavını Yap</span>
           </button>
           <button class="sidebar-tool-btn btn-sidebar-share" id="btnSidebarShare" title="Arkadaşına veya Veliye WhatsApp ile Gönder">
-            <span class="tool-icon">📲</span>
+            <span class="tool-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            </span>
             <span class="tool-label">Paylaş / WhatsApp</span>
           </button>
           <button class="sidebar-tool-btn" id="btnSidebarSettings" title="Sistem ve Akıllı Tahta Ayarları" onclick="window.openSettingsModal ? window.openSettingsModal() : (document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.remove('hide'))">
-            <span class="tool-icon">⚙️</span>
+            <span class="tool-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </span>
             <span class="tool-label">Ayarlar</span>
           </button>
           <button class="teacher-auth-btn sidebar-teacher-btn" id="btnTeacherAuth" title="Öğretmen Girişi / Profil">
-            <span class="auth-icon" id="authIcon">👨‍🏫</span>
-            <span class="auth-text" id="authBtnText">Öğretmenim</span>
+            <span class="auth-icon" id="authIcon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </span>
+            <span class="auth-text" id="authBtnText">Öğretmen Girişi</span>
           </button>
         </div>
       </div>
@@ -1007,7 +1020,9 @@
     <div class="modal-window grade-selector-modal-window">
       <button class="modal-close-btn" data-close-modal="modalSelectGrade" aria-label="Kapat">✕</button>
       <div class="modal-header">
-        <div class="modal-badge-icon">🎓</div>
+        <div class="modal-badge-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
         <h3 class="modal-title">Sınıfını Seç</h3>
         <p class="modal-desc">
           Eğlenceli öğrenme ve düello macerasına başlamak için sınıfına dokun:
@@ -1076,7 +1091,7 @@
           </div>
           <div class="grade-modal-info">
             <span class="grade-modal-name">İngilizce</span>
-            <span class="grade-modal-badge">English Fun 🇬🇧</span>
+            <span class="grade-modal-badge">Kelime &amp; Dinleme</span>
           </div>
           <span class="grade-modal-arrow">→</span>
         </button>
@@ -1086,7 +1101,7 @@
             <img src="assets/icons/3d/lightning.webp" class="grade-modal-3d-icon" alt="Düellolar" width="46" height="46" loading="lazy">
           </div>
           <div class="grade-modal-info">
-            <span class="grade-modal-name">⚡ Sınıf Düelloları</span>
+            <span class="grade-modal-name">İki Kişilik Sınıf Düelloları</span>
             <span class="grade-modal-badge">Fark Bulma, Hızlı Refleks &amp; Stroop</span>
           </div>
           <span class="grade-modal-arrow">→</span>
@@ -1099,7 +1114,9 @@
   <div class="modal-backdrop hide" id="modalConfirmExit">
     <div class="modal-window exit-modal-window">
       <div class="modal-header">
-        <div class="modal-badge-icon">🚪</div>
+        <div class="modal-badge-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </div>
         <h3 class="modal-title" id="exitConfirmTitle">Lobiye Dönmek İstiyor musunuz?</h3>
         <p class="modal-desc" id="exitConfirmDesc">
           Mevcut oyun sonlandırılacak ve ana menüye döneceksiniz.
@@ -1107,10 +1124,12 @@
       </div>
       <div class="exit-modal-actions">
         <button class="btn-exit-confirm-yes" id="btnConfirmExitYes">
-          <span>🏠</span> Evet, Lobiye Dön
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Evet, Lobiye Dön</span>
         </button>
         <button class="btn-exit-confirm-no" id="btnConfirmExitNo">
-          <span>🎮</span> Oyuna Devam Et
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Oyuna Devam Et</span>
         </button>
       </div>
     </div>
@@ -1130,19 +1149,25 @@
 
       <div class="freemium-perks">
         <div class="perk-item">
-          <span class="perk-icon">✨</span>
+          <span class="perk-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
           <div class="perk-info">
             <strong>Kalıcı Sınıf Listesi:</strong> Öğrenci adlarını kaydedin, her derste saniyeler içinde kura çekin.
           </div>
         </div>
         <div class="perk-item">
-          <span class="perk-icon">✏️</span>
+          <span class="perk-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </span>
           <div class="perk-info">
             <strong>Kendi Sorularınızı Ekleyin:</strong> Kendi ders işleyişinize uygun özel sorularla sınıfınızı yarıştırın.
           </div>
         </div>
         <div class="perk-item">
-          <span class="perk-icon">📊</span>
+          <span class="perk-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          </span>
           <div class="perk-info">
             <strong>Sınıf Ligi Sıralaması:</strong> Kim kaç maç kazandı, sınıfın en dikkatli öğrencileri kimler görün.
           </div>
@@ -1161,7 +1186,8 @@
       </button>
 
       <div class="auth-security-note">
-        🔒 Şifre gerekmez. Fatih ağı filtrelerine takılmadan cihazınızda (tarayıcı yerel hafızası) güvenle çalışır.
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Şifre gerekmez. Fatih ağı filtrelerine takılmadan cihazınızda (tarayıcı yerel hafızası) güvenle çalışır.
       </div>
     </div>
   </div>
@@ -1449,52 +1475,72 @@
     <div class="modal-window settings-modal-window">
       <button class="modal-close-btn" data-close-modal="modalSettings" onclick="document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.add('hide')">✕</button>
       <div class="modal-header">
-        <div class="modal-badge-icon">⚙️</div>
+        <div class="modal-badge-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
         <h3 class="modal-title">Sistem ve Akıllı Tahta Ayarları</h3>
         <p class="modal-desc">Ses efektleri, anonslar ve ekran tercihlerini buradan yönetebilirsiniz.</p>
       </div>
       <div class="settings-modal-body">
         <div class="setting-item-row">
           <div class="setting-item-text">
-            <span class="setting-main-label">⚔️ Oyun Modu (Akıllı Tahta Düellosu)</span>
+            <span class="setting-main-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px; margin-right:6px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Oyun Modu (Akıllı Tahta Düellosu)
+            </span>
             <span class="setting-sub-label">İki kişilik split-screen yarışma veya tek kişilik pratik</span>
           </div>
-          <button class="setting-btn-toggle" id="btnSettingsModeToggle">Mod: Düello 👥</button>
+          <button class="setting-btn-toggle" id="btnSettingsModeToggle">Mod: Düello</button>
         </div>
         <div class="setting-item-row">
           <div class="setting-item-text">
-            <span class="setting-main-label">🔊 Ses Efektleri</span>
+            <span class="setting-main-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px; margin-right:6px;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              Ses Efektleri
+            </span>
             <span class="setting-sub-label">Doğru, yanlış, tıklama ve konfeti sesleri</span>
           </div>
-          <button class="setting-btn-toggle" id="btnSettingsSoundToggle">Ses: Açık 🔊</button>
+          <button class="setting-btn-toggle" id="btnSettingsSoundToggle">Ses: Açık</button>
         </div>
         <div class="setting-item-row">
           <div class="setting-item-text">
-            <span class="setting-main-label">🎙️ Sunucu Sesi & Zafer Anonsları</span>
+            <span class="setting-main-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px; margin-right:6px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              Sunucu Sesi &amp; Zafer Anonsları
+            </span>
             <span class="setting-sub-label">Öğretmen ve zafer tebrik anonsları</span>
           </div>
-          <button class="setting-btn-toggle" id="btnSettingsAnnouncerToggle">Anons: Açık 🎙️</button>
+          <button class="setting-btn-toggle" id="btnSettingsAnnouncerToggle">Anons: Açık</button>
         </div>
         <div class="setting-item-row">
           <div class="setting-item-text">
-            <span class="setting-main-label">📖 Soruları Sesli Oku</span>
+            <span class="setting-main-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px; margin-right:6px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              Soruları Sesli Oku
+            </span>
             <span class="setting-sub-label">Soru geldiğinde otomatik seslendirme</span>
           </div>
-          <button class="setting-btn-toggle" id="btnSettingsAutoReadToggle">Okuma: Açık 📖</button>
+          <button class="setting-btn-toggle" id="btnSettingsAutoReadToggle">Okuma: Açık</button>
         </div>
         <div class="setting-item-row">
           <div class="setting-item-text">
-            <span class="setting-main-label">💡 Çözüm Açıklamasını Göster</span>
+            <span class="setting-main-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px; margin-right:6px;"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+              Çözüm Açıklamasını Göster
+            </span>
             <span class="setting-sub-label">Cevap verildikten sonra açıklama gösterimi</span>
           </div>
-          <button class="setting-btn-toggle" id="btnSettingsExplanationToggle">Açıklama: Açık 💡</button>
+          <button class="setting-btn-toggle" id="btnSettingsExplanationToggle">Açıklama: Açık</button>
         </div>
         <div class="setting-item-row">
           <div class="setting-item-text">
-            <span class="setting-main-label">⛶ Tam Ekran Modu (Akıllı Tahta)</span>
+            <span class="setting-main-label">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px; margin-right:6px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              Tam Ekran Modu (Akıllı Tahta)
+            </span>
             <span class="setting-sub-label">Pardus ETAP ve büyük ekranlarda tam ekran</span>
           </div>
-          <button class="setting-btn-action" id="btnSettingsFullscreenAction">Tam Ekran ⛶</button>
+          <button class="setting-btn-action" id="btnSettingsFullscreenAction">Tam Ekran</button>
         </div>
       </div>
     </div>
@@ -1506,8 +1552,8 @@
       <img src="assets/mascot/moli.webp" class="toast-moli-avatar" alt="Moli" width="36" height="36" loading="lazy" decoding="async">
     </div>
     <div class="toast-content">
-      <div class="toast-title">Bağlantı Kopyalandı! 🎉</div>
-      <div class="toast-desc" id="shareToastDesc">WhatsApp veya istediğiniz yere yapıştırabilirsiniz ✅</div>
+      <div class="toast-title">Bağlantı Kopyalandı!</div>
+      <div class="toast-desc" id="shareToastDesc">WhatsApp veya istediğiniz yere yapıştırabilirsiniz</div>
     </div>
   </div>
 
@@ -1523,6 +1569,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=6.3.0" defer></script>
+  <script src="app.js?v=6.6.0" defer></script>
 </body>
 </html>

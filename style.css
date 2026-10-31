@@ -10110,3 +10110,606 @@ input:checked + .slider:before {
   font-weight: 700 !important;
 }
 
+
+
+/* ==========================================================================
+   STEP 2: YAN ÇEKMECE MENÜ (#appSidebar) VE TÜM MODALLAR — FERAH 3D EDTECH TEMASI
+   ========================================================================== */
+
+/* 1) SAĞ KAYAR ÇEKMECE MENÜ (#appSidebar) */
+.app-sidebar {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+  border-left: 3px solid #E2E8F0 !important;
+  box-shadow: -16px 0 42px rgba(15, 23, 42, 0.16) !important;
+  color: #0F172A !important;
+}
+
+.sidebar-close-btn {
+  background: #F1F5F9 !important;
+  border: 2px solid #CBD5E1 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 3px 0 #94A3B8 !important;
+  color: #334155 !important;
+  font-weight: 900 !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease !important;
+}
+
+.sidebar-close-btn:hover {
+  background: #FEE2E2 !important;
+  border-color: #FCA5A5 !important;
+  box-shadow: 0 3px 0 #EF4444 !important;
+  color: #DC2626 !important;
+  transform: translateY(-1px) !important;
+}
+
+.sidebar-brand-card {
+  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%) !important;
+  border: 2px solid #BAE6FD !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 0 #7DD3FC !important;
+  padding: 12px 14px !important;
+}
+
+.sidebar-brand-card .brand-title {
+  color: #0F172A !important;
+  text-shadow: none !important;
+  font-weight: 900 !important;
+}
+
+.sidebar-brand-card .brand-subtitle {
+  color: #0284C7 !important;
+  font-weight: 800 !important;
+}
+
+.sidebar-brand-card .moli-speech-bubble {
+  background: #FFFFFF !important;
+  border: 2px solid #BAE6FD !important;
+  border-radius: 12px !important;
+  color: #0369A1 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08) !important;
+}
+
+.sidebar-home-btn {
+  background: #FFFFFF !important;
+  border: 2px solid #CBD5E1 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 0 #94A3B8 !important;
+  color: #1E293B !important;
+  font-weight: 800 !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.sidebar-home-btn:hover {
+  background: #F8FAFC !important;
+  border-color: #0EA5E9 !important;
+  box-shadow: 0 4px 0 #0284C7 !important;
+  color: #0284C7 !important;
+  transform: translateY(-1px) !important;
+}
+
+.sidebar-home-btn.active {
+  background: linear-gradient(180deg, #FFF7ED 0%, #FFEDD5 100%) !important;
+  border: 2px solid #F97316 !important;
+  box-shadow: 0 4px 0 #EA580C !important;
+  color: #C2410C !important;
+}
+
+.sidebar-home-btn .nav-icon,
+.sidebar-tool-btn .tool-icon,
+.sidebar-teacher-btn .auth-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sidebar-section-label {
+  color: #64748B !important;
+  font-size: 0.74rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.8px !important;
+}
+
+/* Yan Menü 3B Renkli Sınıf Kartları */
+.sidebar-grade-nav .grade-chip {
+  background: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 0 #CBD5E1 !important;
+  color: #0F172A !important;
+  font-weight: 800 !important;
+  padding: 8px 12px !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.sidebar-grade-nav .grade-chip .chip-text {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+.sidebar-grade-nav .grade-chip[data-grade="0"] {
+  border-color: #86EFAC !important;
+  box-shadow: 0 4px 0 #22C55E !important;
+  background: #F0FDF4 !important;
+}
+.sidebar-grade-nav .grade-chip[data-grade="1"] {
+  border-color: #FCD34D !important;
+  box-shadow: 0 4px 0 #F59E0B !important;
+  background: #FFFBEB !important;
+}
+.sidebar-grade-nav .grade-chip[data-grade="2"] {
+  border-color: #7DD3FC !important;
+  box-shadow: 0 4px 0 #0EA5E9 !important;
+  background: #F0F9FF !important;
+}
+.sidebar-grade-nav .grade-chip[data-grade="3"] {
+  border-color: #C4B5FD !important;
+  box-shadow: 0 4px 0 #8B5CF6 !important;
+  background: #F5F3FF !important;
+}
+.sidebar-grade-nav .grade-chip[data-grade="4"] {
+  border-color: #FDA4AF !important;
+  box-shadow: 0 4px 0 #F43F5E !important;
+  background: #FFF1F2 !important;
+}
+
+.sidebar-grade-nav .grade-chip:hover {
+  transform: translateY(-2px) !important;
+}
+
+.sidebar-grade-nav .grade-chip.active {
+  border-color: #0F172A !important;
+  box-shadow: 0 4px 0 #0F172A !important;
+}
+
+.sidebar-grade-nav .grade-chip-duels,
+#btnSidebarDuels {
+  background: linear-gradient(180deg, #FB923C 0%, #EA580C 100%) !important;
+  border: 2px solid #C2410C !important;
+  box-shadow: 0 4px 0 #9A3412 !important;
+  color: #FFFFFF !important;
+}
+
+.sidebar-grade-nav .grade-chip-duels .chip-text,
+#btnSidebarDuels .chip-text {
+  color: #FFFFFF !important;
+}
+
+/* Yan Menü Araç Butonları */
+.sidebar-tool-btn {
+  background: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 3px 0 #CBD5E1 !important;
+  color: #1E293B !important;
+  font-weight: 800 !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.sidebar-tool-btn:hover {
+  background: #F8FAFC !important;
+  border-color: #94A3B8 !important;
+  box-shadow: 0 4px 0 #64748B !important;
+  color: #0F172A !important;
+  transform: translateY(-1px) !important;
+}
+
+.sidebar-tool-btn .tool-icon {
+  color: #0284C7 !important;
+}
+
+.sidebar-teacher-btn {
+  background: linear-gradient(180deg, #8B5CF6 0%, #7C3AED 100%) !important;
+  border: 2px solid #6D28D9 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 0 #4C1D95 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+.sidebar-teacher-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 5px 0 #4C1D95 !important;
+}
+
+/* 2) GENEL MODAL PENCERESİ — FERAH BEYAZ / KREM 3B KART */
+.modal-backdrop {
+  background: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.modal-window,
+.grade-selector-modal-window,
+.settings-modal-window,
+.auth-modal-window,
+.exit-modal-window,
+.picker-modal-window,
+.quiz-builder-modal-window,
+.leaderboard-modal-window {
+  background: #FFFFFF !important;
+  border: 3px solid #E2E8F0 !important;
+  border-radius: 26px !important;
+  box-shadow: 0 10px 0 #CBD5E1, 0 28px 60px rgba(15, 23, 42, 0.25) !important;
+  color: #0F172A !important;
+}
+
+.modal-close-btn {
+  background: #F1F5F9 !important;
+  border: 2px solid #CBD5E1 !important;
+  box-shadow: 0 3px 0 #94A3B8 !important;
+  color: #334155 !important;
+  font-weight: 900 !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  transition: transform 0.14s ease, background 0.14s ease, box-shadow 0.14s ease !important;
+}
+
+.modal-close-btn:hover {
+  background: #FEE2E2 !important;
+  border-color: #FCA5A5 !important;
+  box-shadow: 0 3px 0 #EF4444 !important;
+  color: #DC2626 !important;
+  transform: translateY(-1px) !important;
+}
+
+.modal-badge-icon {
+  width: 60px !important;
+  height: 60px !important;
+  margin: 0 auto 12px !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 100%) !important;
+  border: 2px solid #BAE6FD !important;
+  box-shadow: 0 4px 0 #7DD3FC !important;
+  color: #0284C7 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.9rem !important;
+}
+
+.modal-title {
+  color: #0F172A !important;
+  text-shadow: none !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.3px !important;
+}
+
+.modal-desc {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+/* 3) SINIFINI SEÇ MODALI (#modalSelectGrade) — 3B RENKLİ KARTLAR */
+.grade-selector-modal-window {
+  max-width: 780px !important;
+  padding: 28px 30px !important;
+}
+
+.grade-modal-grid {
+  gap: 14px !important;
+}
+
+.grade-modal-card {
+  background: #FFFFFF !important;
+  border: 2.5px solid #E2E8F0 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 5px 0 #CBD5E1, 0 8px 18px rgba(15, 23, 42, 0.06) !important;
+  padding: 14px 18px !important;
+  color: #0F172A !important;
+  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease !important;
+}
+
+.grade-modal-card:hover {
+  transform: translateY(-3px) !important;
+}
+
+.grade-modal-card:active {
+  transform: translateY(2px) !important;
+}
+
+.grade-modal-icon-wrap {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 16px !important;
+  background: #FFFFFF !important;
+  border: 2px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 3px 0 rgba(15, 23, 42, 0.08) !important;
+}
+
+.grade-modal-name {
+  color: #0F172A !important;
+  text-shadow: none !important;
+  font-size: 1.18rem !important;
+  font-weight: 900 !important;
+}
+
+.grade-modal-badge {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1.5px solid rgba(15, 23, 42, 0.1) !important;
+  color: #334155 !important;
+  font-weight: 800 !important;
+  font-size: 0.76rem !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+}
+
+.grade-modal-arrow {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  background: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  box-shadow: 0 2px 0 #CBD5E1 !important;
+  color: #0F172A !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1rem !important;
+  font-weight: 900 !important;
+  opacity: 1 !important;
+}
+
+/* Sınıf Bazlı 3B Renk Kodlaması */
+.grade-modal-card.card-grade-0 {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%) !important;
+  border-color: #4ADE80 !important;
+  box-shadow: 0 5px 0 #16A34A, 0 8px 16px rgba(22, 163, 74, 0.12) !important;
+}
+.grade-modal-card.card-grade-0 .grade-modal-arrow {
+  border-color: #86EFAC !important;
+  color: #15803D !important;
+}
+
+.grade-modal-card.card-grade-1 {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%) !important;
+  border-color: #FBBF24 !important;
+  box-shadow: 0 5px 0 #D97706, 0 8px 16px rgba(217, 119, 6, 0.12) !important;
+}
+.grade-modal-card.card-grade-1 .grade-modal-arrow {
+  border-color: #FCD34D !important;
+  color: #B45309 !important;
+}
+
+.grade-modal-card.card-grade-2 {
+  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%) !important;
+  border-color: #38BDF8 !important;
+  box-shadow: 0 5px 0 #0284C7, 0 8px 16px rgba(2, 132, 199, 0.12) !important;
+}
+.grade-modal-card.card-grade-2 .grade-modal-arrow {
+  border-color: #7DD3FC !important;
+  color: #0369A1 !important;
+}
+
+.grade-modal-card.card-grade-3 {
+  background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%) !important;
+  border-color: #A78BFA !important;
+  box-shadow: 0 5px 0 #7C3AED, 0 8px 16px rgba(124, 58, 237, 0.12) !important;
+}
+.grade-modal-card.card-grade-3 .grade-modal-arrow {
+  border-color: #C4B5FD !important;
+  color: #6D28D9 !important;
+}
+
+.grade-modal-card.card-grade-4 {
+  background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%) !important;
+  border-color: #FB7185 !important;
+  box-shadow: 0 5px 0 #E11D48, 0 8px 16px rgba(225, 29, 72, 0.12) !important;
+}
+.grade-modal-card.card-grade-4 .grade-modal-arrow {
+  border-color: #FDA4AF !important;
+  color: #BE123C !important;
+}
+
+.grade-modal-card.card-grade-english {
+  background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%) !important;
+  border-color: #F472B6 !important;
+  box-shadow: 0 5px 0 #DB2777, 0 8px 16px rgba(219, 39, 119, 0.12) !important;
+}
+.grade-modal-card.card-grade-english .grade-modal-arrow {
+  border-color: #F9A8D4 !important;
+  color: #BE185D !important;
+}
+
+.grade-modal-card.card-grade-duels {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%) !important;
+  border-color: #FB923C !important;
+  box-shadow: 0 5px 0 #EA580C, 0 8px 18px rgba(234, 88, 12, 0.15) !important;
+}
+.grade-modal-card.card-grade-duels .grade-modal-name {
+  color: #9A3412 !important;
+}
+.grade-modal-card.card-grade-duels .grade-modal-arrow {
+  background: #F97316 !important;
+  border-color: #EA580C !important;
+  box-shadow: 0 2px 0 #C2410C !important;
+  color: #FFFFFF !important;
+}
+
+/* 4) AYARLAR MODALI (#modalSettings) — FERAH KART SATIRLARI VE 3B BUTONLAR */
+.settings-modal-window {
+  max-width: 580px !important;
+  padding: 28px 30px !important;
+}
+
+.setting-item-row {
+  background: #F8FAFC !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 3px 0 #CBD5E1 !important;
+  padding: 13px 16px !important;
+}
+
+.setting-main-label {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+  font-size: 0.96rem !important;
+}
+
+.setting-sub-label {
+  color: #64748B !important;
+  font-weight: 600 !important;
+  font-size: 0.78rem !important;
+}
+
+.setting-btn-toggle {
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%) !important;
+  border: 2px solid #047857 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 0 #065F46 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  min-width: 138px !important;
+  padding: 9px 14px !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.setting-btn-toggle:hover {
+  transform: translateY(-1px) !important;
+}
+
+.setting-btn-toggle.is-off {
+  background: #F1F5F9 !important;
+  border: 2px solid #CBD5E1 !important;
+  box-shadow: 0 4px 0 #94A3B8 !important;
+  color: #475569 !important;
+}
+
+.setting-btn-action {
+  background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%) !important;
+  border: 2px solid #0369A1 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 0 #075985 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  min-width: 138px !important;
+  padding: 9px 14px !important;
+}
+
+/* 5) ÖĞRETMEN GİRİŞİ (#modalAuth) VE ÇIKIŞ ONAYI (#modalConfirmExit) */
+.freemium-perks {
+  background: #F8FAFC !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 0 #CBD5E1 !important;
+  padding: 16px 18px !important;
+}
+
+.perk-item {
+  color: #334155 !important;
+  font-weight: 600 !important;
+  align-items: center !important;
+}
+
+.perk-icon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  box-shadow: 0 2px 0 #CBD5E1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.perk-info strong {
+  color: #0F172A !important;
+  font-weight: 900 !important;
+}
+
+.btn-google-login {
+  background: #FFFFFF !important;
+  border: 2.5px solid #CBD5E1 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 5px 0 #94A3B8 !important;
+  color: #0F172A !important;
+  font-weight: 900 !important;
+}
+
+.btn-google-login:hover {
+  background: #F8FAFC !important;
+  border-color: #0EA5E9 !important;
+  box-shadow: 0 5px 0 #0284C7 !important;
+  transform: translateY(-2px) !important;
+}
+
+.auth-security-note {
+  background: #F0FDF4 !important;
+  border: 1.5px solid #BBF7D0 !important;
+  border-radius: 12px !important;
+  padding: 8px 12px !important;
+  color: #166534 !important;
+  font-weight: 700 !important;
+}
+
+.btn-exit-confirm-yes {
+  background: linear-gradient(180deg, #EF4444 0%, #DC2626 100%) !important;
+  border: 2px solid #B91C1C !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 0 #991B1B !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+.btn-exit-confirm-no {
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%) !important;
+  border: 2px solid #047857 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 0 #065F46 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+/* 6) ÖZEL SINAV OLUŞTURUCU (#modalCustomQ) VE SINIF LİGİ (#modalLeaderboard) FERAH UYUM */
+.quiz-builder-form-pane,
+.quiz-saved-library-pane {
+  background: #F8FAFC !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 0 #CBD5E1 !important;
+}
+
+.quiz-pane-header {
+  border-bottom: 2px solid #E2E8F0 !important;
+}
+
+.quiz-pane-title {
+  color: #0F172A !important;
+}
+
+.quiz-staged-badge,
+.quiz-library-count-badge {
+  background: #E0F2FE !important;
+  border: 1.5px solid #BAE6FD !important;
+  color: #0369A1 !important;
+}
+
+.form-label-bold {
+  color: #0F172A !important;
+}
+
+.leaderboard-table-container {
+  background: #F8FAFC !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 0 #CBD5E1 !important;
+}
+
+.leaderboard-table th {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  border-bottom: 2px solid #CBD5E1 !important;
+}
+
+.leaderboard-table td {
+  color: #1E293B !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.leaderboard-table tr:nth-child(even) td {
+  background: #FFFFFF !important;
+}
