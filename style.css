@@ -14367,3 +14367,176 @@ body,
     display: none !important;
   }
 }
+
+
+/* ==========================================================================
+   V8.3.0: OYUN KARTLARINA DERS GİRİŞLERİNDEKİ GİBİ CANLI PASTEL RENKLENDİRME
+   ========================================================================== */
+
+/* 1. KART: ⚔️ Çarpma Savaşı (Canlı Sıcak Turuncu / Kehribar Teması) */
+.arcade-game-card.theme-tug {
+  background: #FFF7ED !important;
+  border: 2px solid #FED7AA !important;
+  border-bottom: 5px solid #FDBA74 !important;
+  border-left: 7px solid #EA580C !important;
+  box-shadow: 0 6px 0 #FDBA74, 0 12px 24px rgba(234, 88, 12, 0.12) !important;
+}
+.arcade-game-card.theme-tug:hover {
+  border-color: #FB923C !important;
+  box-shadow: 0 8px 0 #FDBA74, 0 18px 30px rgba(234, 88, 12, 0.22) !important;
+}
+.arcade-game-card.theme-tug .arcade-card-emoji {
+  background: #FFEDD5 !important;
+  border-color: #FDBA74 !important;
+}
+.arcade-game-card.theme-tug .arcade-card-tag {
+  background: #FFEDD5 !important;
+  color: #C2410C !important;
+  border-color: #FED7AA !important;
+}
+.arcade-game-card.theme-tug .arcade-card-play-btn {
+  background: linear-gradient(180deg, #F97316 0%, #EA580C 100%) !important;
+  border: 1.5px solid #C2410C !important;
+  border-bottom: 4px solid #9A3412 !important;
+  box-shadow: 0 4px 0 #9A3412, 0 6px 14px rgba(234, 88, 12, 0.35) !important;
+}
+
+/* 2. KART: 🧩 Çocuk Sudokusu (Canlı Zümrüt / Nane Yeşili Teması) */
+.arcade-game-card.theme-sudoku {
+  background: #F0FDF4 !important;
+  border: 2px solid #BBF7D0 !important;
+  border-bottom: 5px solid #86EFAC !important;
+  border-left: 7px solid #10B981 !important;
+  box-shadow: 0 6px 0 #86EFAC, 0 12px 24px rgba(16, 185, 129, 0.12) !important;
+}
+.arcade-game-card.theme-sudoku:hover {
+  border-color: #4ADE80 !important;
+  box-shadow: 0 8px 0 #86EFAC, 0 18px 30px rgba(16, 185, 129, 0.22) !important;
+}
+.arcade-game-card.theme-sudoku .arcade-card-emoji {
+  background: #DCFCE7 !important;
+  border-color: #BBF7D0 !important;
+}
+.arcade-game-card.theme-sudoku .arcade-card-tag {
+  background: #DCFCE7 !important;
+  color: #15803D !important;
+  border-color: #BBF7D0 !important;
+}
+.arcade-game-card.theme-sudoku .arcade-card-play-btn {
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%) !important;
+  border: 1.5px solid #047857 !important;
+  border-bottom: 4px solid #065F46 !important;
+  box-shadow: 0 4px 0 #065F46, 0 6px 14px rgba(16, 185, 129, 0.35) !important;
+}
+
+/* 3. KART: ❌⭕ Akıllı XOX (Canlı Mor / Lavanta Teması) */
+.arcade-game-card.theme-xox {
+  background: #FAF5FF !important;
+  border: 2px solid #E9D5FF !important;
+  border-bottom: 5px solid #D8B4FE !important;
+  border-left: 7px solid #8B5CF6 !important;
+  box-shadow: 0 6px 0 #D8B4FE, 0 12px 24px rgba(139, 92, 246, 0.12) !important;
+}
+.arcade-game-card.theme-xox:hover {
+  border-color: #C084FC !important;
+  box-shadow: 0 8px 0 #D8B4FE, 0 18px 30px rgba(139, 92, 246, 0.22) !important;
+}
+.arcade-game-card.theme-xox .arcade-card-emoji {
+  background: #F3E8FF !important;
+  border-color: #E9D5FF !important;
+}
+.arcade-game-card.theme-xox .arcade-card-tag {
+  background: #F3E8FF !important;
+  color: #7E22CE !important;
+  border-color: #E9D5FF !important;
+}
+.arcade-game-card.theme-xox .arcade-card-play-btn {
+  background: linear-gradient(180deg, #8B5CF6 0%, #7C3AED 100%) !important;
+  border: 1.5px solid #6D28D9 !important;
+  border-bottom: 4px solid #5B21B6 !important;
+  box-shadow: 0 4px 0 #5B21B6, 0 6px 14px rgba(139, 92, 246, 0.35) !important;
+}
+
+/* 4. KART: 🧠 Hafıza Kartları (Canlı Gök Mavisi / Buz Mavisi Teması) */
+.arcade-game-card.theme-memory {
+  background: #F0F9FF !important;
+  border: 2px solid #BAE6FD !important;
+  border-bottom: 5px solid #7DD3FC !important;
+  border-left: 7px solid #0EA5E9 !important;
+  box-shadow: 0 6px 0 #7DD3FC, 0 12px 24px rgba(14, 165, 233, 0.12) !important;
+}
+.arcade-game-card.theme-memory:hover {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 8px 0 #7DD3FC, 0 18px 30px rgba(14, 165, 233, 0.22) !important;
+}
+.arcade-game-card.theme-memory .arcade-card-emoji {
+  background: #E0F2FE !important;
+  border-color: #BAE6FD !important;
+}
+.arcade-game-card.theme-memory .arcade-card-tag {
+  background: #E0F2FE !important;
+  color: #0369A1 !important;
+  border-color: #BAE6FD !important;
+}
+.arcade-game-card.theme-memory .arcade-card-play-btn {
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%) !important;
+  border: 1.5px solid #0369A1 !important;
+  border-bottom: 4px solid #075985 !important;
+  box-shadow: 0 4px 0 #075985, 0 6px 14px rgba(14, 165, 233, 0.35) !important;
+}
+
+/* 5. KART: 🌸 Moli'nin Çiçeği (Canlı Şeker Pembesi / Mercan Teması) */
+.arcade-game-card.theme-flower {
+  background: #FDF2F8 !important;
+  border: 2px solid #FBCFE8 !important;
+  border-bottom: 5px solid #F472B6 !important;
+  border-left: 7px solid #EC4899 !important;
+  box-shadow: 0 6px 0 #F472B6, 0 12px 24px rgba(236, 72, 153, 0.12) !important;
+}
+.arcade-game-card.theme-flower:hover {
+  border-color: #F472B6 !important;
+  box-shadow: 0 8px 0 #F472B6, 0 18px 30px rgba(236, 72, 153, 0.22) !important;
+}
+.arcade-game-card.theme-flower .arcade-card-emoji {
+  background: #FCE7F3 !important;
+  border-color: #FBCFE8 !important;
+}
+.arcade-game-card.theme-flower .arcade-card-tag {
+  background: #FCE7F3 !important;
+  color: #BE185D !important;
+  border-color: #FBCFE8 !important;
+}
+.arcade-game-card.theme-flower .arcade-card-play-btn {
+  background: linear-gradient(180deg, #EC4899 0%, #DB2777 100%) !important;
+  border: 1.5px solid #BE185D !important;
+  border-bottom: 4px solid #9D174D !important;
+  box-shadow: 0 4px 0 #9D174D, 0 6px 14px rgba(236, 72, 153, 0.35) !important;
+}
+
+/* 6. KART: ⚡ Hızlı Parmaklar Buzzer (Canlı Altın Sarısı / Kehribar Teması) */
+.arcade-game-card.theme-buzzer {
+  background: #FFFBEB !important;
+  border: 2px solid #FDE68A !important;
+  border-bottom: 5px solid #FCD34D !important;
+  border-left: 7px solid #F59E0B !important;
+  box-shadow: 0 6px 0 #FCD34D, 0 12px 24px rgba(245, 158, 11, 0.12) !important;
+}
+.arcade-game-card.theme-buzzer:hover {
+  border-color: #FBBF24 !important;
+  box-shadow: 0 8px 0 #FCD34D, 0 18px 30px rgba(245, 158, 11, 0.22) !important;
+}
+.arcade-game-card.theme-buzzer .arcade-card-emoji {
+  background: #FEF3C7 !important;
+  border-color: #FDE68A !important;
+}
+.arcade-game-card.theme-buzzer .arcade-card-tag {
+  background: #FEF3C7 !important;
+  color: #B45309 !important;
+  border-color: #FDE68A !important;
+}
+.arcade-game-card.theme-buzzer .arcade-card-play-btn {
+  background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%) !important;
+  border: 1.5px solid #B45309 !important;
+  border-bottom: 4px solid #92400E !important;
+  box-shadow: 0 4px 0 #92400E, 0 6px 14px rgba(245, 158, 11, 0.35) !important;
+}
