@@ -174,6 +174,308 @@
     }
   };
 
+
+  /* ==========================================================================
+     1.5. YENİDEN KULLANILABİLİR MASCOT BİLEŞENİ (MOLY 30 KARE 20 FPS ENGINE)
+     Örnek Kullanım:
+       <moly-mascot name="moly" state="wave"></moly-mascot>
+       veya <div data-mascot="moly" data-state="wave"></div>
+     Yeni durum eklemek için yalnızca MASCOT_STATES_CONFIG.moly.states içine
+     yeni klasör (folder) ve kare sayısı (frameCount) tanımlanması yeterlidir.
+     ========================================================================== */
+  const MASCOT_STATES_CONFIG = {
+    moly: {
+      width: 480,
+      height: 763,
+      aspectRatio: '719 / 1143',
+      states: {
+        wave: {
+          folder: 'assets/mascot/moly/wave',
+          prefix: 'el_sallama_',
+          pad: 3,
+          ext: 'webp',
+          frameCount: 30,
+          fps: 20,
+          alt: 'Moly robot el sallıyor'
+        }
+        // İleride yeni durumlar (happy, sleep, sad vb.) yalnızca buraya
+        // yeni klasör ve frameCount eklenerek tanımlanabilir:
+        // happy: { folder: 'assets/mascot/moly/happy', prefix: 'mutlu_', pad: 3, ext: 'webp', frameCount: 30, fps: 20, alt: 'Moly robot mutlu' }
+      }
+    }
+  };
+
+  // Önceden yüklenen kare önbelleği: "moly:wave" -> Promise<HTMLImageElement[]>
+  const mascotFramesCache = new Map();
+
+  function preloadMascotFrames(name, stateName) {
+    const charCfg = MASCOT_STATES_CONFIG[name];
+    if (!charCfg || !charCfg.states[stateName]) {
+      return Promise.reject(new Error(`Mascot state bulunamadı: ${name}/${stateName}`));
+    }
+    const cacheKey = `${name}:${stateName}`;
+    if (mascotFramesCache.has(cacheKey)) {
+      return mascotFramesCache.get(cacheKey);
+    }
+
+    const st = charCfg.states[stateName];
+    const promises = [];
+    for (let i = 0; i < st.frameCount; i++) {
+      const idxStr = String(i).padStart(st.pad || 3, '0');
+      const url = `${st.folder}/${st.prefix}${idxStr}.${st.ext || 'webp'}`;
+      promises.push(new Promise((resolve, reject) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = () => {
+          if (typeof img.decode === 'function') {
+            img.decode().then(() => resolve(img)).catch(() => resolve(img));
+          } else {
+            resolve(img);
+          }
+        };
+        img.onerror = () => reject(new Error(`Kare yüklenemedi: ${url}`));
+        img.src = url;
+      }));
+    }
+
+    const allPromise = Promise.all(promises);
+    mascotFramesCache.set(cacheKey, allPromise);
+    return allPromise;
+  }
+
+  class MascotController {
+    constructor(el) {
+      this.el = el;
+      this.name = (el.getAttribute('name') || el.getAttribute('data-mascot') || 'moly').toLowerCase();
+      this.stateName = (el.getAttribute('state') || el.getAttribute('data-state') || 'wave').toLowerCase();
+      this.frames = [];
+      this.isReady = false;
+      this.isVisible = true;
+      this.isTabVisible = !document.hidden;
+      this.reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this.rafId = null;
+      this.startTime = null;
+      this.elapsedBeforePause = 0;
+      this.lastDrawnFrame = -1;
+      this.observer = null;
+
+      this.tick = this.tick.bind(this);
+      this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+      this.handleMotionChange = this.handleMotionChange.bind(this);
+
+      this.setupDOM();
+      this.setupObservers();
+      this.loadAndStart();
+    }
+
+    getConfig() {
+      const charCfg = MASCOT_STATES_CONFIG[this.name] || MASCOT_STATES_CONFIG.moly;
+      const stateCfg = (charCfg && charCfg.states[this.stateName]) || MASCOT_STATES_CONFIG.moly.states.wave;
+      return { charCfg, stateCfg };
+    }
+
+    setupDOM() {
+      const { charCfg, stateCfg } = this.getConfig();
+      this.el.classList.add('moly-mascot-component');
+      this.el.setAttribute('role', 'img');
+      this.el.setAttribute('aria-label', stateCfg.alt || 'Moly robot el sallıyor');
+      this.el.style.aspectRatio = charCfg.aspectRatio || '719 / 1143';
+
+      let fallbackImg = this.el.querySelector('.moly-mascot-fallback-img');
+      const firstFrameUrl = `${stateCfg.folder}/${stateCfg.prefix}${'0'.repeat(stateCfg.pad || 3)}.${stateCfg.ext || 'webp'}`;
+      if (!fallbackImg) {
+        fallbackImg = document.createElement('img');
+        fallbackImg.className = 'moly-mascot-fallback-img';
+        fallbackImg.width = charCfg.width;
+        fallbackImg.height = charCfg.height;
+        fallbackImg.src = firstFrameUrl;
+        this.el.appendChild(fallbackImg);
+      }
+      fallbackImg.alt = stateCfg.alt || 'Moly robot el sallıyor';
+      this.fallbackImg = fallbackImg;
+
+      let canvas = this.el.querySelector('.moly-mascot-canvas');
+      if (!canvas) {
+        canvas = document.createElement('canvas');
+        canvas.className = 'moly-mascot-canvas';
+        canvas.width = charCfg.width;
+        canvas.height = charCfg.height;
+        canvas.setAttribute('aria-hidden', 'true');
+        this.el.appendChild(canvas);
+      }
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d', { alpha: true });
+    }
+
+    setupObservers() {
+      document.addEventListener('visibilitychange', this.handleVisibilityChange);
+
+      if ('IntersectionObserver' in window) {
+        this.observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.target === this.el) {
+              this.isVisible = entry.isIntersecting;
+              this.updatePlaybackState();
+            }
+          });
+        }, { threshold: 0.01 });
+        this.observer.observe(this.el);
+      }
+
+      if (window.matchMedia) {
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (typeof mq.addEventListener === 'function') {
+          mq.addEventListener('change', this.handleMotionChange);
+        }
+      }
+    }
+
+    handleVisibilityChange() {
+      this.isTabVisible = !document.hidden;
+      this.updatePlaybackState();
+    }
+
+    handleMotionChange(e) {
+      this.reducedMotion = !!(e && e.matches);
+      if (this.reducedMotion) {
+        this.stopLoop();
+        this.drawFrame(0);
+      } else {
+        this.updatePlaybackState();
+      }
+    }
+
+    loadAndStart() {
+      preloadMascotFrames(this.name, this.stateName)
+        .then(frames => {
+          this.frames = frames;
+          this.isReady = true;
+          this.drawFrame(0);
+          this.el.classList.add('is-ready');
+          this.updatePlaybackState();
+        })
+        .catch(err => {
+          console.warn('Mascot kareleri yüklenirken hata oluştu:', err);
+        });
+    }
+
+    drawFrame(index) {
+      if (!this.isReady || !this.frames[index] || !this.ctx) return;
+      if (this.lastDrawnFrame === index) return;
+      const w = this.canvas.width;
+      const h = this.canvas.height;
+      this.ctx.clearRect(0, 0, w, h);
+      this.ctx.drawImage(this.frames[index], 0, 0, w, h);
+      this.lastDrawnFrame = index;
+    }
+
+    updatePlaybackState() {
+      if (!this.isReady) return;
+      if (this.reducedMotion) {
+        this.stopLoop();
+        this.drawFrame(0);
+        return;
+      }
+      if (this.isVisible && this.isTabVisible) {
+        this.startLoop();
+      } else {
+        this.stopLoop();
+      }
+    }
+
+    startLoop() {
+      if (this.rafId !== null) return;
+      this.startTime = null;
+      this.rafId = requestAnimationFrame(this.tick);
+    }
+
+    stopLoop() {
+      if (this.rafId !== null) {
+        cancelAnimationFrame(this.rafId);
+        this.rafId = null;
+      }
+      this.startTime = null;
+    }
+
+    tick(timestamp) {
+      if (!this.isVisible || !this.isTabVisible || this.reducedMotion) {
+        this.rafId = null;
+        return;
+      }
+      if (this.startTime === null) {
+        this.startTime = timestamp - this.elapsedBeforePause;
+      }
+      const elapsedMs = timestamp - this.startTime;
+      this.elapsedBeforePause = elapsedMs;
+
+      const { stateCfg } = this.getConfig();
+      const fps = stateCfg.fps || 20;
+      const frameDurationMs = 1000 / fps; // 20 fps -> 50 ms
+      const totalFrames = stateCfg.frameCount || 30;
+
+      // Zamanlamayı kare sayacına göre değil, geçen süreye (elapsedMs) göre hesapla
+      const frameIndex = Math.floor(elapsedMs / frameDurationMs) % totalFrames;
+      this.drawFrame(frameIndex);
+
+      this.rafId = requestAnimationFrame(this.tick);
+    }
+
+    setState(newStateName) {
+      const normalized = (newStateName || 'wave').toLowerCase();
+      if (normalized === this.stateName && this.isReady) return;
+      this.stopLoop();
+      this.stateName = normalized;
+      this.isReady = false;
+      this.lastDrawnFrame = -1;
+      this.elapsedBeforePause = 0;
+      this.setupDOM();
+      this.loadAndStart();
+    }
+  }
+
+  function initAllMascotComponents() {
+    const nodes = document.querySelectorAll('moly-mascot, mascot, [data-mascot]');
+    nodes.forEach(node => {
+      if (!node.__molyController__) {
+        node.__molyController__ = new MascotController(node);
+      }
+    });
+  }
+
+  if (typeof window !== 'undefined' && 'customElements' in window && !customElements.get('moly-mascot')) {
+    class MolyMascotElement extends HTMLElement {
+      static get observedAttributes() {
+        return ['name', 'state'];
+      }
+      connectedCallback() {
+        if (!this.__molyController__) {
+          this.__molyController__ = new MascotController(this);
+        }
+      }
+      attributeChangedCallback(attrName, oldVal, newVal) {
+        if (oldVal !== newVal && this.__molyController__) {
+          if (attrName === 'state') {
+            this.__molyController__.setState(newVal);
+          }
+        }
+      }
+    }
+    customElements.define('moly-mascot', MolyMascotElement);
+  }
+
+  window.Mascot = {
+    CONFIG: MASCOT_STATES_CONFIG,
+    preload: preloadMascotFrames,
+    mountAll: initAllMascotComponents,
+    registerState(mascotName, stateKey, stateConfig) {
+      const m = (mascotName || 'moly').toLowerCase();
+      if (!MASCOT_STATES_CONFIG[m]) {
+        MASCOT_STATES_CONFIG[m] = { width: 480, height: 763, aspectRatio: '719 / 1143', states: {} };
+      }
+      MASCOT_STATES_CONFIG[m].states[stateKey] = stateConfig;
+    }
+  };
+
   /* ==========================================================================
      2. SES MOTORU: WEB AUDIO API & EMA LIGHTNING DOĞAL TÜRKÇE SES KATMANI
      ========================================================================== */
@@ -19925,6 +20227,7 @@
   function init() {
     StorageManager.loadAll();
     loadTeacherToolsState();
+    initAllMascotComponents();
     loadSpeechIndex();
     updateSoundUI();
     updateAnnouncerUI();

@@ -97,7 +97,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=7.9.0">
+  <link rel="stylesheet" href="style.css?v=8.0.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -516,9 +516,12 @@
                     <span class="pill-txt">Hazır mısın?</span>
                   </div>
 
-                  <!-- Moli Maskot Görseli -->
+                  <!-- Moly Maskot Görseli (30 Kare 20 FPS El Sallama Animasyonlu Bileşen) -->
                   <div class="widescreen-moli-mascot" id="widescreenMoliRobot">
-                    <img src="assets/mascot/moli.webp" class="moli-mascot-img" alt="Sevimli Robot Moli" width="160" height="240" loading="eager" fetchpriority="high" decoding="async">
+                    <moly-mascot name="moly" state="wave" class="moly-mascot-component moli-mascot-img" data-mascot="moly" data-state="wave" role="img" aria-label="Moly robot el sallıyor">
+                      <img src="assets/mascot/moly/wave/el_sallama_000.webp" class="moly-mascot-fallback-img" id="moliHeroStaticImg" alt="Moly robot el sallıyor" width="480" height="763" loading="eager" fetchpriority="high" decoding="async">
+                      <canvas class="moly-mascot-canvas" width="480" height="763" aria-hidden="true"></canvas>
+                    </moly-mascot>
                   </div>
                 </div>
               </div>
@@ -2105,6 +2108,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=7.9.0" defer></script>
+  <script src="app.js?v=8.0.0" defer></script>
 </body>
 </html>

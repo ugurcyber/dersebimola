@@ -14141,3 +14141,71 @@ p,
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ==========================================================================
+   V8.0.0: MOLY MASKOT BİLEŞENİ (30 KARE 20 FPS EL SALLAMA ANİMASYONU)
+   ========================================================================== */
+
+moly-mascot,
+.moly-mascot-component {
+  display: inline-block;
+  position: relative;
+  aspect-ratio: 719 / 1143;
+  height: clamp(245px, 38vh, 340px);
+  width: auto;
+  max-width: 100%;
+  background: transparent !important;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Karelerin kendi içinde doğal zıplama ve el sallama hareketi olduğu için ekstra CSS sallanmasını kapat */
+  animation: none !important;
+  filter: drop-shadow(0 14px 24px rgba(15, 23, 42, 0.16));
+}
+
+.moly-mascot-component .moly-mascot-fallback-img,
+.moly-mascot-component .moly-mascot-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent !important;
+  pointer-events: none;
+}
+
+.moly-mascot-component .moly-mascot-canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+/* 30 karenin tamamı önbelleğe alındığında canvas aktifleşir, yedek ilk kare gizlenir (sıfır titreme) */
+.moly-mascot-component.is-ready .moly-mascot-canvas {
+  opacity: 1;
+}
+
+.moly-mascot-component.is-ready .moly-mascot-fallback-img {
+  opacity: 0;
+}
+
+@media (max-width: 1024px) {
+  moly-mascot,
+  .moly-mascot-component {
+    height: clamp(200px, 31vh, 275px) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  moly-mascot,
+  .moly-mascot-component {
+    height: clamp(175px, 27vh, 240px) !important;
+    max-width: 85vw;
+  }
+}
+
+@media (max-height: 620px) {
+  moly-mascot,
+  .moly-mascot-component {
+    height: clamp(150px, 26vh, 195px) !important;
+  }
+}
