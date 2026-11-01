@@ -11865,3 +11865,169 @@ input:checked + .slider:before {
 .auth-divider-row span {
   padding: 0 10px;
 }
+
+
+/* ==========================================================================
+   V7.5.0: SOL MENÜ RENK KODLAMASI (GÖRSEL HAFIZA) &
+   AKILLI TAHTA DOSTU SICAK ARKA PLAN + EĞİTİCİ DESENLER (DOODLES)
+   ========================================================================== */
+
+/* 1. AKILLI TAHTA DOSTU SICAK KREM / FİLDİŞİ ARKA PLAN VE EĞİTİCİ DOODLE DESENİ */
+.app-main-wrapper,
+#viewLobby,
+.app-main-wrapper:has(#homeShowcaseSection:not(.hide)) {
+  background: linear-gradient(135deg, #fdfbf7 0%, #f4efe6 50%, #eef5f9 100%) !important;
+  position: relative;
+}
+
+.home-showcase-section {
+  background: linear-gradient(135deg, #fdfbf7 0%, #f4efe6 50%, #eef5f9 100%) !important;
+  position: relative;
+  isolation: isolate;
+}
+
+.home-showcase-section::before,
+#viewLobby::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22320%22%20height%3D%22320%22%20viewBox%3D%220%200%20320%20320%22%20fill%3D%22none%22%20stroke%3D%22%23334155%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%20%20%3C%21--%20Y%C4%B1ld%C4%B1z%20%28Star%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M48%2026l5.5%2011.2%2012.4%201.8-9%208.7%202.1%2012.3L48%2054.2%2037%2060l2.1-12.3-9-8.7%2012.4-1.8L48%2026z%22/%3E%0A%20%20%3C%21--%20Gezegen%20%26%20Halka%20%28Planet%20with%20Ring%29%20--%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%2256%22%20r%3D%2216%22/%3E%0A%20%20%3Cellipse%20cx%3D%22250%22%20cy%3D%2256%22%20rx%3D%2228%22%20ry%3D%228%22%20transform%3D%22rotate%28-22%20250%2056%29%22/%3E%0A%20%20%3C%21--%20Art%C4%B1%20%C4%B0%C5%9Fareti%20%28%2B%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M150%2038v18M141%2047h18%22/%3E%0A%20%20%3C%21--%20Eksi%20%C4%B0%C5%9Fareti%20%28-%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M282%20142h18%22/%3E%0A%20%20%3C%21--%20Kalem%20%28Pencil%29%20--%3E%0A%20%20%3Cg%20transform%3D%22translate%2842%2C%20165%29%20rotate%28-30%29%22%3E%0A%20%20%20%20%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%2214%22%20height%3D%2242%22%20rx%3D%222%22/%3E%0A%20%20%20%20%3Cpath%20d%3D%22M0%2042l7%2012%207-12%22/%3E%0A%20%20%20%20%3Cline%20x1%3D%220%22%20y1%3D%228%22%20x2%3D%2214%22%20y2%3D%228%22/%3E%0A%20%20%3C/g%3E%0A%20%20%3C%21--%20Yapboz%20Par%C3%A7as%C4%B1%20%28Puzzle%20Piece%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M168%20140h14a5%205%200%201%201%2010%200h14v14a5%205%200%201%201%200%2010v14h-38v-14a5%205%200%201%200%200-10v-14z%22/%3E%0A%20%20%3C%21--%20Say%C4%B1lar%3A%201%2C%202%2C%203%20--%3E%0A%20%20%3Ctext%20x%3D%22108%22%20y%3D%22112%22%20font-family%3D%22Nunito%2C%20sans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22800%22%20fill%3D%22%23334155%22%20stroke%3D%22none%22%3E1%3C/text%3E%0A%20%20%3Ctext%20x%3D%22228%22%20y%3D%22218%22%20font-family%3D%22Nunito%2C%20sans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22800%22%20fill%3D%22%23334155%22%20stroke%3D%22none%22%3E2%3C/text%3E%0A%20%20%3Ctext%20x%3D%2292%22%20y%3D%22276%22%20font-family%3D%22Nunito%2C%20sans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22800%22%20fill%3D%22%23334155%22%20stroke%3D%22none%22%3E3%3C/text%3E%0A%20%20%3C%21--%20K%C3%BC%C3%A7%C3%BCk%20Y%C4%B1ld%C4%B1z%20%28Small%20Star%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M270%20264l3.5%207%207.8%201.1-5.6%205.5%201.3%207.7-7-3.7-7%203.7%201.3-7.7-5.6-5.5%207.8-1.1%203.5-7z%22/%3E%0A%20%20%3C%21--%20%C4%B0kinci%20Art%C4%B1%20ve%20Eksi%20%28%2B%20/%20-%29%20--%3E%0A%20%20%3Cpath%20d%3D%22M40%20284v14M33%20291h14%22/%3E%0A%20%20%3Cpath%20d%3D%22M180%20278h16%22/%3E%0A%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+}
+
+.widescreen-showcase-stage,
+.widescreen-floating-trust-card,
+.lobby-content > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 2. SOL MENÜ SINIF BUTONLARINA RENK KODLAMASI (GÖRSEL HAFIZA) */
+/* Beyaz ve temiz kart yapısı korunur; her sınıfa 6px sol renk şeridi ve 36x36px pastel ikon kutusu verilir */
+.stage-grade-card.card-kindergarten,
+.stage-grade-card.card-grade1,
+.stage-grade-card.card-grade2,
+.stage-grade-card.card-grade3,
+.stage-grade-card.card-grade4 {
+  background: #FFFFFF !important;
+  border-top: 1.5px solid #E2E8F0 !important;
+  border-right: 1.5px solid #E2E8F0 !important;
+  border-bottom: 3.5px solid #CBD5E1 !important;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+.stage-grade-card.card-kindergarten .grade-icon-cube,
+.stage-grade-card.card-grade1 .grade-icon-cube,
+.stage-grade-card.card-grade2 .grade-icon-cube,
+.stage-grade-card.card-grade3 .grade-icon-cube,
+.stage-grade-card.card-grade4 .grade-icon-cube {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Anasınıfı: Canlı Pembe/Mercan (#ec4899) | İkon arka planı: #fce7f3 */
+.stage-grade-card.card-kindergarten,
+.grade-chip[data-grade="0"] {
+  border-left: 6px solid #ec4899 !important;
+}
+.stage-grade-card.card-kindergarten .grade-icon-cube,
+.grade-chip[data-grade="0"] .grade-icon-box {
+  background: #fce7f3 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+}
+.stage-grade-card.card-kindergarten:hover,
+.grade-chip[data-grade="0"]:hover {
+  background: #FFFFFF !important;
+  transform: translateX(4px) !important;
+  border-left: 6px solid #ec4899 !important;
+  box-shadow: 0 8px 20px rgba(236, 72, 153, 0.18) !important;
+}
+
+/* 1. Sınıf: Canlı Kehribar Sarısı/Turuncu (#f59e0b) | İkon arka planı: #fef3c7 */
+.stage-grade-card.card-grade1,
+.grade-chip[data-grade="1"] {
+  border-left: 6px solid #f59e0b !important;
+}
+.stage-grade-card.card-grade1 .grade-icon-cube,
+.grade-chip[data-grade="1"] .grade-icon-box {
+  background: #fef3c7 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+}
+.stage-grade-card.card-grade1:hover,
+.grade-chip[data-grade="1"]:hover {
+  background: #FFFFFF !important;
+  transform: translateX(4px) !important;
+  border-left: 6px solid #f59e0b !important;
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.18) !important;
+}
+
+/* 2. Sınıf: Canlı Zümrüt Yeşili (#10b981) | İkon arka planı: #d1fae5 */
+.stage-grade-card.card-grade2,
+.grade-chip[data-grade="2"] {
+  border-left: 6px solid #10b981 !important;
+}
+.stage-grade-card.card-grade2 .grade-icon-cube,
+.grade-chip[data-grade="2"] .grade-icon-box {
+  background: #d1fae5 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+}
+.stage-grade-card.card-grade2:hover,
+.grade-chip[data-grade="2"]:hover {
+  background: #FFFFFF !important;
+  transform: translateX(4px) !important;
+  border-left: 6px solid #10b981 !important;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.18) !important;
+}
+
+/* 3. Sınıf: Canlı Gök Mavisi (#0ea5e9) | İkon arka planı: #e0f2fe */
+.stage-grade-card.card-grade3,
+.grade-chip[data-grade="3"] {
+  border-left: 6px solid #0ea5e9 !important;
+}
+.stage-grade-card.card-grade3 .grade-icon-cube,
+.grade-chip[data-grade="3"] .grade-icon-box {
+  background: #e0f2fe !important;
+  width: 36px !important;
+  height: 36px !important;
+}
+.stage-grade-card.card-grade3:hover,
+.grade-chip[data-grade="3"]:hover {
+  background: #FFFFFF !important;
+  transform: translateX(4px) !important;
+  border-left: 6px solid #0ea5e9 !important;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.18) !important;
+}
+
+/* 4. Sınıf: Canlı Mor/Eflatun (#8b5cf6) | İkon arka planı: #ede9fe */
+.stage-grade-card.card-grade4,
+.grade-chip[data-grade="4"] {
+  border-left: 6px solid #8b5cf6 !important;
+}
+.stage-grade-card.card-grade4 .grade-icon-cube,
+.grade-chip[data-grade="4"] .grade-icon-box {
+  background: #ede9fe !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+}
+.stage-grade-card.card-grade4:hover,
+.grade-chip[data-grade="4"]:hover {
+  background: #FFFFFF !important;
+  transform: translateX(4px) !important;
+  border-left: 6px solid #8b5cf6 !important;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.18) !important;
+}
