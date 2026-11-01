@@ -6694,530 +6694,147 @@
     // 4. SINIF SORU HAVUZU VE DİNAMİK ÜRETECİLERİ
     // -------------------------------------------------------------
 
-    // 4. SINIF: 4, 5, 6 BASAMAKLI SAYILAR VE DÖRT İŞLEM (26 SORU)
-    grade4DigitsOperationsPool: [
-      {
-            "q": "45.820 sayısının binler bölüğündeki sayı kaçtır? 👑",
-            "a": "45",
-            "d": [
-                  "820",
-                  "58"
-            ],
-            "exp": "Sayının solundaki basamaklar binler bölüğüdür: 45."
-      },
-      {
-            "q": "128.450 sayısının birler bölüğündeki sayı kaçtır? 👑",
-            "a": "450",
-            "d": [
-                  "128",
-                  "28"
-            ],
-            "exp": "Sayının sağındaki üç basamak birler bölüğüdür: 450."
-      },
-      {
-            "q": "67.314 sayısının binler bölüğündeki sayı kaçtır? 👑",
-            "a": "67",
-            "d": [
-                  "314",
-                  "73"
-            ],
-            "exp": "Sayının binler bölüğündeki sayı 67'dir."
-      },
-      {
-            "q": "250.789 sayısının birler bölüğündeki sayı kaçtır? 👑",
-            "a": "789",
-            "d": [
-                  "250",
-                  "50"
-            ],
-            "exp": "Sayının birler bölüğündeki sayı 789'dur."
-      },
-      {
-            "q": "84.905 sayısındaki 8 rakamının basamak değeri kaçtır? 📦",
-            "a": "80.000",
-            "d": [
-                  "8.000",
-                  "800"
-            ],
-            "exp": "8 rakamı on binler basamağında yer aldığı için basamak değeri 80.000'dir."
-      },
-      {
-            "q": "156.420 sayısındaki 1 rakamının basamak değeri kaçtır? 📦",
-            "a": "100.000",
-            "d": [
-                  "10.000",
-                  "1.000"
-            ],
-            "exp": "1 rakamı yüz binler basamağında yer aldığı için basamak değeri 100.000'dir."
-      },
-      {
-            "q": "73.680 sayısındaki 3 rakamının basamak değeri kaçtır? 📦",
-            "a": "3.000",
-            "d": [
-                  "30.000",
-                  "300"
-            ],
-            "exp": "3 rakamı binler basamağında yer aldığı için basamak değeri 3.000'dir."
-      },
-      {
-            "q": "42 sayısını 10 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
-            "a": "420",
-            "d": [
-                  "4200",
-                  "42"
-            ],
-            "exp": "10 ile çarpmak için sayının sağına bir sıfır eklenir: 420."
-      },
-      {
-            "q": "65 sayısını 100 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
-            "a": "6500",
-            "d": [
-                  "650",
-                  "65000"
-            ],
-            "exp": "100 ile çarpmak için sayının sağına iki sıfır eklenir: 6500."
-      },
-      {
-            "q": "18 sayısını 1000 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
-            "a": "18000",
-            "d": [
-                  "1800",
-                  "180"
-            ],
-            "exp": "1000 ile çarpmak için sayının sağına üç sıfır eklenir: 18000."
-      },
-      {
-            "q": "74 sayısını 100 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
-            "a": "7400",
-            "d": [
-                  "740",
-                  "74000"
-            ],
-            "exp": "100 ile çarpmak için sayının sağına iki sıfır eklenir: 7400."
-      },
-      {
-            "q": "50 sayısını 1000 ile zihinden çarptığımızda sonuç kaç olur? ⚡",
-            "a": "50000",
-            "d": [
-                  "5000",
-                  "500"
-            ],
-            "exp": "50 × 1000 = 50.000 eder."
-      },
-      {
-            "q": "480 sayısını 10'a kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
-            "a": "48",
-            "d": [
-                  "480",
-                  "4"
-            ],
-            "exp": "10'a bölerken bir sıfır silinir: 48."
-      },
-      {
-            "q": "3500 sayısını 100'e kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
-            "a": "35",
-            "d": [
-                  "350",
-                  "3"
-            ],
-            "exp": "100'e bölerken iki sıfır silinir: 35."
-      },
-      {
-            "q": "7200 sayısını 100'e kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
-            "a": "72",
-            "d": [
-                  "720",
-                  "7"
-            ],
-            "exp": "100'e bölerken iki sıfır silinir: 72."
-      },
-      {
-            "q": "9000 sayısını 1000'e kısa yoldan böldüğümüzde sonuç kaç olur? ➗",
-            "a": "9",
-            "d": [
-                  "90",
-                  "900"
-            ],
-            "exp": "1000'e bölerken üç sıfır silinir: 9."
-      },
-      {
-            "q": "3480 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
-            "a": "3000",
-            "d": [
-                  "4000",
-                  "3500"
-            ],
-            "exp": "Yüzler basamağında 4 olduğu için 3000 binliğine yuvarlanır."
-      },
-      {
-            "q": "6720 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
-            "a": "7000",
-            "d": [
-                  "6000",
-                  "6500"
-            ],
-            "exp": "Yüzler basamağında 7 olduğu için 7000 binliğine yuvarlanır."
-      },
-      {
-            "q": "5290 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
-            "a": "5000",
-            "d": [
-                  "6000",
-                  "5500"
-            ],
-            "exp": "Yüzler basamağında 2 olduğu için 5000 binliğine yuvarlanır."
-      },
-      {
-            "q": "8650 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
-            "a": "9000",
-            "d": [
-                  "8000",
-                  "8500"
-            ],
-            "exp": "Yüzler basamağında 6 olduğu için 9000 binliğine yuvarlanır."
-      },
-      {
-            "q": "4150 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
-            "a": "4000",
-            "d": [
-                  "5000",
-                  "4500"
-            ],
-            "exp": "Yüzler basamağında 1 olduğu için 4000 binliğine yuvarlanır."
-      },
-      {
-            "q": "9820 sayısı en yakın hangi binliğe yuvarlanır? 🎯",
-            "a": "10000",
-            "d": [
-                  "9000",
-                  "9500"
-            ],
-            "exp": "Yüzler basamağında 8 olduğu için 10000 binliğine yuvarlanır."
-      },
-      {
-            "q": "325 ile 175 sayılarının toplamı zihinden kaç eder? ➕",
-            "a": "500",
-            "d": [
-                  "450",
-                  "550"
-            ],
-            "exp": "325 + 175 = 500 eder."
-      },
-      {
-            "q": "650 sayısından 250 çıkarıldığında fark kaç olur? ➖",
-            "a": "400",
-            "d": [
-                  "350",
-                  "450"
-            ],
-            "exp": "650 - 250 = 400 kalır."
-      },
-      {
-            "q": "Dört basamaklı en küçük doğal sayı kaçtır? 🔢",
-            "a": "1000",
-            "d": [
-                  "1001",
-                  "1023"
-            ],
-            "exp": "Dört basamaklı en küçük doğal sayı 1000'dir."
-      },
-      {
-            "q": "Dört basamaklı rakamları farklı en küçük doğal sayı kaçtır? 🔢",
-            "a": "1023",
-            "d": [
-                  "1000",
-                  "1234"
-            ],
-            "exp": "Rakamları farklı dört basamaklı en küçük sayı 1023'tür."
-      }
-],
+    // =========================================================================
+    // 4. SINIF MATEMATİK: MEB / MAARİF MODELİ 6 ÖĞRENME ALANI (96 ÖZGÜN SORU)
+    // =========================================================================
 
-    generateGrade4DigitsOperations() {
-      const item = this.drawFromPool(this.grade4DigitsOperationsPool, "grade4DigitsOperationsPool");
-      return {
-        question: item.q,
-        correct: item.a,
-        distractors: item.d,
-        explanation: item.exp
-      };
-    },
-
-    // 4. SINIF: KESİRLER, ZAMAN VE AÇILAR (26 ÖZGÜN SORU)
-    grade4FractionsAnglesPool: [
-      { q: 'Payı paydasından KÜÇÜK olan kesirlere (örneğin 3/5, 2/7) ne ad verilir? 🍕', a: 'Basit Kesir 🍕', d: ['Bileşik Kesir', 'Tam Sayılı Kesir'], exp: 'Payı paydasından küçük olan kesirlere basit kesir denir.' },
-      { q: 'Payı paydasına EŞİT veya paydasından BÜYÜK olan kesirlere (örneğin 7/4, 5/5) ne denir? 🍕', a: 'Bileşik Kesir 🍕', d: ['Basit Kesir', 'Birim Kesir'], exp: 'Payı paydasına eşit veya büyük kesirler bileşik kesirdir.' },
-      { q: 'Bir tam sayı ve bir basit kesirden oluşan (örneğin 2 tam 1/3) kesirlere ne ad verilir? 🎂', a: 'Tam Sayılı Kesir 🎂', d: ['Birim Kesir', 'Basit Kesir'], exp: 'Tam kısmı bulunan kesirlere tam sayılı kesir denir.' },
-      { q: 'Ölçüsü 0° ile 90° arasında olan açılara ne ad verilir? 📐', a: 'Dar Açı 📐', d: ['Dik Açı', 'Geniş Açı'], exp: 'Ölçüsü 90 dereceden küçük açılar dar açıdır.' },
-      { q: 'Ölçüsü tam 90 derece (90°) olan açıya ne ad verilir? 📐', a: 'Dik Açı 📐', d: ['Dar Açı', 'Doğru Açı'], exp: 'Birbirini dik kesen doğruların oluşturduğu 90° açı dik açıdır.' },
-      { q: 'Ölçüsü 90° ile 180° arasında olan açılara ne ad verilir? 📐', a: 'Geniş Açı 📐', d: ['Dar Açı', 'Tam Açı'], exp: '90 dereceden büyük, 180 dereceden küçük açılar geniş açıdır.' },
-      { q: 'Ölçüsü tam 180 derece (180°) olan açıya ne denir? 📏', a: 'Doğru Açı 📏', d: ['Dik Açı', 'Geniş Açı'], exp: 'Düz bir doğru oluşturan 180 derecelik açıya doğru açı denir.' },
-      { q: 'Bir üçgenin iç açıları toplamı her zaman kaç derecedir? 🔺', a: '180° 🔺', d: ['90°', '360°'], exp: 'Tüm üçgenlerin iç açıları toplamı daima 180 derecedir.' },
-      { q: 'Bir dörtgenin (kare, dikdörtgen) iç açıları toplamı kaç derecedir? 🟦', a: '360° 🟦', d: ['180°', '270°'], exp: 'Dörtgenlerin iç açıları toplamı 360 derecedir.' },
-      { q: '1 saat kaç saniyeye eşittir? ⏳', a: '3600 saniye ⏳', d: ['60 saniye', '600 saniye'], exp: '1 saat = 60 dakika, her dakika = 60 saniye. 60 × 60 = 3600 saniyedir.' },
-      { q: 'Şubat ayının 4 yılda bir 29 gün çektiği ve yılın 366 gün olduğu yıllara ne denir? 📅', a: 'Artık Yıl 📅', d: ['Güneş Yılı', 'Ay Yılı'], exp: '4 yılda bir 6 saatlik farklar 1 tam gün eder ve o yıla artık yıl denir.' },
-      { q: '60 sayısının 3/5\'i kaçtır? 🔢', a: '36', d: ['30', '40'], exp: '60 ÷ 5 = 12. 12 × 3 = 36.' },
-      { q: '72 sayısının 5/8\'i kaçtır? 🔢', a: '45', d: ['40', '50'], exp: '72 ÷ 8 = 9. 9 × 5 = 45.' },
-      { q: 'Aşağıdaki açılardan hangisi bir DAR AÇIDIR? 📐', a: '45° 📐', d: ['95°', '120°'], exp: '45 derece 90 dereceden küçük olduğu için dar açıdır.' },
-      { q: 'Aşağıdaki açılardan hangisi bir GENİŞ AÇIDIR? 📐', a: '135° 📐', d: ['89°', '90°'], exp: '135 derece 90 ile 180 arasında olduğu için geniş açıdır.' },
-      { q: 'Bir dik açı ile bir doğru açının toplamı kaç derecedir? (90° + 180°)', a: '270° 📐', d: ['360°', '200°'], exp: '90 + 180 = 270 derece eder.' },
-      { q: '3 saat 25 dakika toplam kaç dakikadır? ⏰', a: '205 dakika ⏰', d: ['180 dakika', '225 dakika'], exp: '3 saat = 180 dakika. 180 + 25 = 205 dakika.' },
-      { q: '240 saniye kaç dakikaya eşittir? ⏱️', a: '4 dakika ⏱️', d: ['3 dakika', '6 dakika'], exp: '240 ÷ 60 = 4 dakikadır.' },
-      { q: 'Paydaları eşit 3/7 ile 2/7 kesirlerinin toplamı kaçtır? ➕', a: '5/7', d: ['5/14', '6/7'], exp: 'Paydalar eşitken sadece paylar toplanır: (3 + 2)/7 = 5/7.' },
-      { q: '8/9 kesrinden 3/9 kesri çıkarıldığında sonuç ne olur? ➖', a: '5/9', d: ['5/0', '11/9'], exp: '(8 - 3)/9 = 5/9 kalır.' },
-      { q: 'Bir açıyı ölçmek ve çizmek için kullandığımız yarım daire şeklindeki alete ne denir? 📐', a: 'İletki (Açıölçer) 📐', d: ['Pergel', 'Gönyeli Cetvel'], exp: 'Açıları derece cinsinden iletki (açıölçer) ile ölçeriz.' },
-      { q: 'Bir üçgenin iki açısı 50° ve 60° ise üçüncü açısı kaç derecedir? 🔺', a: '70° 🔺', d: ['60°', '80°'], exp: 'İç açılar toplamı 180°dir. 50 + 60 = 110°. 180 - 110 = 70°.' },
-      { q: 'Tam açının ölçüsü kaç derecedir? 🔄', a: '360° 🔄', d: ['180°', '90°'], exp: 'Tam bir çember dairesi 360 derecelik tam açıdır.' },
-      { q: '5 tam 3/4 kesri bileşik kesre çevrildiğinde payı kaç olur? (5 × 4 + 3)', a: '23 (23/4)', d: ['20', '19'], exp: '5 × 4 = 20, 20 + 3 = 23. Kesir 23/4 olur.' },
-      { q: 'Saat 14:15\'te sinemaya giren Ali, 1 saat 45 dakika sonra çıktığında saat kaç olur? 🎬', a: '16:00 🎬', d: ['15:45', '16:15'], exp: '14:15 + 45 dk = 15:00. 1 saat daha = 16:00.' },
-      { q: 'Bir yılda toplam kaç hafta vardır? 📆', a: '52 hafta 📆', d: ['40 hafta', '48 hafta'], exp: 'Bir takvim yılında yaklaşık 52 hafta bulunur.' }
+    // 1. ÖĞRENME ALANI: 4, 5 VE 6 BASAMAKLI DOĞAL SAYILAR / BÖLÜK VE BASAMAKLAR (16 ÖZGÜN SORU)
+    grade4MathNumbersPlaceValuePool: [
+      { q: '"Üç yüz kırk sekiz bin iki yüz beş" şeklinde okunan 6 basamaklı doğal sayının rakamlarla yazılışı hangisidir? 👑', a: '348.205 👑', d: ['348.025', '384.250'], exp: 'Binler bölüğü 348, birler bölüğü 205 olduğu için sayı 348.205 şeklinde yazılır.', spokenText: 'Üç yüz kırk sekiz bin iki yüz beş şeklinde okunan sayının yazılışı hangisidir?' },
+      { q: '672.419 sayısının "Binler Bölüğü"ndeki sayı ile "Birler Bölüğü"ndeki sayının toplamı kaçtır? (672 + 419) 🔢', a: '1.091 (Binler: 672, Birler: 419) 🔢', d: ['672', '981'], exp: '672.419 sayısının binler bölüğü 672, birler bölüğü 419\'dur. 672 + 419 = 1.091 eder.', spokenText: 'Altı yüz yetmiş iki bin dört yüz on dokuz sayısının binler bölüğü ile birler bölüğündeki sayıların toplamı kaçtır?' },
+      { q: '583.642 sayısındaki "8" rakamının bulunduğu basamağın adı ve basamak değeri hangi seçenekte doğru verilmiştir? 📦', a: 'On Binler Basamağı ➡️ Basamak Değeri: 80.000 📦', d: ['Yüz Binler Basamağı ➡️ 800.000', 'Binler Basamağı ➡️ 8.000'], exp: '8 rakamı on binler basamağında olduğundan basamak değeri 8 × 10.000 = 80.000\'dir.', spokenText: 'Beş yüz seksen üç bin altı yüz kırk iki sayısındaki sekiz rakamının basamağı ve basamak değeri nedir?' },
+      { q: '904.350 sayısındaki "9" rakamının basamak değeri kaçtır? 👑', a: '900.000 👑', d: ['90.000', '9.000'], exp: '9 rakamı yüz binler basamağında yer aldığı için basamak değeri 900.000\'dir.', spokenText: 'Dokuz yüz dört bin üç yüz elli sayısındaki dokuz rakamının basamak değeri kaçtır?' },
+      { q: '"40.000 + 5.000 + 300 + 20 + 8" şeklinde çözümlenmiş olan 5 basamaklı doğal sayı hangisidir? 🧩', a: '45.328 🧩', d: ['405.328', '45.382'], exp: '4 on binlik + 5 binlik + 3 yüzlük + 2 onluk + 8 birlik = 45.328 eder.', spokenText: 'Kırk bin artı beş bin artı üç yüz artı yirmi artı sekiz şeklinde çözümlenen sayı hangisidir?' },
+      { q: '"(7 × 100.000) + (6 × 1.000) + (4 × 100) + (9 × 1)" şeklinde çözümlenen 6 basamaklı doğal sayı kaçtır? 🔍', a: '706.409 🔍', d: ['760.490', '76.409'], exp: 'On binler ve onlar basamağı 0 olduğu için sayı 706.409 olarak yazılır.', spokenText: 'Yedi çarpı yüz bin artı altı çarpı bin artı dört çarpı yüz artı dokuz çarpı bir şeklinde çözümlenen sayı kaçtır?' },
+      { q: '24.674 doğal sayısı EN YAKIN ONLUĞA yuvarlandığında hangi sayı elde edilir? 🎯', a: '24.670 🎯', d: ['24.680', '24.700'], exp: 'Birler basamağında 4 (5\'ten küçük) olduğu için kendi onluğuna, yani 24.670\'e yuvarlanır.', spokenText: 'Yirmi dört bin altı yüz yetmiş dört sayısı en yakın onluğa yuvarlandığında kaç olur?' },
+      { q: '138.450 doğal sayısı EN YAKIN YÜZLÜĞE yuvarlandığında hangi sayı elde edilir? 🎯', a: '138.500 🎯', d: ['138.400', '138.000'], exp: 'Onlar basamağında 5 olduğu için bir üst yüzlüğe, yani 138.500\'e yuvarlanır.', spokenText: 'Yüz otuz sekiz bin dört yüz elli sayısı en yakın yüzlüğe yuvarlandığında kaç olur?' },
+      { q: '4.300\'den başlayarak ileriye doğru YÜZER ritmik sayarken söylediğimiz 4. sayı kaç olur? (4.300 - ? - ? - ?) 🚂', a: '4.600 🚂', d: ['4.500', '4.700'], exp: '1. sayı: 4.300, 2. sayı: 4.400, 3. sayı: 4.500, 4. sayı: 4.600 olur.', spokenText: 'Dört bin üç yüzden başlayarak ileriye doğru yüzer ritmik sayarken söylediğimiz dördüncü sayı kaç olur?' },
+      { q: '3.000\'den başlayıp 10.000\'e kadar ileriye doğru BİNER ritmik sayarken 6.000\'den hemen sonra hangi sayıyı söyleriz? 🚀', a: '7.000 🚀', d: ['6.100', '8.000'], exp: 'Biner ritmik saymada her adımda 1.000 eklenir: 6.000 + 1.000 = 7.000.', spokenText: 'İleriye doğru biner ritmik sayarken altı binden hemen sonra hangi sayıyı söyleriz?' },
+      { q: 'Rakamları birbirinden farklı, 6 basamaklı EN BÜYÜK doğal sayı kaçtır? 🏆', a: '987.654 🏆', d: ['999.999', '987.650'], exp: '6 basamaklı en büyük sayı 999.999\'dur; rakamları farklı denildiği için 987.654 olur.', spokenText: 'Rakamları birbirinden farklı altı basamaklı en büyük doğal sayı kaçtır?' },
+      { q: 'Rakamları birbirinden farklı, 5 basamaklı EN KÜÇÜK doğal sayı kaçtır? 🔢', a: '10.234 🔢', d: ['10.000', '12.345'], exp: 'En soldaki basamağa 0 gelemeyeceği için rakamlar 1, 0, 2, 3, 4 şeklinde dizilir: 10.234.', spokenText: 'Rakamları birbirinden farklı beş basamaklı en küçük doğal sayı kaçtır?' },
+      { q: '"14 - 23 - 32 - 41 - ? - 59" sayı örüntüsünde soru işareti (?) yerine hangi sayı gelmelidir? 🧩', a: '50 (Her adımda +9 artıyor) 🧩', d: ['48', '52'], exp: 'Örüntünün kuralı +9\'dur: 41 + 9 = 50.', spokenText: 'On dört, yirmi üç, otuz iki, kırk bir örüntüsünde soru işareti yerine hangi sayı gelmelidir?' },
+      { q: '"95 - 87 - 79 - 71 - ?" azalan sayı örüntüsünde kurala göre sıradaki sayı kaçtır? 📉', a: '63 (Her adımda 8 azalıyor) 📉', d: ['65', '61'], exp: 'Örüntü her adımda 8 azalmaktadır: 71 - 8 = 63.', spokenText: 'Doksan beş, seksen yedi, yetmiş dokuz, yetmiş bir örüntüsünde sıradaki sayı kaçtır?' },
+      { q: '458.910, 485.190 ve 458.190 sayılarını küçükten büyüğe doğru "<" sembolüyle sıraladığımızda hangisi doğrudur? ⚖️', a: '458.190 < 458.910 < 485.190 ⚖️', d: ['485.190 < 458.910 < 458.190', '458.910 < 458.190 < 485.190'], exp: 'Önce binler bölüğüne (458 < 485), sonra yüzler basamağına (1 < 9) bakılarak sıralama yapılır.', spokenText: 'Sayıları küçükten büyüğe doğru sıraladığımızda hangisi doğrudur?' },
+      { q: '4, 5 ve 6 basamaklı doğal sayılarda en büyük sayı olan 6 basamaklı en büyük doğal sayı kaçtır? 🌟', a: '999.999 (Dokuz yüz doksan dokuz bin dokuz yüz doksan dokuz) 🌟', d: ['100.000', '900.000'], exp: '4. sınıf müfredat sınırımızdaki 6 basamaklı en büyük doğal sayı 999.999\'dur.', spokenText: 'Altı basamaklı en büyük doğal sayı kaçtır?' }
     ],
 
-    // 4. SINIF: ÇEVRE VE ALAN HESAPLAMA (26 SORU)
-    grade4PerimeterAreaPool: [
-      {
-            "q": "Bir kenarı 5 cm olan karenin çevresi kaç santimetredir? 🟦",
-            "a": "20 cm",
-            "d": [
-                  "15 cm",
-                  "25 cm"
-            ],
-            "exp": "Çevre = 4 × 5 = 20 cm'dir."
-      },
-      {
-            "q": "Bir kenarı 8 cm olan karenin çevresi kaç santimetredir? 🟦",
-            "a": "32 cm",
-            "d": [
-                  "24 cm",
-                  "40 cm"
-            ],
-            "exp": "Çevre = 4 × 8 = 32 cm'dir."
-      },
-      {
-            "q": "Bir kenarı 12 cm olan karenin çevresi kaç santimetredir? 🟦",
-            "a": "48 cm",
-            "d": [
-                  "36 cm",
-                  "60 cm"
-            ],
-            "exp": "Çevre = 4 × 12 = 48 cm'dir."
-      },
-      {
-            "q": "Bir kenarı 15 cm olan karenin çevresi kaç santimetredir? 🟦",
-            "a": "60 cm",
-            "d": [
-                  "45 cm",
-                  "75 cm"
-            ],
-            "exp": "Çevre = 4 × 15 = 60 cm'dir."
-      },
-      {
-            "q": "Bir kenarı 20 cm olan karenin çevresi kaç santimetredir? 🟦",
-            "a": "80 cm",
-            "d": [
-                  "60 cm",
-                  "100 cm"
-            ],
-            "exp": "Çevre = 4 × 20 = 80 cm'dir."
-      },
-      {
-            "q": "Bir kenarı 4 cm olan karenin alanı kaç santimetrekaredir? 🟦",
-            "a": "16 cm²",
-            "d": [
-                  "12 cm²",
-                  "20 cm²"
-            ],
-            "exp": "Alan = 4 × 4 = 16 cm²'dir."
-      },
-      {
-            "q": "Bir kenarı 6 cm olan karenin alanı kaç santimetrekaredir? 🟦",
-            "a": "36 cm²",
-            "d": [
-                  "24 cm²",
-                  "42 cm²"
-            ],
-            "exp": "Alan = 6 × 6 = 36 cm²'dir."
-      },
-      {
-            "q": "Bir kenarı 7 cm olan karenin alanı kaç santimetrekaredir? 🟦",
-            "a": "49 cm²",
-            "d": [
-                  "28 cm²",
-                  "56 cm²"
-            ],
-            "exp": "Alan = 7 × 7 = 49 cm²'dir."
-      },
-      {
-            "q": "Bir kenarı 9 cm olan karenin alanı kaç santimetrekaredir? 🟦",
-            "a": "81 cm²",
-            "d": [
-                  "36 cm²",
-                  "72 cm²"
-            ],
-            "exp": "Alan = 9 × 9 = 81 cm²'dir."
-      },
-      {
-            "q": "Bir kenarı 10 cm olan karenin alanı kaç santimetrekaredir? 🟦",
-            "a": "100 cm²",
-            "d": [
-                  "40 cm²",
-                  "80 cm²"
-            ],
-            "exp": "Alan = 10 × 10 = 100 cm²'dir."
-      },
-      {
-            "q": "Kısa kenarı 4 cm, uzun kenarı 7 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
-            "a": "22 cm",
-            "d": [
-                  "18 cm",
-                  "28 cm"
-            ],
-            "exp": "Çevre = 2 × (4 + 7) = 2 × 11 = 22 cm'dir."
-      },
-      {
-            "q": "Kısa kenarı 6 cm, uzun kenarı 10 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
-            "a": "32 cm",
-            "d": [
-                  "26 cm",
-                  "60 cm"
-            ],
-            "exp": "Çevre = 2 × (6 + 10) = 2 × 16 = 32 cm'dir."
-      },
-      {
-            "q": "Kısa kenarı 5 cm, uzun kenarı 9 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
-            "a": "28 cm",
-            "d": [
-                  "24 cm",
-                  "45 cm"
-            ],
-            "exp": "Çevre = 2 × (5 + 9) = 2 × 14 = 28 cm'dir."
-      },
-      {
-            "q": "Kısa kenarı 8 cm, uzun kenarı 12 cm olan dikdörtgenin çevresi kaç santimetredir? 📐",
-            "a": "40 cm",
-            "d": [
-                  "32 cm",
-                  "96 cm"
-            ],
-            "exp": "Çevre = 2 × (8 + 12) = 2 × 20 = 40 cm'dir."
-      },
-      {
-            "q": "Kısa kenarı 3 cm, uzun kenarı 8 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
-            "a": "24 cm²",
-            "d": [
-                  "22 cm²",
-                  "26 cm²"
-            ],
-            "exp": "Alan = 3 × 8 = 24 cm²'dir."
-      },
-      {
-            "q": "Kısa kenarı 5 cm, uzun kenarı 7 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
-            "a": "35 cm²",
-            "d": [
-                  "24 cm²",
-                  "42 cm²"
-            ],
-            "exp": "Alan = 5 × 7 = 35 cm²'dir."
-      },
-      {
-            "q": "Kısa kenarı 6 cm, uzun kenarı 9 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
-            "a": "54 cm²",
-            "d": [
-                  "30 cm²",
-                  "45 cm²"
-            ],
-            "exp": "Alan = 6 × 9 = 54 cm²'dir."
-      },
-      {
-            "q": "Kısa kenarı 4 cm, uzun kenarı 11 cm olan dikdörtgenin alanı kaç santimetrekaredir? 📐",
-            "a": "44 cm²",
-            "d": [
-                  "30 cm²",
-                  "40 cm²"
-            ],
-            "exp": "Alan = 4 × 11 = 44 cm²'dir."
-      },
-      {
-            "q": "Çevresi 36 cm olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
-            "a": "9 cm",
-            "d": [
-                  "8 cm",
-                  "12 cm"
-            ],
-            "exp": "Kenar = 36 ÷ 4 = 9 cm'dir."
-      },
-      {
-            "q": "Çevresi 48 cm olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
-            "a": "12 cm",
-            "d": [
-                  "10 cm",
-                  "16 cm"
-            ],
-            "exp": "Kenar = 48 ÷ 4 = 12 cm'dir."
-      },
-      {
-            "q": "Alanı 64 santimetrekare olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
-            "a": "8 cm",
-            "d": [
-                  "6 cm",
-                  "16 cm"
-            ],
-            "exp": "8 × 8 = 64 olduğu için kenar 8 cm'dir."
-      },
-      {
-            "q": "Alanı 81 santimetrekare olan bir karenin bir kenar uzunluğu kaç santimetredir? 🟦",
-            "a": "9 cm",
-            "d": [
-                  "8 cm",
-                  "18 cm"
-            ],
-            "exp": "9 × 9 = 81 olduğu için kenar 9 cm'dir."
-      },
-      {
-            "q": "Bir kenarı 25 metre olan kare şeklindeki bahçenin çevresi kaç metredir? 🌳",
-            "a": "100 metre",
-            "d": [
-                  "75 metre",
-                  "125 metre"
-            ],
-            "exp": "Çevre = 4 × 25 = 100 metredir."
-      },
-      {
-            "q": "Kısa kenarı 15 metre, uzun kenarı 20 metre olan bahçenin çevresi kaç metredir? 🏡",
-            "a": "70 metre",
-            "d": [
-                  "60 metre",
-                  "80 metre"
-            ],
-            "exp": "Çevre = 2 × (15 + 20) = 2 × 35 = 70 metredir."
-      },
-      {
-            "q": "Tüm kenarları eşit üçgen olan eşkenar üçgenin bir kenarı 7 cm ise çevresi kaç santimetredir? 🔺",
-            "a": "21 cm",
-            "d": [
-                  "14 cm",
-                  "28 cm"
-            ],
-            "exp": "Çevre = 3 × 7 = 21 cm'dir."
-      },
-      {
-            "q": "Kenar uzunlukları 5 cm, 7 cm ve 9 cm olan çeşitkenar üçgenin çevresi kaç santimetredir? 🔺",
-            "a": "21 cm",
-            "d": [
-                  "19 cm",
-                  "23 cm"
-            ],
-            "exp": "Çevre = 5 + 7 + 9 = 21 cm'dir."
-      }
-],
+    // 2. ÖĞRENME ALANI: DÖRT İŞLEM (TOPLAMA, ÇIKARMA, ÇARPMA VE BÖLME) (16 ÖZGÜN SORU)
+    grade4MathFourOperationsPool: [
+      { q: 'Bir hafta sonu müzeyi cumartesi günü 3.475 kişi, pazar günü ise 2.865 kişi ziyaret etmiştir. İki günde toplam kaç kişi ziyaret etmiştir? ➕', a: '6.340 Kişi ➕', d: ['6.240 Kişi', '5.340 Kişi'], exp: '3.475 + 2.865 = 6.340 kişi müzeyi ziyaret etmiştir.', spokenText: 'Üç bin dört yüz yetmiş beş ile iki bin sekiz yüz altmış beşin toplamı kaçtır?' },
+      { q: '8.420 metrelik yürüyüş parkurunun 3.675 metresini yürüyen bir sporcunun geriye kaç metre yolu kalmıştır? ➖', a: '4.745 Metre ➖', d: ['4.845 Metre', '5.745 Metre'], exp: '8.420 - 3.675 = 4.745 metre yolu kalmıştır.', spokenText: 'Sekiz bin dört yüz yirmiden üç bin altı yüz yetmiş beş çıkarsa kaç kalır?' },
+      { q: '4.850 sayısından 600 sayısını (100\'ün katını) ZİHİNDEN çıkardığımızda sonuç kaç olur? 🧠', a: '4.250 🧠', d: ['4.150', '3.250'], exp: 'Yüzler basamağındaki 8 yüzlükten 6 yüzlük çıkarılır: 4.850 - 600 = 4.250.', spokenText: 'Dört bin sekiz yüz elliden altı yüzü zihinden çıkardığımızda sonuç kaç olur?' },
+      { q: '3.480 + 2.130 toplama işleminin sonucunu sayıları EN YAKIN YÜZLÜĞE yuvarlayarak tahmin ettiğimizde tahmini sonuç kaç olur? 🎯', a: '5.600 (3.500 + 2.100) 🎯', d: ['5.500', '5.700'], exp: '3.480 ➡️ 3.500\'e, 2.130 ➡️ 2.100\'e yuvarlanır. 3.500 + 2.100 = 5.600.', spokenText: 'Üç bin dört yüz seksen artı iki bin yüz otuz işlemini en yakın yüzlüğe yuvarlayarak tahmin ettiğimizde sonuç kaç olur?' },
+      { q: 'Her birinde 24 adet boya kalemi bulunan 125 kutuda toplam kaç adet boya kalemi vardır? (125 × 24) ✖️', a: '3.000 Kalem ✖️', d: ['2.500 Kalem', '2.800 Kalem'], exp: '3 basamaklı 125 ile 2 basamaklı 24 çarpıldığında: 125 × 24 = 3.000 bulunur.', spokenText: 'Yüz yirmi beş çarpı yirmi dört işleminin sonucu kaçtır?' },
+      { q: 'Üç doğal sayıyla yapılan çarpma işleminde "(17 × 4) × 25 = 17 × (4 × ?)" eşitliğinin bozulmaması için soru işareti (?) yerine kaç yazılmalıdır? ⚖️', a: '25 (Çarpma işleminin birleşme özelliği) ⚖️', d: ['17', '4'], exp: 'Çarpanların gruplanışı (parantez yeri) değişse de çarpım değişmez; eksik çarpan 25\'tir.', spokenText: 'On yedi çarpı dört çarpı yirmi beş eşitliğinde parantez içindeki soru işareti yerine kaç yazılmalıdır?' },
+      { q: '346 sayısını 1.000 ile kısa yoldan çarptığımızda sonuç kaç olur? ⚡', a: '346.000 ⚡', d: ['34.600', '3.460'], exp: 'Bir doğal sayıyı 1.000 ile kısa yoldan çarpmak için sağına 3 tane sıfır eklenir: 346.000.', spokenText: 'Üç yüz kırk altı sayısını bin ile kısa yoldan çarptığımızda sonuç kaç olur?' },
+      { q: '85.000 sayısını 100\'e kısa yoldan böldüğümüzde bölüm kaç olur? ➗', a: '850 ➗', d: ['85', '8.500'], exp: '100\'e kısa yoldan bölerken sayının sağından 2 tane sıfır silinir: 85.000 ÷ 100 = 850.', spokenText: 'Seksen beş bin sayısını yüze kısa yoldan böldüğümüzde sonuç kaç olur?' },
+      { q: '864 fidan 8 sıraya eşit olarak dikilecektir. Her sıraya kaç fidan düşer? (864 ÷ 8) 🌲', a: '108 Fidan 🌲', d: ['18 Fidan', '180 Fidan'], exp: '8÷8=1, 6\'da 8 yok (0 konulur), 64÷8=8 ➡️ Bölüm 108 olur (ortadaki sıfıra dikkat!).', spokenText: 'Sekiz yüz altmış dört bölü sekiz işleminin sonucu kaçtır?' },
+      { q: '756 ÷ 18 bölme işleminde bölümü (sonucu) doğru hesaplayan bir öğrenci kaç bulur? ➗', a: '42 ➗', d: ['32', '44'], exp: '75\'in içinde 18 dört kere (4×18=72), kalan 36\'nın içinde 18 iki kere vardır ➡️ Bölüm 42\'dir.', spokenText: 'Yedi yüz elli altı bölü on sekiz işleminin sonucu kaçtır?' },
+      { q: 'İşlem yapmadan tahmin edelim: "648 ÷ 4" bölme işleminde bölüm (sonuç) kaç basamaklı bir sayıdır? 🔍', a: '3 Basamaklı (Yüzler basamağındaki 6, bölen 4\'ten büyük olduğu için) 🔍', d: ['2 Basamaklı', '1 Basamaklı'], exp: '3 basamaklı sayının yüzler basamağı (6) bölenden (4) büyük veya eşitse bölüm 3 basamaklıdır.', spokenText: 'Altı yüz kırk sekiz bölü dört işleminde bölüm kaç basamaklı bir sayıdır?' },
+      { q: 'Kalanlı bir bölme işleminde Bölen = 14, Bölüm = 10 ve Kalan = 5 olduğuna göre, BÖLÜNEN sayı kaçtır? 🧩', a: '145 [Bölünen = (14 × 10) + 5] 🧩', d: ['140', '135'], exp: 'Bölünen = (Bölen × Bölüm) + Kalan kuralından: (14 × 10) + 5 = 140 + 5 = 145.', spokenText: 'Bölen on dört, bölüm on ve kalan beş olduğuna göre bölünen sayı kaçtır?' },
+      { q: 'Bir bölme işleminde bölen sayı 9 ise, KALAN sayı alabileceği EN BÜYÜK değer kaç olabilir? ⚠️', a: '8 (Kalan her zaman bölenden küçük olmalıdır) ⚠️', d: ['9', '10'], exp: 'Bölme işleminde kalan daima bölenden küçüktür (Kalan < 9). Bu yüzden en fazla 8 olabilir.', spokenText: 'Bir bölme işleminde bölen dokuz ise kalan en fazla kaç olabilir?' },
+      { q: 'Aradaki eşitlik durumunu koruyalım: "8 × 5 = 32 + ?" eşitliğinde soru işareti (?) yerine hangi sayı gelmelidir? ⚖️', a: '8 (Çünkü 8 × 5 = 40 ve 32 + 8 = 40) ⚖️', d: ['10', '6'], exp: 'Sol taraf 8 × 5 = 40\'tır. Sağ tarafın da 40 olması için 40 - 32 = 8 yazılmalıdır.', spokenText: 'Sekiz çarpı beş eşittir otuz iki artı soru işareti eşitliğinde soru işareti yerine kaç gelmelidir?' },
+      { q: '"96 ÷ 4 = 30 - ?" eşitliğinde terazinin dengede kalması için soru işareti (?) yerine kaç yazılmalıdır? ⚖️', a: '6 (Çünkü 96 ÷ 4 = 24 ve 30 - 6 = 24) ⚖️', d: ['4', '8'], exp: 'Sol taraf 96 ÷ 4 = 24\'tür. Sağ tarafın 24 olması için 30 - 6 = 24 olmalıdır.', spokenText: 'Doksan altı bölü dört eşittir otuz eksi soru işareti eşitliğinde soru işareti yerine kaç yazılmalıdır?' },
+      { q: '2.400 ÷ 6 işlemini sıfırları kullanarak zihinden yaptığımızda sonuç kaç olur? ⚡', a: '400 (24 ÷ 6 = 4, sağına iki sıfır eklenir) ⚡', d: ['40', '4.000'], exp: '24 yüzlük ÷ 6 = 4 yüzlük = 400 eder.', spokenText: 'İki bin dört yüz bölü altı işleminin sonucu kaçtır?' }
+    ],
+
+    // 3. ÖĞRENME ALANI: KESİRLER (BASİT, BİLEŞİK, TAM SAYILI VE İŞLEMLER) (16 ÖZGÜN SORU)
+    grade4MathFractionsPool: [
+      { q: 'Payı paydasından KÜÇÜK olan ve her zaman 1 bütünden az miktarı gösteren kesirlere (Örn: 3/7, 5/9) ne ad verilir? 🍕', a: 'Basit Kesir 🍕', d: ['Bileşik Kesir', 'Tam Sayılı Kesir'], exp: 'Pay < Payda olan kesirlere basit kesir denir.', spokenText: 'Payı paydasından küçük olan kesirlere ne ad verilir?' },
+      { q: 'Payı paydasına EŞİT veya paydasından BÜYÜK olan kesirlere (Örn: 6/6, 9/4, 11/5) ne ad verilir? 🥖', a: 'Bileşik Kesir 🥖', d: ['Basit Kesir', 'Birim Kesir'], exp: 'Pay ≥ Payda olan kesirlere bileşik kesir denir.', spokenText: 'Payı paydasına eşit veya paydasından büyük olan kesirlere ne ad verilir?' },
+      { q: '1 veya daha fazla doğal sayı (bütün) ile bir basit kesirden oluşan kesirlere (Örn: 2 tam 3/5) ne ad verilir? 🎂', a: 'Tam Sayılı Kesir 🎂', d: ['Birim Kesir', 'Basit Kesir'], exp: 'Sayma sayısı ve basit kesirle birlikte yazılan kesirlere tam sayılı kesir denir.', spokenText: 'Bir doğal sayı ve bir basit kesirden oluşan kesirlere ne ad verilir?' },
+      { q: 'Aşağıdaki kesirlerden hangisi bir BİLEŞİK KESİRDİR? 🔍', a: '8/5 (veya 7/7) ✅', d: ['4/9 (Basit Kesir)', '1/12 (Birim Kesir)'], exp: '8/5 kesrinde pay (8), paydadan (5) büyük olduğu için bileşik kesirdir.', spokenText: 'Aşağıdaki kesirlerden hangisi bir bileşik kesirdir?' },
+      { q: '"a / 8" kesrinin bir BASİT KESİR olabilmesi için "a" yerine yazılabilecek EN BÜYÜK doğal sayı kaçtır? 🧩', a: '7 (Pay, payda olan 8\'den küçük olmalıdır) 🧩', d: ['8', '9'], exp: 'Basit kesirde pay < payda (a < 8) olacağından a en fazla 7 olabilir.', spokenText: 'a bölü sekiz kesrinin basit kesir olabilmesi için a yerine yazılabilecek en büyük doğal sayı kaçtır?' },
+      { q: 'Birim kesirleri karşılaştırırken "1/4, 1/9, 1/2" kesirlerinin büyükten küçüğe doğru sıralanışı hangisidir? 🍰', a: '1/2 > 1/4 > 1/9 🍰', d: ['1/9 > 1/4 > 1/2', '1/4 > 1/2 > 1/9'], exp: 'Bir bütün ne kadar az parçaya bölünürse her bir birim parça o kadar büyük olur: Yarım > Çeyrek > Dokuzda bir.', spokenText: 'Bir bölü dört, bir bölü dokuz ve bir bölü iki birim kesirlerinin büyükten küçüğe sıralanışı hangisidir?' },
+      { q: 'Bir sepetteki 60 cevizin 3/5\'ini (beşte üçünü) yiyen sincap kaç tane ceviz yemiştir? 🐿️🌰', a: '36 Ceviz (60 ÷ 5 = 12 ➡️ 12 × 3 = 36) 🐿️', d: ['12 Ceviz', '45 Ceviz'], exp: 'Bütünün basit kesir kadarı bulunurken sayı paydaya bölünür, pay ile çarpılır: (60 ÷ 5) × 3 = 36.', spokenText: 'Altmış cevizin beşte üçü kaç ceviz eder?' },
+      { q: '84 sayfalık bir hikaye kitabının 4/7\'sini (yedide dördünü) okuyan Zeynep toplam kaç sayfa kitap okumuştur? 📖', a: '48 Sayfa (84 ÷ 7 = 12 ➡️ 12 × 4 = 48) 📖', d: ['36 Sayfa', '56 Sayfa'], exp: '84 ÷ 7 = 12 (birim kesir kadarı). 12 × 4 = 48 sayfa okumuştur.', spokenText: 'Seksen dört sayfalık kitabın yedide dördünü okuyan Zeynep kaç sayfa okumuştur?' },
+      { q: '120 TL harçlığının 2/6\'sı ile kalem kutusu alan Mert\'in geriye kaç TL parası KALMIŞTIR? 💰', a: '80 TL Kalmıştır (Harcanan: 40 TL ➡️ Kalan: 120 - 40 = 80 TL) 💰', d: ['40 TL', '60 TL'], exp: '120 ÷ 6 = 20, 20 × 2 = 40 TL harcadı. Geriye 120 - 40 = 80 TL kaldı.', spokenText: 'Yüz yirmi lira harçlığının altıda ikisini harcayan Mertin geriye kaç lirası kalmıştır?' },
+      { q: 'Paydaları eşit olan "5/11, 9/11, 2/11" kesirlerini küçükten büyüğe doğru sıraladığımızda hangisi doğrudur? 📊', a: '2/11 < 5/11 < 9/11 📊', d: ['9/11 < 5/11 < 2/11', '5/11 < 2/11 < 9/11'], exp: 'Paydaları eşit kesirlerde payı küçük olan kesir daha küçüktür.', spokenText: 'Paydaları eşit olan kesirleri küçükten büyüğe sıraladığımızda hangisi doğrudur?' },
+      { q: 'Payları eşit olan "7/8, 7/15, 7/10" kesirlerini büyükten küçüğe sıraladığımızda en büyük kesir hangisidir? 🏆', a: '7/8 (7/8 > 7/10 > 7/15) 🏆', d: ['7/15', '7/10'], exp: 'Payları eşit olan kesirlerde paydası KÜÇÜK olan kesir daha büyüktür.', spokenText: 'Yedi bölü sekiz, yedi bölü on beş ve yedi bölü on kesirlerinden hangisi en büyüktür?' },
+      { q: 'Paydaları eşit iki kesrin toplamı: "4/9 + 3/9" işleminin sonucu kaçtır? ➕', a: '7/9 (Paylar toplanır, ortak payda aynen yazılır) ➕', d: ['7/18', '1/9'], exp: 'Paydaları eşit kesirlerle toplama yapılırken paylar toplanır (4+3=7), payda (9) değişmez: 7/9.', spokenText: 'Dört bölü dokuz artı üç bölü dokuz işleminin sonucu kaçtır?' },
+      { q: 'Paydaları eşit kesirlerle çıkarma: "11/15 - 4/15" işleminin sonucu kaçtır? ➖', a: '7/15 ➖', d: ['7/0', '15/15'], exp: 'Paylar çıkarılır (11 - 4 = 7), ortak payda (15) aynen yazılır: 7/15.', spokenText: 'On bir bölü on beş eksi dört bölü on beş işleminin sonucu kaçtır?' },
+      { q: 'Bir pastanın önce 2/8\'ini, sonra 3/8\'ini yersek pastanın toplam kaçta kaçını yemiş oluruz? 🎂', a: '5/8\'ini (2/8 + 3/8 = 5/8) 🎂', d: ['5/16\'sını', '1/8\'ini'], exp: '2/8 + 3/8 = 5/8.', spokenText: 'Bir pastanın önce sekizde ikisini sonra sekizde üçünü yersek toplam kaçta kaçını yemiş oluruz?' },
+      { q: 'Tamamı 9/9 (1 tam) olan su deposunun 4/9\'u kullanılırsa deponun kaçta kaçı dolu kalır? 💧', a: '5/9\'u (9/9 - 4/9 = 5/9) 💧', d: ['4/9\'u', '5/0\'ı'], exp: 'Tamamı 9/9 olan depodan 4/9 çıkarılırsa 5/9 kalır.', spokenText: 'Tamamı dokuzda dokuz olan su deposunun dokuzda dördü kullanılırsa kaçta kaçı kalır?' },
+      { q: 'Sayı doğrusunda 2 ile 3 doğal sayılarının tam ortasında yer alan kesir hangi tam sayılı kesirdir? 📏', a: '2 tam 1/2 📏', d: ['1 tam 1/2', '3 tam 1/2'], exp: '2 ile 3\'ün tam ortası 2 tam 1/2 (iki buçuk) noktasını gösterir.', spokenText: 'Sayı doğrusunda iki ile üç doğal sayılarının tam ortasında yer alan tam sayılı kesir hangisidir?' }
+    ],
+
+    // 4. ÖĞRENME ALANI: ZAMAN ÖLÇME VE VERİ İŞLEME (GRAFİKLER) (16 ÖZGÜN SORU)
+    grade4MathTimeDataPool: [
+      { q: '4 saat 35 dakika toplam kaç dakikaya eşittir? (1 saat = 60 dakika) ⏰', a: '275 Dakika (4 × 60 = 240 ➡️ 240 + 35 = 275 dk) ⏰', d: ['245 Dakika', '435 Dakika'], exp: '4 saat = 4 × 60 = 240 dakikadır. 240 + 35 = 275 dakika eder.', spokenText: 'Dört saat otuz beş dakika toplam kaç dakikaya eşittir?' },
+      { q: '200 dakika kaç saat ve kaç dakikaya eşittir? ⏳', a: '3 Saat 20 Dakika (200 ÷ 60 = 3 saat, kalan 20 dk) ⏳', d: ['2 Saat 80 Dakika', '3 Saat 40 Dakika'], exp: '3 × 60 = 180 dakika (3 saat) eder. 200 - 180 = 20 dakika artar.', spokenText: 'İki yüz dakika kaç saat ve kaç dakikaya eşittir?' },
+      { q: '5 dakika 15 saniye toplam kaç saniyedir? (1 dakika = 60 saniye) ⏱️', a: '315 Saniye (5 × 60 = 300 ➡️ 300 + 15 = 315 sn) ⏱️', d: ['215 Saniye', '515 Saniye'], exp: '5 dakika = 300 saniye. 300 + 15 = 315 saniyedir.', spokenText: 'Beş dakika on beş saniye toplam kaç saniyedir?' },
+      { q: '420 saniye kaç dakikaya eşittir? ⏱️', a: '7 Dakika (420 ÷ 60 = 7) ⏱️', d: ['6 Dakika', '8 Dakika'], exp: '420 ÷ 60 = 7 dakika eder.', spokenText: 'Dört yüz yirmi saniye kaç dakikaya eşittir?' },
+      { q: 'Normalde 28 gün çeken Şubat ayının 4 yılda bir 29 gün çektiği ve 1 yılın 366 gün sürdüğü yıllara ne ad verilir? 📅', a: 'Artık Yıl 📅', d: ['Yarım Yıl', 'Asırlık Yıl'], exp: 'Dünya\'nın Güneş etrafındaki 365 gün 6 saatlik dolanımındaki 6 saatler 4 yılda bir 24 saat (1 gün) eder ve Şubat 29 gün çeker.', spokenText: 'Şubat ayının dört yılda bir yirmi dokuz gün çektiği yıllara ne ad verilir?' },
+      { q: 'Artık yıllar 4\'ün tam katı olan yıllardır. Buna göre aşağıdaki yıllardan hangisi bir ARTIK YILDIR (Şubat 29 gündür)? 🗓️', a: '2024 Yılı (veya 2028) 🗓️', d: ['2023 Yılı', '2025 Yılı'], exp: 'Son iki basamağı 4\'e kalansız bölünen 2024 ve 2028 yılları artık yıldır.', spokenText: 'Aşağıdaki yıllardan hangisi bir artık yıldır?' },
+      { q: '3 yıl toplam kaç AY ve kaç HAFTA eder? (1 yıl = 12 ay = 52 hafta) 📆', a: '36 Ay — 156 Hafta 📆', d: ['24 Ay — 104 Hafta', '30 Ay — 150 Hafta'], exp: '3 × 12 = 36 ay ve 3 × 52 = 156 hafta eder.', spokenText: 'Üç yıl toplam kaç ay ve kaç hafta eder?' },
+      { q: 'Saat 08:40\'ta başlayan bir okul gezisi saat 13:15\'te sona ermiştir. Bu gezi toplam ne kadar sürmüştür? 🚌⏰', a: '4 Saat 35 Dakika 🚌', d: ['5 Saat 25 Dakika', '4 Saat 15 Dakika'], exp: '08:40\'tan 12:40\'a 4 saat; 12:40\'tan 13:15\'e 35 dakika ➡️ Toplam 4 saat 35 dakika.', spokenText: 'Saat sekiz kırkta başlayıp on üç on beşte biten bir gezi ne kadar sürmüştür?' },
+      { q: 'Saat 15:30\'da fırına konulan bir kek 45 dakika pişecektir. Kek fırından saat kaçta çıkarılmalıdır? 🧁⏰', a: 'Saat 16:15\'te 🧁', d: ['Saat 16:05\'te', 'Saat 16:30\'da'], exp: '15:30 + 30 dk = 16:00. Kalan 15 dk daha eklenirse saat 16:15 olur.', spokenText: 'Saat on beş otuzda fırına konulan ve kırk beş dakika pişen kek saat kaçta çıkarılmalıdır?' },
+      { q: 'Akşam saat 21:30\'da uyuyan ve sabah saat 07:00\'de uyanan bir öğrenci toplam kaç saat kaç dakika uyumuştur? 😴', a: '9 Saat 30 Dakika 😴', d: ['8 Saat 30 Dakika', '10 Saat'], exp: '21:30\'dan gece 24:00\'e kadar 2 saat 30 dk; 00:00\'dan 07:00\'ye 7 saat ➡️ Toplam 9 saat 30 dk.', spokenText: 'Akşam yirmi bir otuzda uyuyup sabah yedide uyanan bir öğrenci ne kadar uyumuştur?' },
+      { q: 'Bir sınıftaki öğrencilerin en sevdiği dersleri yatay ve dikey eksenlerde renkli dikdörtgen çubuklarla gösteren grafiğe ne ad verilir? 📊', a: 'Sütun Grafiği 📊', d: ['Çetele Tablosu', 'Yön Krokisi'], exp: 'Verilerin sütun (çubuk) boylarıyla karşılaştırıldığı grafiğe sütun grafiği denir.', spokenText: 'Verileri renkli dikdörtgen çubuklarla gösteren grafiğe ne ad verilir?' },
+      { q: 'Bir Çetele Tablosunda dört dik çizginin üzerine bir yatay/eğik çizgi çekilerek oluşturulan her bir bağlam (||||̸) kaç veriyi temsil eder? 📝', a: '5 (Beşerli gruplama) 📝', d: ['4', '10'], exp: 'Çetele tablosunda her beşli çizgi grubu 5 sayısını gösterir ve saymayı kolaylaştırır.', spokenText: 'Çetele tablosunda oluşturulan her bir çizgi grubu kaç veriyi temsil eder?' },
+      { q: 'Bir şekil grafiğinde "Her 🍎 şekli 4 kilogram elmayı göstermektedir." notu varsa, 6 tane 🍎 şekli bulunan pazartesi günü kaç kg elma satılmıştır? 🍎', a: '24 kg Elma (6 × 4 = 24) 🍎', d: ['6 kg Elma', '10 kg Elma'], exp: 'Her şekil 4 kg\'ı temsil ettiği için 6 × 4 = 24 kg elma satılmıştır.', spokenText: 'Her elma şekli dört kilogramı gösteriyorsa altı elma şekli kaç kilogramı gösterir?' },
+      { q: 'Okul kütüphanesi sütun grafiğine göre; Masal: 45 kitap, Bilim: 60 kitap, Tarih: 35 kitap bulunmaktadır. Kütüphanede bu üç türden toplam kaç kitap vardır? 📚📊', a: '140 Kitap (45 + 60 + 35 = 140) 📚', d: ['130 Kitap', '150 Kitap'], exp: 'Sütunlardaki değerler toplanır: 45 + 60 = 105, 105 + 35 = 140 kitap.', spokenText: 'Masal kırk beş, bilim altmış ve tarih otuz beş kitap ise toplam kaç kitap vardır?' },
+      { q: 'Yukarıdaki kütüphane sütun grafiğinde (Masal: 45, Bilim: 60, Tarih: 35) en çok bulunan kitap türü, en az bulunan türden kaç fazladır? 📊', a: '25 Fazladır (Bilim 60 - Tarih 35 = 25) 📊', d: ['15 Fazladır', '20 Fazladır'], exp: 'En çok Bilim (60), en az Tarih (35) kitabı vardır: 60 - 35 = 25 fark.', spokenText: 'Altmış bilim kitabı otuz beş tarih kitabından kaç fazladır?' },
+      { q: 'Verilerin çizgiler yerine doğrudan "Sayılarla" gösterildiği tabloya ne ad verilir? 📋', a: 'Sıklık Tablosu 📋', d: ['Çetele Tablosu', 'Şekil Grafiği'], exp: 'Çetele tablosunda çizgiler, sıklık tablosunda ise sayısal değerler kullanılır.', spokenText: 'Verilerin çizgiler yerine doğrudan sayılarla gösterildiği tabloya ne ad verilir?' }
+    ],
+
+    // 5. ÖĞRENME ALANI: GEOMETRİ (ÜÇGEN/KARE/DİKDÖRTGEN, AÇILAR VE SİMETRİ) (16 ÖZGÜN SORU)
+    grade4MathGeometryAnglesPool: [
+      { q: 'Üç kenarının uzunluğu da birbirine EŞİT olan (Örn: 6 cm, 6 cm, 6 cm) üçgenlere ne ad verilir? 🔺', a: 'Eşkenar Üçgen 🔺', d: ['İkizkenar Üçgen', 'Çeşitkenar Üçgen'], exp: 'Üç kenar uzunluğu da eşit olan üçgene eşkenar üçgen denir.', spokenText: 'Üç kenarının uzunluğu da birbirine eşit olan üçgenlere ne ad verilir?' },
+      { q: 'Sadece İKİ kenarının uzunluğu birbirine eşit, üçüncü kenarı farklı olan (Örn: 8 cm, 8 cm, 5 cm) üçgenlere ne ad verilir? 📐', a: 'İkizkenar Üçgen 📐', d: ['Eşkenar Üçgen', 'Çeşitkenar Üçgen'], exp: 'İki kenarı eşit uzunlukta olan üçgene ikizkenar üçgen denir.', spokenText: 'Sadece iki kenarının uzunluğu birbirine eşit olan üçgenlere ne ad verilir?' },
+      { q: 'Üç kenarının uzunluğu da birbirinden FARKLI olan (Örn: 4 cm, 6 cm, 7 cm) üçgenlere ne ad verilir? 🔺', a: 'Çeşitkenar Üçgen 🔺', d: ['Eşkenar Üçgen', 'İkizkenar Üçgen'], exp: 'Bütün kenar uzunlukları farklı olan üçgen çeşitkenar üçgendir.', spokenText: 'Üç kenarının uzunluğu da birbirinden farklı olan üçgenlere ne ad verilir?' },
+      { q: 'Bir küpün kutu halinden kesilip düz bir zemine serilmiş haline "Küpün Açınımı" denir. Küpün açınımında birbirine eş kaç tane KARESEL BÖLGE bulunur? 🎲', a: '6 Eş Karesel Bölge 🎲', d: ['4 Eş Karesel Bölge', '8 Eş Karesel Bölge'], exp: 'Küpün 6 yüzü vardır ve tamamı birbirine eş karesel bölgelerden oluşur.', spokenText: 'Küpün açınımında birbirine eş kaç tane karesel bölge bulunur?' },
+      { q: 'Başlangıç noktaları ortak olan iki ışının birleşmesiyle oluşan geometrik şekle "Açı" denir. Açıları derece (°) cinsinden ölçmek için hangi aracı kullanırız? 📐', a: 'İletki (Açıölçer) veya Gönye 📐', d: ['Pergel', 'Eşit Kollu Terazi'], exp: 'Açıları ölçmek ve standart açı çizmek için iletki (açıölçer) ve gönye kullanılır.', spokenText: 'Açıları derece cinsinden ölçmek için hangi aracı kullanırız?' },
+      { q: 'Ölçüsü 0° ile 90° arasında (90 dereceden küçük) olan açılara ne ad verilir? (Örn: 35°, 60°, 89°) 📐', a: 'Dar Açı 📐', d: ['Dik Açı', 'Geniş Açı'], exp: 'Ölçüsü 90 dereceden küçük olan açılara dar açı denir.', spokenText: 'Ölçüsü doksan dereceden küçük olan açılara ne ad verilir?' },
+      { q: 'Ölçüsü tam 90 derece (90°) olan ve kare ile dikdörtgenin köşelerinde gördüğümüz açıya ne ad verilir? 🟦📐', a: 'Dik Açı (90°) 📐', d: ['Dar Açı', 'Doğru Açı'], exp: 'Ölçüsü tam 90° olan açıya dik açı denir.', spokenText: 'Ölçüsü tam doksan derece olan açıya ne ad verilir?' },
+      { q: 'Ölçüsü 90° ile 180° arasında (90 dereceden büyük, 180 dereceden küçük) olan açılara ne ad verilir? (Örn: 91°, 120°, 165°) 📐', a: 'Geniş Açı 📐', d: ['Dar Açı', 'Dik Açı'], exp: '90° ile 180° arasındaki açılara geniş açı denir.', spokenText: 'Ölçüsü doksan derece ile yüz seksen derece arasında olan açılara ne ad verilir?' },
+      { q: 'Ölçüsü tam 180 derece (180°) olan ve kolları birbirine zıt yönde düz bir çizgi oluşturan açıya ne ad verilir? 📏', a: 'Doğru Açı (180°) 📏', d: ['Dik Açı (90°)', 'Dar Açı'], exp: 'Ölçüsü 180° olan açıya doğru açı denir (İki dik açının toplamına eşittir).', spokenText: 'Ölçüsü tam yüz seksen derece olan açıya ne ad verilir?' },
+      { q: 'En büyük DAR AÇI (tam sayı olarak) ile en küçük GENİŞ AÇININ (tam sayı olarak) dereceleri toplamı kaçtır? (89° + 91°) 🧠', a: '180° (En büyük dar açı: 89° + En küçük geniş açı: 91°) 🧠', d: ['179°', '181°'], exp: '90°\'den küçük en büyük tam sayı dar açı 89°, 90°\'den büyük en küçük tam sayı geniş açı 91°\'dir. 89 + 91 = 180°.', spokenText: 'Tam sayı olarak en büyük dar açı ile en küçük geniş açının toplamı kaç derecedir?' },
+      { q: 'Saat tam 03:00 veya 09:00 iken akrep ile yelkovan arasındaki açı kaç derecedir ve ne tür bir açıdır? 🕒', a: '90° ➡️ Dik Açı 🕒', d: ['45° ➡️ Dar Açı', '180° ➡️ Doğru Açı'], exp: 'Saat 03:00 ve 09:00\'da akrep ile yelkovan birbirine dik durur ve 90° dik açı oluşturur.', spokenText: 'Saat tam üç iken akrep ile yelkovan arasındaki açı kaç derecedir ve ne tür bir açıdır?' },
+      { q: 'Saat tam 06:00 iken akrep ile yelkovan düz bir çizgi oluşturur. Bu andaki açı kaç derecedir ve adı nedir? 🕕', a: '180° ➡️ Doğru Açı 🕕', d: ['90° ➡️ Dik Açı', '120° ➡️ Geniş Açı'], exp: 'Saat 06:00\'da akrep 6\'yı, yelkovan 12\'yi gösterir ve tam 180° doğru açı oluşur.', spokenText: 'Saat tam altı iken akrep ile yelkovan arasındaki açı kaç derecedir ve adı nedir?' },
+      { q: 'Bir şekli tam ortadan iki eş parçaya bölen ve katlandığında iki parçanın üst üste çakışmasını sağlayan çizgiye ne ad verilir? 🦋🪞', a: 'Simetri Doğrusu (Ayna Simetrisi) 🦋', d: ['Kenar Çizgisi', 'Işın'], exp: 'Simetri doğrusu şekli birbirinin ayna görüntüsü olan iki eş parçaya ayırır.', spokenText: 'Bir şekli katlandığında üst üste çakışacak şekilde iki eş parçaya bölen çizgiye ne ad verilir?' },
+      { q: 'Kare ve Dikdörtgen şekillerinin köşeleri isimlendirilirken hangi tür harfler kullanılır? (Örn: ABCD karesi) 🔤', a: 'Büyük Harfler (A, B, C, D gibi) 🔤', d: ['Sadece Rakamlar', 'Noktalama İşaretleri'], exp: 'Geometrik şekillerin köşeleri daima alfabenin büyük harfleriyle isimlendirilir.', spokenText: 'Kare ve dikdörtgenin köşeleri isimlendirilirken hangi tür harfler kullanılır?' },
+      { q: 'Sınıfımızın yazı tahtası, masanın üst yüzeyi, duvar ve defter yaprağı geometride hangi temel kavramın birer modelidir? 📋', a: 'Düzlem (Düzlemsel Yüzey) 📋', d: ['Küre', 'Silindir'], exp: 'İstendiği kadar uzatılabilen düz ve pürüzsüz yüzey modellerine düzlem denir.', spokenText: 'Sınıfımızın yazı tahtası ve defter yaprağı geometride hangi kavramın modelidir?' },
+      { q: '132 derecelik (132°) bir açıyı DİK AÇIYA (90°) dönüştürmek için ölçüsünü kaç derece azaltmalıyız? 📐', a: '42° Azaltmalıyız (132° - 90° = 42°) 📐', d: ['32° Azaltmalıyız', '48° Artırmalıyız'], exp: 'Geniş açı olan 132°\'den dik açı olan 90° çıkarılır: 132 - 90 = 42°.', spokenText: 'Yüz otuz iki derecelik bir açıyı dik açıya dönüştürmek için kaç derece azaltmalıyız?' }
+    ],
+
+    // 6. ÖĞRENME ALANI: UZUNLUK, ÇEVRE, ALAN, TARTMA VE SIVI ÖLÇME (16 ÖZGÜN SORU)
+    grade4MathMeasurementPool: [
+      { q: 'Uzunluk ölçüsü birimlerinde "5 Kilometre (km)" kaç Metreye (m) eşittir? (1 km = 1.000 m) 🛣️', a: '5.000 Metre 🛣️', d: ['500 Metre', '50.000 Metre'], exp: '1 km = 1.000 m olduğu için 5 km = 5 × 1.000 = 5.000 metredir.', spokenText: 'Beş kilometre kaç metreye eşittir?' },
+      { q: '3 Metre 45 Santimetre toplam kaç santimetredir (cm)? ve 8 Santimetre kaç milimetredir (mm)? 📏', a: '345 cm — 80 mm (1 m = 100 cm, 1 cm = 10 mm) 📏', d: ['3.045 cm — 800 mm', '345 cm — 8 mm'], exp: '3 m + 45 cm = 300 + 45 = 345 cm. 8 cm = 8 × 10 = 80 mm.', spokenText: 'Üç metre kırk beş santimetre kaç santimetredir ve sekiz santimetre kaç milimetredir?' },
+      { q: 'Bir kenar uzunluğu 14 cm olan kare şeklindeki bir fotoğraf çerçevesinin ÇEVRE uzunluğu kaç santimetredir? (Çevre = 4 × a) 🖼️', a: '56 cm (4 × 14 = 56 cm) 🖼️', d: ['48 cm', '28 cm'], exp: 'Karenin 4 eşit kenarı vardır: 4 × 14 = 56 cm.', spokenText: 'Bir kenar uzunluğu on dört santimetre olan karenin çevresi kaç santimetredir?' },
+      { q: 'Çevre uzunluğu 72 cm olan kare şeklindeki bir mendilin BİR KENAR uzunluğu kaç santimetredir? 🟦', a: '18 cm (72 ÷ 4 = 18 cm) 🟦', d: ['16 cm', '24 cm'], exp: 'Karenin çevresi 4\'e bölünerek bir kenarı bulunur: 72 ÷ 4 = 18 cm.', spokenText: 'Çevre uzunluğu yetmiş iki santimetre olan karenin bir kenar uzunluğu kaç santimetredir?' },
+      { q: 'Kısa kenarı 12 metre, uzun kenarı 25 metre olan dikdörtgen şeklindeki okul bahçesinin ÇEVRESİ kaç metredir? 🏫', a: '74 Metre [2 × (12 + 25) = 2 × 37 = 74 m] 🏫', d: ['37 Metre', '64 Metre'], exp: 'Dikdörtgenin çevresi = 2 × (Kısa Kenar + Uzun Kenar) = 2 × (12 + 25) = 74 m.', spokenText: 'Kısa kenarı on iki metre, uzun kenarı yirmi beş metre olan dikdörtgenin çevresi kaç metredir?' },
+      { q: 'Çevresi 60 cm ve kısa kenarı 10 cm olan bir dikdörtgenin UZUN KENARI kaç santimetredir? 📐', a: '20 cm (Yarı çevre: 30 cm ➡️ 30 - 10 = 20 cm) 📐', d: ['25 cm', '40 cm'], exp: 'Kısa kenar + Uzun kenar = 60 ÷ 2 = 30 cm. Uzun kenar = 30 - 10 = 20 cm.', spokenText: 'Çevresi altmış santimetre ve kısa kenarı on santimetre olan dikdörtgenin uzun kenarı kaç santimetredir?' },
+      { q: 'Birim kareli zeminde bir kenarı 8 birim olan karesel bölgenin ALANI toplam kaç birim karedir? 🟦', a: '64 Birim Kare (8 × 8 = 64) 🟦', d: ['32 Birim Kare', '16 Birim Kare'], exp: 'Karesel bölgenin alanı iki kenar uzunluğunun çarpımı kadar birim karedir: 8 × 8 = 64 birim kare.', spokenText: 'Bir kenarı sekiz birim olan karesel bölgenin alanı kaç birim karedir?' },
+      { q: 'Kısa kenarında 6 birim kare, uzun kenarında 11 birim kare bulunan dikdörtgensel bölgenin ALANI kaç birim karedir? 🟩', a: '66 Birim Kare (6 × 11 = 66) 🟩', d: ['34 Birim Kare', '56 Birim Kare'], exp: 'Dikdörtgensel bölgenin alanı satır ve sütundaki birim karelerin çarpımıdır: 6 × 11 = 66 birim kare.', spokenText: 'Kısa kenarı altı birim, uzun kenarı on bir birim olan dikdörtgensel bölgenin alanı kaç birim karedir?' },
+      { q: 'Çok ağır yükleri (kamyon, kömür, demir) tartmak için kullanılan "1 Ton (t)" kaç Kilograma (kg) eşittir? 🚛⚖️', a: '1.000 Kilogram (kg) 🚛', d: ['100 Kilogram', '10.000 Kilogram'], exp: '1 Ton = 1.000 Kilogramdır.', spokenText: 'Bir ton kaç kilograma eşittir?' },
+      { q: '4 Kilogram 250 Gram toplam kaç gramdır (g)? (1 kg = 1.000 g) ⚖️', a: '4.250 Gram ⚖️', d: ['425 Gram', '40.250 Gram'], exp: '4 kg = 4.000 g. 4.000 + 250 = 4.250 gram eder.', spokenText: 'Dört kilogram iki yüz elli gram toplam kaç gramdır?' },
+      { q: 'Altın, ilaç ve baharat gibi çok hafif maddeleri ölçerken kullandığımız "Miligram (mg)" için: 6 Gram kaç Miligramdır? (1 g = 1.000 mg) 💊', a: '6.000 Miligram (mg) 💊', d: ['600 Miligram', '60 Miligram'], exp: '1 gram = 1.000 miligram olduğu için 6 g = 6.000 mg eder.', spokenText: 'Altı gram kaç miligramdır?' },
+      { q: '7.000 Kilogram kömür taşıyan bir kamyon kaç TON kömür taşımaktadır? 🚛', a: '7 Ton (7.000 ÷ 1.000 = 7 Ton) 🚛', d: ['70 Ton', '700 Ton'], exp: '1.000 kg = 1 ton olduğundan 7.000 kg = 7 tondur.', spokenText: 'Yedi bin kilogram kaç tondur?' },
+      { q: 'Sıvı ölçüsü birimlerinde "1 Litre (L)" kaç Mililitreye (mL) eşittir? 🥛🧪', a: '1.000 Mililitre (mL) 🥛', d: ['100 Mililitre', '500 Mililitre'], exp: '1 Litre = 1.000 Mililitredir (Yarım litre = 500 mL, Çeyrek litre = 250 mL).', spokenText: 'Bir litre kaç mililitreye eşittir?' },
+      { q: '3 Litre 600 Mililitre zeytinyağı toplam kaç mililitredir (mL)? 🫒', a: '3.600 Mililitre (mL) 🫒', d: ['360 Mililitre', '30.600 Mililitre'], exp: '3 L = 3.000 mL. 3.000 + 600 = 3.600 mL.', spokenText: 'Üç litre altı yüz mililitre toplam kaç mililitredir?' },
+      { q: '2 Litrelik (2.000 mL) dolu bir sürahiden her biri 250 mL alan bardaklardan 5 bardak su içilirse sürahide kaç mL su kalır? 🫗🥛', a: '750 mL Su Kalır (İçilen: 5 × 250 = 1.250 mL ➡️ 2.000 - 1.250 = 750 mL) 🫗', d: ['1.250 mL', '500 mL'], exp: '5 × 250 mL = 1.250 mL içildi. 2.000 - 1.250 = 750 mL kaldı.', spokenText: 'İki litrelik sürahiden iki yüz ellişer mililitrelik beş bardak su içilirse geriye kaç mililitre su kalır?' },
+      { q: 'Bir kenarı 20 metre olan kare şeklindeki bir parkın etrafında 3 TAM TUR koşan bir sporcu toplam kaç metre koşmuş olur? 🏃‍♂️🌳', a: '240 Metre (1 Tur Çevre: 4 × 20 = 80 m ➡️ 3 Tur: 3 × 80 = 240 m) 🏃‍♂️', d: ['80 Metre', '160 Metre'], exp: 'Karenin 1 tur çevresi 4 × 20 = 80 metredir. 3 turda 3 × 80 = 240 metre koşar.', spokenText: 'Bir kenarı yirmi metre olan kare parkın etrafında üç tam tur koşan sporcu kaç metre koşmuştur?' }
+    ],
+
+    // Geriye dönük uyumluluk metodları ve havuzları
+    get grade4DigitsOperationsPool() {
+      return [...this.grade4MathNumbersPlaceValuePool, ...this.grade4MathFourOperationsPool];
+    },
+    get grade4FractionsAnglesPool() {
+      return [...this.grade4MathFractionsPool, ...this.grade4MathTimeDataPool, ...this.grade4MathGeometryAnglesPool];
+    },
+    get grade4PerimeterAreaPool() {
+      return this.grade4MathMeasurementPool;
+    },
+
+    generateGrade4DigitsOperations() {
+      return this.drawFromPool(this.grade4DigitsOperationsPool, "grade4DigitsOperationsPool");
+    },
 
     generateGrade4PerimeterArea() {
-      const item = this.drawFromPool(this.grade4PerimeterAreaPool, "grade4PerimeterAreaPool");
-      return {
-        question: item.q,
-        correct: item.a,
-        distractors: item.d,
-        explanation: item.exp
-      };
+      return this.drawFromPool(this.grade4MathMeasurementPool, "grade4MathMeasurementPool");
     },
 
     // 4. SINIF: DEYİMLER VE ATASÖZLERİ DÜELLOSU (35 ÖZGÜN SORU)
@@ -7691,20 +7308,24 @@
     },
 
     generateGrade4Math() {
-      const r = Math.random();
-      if (r < 0.35) {
-        return this.generateGrade4DigitsOperations();
-      } else if (r < 0.70) {
-        return this.generateGrade4PerimeterArea();
-      } else {
-        const item = this.drawFromPool(this.grade4FractionsAnglesPool, "grade4FractionsAnglesPool");
-        return {
-          question: item.q,
-          correct: item.a,
-          distractors: item.d,
-          explanation: item.exp
-        };
-      }
+      const pools = [
+        this.grade4MathNumbersPlaceValuePool,
+        this.grade4MathFourOperationsPool,
+        this.grade4MathFractionsPool,
+        this.grade4MathTimeDataPool,
+        this.grade4MathGeometryAnglesPool,
+        this.grade4MathMeasurementPool
+      ];
+      const names = [
+        "grade4MathNumbersPlaceValuePool",
+        "grade4MathFourOperationsPool",
+        "grade4MathFractionsPool",
+        "grade4MathTimeDataPool",
+        "grade4MathGeometryAnglesPool",
+        "grade4MathMeasurementPool"
+      ];
+      const idx = Math.floor(Math.random() * pools.length);
+      return this.drawFromPool(pools[idx], names[idx]);
     },
 
     // -------------------------------------------------------------
@@ -8857,17 +8478,34 @@
           englishWord: raw.englishWord,
           lang: 'en'
         }, '👨‍👩‍👧 Family, Feelings & Abilities');
+      // --- 4. SINIF: MEB / MAARİF MODELİ MATEMATİK 6 ÖĞRENME ALANI ---
+      } else if (gameType === 'math_numbers_place_value_4') {
+        const raw = this.drawFromPool(this.grade4MathNumbersPlaceValuePool, "grade4MathNumbersPlaceValuePool");
+        return this.buildQuestionItem(raw, '👑 Binler Bölüğü & 6 Basamaklı Sayı Ustası');
+      } else if (gameType === 'math_four_operations_4') {
+        const raw = this.drawFromPool(this.grade4MathFourOperationsPool, "grade4MathFourOperationsPool");
+        return this.buildQuestionItem(raw, '⚡ 4 İşlem Şampiyonu & Eşitlik Dengesi Düellosu');
+      } else if (gameType === 'math_fractions_operations_4') {
+        const raw = this.drawFromPool(this.grade4MathFractionsPool, "grade4MathFractionsPool");
+        return this.buildQuestionItem(raw, '🍕 Basit-Bileşik-Tam Sayılı Kesir Avcısı & Kesir Problemleri');
+      } else if (gameType === 'math_time_data_4') {
+        const raw = this.drawFromPool(this.grade4MathTimeDataPool, "grade4MathTimeDataPool");
+        return this.buildQuestionItem(raw, '⏰ Zaman Dönüşümleri & Sütun Grafiği Dedektifi');
+      } else if (gameType === 'math_geometry_angles_4') {
+        const raw = this.drawFromPool(this.grade4MathGeometryAnglesPool, "grade4MathGeometryAnglesPool");
+        return this.buildQuestionItem(raw, '📐 Dar-Dik-Geniş Açı & Eşkenar/İkizkenar Üçgen Ustası');
+      } else if (gameType === 'math_measurement_perimeter_area_4') {
+        const raw = this.drawFromPool(this.grade4MathMeasurementPool, "grade4MathMeasurementPool");
+        return this.buildQuestionItem(raw, '📏 Çevre-Alan Hesaplama & Ölçü Dönüşümleri');
+      } else if (gameType === 'math_4_karma') {
+        const raw = this.generateGrade4Math();
+        return this.buildQuestionItem(raw, '🌟 4. Sınıf Matematik Karma Düello');
       } else if (gameType === 'math_digits_operations_4') {
         const raw = this.generateGrade4DigitsOperations();
-        return this.buildQuestionItem(raw, '👑 4, 5, 6 Basamaklı Sayılar & Dört İşlem');
+        return this.buildQuestionItem(raw, '👑 4, 5, 6 Basamaklı Sayılar & 4 İşlem');
       } else if (gameType === 'math_fractions_angles_4') {
         const raw = this.drawFromPool(this.grade4FractionsAnglesPool, "grade4FractionsAnglesPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🍕 Kesirler, Zaman ve Açılar');
+        return this.buildQuestionItem(raw, '🍕 Kesirler, Zaman ve Açılar');
       } else if (gameType === 'math_perimeter_area_4') {
         const raw = this.generateGrade4PerimeterArea();
         return this.buildQuestionItem(raw, '📐 Çevre ve Alan Hesaplama');
@@ -10162,7 +9800,14 @@
     science_lighting_sound_4: '💡 Aydınlatma & Ses',
     science_human_environment_4: '♻️ Tasarruf & Geri Dönüşüm',
     science_simple_circuits_4: '⚡ Basit Elektrik Devreleri',
-    science_4_karma: '🌟 4. Sınıf Fen Bilimleri Karma'
+    science_4_karma: '🌟 4. Sınıf Fen Bilimleri Karma',
+    math_numbers_place_value_4: '👑 6 Basamaklı Sayılar',
+    math_four_operations_4: '⚡ 4 İşlem & Eşitlik',
+    math_fractions_operations_4: '🍕 Kesirler & Problemler',
+    math_time_data_4: '⏰ Zaman & Sütun Grafiği',
+    math_geometry_angles_4: '📐 Açılar, Üçgen & Simetri',
+    math_measurement_perimeter_area_4: '📏 Çevre, Alan & Ölçme',
+    math_4_karma: '🌟 4. Sınıf Matematik Karma'
   };
 
   function getCurrentGameObject() {
@@ -10287,6 +9932,13 @@
       lifescience_3_karma: '3. Sınıf Hayat Bilgisi Karma Düello',
       lifescience_compass_consumer_3: 'Yönlerimiz, Kroki ve Tüketici Hakları',
       english_family_feelings_3: 'Family Members, Feelings & Abilities',
+      math_numbers_place_value_4: 'Binler Bölüğü & 6 Basamaklı Sayı Ustası',
+      math_four_operations_4: '4 İşlem Şampiyonu & Eşitlik Dengesi Düellosu',
+      math_fractions_operations_4: 'Basit-Bileşik-Tam Sayılı Kesir Avcısı & Kesir Problemleri',
+      math_time_data_4: 'Zaman Dönüşümleri & Sütun Grafiği Dedektifi',
+      math_geometry_angles_4: 'Dar-Dik-Geniş Açı & Eşkenar/İkizkenar Üçgen Ustası',
+      math_measurement_perimeter_area_4: 'Çevre-Alan Hesaplama & Ölçü Dönüşümleri (km-m-cm / Ton-kg / L-mL)',
+      math_4_karma: '4. Sınıf Matematik Karma Düello',
       math_digits_operations_4: '4, 5, 6 Basamaklı Sayılar ve Dört İşlem',
       math_fractions_angles_4: 'Kesirler, Zaman ve Açılar',
       math_perimeter_area_4: 'Çevre ve Alan Hesaplama',
@@ -12320,61 +11972,100 @@
         name: 'Matematik',
         icon: '🧮',
         colorTheme: 'theme-math',
-        tagline: '4 İşlem & Kesirler',
-        description: 'Dört basamaklı sayılar, kesirler, açılar ve çevre-alan ustalığı! 👑🍕',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: '4, 5 ve 6 basamaklı doğal sayılar (binler bölüğü), 4 işlem ve eşitlik dengesi, basit-bileşik-tam sayılı kesirler, zaman ve sütun grafiği, dar-dik-geniş açılar, çevre-alan ve ölçü dönüşümleri! 👑⚡🍕⏰📐📏',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'four_operations', label: '👑 Bölükler & 4 İşlem' },
-          { id: 'fractions', label: '🍕 Kesirler & Açılar' },
-          { id: 'geometry', label: '📐 Çevre & Alan' }
+          { id: 'all', label: '🌟 Tüm Öğrenme Alanları / Karma' },
+          { id: 'numbers_place_value', label: '👑 1. 4, 5 ve 6 Basamaklı Doğal Sayılar' },
+          { id: 'four_operations_4', label: '⚡ 2. Dört İşlem (Toplama, Çıkarma, Çarpma, Bölme)' },
+          { id: 'fractions_4', label: '🍕 3. Kesirler ve Kesirlerle İşlemler' },
+          { id: 'time_data_4', label: '⏰ 4. Zaman Ölçme ve Veri İşleme (Grafikler)' },
+          { id: 'geometry_angles_4', label: '📐 5. Geometri (Üçgenler, Açılar ve Simetri)' },
+          { id: 'measurement_perimeter_area_4', label: '📏 6. Uzunluk, Çevre, Alan, Tartma ve Sıvı Ölçme' }
         ],
         games: [
           {
-            id: 'math_digits_operations_4',
+            id: 'math_numbers_place_value_4',
             active: true,
-            title: '4, 5, 6 Basamaklı Sayılar & Dört İşlem',
+            title: 'Binler Bölüğü & 6 Basamaklı Sayı Ustası',
             icon: '👑',
-            badge: 'Dinamik Üretici',
-            featureTag: '👑 Bölükler & İşlem',
-            description: 'Bölükler, basamak değerleri, en yakın binliğe yuvarlama ve zihinden çarpma/bölme! 👑⚡',
-            tags: ['👑 Binler & Birler Bölüğü', '⚡ Zihinden Çarpma', '🎯 Binliğe Yuvarlama'],
+            badge: '👑 1. Doğal Sayılar (999.999\'a Kadar)',
+            featureTag: '🔢 Bölükler, Çözümleme & Yuvarlama',
+            description: '4, 5 ve 6 basamaklı doğal sayıları okuma-yazma, Birler ve Binler Bölüğü, basamak değerleri, çözümleme, en yakın onluğa/yüzlüğe yuvarlama, yüzer-biner ritmik sayma ve sayı örüntüleri!',
+            tags: ['👑 Birler ve Binler Bölüğü', '📦 Basamak Değeri & Çözümleme', '🎯 Onluğa & Yüzlüğe Yuvarlama', '🧩 Sayı Örüntüleri & Sıralama'],
             btnText: 'Düelloyu Başlat',
-            topic: 'four_operations'
+            topic: 'numbers_place_value'
           },
           {
-            id: 'math_fractions_angles_4',
+            id: 'math_four_operations_4',
             active: true,
-            title: 'Kesirler, Zaman ve Açılar',
+            title: '4 İşlem Şampiyonu & Eşitlik Dengesi Düellosu',
+            icon: '⚡',
+            badge: '⚡ 2. Dört İşlem ve Eşitlik',
+            featureTag: '✖️➗ Çarpma, Bölme & Eşitlik Dengesi',
+            description: '4 basamaklı sayılarla toplama-çıkarma, 3 basamaklı ile 2 basamaklı sayıları çarpma, parantezli çarpma, 10-100-1000 ile kısa yoldan çarpma/bölme, Bölünen=(Bölen×Bölüm)+Kalan ve eşitlik dengesi!',
+            tags: ['➕➖ 4 Basamaklı Toplama & Çıkarma', '✖️ 3 Basamaklı × 2 Basamaklı', '➗ Bölünen = (Bölen×Bölüm)+Kalan', '⚖️ Eşitlik Dengesi (8×5 = 32+?)'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'four_operations_4'
+          },
+          {
+            id: 'math_fractions_operations_4',
+            active: true,
+            title: 'Basit-Bileşik-Tam Sayılı Kesir Avcısı & Kesir Problemleri',
             icon: '🍕',
-            badge: '26 Özgün Soru',
-            featureTag: '🍕 Basit & Bileşik',
-            description: 'Basit/bileşik/tam sayılı kesirler, dar-dik-geniş açılar ve saat-dakika dönüşümleri! 🍕📐',
-            tags: ['🍕 Kesir Türleri', '📐 Dar, Dik & Geniş Açı', '⏳ Zaman Dönüşümleri'],
+            badge: '🍕 3. Kesirler ve İşlemler',
+            featureTag: '🎂 Basit, Bileşik, Tam Sayılı & İşlem',
+            description: 'Basit (Pay < Payda), Bileşik (Pay ≥ Payda) ve Tam Sayılı kesirler, birim kesirleri sıralama, bir çokluğun basit kesir kadarını bulma (60\'ın 3/5\'i) ve paydaları eşit kesirlerle toplama-çıkarma!',
+            tags: ['🍕 Basit, Bileşik & Tam Sayılı', '🌰 Çokluğun Kesir Kadarını Bulma', '📊 Kesirlerde Sıralama', '➕➖ Paydası Eşit Kesir İşlemleri'],
             btnText: 'Düelloyu Başlat',
-            topic: 'fractions'
+            topic: 'fractions_4'
           },
           {
-            id: 'math_perimeter_area_4',
+            id: 'math_time_data_4',
             active: true,
-            title: 'Çevre ve Alan Hesaplama',
+            title: 'Zaman Dönüşümleri & Sütun Grafiği Dedektifi',
+            icon: '⏰',
+            badge: '⏰ 4. Zaman Ölçme ve Grafikler',
+            featureTag: '📊 Saat-Dakika, Artık Yıl & Sütun Grafiği',
+            description: 'Saat-dakika ve dakika-saniye dönüşümleri, yıl-ay-hafta-gün ve Artık Yıl (Şubat\'ın 4 yılda bir 29 gün çekmesi), süre hesaplama, Sütun Grafiği, şekil grafiği ve çetele/sıklık tablosu problemleri!',
+            tags: ['⏰ Saat-Dakika-Saniye Dönüşümü', '📅 Artık Yıl (29 Şubat)', '📊 Sütun ve Şekil Grafiği', '📋 Çetele & Sıklık Tablosu'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'time_data_4'
+          },
+          {
+            id: 'math_geometry_angles_4',
+            active: true,
+            title: 'Dar-Dik-Geniş Açı & Eşkenar/İkizkenar Üçgen Ustası',
             icon: '📐',
-            badge: 'Dinamik Hesap',
-            featureTag: '📐 Çevre & Alan',
-            description: 'Kare ve dikdörtgenlerin çevre ve alanlarını dinamik uzunluklarla hesaplama düellosu! 🟦📏',
-            tags: ['🟦 Kare Çevre & Alan', '🚪 Dikdörtgen Alanı', '📏 Santimetrekare (cm²)'],
+            badge: '📐 5. Geometri, Açılar ve Simetri',
+            featureTag: '🔺 Üçgen Türleri, İletki & Açılar',
+            description: 'Kenarlarına göre üçgenler (Eşkenar, İkizkenar, Çeşitkenar), küpün açınımı (6 eş kare), düzlem, iletki ile açı ölçme, Dar (<90°), Dik (90°), Geniş (90°-180°) ve Doğru Açı (180°) ve ayna simetrisi!',
+            tags: ['🔺 Eşkenar, İkizkenar & Çeşitkenar', '📐 Dar, Dik, Geniş & Doğru Açı', '🎲 Küpün Açınımı (6 Eş Kare)', '🦋 Ayna Simetrisi'],
             btnText: 'Düelloyu Başlat',
-            topic: 'geometry'
+            topic: 'geometry_angles_4'
           },
           {
-            id: 'math',
+            id: 'math_measurement_perimeter_area_4',
             active: true,
-            title: 'Kafa Kafaya Matematik (Karma)',
-            icon: '🧮',
-            badge: '👑 4 İşlem Ustası',
-            featureTag: '👑 Usta Hesap',
-            description: '4 işlem fırtınası! Kesirleri, çevre ve alanları saliseler içinde fethet! 👑',
-            tags: ['👑 Hızlı 4 İşlem', '🍕 Kesirler', '📐 Açı & Alan'],
+            title: 'Çevre-Alan Hesaplama & Ölçü Dönüşümleri (km-m-cm / Ton-kg / L-mL)',
+            icon: '📏',
+            badge: '📏 6. Çevre, Alan, Tartma & Sıvı Ölçme',
+            featureTag: '🟦 Çevre, Birim Kare Alan, Ton & Litre',
+            description: 'Uzunluk dönüşümleri (km-m-cm-mm), kare ve dikdörtgenin çevre uzunluğu, birim karelerle alan hesaplama, tartma (Ton-kg-g-mg) ve sıvı ölçme (Litre-Mililitre) dönüşüm problemleri!',
+            tags: ['🟦 Kare & Dikdörtgen Çevre-Alan', '🛣️ km - m - cm - mm Dönüşümü', '🚛 Ton - kg - g - mg Tartma', '🥛 Litre (L) & Mililitre (mL)'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'measurement_perimeter_area_4'
+          },
+          {
+            id: 'math_4_karma',
+            active: true,
+            title: '4. Sınıf Matematik Karma Düello',
+            icon: '🌟',
+            badge: '🏆 96 Soru Büyük Karma',
+            featureTag: '🌟 6 Öğrenme Alanı Büyük Yarışma',
+            description: '4. Sınıf Matematik dersinin 6 öğrenme alanının tamamından dengeli ve rastgele sorular çeken büyük 4. sınıf matematik yarışması! Hem Tek Kişilik Pratik hem İki Kişilik Düello!',
+            tags: ['👑 6 Basamaklı Sayılar & 4 İşlem', '🍕 Kesirler & Zaman/Grafik', '📐 Açılar & Üçgenler', '📏 Çevre, Alan, Ton & Litre'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
