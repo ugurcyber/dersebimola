@@ -14220,3 +14220,150 @@ body,
   background: #FFFFFF !important;
   background-color: #FFFFFF !important;
 }
+
+
+/* ==========================================================================
+   V8.2.0: MOBİL CİHAZLARDA MÜKEMMEL DİKEY AKIŞ VE KAYDIRMA (SCROLL) DÜZENİ
+   Telefonda içeriklerin (Moli, rozetler, güven bandı vb.) ekranın altında
+   kesilmesini önler, dikeyde akıcı ve doğal kaydırma sağlar.
+   ========================================================================== */
+@media (max-width: 768px) {
+  html, body {
+    height: auto !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .app-layout,
+  .app-main-wrapper,
+  #viewLobby {
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+  }
+
+  .lobby-content {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 32px !important;
+  }
+
+  .home-showcase-section {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 10px 14px 40px 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 16px !important;
+  }
+
+  .widescreen-showcase-stage {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  /* Başlık ve Butonlar */
+  .stage-heading-block {
+    margin-bottom: 6px !important;
+  }
+
+  .stage-main-title {
+    font-size: clamp(1.2rem, 5.2vw, 1.6rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  .stage-bubbly-3d {
+    font-size: clamp(1.9rem, 8.8vw, 2.7rem) !important;
+    margin: 4px auto 8px auto !important;
+  }
+
+  .stage-btn-start-3d {
+    width: min(320px, 90vw) !important;
+    padding: 14px 28px !important;
+    font-size: 1.25rem !important;
+    margin: 4px auto !important;
+  }
+
+  /* Günün Bilmecesi Kartı */
+  .daily-riddle-card {
+    width: 100% !important;
+    max-width: min(440px, 94vw) !important;
+    margin: 10px auto !important;
+  }
+
+  /* Moli Sahnesi ve Rozetler */
+  .stage-moli-showcase {
+    flex: none !important;
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 8px auto !important;
+  }
+
+  .widescreen-moli-arena {
+    height: 310px !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    position: relative !important;
+  }
+
+  .widescreen-moli-mascot {
+    height: 100% !important;
+  }
+
+  moly-mascot,
+  .moly-mascot-component,
+  .widescreen-moli-mascot .moli-mascot-img {
+    height: 250px !important;
+    max-height: 85% !important;
+    width: auto !important;
+  }
+
+  /* Alt Güven Bandı */
+  .widescreen-floating-trust-card {
+    width: min(520px, 94vw) !important;
+    margin: 14px auto 20px auto !important;
+    padding: 8px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .trust-lead-text {
+    font-size: 0.8rem !important;
+  }
+
+  .trust-right-tag {
+    font-size: 0.72rem !important;
+  }
+
+  /* Üst bar butonlarının mobilde sıkışmaması için */
+  .topbar-unified-actions {
+    gap: 6px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-width: calc(100vw - 120px) !important;
+    scrollbar-width: none !important;
+  }
+
+  .topbar-unified-actions::-webkit-scrollbar {
+    display: none !important;
+  }
+}
