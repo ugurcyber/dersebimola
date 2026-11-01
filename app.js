@@ -42,6 +42,7 @@
     // Düello Ayarları
     targetScore: 5,
     showAutoExplanation: true,
+    isMuted: false,
     soundEnabled: true,
     announcerEnabled: true, // Öğretmen Kontrolü: Edge-TTS Sunucu & Zafer Sesleri
     autoReadQuestion: true, // Soru Sesli Okuma (Edge-TTS & TTS)
@@ -1053,6 +1054,11 @@
 
     stopAllAudio() {
       this.stopQuestionAudio();
+      if (this.ctx && this.ctx.state === 'running' && (state.isMuted || !state.soundEnabled)) {
+        try {
+          this.ctx.suspend();
+        } catch (e) {}
+      }
     }
   }
 
@@ -1103,12 +1109,7 @@
   }
 
   function readCurrentQuestion(isManual = false) {
-    if (isManual && !state.soundEnabled) {
-      state.soundEnabled = true;
-      StorageManager.saveSettings();
-      updateSoundUI();
-    }
-    if (!state.soundEnabled) return;
+    if (state.isMuted || !state.soundEnabled) return;
     if (!state.currentQuestion) return;
 
     audio.ensureContext();
@@ -9211,10 +9212,22 @@
           if (parsed.targetScore) state.targetScore = parsed.targetScore;
           if (parsed.gameMode) state.gameMode = parsed.gameMode;
           if (parsed.soundEnabled !== undefined) state.soundEnabled = parsed.soundEnabled;
+          if (parsed.isMuted !== undefined) {
+            state.isMuted = Boolean(parsed.isMuted);
+            state.soundEnabled = !state.isMuted;
+          } else {
+            state.isMuted = !state.soundEnabled;
+          }
           if (parsed.announcerEnabled !== undefined) state.announcerEnabled = parsed.announcerEnabled;
           if (parsed.autoReadQuestion !== undefined) state.autoReadQuestion = parsed.autoReadQuestion;
           if (parsed.showAutoExplanation !== undefined) state.showAutoExplanation = parsed.showAutoExplanation;
         }
+        const savedMuted = localStorage.getItem('isMuted');
+        if (savedMuted !== null) {
+          state.isMuted = (savedMuted === 'true' || savedMuted === '1');
+          state.soundEnabled = !state.isMuted;
+        }
+        window.isMuted = state.isMuted;
       } catch (e) {
         console.warn('LocalStorage yükleme hatası:', e);
       }
@@ -9240,9 +9253,11 @@
     },
     saveSettings() {
       try {
+        localStorage.setItem('isMuted', JSON.stringify(Boolean(state.isMuted)));
         localStorage.setItem(this.KEYS.SETTINGS, JSON.stringify({
           targetScore: state.targetScore,
           gameMode: state.gameMode,
+          isMuted: state.isMuted,
           soundEnabled: state.soundEnabled,
           announcerEnabled: state.announcerEnabled,
           autoReadQuestion: state.autoReadQuestion,
@@ -9271,6 +9286,8 @@
     gradeChips: document.querySelectorAll('.grade-chip'),
     gradeCards: document.querySelectorAll('.grade-card'),
     btnToggleSound: document.getElementById('btnToggleSound'),
+    btnTopbarMute: document.getElementById('btnTopbarMute'),
+    topbarMuteIcon: document.getElementById('topbarMuteIcon'),
     iconSoundOn: document.querySelector('.icon-sound-on'),
     iconSoundOff: document.querySelector('.icon-sound-off'),
     btnToggleFullscreen: document.getElementById('btnToggleFullscreen'),
@@ -10319,19 +10336,36 @@
   }
 
   function toggleSound() {
-    state.soundEnabled = !state.soundEnabled;
+    state.isMuted = !state.isMuted;
+    state.soundEnabled = !state.isMuted;
+    window.isMuted = state.isMuted;
     StorageManager.saveSettings();
     updateSoundUI();
-    if (state.soundEnabled) {
+    updateSettingsModalUI();
+    if (state.isMuted) {
+      audio.stopAllAudio();
+      showToast('🔇 Tüm site sesleri kapatıldı');
+    } else {
       audio.ensureContext();
       audio.playCorrect();
-      showToast('🔊 Ses efektleri açıldı');
-    } else {
-      showToast('🔇 Ses efektleri kapatıldı');
+      showToast('🔊 Tüm site sesleri açıldı');
     }
   }
+  window.toggleMute = toggleSound;
 
   function updateSoundUI() {
+    state.isMuted = !state.soundEnabled;
+    window.isMuted = state.isMuted;
+    if (DOM.btnTopbarMute) {
+      DOM.btnTopbarMute.classList.toggle('is-muted', state.isMuted);
+      DOM.btnTopbarMute.setAttribute('aria-pressed', state.isMuted ? 'true' : 'false');
+      DOM.btnTopbarMute.title = state.isMuted
+        ? 'Ses Kapalı - Açmak İçin Tıklayın (🔇)'
+        : 'Ses Açık - Hızlı Sessize Almak İçin Tıklayın (🔊)';
+    }
+    if (DOM.topbarMuteIcon) {
+      DOM.topbarMuteIcon.textContent = state.isMuted ? '🔇' : '🔊';
+    }
     if (DOM.iconSoundOn && DOM.iconSoundOff) {
       if (state.soundEnabled) {
         DOM.iconSoundOn.classList.remove('hide');
@@ -15807,7 +15841,7 @@
       if (progress.length === data.parts.length) {
         zone.querySelectorAll('.word-slot').forEach(s => s.classList.add('word-complete'));
 
-        if (state.announcerEnabled && 'speechSynthesis' in window) {
+        if (!state.isMuted && state.soundEnabled && state.announcerEnabled && 'speechSynthesis' in window) {
           try {
             const u = new SpeechSynthesisUtterance(data.word);
             u.lang = 'tr-TR';
@@ -17066,6 +17100,14 @@
     if (btnDesktopAddQuiz) {
       addTapListener(btnDesktopAddQuiz, () => {
         openCustomQModal();
+      });
+    }
+
+    const btnTopbarMute = document.getElementById('btnTopbarMute');
+    if (btnTopbarMute) {
+      addTapListener(btnTopbarMute, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        toggleSound();
       });
     }
 
