@@ -10522,15 +10522,66 @@
     }
   }
 
+  const MOLI_SPEECH_QUOTES = [
+    'Hadi Başlayalım! 🚀',
+    'Bugün Çok Zekisin! ⭐',
+    'Hangi Dersi Seçiyoruz? 🎯',
+    'Mola Zamanı, Başarı Zamanı! 🏆',
+    'Akıllı Tahtaya Hoş Geldin! ✨',
+    'Harika Bir Gün Olsun! 🌟',
+    'Sen Bir Dahisin! 💡',
+    'Hazır mısın? Süper Güçlerin Var! ⚡',
+    'Moli Seni Çok Seviyor! 🧡'
+  ];
+
+  let lastMoliQuoteIdx = -1;
+  function getRandomMoliQuote() {
+    let idx = Math.floor(Math.random() * MOLI_SPEECH_QUOTES.length);
+    if (idx === lastMoliQuoteIdx) {
+      idx = (idx + 1) % MOLI_SPEECH_QUOTES.length;
+    }
+    lastMoliQuoteIdx = idx;
+    return MOLI_SPEECH_QUOTES[idx];
+  }
+
   function handleMoliClick() {
     if (state.currentView === 'duel') {
       exitDuel();
       return;
     }
+
+    // 1) Moli Maskot Zıplama & Sallanma Animasyonu
+    const robotEl = document.getElementById('widescreenMoliRobot');
+    if (robotEl) {
+      robotEl.classList.remove('moli-bounce-active');
+      void robotEl.offsetWidth;
+      robotEl.classList.add('moli-bounce-active');
+      setTimeout(() => {
+        robotEl.classList.remove('moli-bounce-active');
+      }, 700);
+    }
+
+    // 2) Konuşma Balonundaki Metni Rastgele Motive Edici Cümleyle Değiştir
+    const pillReady = document.getElementById('btnPillReady');
+    if (pillReady) {
+      const txtEl = pillReady.querySelector('.pill-txt');
+      if (txtEl) {
+        txtEl.textContent = getRandomMoliQuote();
+        pillReady.classList.remove('bubble-pop-anim');
+        void pillReady.offsetWidth;
+        pillReady.classList.add('bubble-pop-anim');
+      }
+    }
+
+    // 3) Varsa eski logo ve moliImg uyumluluğu
     if (DOM.moliImg) {
       DOM.moliImg.classList.remove('anim-bounce', 'anim-wobble', 'anim-wave');
       void DOM.moliImg.offsetWidth;
       DOM.moliImg.classList.add('anim-bounce');
+    }
+
+    if (typeof audio !== 'undefined' && audio.playPop) {
+      audio.playPop();
     }
   }
 
