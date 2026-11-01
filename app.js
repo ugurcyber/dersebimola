@@ -11159,6 +11159,1630 @@
     updateTtQuietStarsUI();
   }
 
+
+  /* ==========================================================================
+     8.7. 🔥 POPÜLER OYUNLAR & DÜELLOLAR (6 TAM KAPSAMLI ZEKA & REKABET OYUNU)
+     ========================================================================== */
+  const ArcadeHub = {
+    activeGame: null,
+
+    // 1) ⚔️ Çarpma Savaşı (Halat Çekme)
+    tug: {
+      diff: 'easy', // 'easy' (1-5) | 'medium' (6-9) | 'hard' (2-10) | 'mixed' (4 işlem)
+      ropePos: 0,   // -5 (Mavi kazanır) .. 0 .. +5 (Turuncu kazanır)
+      p1Score: 0,
+      p2Score: 0,
+      p1Locked: false,
+      p2Locked: false,
+      isOver: false,
+      currentQ: null
+    },
+
+    // 2) 🧩 Çocuk Sudokusu
+    sudoku: {
+      mode: 'fruit4', // 'fruit4' | 'shape4' | 'num4' | 'num6'
+      size: 4,
+      boxR: 2,
+      boxC: 2,
+      symbols: ['🍎', '🍌', '🍓', '🍇'],
+      solution: [],
+      puzzle: [],
+      userGrid: [],
+      selectedCell: null,
+      statusStates: [] // '' | 'correct' | 'wrong'
+    },
+
+    // 3) ❌⭕ Akıllı XOX (Klasik & Sonsuz 3 Taş)
+    xox: {
+      vsAi: false,       // false: 2 Kişilik | true: 🤖 Moli'ye Karşı
+      infiniteMode: true, // 🔥 Sonsuz Mod (3 Taş Kuralı)
+      board: Array(9).fill(null),
+      movesX: [],
+      movesO: [],
+      turn: 'X',
+      winner: null,
+      winLine: [],
+      scoreX: 0,
+      scoreO: 0,
+      aiThinking: false
+    },
+
+    // 4) 🧠 Hafıza Kartları Düellosu
+    memory: {
+      players: 2,        // 1 | 2
+      gridSize: 12,      // 12 (4x3) | 16 (4x4)
+      theme: 'animals',  // 'animals' | 'space' | 'fruits' | 'synonyms'
+      cards: [],
+      flippedIndices: [],
+      matchedCount: 0,
+      turn: 1,
+      p1Score: 0,
+      p2Score: 0,
+      moves: 0,
+      busy: false
+    },
+
+    // 5) 🌸 Moli'nin Çiçeği: Kelime Bulmaca
+    flower: {
+      category: 'animals', // 'animals' | 'cities' | 'fruits' | 'proverbs' | 'jobs'
+      word: '',
+      hint: '',
+      guessed: [],
+      wrongCount: 0,
+      maxWrong: 7,
+      isOver: false,
+      won: false,
+      streak: 0
+    },
+
+    // 6) ⚡ Hızlı Parmaklar: Doğru mu Yanlış mı? (Buzzer)
+    buzzer: {
+      p1Score: 0,
+      p2Score: 0,
+      targetScore: 7,
+      p1Locked: false,
+      p2Locked: false,
+      currentItem: null,
+      usedIndices: [],
+      answered: false,
+      isOver: false
+    }
+  };
+
+  function openArcadeHub() {
+    lockInteractions(300);
+    state.currentSection = 'arcade';
+    if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
+    DOM.gradeChips.forEach(chip => chip.classList.remove('active'));
+    const btnSidebarDuels = document.getElementById('btnSidebarDuels');
+    if (btnSidebarDuels) btnSidebarDuels.classList.add('active');
+
+    if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    const cardsView = document.getElementById('arcadeCardsView');
+    const stageView = document.getElementById('arcadeStageView');
+    if (arcadeSec) arcadeSec.classList.remove('hide');
+    if (cardsView) cardsView.classList.remove('hide');
+    if (stageView) stageView.classList.add('hide');
+    ArcadeHub.activeGame = null;
+  }
+  window.openArcadeHub = openArcadeHub;
+
+  function closeArcadeStageToCards() {
+    audio.playClick();
+    const cardsView = document.getElementById('arcadeCardsView');
+    const stageView = document.getElementById('arcadeStageView');
+    if (cardsView) cardsView.classList.remove('hide');
+    if (stageView) stageView.classList.add('hide');
+    ArcadeHub.activeGame = null;
+  }
+
+  function launchArcadeGame(gameId) {
+    audio.playClick();
+    ArcadeHub.activeGame = gameId;
+    const cardsView = document.getElementById('arcadeCardsView');
+    const stageView = document.getElementById('arcadeStageView');
+    if (cardsView) cardsView.classList.add('hide');
+    if (stageView) stageView.classList.remove('hide');
+
+    if (gameId === 'tug') initArcadeTugGame();
+    else if (gameId === 'sudoku') initArcadeSudokuGame();
+    else if (gameId === 'xox') initArcadeXoxGame();
+    else if (gameId === 'memory') initArcadeMemoryGame();
+    else if (gameId === 'flower') initArcadeFlowerGame();
+    else if (gameId === 'buzzer') initArcadeBuzzerGame();
+  }
+
+  // =========================================================================
+  // OYUN 1: ⚔️ ÇARPMA SAVAŞI (HALAT ÇEKME DÜELLOSU - 2 KİŞİLİK)
+  // =========================================================================
+  function generateTugQuestion(diff) {
+    let a, b, op = '×', ans;
+    if (diff === 'easy') {
+      a = Math.floor(Math.random() * 5) + 1;
+      b = Math.floor(Math.random() * 9) + 1;
+      ans = a * b;
+    } else if (diff === 'medium') {
+      a = Math.floor(Math.random() * 4) + 6; // 6..9
+      b = Math.floor(Math.random() * 8) + 2; // 2..9
+      ans = a * b;
+    } else if (diff === 'hard') {
+      a = Math.floor(Math.random() * 9) + 2; // 2..10
+      b = Math.floor(Math.random() * 9) + 2; // 2..10
+      ans = a * b;
+    } else {
+      // 4 İşlem Karma
+      const ops = ['+', '-', '×', '÷'];
+      op = ops[Math.floor(Math.random() * ops.length)];
+      if (op === '+') {
+        a = Math.floor(Math.random() * 40) + 10;
+        b = Math.floor(Math.random() * 40) + 10;
+        ans = a + b;
+      } else if (op === '-') {
+        a = Math.floor(Math.random() * 50) + 25;
+        b = Math.floor(Math.random() * 22) + 5;
+        ans = a - b;
+      } else if (op === '×') {
+        a = Math.floor(Math.random() * 8) + 2;
+        b = Math.floor(Math.random() * 8) + 2;
+        ans = a * b;
+      } else {
+        b = Math.floor(Math.random() * 8) + 2;
+        ans = Math.floor(Math.random() * 9) + 2;
+        a = b * ans;
+      }
+    }
+
+    const optsSet = new Set([ans]);
+    while (optsSet.size < 3) {
+      const delta = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+      const cand = Math.max(1, ans + delta);
+      if (cand !== ans) optsSet.add(cand);
+    }
+    const opts = Array.from(optsSet).sort(() => Math.random() - 0.5);
+    return {
+      text: `${a} ${op} ${b} = ?`,
+      answer: ans,
+      options: opts
+    };
+  }
+
+  function initArcadeTugGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '⚔️';
+    if (titleEl) titleEl.textContent = 'Çarpma Savaşı: Halat Çekme Düellosu';
+
+    const t = ArcadeHub.tug;
+    t.ropePos = 0;
+    t.p1Locked = false;
+    t.p2Locked = false;
+    t.isOver = false;
+    t.currentQ = generateTugQuestion(t.diff);
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${t.diff === 'easy' ? 'active' : ''}" data-tug-diff="easy" type="button">Kolay (1-5'ler)</button>
+          <button class="arc-pill-btn ${t.diff === 'medium' ? 'active' : ''}" data-tug-diff="medium" type="button">Orta (6-9'lar)</button>
+          <button class="arc-pill-btn ${t.diff === 'hard' ? 'active' : ''}" data-tug-diff="hard" type="button">Zor (Tüm Tablo)</button>
+          <button class="arc-pill-btn ${t.diff === 'mixed' ? 'active' : ''}" data-tug-diff="mixed" type="button">4 İşlem Karma</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnTugRestart" type="button">🔄 Yeni Maç</button>
+        </div>
+      `;
+      toolbarEl.querySelectorAll('[data-tug-diff]').forEach(btn => {
+        addTapListener(btn, () => {
+          ArcadeHub.tug.diff = btn.getAttribute('data-tug-diff');
+          audio.playClick();
+          initArcadeTugGame();
+        });
+      });
+      const btnRestart = document.getElementById('btnTugRestart');
+      if (btnRestart) addTapListener(btnRestart, () => { audio.playClick(); initArcadeTugGame(); });
+    }
+
+    renderArcadeTugStage();
+  }
+
+  function renderArcadeTugStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const t = ArcadeHub.tug;
+    const q = t.currentQ;
+    // ropePos: -5 (Blue wins on left) .. 0 (Center) .. +5 (Orange wins on right)
+    const pct = 50 + (t.ropePos * 8.2);
+    const blueSteps = Math.max(0, -t.ropePos);
+    const orangeSteps = Math.max(0, t.ropePos);
+
+    let stepsHtml = '';
+    for (let i = -5; i <= 5; i++) {
+      const cls = i < 0 ? 'step-blue' : (i > 0 ? 'step-orange' : 'step-center');
+      const activeCls = (i < 0 && t.ropePos <= i) ? 'filled-blue' : ((i > 0 && t.ropePos >= i) ? 'filled-orange' : '');
+      stepsHtml += `<span class="tug-step-dot ${cls} ${activeCls}">${i === -5 ? '🔵' : (i === 5 ? '🟠' : (i === 0 ? '⚡' : ''))}</span>`;
+    }
+
+    canvas.innerHTML = `
+      <div class="arc-tug-arena">
+        <!-- Üst Halat Çekme Sahnesi -->
+        <div class="tug-rope-banner">
+          <div class="tug-team-side side-blue">
+            <span class="tug-team-badge">🔵 1. Oyuncu (Mavi)</span>
+            <span class="tug-team-steps">Çekilen: <strong>${blueSteps} / 5</strong> (Zafer: ${t.p1Score})</span>
+          </div>
+          <div class="tug-center-status" id="tugCenterStatus">
+            ${t.isOver
+              ? (t.ropePos <= -5 ? '🏆 1. OYUNCU (MAVİ) HALATI ÇEKTİ VE KAZANDI! 🎉' : '🏆 2. OYUNCU (TURUNCU) HALATI ÇEKTİ VE KAZANDI! 🎉')
+              : '🪢 Doğru şıkka ilk basan halatı kendi tarafına 1 adım çeker! (+5 adımda zafer)'}
+          </div>
+          <div class="tug-team-side side-orange">
+            <span class="tug-team-badge">🟠 2. Oyuncu (Turuncu)</span>
+            <span class="tug-team-steps">Çekilen: <strong>${orangeSteps} / 5</strong> (Zafer: ${t.p2Score})</span>
+          </div>
+        </div>
+
+        <div class="tug-rope-track-wrap">
+          <div class="tug-zone-label zone-blue">🔵 MAVİ ZAFER BÖLGESİ</div>
+          <div class="tug-rope-line">
+            <div class="tug-steps-row">${stepsHtml}</div>
+            <div class="tug-knot-marker" id="tugKnotMarker" style="left: ${pct}%;">
+              <span class="tug-knot-flag">🚩</span>
+              <img src="assets/mascot/moli.webp" class="tug-knot-moli" alt="Moli" width="44" height="44">
+            </div>
+          </div>
+          <div class="tug-zone-label zone-orange">🟠 TURUNCU ZAFER BÖLGESİ</div>
+        </div>
+
+        <!-- İkiye Bölünmüş Oyuncu Soru Ekranları -->
+        <div class="tug-split-players">
+          <!-- Sol: 1. Oyuncu (Mavi) -->
+          <div class="tug-player-card player-blue ${t.p1Locked ? 'is-locked' : ''}" id="tugP1Card">
+            <div class="tug-player-header">🔵 1. Oyuncu (Mavi Köşe)</div>
+            <div class="tug-question-box">${q.text}</div>
+            <div class="tug-options-row">
+              ${q.options.map((opt, idx) => `
+                <button class="tug-opt-btn btn-blue" data-tug-p="1" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>${opt}</button>
+              `).join('')}
+            </div>
+            <div class="tug-lock-msg">🔒 Yanlış cevap! 1.2 sn kilitlendi...</div>
+          </div>
+
+          <!-- Sağ: 2. Oyuncu (Turuncu) -->
+          <div class="tug-player-card player-orange ${t.p2Locked ? 'is-locked' : ''}" id="tugP2Card">
+            <div class="tug-player-header">🟠 2. Oyuncu (Turuncu Köşe)</div>
+            <div class="tug-question-box">${q.text}</div>
+            <div class="tug-options-row">
+              ${q.options.map((opt, idx) => `
+                <button class="tug-opt-btn btn-orange" data-tug-p="2" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>${opt}</button>
+              `).join('')}
+            </div>
+            <div class="tug-lock-msg">🔒 Yanlış cevap! 1.2 sn kilitlendi...</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    canvas.querySelectorAll('[data-tug-p]').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        if (e.cancelable) e.preventDefault();
+        const p = parseInt(btn.getAttribute('data-tug-p'), 10);
+        const val = parseInt(btn.getAttribute('data-tug-val'), 10);
+        handleTugAnswer(p, val);
+      });
+    });
+  }
+
+  function handleTugAnswer(playerNum, val) {
+    const t = ArcadeHub.tug;
+    if (t.isOver) return;
+    if (playerNum === 1 && t.p1Locked) return;
+    if (playerNum === 2 && t.p2Locked) return;
+
+    if (val === t.currentQ.answer) {
+      audio.playCorrect();
+      // 1. Oyuncu sola (-1), 2. Oyuncu sağa (+1) çeker
+      t.ropePos += (playerNum === 1 ? -1 : 1);
+      t.p1Locked = false;
+      t.p2Locked = false;
+
+      if (t.ropePos <= -5 || t.ropePos >= 5) {
+        t.isOver = true;
+        if (t.ropePos <= -5) t.p1Score += 1;
+        else t.p2Score += 1;
+        renderArcadeTugStage();
+        audio.playFanfare();
+        if (typeof launchConfetti === 'function') launchConfetti();
+        if (!state.isMuted && state.soundEnabled) {
+          const winnerText = t.ropePos <= -5 ? 'Birinci oyuncu Mavi Takım halatı çekti ve kazandı!' : 'İkinci oyuncu Turuncu Takım halatı çekti ve kazandı!';
+          audio.speakTurkishText(winnerText);
+        }
+      } else {
+        t.currentQ = generateTugQuestion(t.diff);
+        renderArcadeTugStage();
+      }
+    } else {
+      audio.playWrong();
+      if (playerNum === 1) {
+        t.p1Locked = true;
+        const c1 = document.getElementById('tugP1Card');
+        if (c1) c1.classList.add('is-locked');
+        setTimeout(() => {
+          t.p1Locked = false;
+          const el = document.getElementById('tugP1Card');
+          if (el) el.classList.remove('is-locked');
+        }, 1200);
+      } else {
+        t.p2Locked = true;
+        const c2 = document.getElementById('tugP2Card');
+        if (c2) c2.classList.add('is-locked');
+        setTimeout(() => {
+          t.p2Locked = false;
+          const el = document.getElementById('tugP2Card');
+          if (el) el.classList.remove('is-locked');
+        }, 1200);
+      }
+    }
+  }
+
+  // =========================================================================
+  // OYUN 2: 🧩 ÇOCUK SUDOKUSU (MANTIK VE ZEKA ATÖLYESİ)
+  // =========================================================================
+  function generateSudokuBoard(mode) {
+    const s = ArcadeHub.sudoku;
+    s.mode = mode;
+    if (mode === 'fruit4') {
+      s.size = 4; s.boxR = 2; s.boxC = 2;
+      s.symbols = ['🍎', '🍌', '🍓', '🍇'];
+    } else if (mode === 'shape4') {
+      s.size = 4; s.boxR = 2; s.boxC = 2;
+      s.symbols = ['⭐', '🔷', '🟢', '🔺'];
+    } else if (mode === 'num4') {
+      s.size = 4; s.boxR = 2; s.boxC = 2;
+      s.symbols = ['1', '2', '3', '4'];
+    } else {
+      s.size = 6; s.boxR = 2; s.boxC = 3;
+      s.symbols = ['1', '2', '3', '4', '5', '6'];
+    }
+
+    const N = s.size;
+    // Temel geçerli Latin/Sudoku tablosu üret ve sembolleri karıştır
+    const perm = Array.from({ length: N }, (_, i) => i).sort(() => Math.random() - 0.5);
+    const base = [];
+    for (let r = 0; r < N; r++) {
+      const row = [];
+      const shift = (r * s.boxC + Math.floor(r / s.boxR)) % N;
+      for (let c = 0; c < N; c++) {
+        const symIdx = perm[(c + shift) % N];
+        row.push(s.symbols[symIdx]);
+      }
+      base.push(row);
+    }
+
+    // Aynı blok içindeki satırları karıştır
+    for (let br = 0; br < N; br += s.boxR) {
+      if (Math.random() < 0.5) {
+        const tmp = base[br];
+        base[br] = base[br + 1];
+        base[br + 1] = tmp;
+      }
+    }
+
+    s.solution = base.map(r => r.slice());
+    s.puzzle = base.map(r => r.slice());
+    const blanksPerRow = (N === 4) ? 2 : 3;
+    for (let r = 0; r < N; r++) {
+      const cols = Array.from({ length: N }, (_, i) => i).sort(() => Math.random() - 0.5);
+      for (let k = 0; k < blanksPerRow; k++) {
+        s.puzzle[r][cols[k]] = null;
+      }
+    }
+
+    s.userGrid = s.puzzle.map(r => r.slice());
+    s.statusStates = Array.from({ length: N }, () => Array(N).fill(''));
+    s.selectedCell = null;
+    // İlk boş hücreyi otomatik seç
+    for (let r = 0; r < N && !s.selectedCell; r++) {
+      for (let c = 0; c < N; c++) {
+        if (s.puzzle[r][c] === null) {
+          s.selectedCell = { r, c };
+          break;
+        }
+      }
+    }
+  }
+
+  function initArcadeSudokuGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🧩';
+    if (titleEl) titleEl.textContent = 'Çocuk Sudokusu: Mantık ve Zeka Atölyesi';
+
+    const s = ArcadeHub.sudoku;
+    generateSudokuBoard(s.mode || 'fruit4');
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${s.mode === 'fruit4' ? 'active' : ''}" data-sdk-mode="fruit4" type="button">🍎 4x4 Meyve</button>
+          <button class="arc-pill-btn ${s.mode === 'shape4' ? 'active' : ''}" data-sdk-mode="shape4" type="button">⭐ 4x4 Şekil</button>
+          <button class="arc-pill-btn ${s.mode === 'num4' ? 'active' : ''}" data-sdk-mode="num4" type="button">🔢 4x4 Rakam</button>
+          <button class="arc-pill-btn ${s.mode === 'num6' ? 'active' : ''}" data-sdk-mode="num6" type="button">🧠 6x6 Rakam</button>
+        </div>
+      `;
+      toolbarEl.querySelectorAll('[data-sdk-mode]').forEach(btn => {
+        addTapListener(btn, () => {
+          ArcadeHub.sudoku.mode = btn.getAttribute('data-sdk-mode');
+          audio.playClick();
+          initArcadeSudokuGame();
+        });
+      });
+    }
+
+    renderArcadeSudokuStage();
+  }
+
+  function renderArcadeSudokuStage(bannerMsg = '') {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const s = ArcadeHub.sudoku;
+    const N = s.size;
+
+    let gridHtml = '';
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        const isFixed = s.puzzle[r][c] !== null;
+        const val = s.userGrid[r][c] || '';
+        const isSel = s.selectedCell && s.selectedCell.r === r && s.selectedCell.c === c;
+        const st = s.statusStates[r][c];
+        const borderRight = ((c + 1) % s.boxC === 0 && c < N - 1) ? 'sdk-box-right' : '';
+        const borderBottom = ((r + 1) % s.boxR === 0 && r < N - 1) ? 'sdk-box-bottom' : '';
+        gridHtml += `
+          <button class="sdk-cell ${isFixed ? 'is-fixed' : 'is-editable'} ${isSel ? 'is-selected' : ''} ${st ? 'cell-' + st : ''} ${borderRight} ${borderBottom}"
+                  data-sdk-r="${r}" data-sdk-c="${c}" type="button">
+            ${val}
+          </button>
+        `;
+      }
+    }
+
+    canvas.innerHTML = `
+      <div class="arc-sudoku-arena">
+        <div class="sdk-instructions">
+          💡 <strong>Kural:</strong> Her satırda, her sütunda ve her kalın çerçeveli kutuda aynı simge veya rakam <strong>sadece 1 kez</strong> bulunabilir!
+        </div>
+        ${bannerMsg ? `<div class="sdk-feedback-banner">${bannerMsg}</div>` : ''}
+
+        <div class="sdk-main-layout">
+          <div class="sdk-board grid-${N}x${N}">
+            ${gridHtml}
+          </div>
+
+          <div class="sdk-side-controls">
+            <div class="sdk-pad-title">Seçili Kutuya Yerleştir:</div>
+            <div class="sdk-symbol-pad">
+              ${s.symbols.map(sym => `
+                <button class="sdk-pad-btn" data-sdk-sym="${sym}" type="button">${sym}</button>
+              `).join('')}
+              <button class="sdk-pad-btn sdk-btn-erase" id="btnSdkErase" type="button">🧹 Sil</button>
+            </div>
+
+            <div class="sdk-action-buttons">
+              <button class="tt-ctrl-btn tt-btn-start" id="btnSdkCheck" type="button">✅ Kontrol Et</button>
+              <button class="tt-ctrl-btn tt-btn-bell" id="btnSdkHint" type="button">💡 İpucu Ver</button>
+              <button class="tt-ctrl-btn tt-btn-reset" id="btnSdkNew" type="button">🔄 Yeni Bulmaca</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    canvas.querySelectorAll('[data-sdk-r]').forEach(cell => {
+      addTapListener(cell, () => {
+        const r = parseInt(cell.getAttribute('data-sdk-r'), 10);
+        const c = parseInt(cell.getAttribute('data-sdk-c'), 10);
+        if (s.puzzle[r][c] !== null) return;
+        s.selectedCell = { r, c };
+        audio.playClick();
+        renderArcadeSudokuStage();
+      });
+    });
+
+    canvas.querySelectorAll('[data-sdk-sym]').forEach(btn => {
+      addTapListener(btn, () => {
+        const sym = btn.getAttribute('data-sdk-sym');
+        if (!s.selectedCell) return;
+        const { r, c } = s.selectedCell;
+        if (s.puzzle[r][c] !== null) return;
+        s.userGrid[r][c] = sym;
+        s.statusStates[r][c] = '';
+        audio.playPop();
+        // Otomatik tamamlama kontrolü
+        checkSudokuIfFull();
+      });
+    });
+
+    const btnErase = document.getElementById('btnSdkErase');
+    if (btnErase) {
+      addTapListener(btnErase, () => {
+        if (!s.selectedCell) return;
+        const { r, c } = s.selectedCell;
+        if (s.puzzle[r][c] !== null) return;
+        s.userGrid[r][c] = null;
+        s.statusStates[r][c] = '';
+        audio.playClick();
+        renderArcadeSudokuStage();
+      });
+    }
+
+    const btnCheck = document.getElementById('btnSdkCheck');
+    if (btnCheck) addTapListener(btnCheck, validateSudokuBoard);
+
+    const btnHint = document.getElementById('btnSdkHint');
+    if (btnHint) addTapListener(btnHint, giveSudokuHint);
+
+    const btnNew = document.getElementById('btnSdkNew');
+    if (btnNew) addTapListener(btnNew, () => {
+      audio.playClick();
+      generateSudokuBoard(s.mode);
+      renderArcadeSudokuStage();
+    });
+  }
+
+  function isSudokuCellConflict(grid, N, boxR, boxC, r, c, val) {
+    if (!val) return false;
+    for (let k = 0; k < N; k++) {
+      if (k !== c && grid[r][k] === val) return true;
+      if (k !== r && grid[k][c] === val) return true;
+    }
+    const startR = Math.floor(r / boxR) * boxR;
+    const startC = Math.floor(c / boxC) * boxC;
+    for (let rr = startR; rr < startR + boxR; rr++) {
+      for (let cc = startC; cc < startC + boxC; cc++) {
+        if ((rr !== r || cc !== c) && grid[rr][cc] === val) return true;
+      }
+    }
+    return false;
+  }
+
+  function checkSudokuIfFull() {
+    const s = ArcadeHub.sudoku;
+    const N = s.size;
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        if (!s.userGrid[r][c]) {
+          renderArcadeSudokuStage();
+          return;
+        }
+      }
+    }
+    validateSudokuBoard();
+  }
+
+  function validateSudokuBoard() {
+    const s = ArcadeHub.sudoku;
+    const N = s.size;
+    let emptyCount = 0;
+    let wrongCount = 0;
+
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        if (s.puzzle[r][c] !== null) {
+          s.statusStates[r][c] = '';
+          continue;
+        }
+        const val = s.userGrid[r][c];
+        if (!val) {
+          emptyCount += 1;
+          s.statusStates[r][c] = '';
+        } else if (val === s.solution[r][c] && !isSudokuCellConflict(s.userGrid, N, s.boxR, s.boxC, r, c, val)) {
+          s.statusStates[r][c] = 'correct';
+        } else {
+          wrongCount += 1;
+          s.statusStates[r][c] = 'wrong';
+        }
+      }
+    }
+
+    if (wrongCount === 0 && emptyCount === 0) {
+      audio.playFanfare();
+      if (typeof launchConfetti === 'function') launchConfetti();
+      if (!state.isMuted && state.soundEnabled) {
+        audio.speakTurkishText('Harikasın! Sudoku bulmacasını hatasız tamamladın!');
+      }
+      renderArcadeSudokuStage('🎉 TEBRİKLER! Sudoku Bulmacasını Hatasız Tamamladın! 🏆');
+    } else if (wrongCount > 0) {
+      audio.playWrong();
+      renderArcadeSudokuStage(`⚠️ ${wrongCount} kutuda hata var (Kırmızı kutuları kontrol et).`);
+    } else {
+      audio.playCorrect();
+      renderArcadeSudokuStage(`👍 Şimdiye kadar hepsi doğru! Kalan boş kutu: ${emptyCount}`);
+    }
+  }
+
+  function giveSudokuHint() {
+    const s = ArcadeHub.sudoku;
+    const N = s.size;
+    let target = s.selectedCell;
+    if (!target || s.puzzle[target.r][target.c] !== null || s.userGrid[target.r][target.c] === s.solution[target.r][target.c]) {
+      target = null;
+      for (let r = 0; r < N && !target; r++) {
+        for (let c = 0; c < N; c++) {
+          if (s.puzzle[r][c] === null && s.userGrid[r][c] !== s.solution[r][c]) {
+            target = { r, c };
+            break;
+          }
+        }
+      }
+    }
+    if (!target) {
+      showToast('✨ Tüm kutular zaten doğru dolu!');
+      return;
+    }
+    s.selectedCell = target;
+    s.userGrid[target.r][target.c] = s.solution[target.r][target.c];
+    s.statusStates[target.r][target.c] = 'correct';
+    audio.playCorrect();
+    checkSudokuIfFull();
+  }
+
+  // =========================================================================
+  // OYUN 3: ❌⭕ AKILLI XOX (KLASİK & SONSUZ 3 TAŞ MODU)
+  // =========================================================================
+  const XOX_WIN_LINES = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+  ];
+
+  function initArcadeXoxGame(keepScores = false) {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '❌⭕';
+    if (titleEl) titleEl.textContent = 'Akıllı XOX: Klasik & Sonsuz 3 Taş Modu';
+
+    const x = ArcadeHub.xox;
+    x.board = Array(9).fill(null);
+    x.movesX = [];
+    x.movesO = [];
+    x.turn = 'X';
+    x.winner = null;
+    x.winLine = [];
+    x.aiThinking = false;
+    if (!keepScores) {
+      x.scoreX = 0;
+      x.scoreO = 0;
+    }
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${!x.vsAi ? 'active' : ''}" id="btnXox2P" type="button">👥 2 Kişilik (Arkadaşınla)</button>
+          <button class="arc-pill-btn ${x.vsAi ? 'active' : ''}" id="btnXoxAi" type="button">🤖 Moli'ye Karşı (Yapay Zeka)</button>
+          <button class="arc-pill-btn ${x.infiniteMode ? 'active pill-fire' : ''}" id="btnXoxInfinite" type="button">
+            🔥 Sonsuz 3 Taş Modu: ${x.infiniteMode ? 'AÇIK' : 'KAPALI'}
+          </button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnXoxReset" type="button">🔄 Yeni Tur</button>
+        </div>
+      `;
+      const b2p = document.getElementById('btnXox2P');
+      const bAi = document.getElementById('btnXoxAi');
+      const bInf = document.getElementById('btnXoxInfinite');
+      const bRes = document.getElementById('btnXoxReset');
+
+      if (b2p) addTapListener(b2p, () => { x.vsAi = false; audio.playClick(); initArcadeXoxGame(false); });
+      if (bAi) addTapListener(bAi, () => { x.vsAi = true; audio.playClick(); initArcadeXoxGame(false); });
+      if (bInf) addTapListener(bInf, () => { x.infiniteMode = !x.infiniteMode; audio.playClick(); initArcadeXoxGame(true); });
+      if (bRes) addTapListener(bRes, () => { audio.playClick(); initArcadeXoxGame(true); });
+    }
+
+    renderArcadeXoxStage();
+  }
+
+  function checkXoxWinner(board) {
+    for (const line of XOX_WIN_LINES) {
+      const [a, b, c] = line;
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return { winner: board[a], line };
+      }
+    }
+    if (board.every(cell => cell !== null)) {
+      return { winner: 'draw', line: [] };
+    }
+    return null;
+  }
+
+  function renderArcadeXoxStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const x = ArcadeHub.xox;
+
+    // Sonsuz modda sıradaki hamlede silinecek en eski taşları işaretle
+    const fadingX = (x.infiniteMode && x.movesX.length === 3 && !x.winner) ? x.movesX[0] : -1;
+    const fadingO = (x.infiniteMode && x.movesO.length === 3 && !x.winner) ? x.movesO[0] : -1;
+
+    let statusText = '';
+    if (x.winner === 'X') {
+      statusText = '🏆 ❌ 1. OYUNCU KAZANDI! 🎉';
+    } else if (x.winner === 'O') {
+      statusText = x.vsAi ? '🤖 MOLI KAZANDI! Tekrar dene! 🎉' : '🏆 ⭕ 2. OYUNCU KAZANDI! 🎉';
+    } else if (x.winner === 'draw') {
+      statusText = '🤝 BERABERE! Yeni tura başlayın.';
+    } else {
+      statusText = x.turn === 'X'
+        ? '👉 Sıra: ❌ 1. Oyuncu'
+        : (x.vsAi ? '🤖 Moli hamlesini düşünüyor...' : '👉 Sıra: ⭕ 2. Oyuncu');
+    }
+
+    canvas.innerHTML = `
+      <div class="arc-xox-arena">
+        <div class="xox-scoreboard">
+          <div class="xox-player-pill pill-x ${x.turn === 'X' && !x.winner ? 'active-turn' : ''}">
+            <span>❌ 1. Oyuncu</span>
+            <strong>${x.scoreX}</strong>
+          </div>
+          <div class="xox-status-banner">${statusText}</div>
+          <div class="xox-player-pill pill-o ${x.turn === 'O' && !x.winner ? 'active-turn' : ''}">
+            <span>${x.vsAi ? '🤖 Moli (⭕)' : '⭕ 2. Oyuncu'}</span>
+            <strong>${x.scoreO}</strong>
+          </div>
+        </div>
+
+        ${x.infiniteMode ? `
+          <div class="xox-infinite-hint">
+            🔥 <strong>Sonsuz 3 Taş Kuralı Aktif:</strong> Her oyuncunun tahtada en fazla 3 taşı olabilir. 4. taşını koyduğunda yanıp sönen ilk taşın silinir!
+          </div>
+        ` : ''}
+
+        <div class="xox-board-grid">
+          ${x.board.map((val, idx) => {
+            const isWin = x.winLine.includes(idx);
+            const isFading = (idx === fadingX && x.turn === 'X') || (idx === fadingO && x.turn === 'O');
+            return `
+              <button class="xox-cell ${val ? 'cell-' + val.toLowerCase() : ''} ${isWin ? 'is-win-cell' : ''} ${isFading ? 'is-fading-piece' : ''}"
+                      data-xox-idx="${idx}" type="button" ${val || x.winner || x.aiThinking ? 'disabled' : ''}>
+                <span class="xox-piece-symbol">${val === 'X' ? '❌' : (val === 'O' ? '⭕' : '')}</span>
+                ${isFading ? '<span class="fading-badge">Silinecek</span>' : ''}
+              </button>
+            `;
+          }).join('')}
+        </div>
+
+        ${x.winner ? `
+          <div class="xox-rematch-row">
+            <button class="tt-ctrl-btn tt-btn-start" id="btnXoxPlayAgain" type="button">🔄 Tekrar Oyna</button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    canvas.querySelectorAll('[data-xox-idx]').forEach(btn => {
+      addTapListener(btn, () => {
+        const idx = parseInt(btn.getAttribute('data-xox-idx'), 10);
+        handleXoxMove(idx);
+      });
+    });
+
+    const btnAgain = document.getElementById('btnXoxPlayAgain');
+    if (btnAgain) addTapListener(btnAgain, () => { audio.playClick(); initArcadeXoxGame(true); });
+  }
+
+  function handleXoxMove(idx) {
+    const x = ArcadeHub.xox;
+    if (x.winner || x.board[idx] !== null || x.aiThinking) return;
+
+    placeXoxPiece(idx, x.turn);
+    if (!x.winner && x.vsAi && x.turn === 'O') {
+      x.aiThinking = true;
+      renderArcadeXoxStage();
+      setTimeout(() => {
+        x.aiThinking = false;
+        const aiIdx = computeMoliXoxMove();
+        if (aiIdx !== -1) {
+          placeXoxPiece(aiIdx, 'O');
+        }
+      }, 450);
+    }
+  }
+
+  function placeXoxPiece(idx, symbol) {
+    const x = ArcadeHub.xox;
+    const queue = symbol === 'X' ? x.movesX : x.movesO;
+
+    if (x.infiniteMode && queue.length >= 3) {
+      const oldestIdx = queue.shift();
+      x.board[oldestIdx] = null;
+    }
+    x.board[idx] = symbol;
+    queue.push(idx);
+    audio.playPop();
+
+    const res = checkXoxWinner(x.board);
+    if (res) {
+      x.winner = res.winner;
+      x.winLine = res.line;
+      if (res.winner === 'X') {
+        x.scoreX += 1;
+        audio.playFanfare();
+        if (typeof launchConfetti === 'function') launchConfetti();
+      } else if (res.winner === 'O') {
+        x.scoreO += 1;
+        audio.playCorrect();
+      }
+    } else {
+      x.turn = (symbol === 'X') ? 'O' : 'X';
+    }
+    renderArcadeXoxStage();
+  }
+
+  function computeMoliXoxMove() {
+    const x = ArcadeHub.xox;
+    const empty = [];
+    for (let i = 0; i < 9; i++) {
+      if (x.board[i] === null) empty.push(i);
+    }
+    if (empty.length === 0) return -1;
+
+    // 1) Moli kazanabiliyor mu?
+    for (const cand of empty) {
+      const sim = x.board.slice();
+      if (x.infiniteMode && x.movesO.length >= 3) sim[x.movesO[0]] = null;
+      sim[cand] = 'O';
+      const w = checkXoxWinner(sim);
+      if (w && w.winner === 'O') return cand;
+    }
+
+    // 2) Rakip (X) bir sonraki hamlede kazanabiliyor mu? Engelle!
+    for (const cand of empty) {
+      const sim = x.board.slice();
+      if (x.infiniteMode && x.movesX.length >= 3) sim[x.movesX[0]] = null;
+      sim[cand] = 'X';
+      const w = checkXoxWinner(sim);
+      if (w && w.winner === 'X') return cand;
+    }
+
+    // 3) Merkez boşsa merkezi al
+    if (empty.includes(4)) return 4;
+
+    // 4) Köşelerden birini seç
+    const corners = [0, 2, 6, 8].filter(c => empty.includes(c));
+    if (corners.length > 0) return corners[Math.floor(Math.random() * corners.length)];
+
+    return empty[Math.floor(Math.random() * empty.length)];
+  }
+
+  // =========================================================================
+  // OYUN 4: 🧠 HAFIZA KARTLARI DÜELLOSU (EŞİNİ BUL - 1 VEYA 2 KİŞİLİK)
+  // =========================================================================
+  const MEMORY_THEMES = {
+    animals: [
+      { id: 'a1', a: '🦁 Aslan', b: '🦁 Aslan' },
+      { id: 'a2', a: '🐘 Fil', b: '🐘 Fil' },
+      { id: 'a3', a: '🐼 Panda', b: '🐼 Panda' },
+      { id: 'a4', a: '🦊 Tilki', b: '🦊 Tilki' },
+      { id: 'a5', a: '🐬 Yunus', b: '🐬 Yunus' },
+      { id: 'a6', a: '🦉 Baykuş', b: '🦉 Baykuş' },
+      { id: 'a7', a: '🐢 Kaplumbağa', b: '🐢 Kaplumbağa' },
+      { id: 'a8', a: '🦋 Kelebek', b: '🦋 Kelebek' }
+    ],
+    space: [
+      { id: 's1', a: '🚀 Roket', b: '🚀 Roket' },
+      { id: 's2', a: '🪐 Satürn', b: '🪐 Satürn' },
+      { id: 's3', a: '🌍 Dünya', b: '🌍 Dünya' },
+      { id: 's4', a: '🌙 Ay', b: '🌙 Ay' },
+      { id: 's5', a: '☀️ Güneş', b: '☀️ Güneş' },
+      { id: 's6', a: '☄️ Kuyruklu Yıldız', b: '☄️ Kuyruklu Yıldız' },
+      { id: 's7', a: '🛸 Uzay Gemisi', b: '🛸 Uzay Gemisi' },
+      { id: 's8', a: '👨‍🚀 Astronot', b: '👨‍🚀 Astronot' }
+    ],
+    fruits: [
+      { id: 'f1', a: '🍎 Elma', b: '🍎 Elma' },
+      { id: 'f2', a: '🍌 Muz', b: '🍌 Muz' },
+      { id: 'f3', a: '🍓 Çilek', b: '🍓 Çilek' },
+      { id: 'f4', a: '🍇 Üzüm', b: '🍇 Üzüm' },
+      { id: 'f5', a: '🍉 Karpuz', b: '🍉 Karpuz' },
+      { id: 'f6', a: '🍍 Ananas', b: '🍍 Ananas' },
+      { id: 'f7', a: '🍒 Kiraz', b: '🍒 Kiraz' },
+      { id: 'f8', a: '🍑 Şeftali', b: '🍑 Şeftali' }
+    ],
+    synonyms: [
+      { id: 'w1', a: '📘 Okul', b: '🏫 Mektep' },
+      { id: 'w2', a: '👦 Öğrenci', b: '🎒 Talebe' },
+      { id: 'w3', a: '🎁 Hediye', b: '🎀 Armağan' },
+      { id: 'w4', a: '🔴 Kırmızı', b: '🚩 Al' },
+      { id: 'w5', a: '⚪ Beyaz', b: '🕊️ Ak' },
+      { id: 'w6', a: '⚫ Siyah', b: '🐈‍⬛ Kara' },
+      { id: 'w7', a: '🩺 Doktor', b: '👨‍⚕️ Hekim' },
+      { id: 'w8', a: '📅 Yıl', b: '🗓️ Sene' }
+    ]
+  };
+
+  function initArcadeMemoryGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🧠';
+    if (titleEl) titleEl.textContent = 'Hafıza Kartları Düellosu: Eşini Bul';
+
+    const m = ArcadeHub.memory;
+    const pairCount = m.gridSize / 2;
+    const pool = (MEMORY_THEMES[m.theme] || MEMORY_THEMES.animals).slice(0, pairCount);
+    const deck = [];
+    pool.forEach(item => {
+      deck.push({ pairId: item.id, label: item.a, flipped: false, matched: false });
+      deck.push({ pairId: item.id, label: item.b, flipped: false, matched: false });
+    });
+    m.cards = deck.sort(() => Math.random() - 0.5);
+    m.flippedIndices = [];
+    m.matchedCount = 0;
+    m.turn = 1;
+    m.p1Score = 0;
+    m.p2Score = 0;
+    m.moves = 0;
+    m.busy = false;
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${m.players === 2 ? 'active' : ''}" data-mem-p="2" type="button">👥 2 Kişilik</button>
+          <button class="arc-pill-btn ${m.players === 1 ? 'active' : ''}" data-mem-p="1" type="button">👤 1 Kişilik</button>
+          <button class="arc-pill-btn ${m.gridSize === 12 ? 'active' : ''}" data-mem-size="12" type="button">4x3 (12 Kart)</button>
+          <button class="arc-pill-btn ${m.gridSize === 16 ? 'active' : ''}" data-mem-size="16" type="button">4x4 (16 Kart)</button>
+          <button class="arc-pill-btn ${m.theme === 'animals' ? 'active' : ''}" data-mem-theme="animals" type="button">🐾 Hayvanlar</button>
+          <button class="arc-pill-btn ${m.theme === 'space' ? 'active' : ''}" data-mem-theme="space" type="button">🚀 Uzay</button>
+          <button class="arc-pill-btn ${m.theme === 'fruits' ? 'active' : ''}" data-mem-theme="fruits" type="button">🍓 Meyveler</button>
+          <button class="arc-pill-btn ${m.theme === 'synonyms' ? 'active' : ''}" data-mem-theme="synonyms" type="button">🔤 Eş Anlamlılar</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnMemRestart" type="button">🔄 Karıştır</button>
+        </div>
+      `;
+      toolbarEl.querySelectorAll('[data-mem-p]').forEach(btn => {
+        addTapListener(btn, () => { m.players = parseInt(btn.getAttribute('data-mem-p'), 10); audio.playClick(); initArcadeMemoryGame(); });
+      });
+      toolbarEl.querySelectorAll('[data-mem-size]').forEach(btn => {
+        addTapListener(btn, () => { m.gridSize = parseInt(btn.getAttribute('data-mem-size'), 10); audio.playClick(); initArcadeMemoryGame(); });
+      });
+      toolbarEl.querySelectorAll('[data-mem-theme]').forEach(btn => {
+        addTapListener(btn, () => { m.theme = btn.getAttribute('data-mem-theme'); audio.playClick(); initArcadeMemoryGame(); });
+      });
+      const bRes = document.getElementById('btnMemRestart');
+      if (bRes) addTapListener(bRes, () => { audio.playClick(); initArcadeMemoryGame(); });
+    }
+
+    renderArcadeMemoryStage();
+  }
+
+  function renderArcadeMemoryStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const m = ArcadeHub.memory;
+    const totalPairs = m.gridSize / 2;
+    const isFinished = m.matchedCount >= totalPairs;
+
+    let headerHtml = '';
+    if (m.players === 2) {
+      let winText = `👉 Sıra: ${m.turn === 1 ? '🔵 1. Öğrenci' : '🟠 2. Öğrenci'} (Eşleştiren tekrar oynar!)`;
+      if (isFinished) {
+        if (m.p1Score > m.p2Score) winText = '🏆 1. ÖĞRENCİ (MAVİ) KAZANDI! 🎉';
+        else if (m.p2Score > m.p1Score) winText = '🏆 2. ÖĞRENCİ (TURUNCU) KAZANDI! 🎉';
+        else winText = '🤝 DOSTLUK KAZANDI! Berabere! 🎉';
+      }
+      headerHtml = `
+        <div class="xox-scoreboard">
+          <div class="xox-player-pill pill-x ${m.turn === 1 && !isFinished ? 'active-turn' : ''}">
+            <span>🔵 1. Öğrenci</span>
+            <strong>${m.p1Score} Eşleşme</strong>
+          </div>
+          <div class="xox-status-banner">${winText}</div>
+          <div class="xox-player-pill pill-o ${m.turn === 2 && !isFinished ? 'active-turn' : ''}">
+            <span>🟠 2. Öğrenci</span>
+            <strong>${m.p2Score} Eşleşme</strong>
+          </div>
+        </div>
+      `;
+    } else {
+      headerHtml = `
+        <div class="xox-scoreboard">
+          <div class="xox-player-pill pill-x active-turn">
+            <span>🎯 Bulunan Eşleşme: <strong>${m.matchedCount} / ${totalPairs}</strong></span>
+          </div>
+          <div class="xox-status-banner">
+            ${isFinished ? `🏆 TEBRİKLER! ${m.moves} hamlede tüm kartları eşleştirdin! 🎉` : `Hamle Sayısı: ${m.moves}`}
+          </div>
+        </div>
+      `;
+    }
+
+    canvas.innerHTML = `
+      <div class="arc-memory-arena">
+        ${headerHtml}
+        <div class="memory-cards-grid grid-${m.gridSize}">
+          ${m.cards.map((card, idx) => `
+            <button class="mem-card-btn ${card.flipped || card.matched ? 'is-flipped' : ''} ${card.matched ? 'is-matched' : ''}"
+                    data-mem-idx="${idx}" type="button" ${card.flipped || card.matched || m.busy ? 'disabled' : ''}>
+              <span class="mem-card-back">❓</span>
+              <span class="mem-card-front">${card.label}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    canvas.querySelectorAll('[data-mem-idx]').forEach(btn => {
+      addTapListener(btn, () => {
+        const idx = parseInt(btn.getAttribute('data-mem-idx'), 10);
+        handleMemoryCardFlip(idx);
+      });
+    });
+  }
+
+  function handleMemoryCardFlip(idx) {
+    const m = ArcadeHub.memory;
+    if (m.busy || m.cards[idx].flipped || m.cards[idx].matched) return;
+
+    m.cards[idx].flipped = true;
+    m.flippedIndices.push(idx);
+    audio.playPop();
+    renderArcadeMemoryStage();
+
+    if (m.flippedIndices.length === 2) {
+      m.busy = true;
+      m.moves += 1;
+      const [i1, i2] = m.flippedIndices;
+      const c1 = m.cards[i1];
+      const c2 = m.cards[i2];
+
+      if (c1.pairId === c2.pairId) {
+        setTimeout(() => {
+          c1.matched = true;
+          c2.matched = true;
+          m.matchedCount += 1;
+          if (m.players === 2) {
+            if (m.turn === 1) m.p1Score += 1;
+            else m.p2Score += 1;
+          }
+          m.flippedIndices = [];
+          m.busy = false;
+          audio.playCorrect();
+          if (m.matchedCount >= m.gridSize / 2) {
+            audio.playFanfare();
+            if (typeof launchConfetti === 'function') launchConfetti();
+          }
+          renderArcadeMemoryStage();
+        }, 400);
+      } else {
+        setTimeout(() => {
+          c1.flipped = false;
+          c2.flipped = false;
+          m.flippedIndices = [];
+          if (m.players === 2) {
+            m.turn = (m.turn === 1) ? 2 : 1;
+          }
+          m.busy = false;
+          audio.playWrong();
+          renderArcadeMemoryStage();
+        }, 850);
+      }
+    }
+  }
+
+  // =========================================================================
+  // OYUN 5: 🌸 MOLI'NİN ÇİÇEĞİ: KELİME BULMACA (EĞİTİCİ ADAM ASMACA)
+  // =========================================================================
+  const FLOWER_WORD_BANK = {
+    animals: [
+      { w: 'KAPLUMBAĞA', h: 'Evini sırtında taşıyan yavaş ama azimli hayvan' },
+      { w: 'ZÜRAFA', h: 'Uzun boynuyla ağaçların en üst yapraklarına yetişen hayvan' },
+      { w: 'KELEBEK', h: 'Tırtıldan dönüşen rengârenk kanatlı böcek' },
+      { w: 'PENGUEN', h: 'Güney Kutbu’nda yaşayan, uçamayan ama çok iyi yüzen kuş' },
+      { w: 'SİNCAP', h: 'Ağaçtan ağaca atlayıp fındık ve ceviz biriktiren hayvan' },
+      { w: 'KARINCA', h: 'Yaz boyu durmadan çalışkanlığıyla bilinen minik canlı' },
+      { w: 'AHTAPOT', h: 'Denizlerde yaşayan sekiz kollu zeki canlı' },
+      { w: 'KANGURU', h: 'Yavrusunu karnındaki kesede taşıyan zıplayan hayvan' },
+      { w: 'YUNUS', h: 'Denizlerde yaşayan, insanlara dostluğuyla bilinen memeli' },
+      { w: 'PAPAĞAN', h: 'Renkli tüyleri olan ve konuşmayı taklit edebilen kuş' },
+      { w: 'BUKALEMUN', h: 'Bulunduğu ortama göre renk değiştirebilen sürüngen' },
+      { w: 'KİRPİ', h: 'Tehlike anında dikenli bir top gibi kıvrılan sevimli hayvan' }
+    ],
+    cities: [
+      { w: 'ANKARA', h: 'Türkiye Cumhuriyeti’mizin başkenti ve Anıtkabir’in bulunduğu şehir' },
+      { w: 'İSTANBUL', h: 'Asya ve Avrupa kıtalarını birbirine bağlayan boğazlı şehrimiz' },
+      { w: 'İZMİR', h: 'Saat Kulesi ile ünlü Ege Bölgesi’nin incisi şehrimiz' },
+      { w: 'ANTALYA', h: 'Akdeniz kıyısında güneş, deniz ve şelaleleriyle ünlü şehrimiz' },
+      { w: 'TRABZON', h: 'Karadeniz Bölgesi’nde Sümela Manastırı ve yaylalarıyla ünlü şehir' },
+      { w: 'BURSA', h: 'Uludağ’ı ve İskender kebabıyla ünlü yeşil şehrimiz' },
+      { w: 'KONYA', h: 'Mevlana Müzesi ve geniş ovalarıyla bilinen İç Anadolu şehrimiz' },
+      { w: 'ÇANAKKALE', h: 'Destansı Şehitler Abidesi ve Truva Atı’nın bulunduğu şehrimiz' },
+      { w: 'GAZİANTEP', h: 'Zeugma Mozaik Müzesi ve baklavasıyla dünyaca ünlü şehrimiz' },
+      { w: 'NEVŞEHİR', h: 'Kapadokya Peri Bacaları ve uçan balonlarıyla ünlü şehrimiz' },
+      { w: 'SAMSUN', h: 'Atatürk’ün 19 Mayıs 1919’da Milli Mücadele’yi başlattığı şehir' },
+      { w: 'ERZURUM', h: 'Palandöken Dağı ve kış sporlarıyla ünlü Doğu Anadolu şehrimiz' }
+    ],
+    fruits: [
+      { w: 'KARPUZ', h: 'Dışı yeşil, içi kırmızı ve sulu yaz meyvesi' },
+      { w: 'PORTAKAL', h: 'Kışın C vitamini deposu olan turuncu narenciye meyvesi' },
+      { w: 'MANDALİNA', h: 'Kolayca soyulan, dilimli ve mis kokulu kış meyvesi' },
+      { w: 'ÇİLEK', h: 'Üzerinde minik benekleri olan kırmızı, hoş kokulu meyve' },
+      { w: 'ISPANAK', h: 'Demir yönünden zengin, yeşil yapraklı kış sebzesi' },
+      { w: 'BROKOLİ', h: 'Minik yeşil bir ağaca benzeyen çok sağlıklı sebze' },
+      { w: 'ŞEFTALİ', h: 'Kadife gibi tüylü kabuğu olan sulu yaz meyvesi' },
+      { w: 'HAVUÇ', h: 'Toprak altında büyüyen, gözlere faydalı turuncu sebze' },
+      { w: 'ANANAS', h: 'Üstünde yeşil yaprak tacı olan tropikal sarı meyve' },
+      { w: 'DOMATES', h: 'Salataların ve yemeklerin vazgeçilmezi kırmızı sebze/meyve' },
+      { w: 'SALATALIK', h: 'Cacık ve salatada kullanılan sulu, yeşil sebze' },
+      { w: 'KİRAZ', h: 'İkiz küpe gibi dalından sallanan kırmızı yaz meyvesi' }
+    ],
+    proverbs: [
+      { w: 'DAMLAYA DAMLAYA GÖL OLUR', h: 'Küçük birikimler zamanla büyük zenginliğe dönüşür anlamındaki atasözümüz' },
+      { w: 'AĞAÇ YAŞ İKEN EĞİLİR', h: 'İnsanların küçük yaşta eğitilmesinin önemini anlatan atasözümüz' },
+      { w: 'BİR ELİN NESİ VAR', h: 'Yardımlaşma ve dayanışmanın gücünü anlatan atasözümüzün ilk kısmı' },
+      { w: 'SAKLA SAMANI GELİR ZAMANI', h: 'Tutumlu olmayı ve hiçbir şeyi israf etmemeyi öğütleyen atasözümüz' },
+      { w: 'AKIL YAŞTA DEĞİL BAŞTADIR', h: 'Zekânın yaş büyüklüğüyle değil düşünmekle ilgili olduğunu anlatır' },
+      { w: 'İYİLİK EDEN İYİLİK BULUR', h: 'Çevresine yardım eden kişinin her zaman güzellikle karşılaşacağını anlatır' },
+      { w: 'EMEK OLMADAN YEMEK OLMAZ', h: 'Başarıya ulaşmak için çalışıp gayret etmek gerektiğini anlatan atasözü' }
+    ],
+    jobs: [
+      { w: 'ÖĞRETMEN', h: 'Okulda bize bilgi, sevgi ve erdem öğreten eğitim kahramanı' },
+      { w: 'ASTRONOT', h: 'Uzay mekiğiyle uzaya gidip bilimsel araştırmalar yapan kişi' },
+      { w: 'İTFAİYECİ', h: 'Yangınları söndüren ve zor durumdaki canlıları kurtaran kahraman' },
+      { w: 'VETERİNER', h: 'Hasta veya yaralı hayvanları muayene edip iyileştiren hekim' },
+      { w: 'MÜHENDİS', h: 'Köprüler, makineler, yazılımlar ve binalar tasarlayan uzman' },
+      { w: 'HEMŞİRE', h: 'Hastanede hastaların bakımına ve iyileşmesine yardım eden sağlık çalışanı' },
+      { w: 'ECZACI', h: 'Doktorun yazdığı ilaçları hazırlayıp bize sunan sağlık uzmanı' },
+      { w: 'MİMAR', h: 'Evlerin, okulların ve binaların estetik planlarını çizen meslek' },
+      { w: 'KAPTAN', h: 'Denizlerde gemileri güvenle yöneten kişi' },
+      { w: 'PİLOT', h: 'Gökyüzünde uçakları uçuran havacılık uzmanı' }
+    ]
+  };
+
+  const TR_ALPHABET = [
+    'A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'Ğ', 'H',
+    'I', 'İ', 'J', 'K', 'L', 'M', 'N', 'O', 'Ö', 'P',
+    'R', 'S', 'Ş', 'T', 'U', 'Ü', 'V', 'Y', 'Z'
+  ];
+
+  function pickFlowerWord() {
+    const f = ArcadeHub.flower;
+    const list = FLOWER_WORD_BANK[f.category] || FLOWER_WORD_BANK.animals;
+    const item = list[Math.floor(Math.random() * list.length)];
+    f.word = item.w;
+    f.hint = item.h;
+    f.guessed = [' '];
+    f.wrongCount = 0;
+    f.isOver = false;
+    f.won = false;
+  }
+
+  function initArcadeFlowerGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🌸';
+    if (titleEl) titleEl.textContent = "Moli'nin Çiçeği: Kelime Bulmaca";
+
+    const f = ArcadeHub.flower;
+    pickFlowerWord();
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${f.category === 'animals' ? 'active' : ''}" data-flw-cat="animals" type="button">🐾 Hayvanlar</button>
+          <button class="arc-pill-btn ${f.category === 'cities' ? 'active' : ''}" data-flw-cat="cities" type="button">🏙️ Şehirlerimiz</button>
+          <button class="arc-pill-btn ${f.category === 'fruits' ? 'active' : ''}" data-flw-cat="fruits" type="button">🍎 Meyve & Sebze</button>
+          <button class="arc-pill-btn ${f.category === 'proverbs' ? 'active' : ''}" data-flw-cat="proverbs" type="button">📜 Atasözlerimiz</button>
+          <button class="arc-pill-btn ${f.category === 'jobs' ? 'active' : ''}" data-flw-cat="jobs" type="button">👩‍⚕️ Meslekler</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnFlwNewWord" type="button">🔄 Yeni Kelime</button>
+        </div>
+      `;
+      toolbarEl.querySelectorAll('[data-flw-cat]').forEach(btn => {
+        addTapListener(btn, () => {
+          ArcadeHub.flower.category = btn.getAttribute('data-flw-cat');
+          audio.playClick();
+          initArcadeFlowerGame();
+        });
+      });
+      const bNew = document.getElementById('btnFlwNewWord');
+      if (bNew) addTapListener(bNew, () => { audio.playClick(); pickFlowerWord(); renderArcadeFlowerStage(); });
+    }
+
+    renderArcadeFlowerStage();
+  }
+
+  function renderArcadeFlowerStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const f = ArcadeHub.flower;
+    const remainingPetals = Math.max(0, f.maxWrong - f.wrongCount);
+
+    // 7 Yapraklı SVG Çiçek
+    const petalColors = ['#F43F5E', '#FB7185', '#F59E0B', '#10B981', '#0EA5E9', '#8B5CF6', '#EC4899'];
+    let petalsSvg = '';
+    for (let i = 0; i < 7; i++) {
+      const angle = i * (360 / 7);
+      const isDropped = i >= remainingPetals;
+      petalsSvg += `
+        <g transform="rotate(${angle} 100 100)" class="flower-petal-group ${isDropped ? 'petal-dropped' : ''}">
+          <ellipse cx="100" cy="44" rx="20" ry="34" fill="${petalColors[i]}" stroke="#FFFFFF" stroke-width="2.5"/>
+        </g>
+      `;
+    }
+
+    const wordsArr = f.word.split(' ');
+    const slotsHtml = wordsArr.map(wordPart => `
+      <div class="flower-word-group">
+        ${Array.from(wordPart).map(ch => {
+          const shown = f.guessed.includes(ch) || f.isOver;
+          return `<span class="flower-letter-slot ${shown ? 'is-revealed' : ''} ${f.isOver && !f.guessed.includes(ch) ? 'is-missed' : ''}">${shown ? ch : ''}</span>`;
+        }).join('')}
+      </div>
+    `).join('<span class="flower-word-space"></span>');
+
+    canvas.innerHTML = `
+      <div class="arc-flower-arena">
+        <div class="flower-top-row">
+          <!-- Sol: 7 Yapraklı Çiçek Görseli -->
+          <div class="flower-visual-card">
+            <svg viewBox="0 0 200 220" width="145" height="155" class="moli-flower-svg" aria-label="Moli'nin Çiçeği">
+              <!-- Gövde ve Yaprak -->
+              <path d="M100 110 Q100 170 100 212" stroke="#16A34A" stroke-width="9" stroke-linecap="round" fill="none"/>
+              <path d="M100 165 Q132 145 140 165 Q122 182 100 170 Z" fill="#22C55E"/>
+              <path d="M100 175 Q68 155 60 175 Q78 192 100 180 Z" fill="#22C55E"/>
+              ${petalsSvg}
+              <!-- Gülen Çiçek Merkezi -->
+              <circle cx="100" cy="100" r="28" fill="#FACC15" stroke="#CA8A04" stroke-width="3"/>
+              <circle cx="90" cy="94" r="3.5" fill="#1E293B"/>
+              <circle cx="110" cy="94" r="3.5" fill="#1E293B"/>
+              ${f.isOver && !f.won
+                ? '<path d="M89 112 Q100 103 111 112" stroke="#1E293B" stroke-width="3" fill="none" stroke-linecap="round"/>'
+                : '<path d="M88 106 Q100 116 112 106" stroke="#1E293B" stroke-width="3" fill="none" stroke-linecap="round"/>'}
+            </svg>
+            <div class="flower-petals-badge">
+              🌸 Kalan Yaprak: <strong>${remainingPetals} / ${f.maxWrong}</strong> | Seri: 🔥 ${f.streak}
+            </div>
+          </div>
+
+          <!-- Sağ: İpucu ve Kelime Kutuları -->
+          <div class="flower-word-stage">
+            <div class="flower-hint-box">
+              <span class="hint-tag">💡 İpucu:</span>
+              <span class="hint-text">${f.hint}</span>
+            </div>
+
+            <div class="flower-slots-container">
+              ${slotsHtml}
+            </div>
+
+            ${f.isOver ? `
+              <div class="flower-result-banner ${f.won ? 'banner-win' : 'banner-lose'}">
+                <span>${f.won ? '🎉 HARİKASINIZ! Çiçeğin yaprakları dökülmeden kelimeyi buldunuz!' : `😮 Yapraklar döküldü! Doğru Cevap: ${f.word}`}</span>
+                <button class="tt-ctrl-btn tt-btn-start" id="btnFlwNextRound" type="button">➡️ Sıradaki Kelime</button>
+              </div>
+            ` : `
+              <div class="flower-helper-actions">
+                <button class="arc-pill-btn" id="btnFlwGiveLetter" type="button">💡 Harf İpucu Aç</button>
+              </div>
+            `}
+          </div>
+        </div>
+
+        <!-- Alt: 29 Harfli Türkçe Dokunmatik Klavye -->
+        <div class="flower-keyboard-grid">
+          ${TR_ALPHABET.map(letter => {
+            const used = f.guessed.includes(letter);
+            const isCorrect = used && f.word.includes(letter);
+            const isWrong = used && !f.word.includes(letter);
+            return `
+              <button class="flower-key-btn ${isCorrect ? 'key-correct' : ''} ${isWrong ? 'key-wrong' : ''}"
+                      data-flw-key="${letter}" type="button" ${used || f.isOver ? 'disabled' : ''}>
+                ${letter}
+              </button>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+
+    canvas.querySelectorAll('[data-flw-key]').forEach(btn => {
+      addTapListener(btn, () => {
+        const letter = btn.getAttribute('data-flw-key');
+        handleFlowerGuess(letter);
+      });
+    });
+
+    const btnHintLetter = document.getElementById('btnFlwGiveLetter');
+    if (btnHintLetter) {
+      addTapListener(btnHintLetter, () => {
+        const unrevealed = Array.from(f.word).filter(ch => ch !== ' ' && !f.guessed.includes(ch));
+        if (unrevealed.length > 0) {
+          const randomChar = unrevealed[Math.floor(Math.random() * unrevealed.length)];
+          handleFlowerGuess(randomChar);
+        }
+      });
+    }
+
+    const btnNext = document.getElementById('btnFlwNextRound');
+    if (btnNext) {
+      addTapListener(btnNext, () => {
+        audio.playClick();
+        pickFlowerWord();
+        renderArcadeFlowerStage();
+      });
+    }
+  }
+
+  function handleFlowerGuess(letter) {
+    const f = ArcadeHub.flower;
+    if (f.isOver || f.guessed.includes(letter)) return;
+
+    f.guessed.push(letter);
+    if (f.word.includes(letter)) {
+      audio.playCorrect();
+      const allFound = Array.from(f.word).every(ch => f.guessed.includes(ch));
+      if (allFound) {
+        f.isOver = true;
+        f.won = true;
+        f.streak += 1;
+        audio.playFanfare();
+        if (typeof launchConfetti === 'function') launchConfetti();
+        if (!state.isMuted && state.soundEnabled) {
+          audio.speakTurkishText(`Tebrikler! Doğru kelime: ${f.word}`);
+        }
+      }
+    } else {
+      f.wrongCount += 1;
+      audio.playWrong();
+      if (f.wrongCount >= f.maxWrong) {
+        f.isOver = true;
+        f.won = false;
+        f.streak = 0;
+      }
+    }
+    renderArcadeFlowerStage();
+  }
+
+  // =========================================================================
+  // OYUN 6: ⚡ HIZLI PARMAKLAR: DOĞRU MU YANLIŞ MI? (BUZZER DÜELLOSU - 48 SORU)
+  // =========================================================================
+  const BUZZER_QUESTIONS_POOL = [
+    { q: "Penguenler uçabilen kuşlardır.", a: false, exp: "Yanlış! Penguenler kuş türüdür ancak uçamazlar, çok iyi yüzerler." },
+    { q: "1 Düzine tam 12 tanedir.", a: true, exp: "Doğru! 1 Deste 10 tane, 1 Düzine ise 12 tanedir." },
+    { q: "8 × 7 işleminin sonucu 54 eder.", a: false, exp: "Yanlış! 8 × 7 = 56 eder (9 × 6 = 54 eder)." },
+    { q: "Türkiye'nin başkenti Ankara'dır.", a: true, exp: "Doğru! Başkentimiz Ankara'dır." },
+    { q: "Dünya kendi etrafındaki dönüşünü 24 saatte tamamlar.", a: true, exp: "Doğru! Bu dönüş sonucunda 1 gün (gece ve gündüz) oluşur." },
+    { q: "Balinalar balık değil, memeli deniz canlılarıdır.", a: true, exp: "Doğru! Balinalar ve yunuslar akciğer solunumu yapan memelilerdir." },
+    { q: "1 saat tam 100 dakikadır.", a: false, exp: "Yanlış! 1 saat 60 dakikadır." },
+    { q: "Güneş sistemimizdeki en büyük gezegen Jüpiter'dir.", a: true, exp: "Doğru! Jüpiter Güneş sisteminin en büyük gezegenidir." },
+    { q: "Mıknatıs plastik ve tahta maddeleri güçlüce çeker.", a: false, exp: "Yanlış! Mıknatıs yalnız demir, nikel ve kobaltı çeker." },
+    { q: "Üçgenin iç açılarının toplamı 180 derecedir.", a: true, exp: "Doğru! Tüm üçgenlerin iç açıları toplamı 180°'dir." },
+    { q: "'Siyah' kelimesinin eş anlamlısı 'Ak'tır.", a: false, exp: "Yanlış! Siyah'ın eş anlamlısı 'Kara', Beyaz'ın eş anlamlısı 'Ak'tır." },
+    { q: "Bir yılda 4 mevsim ve 12 ay vardır.", a: true, exp: "Doğru! İlkbahar, Yaz, Sonbahar ve Kış olmak üzere 4 mevsim vardır." },
+    { q: "Su 100 santigrat derecede (deniz seviyesinde) kaynar.", a: true, exp: "Doğru! Saf su deniz seviyesinde 100°C'de kaynar, 0°C'de donar." },
+    { q: "9 × 9 işleminin sonucu 81 eder.", a: true, exp: "Doğru! 9 kere 9 eşittir 81." },
+    { q: "Örümceklerin 6 bacağı vardır.", a: false, exp: "Yanlış! Böceklerin 6, örümceklerin ise 8 bacağı vardır." },
+    { q: "İstiklal Marşı'mızın şairi Mehmet Akif Ersoy'dur.", a: true, exp: "Doğru! Milli şairimiz Mehmet Akif Ersoy'dur." },
+    { q: "En küçük üç basamaklı doğal sayı 101'dir.", a: false, exp: "Yanlış! En küçük üç basamaklı doğal sayı 100'dür." },
+    { q: "Ay, kendi ışığını üreten bir yıldızdır.", a: false, exp: "Yanlış! Ay doğal bir uydudur, Güneş'ten aldığı ışığı yansıtır." },
+    { q: "1 Kilometre 1000 metreye eşittir.", a: true, exp: "Doğru! 1 km = 1000 m." },
+    { q: "Kutup ayıları Güney Kutbu'nda (Antarktika'da) yaşar.", a: false, exp: "Yanlış! Kutup ayıları Kuzey Kutbu'nda, penguenler Güney Kutbu'nda yaşar." },
+    { q: "Gökkuşağında 7 ana renk bulunur.", a: true, exp: "Doğru! Kırmızı, turuncu, sarı, yeşil, mavi, lacivert ve mor." },
+    { q: "100 ÷ 4 işleminin sonucu 25'tir.", a: true, exp: "Doğru! 100'ün çeyreği 25'tir." },
+    { q: "Bitkiler fotosentez yaparken havaya karbondioksit verir, oksijen alır.", a: false, exp: "Yanlış! Bitkiler gündüz fotosentezle karbondioksit alıp havaya oksijen verir." },
+    { q: "Pusulanın renkli ucu her zaman Kuzey yönünü gösterir.", a: true, exp: "Doğru! Pusulanın mıknatıslı ibresi daima Kuzey'i gösterir." },
+    { q: "Dik açının ölçüsü tam 90 derecedir.", a: true, exp: "Doğru! Dik açı 90°, doğru açı 180°'dir." },
+    { q: "Yarasalar görme duyusu yerine ses dalgalarıyla (ekolokasyon) yön bulur.", a: true, exp: "Doğru! Yarasalar yaydıkları ses dalgalarının yankısıyla yönlerini bulur." },
+    { q: "6 × 8 işleminin sonucu 42 eder.", a: false, exp: "Yanlış! 6 × 8 = 48 eder (6 × 7 = 42 eder)." },
+    { q: "Türk alfabesinde 29 harf vardır; bunların 8 tanesi ünlü (sesli) harftir.", a: true, exp: "Doğru! 8 ünlü (a, e, ı, i, o, ö, u, ü) ve 21 ünsüz harf vardır." },
+    { q: "Karbonhidratlar vücudumuzda öncelikle yapım ve onarım görevi yapar.", a: false, exp: "Yanlış! Karbonhidratlar enerji verir; yapım ve onarım görevi proteinlerindir." },
+    { q: "Cumhuriyetimiz 29 Ekim 1923 tarihinde ilan edilmiştir.", a: true, exp: "Doğru! 29 Ekim 1923'te Cumhuriyet ilan edilmiştir." },
+    { q: "Bir karenin 4 kenar uzunluğu da birbirine eşittir.", a: true, exp: "Doğru! Karenin tüm kenarları eşit ve tüm açıları 90 derecedir." },
+    { q: " bukalemunlar sadece yeşil renge dönüşebilir.", a: false, exp: "Yanlış! Bukalemunlar sarı, kahverengi, kırmızı gibi pek çok renge bürünebilir." },
+    { q: "1 Ton 100 kilogramdır.", a: false, exp: "Yanlış! 1 Ton = 1000 kilogramdır." },
+    { q: "'Okul' kelimesinin eş anlamlısı 'Mektep'tir.", a: true, exp: "Doğru! Okul ve mektep eş anlamlı kelimelerdir." },
+    { q: "Ses boşlukta (uzayda) ışık hızından daha hızlı yayılır.", a: false, exp: "Yanlış! Sesin yayılması için maddesel ortam gerekir, uzay boşluğunda ses yayılmaz." },
+    { q: "7 × 7 işleminin sonucu 49 eder.", a: true, exp: "Doğru! 7 kere 7 eşittir 49." },
+    { q: "Türkiye'nin en yüksek dağı Ağrı Dağı'dır.", a: true, exp: "Doğru! Ağrı Dağı 5137 metre ile ülkemizin en yüksek dağıdır." },
+    { q: "Mıknatısın aynı kutupları (N ve N) birbirini çeker.", a: false, exp: "Yanlış! Aynı kutuplar birbirini iter, zıt kutuplar (N ve S) birbirini çeker." },
+    { q: "Arıların 5 tane gözü vardır.", a: true, exp: "Doğru! Bal arılarının 2 büyük bileşik gözü ve başının üstünde 3 küçük gözü vardır." },
+    { q: "45 + 35 işleminin sonucu 90 eder.", a: false, exp: "Yanlış! 45 + 35 = 80 eder." },
+    { q: "İnsan vücudundaki en sert madde diş minesidir.", a: true, exp: "Doğru! Diş minesi vücudumuzdaki en sert dokudur." },
+    { q: "Şubat ayı her yıl 30 gün çeker.", a: false, exp: "Yanlış! Şubat ayı normal yıllarda 28, artık yıllarda (4 yılda bir) 29 gün çeker." },
+    { q: "Zürafaların ses telleri olmadığı için hiç ses çıkaramazlar.", a: false, exp: "Yanlış! Zürafaların ses telleri vardır, düşük frekanslı seslerle iletişim kurarlar." },
+    { q: "12 × 5 işleminin sonucu 60 eder.", a: true, exp: "Doğru! 12 × 5 = 60 eder." },
+    { q: "Çam ağaçları kışın tüm iğne yapraklarını döker.", a: false, exp: "Yanlış! Çam ağaçları her mevsim yeşil kalan iğne yapraklı ağaçlardır." },
+    { q: "Güneş doğudan doğar ve batıdan batar.", a: true, exp: "Doğru! Dünya batıdan doğuya döndüğü için Güneş doğudan doğup batıdan batar." },
+    { q: "1 Deste kalemden 3 kalem eksilirse 7 kalem kalır.", a: true, exp: "Doğru! 1 Deste = 10 tanedir; 10 - 3 = 7 kalır." },
+    { q: "Kelebekler yiyeceklerin tadını ayaklarıyla alırlar.", a: true, exp: "Doğru! Kelebeklerin tat alma duyargaları ayaklarının altındadır." }
+  ];
+
+  function pickNextBuzzerQuestion() {
+    const b = ArcadeHub.buzzer;
+    if (b.usedIndices.length >= BUZZER_QUESTIONS_POOL.length) {
+      b.usedIndices = [];
+    }
+    const available = [];
+    for (let i = 0; i < BUZZER_QUESTIONS_POOL.length; i++) {
+      if (!b.usedIndices.includes(i)) available.push(i);
+    }
+    const chosenIdx = available[Math.floor(Math.random() * available.length)];
+    b.usedIndices.push(chosenIdx);
+    b.currentItem = BUZZER_QUESTIONS_POOL[chosenIdx];
+    b.answered = false;
+    b.p1Locked = false;
+    b.p2Locked = false;
+  }
+
+  function initArcadeBuzzerGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '⚡';
+    if (titleEl) titleEl.textContent = 'Hızlı Parmaklar: Doğru mu Yanlış mı?';
+
+    const b = ArcadeHub.buzzer;
+    b.p1Score = 0;
+    b.p2Score = 0;
+    b.isOver = false;
+    pickNextBuzzerQuestion();
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <span class="arc-pill-btn active">🎯 Hedef: ${b.targetScore} Puan</span>
+          <button class="arc-pill-btn" id="btnBuzzerSkip" type="button">⏭️ Soruyu Geç</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnBuzzerRestart" type="button">🔄 Yeni Düello</button>
+        </div>
+      `;
+      const bSkip = document.getElementById('btnBuzzerSkip');
+      const bRes = document.getElementById('btnBuzzerRestart');
+      if (bSkip) addTapListener(bSkip, () => {
+        if (b.isOver) return;
+        audio.playClick();
+        pickNextBuzzerQuestion();
+        renderArcadeBuzzerStage();
+      });
+      if (bRes) addTapListener(bRes, () => { audio.playClick(); initArcadeBuzzerGame(); });
+    }
+
+    renderArcadeBuzzerStage();
+  }
+
+  function renderArcadeBuzzerStage(feedbackMsg = '') {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const b = ArcadeHub.buzzer;
+    const item = b.currentItem;
+
+    canvas.innerHTML = `
+      <div class="arc-buzzer-arena">
+        <!-- Üst Skor Tablosu -->
+        <div class="xox-scoreboard">
+          <div class="xox-player-pill pill-x">
+            <span>🔵 1. Oyuncu (Mavi)</span>
+            <strong>${b.p1Score} / ${b.targetScore}</strong>
+          </div>
+          <div class="xox-status-banner">
+            ${b.isOver
+              ? (b.p1Score >= b.targetScore ? '🏆 1. OYUNCU (MAVİ) ŞAMPİYON OLDU! 🎉' : '🏆 2. OYUNCU (TURUNCU) ŞAMPİYON OLDU! 🎉')
+              : '⚡ İfadeyi oku, ilk doğru basan +1 puan alır! Yanlış basan 1.5 sn kilitlenir!'}
+          </div>
+          <div class="xox-player-pill pill-o">
+            <span>🟠 2. Oyuncu (Turuncu)</span>
+            <strong>${b.p2Score} / ${b.targetScore}</strong>
+          </div>
+        </div>
+
+        <!-- Ortadaki Büyük Bulanıklıktan Netleşen İfade Kartı -->
+        <div class="buzzer-statement-card" id="buzzerStatementCard">
+          <div class="buzzer-statement-tag">🧠 DOĞRU MU, YANLIŞ MI?</div>
+          <div class="buzzer-statement-text">${item.q}</div>
+          ${feedbackMsg ? `<div class="buzzer-explanation-box">${feedbackMsg}</div>` : ''}
+        </div>
+
+        <!-- Sol & Sağ İki Oyuncu Buzzer Panelleri -->
+        <div class="buzzer-split-panels">
+          <!-- Sol: 1. Oyuncu -->
+          <div class="buzzer-player-box player-blue ${b.p1Locked ? 'is-locked' : ''}" id="buzzerP1Box">
+            <div class="buzzer-player-title">🔵 1. Oyuncu Buzzer</div>
+            <div class="buzzer-btns-grid">
+              <button class="buzzer-big-btn btn-true" data-bz-p="1" data-bz-val="true" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+                <span class="bz-icon">✅</span>
+                <span>DOĞRU</span>
+              </button>
+              <button class="buzzer-big-btn btn-false" data-bz-p="1" data-bz-val="false" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+                <span class="bz-icon">❌</span>
+                <span>YANLIŞ</span>
+              </button>
+            </div>
+            <div class="buzzer-lock-overlay">🔒 Yanlış! 1.5 Saniye Kilitlendi!</div>
+          </div>
+
+          <!-- Sağ: 2. Oyuncu -->
+          <div class="buzzer-player-box player-orange ${b.p2Locked ? 'is-locked' : ''}" id="buzzerP2Box">
+            <div class="buzzer-player-title">🟠 2. Oyuncu Buzzer</div>
+            <div class="buzzer-btns-grid">
+              <button class="buzzer-big-btn btn-true" data-bz-p="2" data-bz-val="true" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+                <span class="bz-icon">✅</span>
+                <span>DOĞRU</span>
+              </button>
+              <button class="buzzer-big-btn btn-false" data-bz-p="2" data-bz-val="false" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+                <span class="bz-icon">❌</span>
+                <span>YANLIŞ</span>
+              </button>
+            </div>
+            <div class="buzzer-lock-overlay">🔒 Yanlış! 1.5 Saniye Kilitlendi!</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    canvas.querySelectorAll('[data-bz-p]').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        if (e.cancelable) e.preventDefault();
+        const p = parseInt(btn.getAttribute('data-bz-p'), 10);
+        const val = btn.getAttribute('data-bz-val') === 'true';
+        handleBuzzerPress(p, val);
+      });
+    });
+  }
+
+  function handleBuzzerPress(playerNum, choiceBool) {
+    const b = ArcadeHub.buzzer;
+    if (b.isOver || b.answered) return;
+    if (playerNum === 1 && b.p1Locked) return;
+    if (playerNum === 2 && b.p2Locked) return;
+
+    if (choiceBool === b.currentItem.a) {
+      b.answered = true;
+      audio.playCorrect();
+      if (playerNum === 1) b.p1Score += 1;
+      else b.p2Score += 1;
+
+      const who = playerNum === 1 ? '🔵 1. Oyuncu' : '🟠 2. Oyuncu';
+      if (b.p1Score >= b.targetScore || b.p2Score >= b.targetScore) {
+        b.isOver = true;
+        renderArcadeBuzzerStage(`🏆 ${who} Doğru Bildi! ${b.currentItem.exp}`);
+        audio.playFanfare();
+        if (typeof launchConfetti === 'function') launchConfetti();
+        if (!state.isMuted && state.soundEnabled) {
+          audio.speakTurkishText(b.p1Score >= b.targetScore ? 'Birinci oyuncu Mavi Takım kazandı!' : 'İkinci oyuncu Turuncu Takım kazandı!');
+        }
+      } else {
+        renderArcadeBuzzerStage(`✨ ${who} +1 Puan Aldı! ${b.currentItem.exp}`);
+        setTimeout(() => {
+          if (ArcadeHub.activeGame === 'buzzer' && !b.isOver) {
+            pickNextBuzzerQuestion();
+            renderArcadeBuzzerStage();
+          }
+        }, 1700);
+      }
+    } else {
+      audio.playWrong();
+      if (playerNum === 1) {
+        b.p1Locked = true;
+        const box1 = document.getElementById('buzzerP1Box');
+        if (box1) box1.classList.add('is-locked');
+        setTimeout(() => {
+          b.p1Locked = false;
+          const el = document.getElementById('buzzerP1Box');
+          if (el) el.classList.remove('is-locked');
+        }, 1500);
+      } else {
+        b.p2Locked = true;
+        const box2 = document.getElementById('buzzerP2Box');
+        if (box2) box2.classList.add('is-locked');
+        setTimeout(() => {
+          b.p2Locked = false;
+          const el = document.getElementById('buzzerP2Box');
+          if (el) el.classList.remove('is-locked');
+        }, 1500);
+      }
+    }
+  }
+
   function syncTeacherToolsUI() {
     const inpSize = document.getElementById('inpTtClassSize');
     if (inpSize) inpSize.value = TeacherTools.classSize;
@@ -13638,6 +15262,8 @@
     state.currentSubject = null;
     state.currentCategory = 'all';
 
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    if (arcadeSec) arcadeSec.classList.add('hide');
     if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -14137,6 +15763,8 @@
 
     // Bölümleri yönet: Ana Sayfa Vitrini açık, diğerleri gizli
     if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    if (arcadeSec) arcadeSec.classList.add('hide');
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.remove('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -18181,14 +19809,30 @@
 
     function handleQuickDuelsClick() {
       audio.playClick();
-      setGameMode('duel');
-      setGrade(1);
-      if (typeof selectSubject === 'function') {
-        selectSubject('grade1_extra');
-      }
       const modalSelectGrade = document.getElementById('modalSelectGrade');
       if (modalSelectGrade) closeModal(modalSelectGrade);
+      openArcadeHub();
     }
+
+    const btnArcadeBackHome = document.getElementById('btnArcadeBackHome');
+    if (btnArcadeBackHome) {
+      addTapListener(btnArcadeBackHome, () => {
+        audio.playClick();
+        openHomePage();
+      });
+    }
+
+    const btnArcadeBackToList = document.getElementById('btnArcadeBackToList');
+    if (btnArcadeBackToList) {
+      addTapListener(btnArcadeBackToList, closeArcadeStageToCards);
+    }
+
+    document.querySelectorAll('[data-arcade-game]').forEach(card => {
+      addTapListener(card, () => {
+        const gameId = card.getAttribute('data-arcade-game');
+        if (gameId) launchArcadeGame(gameId);
+      });
+    });
 
     const btnStageQuickDuels = document.getElementById('btnStageQuickDuels');
     if (btnStageQuickDuels) {

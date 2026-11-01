@@ -97,7 +97,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=7.8.0">
+  <link rel="stylesheet" href="style.css?v=7.9.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -175,9 +175,9 @@
             <span class="grade-icon-box grade-icon-4"><img src="assets/icons/3d/books.webp" class="chip-3d-icon" alt="4. Sınıf" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">4. Sınıf</span>
           </button>
-          <button class="grade-chip chip-duels" id="btnSidebarDuels" title="Sınıf Düellosu & Zeka Oyunları">
-            <span class="grade-icon-box grade-icon-duels"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="Düellolar" width="22" height="22" loading="lazy" decoding="async"></span>
-            <span class="grade-chip-name">Düellolar &amp; Oyunlar</span>
+          <button class="grade-chip chip-duels" id="btnSidebarDuels" title="Popüler Oyunlar & Düellolar - Zeka ve Rekabet Merkezi">
+            <span class="grade-icon-box grade-icon-duels"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="Popüler Oyunlar" width="22" height="22" loading="lazy" decoding="async"></span>
+            <span class="grade-chip-name">🔥 Popüler Oyunlar &amp; Düellolar</span>
           </button>
         </nav>
       </div>
@@ -387,12 +387,12 @@
                   <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
 
-                <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Düellolar & Oyunlar">
+                <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Popüler Oyunlar & Düellolar">
                   <div class="grade-icon-cube icon-theme-duel">
                     <img src="assets/icons/3d/lightning.webp" class="grade-card-3d-img" alt="Düellolar" width="30" height="30" loading="lazy" decoding="async">
                   </div>
                   <div class="grade-card-text-group">
-                    <span class="grade-card-label">Düellolar &amp; Oyunlar</span>
+                    <span class="grade-card-label">🔥 Popüler Oyunlar &amp; Düellolar</span>
                   </div>
                   <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
@@ -693,6 +693,148 @@
 
           <div class="setting-info-badge">
             <span><strong>Tahta Kuralı:</strong> İki öğrenci aynı anda dokunabilir. Yanlış şıkka basanın ekranı 1.5 sn kilitlenir.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- 3. KADEME: 🔥 POPÜLER OYUNLAR & DÜELLOLAR (ZEKA & REKABET MERKEZİ) -->
+      <!-- ============================================================== -->
+      <section class="arcade-hub-section hide" id="arcadeHubSection" aria-label="Popüler Oyunlar ve Düellolar Merkezi">
+        <!-- A) 6 OYUN KARTI VİTRİNİ -->
+        <div class="arcade-cards-view" id="arcadeCardsView">
+          <div class="subjects-section-header arcade-hub-header">
+            <button class="btn-back-to-home" id="btnArcadeBackHome" type="button" title="Ana Sayfaya Dön">
+              <span class="back-home-icon" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 12H5"></path>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+              </span>
+              Ana Sayfa
+            </button>
+            <div class="section-title-wrap">
+              <div class="section-ribbon-banner">
+                <span class="section-pill-badge">⚡ ZEKA VE REKABET MERKEZİ</span>
+              </div>
+              <h2 class="section-title">🔥 Popüler Oyunlar &amp; Düellolar</h2>
+              <p class="section-desc">Akıllı tahtada iki kişilik, sınıfça veya Moli'ye karşı oynanan 6 interaktif mini oyun:</p>
+            </div>
+            <span class="subjects-count-badge">6 Mini Oyun Aktif</span>
+          </div>
+
+          <div class="arcade-games-grid">
+            <!-- Oyun 1: ⚔️ Çarpma Savaşı (Halat Çekme Düellosu) -->
+            <div class="arcade-game-card theme-tug" data-arcade-game="tug" role="button" tabindex="0">
+              <div class="arcade-card-top">
+                <span class="arcade-card-emoji">⚔️</span>
+                <span class="arcade-card-tag">2 Kişilik Düello</span>
+              </div>
+              <h3 class="arcade-card-title">Çarpma Savaşı: Halat Çekme</h3>
+              <p class="arcade-card-desc">Aynı anda çarpma ve 4 işlem sorularını çöz, halatı kendi bölgende +5 adıma çekerek kazan!</p>
+              <div class="arcade-card-badges">
+                <span>🪢 Halat Çekme</span>
+                <span>⚡ Kolay / Orta / Zor / 4 İşlem</span>
+              </div>
+              <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
+            </div>
+
+            <!-- Oyun 2: 🧩 Çocuk Sudokusu -->
+            <div class="arcade-game-card theme-sudoku" data-arcade-game="sudoku" role="button" tabindex="0">
+              <div class="arcade-card-top">
+                <span class="arcade-card-emoji">🧩</span>
+                <span class="arcade-card-tag">Mantık &amp; Zeka</span>
+              </div>
+              <h3 class="arcade-card-title">Çocuk Sudokusu Atölyesi</h3>
+              <p class="arcade-card-desc">4x4 Meyve/Şekil Sudokusu ile 4x4 ve 6x6 Rakam Sudokusu! İpucu al, kontrol et ve bulmacayı çöz.</p>
+              <div class="arcade-card-badges">
+                <span>🍎 4x4 Simge/Meyve</span>
+                <span>🔢 4x4 &amp; 6x6 Rakam</span>
+              </div>
+              <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
+            </div>
+
+            <!-- Oyun 3: ❌⭕ Akıllı XOX (Klasik & Sonsuz 3 Taş) -->
+            <div class="arcade-game-card theme-xox" data-arcade-game="xox" role="button" tabindex="0">
+              <div class="arcade-card-top">
+                <span class="arcade-card-emoji">❌⭕</span>
+                <span class="arcade-card-tag">2 Kişi &amp; 🤖 Moli AI</span>
+              </div>
+              <h3 class="arcade-card-title">Akıllı XOX: Sonsuz 3 Taş</h3>
+              <p class="arcade-card-desc">Arkadaşınla veya Moli'ye karşı oyna! 🔥 Sonsuz Modda 4. taşı koyduğunda ilk taşın silinir, beraberlik yok!</p>
+              <div class="arcade-card-badges">
+                <span>🔥 Sonsuz 3 Taş Modu</span>
+                <span>🤖 Yapay Zeka Moli</span>
+              </div>
+              <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
+            </div>
+
+            <!-- Oyun 4: 🧠 Hafıza Kartları Düellosu -->
+            <div class="arcade-game-card theme-memory" data-arcade-game="memory" role="button" tabindex="0">
+              <div class="arcade-card-top">
+                <span class="arcade-card-emoji">🧠</span>
+                <span class="arcade-card-tag">1 veya 2 Kişilik</span>
+              </div>
+              <h3 class="arcade-card-title">Hafıza Kartları: Eşini Bul</h3>
+              <p class="arcade-card-desc">4x3 veya 4x4 kartları çevir; Hayvanlar, Uzay, Meyveler veya Eş Anlamlı Kelimeleri eşleştirip puan topla!</p>
+              <div class="arcade-card-badges">
+                <span>🐾 4 Farklı Tema</span>
+                <span>🔤 Eş Anlamlı Kelimeler</span>
+              </div>
+              <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
+            </div>
+
+            <!-- Oyun 5: 🌸 Moli'nin Çiçeği: Kelime Bulmaca -->
+            <div class="arcade-game-card theme-flower" data-arcade-game="flower" role="button" tabindex="0">
+              <div class="arcade-card-top">
+                <span class="arcade-card-emoji">🌸</span>
+                <span class="arcade-card-tag">Sınıfça Kelime Oyunu</span>
+              </div>
+              <h3 class="arcade-card-title">Moli'nin Çiçeği: Kelime Bulmaca</h3>
+              <p class="arcade-card-desc">Çiçeğin 7 yaprağı dökülmeden Türkçe klavyeden harfleri seçerek gizli kelimeyi veya atasözünü bul!</p>
+              <div class="arcade-card-badges">
+                <span>🌸 7 Yaprak Hakkı</span>
+                <span>📚 5 Zengin Kategori</span>
+              </div>
+              <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
+            </div>
+
+            <!-- Oyun 6: ⚡ Hızlı Parmaklar: Doğru mu Yanlış mı? -->
+            <div class="arcade-game-card theme-buzzer" data-arcade-game="buzzer" role="button" tabindex="0">
+              <div class="arcade-card-top">
+                <span class="arcade-card-emoji">⚡</span>
+                <span class="arcade-card-tag">2 Kişilik Buzzer</span>
+              </div>
+              <h3 class="arcade-card-title">Hızlı Parmaklar: Doğru / Yanlış</h3>
+              <p class="arcade-card-desc">Ortadaki genel kültür, doğa, fen ve matematik ifadesini ilk doğru bilen +1 puan alır; yanlış basan 1.5sn kilitlenir!</p>
+              <div class="arcade-card-badges">
+                <span>✅ 48 Soruluk Havuz</span>
+                <span>🔒 1.5sn Ceza Kilidi</span>
+              </div>
+              <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- B) AKTİF MİNİ OYUN SAHNESİ -->
+        <div class="arcade-stage-view hide" id="arcadeStageView">
+          <div class="arcade-stage-topbar">
+            <button class="btn-back-to-subjects" id="btnArcadeBackToList" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5"></path>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Tüm Oyunlar
+            </button>
+            <div class="arcade-stage-title-wrap">
+              <span class="arcade-stage-icon" id="arcadeStageIcon">⚔️</span>
+              <h2 class="arcade-stage-title" id="arcadeStageTitle">Çarpma Savaşı</h2>
+            </div>
+            <div class="arcade-stage-toolbar" id="arcadeStageToolbar"></div>
+          </div>
+
+          <div class="arcade-stage-canvas" id="arcadeStageCanvas">
+            <!-- Seçilen oyunun interaktif sahnesi buraya dinamik render edilir -->
           </div>
         </div>
       </section>
@@ -1143,8 +1285,8 @@
             <img src="assets/icons/3d/lightning.webp" class="grade-modal-3d-icon" alt="Düellolar" width="46" height="46" loading="lazy">
           </div>
           <div class="grade-modal-info">
-            <span class="grade-modal-name">İki Kişilik Sınıf Düelloları</span>
-            <span class="grade-modal-badge">Fark Bulma, Hızlı Refleks &amp; Stroop</span>
+            <span class="grade-modal-name">🔥 Popüler Oyunlar &amp; Düellolar</span>
+            <span class="grade-modal-badge">Halat Çekme, Sudoku, XOX, Hafıza, Çiçek &amp; Buzzer</span>
           </div>
           <span class="grade-modal-arrow">→</span>
         </button>
@@ -1963,6 +2105,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=7.8.0" defer></script>
+  <script src="app.js?v=7.9.0" defer></script>
 </body>
 </html>

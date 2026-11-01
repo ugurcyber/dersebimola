@@ -13081,3 +13081,1063 @@ p,
     display: none !important;
   }
 }
+
+
+/* ==========================================================================
+   V7.9.0: 🔥 POPÜLER OYUNLAR & DÜELLOLAR (ZEKA VE REKABET MERKEZİ - 6 OYUN)
+   ========================================================================== */
+
+.arcade-hub-section {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 8px clamp(14px, 2.2vw, 32px) 18px clamp(14px, 2.2vw, 32px);
+  height: calc(100vh - 96px);
+  overflow-y: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.arcade-games-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.arcade-game-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 5px solid #CBD5E1;
+  border-radius: 24px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+}
+
+.arcade-game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.11);
+}
+
+.arcade-game-card.theme-tug { border-left: 7px solid #EA580C; }
+.arcade-game-card.theme-sudoku { border-left: 7px solid #10B981; }
+.arcade-game-card.theme-xox { border-left: 7px solid #8B5CF6; }
+.arcade-game-card.theme-memory { border-left: 7px solid #0EA5E9; }
+.arcade-game-card.theme-flower { border-left: 7px solid #EC4899; }
+.arcade-game-card.theme-buzzer { border-left: 7px solid #F59E0B; }
+
+.arcade-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arcade-card-emoji {
+  font-size: 2.1rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arcade-card-tag {
+  background: #EFF6FF;
+  color: #0284C7;
+  border: 1px solid #BAE6FD;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.arcade-card-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+}
+
+.arcade-card-desc {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #475569;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.arcade-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.arcade-card-badges span {
+  font-size: 0.74rem;
+  font-weight: 800;
+  background: #F8FAFC;
+  color: #334155;
+  border: 1px solid #E2E8F0;
+  padding: 3px 9px;
+  border-radius: 8px;
+}
+
+.arcade-card-play-btn {
+  width: 100%;
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%);
+  border: 1.5px solid #0284C7;
+  border-bottom: 4px solid #0369A1;
+  color: #FFFFFF;
+  border-radius: 14px;
+  padding: 9px 14px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* B) AKTİF OYUN SAHNESİ ÜST BARI */
+.arcade-stage-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #FFFFFF;
+  border: 2px solid #DBEAFE;
+  border-bottom: 4px solid #93C5FD;
+  border-radius: 20px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
+}
+
+.arcade-stage-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.arcade-stage-icon {
+  font-size: 1.6rem;
+}
+
+.arcade-stage-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: clamp(1.1rem, 1.6vw, 1.38rem);
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+}
+
+.arc-toolbar-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.arc-pill-btn {
+  background: #F8FAFC;
+  border: 1.5px solid #CBD5E1;
+  border-bottom: 3px solid #94A3B8;
+  color: #334155;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.arc-pill-btn.active {
+  background: #0EA5E9;
+  border-color: #0284C7;
+  border-bottom-color: #0369A1;
+  color: #FFFFFF;
+}
+
+.arc-pill-btn.pill-fire {
+  background: linear-gradient(180deg, #F97316 0%, #EA580C 100%);
+  border-color: #EA580C;
+  border-bottom-color: #9A3412;
+  color: #FFFFFF;
+}
+
+.arc-pill-btn.arc-btn-restart {
+  background: #FFFBEB;
+  border-color: #FCD34D;
+  border-bottom-color: #F59E0B;
+  color: #92400E;
+}
+
+/* OYUN 1: ⚔️ ÇARPMA SAVAŞI (HALAT ÇEKME) */
+.arc-tug-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tug-rope-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 10px 16px;
+}
+
+.tug-team-side {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.85rem;
+}
+
+.tug-team-badge {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tug-center-status {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #0F172A;
+  text-align: center;
+}
+
+.tug-rope-track-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(90deg, #EFF6FF 0%, #FFFBEB 50%, #FFF7ED 100%);
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  border-radius: 22px;
+  padding: 20px 18px;
+}
+
+.tug-zone-label {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.tug-zone-label.zone-blue {
+  background: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.tug-zone-label.zone-orange {
+  background: #FFEDD5;
+  color: #C2410C;
+}
+
+.tug-rope-line {
+  flex: 1;
+  height: 14px;
+  background: repeating-linear-gradient(45deg, #D97706, #D97706 10px, #F59E0B 10px, #F59E0B 20px);
+  border-radius: 9999px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.tug-steps-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.tug-step-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #94A3B8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.tug-step-dot.filled-blue {
+  background: #3B82F6;
+  border-color: #1D4ED8;
+}
+
+.tug-step-dot.filled-orange {
+  background: #F97316;
+  border-color: #C2410C;
+}
+
+.tug-knot-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: left 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tug-knot-flag {
+  font-size: 1.2rem;
+  margin-bottom: -6px;
+}
+
+.tug-knot-moli {
+  background: #FFFFFF;
+  border: 3px solid #F59E0B;
+  border-radius: 50%;
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.2);
+}
+
+.tug-split-players {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.tug-player-card {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 5px solid #CBD5E1;
+  border-radius: 24px;
+  padding: 18px;
+  text-align: center;
+  position: relative;
+}
+
+.tug-player-card.player-blue {
+  border-color: #93C5FD;
+  border-bottom-color: #2563EB;
+}
+
+.tug-player-card.player-orange {
+  border-color: #FDBA74;
+  border-bottom-color: #EA580C;
+}
+
+.tug-player-header {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tug-question-box {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-weight: 700;
+  color: #0F172A;
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.tug-options-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.tug-opt-btn {
+  border-radius: 16px;
+  padding: 16px 10px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.tug-opt-btn.btn-blue {
+  background: linear-gradient(180deg, #3B82F6 0%, #2563EB 100%);
+  border: 1.5px solid #1D4ED8;
+  border-bottom: 4.5px solid #1E40AF;
+}
+
+.tug-opt-btn.btn-orange {
+  background: linear-gradient(180deg, #F97316 0%, #EA580C 100%);
+  border: 1.5px solid #C2410C;
+  border-bottom: 4.5px solid #9A3412;
+}
+
+.tug-lock-msg {
+  display: none;
+  margin-top: 10px;
+  background: #FEE2E2;
+  color: #DC2626;
+  font-weight: 800;
+  font-size: 0.86rem;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.tug-player-card.is-locked .tug-lock-msg {
+  display: block;
+}
+
+.tug-player-card.is-locked .tug-opt-btn {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* OYUN 2: 🧩 ÇOCUK SUDOKUSU */
+.arc-sudoku-arena {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 5px solid #CBD5E1;
+  border-radius: 24px;
+  padding: 16px 20px;
+}
+
+.sdk-instructions {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #334155;
+  margin-bottom: 10px;
+}
+
+.sdk-feedback-banner {
+  text-align: center;
+  background: #FEF3C7;
+  border: 1.5px solid #F59E0B;
+  color: #92400E;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.95rem;
+  padding: 7px 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.sdk-main-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.sdk-board {
+  display: grid;
+  background: #CBD5E1;
+  border: 3px solid #334155;
+  border-radius: 16px;
+  overflow: hidden;
+  gap: 2px;
+}
+
+.sdk-board.grid-4x4 {
+  grid-template-columns: repeat(4, 72px);
+  grid-template-rows: repeat(4, 72px);
+}
+
+.sdk-board.grid-6x6 {
+  grid-template-columns: repeat(6, 56px);
+  grid-template-rows: repeat(6, 56px);
+}
+
+.sdk-cell {
+  background: #FFFFFF;
+  border: none;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sdk-cell.is-fixed {
+  background: #F1F5F9;
+  color: #334155;
+  cursor: default;
+}
+
+.sdk-cell.is-editable {
+  color: #0284C7;
+}
+
+.sdk-cell.is-selected {
+  background: #FEF9C3 !important;
+  box-shadow: inset 0 0 0 3px #F59E0B;
+}
+
+.sdk-cell.cell-correct {
+  background: #DCFCE7 !important;
+  color: #15803D !important;
+}
+
+.sdk-cell.cell-wrong {
+  background: #FEE2E2 !important;
+  color: #DC2626 !important;
+}
+
+.sdk-cell.sdk-box-right {
+  border-right: 3px solid #334155 !important;
+}
+
+.sdk-cell.sdk-box-bottom {
+  border-bottom: 3px solid #334155 !important;
+}
+
+.sdk-side-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 300px;
+}
+
+.sdk-pad-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.sdk-symbol-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.sdk-pad-btn {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sdk-pad-btn:hover {
+  background: #F0F9FF;
+  border-color: #38BDF8;
+}
+
+.sdk-btn-erase {
+  font-size: 0.95rem;
+  color: #DC2626;
+}
+
+.sdk-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* OYUN 3: ❌⭕ AKILLI XOX */
+.arc-xox-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.xox-scoreboard {
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  border-radius: 18px;
+  padding: 10px 18px;
+}
+
+.xox-player-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.95rem;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+}
+
+.xox-player-pill.active-turn {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #92400E;
+}
+
+.xox-status-banner {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0F172A;
+  text-align: center;
+}
+
+.xox-infinite-hint {
+  background: #FFF7ED;
+  border: 1.5px solid #FDBA74;
+  color: #9A3412;
+  font-size: 0.84rem;
+  padding: 6px 14px;
+  border-radius: 12px;
+}
+
+.xox-board-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 108px);
+  grid-template-rows: repeat(3, 108px);
+  gap: 10px;
+  background: #E2E8F0;
+  padding: 12px;
+  border-radius: 24px;
+  border: 3px solid #CBD5E1;
+}
+
+.xox-cell {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-bottom: 5px solid #94A3B8;
+  border-radius: 18px;
+  font-size: 2.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.xox-cell.is-win-cell {
+  background: #DCFCE7 !important;
+  border-color: #22C55E !important;
+}
+
+.xox-cell.is-fading-piece {
+  opacity: 0.62;
+  border-style: dashed !important;
+  border-color: #F59E0B !important;
+}
+
+.fading-badge {
+  position: absolute;
+  bottom: 4px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  background: #FEF3C7;
+  color: #B45309;
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+/* OYUN 4: 🧠 HAFIZA KARTLARI DÜELLOSU */
+.arc-memory-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.memory-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(110px, 155px));
+  gap: 12px;
+  justify-content: center;
+}
+
+.mem-card-btn {
+  height: 88px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  border: 2px solid #0284C7;
+  border-bottom: 5px solid #0369A1;
+  color: #FFFFFF;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: transform 0.22s ease, background 0.22s ease;
+}
+
+.mem-card-btn .mem-card-front {
+  display: none;
+}
+
+.mem-card-btn .mem-card-back {
+  font-size: 1.8rem;
+}
+
+.mem-card-btn.is-flipped {
+  background: #FFFFFF;
+  border-color: #93C5FD;
+  border-bottom-color: #3B82F6;
+  color: #0F172A;
+}
+
+.mem-card-btn.is-flipped .mem-card-back {
+  display: none;
+}
+
+.mem-card-btn.is-flipped .mem-card-front {
+  display: inline-block;
+}
+
+.mem-card-btn.is-matched {
+  background: #ECFDF5 !important;
+  border-color: #34D399 !important;
+  border-bottom-color: #10B981 !important;
+  color: #047857 !important;
+}
+
+/* OYUN 5: 🌸 MOLI'NİN ÇİÇEĞİ: KELİME BULMACA */
+.arc-flower-arena {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 5px solid #CBD5E1;
+  border-radius: 24px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.flower-top-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.flower-visual-card {
+  background: #FFFBEB;
+  border: 2px solid #FDE68A;
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.flower-petal-group {
+  transition: opacity 0.35s ease, transform 0.45s ease;
+}
+
+.flower-petal-group.petal-dropped {
+  opacity: 0.12;
+}
+
+.flower-petals-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #92400E;
+}
+
+.flower-word-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.flower-hint-box {
+  background: #F0F9FF;
+  border: 1.5px solid #BAE6FD;
+  border-radius: 14px;
+  padding: 8px 14px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0369A1;
+  text-align: center;
+}
+
+.flower-slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.flower-word-group {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.flower-word-space {
+  width: 18px;
+}
+
+.flower-letter-slot {
+  width: 40px;
+  height: 48px;
+  border-radius: 12px;
+  background: #F8FAFC;
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0F172A;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flower-letter-slot.is-revealed {
+  background: #ECFDF5;
+  border-color: #34D399;
+  border-bottom-color: #10B981;
+  color: #047857;
+}
+
+.flower-letter-slot.is-missed {
+  background: #FEE2E2;
+  border-color: #FCA5A5;
+  color: #DC2626;
+}
+
+.flower-result-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: 14px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.95rem;
+}
+
+.flower-result-banner.banner-win {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+.flower-result-banner.banner-lose {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.flower-keyboard-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.flower-key-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-bottom: 3.5px solid #94A3B8;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+.flower-key-btn.key-correct {
+  background: #22C55E !important;
+  border-color: #16A34A !important;
+  color: #FFFFFF !important;
+}
+
+.flower-key-btn.key-wrong {
+  background: #E2E8F0 !important;
+  color: #94A3B8 !important;
+  opacity: 0.6;
+}
+
+/* OYUN 6: ⚡ HIZLI PARMAKLAR (BUZZER DÜELLOSU) */
+.arc-buzzer-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.buzzer-statement-card {
+  width: 100%;
+  max-width: 860px;
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border: 2.5px solid #FCD34D;
+  border-bottom: 6px solid #F59E0B;
+  border-radius: 24px;
+  padding: 20px 24px;
+  text-align: center;
+  animation: buzzerUnblur 0.42s ease-out;
+}
+
+@keyframes buzzerUnblur {
+  0% { filter: blur(8px); transform: scale(0.95); opacity: 0.5; }
+  100% { filter: blur(0); transform: scale(1); opacity: 1; }
+}
+
+.buzzer-statement-tag {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #B45309;
+  margin-bottom: 6px;
+}
+
+.buzzer-statement-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.3;
+}
+
+.buzzer-explanation-box {
+  margin-top: 10px;
+  background: #FFFFFF;
+  border: 1.5px solid #10B981;
+  color: #047857;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.92rem;
+}
+
+.buzzer-split-panels {
+  width: 100%;
+  max-width: 860px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.buzzer-player-box {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 5px solid #CBD5E1;
+  border-radius: 24px;
+  padding: 18px;
+  text-align: center;
+  position: relative;
+}
+
+.buzzer-player-box.player-blue {
+  border-color: #93C5FD;
+  border-bottom-color: #2563EB;
+}
+
+.buzzer-player-box.player-orange {
+  border-color: #FDBA74;
+  border-bottom-color: #EA580C;
+}
+
+.buzzer-player-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.buzzer-btns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.buzzer-big-btn {
+  border-radius: 18px;
+  padding: 20px 12px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.buzzer-big-btn .bz-icon {
+  font-size: 1.7rem;
+}
+
+.buzzer-big-btn.btn-true {
+  background: linear-gradient(180deg, #22C55E 0%, #16A34A 100%);
+  border: 1.5px solid #15803D;
+  border-bottom: 5px solid #166534;
+}
+
+.buzzer-big-btn.btn-false {
+  background: linear-gradient(180deg, #EF4444 0%, #DC2626 100%);
+  border: 1.5px solid #B91C1C;
+  border-bottom: 5px solid #991B1B;
+}
+
+.buzzer-lock-overlay {
+  display: none;
+  margin-top: 10px;
+  background: #FEE2E2;
+  color: #DC2626;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.buzzer-player-box.is-locked .buzzer-lock-overlay {
+  display: block;
+}
+
+.buzzer-player-box.is-locked .buzzer-big-btn {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@media (max-width: 960px) {
+  .arcade-games-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .flower-top-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .arcade-games-grid,
+  .tug-split-players,
+  .buzzer-split-panels {
+    grid-template-columns: 1fr;
+  }
+}
