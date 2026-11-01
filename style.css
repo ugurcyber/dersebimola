@@ -14540,3 +14540,149 @@ body,
   border-bottom: 4px solid #92400E !important;
   box-shadow: 0 4px 0 #92400E, 0 6px 14px rgba(245, 158, 11, 0.35) !important;
 }
+
+
+/* ==========================================================================
+   V8.4.0: MOBİLDE MOLI LOGOSUNUN MERKEZE TAŞINMASI VE %100 SIĞDIRMA DÜZENİ
+   ========================================================================== */
+
+/* Masaüstü ve mobilde Öğrenmenin En Eğlenceli Yolu üzerine yerleşen Moli Logosu */
+.hero-center-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka', 'Poppins', sans-serif !important;
+  font-size: clamp(2.3rem, 5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hero-center-brand-logo .logo-mo {
+  color: #0F172A;
+}
+
+.hero-center-brand-logo .logo-li {
+  color: #FF6B00;
+  margin-left: 1px;
+}
+
+.hero-center-brand-logo .logo-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -12px;
+  margin-left: 4px;
+  filter: drop-shadow(0 2px 5px rgba(245, 158, 11, 0.4));
+}
+
+@media (max-width: 768px) {
+  /* 1) Sol üstteki Moli yazısını ve alt başlığı mobilde gizle (artık tam ortada 'Öğrenmenin' üzerinde) */
+  .topbar-logo-brand {
+    display: none !important;
+  }
+
+  /* 2) Üst barın mobilde sağa sola taşmasını engelle, ekran genişliğine tam sığdır */
+  .unified-topbar {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    padding: 6px 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+  }
+
+  .topbar-unified-actions {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 4px !important;
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+
+  /* Butonları dengeli küçült, yatay kaydırmaya asla izin verme */
+  .topbar-action-pill {
+    padding: 5px 6px !important;
+    font-size: 0.72rem !important;
+    gap: 3px !important;
+    flex-shrink: 1 !important;
+  }
+
+  .topbar-action-pill.pill-gamemode {
+    padding: 5px 8px !important;
+  }
+
+  .topbar-action-pill.pill-login {
+    padding: 5px 9px !important;
+    font-size: 0.75rem !important;
+  }
+
+  .topbar-action-pill.pill-gamemode .pill-text,
+  .topbar-action-pill.pill-teacher-tools .pill-text,
+  .topbar-action-pill.pill-share .pill-text,
+  .topbar-action-pill.pill-addquiz .pill-text,
+  .topbar-action-pill.pill-settings .pill-text {
+    display: none !important;
+  }
+
+  .topbar-sound-btn {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+  }
+
+  .topbar-btn-menu {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+  }
+
+  /* 3) Tüm ekranın sağa sola kaymasını (horizontal scroll) kesin olarak engelle */
+  html, body, .app-layout, .app-main-wrapper, #viewLobby, .home-showcase-section, .widescreen-showcase-stage {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-center-brand-logo {
+    font-size: 2.35rem !important;
+    margin-bottom: 2px !important;
+  }
+
+  .stage-main-title {
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .stage-bubbly-3d {
+    font-size: 2.1rem !important;
+    margin: 3px auto 8px auto !important;
+  }
+
+  .stage-btn-start-3d {
+    width: min(290px, 88vw) !important;
+    padding: 12px 22px !important;
+    font-size: 1.2rem !important;
+  }
+
+  .daily-riddle-card {
+    max-width: calc(100vw - 24px) !important;
+    box-sizing: border-box !important;
+  }
+
+  .widescreen-moli-arena {
+    max-width: calc(100vw - 20px) !important;
+  }
+
+  .widescreen-floating-trust-card {
+    max-width: calc(100vw - 24px) !important;
+    box-sizing: border-box !important;
+  }
+}

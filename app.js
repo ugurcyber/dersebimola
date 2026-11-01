@@ -19759,6 +19759,20 @@
       });
     }
 
+    const heroCenterBrandLogo = document.getElementById('heroCenterBrandLogo');
+    if (heroCenterBrandLogo) {
+      addTapListener(heroCenterBrandLogo, (e) => {
+        audio.playClick();
+        if (state.currentView === 'duel') {
+          exitDuel();
+        } else if (state.currentSection !== 'home') {
+          openHomePage();
+        } else {
+          handleMoliClick();
+        }
+      });
+    }
+
     const btnDesktopLogin = document.getElementById('btnDesktopLogin');
     if (btnDesktopLogin) {
       addTapListener(btnDesktopLogin, () => {
