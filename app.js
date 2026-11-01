@@ -7293,65 +7293,174 @@
       { q: '"En heyecan verici spor futboldur." cümlesi nedir? ⚽', a: 'Öznel Yargı ⚽', d: ['Nesnel Yargı', 'Sebep-Sonuç'], exp: 'Futbolun en heyecanlı olması kişisel bir zevktir.' }
     ],
 
-    // 4. SINIF: YER KABUĞU, DÜNYA'NIN HAREKETLERİ VE BESİNLERİMİZ (30 ÖZGÜN SORU)
-    grade4CrustNutritionPool: [
-      { q: 'Yer kabuğunu oluşturan kayaçların parçalanmasıyla sırasıyla kaya, taş, çakıl ve en son ne oluşur? 🏖️', a: 'Toprak ve Kum 🏖️', d: ['Maden', 'Fosil'], exp: 'Kayaçlar rüzgar ve suyla aşınarak ufalanır ve toprağı meydana getirir.' },
-      { q: 'Kayaçların içinde bulunan ve ekonomik değeri olan değerli minerallere ne ad verilir? 💎', a: 'Maden 💎', d: ['Fosil', 'Toprak'], exp: 'Ekonomik değere sahip kayaçlara maden denir (Altın, Bor, Bakır vb.).' },
-      { q: 'Ülkemizin dünyada 1. sırada rezervine sahip olduğu, roket yakıtı ve temizlikte kullanılan stratejik maden hangisidir? 🚀', a: 'Bor Madeni 🚀', d: ['Taş Kömürü', 'Petrol'], exp: 'Türkiye dünyadaki bor rezervlerinin yaklaşık %73\'üne sahiptir.' },
-      { q: 'Eski çağlarda yaşamış canlıların kayaç tabakaları arasında taşlaşmış kalıntı ve izlerine ne denir? 🦖', a: 'Fosil 🦖', d: ['Mineral', 'Linyit'], exp: 'Milyonlarca yıllık canlı kalıntıları fosil olarak adlandırılır.' },
-      { q: 'Dünya\'nın kendi ekseni etrafında batıdan doğuya dönmesi ne kadar sürer? ⏳', a: '24 saat (1 gün) ⏳', d: ['365 gün 6 saat', '12 saat'], exp: 'Dünya kendi etrafındaki 1 tam dönüşünü 24 saatte tamamlar.' },
-      { q: 'Dünya\'nın kendi etrafında dönmesi sonucunda hangisi OLUŞUR? 🌍', a: 'Gece ve Gündüz 🌍', d: ['Mevsimler', 'Artık Yıl'], exp: 'Dünya\'nın kendi etrafında dönmesiyle gece ve gündüz döngüsü oluşur.' },
-      { q: 'Dünya\'nın Güneş etrafında dolanması ne kadar sürer? ☀️', a: '365 gün 6 saat (1 yıl) ☀️', d: ['24 saat', '30 gün'], exp: 'Dünya Güneş etrafındaki 1 tam dolanımını 1 yılda tamamlar.' },
-      { q: 'Dünya\'nın Güneş etrafında dolanması ve eksen eğikliği sonucunda hangisi OLUŞUR? 🍂🌸', a: 'Dört Mevsim (İlkbahar, Yaz, Sonbahar, Kış) 🍂', d: ['Gece ve Gündüz', 'Gelgit'], exp: 'Güneş etrafındaki dolanma mevsimleri meydana getirir.' },
-      { q: 'Vücudumuza öncelikli olarak ENERJİ sağlayan temel besin grubu hangisidir? 🍞', a: 'Karbonhidratlar (Ekmek, Makarna, Patates) 🍞', d: ['Proteinler', 'Vitaminler'], exp: 'Karbonhidratlar vücudumuzun 1. dereceden enerji yakıtıdır.' },
-      { q: 'Vücudumuzda BÜYÜME, GELİŞME ve YARALARIN İYİLEŞMESİNİ sağlayan yapıcı-onarıcı besin hangisidir? 🥩', a: 'Proteinler (Et, Süt, Yumurta, Balık) 🥩', d: ['Yağlar', 'Karbonhidratlar'], exp: 'Proteinler vücudun yapı taşıdır; kas ve hücreleri onarır.' },
-      { q: 'Vücudumuza enerji veren, fazlası depolanan ve soğuktan koruyan besin grubu nedir? 🧈', a: 'Yağlar (Zeytinyağı, Tereyağı, Ceviz) 🧈', d: ['Mineraller', 'Su'], exp: 'Yağlar yüksek enerji içerir ve organları korur.' },
-      { q: 'Vücudumuzda DÜZENLEYİCİ olarak görev yapan ve hastalıklara karşı direncimizi artıran besin grubu nedir? 🍎🥦', a: 'Vitaminler (Meyve ve Sebzeler) 🍎', d: ['Karbonhidratlar', 'Yağlar'], exp: 'Vitaminler bağışıklık sistemini güçlendirir ve hastalıklardan korur.' },
-      { q: 'Vücudumuzun yaklaşık %70\'ini oluşturan, her besinde bulunan ve hayati önem taşıyan madde nedir? 💧', a: 'Su ve Mineraller 💧', d: ['Sadece Şeker', 'Sadece Tuz'], exp: 'Su ve mineraller vücudun çalışması için her gün mutlaka tüketilmelidir.' },
-      { q: 'Kayaçların farklı renk ve sertlikte olmasını sağlayan temel yapı nedir? 🪨', a: 'İçerdikleri Mineraller 🪨', d: ['Toprağın nemi', 'Havanın sıcaklığı'], exp: 'Kayaçlara özelliklerini içindeki mineraller kazandırır.' },
-      { q: 'Mutfak tezgahlarında ve heykellerde kullanılan değerli ve sert kayaç/maden hangisidir? 🏛️', a: 'Mermer 🏛️', d: ['Kömür', 'Tuz'], exp: 'Afyon ve Marmara Adası mermerleriyle dünyaca ünlüdür.' },
-      { q: 'Termik santrallerde yakılarak elektrik enerjisi üretilen kahverengi kömür madeni hangisidir? ⛏️', a: 'Linyit ⛏️', d: ['Bor', 'Bakır'], exp: 'Linyit ülkemizde yaygın olarak çıkarılan bir enerji madenidir.' },
-      { q: 'Fosilleri inceleyen bilim dalına ne ad verilir? 🦖', a: 'Paleontoloji (Fosil Bilimi) 🦖', d: ['Arkeoloji', 'Meteoroloji'], exp: 'Fosilleri inceleyen uzmanlara paleontolog denir.' },
-      { q: 'Aşırı ve dengesiz beslenme ile hareketsiz yaşamın yol açtığı tehlikeli sağlık sorunu nedir? ⚖️', a: 'Obezite (Aşırı Şişmanlık) ⚖️', d: ['Grip', 'Kansızlık'], exp: 'Dengesiz beslenme obeziteye yol açar.' },
-      { q: 'Sigara dumanında bulunan ve akciğer kanserine yol açan en zararlı zehirli maddeler nelerdir? 🚭', a: 'Nikotin ve Katran 🚭', d: ['Vitamin ve Mineral', 'Kalsiyum'], exp: 'Sigara dumanında binlerce kanserojen zehir bulunur.' },
-      { q: 'Alkol kullanımı öncelikli olarak hangi hayati organımızı tahrip eder ve siroza yol açar? 🍺', a: 'Karaciğer 🩺', d: ['Mide', 'Göz'], exp: 'Alkol karaciğeri zehirleyerek kalıcı hasar verir.' },
-      { q: 'Kemik ve dişlerimizin güçlü olması için hangi mineral özellikle gereklidir? 🥛', a: 'Kalsiyum 🥛', d: ['Şeker', 'Katran'], exp: 'Süt ve peynirdeki kalsiyum kemikleri güçlendirir.' },
-      { q: 'Güneş\'in sabah doğudan doğup akşam batıdan batıyor gibi görünmesinin sebebi nedir? ☀️', a: 'Dünya\'nın kendi ekseni etrafında batıdan doğuya dönmesi 🌍', d: ['Güneş\'in koşması', 'Ay\'ın durması'], exp: 'Dünya kendi etrafında döndüğü için Güneş gökyüzünde hareket ediyormuş gibi görünür.' },
-      { q: 'Fosil oluşumu genellikle hangi tür kayaç tabakalarında gerçekleşir? 🦴', a: 'Tortul Kayaçlar 🦴', d: ['Magma lavları', 'Ateş küre'], exp: 'Lavlar canlıyı yakar; fosiller tortul kayaçlar arasında korunur.' },
-      { q: 'Elektrik kablolarının içinde elektriği mükemmel ileten hangi maden kullanılır? 🔌', a: 'Bakır 🔌', d: ['Kömür', 'Kireç'], exp: 'Bakır yüksek iletkenliğiyle kablolarda vazgeçilmezdir.' },
-      { q: 'Gözlerimizin karanlıkta daha iyi görmesini sağlayan ve havuçta bolca bulunan vitamin hangisidir? 🥕', a: 'A Vitamini 🥕', d: ['C Vitamini', 'D Vitamini'], exp: 'A vitamini göz retinası için çok faydalıdır.' },
-      { q: 'Portakal, limon ve mandalina gibi kış meyvelerinde bolca bulunan bağışıklık vitamini hangisidir? 🍊', a: 'C Vitamini 🍊', d: ['A Vitamini', 'B Vitamini'], exp: 'C vitamini gribe karşı vücut direncini artırır.' }
+    // =========================================================================
+    // 4. SINIF FEN BİLİMLERİ: MEB / MAARİF MODELİ 7 ÜNİTE (105 ÖZGÜN SORU)
+    // =========================================================================
+
+    // 1. ÜNİTE: YER KABUĞU VE DÜNYA'MIZIN HAREKETLERİ (15 ÖZGÜN SORU)
+    grade4ScienceCrustMovementsPool: [
+      { q: 'Yer kabuğunun kara tabakası neyden oluşur ve rüzgar/su etkisiyle parçalandığında büyükten küçüğe hangi sırayla ufalanır? 🪨', a: 'Kayaç ➡️ Kaya ➡️ Taş ➡️ Çakıl ➡️ Kum (Toprak) 🪨🏖️', d: ['Kum ➡️ Çakıl ➡️ Taş ➡️ Kayaç', 'Fosil ➡️ Maden ➡️ Magma ➡️ Kaya'], exp: 'Yer kabuğunu oluşturan kayaçlar dış etkilerle parçalanarak sırasıyla kaya, taş, çakıl, kum ve toprağa dönüşür.', spokenText: 'Yer kabuğundaki kayaçlar parçalandığında büyükten küçüğe hangi sırayla ufalanır?' },
+      { q: 'Kayaçların birbirinden farklı renkte, parlaklıkta ve sertlikte olmasını sağlayan temel yapı taşlarına ne ad verilir? 💎', a: 'Mineral 💎', d: ['Fosil 🦖', 'Toprak 🌱'], exp: 'Kayaçların yapısında bulunan doğal maddelere mineral denir; kayaçların özelliğini mineraller belirler.', spokenText: 'Kayaçların farklı renk ve sertlikte olmasını sağlayan yapı taşlarına ne ad verilir?' },
+      { q: 'Yer kabuğunun derinliklerinden çıkarılan ve ekonomik (parasal) değeri olan kayaç ve minerallere genel olarak ne ad verilir? ⛏️', a: 'Maden ⛏️', d: ['Çakıl Taşı', 'Tortul Tabaka'], exp: 'Altın, gümüş, bakır, bor, demir ve mermer gibi ekonomik değeri olan kayaçlara maden denir.', spokenText: 'Ekonomik değeri olan kayaç ve minerallere ne ad verilir?' },
+      { q: 'Dünya rezervlerinin yaklaşık %73\'ü ülkemizde bulunan, roket yakıtı, ısıya dayanıklı cam ve temizlik ürünlerinde kullanılan madenimiz hangisidir? 🚀', a: 'Bor Madeni 🚀', d: ['Taş Kömürü', 'Cıva'], exp: 'Türkiye bor madeni rezervinde dünyada birinci sıradadır.', spokenText: 'Dünya rezervlerinin büyük kısmı ülkemizde bulunan ve roket yakıtında kullanılan madenimiz hangisidir?' },
+      { q: 'Elektrik ve elektronik sanayisinde kabloların iç kısmında elektriği çok iyi ilettiği için yaygın olarak kullanılan maden hangisidir? 🔌', a: 'Bakır 🔌', d: ['Mermer 🏛️', 'Kömür 🪨'], exp: 'Bakır madeni elektrik ve ısıyı çok iyi ilettiği için elektrik tellerinde ve mutfak eşyalarında kullanılır.', spokenText: 'Kabloların iç kısmında elektriği iletmek için hangi maden kullanılır?' },
+      { q: 'Mutfak tezgahlarında, merdiven basamaklarında, heykel ve süs eşyası yapımında kullanılan değerli maden/kayaç hangisidir? 🏛️', a: 'Mermer 🏛️', d: ['Linyit', 'Bor'], exp: 'Mermer inşaat ve heykelcilik alanında yaygın olarak kullanılan değerli bir madendir.', spokenText: 'Mutfak tezgahlarında ve heykel yapımında kullanılan maden hangisidir?' },
+      { q: 'Kuyumculukta, süs eşyası ve resmi madeni para basımında kullanılan, paslanmayan değerli maden hangisidir? 🥇', a: 'Altın ve Gümüş 🥇', d: ['Taş Kömürü', 'Tebeşir'], exp: 'Altın ve gümüş parlak ve işlenebilir olduğu için mücevherat ve kuyumculukta kullanılır.', spokenText: 'Kuyumculukta ve süs eşyası yapımında kullanılan değerli maden hangisidir?' },
+      { q: 'Milyonlarca yıl önce yaşamış bitki ve hayvanların, havayla teması kesilerek tortul kayaç tabakaları arasında taşlaşmış kalıntı ve izlerine ne denir? 🦖', a: 'Fosil 🦖', d: ['Maden Filizi', 'Magma'], exp: 'Canlı kalıntılarının üstü kum, kil ve çamurla örtülüp milyonlarca yılda taşlaşmasıyla fosiller oluşur.', spokenText: 'Milyonlarca yıl önce yaşamış canlıların taşlaşmış kalıntı ve izlerine ne denir?' },
+      { q: 'Fosilleri inceleyerek Dünya\'nın geçmişi ve soyu tükenmiş canlılar hakkında bilgi toplayan bilim dalına ve bilim insanına ne denir? 🦴', a: 'Paleontoloji (Fosil Bilimi) — Paleontolog 🦴', d: ['Meteoroloji — Meteorolog', 'Astronomi — Astronom'], exp: 'Fosilleri inceleyen bilim dalı Paleontoloji, bu alanda çalışan bilim insanı ise Paleontologdur.', spokenText: 'Fosilleri inceleyen bilim dalına ve bilim insanına ne denir?' },
+      { q: 'Bir canlının öldükten sonra fosilleşebilmesi için aşağıdaki şartlardan hangisi GEREKLİDİR? 🛡️', a: 'Üzerinin hızla kum/çamurla örtülerek havayla (oksijenle) temasının kesilmesi 🛡️', d: ['Açık havada güneşin altında çürümesi', 'Yanardağ lavlarının içine düşmesi'], exp: 'Havayla teması kesilmeyen canlı kalıntıları çürür ve yok olur; fosilleşme için havasız ortam şarttır.', spokenText: 'Bir canlının fosilleşebilmesi için hangi şart gereklidir?' },
+      { q: 'Dünya\'mızın kendi ekseni etrafında batıdan doğuya doğru 1 tam dönüşünü tamamlaması ne kadar sürer ve bunun sonucunda ne oluşur? 🌍', a: '24 Saat (1 Gün) sürer ➡️ Gece ve Gündüz oluşur 🌓', d: ['365 Gün 6 Saat sürer ➡️ Mevsimler oluşur', '30 Gün sürer ➡️ 1 Ay oluşur'], exp: 'Dünya kendi etrafında 24 saatte döner; Güneş\'e dönük yüzünde gündüz, arka yüzünde gece yaşanır.', spokenText: 'Dünyamızın kendi ekseni etrafında bir tam dönüşü ne kadar sürer ve sonucunda ne oluşur?' },
+      { q: 'Gün içinde Güneş\'in sabah doğudan doğup, öğlen tepeye çıkıp, akşam batıdan batıyormuş gibi görünmesinin gerçek nedeni nedir? ☀️', a: 'Dünya\'nın kendi ekseni etrafında batıdan doğuya doğru dönmesi 🌍', d: ['Güneş\'in Dünya etrafında hızla koşması', 'Ay\'ın Güneş\'in önünü kapatması'], exp: 'Güneş yerinde sabittir; Dünya batıdan doğuya döndüğü için Güneş gökyüzünde yer değiştiriyormuş gibi görünür.', spokenText: 'Gün içinde Güneşin gökyüzünde hareket ediyormuş gibi görünmesinin gerçek nedeni nedir?' },
+      { q: 'Güneşli bir günde bahçedeki bir ağacın gölge boyu günün hangi vaktinde EN KISA olur? 🌳', a: 'Öğle vakti (Saat 12:00 civarında Güneş en tepedeyken) ☀️', d: ['Sabah Güneş yeni doğarken', 'Akşam Güneş batarken'], exp: 'Sabah ve akşam Güneş ışınları eğik geldiği için gölge uzundur; öğlen dik geldiği için gölge en kısadır.', spokenText: 'Bir ağacın gölge boyu günün hangi vaktinde en kısa olur?' },
+      { q: 'Dünya\'mızın Güneş etrafında elips şeklindeki yörüngede 1 tam dolanımını tamamlaması ne kadar sürer ve sonucunda ne oluşur? 🍂🌸', a: '365 Gün 6 Saat (1 Yıl) sürer ➡️ Mevsimler oluşur 🍂🌸', d: ['24 Saat sürer ➡️ Gece ve Gündüz oluşur', '7 Gün sürer ➡️ Haftalar oluşur'], exp: 'Dünya Güneş etrafındaki dolanma hareketini 365 gün 6 saatte tamamlar ve dört mevsim oluşur.', spokenText: 'Dünyamızın Güneş etrafında bir tam dolanımı ne kadar sürer ve sonucunda ne oluşur?' },
+      { q: 'Termik santrallerde yakıt olarak kullanılan kömür ile araçlarda kullanılan petrol ve doğal gaz nasıl oluşmuştur? ⛽', a: 'Milyonlarca yıl önceki bitki ve hayvan kalıntılarından (Fosil Yakıtlar) 🦖⛽', d: ['Deniz suyunun dondurulmasıyla', 'Bulutlardaki yağmur damlalarından'], exp: 'Kömür, petrol ve doğal gaz milyonlarca yıllık canlı kalıntılarından oluşan fosil yakıtlardır.', spokenText: 'Kömür, petrol ve doğal gaz nasıl oluşmuştur?' }
     ],
 
-    // 4. SINIF: KUVVET, MIKNATISLAR VE BASİT ELEKTRİK DEVRELERİ (30 ÖZGÜN SORU)
-    grade4CircuitsMagnetsPool: [
-      { q: 'Bir mıknatısın kaç adet manyetik kutbu vardır? 🧲', a: '2 kutbu vardır (N ve S) 🧲', d: ['1 kutbu', '4 kutbu'], exp: 'Mıknatısın Kuzey (N) ve Güney (S) olmak üzere iki kutbu bulunur.' },
-      { q: 'İki mıknatısın AYNI KUTUPLARI (N-N veya S-S) birbirine yaklaştırılırsa ne olur? 🧲', a: 'Birbirini İTER ↔️', d: ['Birbirini çeker', 'Yapışır'], exp: 'Aynı kutuplar birbirini iter, zıt kutuplar çeker.' },
-      { q: 'İki mıknatısın ZIT KUTUPLARI (N-S) birbirine yaklaştırılırsa ne olur? 🧲', a: 'Birbirini ÇEKER 🧲', d: ['Birbirini iter', 'Hiçbir şey olmaz'], exp: 'Zıt kutuplar birbirini güçlü bir şekilde çeker.' },
-      { q: 'Mıknatıs aşağıdaki maddelerden hangisini KESİNLİKLE ÇEKMEZ? 🪵', a: 'Tahta parçası ve plastik 🪵', d: ['Demir çivi 📌', 'Nikel para 🪙'], exp: 'Mıknatıslar demir, nikel, kobaltı çeker; tahta, plastik, camı çekmez.' },
-      { q: 'Bir mıknatıs ortadan ikiye kırılırsa yeni oluşan parçalarda ne görülür? 🧲', a: 'Her parçada yine 2 kutup (N ve S) oluşur 🧲', d: ['Mıknatıslık özelliği yok olur', 'Sadece N kutbu kalır'], exp: 'Mıknatıs ne kadar bölünürse bölünsün daima N ve S kutuplarına sahip olur.' },
-      { q: 'Yön bulmaya yarayan pusulanın ibresi hangi aletin çalışma prensibine dayanır? 🧭', a: 'Mıknatıs 🧭', d: ['Ayna', 'Pil'], exp: 'Pusula ibresi küçük ve hassas bir mıknatıstır.' },
-      { q: 'Rayların üzerinde temas etmeden havada süzülerek giden çok hızlı trenlere ne denir? 🚄', a: 'Maglev (Manyetik Levitasyon) Treni 🚄', d: ['Buharlı Tren', 'Metro'], exp: 'Maglev trenleri güçlü elektromıknatıslarla rayların üstünde uçar gibi gider.' },
-      { q: 'Aşağıdakilerden hangisi SAF BİR MADDEDİR? 💧', a: 'Saf su ve tuz 💧🧂', d: ['Meyve salatası 🥗', 'Limonata 🍋'], exp: 'Saf maddeler tek cins atom veya molekülden oluşur; limonata karışımdır.' },
-      { q: 'Birden çok maddenin kendi özelliğini kaybetmeden bir araya gelmesiyle ne oluşur? 🥗', a: 'Karışım 🥗', d: ['Saf Madde', 'Element'], exp: 'Salata, ayran ve hava birer karışımdır.' },
-      { q: 'Demir tozları ile kum karışımını en kolay hangi yöntemle ayırabiliriz? 🧲', a: 'Mıknatıs kullanarak 🧲', d: ['Suda bekleterek', 'Elekle eleyerek'], exp: 'Mıknatıs demir tozlarını çeker, kum ise geride kalır.' },
-      { q: 'Tuzlu sudaki tuzu geri elde etmek için hangi ayırma yöntemi uygulanır? 🧂', a: 'Buharlaştırma ☀️', d: ['Mıknatısla çekme', 'Süzme'], exp: 'Su buharlaştığında kabın dibinde tuz kristalleri kalır.' },
-      { q: 'Makarna ile haşlama suyunu birbirinden ayırmak için hangi alet kullanılır? 🍝', a: 'Süzgeç (Süzme yöntemi) 🍝', d: ['Mıknatıs', 'Elek'], exp: 'Katı-sıvı karışımlar süzgeçle süzülür.' },
-      { q: 'Basit bir elektrik devresinde elektrik ENERJİSİ KAYNAĞI olan eleman nedir? 🔋', a: 'Pil 🔋', d: ['Ampul 💡', 'Anahtar'], exp: 'Pil kimyasal enerjiyi elektrik enerjisine çevirir.' },
-      { q: 'Basit bir elektrik devresinde elektrik enerjisini IŞIĞA çeviren eleman hangisidir? 💡', a: 'Ampul 💡', d: ['Anahtar', 'Kablo'], exp: 'Ampul devre tamamlandığında ışık saçar.' },
-      { q: 'Elektrik akımını açıp kapatmaya yarayan (duvardaki lamba düğmesi gibi) devre elemanı nedir? 🎛️', a: 'Anahtar 🎛️', d: ['Pil', 'Duy'], exp: 'Anahtar devreden akım geçişini kontrol eder.' },
-      { q: 'Basit bir devrede anahtar AÇIK konumdayken ampul neden IŞIK VERMEZ? 💡', a: 'Devre tamamlanmadığı ve akım geçmediği için ❌', d: ['Pil bittiği için', 'Ampul kırıldığı için'], exp: 'Anahtar açıkken köprü kalkmış gibidir; akım iletilmez.' },
-      { q: 'Ampulün devrede vidalanarak takıldığı yuvaya ne ad verilir? 💡', a: 'Duy 💡', d: ['Pil yatağı', 'Sigorta'], exp: 'Ampul duya yerleştirilir.' },
-      { q: 'Evimizdeki prizlerde kullanılan şehir elektriği kaç volt gerilime sahiptir? ⚡', a: '220 Volt ⚡', d: ['1.5 Volt', '12 Volt'], exp: 'Evlerdeki prizler 220V yüksek gerilim taşır; asla yabancı cisim sokulmamalıdır!' },
-      { q: 'Islak ellerle elektrik anahtarına veya prize dokunmak neden çok tehlikelidir? ⚠️', a: 'Islak ten elektriği ileterek elektrik çarpmasına yol açar ⚡', d: ['Anahtar kirlenir', 'Elektrik faturası artar'], exp: 'Su ve nem elektriği iletir; ölümcül elektrik çarpması riski doğar.' },
-      { q: 'Hangisi elektrik akımını İLETEN (İletken) bir maddedir? 🔌', a: 'Bakır tel ve demir çivi 🔌', d: ['Plastik eldiven', 'Kuru tahta'], exp: 'Metaller elektrik akımını çok iyi iletir.' },
-      { q: 'Hangisi elektrik akımını İLETMEYEN (Yalıtkan) bir maddedir? 🧤', a: 'Plastik ve kauçuk 🧤', d: ['Bakır', 'Alüminyum folyo'], exp: 'Plastik elektrik teknisyenlerini koruyan yalıtkan bir malzemedir.' },
-      { q: 'Buzdolabı kapaklarının kendiliğinden yapışıp kapanmasını sağlayan nedir? 🧲', a: 'Lastik şeritlerin içindeki mıknatıs 🧲', d: ['Yapıştırıcı', 'Kilit mekanizması'], exp: 'Buzdolabı contalarında gizli mıknatıslar bulunur.' },
-      { q: 'Çakıl taşı ile kum karışımını birbirinden ayırmak için hangi araç kullanılır? 🏖️', a: 'Elek (Eleme yöntemi) 🏖️', d: ['Mıknatıs', 'Buharlaştırma'], exp: 'Tanecik boyutları farklı katılar elekle ayrılır.' },
-      { q: 'Hoparlör, kulaklık ve kapı zillerinin içinde hangi parça ses üretmeye yardımcı olur? 🔊', a: 'Mıknatıs 🧲', d: ['Cam', 'Pil'], exp: 'Hoparlörün diyaframı mıknatısın titreşimiyle ses üretir.' },
-      { q: 'Devredeki pillerin güvenle yerleştirildiği plastik kutuya ne ad verilir? 🔋', a: 'Pil Yatağı 🔋', d: ['Duy', 'Anahtar'], exp: 'Piller pil yatağına takılır.' },
-      { q: 'Atık pilleri doğaya veya çöpe atmayıp nereye bırakmalıyız? ♻️', a: 'Atık Pil Toplama Kutusuna ♻️', d: ['Denize', 'Toprağa'], exp: 'Pillerdeki ağır kimyasallar toprağa ve yer altı sularına karışmamalıdır.' }
+    // 2. ÜNİTE: BESİNLERİMİZ (15 ÖZGÜN SORU)
+    grade4ScienceNutritionPool: [
+      { q: 'Koşarken, oyun oynarken ve ders çalışırken vücudumuzun ihtiyaç duyduğu ENERJİYİ 1. dereceden (öncelikli) sağlayan besin içeriği hangisidir? 🍞🍝', a: 'Karbonhidratlar (Tahıllar, Ekmek, Makarna, Patates, Bal) 🍞', d: ['Proteinler 🥩', 'Vitaminler 🍊'], exp: 'Karbonhidratlar vücudumuzun temel ve en hızlı enerji kaynağıdır.', spokenText: 'Vücudumuzun ihtiyaç duyduğu enerjiyi birinci dereceden sağlayan besin içeriği hangisidir?' },
+      { q: 'Vücudumuzda büyümeyi, gelişmeyi, kas yapımını ve kesilen/kırılan dokuların iyileşmesini sağlayan "YAPICI ve ONARICI" besin grubu hangisidir? 🥩🥚', a: 'Proteinler (Et, Balık, Yumurta, Süt, Peynir, Nohut, Mercimek) 🥩', d: ['Karbonhidratlar 🍞', 'Yağlar 🧈'], exp: 'Proteinler vücudumuzun inşaat tuğlaları gibidir; yapıcı ve onarıcıdır.', spokenText: 'Vücudumuzda büyümeyi ve yaraların iyileşmesini sağlayan yapıcı ve onarıcı besin grubu hangisidir?' },
+      { q: 'Karbonhidratlardan yeterli enerji alınamadığında devreye giren, deri altında depolanarak vücudu soğuktan ve darbelerden koruyan besin içeriği nedir? 🫒🧈', a: 'Yağlar (Zeytinyağı, Tereyağı, Ceviz, Fındık, Ayçiçeği) 🫒', d: ['Su ve Mineraller 💧', 'Vitaminler 🥦'], exp: 'Yağlar da enerji vericidir; fazlası vücutta depolanır ve soğuk bölgelerde yaşayan canlıları korur.', spokenText: 'Vücudu soğuktan koruyan ve enerji veren besin içeriği nedir?' },
+      { q: 'Vücudumuzda DÜZENLEYİCİ olarak görev yapan, organlarımızın düzenli çalışmasını sağlayan ve bizi hastalıklara karşı koruyan besin içeriği hangisidir? 🍎🥦', a: 'Vitaminler (Taze Sebze ve Meyveler) 🍎🥦', d: ['Karbonhidratlar 🍞', 'Yağlar 🧈'], exp: 'Vitaminler vücut direncimizi artırarak bizi mikroplara ve hastalıklara karşı korur.', spokenText: 'Bizi hastalıklara karşı koruyan ve düzenleyici olarak görev yapan besin içeriği hangisidir?' },
+      { q: 'Doğadaki BÜTÜN besinlerin içinde bulunan, enerji vermeyen ancak vücudumuzda DÜZENLEYİCİ olarak yaşamsal görev yapan ikili hangisidir? 💧🧂', a: 'Su ve Mineraller 💧🧂', d: ['Protein ve Yağ', 'Şeker ve Nişasta'], exp: 'Su ve mineraller (kalsiyum, demir, iyot vb.) tükettiğimiz tüm besinlerde az ya da çok bulunur ve düzenleyicidir.', spokenText: 'Doğadaki bütün besinlerin içinde bulunan ve düzenleyici olarak görev yapan ikili hangisidir?' },
+      { q: 'Kolunu kıran veya ameliyat olan bir hastanın kemik ve dokularının hızla onarılması için doktor özellikle hangi besinleri bol tüketmesini önerir? 🥛🐟', a: 'Protein ve Kalsiyum yönünden zengin süt, yumurta, et ve balık 🥛🐟', d: ['Gazlı içecekler ve şekerleme', 'Sadece beyaz ekmek ve patates kızartması'], exp: 'Yapıcı ve onarıcı görev yapan proteinler ile kemikleri güçlendiren kalsiyum iyileşmeyi hızlandırır.', spokenText: 'Kolunu kıran bir hastanın hızla iyileşmesi için hangi besinleri tüketmesi önerilir?' },
+      { q: 'Paketli bir gıda (süt, peynir, bisküvi) satın alırken sağlığımızı korumak için ambalaj üzerinde aşağıdakilerden hangilerini kontrol etmeliyiz? 🛒', a: 'TSE Damgası, Son Tüketim Tarihi (STT) ve Tarım Bakanlığı İznini 🛡️', d: ['Sadece ambalajın rengini ve üzerindeki çizgi film resmini', 'Marketin kapı numarasını'], exp: 'Bilinçli tüketici paketli gıdalarda TSE damgasına, üretim ve son tüketim tarihine mutlaka bakar.', spokenText: 'Paketli bir gıda satın alırken ambalaj üzerinde hangilerini kontrol etmeliyiz?' },
+      { q: 'İhtiyacımızdan çok fazla kalorili/yağlı besin tüketmek ve hareketsiz kalmak sonucunda ortaya çıkan aşırı şişmanlık hastalığına ne ad verilir? ⚖️', a: 'Obezite (Aşırı Şişmanlık) ⚖️', d: ['İskorbüt', 'Renk Körlüğü'], exp: 'Harcanandan fazla enerji alınması vücutta yağ birikimine ve obezite hastalığına yol açar.', spokenText: 'Aşırı ve dengesiz beslenme sonucunda ortaya çıkan aşırı şişmanlık hastalığına ne ad verilir?' },
+      { q: 'Her besin grubundan (protein, karbonhidrat, yağ, vitamin, su ve mineral) vücudun ihtiyacı kadar ve öğünlere uygun tüketmeye ne denir? 🥗', a: 'Dengeli ve Sağlıklı Beslenme 🥗', d: ['Tek Tip Beslenme', 'Besin İsrafı'], exp: 'Sağlıklı büyüme için tek tip beslenmekten kaçınmalı, her besin grubundan dengeli tüketmeliyiz.', spokenText: 'Her besin grubundan vücudun ihtiyacı kadar tüketmeye ne denir?' },
+      { q: 'Besinlerin taze kalmasını sağlamak için geçmişten günümüze kullanılan sağlıklı saklama yöntemleri arasında hangisi YER ALMAZ? ❄️', a: 'Yiyecekleri güneşin altında açıkta günlerce bekletmek ☀️❌', d: ['Derin dondurucuda dondurmak ❄️', 'Kurutmak, tuzlamak veya konserve yapmak 🫙'], exp: 'Besinler dondurma, kurutma, tuzlama ve pastörizasyon ile bozulmadan saklanır; açıkta bırakılırsa bakteri üretir.', spokenText: 'Besinleri saklama yöntemleri arasında hangisi yer almaz?' },
+      { q: 'Sigaranın içinde bulunan, insanlarda güçlü bağımlılık yapan zehirli madde ile akciğerleri karartan katran hangi organımıza en büyük zararı verir? 🚭', a: 'Nikotin ve Katran ➡️ Akciğerlerimize ve solunum sistemimize 🫁🚭', d: ['Vitamin ➡️ Kemiklerimize', 'Mineral ➡️ Saçlarımıza'], exp: 'Sigara dumanındaki nikotin bağımlılık yapar; katran ve karbonmonoksit akciğer kanserine yol açar.', spokenText: 'Sigaranın içindeki nikotin ve katran en çok hangi organımıza zarar verir?' },
+      { q: 'Kendisi sigara içmediği halde, sigara içilen kapalı bir ortamda bulunarak o zehirli dumanı soluyan kişilere ne ad verilir? 🚭', a: 'Pasif İçici 🚭', d: ['Sağlıklı Sporcu', 'Aktif Koşucu'], exp: 'Pasif içiciler de sigara dumanındaki zehirlerden en az sigara içenler kadar zarar görür.', spokenText: 'Sigara içmediği halde sigara dumanına maruz kalan kişilere ne ad verilir?' },
+      { q: 'Alkol kullanımı beynin karar verme ve denge merkezini uyararak trafik kazalarına yol açmasının yanında, en çok hangi organı tahrip ederek "Siroz" hastalığına neden olur? 🩺', a: 'Karaciğer 🩺', d: ['Diş minesini', 'Kulak kepçesini'], exp: 'Alkol kandaki zehirleri süzen karaciğeri tahrip ederek ölümcül siroz hastalığına yol açar.', spokenText: 'Alkol kullanımı en çok hangi organı tahrip ederek siroz hastalığına neden olur?' },
+      { q: 'Ülkemizde toplumu sigara, alkol, uyuşturucu ve teknoloji bağımlılığı gibi zararlı alışkanlıklardan korumak için çalışan köklü kuruluşumuz hangisidir? 🌙💚', a: 'Yeşilay (Yeşilay Cemiyeti) 💚', d: ['AFAD 🚨', 'TÜBİTAK 🔬'], exp: '1920 yılında kurulan Yeşilay, bağımlılıklarla mücadele eden ve sağlıklı yaşamı destekleyen kuruluşumuzdur.', spokenText: 'Toplumu sigara ve alkol gibi zararlı alışkanlıklardan korumak için çalışan kuruluşumuz hangisidir?' },
+      { q: 'Mercimek, nohut, kuru fasulye gibi baklagiller ile fındık ve badem bitkisel kaynaklı olmalarına rağmen hangi yapıcı-onarıcı besin içeriği bakımından çok zengindir? 🌱', a: 'Bitkisel Protein 🌱', d: ['Tuz', 'Su'], exp: 'Proteinler sadece hayvansal gıdalarda değil; nohut, mercimek ve fasulye gibi baklagillerde de bolca bulunur.', spokenText: 'Mercimek, nohut ve kuru fasulye hangi besin içeriği bakımından çok zengindir?' }
     ],
+
+    // 3. ÜNİTE: KUVVETİN ETKİLERİ VE MIKNATISLAR (15 ÖZGÜN SORU)
+    grade4ScienceForceMagnetsPool: [
+      { q: 'Duran bir futbol topuna vurduğumuzda, bisikletin frenine bastığımızda veya gelen tenis topuna raketle vurduğumuzda kuvvetin hangi etkilerini gözlemleriz? ⚽🎾', a: 'Harekete geçirme, yavaşlatma/durdurma ve yön değiştirme etkilerini ⚡', d: ['Sadece rengini değiştirme etkisini', 'Sadece kütlesini artırma etkisini'], exp: 'Kuvvet duran cismi hareket ettirebilir, hareketli cismi hızlandırabilir, yavaşlatabilir, durdurabilir veya yönünü değiştirebilir.', spokenText: 'Topa vurduğumuzda ve frene bastığımızda kuvvetin hangi etkilerini gözlemleriz?' },
+      { q: 'Kuvvet uygulandığında şekli değişen, ancak kuvvet ortadan kalktığında tekrar eski haline dönebilen cisimlere ne ad verilir? (Örn: Paket lastiği, sünger, yay) 🔄', a: 'Esnek Cisimler 🔄', d: ['Kırılgan Cisimler', 'Sıvı Maddeler'], exp: 'Yay, bulaşık süngeri, paket lastiği ve balon kuvvet kalkınca eski şekline döndüğü için esnek cisimdir.', spokenText: 'Kuvvet ortadan kalktığında tekrar eski şekline dönebilen cisimlere ne ad verilir?' },
+      { q: 'Oyun hamurunu, bakır teli veya buruşturulan kağıdı sıktığımızda kuvvet kalksa bile eski haline dönmemesine ne denir? 🧱', a: 'Kalıcı Şekil Değişikliği (Esnek olmayan cisim) 🧱', d: ['Esneklik özelliği', 'Mıknatıslanma'], exp: 'Oyun hamuru, cam ve kağıt esnek değildir; uygulanan kuvvet kalıcı şekil değişikliği yapar.', spokenText: 'Oyun hamurunu sıktığımızda kuvvet kalksa bile eski haline dönmemesine ne denir?' },
+      { q: 'Her mıknatısın uç kısımlarında çekim gücünün en yoğun olduğu iki kutup bulunur. Bu kutupların isimleri ve harf sembolleri nedir? 🧲', a: 'Kuzey Kutbu (N) ve Güney Kutbu (S) 🧲', d: ['Doğu Kutbu (E) ve Batı Kutbu (W)', 'Artı Kutbu (+) ve Eksi Kutbu (-)'], exp: 'Mıknatıslarda İngilizce North (Kuzey = N) ve South (Güney = S) olmak üzere iki kutup vardır.', spokenText: 'Her mıknatısın iki kutbunun isimleri ve harf sembolleri nedir?' },
+      { q: 'İki çubuk mıknatısın AYNI kutupları (N ile N veya S ile S) birbirine yaklaştırıldığında nasıl bir kuvvet oluşur? 🧲↔️', a: 'Mıknatıslar birbirini İTER ↔️', d: ['Mıknatıslar birbirini güçlüce ÇEKER', 'Hiçbir kuvvet oluşmaz'], exp: 'Mıknatısların aynı isimli kutupları birbirini iter, zıt isimli kutupları (N ve S) birbirini çeker.', spokenText: 'İki mıknatısın aynı kutupları birbirine yaklaştırıldığında ne olur?' },
+      { q: 'Bir çubuk mıknatıs tam ortasından ikiye veya dörde bölündüğünde oluşan yeni küçük parçaların kutupları nasıl olur? 🧲', a: 'Bölünen her küçük parça yine hem N hem de S kutbuna sahip yeni birer mıknatıs olur 🧲', d: ['Bir parçada sadece N, diğerinde sadece S kutbu kalır', 'Mıknatıslık özelliği tamamen kaybolur'], exp: 'Mıknatıs ne kadar küçük parçalara bölünürse bölünsün tek kutuplu mıknatıs elde edilemez; her parçada N ve S vardır.', spokenText: 'Bir çubuk mıknatıs ortasından ikiye bölündüğünde oluşan parçaların kutupları nasıl olur?' },
+      { q: 'Mıknatıs doğadaki her metali çekmez! Mıknatısın güçlü bir şekilde ÇEKTİĞİ üç temel madde hangi seçenekte doğru verilmiştir? 🧲📌', a: 'Demir, Nikel ve Kobalt (ve bunlardan yapılan çelik eşyalar) 📌', d: ['Altın, Gümüş ve Bakır 🪙', 'Tahta, Cam ve Plastik 🪵'], exp: 'Mıknatıslar sadece demir, nikel ve kobalt maddelerini çeker; bakır, alüminyum, altın ve gümüşü çekmez!', spokenText: 'Mıknatısın güçlü bir şekilde çektiği üç temel madde hangileridir?' },
+      { q: 'Mıknatıs aşağıdaki günlük eşyalardan hangisini KESİNLİKLE ÇEKMEZ? 🔍', a: 'Bakır cezve, alüminyum folyo, cam bilye ve plastik silgi 🚫', d: ['Demir toplu iğne 📌', 'Çelik ataş ve nikel çivi 📎'], exp: 'Bakır ve alüminyum metal olmalarına rağmen mıknatıs tarafından çekilmez; cam ve plastik de çekilmez.', spokenText: 'Mıknatıs aşağıdaki eşyalardan hangisini kesinlikle çekmez?' },
+      { q: 'Denizcilerin ve dağcıların yön bulmak için kullandığı pusulanın içindeki renkli ibre aslında nedir? 🧭', a: 'Ortasından serbestçe dönebilen küçük bir mıknatıstır 🧭', d: ['Bakırdan yapılmış bir teldir', 'Plastik bir çubuktur'], exp: 'Dünya\'mız dev bir mıknatıs gibidir; pusula ibresi de küçük bir mıknatıs olduğu için N ucu daima Kuzey\'i gösterir.', spokenText: 'Pusulanın içindeki renkli ibre aslında nedir?' },
+      { q: 'Tekerlek kullanmadan, raylar ile tren tabanındaki güçlü mıknatısların birbirini İTMESİ sayesinde havada süzülerek saatte 500 km hızla giden tren hangisidir? 🚄', a: 'Maglev Treni (Manyetik Yastıklamalı Hızlı Tren) 🚄', d: ['Kömürlü Buharlı Tren 🚂', 'Atlı Tramvay'], exp: 'Maglev trenlerinde aynı kutupların birbirini itmesi prensibiyle sürtünme azaltılır ve çok yüksek hıza ulaşılır.', spokenText: 'Mıknatısların birbirini itmesi sayesinde rayların üzerinde havada süzülerek giden hızlı tren hangisidir?' },
+      { q: 'Aşağıdakilerden hangisi mıknatısların günlük yaşamda kullanıldığı yerlerden biri DEĞİLDİR? 🧲', a: 'Araba lastiklerinin şişirilmesi 🛞', d: ['Buzdolabı kapaklarının sıkıca kapanması ve çanta klipsleri 👜', 'Hoparlör, kulaklık, kapı zili ve hurda demir kaldıran dev vinçler 🏗️'], exp: 'Buzdolabı kapağı, hoparlör, kapı zili, pusula ve hurda vinçlerinde mıknatıs kullanılır; lastiklerde hava basıncı vardır.', spokenText: 'Aşağıdakilerden hangisi mıknatısların kullanıldığı yerlerden biri değildir?' },
+      { q: 'Güçlü bir mıknatısı cep telefonu, bilgisayar sabit diski, televizyon ekranı ve banka/kredi kartlarına yaklaştırmak neden sakıncalıdır? ⚠️💳', a: 'Manyetik alanı bozarak elektronik cihazlara zarar verir ve karttaki bilgileri siler ⚠️', d: ['Telefonun şarjını doldurur', 'Bilgisayarın daha hızlı çalışmasını sağlar'], exp: 'Elektronik cihazlar ve manyetik şeritli banka kartları güçlü mıknatıslardan zarar görür.', spokenText: 'Güçlü bir mıknatısı cep telefonu ve banka kartlarına yaklaştırmak neden sakıncalıdır?' },
+      { q: 'Terzilerin yere dökülen yüzlerce çelik toplu iğneyi tek tek toplamak yerine saniyeler içinde kolayca toplaması için ne kullanması en uygundur? 🧵📌', a: 'Mıknatıs 🧲', d: ['Büyüteç 🔍', 'Süzgeç'], exp: 'Çelik toplu iğneler demir içerdiği için mıknatısla temas etmeden bile hızla çekilip toplanır.', spokenText: 'Terzilerin yere dökülen çelik toplu iğneleri hızla toplaması için ne kullanması en uygundur?' },
+      { q: 'Bir oyuncağın kurma kolunu çevirdiğimizde veya yaylı ok attığımızda hangi cismin esneklik özelliğinden yararlanırız? 🏹', a: 'Esnek Yay ve Lastikten 🏹', d: ['Kuru Tahtadan', 'Mermer Taştan'], exp: 'Sıkıştırılan veya gerilen esnek yaylar bırakıldığında eski haline dönerken cisimleri hareket ettirir.', spokenText: 'Yaylı ok attığımızda hangi cismin esneklik özelliğinden yararlanırız?' },
+      { q: 'Hareket halindeki bir oyuncak arabaya hareket yönüyle AYNI yönde bir kuvvet uygularsak arabanın hareketi nasıl değişir? 🏎️💨', a: 'Araba daha da HIZLANIR 🏎️💨', d: ['Araba yavaşlar ve durur', 'Araba geri dönmeye başlar'], exp: 'Hareket yönüyle aynı yönde uygulanan kuvvet cismi hızlandırır; zıt yönde uygulanan kuvvet yavaşlatır.', spokenText: 'Hareket halindeki bir arabaya hareket yönüyle aynı yönde kuvvet uygularsak ne olur?' }
+    ],
+
+    // 4. ÜNİTE: MADDENİN ÖZELLİKLERİ (15 ÖZGÜN SORU)
+    grade4ScienceMatterPropertiesPool: [
+      { q: 'Yağmurlu bir günde şemsiye ve yağmurluk yapımında kullanılan naylon/plastik kumaşların maddeleri niteleyen hangi özelliğinden yararlanılır? ☔', a: 'Suyu Emmeme (Su Geçirmeme) Özelliği ☔', d: ['Suyu Hızla Emme Özelliği', 'Mıknatısla Çekilme Özelliği'], exp: 'Şemsiye ve yağmurluk suyu emmeyen maddelerden; havlu ve peçete ise suyu emen maddelerden yapılır.', spokenText: 'Şemsiye ve yağmurluk yapımında maddelerin hangi özelliğinden yararlanılır?' },
+      { q: 'Suya bırakıldığında tahta parçası, mantar tıpa ve zeytinyağı suyun üstünde YÜZERKEN; demir çivi, taş ve madeni para neden BATAR? 🪣', a: 'Maddelerin suda yüzme ve batma özelliği (yoğunlukları) birbirinden farklı olduğu için 🪣', d: ['Sadece küçük cisimler battığı için', 'Suyun rengi şeffaf olduğu için'], exp: 'Suda yüzme veya batma maddenin büyüklüğüne değil, yapıldığı maddenin cinsine bağlı niteleyici bir özelliktir.', spokenText: 'Suya bırakıldığında tahta yüzerken demir çivi neden batar?' },
+      { q: 'Değişmeyen madde miktarına "KÜTLE" denir. Kütle hangi araçla ölçülür ve temel birimleri nelerdir? ⚖️', a: 'Eşit Kollu Terazi (veya Elektronik Terazi) ile ölçülür ➡️ Birimi: Kilogram (kg) ve Gram (g) ⚖️', d: ['Dereceli Silindir ile ölçülür ➡️ Birimi: Litre (L)', 'Termometre ile ölçülür ➡️ Birimi: Derece'], exp: 'Kütle eşit kollu terazi ile ölçülür; 1 kilogram (kg) = 1000 gram (g) eder.', spokenText: 'Kütle hangi araçla ölçülür ve birimleri nelerdir?' },
+      { q: 'Boş bir kavanozun kütlesi (Dara) 200 gramdır. İçine bal doldurulup tartıldığında toplam kütle (Brüt Kütle) 950 gram geliyorsa, kavanozun içindeki balın NET KÜTLESİ kaç gramdır? 🍯⚖️', a: '750 gram (Net Kütle = Brüt 950 g - Dara 200 g) 🍯', d: ['1150 gram', '200 gram'], exp: 'Net Kütle = Brüt Kütle (Kap + Sıvı) - Dara (Boş Kap) formülüyle 950 - 200 = 750 g bulunur.', spokenText: 'Boş kavanoz iki yüz gram, bal dolu kavanoz dokuz yüz elli gram ise balın net kütlesi kaç gramdır?' },
+      { q: 'Maddenin uzayda kapladığı yere "HACİM" denir. Sıvıların hacmi laboratuvarda hangi ölçekli kapla ölçülür ve birimleri nelerdir? 🧪', a: 'Dereceli Silindir (Mezür) ile ölçülür ➡️ Birimi: Litre (L) ve Mililitre (mL) 🧪', d: ['Eşit Kollu Terazi ile ölçülür ➡️ Birimi: Kilogram', 'Cetvel ile ölçülür ➡️ Birimi: Metre'], exp: 'Sıvıların hacmi dereceli silindir (mezür) ile ölçülür ve 1 Litre (L) = 1000 Mililitre (mL) eder.', spokenText: 'Sıvıların hacmi hangi ölçekli kapla ölçülür ve birimleri nelerdir?' },
+      { q: 'İçinde 300 mL su bulunan dereceli silindire suda çözünmeyen bir taş yavaşça bırakıldığında su seviyesi 420 mL çizgisine yükseliyor. Bu taşın HACMİ kaç mL\'dir? 🪨🧪', a: '120 mL (420 mL - 300 mL = 120 mL) 🪨', d: ['720 mL', '300 mL'], exp: 'Şekli düzgün olmayan katıların hacmi sıvıdaki yükselme miktarıyla bulunur: 420 - 300 = 120 mL.', spokenText: 'Üç yüz mililitre su bulunan dereceli silindire taş atılınca su seviyesi dört yüz yirmi mililitreye çıkıyorsa taşın hacmi kaç mililitredir?' },
+      { q: 'Belirli bir şekli ve hacmi olan, dışarıdan bir kuvvet uygulanmadıkça şeklini koruyan maddeler (Örn: Taş, kalem, buz) maddenin hangi halindedir? 🧊', a: 'Katı Hal 🧊', d: ['Sıvı Hal 💧', 'Gaz Hal 💨'], exp: 'Katıların belirli bir şekli ve hacmi vardır; akışkan değillerdir.', spokenText: 'Belirli bir şekli ve hacmi olan maddeler maddenin hangi halindedir?' },
+      { q: 'Tuz, toz şeker, un ve kum gibi küçük taneli maddeler konuldukları kabın şeklini almalarına rağmen maddenin hangi halindedir? 🧂', a: 'Katı Hal (Küçük taneli katılar) 🧂', d: ['Sıvı Hal', 'Gaz Hal'], exp: 'Tuz, şeker ve kumun her bir taneciğinin kendi sabit şekli vardır; bu yüzden sıvı değil, küçük taneli KATI maddedir.', spokenText: 'Tuz, toz şeker ve kum konuldukları kabın şeklini almalarına rağmen maddenin hangi halindedir?' },
+      { q: 'Belirli bir şekli olmayan, konulduğu kabın sadece doldurduğu kısmının şeklini alan ve akışkan olan maddeler (Su, süt, zeytinyağı) hangi haldedir? 💧', a: 'Sıvı Hal 💧', d: ['Katı Hal', 'Gaz Hal'], exp: 'Sıvıların belirli hacmi vardır ancak belirli şekli yoktur; konuldukları kabın şeklini alırlar.', spokenText: 'Konulduğu kabın şeklini alan ve akışkan olan su ve süt maddenin hangi halindedir?' },
+      { q: 'Belirli bir şekli ve hacmi olmayan, bulunduğu ortamın tamamına yayılan ve küçük deliklerden bile kaçabilen maddeler (Hava, su buharı, doğal gaz, kolonya kokusu) hangi haldedir? 💨', a: 'Gaz Hal 💨', d: ['Katı Hal', 'Sıvı Hal'], exp: 'Gazlar sıkıştırılabilir ve girdikleri kabın her yerine eşit olarak yayılırlar.', spokenText: 'Bulunduğu ortamın tamamına yayılan hava ve su buharı maddenin hangi halindedir?' },
+      { q: 'Buzdolabından çıkarılan katı buzun ortamdan ISI ALARAK sıvı suya dönüşmesine hangi hal değişimi denir? 🧊➡️💧', a: 'Erime (Katıdan Sıvıya Geçiş) ☀️', d: ['Donma (Sıvıdan Katıya Geçiş)', 'Buharlaşma'], exp: 'Katı bir maddenin ısı alarak sıvı hale geçmesine erime, sıvının ısı vererek katılaşmasına donma denir.', spokenText: 'Katı buzun ısı alarak sıvı suya dönüşmesine hangi hal değişimi denir?' },
+      { q: 'İçinde kendisinden başka madde bulunmayan tek cins maddelere (Örn: Saf su, altın, demir, tuz, şeker) ne ad verilir? ✨', a: 'Saf Madde ✨', d: ['Karışım 🥗', 'Çözelti'], exp: 'Yapısında tek çeşit madde bulunan varlıklara saf madde; birden fazla maddenin birleşimine karışım denir.', spokenText: 'İçinde kendisinden başka madde bulunmayan tek cins maddelere ne ad verilir?' },
+      { q: 'İnşaatlarda çakıl taşı ile kumu, mutfakta ise un ile kepeği büyüklük farkından yararlanarak birbirinden ayırmak için hangi yöntem kullanılır? 🏖️', a: 'Eleme Yöntemi (Elek ile) 🏖️', d: ['Süzme Yöntemi', 'Mıknatısla Ayırma'], exp: 'Farklı büyüklükteki katı-katı karışımlar elek kullanılarak eleme yöntemiyle ayrılır.', spokenText: 'Çakıl taşı ile kumu büyüklük farkından yararlanarak ayırmak için hangi yöntem kullanılır?' },
+      { q: 'Haşlanan makarnayı suyundan veya demlenen çayın posasını çay suyundan ayırmak için hangi yöntem kullanılır? 🍝🍵', a: 'Süzme Yöntemi (Süzgeç ile) 🍝', d: ['Eleme Yöntemi', 'Mıknatısla Ayırma'], exp: 'Sıvı içinde çözünmeyen katı maddeleri sıvıdan ayırmak için süzgeçle süzme yöntemi kullanılır.', spokenText: 'Makarnayı haşlama suyundan ayırmak için hangi yöntem kullanılır?' },
+      { q: 'Demir tozu ile kum (veya nikel ataş ile plastik düğme) karışımını birbirinden en hızlı ve kolay hangi yöntemle ayırabiliriz? 🧲', a: 'Mıknatısla Ayırma Yöntemi 🧲', d: ['Süzgeçle Süzme', 'Isıtarak Eritme'], exp: 'Karışımdaki maddelerden biri demir, nikel veya kobalt ise mıknatıs kullanılarak kolayca çekilip ayrılır.', spokenText: 'Demir tozu ile kum karışımını en hızlı hangi yöntemle ayırabiliriz?' }
+    ],
+
+    // 5. ÜNİTE: AYDINLATMA VE SES TEKNOLOJİLERİ (15 ÖZGÜN SORU)
+    grade4ScienceLightingSoundPool: [
+      { q: 'Aydınlatma teknolojilerinin geçmişten günümüze (eskiden yeniye) doğru tarihsel gelişim sıralaması hangi seçenekte doğru verilmiştir? 💡', a: 'Ateş ➡️ Meşale ➡️ Kandil ➡️ Mum ➡️ Gaz Lambası ➡️ Ampul ➡️ Floresan ➡️ LED Lamba 💡', d: ['LED Lamba ➡️ Ampul ➡️ Gaz Lambası ➡️ Meşale ➡️ Ateş', 'Ampul ➡️ Ateş ➡️ Mum ➡️ Floresan ➡️ Kandil'], exp: 'İnsanlar önce ateşi ve meşaleyi, sonra hayvan yağlı kandil, mum, gaz lambası, Edison\'un ampulü ve en son tasarruflu LED lambaları geliştirmiştir.', spokenText: 'Aydınlatma teknolojilerinin geçmişten günümüze sıralaması hangisinde doğru verilmiştir?' },
+      { q: 'Elektrikle çalışan ve uzun süre ışık verebilen akkor telli ampulü icat ederek aydınlatma teknolojisinde çığır açan bilim insanı kimdir? 💡', a: 'Thomas Alva Edison 💡', d: ['Alexander Graham Bell ☎️', 'Galileo Galilei 🔭'], exp: 'Thomas Edison 1879 yılında elektrik ampulünü geliştirerek geceleri güvenli aydınlatmayı sağlamıştır.', spokenText: 'Elektrik ampulünü icat eden bilim insanı kimdir?' },
+      { q: 'Günümüzde evlerimizde ve sokaklarda en az elektrik harcayarak en verimli ışığı veren ve en uzun ömürlü olan modern aydınlatma aracı hangisidir? 🌟', a: 'LED Lamba (veya Tasarruflu Floresan Ampul) 🌟', d: ['Eski Tip Akkor Flamanlı Ampul', 'Gaz Lambası'], exp: 'LED lambalar eski tip ampullere göre %80\'e varan enerji tasarrufu sağlar ve çok uzun ömürlüdür.', spokenText: 'Günümüzde en az elektrik harcayarak en verimli ışığı veren modern aydınlatma aracı hangisidir?' },
+      { q: 'Uygun aydınlatma ve göz sağlığımızı korumak için aşağıdakilerden hangisi DOĞRU bir davranıştır? 👀💡', a: 'Işığın doğrudan gözümüze değil, aydınlatılacak çalışma yüzeyine yönlendirilmesi ✅', d: ['Güneş\'e ve güçlü lazer ışıklarına çıplak gözle bakmak ❌', 'Sağ elle yazı yazarken ışığın sağ taraftan gelip gölge yapması ❌'], exp: 'Doğru aydınlatmada ışık gözü kamaştırmamalı; sağ elle yazarken sol üstten, sol elle yazarken sağ üstten gelmelidir.', spokenText: 'Uygun aydınlatma ve göz sağlığımızı korumak için hangisi doğru bir davranıştır?' },
+      { q: 'Işığın yanlış yerde, yanlış miktarda, yanlış yönde ve yanlış zamanda kullanılmasına ne ad verilir? 🌃', a: 'Işık Kirliliği 🌃', d: ['Ses Kirliliği 🔊', 'Su Kirliliği 💧'], exp: 'Gereksiz ve gökyüzüne doğru yapılan aşırı aydınlatmalar ışık kirliliğine neden olur.', spokenText: 'Işığın yanlış yerde, yanlış miktarda ve yanlış yönde kullanılmasına ne ad verilir?' },
+      { q: 'Şehirlerdeki aşırı IŞIK KİRLİLİĞİ doğadaki canlıları ve bilimsel çalışmaları nasıl olumsuz etkiler? 🐢🔭', a: 'Gökbilimcilerin yıldızları gözlemlemesini engeller; göçmen kuşların ve Caretta Caretta yavrularının yönünü şaşırtır 🐢🔭', d: ['Deniz kaplumbağalarının denizi daha kolay bulmasını sağlar', 'Teleskopların uzayı daha net görmesini sağlar'], exp: 'Yumurtadan çıkan Caretta Caretta yavruları Ay ışığı yerine sahildeki otel ışıklarına yönelirse denize ulaşamaz.', spokenText: 'Aşırı ışık kirliliği doğadaki canlıları ve bilimsel çalışmaları nasıl etkiler?' },
+      { q: 'Sokak lambalarında ışık kirliliğini önlemek ve enerji tasarrufu sağlamak için lambaların başlığı nasıl tasarlanmalıdır? 💡', a: 'Işığı gökyüzüne değil, siperlikle sadece aşağıya (yola) yönlendirecek şekilde ⬇️💡', d: ['Işığı doğrudan gökyüzüne ve bulutlara verecek şekilde', 'Gündüzleri de tam güçle yanacak şekilde'], exp: 'Siperlikli sokak lambaları ışığın gökyüzüne kaçmasını önler ve sadece yolu aydınlatır.', spokenText: 'Sokak lambalarında ışık kirliliğini önlemek için lambaların başlığı nasıl tasarlanmalıdır?' },
+      { q: 'Sesi kaydetmek ve kaydedilen sesi tekrar dinlemek amacıyla Thomas Edison tarafından icat edilen İLK ses kayıt cihazı hangisidir? 🎙️', a: 'Fonograf 🎙️', d: ['CD Çalar 💿', 'MP3 Çalar 🎧'], exp: 'Thomas Edison 1877 yılında sesi silindir üzerine kaydedip tekrar çalabilen Fonograf adlı cihazı icat etmiştir.', spokenText: 'Sesi kaydetmek ve tekrar dinlemek amacıyla Thomas Edison tarafından icat edilen ilk cihaz hangisidir?' },
+      { q: 'Fonograftan sonra geliştirilen ve yassı yuvarlak taş plaklar üzerine kaydedilen sesleri çalan nostaljik ses aracına ne ad verilir? 📻', a: 'Gramofon (ve Plak) 🎶', d: ['Megafon 📢', 'Stetoskop 🩺'], exp: 'Emile Berliner tarafından geliştirilen Gramofon, döner plaklar üzerindeki ses izlerini büyük borusuyla dışarı verir.', spokenText: 'Taş plaklar üzerine kaydedilen sesleri çalan ses aracına ne ad verilir?' },
+      { q: 'Okul törenlerinde, mitinglerde veya acil durumlarda sesin şiddetini artırarak kalabalığa duyurulmasını sağlayan taşınabilir huni şeklindeki araç nedir? 📢', a: 'Megafon (veya Mikrofon + Hoparlör) 📢', d: ['Gramofon', 'Kaset'], exp: 'Megafon, mikrofon ve hoparlör ses şiddetini yükselterek sesin uzaklara ulaşmasını sağlayan teknolojilerdir.', spokenText: 'Sesin şiddetini artırarak kalabalığa duyurulmasını sağlayan huni şeklindeki araç nedir?' },
+      { q: 'İşitme güçlüğü çeken bireylerin çevredeki sesleri net duyabilmesi için kulaklarına taktıkları teknolojik sağlık ürünü nedir? 🦻', a: 'İşitme Cihazı 🦻', d: ['Teleskop', 'Mikroskop'], exp: 'İşitme cihazları dışarıdan gelen seslerin şiddetini artırarak kulağa iletir.', spokenText: 'İşitme güçlüğü çeken bireylerin sesleri net duyabilmesi için kulaklarına taktıkları cihaz nedir?' },
+      { q: 'Geçmişten günümüze ses kayıt teknolojilerinin doğru tarihsel sıralaması hangi seçenekte verilmiştir? 📼💿', a: 'Fonograf ➡️ Gramofon (Plak) ➡️ Kasetçalar ➡️ CD / DVD ➡️ Dijital MP3 / Bellek 🎧', d: ['CD ➡️ Kasetçalar ➡️ Gramofon ➡️ Fonograf', 'MP3 ➡️ Plak ➡️ Fonograf ➡️ Kaset'], exp: 'Ses kaydı fonografla başlamış, plaklı gramofon, manyetik şeritli kaset, optik CD ve dijital ses dosyalarıyla gelişmiştir.', spokenText: 'Geçmişten günümüze ses kayıt teknolojilerinin doğru sıralaması hangisidir?' },
+      { q: 'İnsanların işitme sağlığını ve ruhsal huzurunu bozan, düzensiz ve şiddetli seslerin oluşturduğu çevre sorununa ne ad verilir? 🔊🚧', a: 'Ses Kirliliği (Gürültü) 🔊🚧', d: ['Işık Kirliliği', 'Toprak Kirliliği'], exp: 'Trafikteki korna sesleri, iş makineleri ve yüksek sesli müzik ses kirliliğine (gürültüye) yol açar.', spokenText: 'İşitme sağlığını bozan düzensiz ve şiddetli seslerin oluşturduğu kirliliğe ne ad verilir?' },
+      { q: 'Şiddetli ses kirliliğinin (gürültünün) insan sağlığı üzerindeki olumsuz etkileri arasında aşağıdakilerden hangisi YER ALMAZ? ⚠️', a: 'Dikkat ve öğrenme yeteneğini güçlendirmesi ❌', d: ['Geçici veya kalıcı işitme kaybına yol açması 🦻', 'Stres, baş ağrısı, uyku bozukluğu ve dikkat dağınıklığı yapması 😣'], exp: 'Ses kirliliği dikkat dağınıklığı, stres ve işitme kaybı yapar; öğrenmeyi güçlendirmez, aksine zorlaştırır.', spokenText: 'Ses kirliliğinin insan sağlığı üzerindeki olumsuz etkileri arasında hangisi yer almaz?' },
+      { q: 'Evlerimizi, okulları ve sinema salonlarını dışarıdaki gürültüden korumak için duvarlarda ve pencerelerde hangi önlem alınır? 🪟🧱', a: 'Çift camlı pencere ve ses yalıtım (izolasyon) malzemeleri kullanmak 🪟', d: ['Duvarları ayna ile kaplamak', 'Pencereleri sürekli açık bırakmak'], exp: 'Çift cam, cam yünü, sünger ve ağaçlandırma sesin yayılmasını engelleyerek ses yalıtımı sağlar.', spokenText: 'Binaları dışarıdaki gürültüden korumak için duvar ve pencerelerde hangi önlem alınır?' }
+    ],
+
+    // 6. ÜNİTE: İNSAN VE ÇEVRE (15 ÖZGÜN SORU)
+    grade4ScienceHumanEnvironmentPool: [
+      { q: 'Canlıların yaşamını sürdürebilmesi için vazgeçilmez olan su, elektrik ve besin gibi kaynakları kullanırken nasıl davranmalıyız? 💧💡', a: 'Tasarruflu ve bilinçli kullanmalı, israftan kaçınmalıyız 🌱', d: ['Sınırsızca ve istediğimiz kadar boşa harcamalıyız', 'Muslukları ve lambaları sürekli açık bırakmalıyız'], exp: 'Doğal kaynaklarımız sınırsız değildir; gelecek nesiller için su, elektrik ve besin tasarrufu şarttır.', spokenText: 'Su, elektrik ve besin gibi kaynakları kullanırken nasıl davranmalıyız?' },
+      { q: 'Dişlerimizi fırçalarken veya ellerimizi sabunlarken musluğu kapatmak yılda bir ailenin ne kadar su tasarrufu yapmasını sağlar? 🪥🚰', a: 'Tonlarca temiz içme suyunun boşa akmasını önler 🚰💧', d: ['Sadece birkaç damla su kurtarır', 'Su faturasını artırır'], exp: 'Diş fırçalarken açık bırakılan musluktan dakikada yaklaşık 6-10 litre temiz su boşa akar.', spokenText: 'Dişlerimizi fırçalarken musluğu kapatmak ne sağlar?' },
+      { q: 'Evimizde ELEKTRİK TASARRUFU yapmak isteyen bir öğrencinin aşağıdaki davranışlardan hangisini yapması DOĞRUDUR? 💡🔌', a: 'Gündüzleri güneş ışığından yararlanmak, boş odaların ışığını kapatmak ve LED ampul kullanmak ✅', d: ['Buzdolabının kapağını uzun süre açık bırakmak ❌', 'Çamaşır ve bulaşık makinesini tek bir eşya ile çalıştırmak ❌'], exp: 'Makinaları tam dolunca çalıştırmak, enerji tasarruflu (A sınıfı) cihazlar ve LED ampul kullanmak elektriği korur.', spokenText: 'Evimizde elektrik tasarrufu yapmak için hangi davranış doğrudur?' },
+      { q: 'Satın alınan sebze, meyve ve ekmeklerin tüketilemeden bozulup çöpe atılmasına ne ad verilir ve nasıl önlenir? 🍞🗑️', a: 'Besin İsrafı denir ➡️ Alışveriş listesi yaparak ve ihtiyacımız kadar alarak önlenir 📝', d: ['Geri dönüşüm denir ➡️ Fazla ekmek alarak önlenir', 'Üretim denir ➡️ Yemekleri dökerek önlenir'], exp: 'İhtiyaç kadar alışveriş yapmak ve bayat ekmekleri yemeklerde değerlendirmek besin israfını önler.', spokenText: 'Besinlerin tüketilemeden çöpe atılmasına ne ad verilir ve nasıl önlenir?' },
+      { q: 'Kullanım dışı kalan kağıt, cam, plastik ve metal gibi atıkların fabrikalarda çeşitli işlemlerden geçirilerek YENİ HAMMADDE veya ÜRÜNE dönüştürülmesine ne denir? ♻️', a: 'Geri Dönüşüm ♻️', d: ['Çöp Depolama', 'İsraf Etme'], exp: 'Atıkların fiziksel ve kimyasal işlemlerle tekrar üretime kazandırılmasına geri dönüşüm denir.', spokenText: 'Atıkların fabrikalarda işlenerek yeni ürüne dönüştürülmesine ne denir?' },
+      { q: 'Bir eşyayı (örneğin cam salça kavanozunu veya sağlam kıyafetleri) çöpe atmadan, yıkayıp baharatlık olarak veya ihtiyaç sahipleriyle paylaşarak tekrar kullanmaya ne denir? 🫙👕', a: 'Yeniden Kullanma (Tekrar Kullanım) 🫙', d: ['Fabrikada Eritme', 'Yakarak Yok Etme'], exp: 'Bir ürünü fabrikada işlemeden doğrudan başka amaçlarla tekrar değerlendirmeye yeniden kullanım denir.', spokenText: 'Cam kavanozu çöpe atmadan yıkayıp baharatlık olarak tekrar kullanmaya ne denir?' },
+      { q: 'Aşağıdaki atıklardan hangisi GERİ DÖNÜŞÜM KUTULARINA ATILAMAZ (geri dönüştürülemez)? 🗑️', a: 'Yemek artıkları, meyve kabukları ve kullanılmış kağıt mendil/peçeteler 🍌', d: ['Eski ders kitapları, defterler ve karton kutular 📦', 'Cam şişeler, plastik su şişeleri ve metal içecek kutuları 🍾'], exp: 'Kağıt, cam, plastik ve metal geri dönüştürülür; ıslak/kirli peçeteler ve yemek artıkları geri dönüşüm kutusuna atılmaz.', spokenText: 'Aşağıdaki atıklardan hangisi geri dönüşüm kutularına atılamaz?' },
+      { q: 'Kullanılmış 1 ton atık kağıt ve kartonun geri dönüştürülmesi doğada neyi doğrudan korur? 🌲📚', a: 'Yaklaşık 17 yetişkin ağacın kesilmesini önler ve ormanlarımızı korur 🌲', d: ['Denizlerin tuzluluk oranını artırır', 'Havadaki oksijeni azaltır'], exp: 'Kağıt ağaçtan üretildiği için kağıt geri dönüşümü ormanların kesilmesini doğrudan engeller.', spokenText: 'Bir ton atık kağıdın geri dönüştürülmesi doğada neyi korur?' },
+      { q: 'Mutfakta kızartmalardan sonra kalan "Bitkisel Atık Yağları" lavaboya dökmek neden çok büyük bir çevre felaketidir? 🛢️🌊', a: '1 litre atık yağ, 1 milyon litre temiz içme suyunu kirletir ve deniz canlılarının ölümüne yol açar ⚠️', d: ['Lavabo borularını tertemiz yapar', 'Balıkların beslenmesine yardımcı olur'], exp: 'Bitkisel atık yağlar asla lavaboya dökülmemeli, bir şişede biriktirilerek Atık Yağ Toplama Noktalarına verilmelidir.', spokenText: 'Kızartmalardan kalan bitkisel atık yağları lavaboya dökmek neden çok tehlikelidir?' },
+      { q: 'Bitmiş kumanda pilleri, saat pilleri ve şarjlı piller neden evsel çöplere veya toprağa kesinlikle atılmamalıdır? 🔋☠️', a: 'İçindeki cıva, kurşun ve kadmiyum gibi zehirli kimyasallar toprağı ve yer altı sularını zehirlediği için ⚠️', d: ['Piller toprakta çiçek açtırdığı için', 'Çöp kutusu ağırlaştığı için'], exp: 'Atık piller yalnızca kırmızı renkli Atık Pil Toplama Kutularına (TAP) atılmalıdır.', spokenText: 'Bitmiş piller neden çöpe veya toprağa kesinlikle atılmamalıdır?' },
+      { q: 'Geri dönüşümün ülkemiz ve Dünya\'mız için sağladığı faydalar arasında aşağıdakilerden hangisi YER ALMAZ? 🌍♻️', a: 'Hammadde ve enerji tüketimini artırması ❌', d: ['Doğal kaynaklarımızın korunmasını ve enerji tasarrufu sağlaması ⚡', 'Çöp miktarını azaltması ve ülke ekonomisine büyük katkı sağlaması 💰'], exp: 'Geri dönüşüm hammadde ve enerji tüketimini artırmaz; tam aksine büyük oranda AZALTIR ve tasarruf sağlar.', spokenText: 'Geri dönüşümün sağladığı faydalar arasında hangisi yer almaz?' },
+      { q: 'Metal içecek kutularının ve alüminyum folyoların geri dönüştürülmesi, sıfırdan maden çıkarıp üretmeye göre yüzde kaç oranında enerji tasarrufu sağlar? 🥫⚡', a: 'Yaklaşık %95 oranında muazzam enerji tasarrufu sağlar ⚡', d: ['Hiç tasarruf sağlamaz', 'Daha fazla elektrik harcatır'], exp: 'Geri dönüştürülen metaller doğrudan eritilerek kalıba döküldüğü için madencilik enerjisinden %95 tasarruf edilir.', spokenText: 'Metal kutuların geri dönüştürülmesi yüzde kaç oranında enerji tasarrufu sağlar?' },
+      { q: 'Market alışverişine giderken tek kullanımlık plastik poşetler yerine "Bez Çanta" veya "File" kullanmak doğayı nasıl korur? 🛍️🐢', a: 'Doğada yüzlerce yıl çözünmeyen plastik atık kirliliğini azaltır 🌱', d: ['Plastik üretimini hızlandırır', 'Orman yangınlarını artırır'], exp: 'Plastik poşetler doğada 400-1000 yıl boyunca yok olmaz; bez çanta kullanmak plastik kirliliğini önler.', spokenText: 'Alışverişte plastik poşet yerine bez çanta kullanmak doğayı nasıl korur?' },
+      { q: 'Bozulan bilgisayar, telefon, televizyon ve küçük ev aletleri hangi atık grubuna girer ve nereye teslim edilmelidir? 💻📱', a: 'Elektronik Atık (E-Atık) grubuna girer ➡️ E-Atık Toplama Merkezlerine verilmelidir ♻️', d: ['Evsel çöp grubuna girer ➡️ Sokaktaki çöp konteynerine atılmalıdır', 'Organik atık grubuna girer ➡️ Bahçeye gömülmelidir'], exp: 'E-atıklar içinde altın, bakır, plastik ve zararlı metaller barındırdığı için özel E-Atık tesislerinde geri dönüştürülür.', spokenText: 'Bozulan bilgisayar ve telefonlar hangi atık grubuna girer ve nereye verilmelidir?' },
+      { q: 'İsrafın önlenmesi, kaynakların daha verimli kullanılması ve atıkların kaynağında ayrıştırılarak geri kazanılmasını hedefleyen ulusal çevre projemizin adı nedir? 🇹🇷♻️', a: 'Sıfır Atık Projesi ♻️', d: ['Hızlı Tüketim Projesi', 'Tek Kullanımlık Hayat'], exp: 'Sıfır Atık Projesi okullarda, kurumlarda ve evlerde atıkları kaynağında ayrıştırarak doğayı ve ekonomiyi korur.', spokenText: 'Atıkların kaynağında ayrıştırılarak geri kazanılmasını hedefleyen ulusal çevre projemizin adı nedir?' }
+    ],
+
+    // 7. ÜNİTE: BASİT ELEKTRİK DEVRELERİ (15 ÖZGÜN SORU)
+    grade4ScienceSimpleCircuitsPool: [
+      { q: 'Basit bir elektrik devresinin çalışması için gerekli olan elektrik ENERJİSİNİ üreten temel devre elemanı hangisidir? 🔋', a: 'Pil (Üreteç / Güç Kaynağı) 🔋', d: ['Ampul 💡', 'Anahtar 🎛️'], exp: 'Pil, devredeki elektrik enerjisinin kaynağıdır; kimyasal enerjiyi elektrik enerjisine dönüştürür.', spokenText: 'Basit bir elektrik devresinde elektrik enerjisini üreten devre elemanı hangisidir?' },
+      { q: 'Pilin ürettiği elektrik enerjisini devredeki diğer elemanlara taşıyan, içi bakır tel dışı plastik kaplı devre elemanı nedir? 🔌', a: 'Bağlantı Kablosu (İletken Tel) 🔌', d: ['Duy', 'Pil Yatağı'], exp: 'Bağlantı kablosu pildeki elektrik enerjisini ampul ve anahtara ileten köprüdür.', spokenText: 'Pilin ürettiği elektrik enerjisini diğer elemanlara taşıyan devre elemanı nedir?' },
+      { q: 'Basit elektrik devresinde kablodan gelen elektrik enerjisini IŞIK ENERJİSİNE dönüştürerek etrafı aydınlatan devre elemanı hangisidir? 💡', a: 'Ampul (Lamba) 💡', d: ['Anahtar 🎛️', 'Pil 🔋'], exp: 'Ampul, içindeki ince telden elektrik geçtiğinde ışık veren devre elemanıdır.', spokenText: 'Elektrik enerjisini ışık enerjisine dönüştüren devre elemanı hangisidir?' },
+      { q: 'Basit bir elektrik devresinde elektriğin geçişini kontrol eden, devreyi istediğimiz zaman AÇIP KAPATMAYA yarayan eleman hangisidir? 🎛️', a: 'Anahtar 🎛️', d: ['Pil Yatağı', 'Duy'], exp: 'Anahtar KAPALI olduğunda devre tamamlanır ve ampul yanar; anahtar AÇIK olduğunda devre kesilir ve ampul söner.', spokenText: 'Devreyi istediğimiz zaman açıp kapatmaya yarayan eleman hangisidir?' },
+      { q: 'Basit bir elektrik devresinde ampulün vidalanarak sabitlendiği yuvaya ve pillerin yerleştirildiği kutuya sırasıyla ne ad verilir? 💡🔋', a: 'Ampulün yuvası: DUY — Pillerin kutusu: PİL YATAĞI 💡🔋', d: ['Ampulün yuvası: Anahtar — Pillerin kutusu: Kablo', 'Ampulün yuvası: Sigorta — Pillerin kutusu: Priz'], exp: 'Duy ampulün, pil yatağı ise pillerin devrede düzgün ve güvenli durmasını sağlayan yardımcı elemanlardır.', spokenText: 'Ampulün takıldığı yuvaya ve pillerin yerleştirildiği kutuya sırasıyla ne ad verilir?' },
+      { q: 'Bir öğrenci pil, kablo, ampul ve anahtarı doğru bağladığı halde ampul IŞIK VERMİYORSA, bunun sebebi anahtarın hangi konumda olmasıdır? 🔍', a: 'Anahtarın AÇIK konumda olması (Açık devrede elektrik akımı geçmez) ❌', d: ['Anahtarın KAPALI konumda olması', 'Pilin tam dolu olması'], exp: 'Elektrik devresinde anahtar AÇIK ise yol kopuk demektir; ampulün yanması için anahtar KAPALI konuma getirilmelidir!', spokenText: 'Devre doğru bağlandığı halde ampul ışık vermiyorsa anahtar hangi konumdadır?' },
+      { q: 'Anahtarı KAPALI olan bir basit elektrik devresinde ampul yine de ışık vermiyorsa, aşağıdaki arızalardan hangisi olmuş OLABİLİR? 🛠️', a: 'Pil bitmiş, ampul patlamış, kablo içten kopmuş veya piller ters bağlanmış olabilir 🛠️', d: ['Kablolar sağlam bakırdan yapılmış olabilir', 'Pil yeni alınmış olabilir'], exp: 'Bitmiş pil, patlak ampul, kopuk bağlantı kablosu, ters takılmış pil veya duya tam oturmamış ampul devrenin çalışmasını engeller.', spokenText: 'Anahtarı kapalı olan bir devrede ampul yanmıyorsa hangi arıza olmuş olabilir?' },
+      { q: 'İki pilli bir pil yatağına piller yerleştirilirken ampulün yanması için pillerin kutupları (+ ve -) nasıl sıralanmalıdır? 🔋➕➖', a: 'Bir pilin (+) kutbu diğer pilin (-) kutbuna gelecek şekilde düz bağlanmalıdır ➕➖', d: ['İki pilin (+) kutupları kafa kafaya çarpışacak şekilde ters bağlanmalıdır', 'Pillerden sadece bir ucu bağlanmalıdır'], exp: 'Pillerin + ve - uçları ardışık (seri ve doğru) bağlanmazsa piller birbirini sıfırlar ve ampul yanmaz.', spokenText: 'İki pilli bir pil yatağına piller yerleştirilirken kutupları nasıl sıralanmalıdır?' },
+      { q: 'Bir basit elektrik devresinde "Duy" ve "Pil Yatağı" kullanmadan sadece Pil, Kablo ve Ampul ile çalışan bir devre kurulabilir mi? 🧪', a: 'Evet kurulabilir! Kablonun uçları doğrudan pilin (+)/(-) kutuplarına ve ampulün metal kısımlarına değdirilirse ampul yanar 💡', d: ['Hayır, pil yatağı olmadan elektrik asla oluşmaz', 'Hayır, duy olmadan ampul kesinlikle çalışmaz'], exp: 'Duy ve pil yatağı sadece kolaylık sağlar; temel devre elemanları pil, kablo ve ampuldür.', spokenText: 'Duy ve pil yatağı kullanmadan sadece pil, kablo ve ampul ile çalışan bir devre kurulabilir mi?' },
+      { q: 'Odamıza girdiğimizde duvardaki lamba düğmesine (butona) basarak tavandaki lambayı yakmamız, basit elektrik devresindeki hangi elemanın görevidir? 🏠💡', a: 'Anahtar (Lamba düğmesi devreyi kapatarak elektriğin ampule gitmesini sağlar) 🎛️', d: ['Pil Yatağı', 'Duy'], exp: 'Evlerimizdeki lamba düğmeleri birer devre anahtarıdır; duvarların içinden geçen teller ise bağlantı kablosudur.', spokenText: 'Odamıza girdiğimizde duvardaki lamba düğmesine basmamız basit elektrik devresindeki hangi elemanın görevidir?' },
+      { q: 'Evlerimizde duvarların içinden geçerek prizleri ve tavan lambalarını şehir elektriğine bağlayan tesisat telleri, basit devredeki hangi elemana karşılık gelir? 🧱🔌', a: 'Bağlantı Kablosuna 🔌', d: ['Ampule', 'Anahtara'], exp: 'Duvar içindeki elektrik tesisat kabloları, elektrik enerjisini santralden evdeki cihazlara taşıyan bağlantı kablolarıdır.', spokenText: 'Duvarların içinden geçen elektrik telleri basit devredeki hangi elemana karşılık gelir?' },
+      { q: 'Okulda deney yaparken neden prizdeki 220 Voltluk şehir elektriğini DEĞİL DE, 1,5 Voltluk küçük kalem pilleri kullanırız? ⚡🛡️', a: 'Kalem pil düşük enerjili ve tamamen güvenli olduğu, şehir elektriği ise ölümcül elektrik çarpmasına yol açabileceği için 🛡️', d: ['Şehir elektriği ampulü yakmaya yetmediği için', 'Piller daha ağır olduğu için'], exp: 'Ev prizlerindeki 220V elektrik çok tehlikelidir; deneylerde yalnızca güvenli olan düşük voltajlı piller kullanılır.', spokenText: 'Deney yaparken neden şehir elektriğini değil de küçük kalem pilleri kullanırız?' },
+      { q: 'Bir el fenerinin içini açtığımızda pilleri, ampulü, metal telleri ve dışarıdaki açma-kapama sürgüsünü görürüz. El feneri aslında nedir? 🔦', a: 'Taşınabilir bir Basit Elektrik Devresidir 🔦', d: ['Sadece bir mıknatıstır', 'Işık yansıtan bir aynadır'], exp: 'El feneri; pili, anahtarı (düğmesi), iletken telleri ve ampulü ile tam bir basit elektrik devresidir.', spokenText: 'El feneri aslında nedir?' },
+      { q: 'Bağlantı kablolarının iç kısmının bakır telden, dış kısmının ise plastik kılıftan yapılmasının bilimsel nedeni nedir? 🔌🧤', a: 'İçteki bakır elektriği iletsin, dıştaki plastik ise bizi elektrik çarpmasından korusun (yalıtsın) diye 🛡️', d: ['Kablo daha ağır olsun diye', 'Plastik elektriği daha hızlı taşısın diye'], exp: 'Bakır iletken olduğu için elektriği taşır; plastik ise yalıtkan olduğu için elektriğin dışarı çıkmasını önler.', spokenText: 'Bağlantı kablolarının içinin bakırdan, dışının plastikten yapılmasının nedeni nedir?' },
+      { q: 'Elektrikli araçları güvenli kullanmak ve elektrik kazalarından korunmak için aşağıdakilerden hangisi KESİNLİKLE YAPILMAMALIDIR? ⚠️⚡', a: 'Islak elle prize/anahtara dokunmak ve priz deliklerine metal çivi/makas sokmak 🚫⚡', d: ['Fişi prizden çekerken kablosundan değil, plastik başlığından tutmak ✅', 'Bozuk elektrikli aletleri fişten çekip uzman tamirciye göstermek ✅'], exp: 'Islak eller ve metal cisimler elektriği doğrudan vücudumuza ileterek hayati tehlike oluşturur.', spokenText: 'Elektrik kazalarından korunmak için hangisi kesinlikle yapılmamalıdır?' }
+    ],
+
+    // 4. Sınıf Fen Bilimleri Karma Üreteci (7 Üniteden Dengeli Çekim)
+    generateGrade4ScienceKarma() {
+      const pools = [
+        this.grade4ScienceCrustMovementsPool,
+        this.grade4ScienceNutritionPool,
+        this.grade4ScienceForceMagnetsPool,
+        this.grade4ScienceMatterPropertiesPool,
+        this.grade4ScienceLightingSoundPool,
+        this.grade4ScienceHumanEnvironmentPool,
+        this.grade4ScienceSimpleCircuitsPool
+      ];
+      const names = [
+        "grade4ScienceCrustMovementsPool",
+        "grade4ScienceNutritionPool",
+        "grade4ScienceForceMagnetsPool",
+        "grade4ScienceMatterPropertiesPool",
+        "grade4ScienceLightingSoundPool",
+        "grade4ScienceHumanEnvironmentPool",
+        "grade4ScienceSimpleCircuitsPool"
+      ];
+      const idx = Math.floor(Math.random() * pools.length);
+      return this.drawFromPool(pools[idx], names[idx]);
+    },
+
+    // Geriye dönük uyumluluk havuzları
+    get grade4CrustNutritionPool() {
+      return [...this.grade4ScienceCrustMovementsPool, ...this.grade4ScienceNutritionPool];
+    },
+    get grade4CircuitsMagnetsPool() {
+      return [...this.grade4ScienceForceMagnetsPool, ...this.grade4ScienceMatterPropertiesPool, ...this.grade4ScienceSimpleCircuitsPool];
+    },
 
     // =========================================================================
     // 4. SINIF SOSYAL BİLGİLER: MEB / MAARİF MODELİ 7 ÖĞRENME ALANI (105 ÖZGÜN SORU)
@@ -8778,22 +8887,37 @@
           distractors: raw.d,
           explanation: raw.exp
         }, '💡 Sebep-Sonuç, Amaç-Sonuç & Yargılar');
+      // --- 4. SINIF: MEB / MAARİF MODELİ FEN BİLİMLERİ 7 ÜNİTE ---
+      } else if (gameType === 'science_crust_movements_4') {
+        const raw = this.drawFromPool(this.grade4ScienceCrustMovementsPool, "grade4ScienceCrustMovementsPool");
+        return this.buildQuestionItem(raw, '🌍 Kayaç-Maden-Fosil & Dünya\'nın Hareketleri Düellosu');
+      } else if (gameType === 'science_nutrition_4') {
+        const raw = this.drawFromPool(this.grade4ScienceNutritionPool, "grade4ScienceNutritionPool");
+        return this.buildQuestionItem(raw, '🍎 Besin İçerikleri (Protein/Karbonhidrat/Vitamin) Dedektifi');
+      } else if (gameType === 'science_force_magnets_4') {
+        const raw = this.drawFromPool(this.grade4ScienceForceMagnetsPool, "grade4ScienceForceMagnetsPool");
+        return this.buildQuestionItem(raw, '🧲 Mıknatıs Kutupları (N-S) & Kuvvet Etkileri');
+      } else if (gameType === 'science_matter_properties_4') {
+        const raw = this.drawFromPool(this.grade4ScienceMatterPropertiesPool, "grade4ScienceMatterPropertiesPool");
+        return this.buildQuestionItem(raw, '🧪 Kütle-Hacim Hesaplama & Karışımları Ayırma Atölyesi');
+      } else if (gameType === 'science_lighting_sound_4') {
+        const raw = this.drawFromPool(this.grade4ScienceLightingSoundPool, "grade4ScienceLightingSoundPool");
+        return this.buildQuestionItem(raw, '💡 Aydınlatma/Ses Tarihi & Işık-Ses Kirliliği Avcısı');
+      } else if (gameType === 'science_human_environment_4') {
+        const raw = this.drawFromPool(this.grade4ScienceHumanEnvironmentPool, "grade4ScienceHumanEnvironmentPool");
+        return this.buildQuestionItem(raw, '♻️ Tasarruf ve Geri Dönüşüm Kahramanı');
+      } else if (gameType === 'science_simple_circuits_4') {
+        const raw = this.drawFromPool(this.grade4ScienceSimpleCircuitsPool, "grade4ScienceSimpleCircuitsPool");
+        return this.buildQuestionItem(raw, '⚡ Basit Elektrik Devresi Kurucu & Arıza Dedektifi');
+      } else if (gameType === 'science_4_karma') {
+        const raw = this.generateGrade4ScienceKarma();
+        return this.buildQuestionItem(raw, '🌟 4. Sınıf Fen Bilimleri Karma Düello');
       } else if (gameType === 'science_crust_nutrition_4') {
         const raw = this.drawFromPool(this.grade4CrustNutritionPool, "grade4CrustNutritionPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🌍 Yer Kabuğu, Hareketler & Besinler');
+        return this.buildQuestionItem(raw, '🌍 Yer Kabuğu, Hareketler & Besinler');
       } else if (gameType === 'science_circuits_magnets_4') {
         const raw = this.drawFromPool(this.grade4CircuitsMagnetsPool, "grade4CircuitsMagnetsPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '💡 Kuvvet, Mıknatıslar & Devreler');
+        return this.buildQuestionItem(raw, '💡 Kuvvet, Mıknatıslar & Devreler');
       // --- 4. SINIF: MEB / MAARİF MODELİ SOSYAL BİLGİLER 7 ÖĞRENME ALANI ---
       } else if (gameType === 'social_individual_society_4') {
         const raw = this.drawFromPool(this.grade4SocialIndividualSocietyPool, "grade4SocialIndividualSocietyPool");
@@ -8930,14 +9054,8 @@
           const raw = this.generateGrade3ScienceKarma();
           return this.buildQuestionItem(raw, '🔬 3. Sınıf Fen Bilimleri Karma');
         } else if (g === 4) {
-          const r = Math.random();
-          if (r < 0.5) {
-            const raw = this.drawFromPool(this.grade4CrustNutritionPool, "grade4CrustNutritionPool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '🌍 Yer Kabuğu & Besinlerimiz');
-          } else {
-            const raw = this.drawFromPool(this.grade4CircuitsMagnetsPool, "grade4CircuitsMagnetsPool");
-            return this.buildQuestionItem({ question: raw.q, correct: raw.a, distractors: raw.d, explanation: raw.exp }, '💡 Mıknatıslar & Elektrik Devreleri');
-          }
+          const raw = this.generateGrade4ScienceKarma();
+          return this.buildQuestionItem(raw, '🌟 4. Sınıf Fen Bilimleri Karma Düello');
         } else {
           let filtered = this.sciencePool.filter(item => !item.grade || item.grade === g || item.grade <= g);
           if (filtered.length === 0) filtered = this.sciencePool;
@@ -10036,7 +10154,15 @@
     social_production_economy_4: '🛒 Üretim & Bilinçli Tüketici',
     social_active_citizenship_4: '🏛️ Çocuk Hakları & Egemenlik',
     social_global_connections_4: '🌍 Komşu Ülkeler & Kültürler',
-    social_4_karma: '🌟 4. Sınıf Sosyal Bilgiler Karma'
+    social_4_karma: '🌟 4. Sınıf Sosyal Bilgiler Karma',
+    science_crust_movements_4: '🌍 Kayaç, Fosil & Dünya',
+    science_nutrition_4: '🍎 Besin İçerikleri',
+    science_force_magnets_4: '🧲 Kuvvet & Mıknatıslar',
+    science_matter_properties_4: '🧪 Kütle, Hacim & Karışım',
+    science_lighting_sound_4: '💡 Aydınlatma & Ses',
+    science_human_environment_4: '♻️ Tasarruf & Geri Dönüşüm',
+    science_simple_circuits_4: '⚡ Basit Elektrik Devreleri',
+    science_4_karma: '🌟 4. Sınıf Fen Bilimleri Karma'
   };
 
   function getCurrentGameObject() {
@@ -10166,6 +10292,14 @@
       math_perimeter_area_4: 'Çevre ve Alan Hesaplama',
       turkish_idioms_proverbs_4: 'Deyimler ve Atasözleri Düellosu',
       turkish_sentences_logic_4: 'Sebep-Sonuç, Amaç-Sonuç ve Yargılar',
+      science_crust_movements_4: 'Kayaç-Maden-Fosil & Dünya\'nın Hareketleri Düellosu',
+      science_nutrition_4: 'Besin İçerikleri (Protein/Karbonhidrat/Vitamin) Dedektifi',
+      science_force_magnets_4: 'Mıknatıs Kutupları (N-S) & Kuvvet Etkileri',
+      science_matter_properties_4: 'Kütle-Hacim Hesaplama & Karışımları Ayırma Atölyesi',
+      science_lighting_sound_4: 'Aydınlatma/Ses Tarihi & Işık-Ses Kirliliği Avcısı',
+      science_human_environment_4: 'Tasarruf ve Geri Dönüşüm Kahramanı',
+      science_simple_circuits_4: 'Basit Elektrik Devresi Kurucu & Arıza Dedektifi',
+      science_4_karma: '4. Sınıf Fen Bilimleri Karma Düello',
       science_crust_nutrition_4: 'Yer Kabuğu, Hareketler ve Besinlerimiz',
       science_circuits_magnets_4: 'Kuvvet, Mıknatıslar ve Basit Devreler',
       social_individual_society_4: 'Kronoloji Ustası & Kimlik/Empati Düellosu',
@@ -12303,48 +12437,113 @@
         name: 'Fen Bilimleri',
         icon: '🔬',
         colorTheme: 'theme-science',
-        tagline: 'Yer Kabuğu, Madde & Devreler',
-        description: 'Yer kabuğu, besinlerimiz, mıknatıslar ve basit elektrik devreleri! ⚡🍎',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Kayaç-maden-fosil ve Dünya\'nın hareketleri, besin içerikleri, mıknatıslar ve kuvvet, kütle-hacim ve karışımlar, aydınlatma ve ses, geri dönüşüm ve basit elektrik devreleri! 🌍🍎🧲🧪💡♻️⚡',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'crust_nutrition', label: '🌍 Yer Kabuğu & Besinler' },
-          { id: 'circuits_magnets', label: '💡 Mıknatıs & Devreler' }
+          { id: 'all', label: '🌟 Tüm Üniteler / Karma Düello' },
+          { id: 'crust_movements', label: '🌍 Ünite 1: Yer Kabuğu ve Dünya\'mızın Hareketleri' },
+          { id: 'nutrition', label: '🍎 Ünite 2: Besinlerimiz' },
+          { id: 'force_magnets', label: '🧲 Ünite 3: Kuvvetin Etkileri ve Mıknatıslar' },
+          { id: 'matter_properties', label: '🧪 Ünite 4: Maddenin Özellikleri' },
+          { id: 'lighting_sound', label: '💡 Ünite 5: Aydınlatma ve Ses Teknolojileri' },
+          { id: 'human_environment', label: '♻️ Ünite 6: İnsan ve Çevre' },
+          { id: 'simple_circuits', label: '⚡ Ünite 7: Basit Elektrik Devreleri' }
         ],
         games: [
           {
-            id: 'science_crust_nutrition_4',
+            id: 'science_crust_movements_4',
             active: true,
-            title: 'Yer Kabuğu, Hareketler & Besinlerimiz',
+            title: 'Kayaç-Maden-Fosil & Dünya\'nın Hareketleri Düellosu',
             icon: '🌍',
-            badge: '30 Özgün Soru',
-            featureTag: '🌍 Kayaçlar & Besin',
-            description: 'Kayaçlar, madenler, fosiller, Dünya\'nın dönme/dolanma hareketleri ve besin grupları! 🌍🍎',
-            tags: ['💎 Kayaçlar ve Madenler', '🔄 Dönme ve Dolanma', '🥩 Protein & Karbonhidrat'],
+            badge: '🌍 Ünite 1: Yer Kabuğu & Dünya',
+            featureTag: '🦖 Kayaç, Maden, Fosil & Mevsimler',
+            description: 'Yer kabuğunun yapısı (kayaç, taş, çakıl, kum), ekonomik değeri olan madenler (bor, altın, bakır, kömür, mermer), fosiller, Dünya\'nın dönme (24 saat) ve dolanma (365 gün 6 saat) hareketleri!',
+            tags: ['💎 Kayaçlar & Madenler (Bor/Bakır)', '🦖 Fosiller & Paleontoloji', '🌓 24 Saat: Gece-Gündüz', '🍂 365 Gün 6 Saat: Mevsimler'],
             btnText: 'Düelloyu Başlat',
-            topic: 'crust_nutrition'
+            topic: 'crust_movements'
           },
           {
-            id: 'science_circuits_magnets_4',
+            id: 'science_nutrition_4',
             active: true,
-            title: 'Kuvvet, Mıknatıslar & Basit Devreler',
+            title: 'Besin İçerikleri (Protein/Karbonhidrat/Vitamin) Dedektifi',
+            icon: '🍎',
+            badge: '🍎 Ünite 2: Besinlerimiz',
+            featureTag: '🥩 Yapıcı-Onarıcı, Enerji & Düzenleyici',
+            description: 'Karbonhidratlar (enerji), Proteinler (yapıcı-onarıcı), Yağlar (enerji), Vitaminler ile Su ve Mineraller (düzenleyici), doğal beslenme, obezite, besin israfı, sigara ve alkolün zararları!',
+            tags: ['🥩 Protein & Karbonhidrat', '🍊 Vitamin, Su & Mineral', '⚖️ Dengeli Beslenme & Obezite', '🚭 Sigara & Alkolün Zararları'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'nutrition'
+          },
+          {
+            id: 'science_force_magnets_4',
+            active: true,
+            title: 'Mıknatıs Kutupları (N-S) & Kuvvet Etkileri',
+            icon: '🧲',
+            badge: '🧲 Ünite 3: Kuvvet & Mıknatıslar',
+            featureTag: '🧲 N-S Kutupları & Esnek Cisimler',
+            description: 'Kuvvetin hızlandırma, yavaşlatma, yön ve şekil değiştirme (kalıcı/esnek) etkileri, mıknatısın N ve S kutupları, itme-çekme, demir-nikel-kobalt ve günlük hayatta mıknatıslar (pusula, Maglev treni)!',
+            tags: ['🧲 Kuzey (N) & Güney (S)', '📌 Demir, Nikel & Kobalt', '🔄 Esnek ve Kalıcı Şekil', '🚄 Pusula & Maglev Treni'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'force_magnets'
+          },
+          {
+            id: 'science_matter_properties_4',
+            active: true,
+            title: 'Kütle-Hacim Hesaplama & Karışımları Ayırma Atölyesi',
+            icon: '🧪',
+            badge: '🧪 Ünite 4: Maddenin Özellikleri',
+            featureTag: '⚖️ Kütle, Hacim, Hal Değişimi & Ayırma',
+            description: 'Suda yüzme-batma, suyu emme, Kütle (terazi, kg/g, brüt-net-dara) ve Hacim (dereceli silindir, L/mL, suda taşırma), katı-sıvı-gaz, erime-donma-buharlaşma, saf madde-karışım ve eleme-süzme-mıknatısla ayırma!',
+            tags: ['⚖️ Kütle (Brüt-Net-Dara)', '🧪 Dereceli Silindir & Hacim', '🧊 Erime, Donma & Buharlaşma', '🧲 Eleme, Süzme & Mıknatıs'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'matter_properties'
+          },
+          {
+            id: 'science_lighting_sound_4',
+            active: true,
+            title: 'Aydınlatma/Ses Tarihi & Işık-Ses Kirliliği Avcısı',
             icon: '💡',
-            badge: '30 Özgün Soru',
-            featureTag: '⚡ Devre & Mıknatıs',
-            description: 'Mıknatıs kutupları, saf madde-karışım ayırma ve basit elektrik devreleri! 🧲💡',
-            tags: ['🧲 Mıknatıs Kutupları', '🥗 Saf Madde & Karışım', '💡 Pil, Anahtar & Ampul'],
+            badge: '💡 Ünite 5: Aydınlatma ve Ses',
+            featureTag: '🎙️ Edison, Fonograf, LED & Kirlilik',
+            description: 'Ateşten LED lambaya aydınlatma tarihi, uygun aydınlatma ve göz sağlığı, ışık kirliliği (Caretta caretta ve gökbilim), megafon-fonograf-gramofon-kasetçalar ses teknolojileri ve ses kirliliği!',
+            tags: ['💡 Meşale ➡️ Ampul ➡️ LED', '🐢 Işık Kirliliği & Göz Sağlığı', '🎙️ Fonograf, Gramofon & Megafon', '🔊 Ses Kirliliği & Yalıtım'],
             btnText: 'Düelloyu Başlat',
-            topic: 'circuits_magnets'
+            topic: 'lighting_sound'
           },
           {
-            id: 'science',
+            id: 'science_human_environment_4',
             active: true,
-            title: 'Fen Bilimleri Laboratuvarı (Karma)',
-            icon: '🔬',
-            badge: '👑 Bilim Ustası',
-            featureTag: '⚡ Doğa & Madde',
-            description: 'Karbonhidratlar, elektrik devreleri, mıknatıslar ve kayaçlar! 🔬⚡',
-            tags: ['🍎 Besin Grupları', '🧊 Katı-Sıvı-Gaz', '💡 Basit Devre'],
+            title: 'Tasarruf ve Geri Dönüşüm Kahramanı',
+            icon: '♻️',
+            badge: '♻️ Ünite 6: İnsan ve Çevre',
+            featureTag: '🌱 Su, Elektrik Tasarrufu & Sıfır Atık',
+            description: 'Su, elektrik ve besin kaynaklarının tasarruflu kullanımı, yeniden kullanım, kağıt-cam-plastik-metal-atık yağ ve atık pillerin geri dönüşümü ve ülke ekonomisine katkısı!',
+            tags: ['💧 Su ve Elektrik Tasarrufu', '♻️ Kağıt, Cam, Plastik & Metal', '🔋 Atık Pil & Bitkisel Atık Yağ', '🇹🇷 Sıfır Atık & Ekonomi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'human_environment'
+          },
+          {
+            id: 'science_simple_circuits_4',
+            active: true,
+            title: 'Basit Elektrik Devresi Kurucu & Arıza Dedektifi',
+            icon: '⚡',
+            badge: '⚡ Ünite 7: Basit Elektrik Devreleri',
+            featureTag: '🔋 Pil, Ampul, Anahtar, Kablo & Arıza',
+            description: 'Basit elektrik devresi elemanları ve görevleri (pil, ampul, kablo, anahtar, duy, pil yatağı), devrenin çalışmama nedenleri (açık anahtar, kopuk kablo, ters pil, patlak ampul) ve güvenli elektrik!',
+            tags: ['🔋 Pil, Ampul, Kablo & Anahtar', '💡 Duy ve Pil Yatağı', '🛠️ Devre Neden Çalışmaz?', '🛡️ Güvenli Elektrik Kullanımı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'simple_circuits'
+          },
+          {
+            id: 'science_4_karma',
+            active: true,
+            title: '4. Sınıf Fen Bilimleri Karma Düello',
+            icon: '🌟',
+            badge: '🏆 105 Soru Büyük Karma',
+            featureTag: '🌟 7 Ünite Büyük Fen Yarışması',
+            description: '4. Sınıf Fen Bilimleri dersinin 7 ünitesinin tamamından rastgele ve dengeli sorular çeken büyük Fen Bilimleri yarışması! Hem Tek Kişilik Pratik hem İki Kişilik Düello!',
+            tags: ['🌍 Yer Kabuğu & Besinler', '🧲 Mıknatıs & Madde', '💡 Aydınlatma & Ses', '♻️ Çevre & Elektrik Devresi'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
