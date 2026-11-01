@@ -10534,6 +10534,645 @@
     renderDailyRiddle(nextIdx, true);
   }
 
+  /* ==========================================================================
+     8.6. 🧰 ÖĞRETMEN ARAÇLARI MODÜLÜ (ZAMANLAYICI, KURA, SESSİZLİK & GÜRÜLTÜ ÖLÇER)
+     ========================================================================== */
+  const TeacherTools = {
+    activeTab: 'timer',
+
+    // 1) Zamanlayıcı Durumu
+    timerMode: 'countdown', // 'countdown' | 'stopwatch'
+    timerTotalSec: 180,
+    timerRemainingSec: 180,
+    timerRunning: false,
+    timerInterval: null,
+
+    // 2) Öğrenci Seçici (Kura) Durumu
+    pickerSubMode: 'number', // 'number' | 'name'
+    classSize: 30,
+    rememberNumbers: true,
+    pickedNumbers: [],
+    rememberNames: true,
+    pickedNames: [],
+    isDrawing: false,
+
+    // 3) Sessizlik Oyunu & Gürültü Ölçer Durumu
+    quietStars: 5,
+    micActive: false,
+    micStream: null,
+    micAudioCtx: null,
+    micAnalyser: null,
+    micRafId: null
+  };
+
+  function loadTeacherToolsState() {
+    try {
+      const savedSize = parseInt(localStorage.getItem('dbm_tt_class_size'), 10);
+      if (!isNaN(savedSize) && savedSize >= 2 && savedSize <= 99) {
+        TeacherTools.classSize = savedSize;
+      }
+      const savedStars = parseInt(localStorage.getItem('dbm_tt_quiet_stars'), 10);
+      if (!isNaN(savedStars) && savedStars >= 0 && savedStars <= 50) {
+        TeacherTools.quietStars = savedStars;
+      }
+    } catch (e) {}
+  }
+
+  function saveTeacherToolsState() {
+    try {
+      localStorage.setItem('dbm_tt_class_size', String(TeacherTools.classSize));
+      localStorage.setItem('dbm_tt_quiet_stars', String(TeacherTools.quietStars));
+    } catch (e) {}
+  }
+
+  // Tatlı Okul Zili Sesi (Web Audio API Harmonik Çan)
+  function playSchoolBellChime() {
+    if (state.isMuted || !state.soundEnabled || !audio.ensureContext()) return;
+    try {
+      const ctx = audio.ctx;
+      const now = ctx.currentTime;
+      const notes = [
+        { f: 783.99, t: 0.0, d: 0.35 },  // G5
+        { f: 659.25, t: 0.28, d: 0.35 }, // E5
+        { f: 523.25, t: 0.56, d: 0.45 }, // C5
+        { f: 1046.50, t: 0.95, d: 0.70 } // C6
+      ];
+      notes.forEach(n => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(n.f, now + n.t);
+        gain.gain.setValueAtTime(0.001, now + n.t);
+        gain.gain.linearRampToValueAtTime(0.32, now + n.t + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + n.t);
+        osc.stop(now + n.t + n.d + 0.02);
+      });
+    } catch (e) {}
+  }
+
+  // Alkış & Kutlama Sesi
+  function playApplauseAndCheer() {
+    if (state.isMuted || !state.soundEnabled || !audio.ensureContext()) return;
+    audio.playFanfare();
+  }
+
+  function openTeacherToolsModal(defaultTab) {
+    const modal = document.getElementById('modalTeacherTools');
+    if (!modal) return;
+    if (defaultTab) {
+      switchTeacherToolTab(defaultTab);
+    }
+    syncTeacherToolsUI();
+    openModal(modal);
+  }
+  window.openTeacherToolsModal = openTeacherToolsModal;
+
+  function switchTeacherToolTab(tabId) {
+    TeacherTools.activeTab = tabId;
+    document.querySelectorAll('.tt-tab-btn').forEach(btn => {
+      const isMatch = btn.getAttribute('data-tt-tab') === tabId;
+      btn.classList.toggle('active', isMatch);
+      btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+    });
+    const panels = {
+      timer: document.getElementById('ttPanelTimer'),
+      picker: document.getElementById('ttPanelPicker'),
+      quiet: document.getElementById('ttPanelQuiet')
+    };
+    Object.keys(panels).forEach(k => {
+      if (panels[k]) {
+        panels[k].classList.toggle('hide', k !== tabId);
+        panels[k].classList.toggle('active', k === tabId);
+      }
+    });
+    if (tabId !== 'quiet' && TeacherTools.micActive) {
+      stopTeacherNoiseMeter();
+    }
+  }
+
+  // -------------------------------------------------------------
+  // ARAÇ 1: ⏱️ AKILLI SINIF ZAMANLAYICISI
+  // -------------------------------------------------------------
+  function formatTimerMMSS(sec) {
+    const s = Math.max(0, Math.floor(sec));
+    const m = Math.floor(s / 60);
+    const rem = s % 60;
+    return `${String(m).padStart(2, '0')}:${String(rem).padStart(2, '0')}`;
+  }
+
+  function updateTtTimerUI() {
+    const display = document.getElementById('ttTimerDisplay');
+    const fill = document.getElementById('ttTimerProgressFill');
+    const startIcon = document.getElementById('ttTimerStartIcon');
+    const startText = document.getElementById('ttTimerStartText');
+    const startBtn = document.getElementById('btnTtTimerStartPause');
+
+    if (display) {
+      display.textContent = formatTimerMMSS(TeacherTools.timerRemainingSec);
+    }
+    if (fill) {
+      if (TeacherTools.timerMode === 'stopwatch') {
+        const pct = ((TeacherTools.timerRemainingSec % 60) / 60) * 100;
+        fill.style.width = `${pct}%`;
+      } else {
+        const total = Math.max(1, TeacherTools.timerTotalSec);
+        const pct = Math.max(0, Math.min(100, (TeacherTools.timerRemainingSec / total) * 100));
+        fill.style.width = `${pct}%`;
+      }
+    }
+    if (startIcon) startIcon.textContent = TeacherTools.timerRunning ? '⏸️' : '▶️';
+    if (startText) startText.textContent = TeacherTools.timerRunning ? 'Duraklat' : 'Başlat';
+    if (startBtn) startBtn.classList.toggle('is-running', TeacherTools.timerRunning);
+  }
+
+  function setTtTimerPreset(seconds) {
+    stopTtTimerInterval();
+    const banner = document.getElementById('ttTimerStatusBanner');
+    const card = document.getElementById('ttTimerDisplayCard');
+    if (banner) banner.classList.add('hide');
+    if (card) card.classList.remove('timer-finished');
+
+    if (seconds === 0) {
+      TeacherTools.timerMode = 'stopwatch';
+      TeacherTools.timerTotalSec = 0;
+      TeacherTools.timerRemainingSec = 0;
+    } else {
+      TeacherTools.timerMode = 'countdown';
+      TeacherTools.timerTotalSec = seconds;
+      TeacherTools.timerRemainingSec = seconds;
+    }
+    document.querySelectorAll('.tt-preset-btn').forEach(btn => {
+      const s = parseInt(btn.getAttribute('data-tt-sec'), 10);
+      btn.classList.toggle('active', s === seconds);
+    });
+    updateTtTimerUI();
+  }
+
+  function adjustTtTimer(deltaSec) {
+    const banner = document.getElementById('ttTimerStatusBanner');
+    const card = document.getElementById('ttTimerDisplayCard');
+    if (banner) banner.classList.add('hide');
+    if (card) card.classList.remove('timer-finished');
+
+    if (TeacherTools.timerMode === 'stopwatch') {
+      TeacherTools.timerMode = 'countdown';
+    }
+    const nextVal = Math.max(5, Math.min(3600, TeacherTools.timerRemainingSec + deltaSec));
+    TeacherTools.timerRemainingSec = nextVal;
+    if (nextVal > TeacherTools.timerTotalSec) {
+      TeacherTools.timerTotalSec = nextVal;
+    }
+    updateTtTimerUI();
+  }
+
+  function stopTtTimerInterval() {
+    TeacherTools.timerRunning = false;
+    if (TeacherTools.timerInterval) {
+      clearInterval(TeacherTools.timerInterval);
+      TeacherTools.timerInterval = null;
+    }
+  }
+
+  function toggleTtTimerStartPause() {
+    const banner = document.getElementById('ttTimerStatusBanner');
+    const card = document.getElementById('ttTimerDisplayCard');
+    if (TeacherTools.timerRunning) {
+      stopTtTimerInterval();
+      audio.playClick();
+      updateTtTimerUI();
+      return;
+    }
+
+    if (TeacherTools.timerMode === 'countdown' && TeacherTools.timerRemainingSec <= 0) {
+      TeacherTools.timerRemainingSec = TeacherTools.timerTotalSec || 180;
+    }
+    if (banner) banner.classList.add('hide');
+    if (card) card.classList.remove('timer-finished');
+
+    TeacherTools.timerRunning = true;
+    audio.playClick();
+    updateTtTimerUI();
+
+    TeacherTools.timerInterval = setInterval(() => {
+      if (TeacherTools.timerMode === 'stopwatch') {
+        TeacherTools.timerRemainingSec += 1;
+        updateTtTimerUI();
+      } else {
+        if (TeacherTools.timerRemainingSec > 0) {
+          TeacherTools.timerRemainingSec -= 1;
+          if (TeacherTools.timerRemainingSec <= 3 && TeacherTools.timerRemainingSec > 0) {
+            audio.playTick();
+          }
+          updateTtTimerUI();
+        }
+        if (TeacherTools.timerRemainingSec <= 0) {
+          stopTtTimerInterval();
+          updateTtTimerUI();
+          if (banner) banner.classList.remove('hide');
+          if (card) card.classList.add('timer-finished');
+          playSchoolBellChime();
+          if (typeof launchConfetti === 'function') launchConfetti();
+          if (!state.isMuted && state.soundEnabled) {
+            setTimeout(() => {
+              audio.speakTurkishText('Süre bitti! Harika çalıştınız çocuklar!');
+            }, 900);
+          }
+        }
+      }
+    }, 1000);
+  }
+
+  function resetTtTimer() {
+    stopTtTimerInterval();
+    const banner = document.getElementById('ttTimerStatusBanner');
+    const card = document.getElementById('ttTimerDisplayCard');
+    if (banner) banner.classList.add('hide');
+    if (card) card.classList.remove('timer-finished');
+
+    if (TeacherTools.timerMode === 'stopwatch') {
+      TeacherTools.timerRemainingSec = 0;
+    } else {
+      TeacherTools.timerRemainingSec = TeacherTools.timerTotalSec || 180;
+    }
+    audio.playClick();
+    updateTtTimerUI();
+  }
+
+  // -------------------------------------------------------------
+  // ARAÇ 2: 🎡 RASTGELE ÖĞRENCİ SEÇİCİ (NUMARA & İSİM KURASI)
+  // -------------------------------------------------------------
+  function switchTtPickerSubMode(subMode) {
+    TeacherTools.pickerSubMode = subMode;
+    const btnNum = document.getElementById('btnTtModeNumber');
+    const btnName = document.getElementById('btnTtModeName');
+    const subNum = document.getElementById('ttSubpanelNumber');
+    const subName = document.getElementById('ttSubpanelName');
+    const drawText = document.getElementById('btnTtDrawStudentText');
+    const badge = document.getElementById('ttLuckyBadge');
+    const result = document.getElementById('ttLuckyResult');
+
+    if (btnNum) btnNum.classList.toggle('active', subMode === 'number');
+    if (btnName) btnName.classList.toggle('active', subMode === 'name');
+    if (subNum) subNum.classList.toggle('hide', subMode !== 'number');
+    if (subName) subName.classList.toggle('hide', subMode !== 'name');
+    if (drawText) {
+      drawText.textContent = subMode === 'number' ? 'Şanslı Numarayı Seç!' : 'Şanslı Öğrenciyi Seç!';
+    }
+    if (badge) {
+      badge.textContent = subMode === 'number' ? '🔢 Numara Kurası Hazır' : '📝 İsim Kurası Hazır';
+    }
+    if (result) result.textContent = '?';
+    updateTtPickerCountsUI();
+  }
+
+  function getTtNamesArray() {
+    const inp = document.getElementById('inpTtStudentNames');
+    const raw = inp ? inp.value : (state.classRoster || []).join(', ');
+    const list = raw
+      .split(/[,;\n]+/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    return list.length > 0 ? list : ['Ali', 'Ayşe', 'Mehmet', 'Zeynep', 'Can', 'Elif'];
+  }
+
+  function saveTtNamesFromTextarea(showMsg = false) {
+    const inp = document.getElementById('inpTtStudentNames');
+    if (!inp) return;
+    const list = inp.value
+      .split(/[,;\n]+/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    if (list.length > 0) {
+      state.classRoster = list;
+      StorageManager.saveRoster();
+      const mainRosterTextarea = document.getElementById('rosterTextarea');
+      if (mainRosterTextarea) mainRosterTextarea.value = list.join('\n');
+      if (showMsg) {
+        audio.playCorrect();
+        showToast(`✅ ${list.length} kişilik sınıf listesi kaydedildi!`);
+      }
+    }
+    updateTtPickerCountsUI();
+  }
+
+  function updateTtPickerCountsUI() {
+    const numCountEl = document.getElementById('ttPickedNumbersCount');
+    const nameCountEl = document.getElementById('ttPickedNamesCount');
+    const historyEl = document.getElementById('ttLuckyHistory');
+
+    if (numCountEl) numCountEl.textContent = `${TeacherTools.pickedNumbers.length}/${TeacherTools.classSize}`;
+    const names = getTtNamesArray();
+    if (nameCountEl) nameCountEl.textContent = `${TeacherTools.pickedNames.length}/${names.length}`;
+
+    if (historyEl) {
+      if (TeacherTools.pickerSubMode === 'number') {
+        historyEl.textContent = TeacherTools.pickedNumbers.length > 0
+          ? `Seçilen Numaralar: ${TeacherTools.pickedNumbers.slice(-8).join(', ')}`
+          : 'Henüz numara seçilmedi';
+      } else {
+        historyEl.textContent = TeacherTools.pickedNames.length > 0
+          ? `Tahtaya Kalkanlar: ${TeacherTools.pickedNames.slice(-6).join(', ')}`
+          : 'Henüz öğrenci seçilmedi';
+      }
+    }
+  }
+
+  function runTtLuckyDraw() {
+    if (TeacherTools.isDrawing) return;
+    const badge = document.getElementById('ttLuckyBadge');
+    const resultEl = document.getElementById('ttLuckyResult');
+    const stageCard = document.getElementById('ttLuckyStageCard');
+    if (!resultEl) return;
+
+    if (TeacherTools.pickerSubMode === 'number') {
+      const inpSize = document.getElementById('inpTtClassSize');
+      const size = Math.max(2, Math.min(99, parseInt(inpSize ? inpSize.value : 30, 10) || 30));
+      TeacherTools.classSize = size;
+      saveTeacherToolsState();
+
+      let pool = [];
+      for (let i = 1; i <= size; i++) {
+        if (!TeacherTools.rememberNumbers || !TeacherTools.pickedNumbers.includes(i)) {
+          pool.push(i);
+        }
+      }
+      if (pool.length === 0) {
+        TeacherTools.pickedNumbers = [];
+        for (let i = 1; i <= size; i++) pool.push(i);
+        showToast('🔄 Tüm numaralar seçildiği için torba yenilendi!');
+      }
+
+      const winnerNum = pool[Math.floor(Math.random() * pool.length)];
+      TeacherTools.isDrawing = true;
+      if (stageCard) stageCard.classList.remove('lucky-winner-pop');
+      if (badge) badge.textContent = '🎲 Numaralar Karıştırılıyor...';
+
+      let ticks = 0;
+      const totalTicks = 16;
+      const rollTimer = setInterval(() => {
+        ticks += 1;
+        const tempNum = Math.floor(Math.random() * size) + 1;
+        resultEl.textContent = tempNum;
+        audio.playTick();
+
+        if (ticks >= totalTicks) {
+          clearInterval(rollTimer);
+          TeacherTools.isDrawing = false;
+          if (TeacherTools.rememberNumbers && !TeacherTools.pickedNumbers.includes(winnerNum)) {
+            TeacherTools.pickedNumbers.push(winnerNum);
+          }
+          resultEl.textContent = `🎯 ${winnerNum} Numara!`;
+          if (badge) badge.textContent = '🌟 Şanslı Okul Numarası Seçildi!';
+          if (stageCard) stageCard.classList.add('lucky-winner-pop');
+          updateTtPickerCountsUI();
+          playApplauseAndCheer();
+          if (typeof launchConfetti === 'function') launchConfetti();
+          if (!state.isMuted && state.soundEnabled) {
+            audio.speakTurkishText(`Şanslı numara: ${winnerNum}! Alkışlarla tahtaya bekliyoruz!`);
+          }
+        }
+      }, 75);
+    } else {
+      saveTtNamesFromTextarea(false);
+      const allNames = getTtNamesArray();
+      let pool = allNames.filter(n => !TeacherTools.rememberNames || !TeacherTools.pickedNames.includes(n));
+      if (pool.length === 0) {
+        TeacherTools.pickedNames = [];
+        pool = allNames.slice();
+        showToast('🔄 Tüm öğrenciler tahtaya kalktığı için liste yenilendi!');
+      }
+
+      const winnerName = pool[Math.floor(Math.random() * pool.length)];
+      TeacherTools.isDrawing = true;
+      if (stageCard) stageCard.classList.remove('lucky-winner-pop');
+      if (badge) badge.textContent = '🎡 İsimler Dönüyor...';
+
+      let ticks = 0;
+      const totalTicks = 16;
+      const rollTimer = setInterval(() => {
+        ticks += 1;
+        const tempName = allNames[Math.floor(Math.random() * allNames.length)];
+        resultEl.textContent = tempName;
+        audio.playTick();
+
+        if (ticks >= totalTicks) {
+          clearInterval(rollTimer);
+          TeacherTools.isDrawing = false;
+          if (TeacherTools.rememberNames && !TeacherTools.pickedNames.includes(winnerName)) {
+            TeacherTools.pickedNames.push(winnerName);
+          }
+          resultEl.textContent = `👏 ${winnerName}! 🎉`;
+          if (badge) badge.textContent = '🌟 Şanslı Öğrencimiz Seçildi!';
+          if (stageCard) stageCard.classList.add('lucky-winner-pop');
+          updateTtPickerCountsUI();
+          playApplauseAndCheer();
+          if (typeof launchConfetti === 'function') launchConfetti();
+          if (!state.isMuted && state.soundEnabled) {
+            audio.speakTurkishText(`Şanslı öğrencimiz: ${winnerName}! Alkışlarla tahtaya bekliyoruz!`);
+          }
+        }
+      }, 75);
+    }
+  }
+
+  // -------------------------------------------------------------
+  // ARAÇ 3: 🤫 SESSİZLİK OYUNU & CANLI SINIF GÜRÜLTÜ ÖLÇER
+  // -------------------------------------------------------------
+  function updateTtQuietStarsUI() {
+    const iconsRow = document.getElementById('ttStarsIconsRow');
+    const countEl = document.getElementById('ttQuietStarsCount');
+    const titleEl = document.getElementById('ttQuietStatusTitle');
+    const subEl = document.getElementById('ttQuietStatusSub');
+
+    const count = TeacherTools.quietStars;
+    if (countEl) countEl.textContent = String(count);
+    if (iconsRow) {
+      if (count === 0) {
+        iconsRow.textContent = '☆☆☆ (Henüz yıldız yok)';
+      } else {
+        const visibleStars = Math.min(count, 12);
+        iconsRow.textContent = '⭐'.repeat(visibleStars) + (count > 12 ? ` +${count - 12}` : '');
+      }
+    }
+    if (!TeacherTools.micActive) {
+      if (count >= 8) {
+        if (titleEl) titleEl.textContent = '🏆 Muhteşem! Örnek Sınıf Oldunuz!';
+        if (subEl) subEl.textContent = 'Moli sizinle gurur duyuyor, harika bir sessizlik!';
+      } else if (count >= 4) {
+        if (titleEl) titleEl.textContent = '😊 Harika Gidiyoruz! Sessizlik Korunuyor';
+        if (subEl) subEl.textContent = 'Sessiz kalarak yeni yıldızlar kazanmaya devam edelim!';
+      } else {
+        if (titleEl) titleEl.textContent = '🤫 Sessizlik Oyunu Başladı!';
+        if (subEl) subEl.textContent = 'Sınıfça sessiz olalım, yıldızlarımızı çoğaltalım!';
+      }
+    }
+  }
+
+  function changeTtQuietStars(delta) {
+    TeacherTools.quietStars = Math.max(0, Math.min(50, TeacherTools.quietStars + delta));
+    saveTeacherToolsState();
+    updateTtQuietStarsUI();
+    if (delta > 0) {
+      audio.playCorrect();
+      if (TeacherTools.quietStars % 5 === 0 && typeof launchConfetti === 'function') {
+        launchConfetti();
+      }
+    } else {
+      audio.playWrong();
+    }
+  }
+
+  async function toggleTeacherNoiseMeter() {
+    if (TeacherTools.micActive) {
+      stopTeacherNoiseMeter();
+      return;
+    }
+    const badge = document.getElementById('ttNoiseLevelBadge');
+    const desc = document.getElementById('ttNoiseDesc');
+    const btnIcon = document.getElementById('ttMicBtnIcon');
+    const btnText = document.getElementById('ttMicBtnText');
+    const btnMic = document.getElementById('btnTtToggleMic');
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      showToast('ℹ️ Bu cihazda mikrofon bulunamadı. Manuel Sessizlik Yıldızı sayacını kullanabilirsiniz.');
+      if (desc) desc.textContent = 'Bu akıllı tahtada mikrofon algılanmadı. Soldaki Sessizlik Yıldızı ⭐ sayacını manuel kullanabilirsiniz.';
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      const audioCtx = new AudioContextClass();
+      const source = audioCtx.createMediaStreamSource(stream);
+      const analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.82;
+      source.connect(analyser);
+
+      TeacherTools.micActive = true;
+      TeacherTools.micStream = stream;
+      TeacherTools.micAudioCtx = audioCtx;
+      TeacherTools.micAnalyser = analyser;
+
+      if (btnIcon) btnIcon.textContent = '⏹️';
+      if (btnText) btnText.textContent = 'Mikrofon Ölçümünü Durdur';
+      if (btnMic) btnMic.classList.add('is-active');
+      if (desc) desc.textContent = 'Canlı ses seviyesi ölçülüyor: Yeşil alanda kalmaya çalışalım!';
+
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+      const barFill = document.getElementById('ttNoiseBarFill');
+      const titleEl = document.getElementById('ttQuietStatusTitle');
+      const subEl = document.getElementById('ttQuietStatusSub');
+
+      const updateMeter = () => {
+        if (!TeacherTools.micActive || !TeacherTools.micAnalyser) return;
+        TeacherTools.micAnalyser.getByteFrequencyData(dataArray);
+        let sum = 0;
+        for (let i = 0; i < dataArray.length; i++) {
+          sum += dataArray[i];
+        }
+        const avg = sum / dataArray.length;
+        const levelPct = Math.min(100, Math.max(5, Math.round((avg / 95) * 100)));
+
+        if (barFill) {
+          barFill.style.width = `${levelPct}%`;
+          barFill.classList.remove('fill-green', 'fill-yellow', 'fill-red');
+          if (levelPct < 38) {
+            barFill.classList.add('fill-green');
+          } else if (levelPct < 70) {
+            barFill.classList.add('fill-yellow');
+          } else {
+            barFill.classList.add('fill-red');
+          }
+        }
+
+        if (badge) {
+          badge.classList.remove('level-green', 'level-yellow', 'level-red');
+          if (levelPct < 38) {
+            badge.classList.add('level-green');
+            badge.textContent = `🟢 Harika Sessiz (%${levelPct})`;
+            if (titleEl) titleEl.textContent = '😴 Moli Mışıl Mışıl Dinleniyor!';
+            if (subEl) subEl.textContent = 'Sınıf çok huzurlu ve sessiz, tebrikler çocuklar!';
+          } else if (levelPct < 70) {
+            badge.classList.add('level-yellow');
+            badge.textContent = `🟡 Normal Ses (%${levelPct})`;
+            if (titleEl) titleEl.textContent = '🙂 Sesimiz Biraz Yükseliyor';
+            if (subEl) subEl.textContent = 'Moli uyanmak üzere, biraz daha kısık sesle konuşalım.';
+          } else {
+            badge.classList.add('level-red');
+            badge.textContent = `🔴 Çok Gürültülü! (%${levelPct})`;
+            if (titleEl) titleEl.textContent = '🙉 Çok Gürültü Var! Sessiz Olalım!';
+            if (subEl) subEl.textContent = 'Ses seviyesi çok yükseldi, hemen sessizlik moduna geçelim!';
+          }
+        }
+
+        TeacherTools.micRafId = requestAnimationFrame(updateMeter);
+      };
+
+      TeacherTools.micRafId = requestAnimationFrame(updateMeter);
+    } catch (err) {
+      showToast('ℹ️ Mikrofon izni verilmedi. Manuel Sessizlik Yıldızı sayacını kullanabilirsiniz.');
+      if (desc) desc.textContent = 'Mikrofon izni kapalı. Soldaki Sessizlik Yıldızı ⭐ butonlarıyla sınıf enerjisini manuel yönetebilirsiniz.';
+    }
+  }
+
+  function stopTeacherNoiseMeter() {
+    TeacherTools.micActive = false;
+    if (TeacherTools.micRafId) {
+      cancelAnimationFrame(TeacherTools.micRafId);
+      TeacherTools.micRafId = null;
+    }
+    if (TeacherTools.micStream) {
+      try {
+        TeacherTools.micStream.getTracks().forEach(t => t.stop());
+      } catch (e) {}
+      TeacherTools.micStream = null;
+    }
+    if (TeacherTools.micAudioCtx) {
+      try {
+        TeacherTools.micAudioCtx.close();
+      } catch (e) {}
+      TeacherTools.micAudioCtx = null;
+    }
+    TeacherTools.micAnalyser = null;
+
+    const badge = document.getElementById('ttNoiseLevelBadge');
+    const barFill = document.getElementById('ttNoiseBarFill');
+    const btnIcon = document.getElementById('ttMicBtnIcon');
+    const btnText = document.getElementById('ttMicBtnText');
+    const btnMic = document.getElementById('btnTtToggleMic');
+
+    if (badge) {
+      badge.className = 'tt-noise-level-badge level-green';
+      badge.textContent = 'Hazır';
+    }
+    if (barFill) {
+      barFill.style.width = '8%';
+      barFill.className = 'tt-noise-bar-fill fill-green';
+    }
+    if (btnIcon) btnIcon.textContent = '🎙️';
+    if (btnText) btnText.textContent = 'Mikrofonla Ölçümü Başlat';
+    if (btnMic) btnMic.classList.remove('is-active');
+    updateTtQuietStarsUI();
+  }
+
+  function syncTeacherToolsUI() {
+    const inpSize = document.getElementById('inpTtClassSize');
+    if (inpSize) inpSize.value = TeacherTools.classSize;
+
+    const inpNames = document.getElementById('inpTtStudentNames');
+    if (inpNames && !inpNames.value.trim()) {
+      inpNames.value = (state.classRoster || []).join(', ');
+    }
+    updateTtTimerUI();
+    updateTtPickerCountsUI();
+    updateTtQuietStarsUI();
+  }
+
+
 
   /* ==========================================================================
      9. SINIF -> DERS -> KONU HİYERARŞİK MÜFREDAT YAPISI (DİNAMİK LOBİ SİSTEMİ)
@@ -17216,6 +17855,183 @@
       });
     }
 
+    // 🧰 Öğretmen Araçları Giriş Butonları ve Sekme Kontrolleri
+    const btnTopbarTeacherTools = document.getElementById('btnTopbarTeacherTools');
+    if (btnTopbarTeacherTools) {
+      addTapListener(btnTopbarTeacherTools, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        audio.playClick();
+        openTeacherToolsModal();
+      });
+    }
+
+    const btnSidebarTeacherTools = document.getElementById('btnSidebarTeacherTools');
+    if (btnSidebarTeacherTools) {
+      addTapListener(btnSidebarTeacherTools, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        audio.playClick();
+        closeMobileSidebar();
+        openTeacherToolsModal();
+      });
+    }
+
+    const btnCloseTeacherTools = document.getElementById('btnCloseTeacherTools');
+    if (btnCloseTeacherTools) {
+      addTapListener(btnCloseTeacherTools, () => {
+        stopTeacherNoiseMeter();
+      });
+    }
+
+    document.querySelectorAll('.tt-tab-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const tab = btn.getAttribute('data-tt-tab');
+        if (tab) {
+          audio.playClick();
+          switchTeacherToolTab(tab);
+        }
+      });
+    });
+
+    // Araç 1: Zamanlayıcı Kontrolleri
+    document.querySelectorAll('.tt-preset-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const sec = parseInt(btn.getAttribute('data-tt-sec'), 10);
+        if (!isNaN(sec)) {
+          audio.playClick();
+          setTtTimerPreset(sec);
+        }
+      });
+    });
+
+    document.querySelectorAll('.tt-adj-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const adj = parseInt(btn.getAttribute('data-tt-adj'), 10);
+        if (!isNaN(adj)) {
+          audio.playClick();
+          adjustTtTimer(adj);
+        }
+      });
+    });
+
+    const btnTtTimerStartPause = document.getElementById('btnTtTimerStartPause');
+    if (btnTtTimerStartPause) {
+      addTapListener(btnTtTimerStartPause, toggleTtTimerStartPause);
+    }
+
+    const btnTtTimerReset = document.getElementById('btnTtTimerReset');
+    if (btnTtTimerReset) {
+      addTapListener(btnTtTimerReset, resetTtTimer);
+    }
+
+    const btnTtRingBell = document.getElementById('btnTtRingBell');
+    if (btnTtRingBell) {
+      addTapListener(btnTtRingBell, () => {
+        playSchoolBellChime();
+        showToast('🔔 Sınıf Dikkat Zili Çalındı!');
+      });
+    }
+
+    // Araç 2: Öğrenci Seçici (Numara & İsim Kurası) Kontrolleri
+    const btnTtModeNumber = document.getElementById('btnTtModeNumber');
+    if (btnTtModeNumber) {
+      addTapListener(btnTtModeNumber, () => {
+        audio.playClick();
+        switchTtPickerSubMode('number');
+      });
+    }
+
+    const btnTtModeName = document.getElementById('btnTtModeName');
+    if (btnTtModeName) {
+      addTapListener(btnTtModeName, () => {
+        audio.playClick();
+        switchTtPickerSubMode('name');
+      });
+    }
+
+    const inpTtClassSize = document.getElementById('inpTtClassSize');
+    if (inpTtClassSize) {
+      inpTtClassSize.addEventListener('change', () => {
+        const val = Math.max(2, Math.min(99, parseInt(inpTtClassSize.value, 10) || 30));
+        inpTtClassSize.value = val;
+        TeacherTools.classSize = val;
+        saveTeacherToolsState();
+        updateTtPickerCountsUI();
+      });
+    }
+
+    const chkTtRememberNumbers = document.getElementById('chkTtRememberNumbers');
+    if (chkTtRememberNumbers) {
+      chkTtRememberNumbers.addEventListener('change', () => {
+        TeacherTools.rememberNumbers = chkTtRememberNumbers.checked;
+      });
+    }
+
+    const btnTtResetNumbers = document.getElementById('btnTtResetNumbers');
+    if (btnTtResetNumbers) {
+      addTapListener(btnTtResetNumbers, () => {
+        TeacherTools.pickedNumbers = [];
+        audio.playClick();
+        updateTtPickerCountsUI();
+        showToast('🔄 Seçilen numaralar sıfırlandı!');
+      });
+    }
+
+    const chkTtRememberNames = document.getElementById('chkTtRememberNames');
+    if (chkTtRememberNames) {
+      chkTtRememberNames.addEventListener('change', () => {
+        TeacherTools.rememberNames = chkTtRememberNames.checked;
+      });
+    }
+
+    const btnTtSaveNames = document.getElementById('btnTtSaveNames');
+    if (btnTtSaveNames) {
+      addTapListener(btnTtSaveNames, () => {
+        saveTtNamesFromTextarea(true);
+      });
+    }
+
+    const btnTtResetNames = document.getElementById('btnTtResetNames');
+    if (btnTtResetNames) {
+      addTapListener(btnTtResetNames, () => {
+        TeacherTools.pickedNames = [];
+        audio.playClick();
+        updateTtPickerCountsUI();
+        showToast('🔄 Tahtaya kalkan öğrenci listesi sıfırlandı!');
+      });
+    }
+
+    const btnTtDrawStudent = document.getElementById('btnTtDrawStudent');
+    if (btnTtDrawStudent) {
+      addTapListener(btnTtDrawStudent, runTtLuckyDraw);
+    }
+
+    // Araç 3: Sessizlik Oyunu & Gürültü Ölçer Kontrolleri
+    const btnTtAddStar = document.getElementById('btnTtAddStar');
+    if (btnTtAddStar) {
+      addTapListener(btnTtAddStar, () => changeTtQuietStars(1));
+    }
+
+    const btnTtRemoveStar = document.getElementById('btnTtRemoveStar');
+    if (btnTtRemoveStar) {
+      addTapListener(btnTtRemoveStar, () => changeTtQuietStars(-1));
+    }
+
+    const btnTtResetStars = document.getElementById('btnTtResetStars');
+    if (btnTtResetStars) {
+      addTapListener(btnTtResetStars, () => {
+        TeacherTools.quietStars = 5;
+        saveTeacherToolsState();
+        audio.playClick();
+        updateTtQuietStarsUI();
+        showToast('⭐ Sessizlik yıldızları 5 olarak sıfırlandı!');
+      });
+    }
+
+    const btnTtToggleMic = document.getElementById('btnTtToggleMic');
+    if (btnTtToggleMic) {
+      addTapListener(btnTtToggleMic, toggleTeacherNoiseMeter);
+    }
+
     const btnTopbarMute = document.getElementById('btnTopbarMute');
     if (btnTopbarMute) {
       addTapListener(btnTopbarMute, (e) => {
@@ -17464,6 +18280,7 @@
      ========================================================================== */
   function init() {
     StorageManager.loadAll();
+    loadTeacherToolsState();
     loadSpeechIndex();
     updateSoundUI();
     updateAnnouncerUI();

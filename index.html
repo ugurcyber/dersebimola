@@ -97,7 +97,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=7.7.0">
+  <link rel="stylesheet" href="style.css?v=7.8.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -186,6 +186,10 @@
       <div class="sidebar-footer">
         <div class="sidebar-nav-title">ÖĞRETMEN VE ARAÇLAR</div>
         <div class="sidebar-tools-list">
+          <button class="sidebar-tool-btn btn-sidebar-teacher-tools" id="btnSidebarTeacherTools" title="Zamanlayıcı, Kura ve Sessizlik Oyunu">
+            <span class="tool-icon" aria-hidden="true">🧰</span>
+            <span class="tool-label">Öğretmen Araçları</span>
+          </button>
           <button class="sidebar-tool-btn" id="btnOpenLeaderboard" title="Sınıf Ligi Puan Tablosu">
             <span class="tool-icon"><img src="assets/icons/3d/trophy.webp" class="chip-3d-icon" alt="Sınıf Ligi" width="20" height="20" loading="lazy" decoding="async"></span>
             <span class="tool-label">Sınıf Ligi</span>
@@ -268,6 +272,10 @@
               </svg>
             </span>
             <span class="pill-text">Paylaş</span>
+          </button>
+          <button class="topbar-action-pill pill-teacher-tools" id="btnTopbarTeacherTools" type="button" aria-label="Öğretmen Araçları" title="Zamanlayıcı, Kura ve Sessizlik Oyunu">
+            <span class="pill-icon" aria-hidden="true">🧰</span>
+            <span class="pill-text">Öğretmen Araçları</span>
           </button>
           <button class="topbar-action-pill pill-addquiz" id="btnDesktopAddQuiz" type="button" aria-label="Soru Ekle">
             <span class="pill-icon">
@@ -1685,6 +1693,190 @@
     </div>
   </div>
 
+  <!-- MODAL: 🧰 ÖĞRETMEN ARAÇLARI (ZAMANLAYICI, ÖĞRENCİ KURASI, SESSİZLİK OYUNU) -->
+  <div class="modal-backdrop hide" id="modalTeacherTools">
+    <div class="modal-window teacher-tools-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalTeacherTools" id="btnCloseTeacherTools" aria-label="Kapat">✕</button>
+      <div class="teacher-tools-header">
+        <div class="tt-header-title-row">
+          <span class="tt-header-badge-icon" aria-hidden="true">🧰</span>
+          <div>
+            <h3 class="modal-title tt-modal-title">Öğretmen Sınıf Araçları</h3>
+            <p class="modal-desc tt-modal-desc">Ders anlatırken ve etkinliklerde akıllı tahta yardımcınız</p>
+          </div>
+        </div>
+        <!-- Sekmeler (Tabs) -->
+        <div class="tt-tabs-nav" role="tablist" aria-label="Öğretmen Araçları Sekmeleri">
+          <button class="tt-tab-btn active" data-tt-tab="timer" id="btnTtTabTimer" type="button" role="tab" aria-selected="true">
+            <span aria-hidden="true">⏱️</span>
+            <span>Sınıf Zamanlayıcısı</span>
+          </button>
+          <button class="tt-tab-btn" data-tt-tab="picker" id="btnTtTabPicker" type="button" role="tab" aria-selected="false">
+            <span aria-hidden="true">🎡</span>
+            <span>Rastgele Öğrenci Seçici</span>
+          </button>
+          <button class="tt-tab-btn" data-tt-tab="quiet" id="btnTtTabQuiet" type="button" role="tab" aria-selected="false">
+            <span aria-hidden="true">🤫</span>
+            <span>Sessizlik Oyunu &amp; Yıldız</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="teacher-tools-body">
+        <!-- SEKME 1: ⏱️ AKILLI SINIF ZAMANLAYICISI -->
+        <div class="tt-tab-panel active" id="ttPanelTimer" role="tabpanel">
+          <div class="tt-timer-presets">
+            <button class="tt-preset-btn" data-tt-sec="60" type="button">1 Dakika</button>
+            <button class="tt-preset-btn active" data-tt-sec="180" type="button">3 Dakika</button>
+            <button class="tt-preset-btn" data-tt-sec="300" type="button">5 Dakika</button>
+            <button class="tt-preset-btn" data-tt-sec="600" type="button">10 Dakika</button>
+            <button class="tt-preset-btn tt-preset-stopwatch" data-tt-sec="0" id="btnTtStopwatchMode" type="button">⏱️ Kronometre</button>
+          </div>
+
+          <div class="tt-timer-display-card" id="ttTimerDisplayCard">
+            <div class="tt-timer-adjust-row">
+              <button class="tt-adj-btn" data-tt-adj="-60" type="button" title="1 Dakika Azalt">−1 dk</button>
+              <button class="tt-adj-btn" data-tt-adj="-15" type="button" title="15 Saniye Azalt">−15 sn</button>
+              <div class="tt-digital-clock" id="ttTimerDisplay">03:00</div>
+              <button class="tt-adj-btn" data-tt-adj="15" type="button" title="15 Saniye Ekle">+15 sn</button>
+              <button class="tt-adj-btn" data-tt-adj="60" type="button" title="1 Dakika Ekle">+1 dk</button>
+            </div>
+            <div class="tt-timer-progress-track">
+              <div class="tt-timer-progress-fill" id="ttTimerProgressFill" style="width: 100%;"></div>
+            </div>
+            <div class="tt-timer-status-banner hide" id="ttTimerStatusBanner">
+              🔔 Süre Bitti! Kalemleri bırakalım, harika çalıştınız! 🎉
+            </div>
+          </div>
+
+          <div class="tt-timer-controls">
+            <button class="tt-ctrl-btn tt-btn-start" id="btnTtTimerStartPause" type="button">
+              <span id="ttTimerStartIcon">▶️</span>
+              <span id="ttTimerStartText">Başlat</span>
+            </button>
+            <button class="tt-ctrl-btn tt-btn-reset" id="btnTtTimerReset" type="button">
+              <span>🔄</span>
+              <span>Sıfırla</span>
+            </button>
+            <button class="tt-ctrl-btn tt-btn-bell" id="btnTtRingBell" type="button" title="Dikkat Zili Çal">
+              <span>🔔</span>
+              <span>Zil Çal</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SEKME 2: 🎡 RASTGELE ÖĞRENCİ SEÇİCİ (NUMARA KURASI & İSİM KURASI) -->
+        <div class="tt-tab-panel hide" id="ttPanelPicker" role="tabpanel">
+          <div class="tt-submode-switch">
+            <button class="tt-submode-btn active" id="btnTtModeNumber" type="button">🔢 Numara Kurası</button>
+            <button class="tt-submode-btn" id="btnTtModeName" type="button">📝 İsim Kurası</button>
+          </div>
+
+          <!-- Alt Mod A: Numara Kurası -->
+          <div class="tt-picker-subpanel" id="ttSubpanelNumber">
+            <div class="tt-number-config-row">
+              <label class="tt-config-label" for="inpTtClassSize">
+                <span>👥 Sınıf Mevcudu (1'den):</span>
+                <input type="number" id="inpTtClassSize" class="tt-number-input" min="2" max="99" value="30">
+              </label>
+              <label class="tt-checkbox-label">
+                <input type="checkbox" id="chkTtRememberNumbers" checked>
+                <span>Seçilenleri Hatırla</span>
+              </label>
+              <button class="tt-small-reset-btn" id="btnTtResetNumbers" type="button">🔄 Sıfırla (<span id="ttPickedNumbersCount">0</span>)</button>
+            </div>
+          </div>
+
+          <!-- Alt Mod B: İsim Kurası -->
+          <div class="tt-picker-subpanel hide" id="ttSubpanelName">
+            <div class="tt-name-input-wrap">
+              <label class="tt-name-label" for="inpTtStudentNames">
+                <span>📋 Sınıf Listesi (İsimleri virgülle ayırarak yazın, otomatik kaydedilir):</span>
+              </label>
+              <textarea id="inpTtStudentNames" class="tt-name-textarea" rows="2" placeholder="Örn: Ali, Ayşe, Mehmet, Zeynep, Can, Elif..."></textarea>
+              <div class="tt-name-options-row">
+                <label class="tt-checkbox-label">
+                  <input type="checkbox" id="chkTtRememberNames" checked>
+                  <span>Seçilenleri Hatırla</span>
+                </label>
+                <div class="tt-name-btns-right">
+                  <button class="tt-small-reset-btn" id="btnTtSaveNames" type="button">💾 Listeyi Kaydet</button>
+                  <button class="tt-small-reset-btn" id="btnTtResetNames" type="button">🔄 Sıfırla (<span id="ttPickedNamesCount">0</span>)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ortak Büyük Kura Sahnesi -->
+          <div class="tt-lucky-stage-card" id="ttLuckyStageCard">
+            <div class="tt-lucky-badge" id="ttLuckyBadge">🎯 Kura Sahnesi Hazır</div>
+            <div class="tt-lucky-result" id="ttLuckyResult">?</div>
+            <div class="tt-lucky-history" id="ttLuckyHistory">Henüz seçim yapılmadı</div>
+          </div>
+
+          <div class="tt-picker-actions">
+            <button class="tt-ctrl-btn tt-btn-pick-draw" id="btnTtDrawStudent" type="button">
+              <span aria-hidden="true">🎲</span>
+              <span id="btnTtDrawStudentText">Şanslı Numarayı Seç!</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SEKME 3: 🤫 SESSİZLİK OYUNU / SINIF ENERJİ & YILDIZ SAYACI -->
+        <div class="tt-tab-panel hide" id="ttPanelQuiet" role="tabpanel">
+          <div class="tt-quiet-top-grid">
+            <!-- Sol: Moli Durum & Sessizlik Yıldızı Sayacı -->
+            <div class="tt-quiet-stars-card">
+              <div class="tt-quiet-mascot-row">
+                <img src="assets/mascot/moli.webp" class="tt-quiet-moli-img" id="ttQuietMoliImg" alt="Moli" width="60" height="60" loading="lazy">
+                <div class="tt-quiet-status-info">
+                  <div class="tt-quiet-status-title" id="ttQuietStatusTitle">🤫 Sessizlik Yıldızı Sayacı</div>
+                  <div class="tt-quiet-status-sub" id="ttQuietStatusSub">Sınıfça sessiz kalarak yıldızları toplayalım!</div>
+                </div>
+              </div>
+
+              <div class="tt-stars-showcase" id="ttStarsShowcase">
+                <div class="tt-stars-icons" id="ttStarsIconsRow">⭐⭐⭐⭐⭐</div>
+                <div class="tt-stars-counter-badge">
+                  Toplam: <strong id="ttQuietStarsCount">5</strong> ⭐
+                </div>
+              </div>
+
+              <div class="tt-stars-actions">
+                <button class="tt-star-btn btn-star-add" id="btnTtAddStar" type="button">⭐ +1 Sessizlik Yıldızı Ver</button>
+                <button class="tt-star-btn btn-star-remove" id="btnTtRemoveStar" type="button">➖ Yıldız Al</button>
+                <button class="tt-star-btn btn-star-reset" id="btnTtResetStars" type="button">🔄 Sıfırla</button>
+              </div>
+            </div>
+
+            <!-- Sağ: Canlı Mikrofon Gürültü Ölçer -->
+            <div class="tt-noise-meter-card">
+              <div class="tt-noise-header">
+                <span class="tt-noise-title">🎙️ Canlı Sınıf Gürültü Ölçer</span>
+                <span class="tt-noise-level-badge level-green" id="ttNoiseLevelBadge">Hazır</span>
+              </div>
+              <p class="tt-noise-desc" id="ttNoiseDesc">
+                Mikrofon izni vererek sınıfın ses seviyesini canlı renkli bar ile takip edebilirsiniz.
+              </p>
+              <div class="tt-noise-bar-track">
+                <div class="tt-noise-bar-fill" id="ttNoiseBarFill" style="width: 8%;"></div>
+              </div>
+              <div class="tt-noise-legend">
+                <span class="legend-green">🟢 Harika (Sessiz)</span>
+                <span class="legend-yellow">🟡 Normal</span>
+                <span class="legend-red">🔴 Çok Gürültülü!</span>
+              </div>
+              <button class="tt-ctrl-btn tt-btn-mic" id="btnTtToggleMic" type="button">
+                <span id="ttMicBtnIcon">🎙️</span>
+                <span id="ttMicBtnText">Mikrofonla Ölçümü Başlat</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: HIZLI PAYLAŞ (WHATSAPP & INSTAGRAM) -->
   <div class="modal-backdrop hide" id="modalShare">
     <div class="modal-window share-modal-window">
@@ -1771,6 +1963,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=7.7.0" defer></script>
+  <script src="app.js?v=7.8.0" defer></script>
 </body>
 </html>
