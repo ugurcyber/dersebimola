@@ -6837,78 +6837,177 @@
       return this.drawFromPool(this.grade4MathMeasurementPool, "grade4MathMeasurementPool");
     },
 
-    // 4. SINIF: DEYİMLER VE ATASÖZLERİ DÜELLOSU (35 ÖZGÜN SORU)
-    grade4IdiomsProverbsPool: [
-      { q: '"Göze girmek" deyimi ne anlama gelir? 👁️', a: 'Davranışlarıyla sevgi ve güven kazanmak 🌟', d: ['Gözü ağrımak', 'Görünmez olmak'], exp: 'Çalışkanlığı ve dürüstlüğüyle başkalarının takdirini kazanmaktır.' },
-      { q: '"Gözden düşmek" deyimi ne anlama gelir? 💔', a: 'Eski değer ve sevgisini kaybetmek 💔', d: ['Yere yuvarlanmak', 'Uyumak'], exp: 'Kötü bir davranış sonucu birinin gözündeki değerini yitirmektir.' },
-      { q: '"Kulak kabartmak" deyimi ne anlama gelir? 👂', a: 'Belli etmemeye çalışarak gizlice dinlemek 👂', d: ['Kulağı şişmek', 'Bağırarak konuşmak'], exp: 'Yanında konuşulanları çaktırmadan dinlemeye kulak kabartmak denir.' },
-      { q: '"Kulak misafiri olmak" deyimi ne anlatır? 👂', a: 'İstemeden, yanındayken bir konuşmayı duymak 👂', d: ['Misafirliğe gitmek', 'Kulak temizletmek'], exp: 'Kendi konuşması olmadığı halde yanı başında konuşulanları tesadüfen duymaktır.' },
-      { q: '"Diline dolamak" deyimi ne anlama gelir? 👅', a: 'Bir konuyu veya kişiyi durmadan tekrar edip söylemek 🗣️', d: ['Yemek yemek', 'Hiç konuşmamak'], exp: 'Sürekli aynı şeyi konuşup dedikodusunu yapmaktır.' },
-      { q: '"Baltayı taşa vurmak" deyimi ne anlama gelir? 🪓', a: 'Farkında olmadan pot kırmak, karşısındakini incitecek söz söylemek 🙈', d: ['Odun kesmek', 'Taş kırmak'], exp: 'İstemeden uygunsuz ve mahcup edici bir laf etmektir.' },
-      { q: '"Çantada keklik" deyimi neyi ifade eder? 🎒', a: 'Kolayca ve kesin olarak elde edilecek şey 🎯', d: ['Avcılık yapmak', 'Kayıp eşya'], exp: 'Zaten kazanılmış, kesin gözüyle bakılan işler için kullanılır.' },
-      { q: '"Pabucu dama atılmak" deyimi ne anlatır? 👞', a: 'Kendinden üstün birinin gelmesiyle eski ilgiyi kaybetmek 👞', d: ['Yeni ayakkabı almak', 'Çatıya çıkmak'], exp: 'Özellikle yeni kardeş doğunca veya yeni birisi gelince gözden düşmektir.' },
-      { q: '"Etekleri zil çalmak" deyimi ne anlama gelir? 🔔', a: 'Çok büyük bir sevinç ve heyecan duymak 🎉', d: ['Korkudan titremek', 'Müzik yapmak'], exp: 'Aşırı mutlu olmak ve içi içine sığmamaktır.' },
-      { q: '"Ağzı kulaklarına varmak" deyimi neyi belirtir? 😄', a: 'Gülümsemekten yüzü aydınlanacak kadar çok sevinmek 😄', d: ['Şaşkınlıktan donakalmak', 'Yorulmak'], exp: 'Çok mutlu ve neşeli olmayı anlatır.' },
-      { q: '"Saman alevi gibi parlamak" deyimi ne anlama gelir? 🌾🔥', a: 'Birden öfkelenip çok çabuk yatışmak 🌾', d: ['Sürekli sinirli olmak', 'Karanlığı aydınlatmak'], exp: 'Öfkesi çabucak geçip sakinleşen kişiler için söylenir.' },
-      { q: '"Burnundan kıl aldırmamak" deyimi ne anlatır? 👃', a: 'Çok kibirli ve en küçük eleştiriye bile gelememek 😤', d: ['Çok titiz olmak', 'Grip olmak'], exp: 'Kendini çok beğenmiş, dokunulmaz sanan kişiler için kullanılır.' },
-      { q: '"Pireyi deve yapmak" deyimi ne anlama gelir? 🐪', a: 'Küçük bir sorunu aşırı büyüterek abartmak 🐪', d: ['Hayvanları sevmek', 'Çok çalışmak'], exp: 'Önemsiz bir meseleyi devasa bir dert haline getirmektir.' },
-      { q: '"İpe un sermek" deyimi ne demektir? 🧶', a: 'Geçersiz bahaneler uydurarak işi yapmaktan kaçınmak 🏃‍♂️', d: ['Börek yapmak', 'Temizlik yapmak'], exp: 'Olmayacak engeller öne sürüp işi savsaklamaktır.' },
-      { q: '"Can kulağıyla dinlemek" deyimi ne anlatır? 👂', a: 'Bütün dikkatini vererek büyük bir özenle dinlemek 🎯', d: ['Müzik dinlemek', 'Hiç duymamak'], exp: 'Hiçbir kelimeyi kaçırmadan tam odakla dinlemektir.' },
-      { q: '"Ateş püskürmek" deyimi ne anlama gelir? 🔥', a: 'Çok fazla sinirlenmek ve öfke saçmak 😡', d: ['Ateş yakmak', 'Ejderha olmak'], exp: 'Aşırı kızgınlık halinde bağırıp çağırmaktır.' },
-      { q: '"İçi içine sığmamak" deyimi neyi anlatır? 🎈', a: 'Coşku, sevinç ve heyecandan yerinde duramamak 🎈', d: ['Çok kilo almak', 'Dar elbiseler giymek'], exp: 'Sabırsızlıkla büyük bir sevinç yaşamaktır.' },
-      { q: '"Sineğin yağını çıkarmak" deyimi ne demektir? 🦟', a: 'Aşırı derecede cimri ve çıkarcı davranmak 💰', d: ['Temizlik yapmak', 'Sinek avlamak'], exp: 'En ufak şeyden bile haksız kazanç çıkarmaya çalışan cimriler için söylenir.' },
-      { q: '"Damlaya damlaya göl olur" atasözü neyi öğütler? 💧', a: 'Küçük birikimlerin zamanla büyük değerlere dönüşeceğini (Tasarruf) 💧', d: ['Yağmur yağmasını beklemeyi', 'Su israf etmeyi'], exp: 'Küçük paralar ve tasarruflar birikerek büyük servet olur.' },
-      { q: '"Ağaç yaşken eğilir" atasözünün anlamı nedir? 🌳', a: 'İnsanların küçük yaşlarda daha kolay eğitilebileceği 👦', d: ['Yaş ağaçların kırılacağı', 'Bahçeye ağaç dikilmesi gerektiği'], exp: 'Eğitim ve güzel ahlak çocuklukta kazanılır.' },
-      { q: '"Sakla samanı, gelir zamanı" atasözü ne anlatır? 🌾', a: 'Değersiz görünen şeylerin bile bir gün işe yarayacağını 🌾', d: ['Saman alıp satmayı', 'Hayvan beslemeyi'], exp: 'Hiçbir şeyi gereksiz yere israf etmemek gerektiğini öğütler.' },
-      { q: '"Ev alma, komşu al" atasözü neyi vurgular? 🏡', a: 'İyi bir komşunun evden çok daha değerli olduğunu 🤝', d: ['Pahalı ev satın almayı', 'Yalnız yaşamayı'], exp: 'Huzurlu bir yaşam için komşuluk ilişkileri binadan önemlidir.' },
-      { q: '"Bir elin nesi var, iki elin sesi var" atasözü neyi anlatır? 👏', a: 'Birlik, beraberlik ve yardımlaşmanın gücünü 🤝', d: ['Alkış yapmayı', 'El yıkamayı'], exp: 'Birlikte çalışmak tek başına yapmaktan çok daha güçlü sonuçlar verir.' },
-      { q: '"İşleyen demir ışıldar" atasözü ne demektir? ⚙️', a: 'Sürekli çalışan ve gayret eden insanın başarılı ve sağlıklı olacağı 🌟', d: ['Demir eşyaların parlatılması gerektiği', 'Tembellik yapmayı'], exp: 'Çalışmak insanı diri, zinde ve başarılı tutar.' },
-      { q: '"Acele işe şeytan karışır" atasözü neyi öğütler? ⏳', a: 'Sabırsız ve telaşla yapılan işlerin yanlış ve kusurlu olacağını ⏳', d: ['Çok hızlı koşmayı', 'Hemen bitirmeyi'], exp: 'İşleri dikkatli, sakin ve düşünerek yapmak gerekir.' },
-      { q: '"Tatlı dil yılanı deliğinden çıkarır" atasözü neyi anlatır? 🐍', a: 'Güzel, tatlı ve nazik sözün en zor kişileri bile ikna edeceğini 🍯', d: ['Yılanları sevmeyi', 'Ormanda gezmeyi'], exp: 'Nezaket ve güzel söz her kapıyı açar.' },
-      { q: '"Ne doğrarsan aşına, o çıkar kaşığına" atasözü ne demektir? 🍲', a: 'Kişi ne kadar emek verirse o kadar karşılık alır 🍲', d: ['Çorba pişirmeyi', 'Yemek seçmeyi'], exp: 'Bugün yaptığımız iyi veya kötü işlerin karşılığını gelecekte görürüz.' },
-      { q: '"Ayağını yorganına göre uzat" atasözü neyi öğütler? 🛏️', a: 'Giderlerini gelirine göre ayarlamayı ve bütçeni aşmamayı 💰', d: ['Uzun yorgan satın almayı', 'Erken uyumayı'], exp: 'Kazancından fazlasını harcayanlar borç ve sıkıntıya düşer.' },
-      { q: '"Gülme komşuna, gelir başına" atasözü ne anlatır? 👥', a: 'Başkalarının başına gelen kötü duruma sevinmemek gerektiğini 👥', d: ['Komşulara şaka yapmayı', 'Kahkaha atmayı'], exp: 'Kötü talih herkesin başına gelebilir; başkasıyla alay edilmemelidir.' },
-      { q: '"Vakit nakittir" atasözü neyi ifade eder? ⏰', a: 'Zamanın en az para kadar değerli ve geri getirilemez olduğunu ⏰', d: ['Saat satın almayı', 'Hızlı yürümeyi'], exp: 'Zamanı boşa harcamamak gerekir.' },
-      { q: '"Dost kara günde belli olur" atasözü ne demektir? 🤝', a: 'Gerçek dostların zor ve sıkıntılı zamanlarda yanımızda olduğu 🤝', d: ['Hava kararınca dostla gezmeyi', 'Sadece iyi günlerde eğlenmeyi'], exp: 'Zor zamanlarda yanımızdan ayrılmayanlar hakiki dosttur.' },
-      { q: '"Sütten ağzı yanan yoğurdu üfleyerek yer" atasözü ne anlatır? 🥛', a: 'Bir olaydan zarar görenin benzer durumlarda aşırı temkinli davranacağını 🥛', d: ['Sıcak yoğurt yemeyi', 'Soğuk süt içmeyi'], exp: 'Yaşanan tecrübeler insanı daha dikkatli ve tedbirli yapar.' },
-      { q: '"Akıl akıldan üstündür" atasözü neyi vurgular? 🧠', a: 'Önemli işlerde başkalarına danışmanın ve fikir almanın faydasını 🧠', d: ['Kendi aklına güvenmeyi', 'Her şeyi bilmeyi'], exp: 'İstişare etmek ve fikir alışverişinde bulunmak en doğru yoldur.' },
-      { q: '"Meyve veren ağaç taşlanır" atasözü ne demektir? 🍎', a: 'Başarılı ve yetenekli insanların kıskanılıp eleştirilebileceğini 🍎', d: ['Bahçedeki ağaçlara taş atmayı', 'Meyve toplamayı'], exp: 'Başarılı kimseleri kıskananlar onlara kusur bulmaya çalışır.' },
-      { q: '"Öfkeyle kalkan zararla oturur" atasözü neyi öğütler? 😡', a: 'Öfke anında düşünmeden davrananların sonunda pişman olacağını 😡', d: ['Ayağa kalkmayı', 'Kızgın görünmeyi'], exp: 'Öfkeyle verilen kararlar daima kayıp getirir; sakin olmak gerekir.' }
+    // =========================================================================
+    // 4. SINIF TÜRKÇE: MEB / MAARİF MODELİ 6 ÖĞRENME ALANI (96 ÖZGÜN SORU)
+    // =========================================================================
+
+    // 1. ÖĞRENME ALANI: SÖZCÜKTE ANLAM (GERÇEK, MECAZ, TERİM ANLAM VE EŞ/ZIT/SESTEŞ & TÜRKÇE KARŞILIKLAR) (16 ÖZGÜN SORU)
+    grade4TurkishWordMeaningPool: [
+      { q: 'Bir kelimenin söylendiğinde akla gelen ilk ve sözlükteki temel anlamına ne ad verilir? (Örn: "Kardeşimin dişi ağrıyor.") 📖', a: 'Gerçek (Temel) Anlam 📖', d: ['Mecaz Anlam', 'Terim Anlam'], exp: 'Kelimenin herkesçe bilinen ilk ve gerçek anlamıdır.', spokenText: 'Bir kelimenin söylendiğinde akla gelen ilk anlamına ne ad verilir?' },
+      { q: 'Aşağıdaki cümlelerin hangisinde altı çizili kelime "MECAZ ANLAMDA" kullanılmıştır? 🎭', a: 'Arkadaşımın bu soğuk davranışı hepimizi çok üzdü. ❄️💔', d: ['Buzdolabından çıkardığı soğuk suyu içti. 🧊', 'Ağır kolileri üst kata birlikte taşıdık. 📦'], exp: '"Soğuk davranış" sevgisiz ve ilgisiz anlamında mecaz olarak kullanılmıştır.', spokenText: 'Aşağıdaki cümlelerin hangisinde soğuk kelimesi mecaz anlamda kullanılmıştır?' },
+      { q: '"Boş sözlerle vaktimizi harcama!" cümlesindeki "boş" kelimesinin anlam özelliği nedir? 💡', a: 'Mecaz Anlam (İşe yaramayan, anlamsız söz) 💡', d: ['Gerçek Anlam', 'Spor Terimi'], exp: 'İçinde bir şey olmayan anlamından uzaklaşarak "gereksiz, anlamsız" mecaz anlamını kazanmıştır.', spokenText: 'Boş sözlerle vaktimizi harcama cümlesindeki boş kelimesinin anlam özelliği nedir?' },
+      { q: 'Bilim, sanat, spor veya bir meslek dalıyla ilgili özel kavramları karşılayan kelimelere ne ad verilir? 🔬🎨⚽', a: 'Terim Anlamlı Kelimeler 🔬🎨⚽', d: ['Mecaz Anlamlı Kelimeler', 'Zıt Anlamlı Kelimeler'], exp: 'Belirli bir bilim, sanat veya spor dalına özgü sözcüklere terim anlamlı kelimeler denir.', spokenText: 'Bilim, sanat veya spor dalıyla ilgili özel kavramları karşılayan kelimelere ne ad verilir?' },
+      { q: '"Hakem maçın son dakikasında penaltı ve korner kararı verdi." cümlesindeki "penaltı ve korner" hangi alana ait TERİM anlamlı kelimelerdir? ⚽', a: 'Futbol (Spor) Terimi ⚽', d: ['Müzik Terimi 🎵', 'Tiyatro Terimi 🎭'], exp: 'Penaltı, korner, taç, ofsayt ve gol kelimeleri futbol sporu terimleridir.', spokenText: 'Penaltı ve korner hangi alana ait terim anlamlı kelimelerdir?' },
+      { q: '"Şarkıyı çalarken portenin üzerindeki notalara ve sol anahtarına dikkat etmelisin." cümlesindeki terimler hangi sanat dalına aittir? 🎼', a: 'Müzik Terimi (Nota, Porte, Sol Anahtarı) 🎼', d: ['Matematik Terimi 📐', 'Coğrafya Terimi 🗺️'], exp: 'Nota, porte ve sol anahtarı müzik sanatına ait terimlerdir.', spokenText: 'Nota, porte ve sol anahtarı hangi sanat dalına ait terimlerdir?' },
+      { q: '"Bugün derste üçgenin iç açılarını ve basit kesirlerin paydasını öğrendik." cümlesindeki altı çizili sözcükler hangi dersin terimleridir? 📐', a: 'Matematik Terimi (Üçgen, Açı, Kesir, Payda) 📐', d: ['Tiyatro Terimi', 'Tıp Terimi'], exp: 'Üçgen, açı, kesir, pay ve payda matematik dersi terimleridir.', spokenText: 'Üçgen, açı, kesir ve payda hangi dersin terimleridir?' },
+      { q: '"Oyuncular sahnedeki dekorun arkasından çıkıp birinci perdeyi başarıyla oynadılar." cümlesindeki "sahne, dekor, perde" hangi alana ait terimlerdir? 🎭', a: 'Tiyatro Terimi 🎭', d: ['Astronomi Terimi', 'Futbol Terimi'], exp: 'Sahne, perde, dekor, kostüm ve kulis tiyatro terimleridir. (Evdeki perde ise gerçek anlamdır!)', spokenText: 'Sahne, dekor ve perde hangi alana ait terimlerdir?' },
+      { q: '"Uygarlık — Özgün — Kanıt — Olasılık" kelimelerinin EŞ ANLAMLILARI sırasıyla hangi seçenekte doğru verilmiştir? ✨', a: 'Medeniyet — Orijinal — Delil — İhtimal ✨', d: ['Kültür — Taklit — Şüphe — Kesinlik', 'Tarih — Eski — Belge — Yanlış'], exp: 'Uygarlık=Medeniyet, Özgün=Orijinal, Kanıt=Delil, Olasılık=İhtimal eş anlamlı kelimelerdir.', spokenText: 'Uygarlık, özgün, kanıt ve olasılık kelimelerinin eş anlamlıları hangileridir?' },
+      { q: '"Doğal — Üretim — Cömert — Acemi" kelimelerinin ZIT (KARŞIT) ANLAMLILARI sırasıyla hangileridir? 🔄', a: 'Yapay — Tüketim — Cimri — Usta 🔄', d: ['Canlı — Satış — Zengin — Çırak', 'Temiz — Dağıtım — İyi — Yaşlı'], exp: 'Doğal↔Yapay, Üretim↔Tüketim, Cömert↔Cimri, Acemi↔Usta birbirinin zıt anlamlısıdır.', spokenText: 'Doğal, üretim, cömert ve acemi kelimelerinin zıt anlamlıları hangileridir?' },
+      { q: 'Yazılışları ve okunuşları aynı, anlamları birbirinden tamamen farklı olan "Yüz, Kaz, Bağ, Dal, Kır" gibi kelimelere ne ad verilir? 🦢🏊', a: 'Eş Sesli (Sesteş) Kelimeler 🦢🏊', d: ['Eş Anlamlı Kelimeler', 'Zıt Anlamlı Kelimeler'], exp: 'Örneğin "yüz": sayı olan 100, suratımız ve suda yüzmek anlamlarıyla eş sesli (sesteş) bir kelimedir.', spokenText: 'Yazılışları aynı, anlamları tamamen farklı olan kelimelere ne ad verilir?' },
+      { q: 'Aşağıdaki kelimelerden hangisinin EŞ SESLİSİ (SESTEŞİ) YOKTUR? 🔍', a: 'Kitap 📚', d: ['Ocak (Ay adı / Yemek pişirilen yer) 🔥', 'Bin (Sayı olan 1.000 / Ata binmek) 🐎'], exp: 'Ocak ve Bin kelimelerinin birden fazla farklı temel anlamı (sesteşi) vardır; Kitap kelimesinin sesteşi yoktur.', spokenText: 'Aşağıdaki kelimelerden hangisinin eş seslisi yoktur?' },
+      { q: 'Dilimizi korumak için yabancı dillerden giren "Selfie" ve "E-mail" kelimelerinin yerine hangi Türkçe karşılıklarını kullanmalıyız? 📸✉️', a: 'Selfie ➡️ Özçekim — E-mail ➡️ E-posta (Elektronik Posta) 📸✉️', d: ['Selfie ➡️ Ayna — E-mail ➡️ Mektup', 'Selfie ➡️ Tablo — E-mail ➡️ Telgraf'], exp: 'Türk Dil Kurumu selfie için "özçekim", e-mail için "e-posta" karşılıklarını belirlemiştir.', spokenText: 'Selfie ve e-mail kelimelerinin yerine hangi Türkçe karşılıkları kullanmalıyız?' },
+      { q: 'Yabancı kökenli "Printer" ve "Link" sözcüklerinin güzel Türkçemizdeki karşılıkları hangi seçenekte doğru verilmiştir? 🖨️🔗', a: 'Printer ➡️ Yazıcı — Link ➡️ Bağlantı (İlişim) 🖨️🔗', d: ['Printer ➡️ Tarayıcı — Link ➡️ Ekran', 'Printer ➡️ Klavye — Link ➡️ Fare'], exp: 'Printer yerine "yazıcı", link yerine "bağlantı" kelimelerini kullanmalıyız.', spokenText: 'Printer ve link sözcüklerinin Türkçe karşılıkları nelerdir?' },
+      { q: 'Günlük konuşmada sıkça yapılan yanlışlardan olan yabancı "Star", "Ekstra" ve "Online" kelimelerinin Türkçe karşılıkları nelerdir? ⭐🌐', a: 'Star ➡️ Yıldız — Ekstra ➡️ Fazladan — Online ➡️ Çevrim İçi ⭐🌐', d: ['Star ➡️ Güneş — Ekstra ➡️ Eksik — Online ➡️ Kapalı', 'Star ➡️ Ay — Ekstra ➡️ Normal — Online ➡️ Uzak'], exp: 'Dilimizin zenginliğini korumak için yabancı sözcüklerin Türkçe karşılıklarını tercih etmeliyiz.', spokenText: 'Star, ekstra ve online kelimelerinin Türkçe karşılıkları nelerdir?' },
+      { q: '"Dedem bahçedeki kuru dalları topladı." ve "Çocuk havuza hızla daldı." cümlelerindeki "dal" sözcükleri arasındaki anlam ilişkisi nedir? 🌳🏊', a: 'Eş Sesli (Sesteş) Sözcükler 🌳🏊', d: ['Zıt Anlamlı Sözcükler', 'Terim Anlamlı Sözcükler'], exp: 'Birincisi ağacın kolu olan "dal", ikincisi suya batmak olan "dal-" eylemidir; yazılışları aynı anlamları farklı sesteş sözcüklerdir.', spokenText: 'Kuru dalları topladı ve havuza daldı cümlelerindeki dal sözcükleri arasındaki ilişki nedir?' }
     ],
 
-    // 4. SINIF: SEBEP-SONUÇ, AMAÇ-SONUÇ VE ÖZNEL/NESNEL YARGILAR (30 ÖZGÜN SORU)
-    grade4SentencesLogicPool: [
-      { q: '"Kar yağdığı için köy yolları ulaşıma kapandı." cümlesinde hangi anlam ilişkisi vardır? ❄️', a: 'Sebep - Sonuç (Neden - Sonuç) ❄️', d: ['Amaç - Sonuç', 'Koşul - Sonuç'], exp: 'Köy yollarının kapanmasının gerçekleşmiş gerçek sebebi kar yağmasıdır.' },
-      { q: '"Sınavdan yüksek not almak için gece gündüz ders çalıştı." cümlesinde hangi anlam ilişkisi vardır? 🎯', a: 'Amaç - Sonuç 🎯', d: ['Sebep - Sonuç', 'Benzetme'], exp: 'Ders çalışmasının hedefi/gayesi yüksek not almaktır (Amaç-Sonuç).' },
-      { q: '"Hızlı koştuğundan nefes nefese kaldı." cümlesi hangi tür bir cümledir? 🏃‍♂️', a: 'Sebep - Sonuç 🏃‍♂️', d: ['Koşul - Sonuç', 'Öznel Cümle'], exp: 'Nefes nefese kalmanın gerçekleşen nedeni hızlı koşmaktır.' },
-      { q: '"Kilo vermek amacıyla her sabah düzenli yürüyüş yapıyor." cümlesi hangisidir? 🚶‍♂️', a: 'Amaç - Sonuç 🚶‍♂️', d: ['Sebep - Sonuç', 'Nesnel Cümle'], exp: '"Amacıyla" ifadesi açıkça amaç-sonuç ilişkisini gösterir.' },
-      { q: '"Ödevlerini zamanında bitirirsen hafta sonu parka gidebilirsin." cümlesinde hangi anlam vardır? 🎡', a: 'Koşul - Sonuç (Şart) 🎡', d: ['Amaç - Sonuç', 'Sebep - Sonuç'], exp: 'Parka gitmenin şartı/koşulu ödevleri bitirmektir (-se / -sa).' },
-      { q: '"Türkiye\'nin başkenti Ankara\'dır." cümlesi ne tür bir yargı bildirir? 🏛️', a: 'Nesnel Yargı (Kanıtlanabilir) 🏛️', d: ['Öznel Yargı (Kişisel)', 'Amaç Bildiren'], exp: 'Herkes için geçerli, kişiden kişiye değişmeyen bilimsel/resmi gerçekler nesneldir.' },
-      { q: '"En güzel ve dinlendirici renk mavidir." cümlesi ne tür bir yargıdır? 🔵', a: 'Öznel Yargı (Kişisel beğeni) 🔵', d: ['Nesnel Yargı', 'Koşul Bildiren'], exp: 'Güzellik kişiden kişiye değişir, kanıtlanamaz; bu yüzden özneldir.' },
-      { q: '"Türkiye\'nin en yüksek dağı Ağrı Dağı\'dır." cümlesi hangi tür yargıdır? 🏔️', a: 'Nesnel Yargı 🏔️', d: ['Öznel Yargı', 'Sebep-Sonuç'], exp: 'Ölçülebilir coğrafi bir gerçektir, nesneldir.' },
-      { q: '"Bu film hayatımda izlediğim en harika filmdi." cümlesi nedir? 🎬', a: 'Öznel Yargı 🎬', d: ['Nesnel Yargı', 'Amaç Cümlesi'], exp: 'Filmin harika olması tamamen izleyicinin kendi kişisel yorumudur.' },
-      { q: '"Şemsiyesini evde unuttuğu için yağmurda ıslandı." cümlesi hangisidir? 🌧️', a: 'Sebep - Sonuç 🌧️', d: ['Amaç - Sonuç', 'Öznel Cümle'], exp: 'Islanmasının gerçek sebebi şemsiyesini unutmasıdır.' },
-      { q: '"Yeni bir bisiklet almak üzere para biriktiriyor." cümlesinde hangi anlam vardır? 🚲', a: 'Amaç - Sonuç 🚲', d: ['Sebep - Sonuç', 'Koşul - Sonuç'], exp: 'Para biriktirmesinin gayesi yeni bisiklet almaktır.' },
-      { q: '"Hava soğuk olduğu için kalın montunu giydi." cümlesinde sebep nedir? 🧥', a: 'Havanın soğuk olması 🧥', d: ['Montunu giymesi', 'Dışarı çıkması'], exp: 'Mont giyme eyleminin gerekçesi havanın soğuk olmasıdır.' },
-      { q: '"Kitap okursan hayal gücün zenginleşir." cümlesi hangi türdür? 📖', a: 'Koşul - Sonuç 📖', d: ['Amaç - Sonuç', 'Öznel Yargı'], exp: 'Hayal gücünün zenginleşmesi kitap okuma şartına bağlanmıştır.' },
-      { q: '"Pamuk gibi yumuşacık elleri vardı." cümlesinde hangi sanat/anlatım vardır? ☁️', a: 'Benzetme ☁️', d: ['Karşılaştırma', 'Sebep-Sonuç'], exp: 'Eller yumuşaklık yönünden pamuğa benzetilmiştir.' },
-      { q: '"Ali, sınıfın en uzun boylu öğrencisidir." cümlesinde hangi anlatım vardır? 📏', a: 'Karşılaştırma 📏', d: ['Benzetme', 'Koşul'], exp: 'Ali ile sınıftaki diğer öğrencilerin boyları kıyaslanmıştır.' },
-      { q: '"Güneş batınca ortalık zifiri karanlığa büründü." cümlesi ne bildirir? 🌑', a: 'Nesnel Yargı 🌑', d: ['Öznel Yargı', 'Amaç'], exp: 'Güneş battığında havanın kararması doğa kanunudur, nesneldir.' },
-      { q: '"Çilekli dondurma vanilyalı dondurmadan çok daha lezzetlidir." cümlesi nedir? 🍨', a: 'Öznel Yargı 🍨', d: ['Nesnel Yargı', 'Koşul'], exp: 'Lezzet algısı kişiseldir, kanıtlanamaz.' },
-      { q: '"Trafik kurallarına uyarsak kazalar önlenir." cümlesi hangisidir? 🚦', a: 'Koşul - Sonuç 🚦', d: ['Amaç - Sonuç', 'Öznel'], exp: 'Kazaların önlenmesi kurallara uyma şartına bağlıdır.' },
-      { q: '"Yabancı dil öğrenmek maksadıyla kursa kaydoldu." cümlesi nedir? 🌍', a: 'Amaç - Sonuç 🌍', d: ['Sebep - Sonuç', 'Koşul'], exp: '"Maksadıyla" kelimesi amaca işaret eder.' },
-      { q: '"Elektrikler kesilince asansörde mahsur kaldılar." cümlesi nedir? ⚡', a: 'Sebep - Sonuç ⚡', d: ['Amaç - Sonuç', 'Öznel Yargı'], exp: 'Asansörde kalmanın gerçekleşmiş nedeni elektriğin kesilmesidir.' },
-      { q: '"Su 100 derecede kaynar." cümlesi hangi tür yargıdır? 💧', a: 'Nesnel Yargı 💧', d: ['Öznel Yargı', 'Amaç'], exp: 'Deneyle ispatlanabilir bilimsel gerçek nesneldir.' },
-      { q: '"Sonbahar mevsimi insana hüzün verir." cümlesi ne tür bir yargıdır? 🍂', a: 'Öznel Yargı 🍂', d: ['Nesnel Yargı', 'Koşul'], exp: 'Sonbaharın hüzünlü gelmesi kişiden kişiye değişen duygudur.' },
-      { q: '"Geç kaldığı için öğretmeninden özür diledi." cümlesi hangisidir? ⏰', a: 'Sebep - Sonuç ⏰', d: ['Amaç - Sonuç', 'Öznel'], exp: 'Özür dilemesinin sebebi derse geç kalmasıdır.' },
-      { q: '"Temiz bir çevre istiyorsan çöpleri kutuya atmalısın." cümlesi nedir? ♻️', a: 'Koşul - Sonuç ♻️', d: ['Amaç - Sonuç', 'Nesnel'], exp: 'Temiz çevreye kavuşmanın şartı çöpleri kutuya atmaktır.' },
-      { q: '"Bir haftada yedi gün vardır." cümlesi ne tür bir yargıdır? 📅', a: 'Nesnel Yargı 📅', d: ['Öznel Yargı', 'Koşul'], exp: 'Takvim kuralı kesin ve nesneldir.' },
-      { q: '"Tavşan gibi hızlı koşan bir çocuktu." cümlesinde ne vardır? 🐰', a: 'Benzetme 🐰', d: ['Koşul', 'Amaç'], exp: 'Çocuğun hızı tavşana benzetilmiştir.' },
-      { q: '"Bu yazarın dili diğer yazarlara göre daha akıcıdır." cümlesinde ne vardır? ✍️', a: 'Karşılaştırma ve Öznel Yargı ✍️', d: ['Nesnel Yargı', 'Sebep-Sonuç'], exp: 'Yazarlar arasında akıcılık yönünden kişisel bir kıyaslama yapılmıştır.' },
-      { q: '"Kütüphaneden kitap almak üzere evden çıktı." cümlesi nedir? 📚', a: 'Amaç - Sonuç 📚', d: ['Sebep - Sonuç', 'Nesnel'], exp: 'Evden çıkma gayesi kütüphaneden kitap almaktır.' },
-      { q: '"Buzdolabının kapağı açık kaldığı için yiyecekler bozuldu." cümlesi nedir? 🧊', a: 'Sebep - Sonuç 🧊', d: ['Amaç - Sonuç', 'Öznel'], exp: 'Yiyeceklerin bozulmasının somut nedeni kapağın açık kalmasıdır.' },
-      { q: '"En heyecan verici spor futboldur." cümlesi nedir? ⚽', a: 'Öznel Yargı ⚽', d: ['Nesnel Yargı', 'Sebep-Sonuç'], exp: 'Futbolun en heyecanlı olması kişisel bir zevktir.' }
+    // 2. ÖĞRENME ALANI: DEYİMLER, ATASÖZLERİ VE ÖZDEYİŞLER (16 ÖZGÜN SORU)
+    grade4TurkishIdiomsProverbsPool: [
+      { q: 'Gösteriş yaparak veya aldatıcı bir düzenle bir şeyi olduğundan iyi gösterip kandırmaya çalışmak hangi deyimle ifade edilir? 🎨👀', a: 'Göz boyamak 👀', d: ['Göze girmek 🌟', 'Göz kulak olmak 🛡️'], exp: '"Göz boyamak" kusurları gizleyip sahte bir görünüşle başkalarını yanıltmak demektir.', spokenText: 'Aldatıcı bir düzenle bir şeyi olduğundan iyi gösterip kandırmaya çalışmak hangi deyimle ifade edilir?' },
+      { q: 'Kendisine sunulan bir şeyi beğenmeyerek küçümsemek ve önemsememek anlamına gelen deyim hangisidir? 👃', a: 'Burun kıvırmak 👃', d: ['Burnunun dikine gitmek', 'Burnunda tütmek'], exp: '"Burun kıvırmak" beğenmeyip küçümsemek; "burnunda tütmek" ise çok özlemek demektir.', spokenText: 'Sunulan bir şeyi beğenmeyerek küçümsemek anlamına gelen deyim hangisidir?' },
+      { q: 'Yaşanan olumsuz bir olaydan büyük bir ders alarak onu hiç unutmamak ve bir daha aynı hatayı yapmamak hangi deyimle anlatılır? 👂💎', a: 'Kulağına küpe olmak 👂💎', d: ['Kulak kabartmak', 'Kulak misafiri olmak'], exp: 'Başımıza gelen bir olaydan kalıcı ders çıkarmaya "kulağına küpe olmak" denir.', spokenText: 'Yaşanan bir olaydan ders alarak onu hiç unutmamak hangi deyimle anlatılır?' },
+      { q: 'Farkında olmadan karşısındaki kişiyi üzecek veya utandıracak yanlış bir söz söylemek (pot kırmak) hangi deyimle ifade edilir? 🌲🪓', a: 'Çam devirmek (veya Baltayı taşa vurmak) 🌲🪓', d: ['Ağzı kulaklarına varmak 😄', 'Etekleri zil çalmak 🔔'], exp: '"Çam devirmek" ve "baltayı taşa vurmak" istemeden yersiz ve kırıcı bir söz söylemek (gaf yapmak) demektir.', spokenText: 'Farkında olmadan karşısındakini üzecek yanlış bir söz söylemek hangi deyimle ifade edilir?' },
+      { q: 'Bir işi yapmamak için akla uymayan, geçersiz bahaneler ve engeller öne sürmek anlamına gelen deyim hangisidir? 🧶', a: 'İpe un sermek 🧶', d: ['Ununu elemiş, eleğini asmış', 'Tereyağından kıl çekmek'], exp: 'İpe un serilemeyeceği gibi, işi savsaklamak için imkansız bahaneler uydurmaya "ipe un sermek" denir.', spokenText: 'Bir işi yapmamak için geçersiz bahaneler öne sürmek anlamına gelen deyim hangisidir?' },
+      { q: 'Çok büyük bir sevinç, mutluluk ve neşe duymak anlamında kullanılan deyim ikilisi aşağıdakilerden hangisidir? 😄🔔', a: 'Ağzı kulaklarına varmak — Etekleri zil çalmak 😄🔔', d: ['Etekleri tutuşmak — Ağzını bıçak açmamak', 'Küplere binmek — Ateş püskürmek'], exp: '"Ağzı kulaklarına varmak" ve "etekleri zil çalmak" aşırı sevinç; "etekleri tutuşmak" ise telaşlanmak demektir.', spokenText: 'Çok büyük bir sevinç ve mutluluk duymak anlamında kullanılan deyim ikilisi hangisidir?' },
+      { q: 'İnsanların en kolay ve kalıcı şekilde çocukluk yaşlarında eğitilebileceğini anlatan atasözümüz hangisidir? 🌱🌳', a: 'Ağaç yaş iken eğilir. 🌱', d: ['Meyve veren ağaç taşlanır.', 'Ağaç yaprağıyla gürler.'], exp: 'Kuru dal eğilirse kırılır; insanlara da doğru alışkanlıklar küçük yaşta kazandırılır.', spokenText: 'İnsanların en kolay çocukluk yaşlarında eğitilebileceğini anlatan atasözümüz hangisidir?' },
+      { q: 'Dayanışma, yardımlaşma ve birlik içinde çalışmanın tek başına çalışmaktan çok daha güçlü olduğunu vurgulayan atasözü hangisidir? 👏🤝', a: 'Bir elin nesi var, iki elin sesi var. 👏', d: ['El elden üstündür.', 'İki karpuz bir koltuğa sığmaz.'], exp: 'İnsanlar güçlerini birleştirirse en zor işleri bile kolayca başarırlar.', spokenText: 'Dayanışma ve birlik içinde çalışmanın gücünü vurgulayan atasözü hangisidir?' },
+      { q: 'Harcamalarını mutlaka gelirine (bütçene) göre ayarla, kazancından fazla harcama yapma öğüdü veren atasözümüz hangisidir? 🛏️💰', a: 'Ayağını yorganına göre uzat. 🛏️', d: ['Damlaya damlaya göl olur.', 'Sakla samanı, gelir zamanı.'], exp: 'Gelirinden fazla harcama yapan kişi borca ve sıkıntıya düşer.', spokenText: 'Harcamalarını gelirine göre ayarla öğüdü veren atasözümüz hangisidir?' },
+      { q: 'İnsanların toplumsal hayatta en küçük bir şeyde bile komşularının yardımına ihtiyaç duyabileceğini anlatan atasözümüz hangisidir? 🏡🤝', a: 'Komşu komşunun külüne muhtaçtır. 🏡', d: ['Gülme komşuna, gelir başına.', 'Uzak yerin salığını kervan getirir.'], exp: 'Komşuluk ilişkilerinde en ufak bir yardımlaşma bile çok değerlidir.', spokenText: 'İnsanların en küçük bir şeyde bile komşusuna ihtiyaç duyabileceğini anlatan atasözümüz hangisidir?' },
+      { q: 'Kim tarafından söylendiği belli olan (Atatürk, Mevlana, Yunus Emre gibi), derin ve özlü anlamlar taşıyan bilgece sözlere ne ad verilir? 📜✨', a: 'Özdeyiş (Vecize) 📜✨', d: ['Atasözü (Söyleyeni belli değildir)', 'Tekerleme'], exp: 'Atasözlerinin söyleyeni belli değildir (anonimdir); Özdeyişlerin (vecizelerin) ise söyleyeni bellidir!', spokenText: 'Kim tarafından söylendiği belli olan özlü sözlere ne ad verilir?' },
+      { q: 'Gazi Mustafa Kemal Atatürk\'ün "Hayatta en hakiki mürşit (yol gösterici) ilimdir, fendir." özdeyişi neyin önemini vurgular? 🔬📚', a: 'Bilimin ve aklın insan yaşamındaki en gerçek yol gösterici olduğunu 🔬', d: ['Sadece spor yapmanın yeterli olduğunu', 'Eski alışkanlıkların hiç değişmemesi gerektiğini'], exp: 'Atatürk bu özdeyişiyle milletimize daima bilimi ve fen bilgisini rehber edinmeyi öğütlemiştir.', spokenText: 'Atatürkün Hayatta en hakiki mürşit ilimdir fendir özdeyişi neyin önemini vurgular?' },
+      { q: 'Atatürk\'ün "Sanatsız kalan bir milletin hayat damarlarından biri kopmuş demektir." özdeyişinde toplum için neyin hayati önemi anlatılır? 🎨🎼', a: 'Sanatın ve sanatçının toplumların yaşamasındaki vazgeçilmez önemi 🎨', d: ['Tıp biliminin önemi', 'Ticaretle uğraşmanın önemi'], exp: 'Bir toplumun gelişmesi ve ayakta kalması için güzel sanatlar hayati bir damar gibidir.', spokenText: 'Atatürkün Sanatsız kalan bir milletin hayat damarlarından biri kopmuş demektir özdeyişinde neyin önemi anlatılır?' },
+      { q: 'Atatürk\'ün "Öğretmenler! Yeni nesil sizin eseriniz olacaktır." özdeyişi kimlerin gelecek kuşakları yetiştirmedeki büyük sorumluluğunu anlatır? 👩‍🏫👨‍🏫', a: 'Öğretmenlerin ve eğitimin 👩‍🏫', d: ['Mühendislerin', 'Denizcilerin'], exp: 'Geleceği kuracak olan çocukları ve gençleri bilgi ve erdemle donatanlar öğretmenlerdir.', spokenText: 'Yeni nesil sizin eseriniz olacaktır özdeyişi kimlerin sorumluluğunu anlatır?' },
+      { q: 'Mevlana\'nın tüm insanlığa hoşgörü ve dürüstlük öğütleyen dünyaca ünlü özdeyişi aşağıdakilerden hangisidir? 🕊️', a: '"Ya olduğun gibi görün, ya göründüğün gibi ol." 🕊️', d: ['"Damlaya damlaya göl olur."', '"Ağaç yaş iken eğilir."'], exp: 'Mevlana Celaleddin-i Rumi bu özdeyişiyle insanlara ikiyüzlülükten uzak, dürüst ve samimi olmayı öğütlemiştir.', spokenText: 'Mevlananın dürüstlük öğütleyen ünlü özdeyişi hangisidir?' },
+      { q: 'Deyimler, Atasözleri ve Özdeyişler arasındaki farkla ilgili aşağıdaki bilgilerden hangisi DOĞRUDUR? 🧠', a: 'Atasözü ve özdeyişler ders/öğüt veren tam cümledir; özdeyişin söyleyeni bellidir, atasözünün ise belli değildir ✅', d: ['Deyimlerin söyleyeni bellidir ve kanun hükmündedir ❌', 'Atasözlerini tek bir yazar dün yazmıştır ❌'], exp: 'Deyimler durumu çekici anlatan söz gruplarıdır; atasözleri anonim öğüt cümleleridir; özdeyişler ise sahibi bilinen özlü sözlerdir.', spokenText: 'Deyimler, atasözleri ve özdeyişler arasındaki farkla ilgili hangisi doğrudur?' }
     ],
+
+    // 3. ÖĞRENME ALANI: CÜMLEDE ANLAM (ÖZNEL-NESNEL, NEDEN-SONUÇ, AMAÇ-SONUÇ, KARŞILAŞTIRMA, DUYGULAR) (16 ÖZGÜN SORU)
+    grade4TurkishSentenceMeaningPool: [
+      { q: 'Söyleyenin kendi kişisel duygusunu, beğenisini veya yorumunu içeren ve doğruluğu kanıtlanamayan cümlelere ne ad verilir? 💭', a: 'Öznel Yargılı Cümle 💭', d: ['Nesnel Yargılı Cümle 📏', 'Tanım Cümlesi'], exp: 'İçinde "en güzel, harika, sıkıcı, lezzetli" gibi kişisel yorum barındıran cümleler özneldir.', spokenText: 'Söyleyenin kişisel beğenisini içeren ve kanıtlanamayan cümlelere ne ad verilir?' },
+      { q: 'Aşağıdaki cümlelerden hangisi herkes tarafından kabul edilen, kanıtlanabilir bir "NESNEL YARGI" cümlesidir? 📏🏛️', a: 'İstiklal Marşı\'mız 10 kıtadan oluşur ve şairi Mehmet Akif Ersoy\'dur. 📜', d: ['Dünyanın en sevimli hayvanı yavru kedilerdir. 🐱', 'Mavi gömlek sana diğer renklerden çok daha fazla yakışıyor. 👕'], exp: 'İstiklal Marşı\'nın kıta sayısı ve şairi herkes için aynı olan, kanıtlanabilir nesnel bir bilgidir.', spokenText: 'Aşağıdaki cümlelerden hangisi kanıtlanabilir bir nesnel yargı cümlesidir?' },
+      { q: 'Aşağıdaki cümlelerden hangisi kişisel görüş bildiren bir "ÖZNEL YARGI" cümlesidir? 🎨', a: 'Karadeniz\'in eşsiz yaylaları insanın ruhuna huzur veriyor. 🌲', d: ['Bir yılda on iki ay ve dört mevsim vardır. 📅', 'Zeytin ağacı Akdeniz ikliminde yaygın olarak yetişir. 🫒'], exp: '"Eşsiz" ve "ruhuna huzur veriyor" ifadeleri kişiden kişiye değişen öznel beğenilerdir.', spokenText: 'Aşağıdaki cümlelerden hangisi kişisel görüş bildiren bir öznel yargı cümlesidir?' },
+      { q: '"Gece yoğun kar yağdığı için sabah okullar tatil edildi." cümlesinde hangi anlam ilişkisi vardır? ❄️🏫', a: 'Neden - Sonuç (Sebep - Sonuç) ❄️', d: ['Amaç - Sonuç 🎯', 'Benzetme ☁️'], exp: 'Kar yağması da okulların tatil edilmesi de gerçekleşmiştir; tatil edilmesinin nedeni kar yağmasıdır.', spokenText: 'Yoğun kar yağdığı için okullar tatil edildi cümlesinde hangi anlam ilişkisi vardır?' },
+      { q: '"Dedemi ziyaret etmek için hafta sonu köye gittik." cümlesinde hangi anlam ilişkisi vardır? 🎯🏡', a: 'Amaç - Sonuç ("Hangi amaçla köye gittik? ➡️ Dedemi ziyaret etmek amacıyla") 🎯', d: ['Neden - Sonuç', 'Koşul - Sonuç'], exp: '"-mak için" yerine "amacıyla" koyduğumuzda anlam bozulmuyorsa cümle Amaç-Sonuç cümlesidir.', spokenText: 'Dedemi ziyaret etmek için köye gittik cümlesinde hangi anlam ilişkisi vardır?' },
+      { q: 'Aşağıdaki cümlelerin hangisinde "AMAÇ - SONUÇ" ilişkisi vardır? 🎯', a: 'Yarışmada birinci olmak üzere her gün düzenli antrenman yapıyor. 🏅', d: ['Antrenmanda ayağı burkulduğu için maça çıkamadı. 🩹', 'Yağmur dinince gökyüzünde rengarenk gökkuşağı çıktı. 🌈'], exp: 'Antrenman yapmasının hedefi/amacı yarışmada birinci olmaktır.', spokenText: 'Aşağıdaki cümlelerin hangisinde amaç sonuç ilişkisi vardır?' },
+      { q: '"Dişlerini düzenli fırçalarsan dişlerin çürümez." cümlesinde hangi anlam ilişkisi bulunmaktadır? 🪥🦷', a: 'Koşul - Sonuç (Şart Cümlesi: -sa/-se) 🪥', d: ['Benzetme Cümlesi', 'Örneklendirme Cümlesi'], exp: 'Dişlerin çürümemesi, düzenli fırçalanması şartına (koşuluna) bağlanmıştır.', spokenText: 'Dişlerini düzenli fırçalarsan dişlerin çürümez cümlesinde hangi anlam ilişkisi vardır?' },
+      { q: '"Hızlı tren, otobüse göre çok daha kısa sürede Ankara\'ya ulaşıyor." cümlesinde hangi anlatım özelliği vardır? 🚄🚌', a: 'Karşılaştırma (Hızlı tren ile otobüs süre bakımından kıyaslanmıştır) ⚖️', d: ['Koşul - Sonuç', 'Pişmanlık'], exp: '"Göre, daha, en, ise, kadar" gibi sözcüklerle iki varlığın kıyaslanmasına karşılaştırma denir.', spokenText: 'Hızlı tren otobüse göre daha kısa sürede ulaşıyor cümlesinde hangi anlatım özelliği vardır?' },
+      { q: '"Aslan gibi güçlü kollarıyla çuvalı tek başına kaldırdı." cümlesinde kollar güçlü olan hangi varlığa benzetilmiştir? 🦁💪', a: 'Aslana (Benzetme Cümlesi) 🦁', d: ['Çuvala', 'Karıncaya'], exp: 'Aralarında ilgi bulunan iki varlıktan zayıf olanın güçlü olana "gibi" edatıyla benzetilmesidir.', spokenText: 'Aslan gibi güçlü kollarıyla çuvalı kaldırdı cümlesinde kollar neye benzetilmiştir?' },
+      { q: '"Yaz mevsiminde karpuz, şeftali, kiraz ve üzüm gibi sulu meyveler bolca yetişir." cümlesinde düşünceyi geliştirmek için ne yapılmıştır? 🍉🍒', a: 'Örneklendirme (Yaz meyvelerine somut örnekler verilmiştir) 🍉', d: ['Abartma', 'Koşul bildirme'], exp: 'Anlatılan düşünceyi somutlaştırmak için karpuz, şeftali ve kiraz örnek olarak sıralanmıştır.', spokenText: 'Yaz mevsiminde karpuz, şeftali ve kiraz gibi meyveler yetişir cümlesinde ne yapılmıştır?' },
+      { q: '"Keşke dün akşam tabletle oynayacağıma sınavıma biraz daha çalışsaydım!" diyen bir öğrencinin cümlesinde hangi duygu hakimdir? 😔', a: 'Pişmanlık (Kendi yaptığı hatadan dolayı üzülme) 😔', d: ['Şaşırma 😮', 'Beğenme 👏'], exp: 'Kişinin kendi yaptığı veya yapmadığı bir davranışın sonucundan duyduğu üzüntüye pişmanlık denir.', spokenText: 'Keşke dün akşam sınavıma biraz daha çalışsaydım cümlesinde hangi duygu hakimdir?' },
+      { q: '"İnanmıyorum, bu kadar kısa sürede bütün yapbozu tek başına mı tamamladın!" cümlesinde hangi duygu vardır? 😮🧩', a: 'Şaşırma (Hayret etme) 😮', d: ['Özlem', 'Karamsarlık'], exp: 'Beklenmedik bir durum karşısında duyulan hayret ve şaşkınlık anlatılmıştır.', spokenText: 'Bu kadar kısa sürede bütün yapbozu tek başına mı tamamladın cümlesinde hangi duygu vardır?' },
+      { q: '"Bu şehre kadar gelmişsin de kırk yıllık dostuna bir merhaba bile demeden gitmişsin..." cümlesinde yakın bir dosta duyulan kırgınlığı anlatan duygu nedir? 💬', a: 'Sitem (Bir kimseye yaptığı davranıştan dolayı öfkelenmeden kırgınlık belirtme) 💬', d: ['Sevinç', 'Korku'], exp: 'Sevilen bir kişinin davranışından duyulan üzüntü ve kırgınlığı kendisine nazikçe söylemeye sitem denir.', spokenText: 'Bu şehre kadar gelmişsin de dostuna merhaba bile dememişsin cümlesinde hangi duygu vardır?' },
+      { q: '"Ah, şimdi köyümün o buz gibi akan pınarları ve mis kokulu çam ormanları burnumda tütüyor!" cümlesinde hangi duygu anlatılmaktadır? 🏡💚', a: 'Özlem (Hasret) 💚', d: ['Endişe (Kaygı)', 'Öfke'], exp: 'Uzak kalınan bir yeri veya sevilen bir kişiyi tekrar görme isteğine özlem (hasret) denir.', spokenText: 'Köyümün pınarları ve ormanları burnumda tütüyor cümlesinde hangi duygu anlatılmaktadır?' },
+      { q: '"Saat sekiz oldu, hava da iyice karardı; acaba kardeşim neden hala eve gelmedi?" cümlesinde hangi duygu vardır? 😟⏰', a: 'Endişe (Merak ve Kaygı) 😟', d: ['Beğenme', 'Alay etme'], exp: 'Olumsuz bir durum olabileceği düşüncesiyle duyulan huzursuzluğa endişe (kaygı) denir.', spokenText: 'Hava karardı acaba kardeşim neden hala eve gelmedi cümlesinde hangi duygu vardır?' },
+      { q: '"Gökyüzündeki kara bulutlar bir anda dağıldı, güneş gülümseyerek çiçeklere göz kırptı." cümlesinde hangi kurgusal sanat vardır? ☀️🌸', a: 'Kişileştirme / Hayal Ürünü (Güneş\'e insana ait gülümseme ve göz kırpma özelliği verilmesi) ☀️', d: ['Tamamen gerçek ve bilimsel anlatım', 'Karşılaştırma'], exp: 'İnsan dışındaki varlıklara insana özgü özellikler verilmesine kişileştirme (hayal ürünü ifade) denir.', spokenText: 'Güneş gülümseyerek çiçeklere göz kırptı cümlesinde hangi sanat vardır?' }
+    ],
+
+    // 4. ÖĞRENME ALANI: PARAGRAFTA ANLAM, METİN TÜRLERİ VE GÖRSEL/GRAFİK OKUMA (16 ÖZGÜN SORU)
+    grade4TurkishParagraphTextTypesPool: [
+      { q: 'Bir paragrafta yazarın okuyucuya vermek istediği ASIL MESAJ ve ders niteliğindeki temel yargıya ne ad verilir? 💡📖', a: 'Paragrafın Ana Fikri (Ana Düşüncesi) 💡', d: ['Paragrafın Konusu', 'Paragrafın Başlığı'], exp: '"Yazar bu metni hangi mesajı vermek için yazmıştır?" sorusunun cevabı Ana Fikirdir.', spokenText: 'Bir paragrafta yazarın okuyucuya vermek istediği asıl mesaja ne ad verilir?' },
+      { q: 'Bir metinde üzerinde en çok durulan kavram, olay veya duruma ("Bu metinde ne anlatılıyor?" sorusunun cevabına) ne ad verilir? 📝', a: 'Paragrafın Konusu 📝', d: ['Paragrafın Ana Fikri', 'Yardımcı Düşünce'], exp: 'Üzerinde söz söylenen kavram veya olay metnin konusudur (Örn: Kitap okumanın faydaları).', spokenText: 'Bu metinde ne anlatılıyor sorusunun cevabına ne ad verilir?' },
+      { q: '"Ormanlar hem binlerce canlıya yuva olur hem de havamızı temizleyerek Dünya\'ya nefes aldırır. Ayrıca ağaç kökleri toprağı tutarak erozyonu önler. Bu yüzden ormanlarımızı gözümüz gibi korumalı ve her yıl fidan dikmeliyiz." metninin ANA FİKRİ nedir? 🌲', a: 'Canlı yaşamı ve doğa için hayati öneme sahip olan ormanlarımızı korumalı ve çoğaltmalıyız. 🌲', d: ['Ormanlarda sadece kuşlar yaşar.', 'Ağaçların yaprakları sonbaharda sararır.'], exp: 'Son cümlede vurgulanan "ormanlarımızı korumalı ve fidan dikmeliyiz" yargısı metnin ana fikridir.', spokenText: 'Bu metnin ana fikri nedir?' },
+      { q: 'Yukarıdaki orman paragrafına verilebilecek EN UYGUN BAŞLIK aşağıdakilerden hangisidir? 🌲🏷️', a: 'Ormanların Önemi ve Korunması 🌲', d: ['Deniz Canlıları', 'Kış Mevsimi Oyunları'], exp: 'Başlık, metnin konusunu ve ana fikrini en kısa ve öz biçimde yansıtmalıdır.', spokenText: 'Yukarıdaki orman paragrafına verilebilecek en uygun başlık hangisidir?' },
+      { q: 'Bir hikaye (öykü) metninde mutlaka bulunan 4 temel "HİKAYE UNSURU" hangi seçenekte bir arada doğru verilmiştir? 📚', a: 'Olay — Yer (Mekan) — Zaman — Kahramanlar (Şahıs ve Varlık Kadrosu) 📚', d: ['Başlık — Nokta — Virgül — Satır', 'Kafiye — Dize — Kıta — Şair'], exp: 'Her hikayede bir olay, olayın geçtiği yer, zaman ve olayı yaşayan kahramanlar bulunur.', spokenText: 'Bir hikayede bulunan dört temel hikaye unsuru hangileridir?' },
+      { q: '"Sabah erkenden uyandım, çantamı hazırladım ve annemle birlikte okulun yolunu tuttum." cümlesinde olayları bizzat yaşayan kişinin kendi ağzından anlatmasına ne denir? 🗣️', a: '1. Kişi Ağzıyla Anlatım (Kahraman Anlatıcı: -dım, -dık) 🗣️', d: ['3. Kişi Ağzıyla Anlatım (Gözlemci: -dı, -dılar)', 'Masal Anlatımı'], exp: 'Yazar "ben" veya "biz" zamirlerini kullanarak olayı kendi başından geçmiş gibi anlatıyorsa 1. kişi ağzıdır.', spokenText: 'Olayları bizzat yaşayan kişinin kendi ağzından anlatmasına ne denir?' },
+      { q: 'Kahramanları genellikle hayvanlar ve bitkiler olan, insan gibi konuşturulan ve sonunda okuyucuya ahlaki bir ders veren metin türüne ne ad verilir? (Örn: Ağustos Böceği ile Karınca) 🐜🦗', a: 'Fabl (Öykünce) 🐜🦗', d: ['Anı (Hatıra)', 'Biyografi'], exp: 'Hayvanların konuşturularak (intak) insanlara ders verildiği metin türü Fabl\'dır.', spokenText: 'Kahramanları hayvanlar olan ve sonunda ders veren metin türüne ne ad verilir?' },
+      { q: '"Bir varmış, bir yokmuş. Evvel zaman içinde..." tekerlemesiyle başlayan; devler, periler ve Kaf Dağı gibi tamamen hayal ürünü unsurlar içeren metin türü nedir? 🧚‍♀️🏰', a: 'Masal 🧚‍♀️🏰', d: ['Bilgilendirici Metin', 'Haber Yazısı'], exp: 'Masallarda yer ve zaman belirsizdir; olağanüstü kahramanlar ve olaylar yer alır.', spokenText: 'Bir varmış bir yokmuş tekerlemesiyle başlayan ve olağanüstü unsurlar içeren metin türü nedir?' },
+      { q: 'Bir kişinin başından geçen önemli olayları, üzerinden yıllar geçtikten sonra geçmişi hatırlayarak anlattığı yazı türüne ne ad verilir? 🕰️🖋️', a: 'Anı (Hatıra) 🕰️🖋️', d: ['Günlük (Günce)', 'Fabl'], exp: 'Yaşanmış olayların üzerinden zaman geçtikten sonra yazılmasına Anı (Hatıra) denir.', spokenText: 'Başından geçen olayları üzerinden zaman geçtikten sonra anlatan yazı türüne ne ad verilir?' },
+      { q: 'Bir kişinin o gün yaşadığı olayları, duygu ve düşüncelerini TARİH ATARAK günü gününe yazdığı samimi yazı türüne ne ad verilir? 📓📅', a: 'Günlük (Günce) 📓📅', d: ['Anı (Hatıra)', 'Masal'], exp: 'Olaylar yaşandığı gün, sağ üst köşeye tarih atılarak yazılıyorsa bu metin türü Günlük\'tür (Günce).', spokenText: 'Yaşanan olayların tarih atılarak günü gününe yazıldığı yazı türüne ne ad verilir?' },
+      { q: 'Duygu, düşünce ve coşkuların "Dize (Mısra)" ve "Kıta (Dörtlük)" adı verilen bölümlerle, ahenkli bir dille anlatıldığı metin türü nedir? 📜🎶', a: 'Şiir (Manzume) 📜🎶', d: ['Hikaye', 'Tiyatro'], exp: 'Şiirlerde her satıra dize (mısra), dört dizelik bölümlere kıta (dörtlük), yazana ise şair (ozan) denir.', spokenText: 'Duyguların dize ve kıtalarla ahenkli bir dille anlatıldığı metin türü nedir?' },
+      { q: 'Uzakta bulunan bir dosta, akrabaya veya bir kuruma haber vermek amacıyla "Hitap" sözüyle başlayıp zarfa konularak gönderilen yazı türü nedir? ✉️📮', a: 'Mektup ✉️📮', d: ['Fabl', 'Destan'], exp: '"Sevgili Arkadaşım," gibi bir hitapla başlayan ve sağ alt köşede ad-soyad/imza bulunan tür mektuptur.', spokenText: 'Uzakta bulunan bir dosta haber vermek amacıyla yazılan yazı türü nedir?' },
+      { q: 'Okuyucuya bir konu hakkında gerçek ve bilimsel bilgiler öğretmek, açıklama yapmak amacıyla yazılan metinlere ne ad verilir? 🔬📘', a: 'Bilgilendirici (Öğretici) Metin 🔬📘', d: ['Masal Metni', 'Kurgusal Hikaye'], exp: 'Ders kitaplarımızdaki ve ansiklopedilerdeki bilimsel yazılar bilgilendirici metinlerdir.', spokenText: 'Okuyucuya gerçek ve bilimsel bilgiler öğretmek amacıyla yazılan metinlere ne ad verilir?' },
+      { q: 'Aşağıdaki cümlelerden hangisi gerçek hayatta yaşanması imkansız olan bir "HAYAL ÜRÜNÜ (KURGUSAL)" ifadedir? 🦄☁️', a: 'Küçük bulut şemsiyesini açıp yıldızlarla saklambaç oynamaya başladı. ☁️⭐', d: ['Sonbahar gelince bahçedeki çınar ağacının yaprakları döküldü. 🍂', 'Dedem sabah erkenden kalkıp tavuklara yem verdi. 🐓'], exp: 'Bulutun şemsiye açması ve yıldızlarla saklambaç oynaması tamamen hayal ürünüdür.', spokenText: 'Aşağıdaki cümlelerden hangisi bir hayal ürünü ifadedir?' },
+      { q: 'Televizyon programlarının başında gördüğümüz RTÜK "Akıllı İşaretler" sembollerinden "Anne-baba ve çocuk silüeti (Aile)" sembolü ne anlama gelir? 📺👨‍👩‍👧', a: 'Genel İzleyici Kitlesi (Ailecek herkesin güvenle izleyebileceği yayın) 👨‍👩‍👧', d: ['Sadece 18 yaş üstü izleyebilir', 'Şiddet ve korku içerir'], exp: 'Genel İzleyici sembolü, programın her yaştan izleyici ve çocuklar için uygun olduğunu bildirir.', spokenText: 'Televizyondaki akıllı işaretlerden aile sembolü ne anlama gelir?' },
+      { q: 'Televizyondaki Akıllı İşaretlerde daire içinde yer alan "7+" veya "13+" sembolleri izleyicilere neyi bildirir? 📺🔢', a: 'Programın 7 yaş veya 13 yaş ve üzerindeki izleyiciler için uygun olduğunu 📺', d: ['Programın 7 dakika süreceğini', 'Televizyonun 7. kanalda olduğunu'], exp: '7+, 13+ ve 18+ sembolleri çocukları yaşlarına uygun olmayan içeriklerden korumak için yaş sınırını gösterir.', spokenText: 'Akıllı işaretlerdeki yedi artı ve on üç artı sembolleri neyi bildirir?' }
+    ],
+
+    // 5. ÖĞRENME ALANI: SÖZCÜK YAPISI VE SÖZCÜK TÜRLERİ (DİL BİLGİSİ TEMELLERİ) (16 ÖZGÜN SORU)
+    grade4TurkishGrammarWordStructurePool: [
+      { q: 'Yapım eki almamış, kök halinde bulunan veya sadece "-lar/-ler, -de, -den, -im" gibi çekim ekleri almış sözcüklere (Örn: kitap, ağaçlar, evimiz) yapısına göre ne denir? 🧱', a: 'Basit Sözcük (Basit Kelime) 🧱', d: ['Türemiş Sözcük', 'Birleşik Sözcük'], exp: 'Yeni bir anlam türetmeyen, yapım eki almamış kelimeler yapısına göre basit kelimedir.', spokenText: 'Yapım eki almamış sözcüklere yapısına göre ne denir?' },
+      { q: 'Kelime köküne "-lı, -sız, -cı, -lık" gibi YAPIM EKLERİ getirilerek anlamı değişmiş yeni kelimelere (Örn: göz ➡️ gözlük ➡️ gözlükçü) ne ad verilir? 🌱', a: 'Türemiş Sözcük (Türemiş Kelime) 🌱', d: ['Basit Sözcük', 'Birleşik Sözcük'], exp: 'Yapım eki alarak yeni bir kavramı karşılayan kelimelere türemiş kelime denir.', spokenText: 'Yapım eki alarak yeni anlam kazanmış kelimelere ne ad verilir?' },
+      { q: 'Aşağıdaki kelimelerden hangisi yapım eki alarak yeni anlam kazanmış bir "TÜREMİŞ KELİMEDİR"? 🔍', a: 'Simitçi / Tuzluk / Susuz 🥨🧂', d: ['Masalar (Sadece çoğul eki almış ➡️ Basit)', 'Okulda (Sadece bulunma eki almış ➡️ Basit)'], exp: 'Simit+çi, tuz+luk ve su+suz kelimeleri yapım eki alarak türemiştir.', spokenText: 'Aşağıdaki kelimelerden hangisi bir türemiş kelimedir?' },
+      { q: 'En az iki kelimenin yeni bir kavramı karşılamak üzere kaynaşıp birleşmesiyle oluşan "İlkokul, Bilgisayar, Hanımeli, Gecekondu, Aslanağzı" gibi sözcüklere ne denir? 🧩', a: 'Birleşik Sözcük (Birleşik Kelime) 🧩', d: ['Basit Sözcük', 'Türemiş Sözcük'], exp: 'İlk+okul, bilgi+sayar, hanım+eli gibi iki kelimenin birleşmesiyle oluşan sözcüklere birleşik sözcük denir.', spokenText: 'İki kelimenin birleşmesiyle oluşan ilkokul ve bilgisayar gibi sözcüklere ne denir?' },
+      { q: '"Tuzluk — Atatürkçülük — Kalemler — Kahvaltı" kelimelerinden hangisi yapısına göre BİRLEŞİK KELİMEDİR? ☕🧀', a: 'Kahvaltı (Kahve + altı kelimelerinin birleşmesiyle oluşmuştur) ☕', d: ['Tuzluk (Türemiş)', 'Kalemler (Basit)'], exp: '"Kahvaltı" sözcüğü "kahve" ve "altı" kelimelerinin ses düşmesiyle birleşmesinden oluşmuş birleşik bir kelimedir.', spokenText: 'Tuzluk, Atatürkçülük, kalemler ve kahvaltı kelimelerinden hangisi birleşik kelimedir?' },
+      { q: 'İsimlerin (adların) önüne gelerek onların rengini, biçimini, durumunu veya sayısını belirten sözcüklere (Örn: kırmızı elma, yuvarlak masa, çalışkan öğrenci) ne ad verilir? 🎨', a: 'Ön Ad (Sıfat) 🎨', d: ['Adıl (Zamir)', 'Bağlaç'], exp: 'Varlıkların özelliğini belirten ve ismin önünde yer alan sözcüklere Ön Ad (Sıfat) denir.', spokenText: 'İsimlerin önüne gelerek onların rengini, biçimini ve durumunu belirten sözcüklere ne ad verilir?' },
+      { q: '"Yaşlı adam, elindeki ağır çantayı küçük çocuğun yanındaki kare masaya bıraktı." cümlesinde varlıkların özelliğini belirten kaç tane ÖN AD (SIFAT) vardır? 🔍', a: '4 Tane: Yaşlı (adam), Ağır (çanta), Küçük (çocuk), Kare (masa) 🔍', d: ['1 Tane', '2 Tane'], exp: 'Nasıl adam? Yaşlı. Nasıl çanta? Ağır. Nasıl çocuk? Küçük. Nasıl masa? Kare ➡️ 4 tane sıfat vardır.', spokenText: 'Yaşlı adam, ağır çanta, küçük çocuk ve kare masa tamlamalarında kaç tane ön ad vardır?' },
+      { q: 'Cümlede isimlerin (adların) yerine kullanılan "ben, sen, o, biz, siz, onlar, bu, şu, bunlar, herkes, kim" gibi sözcüklere ne ad verilir? 🔄', a: 'Adıl (Zamir) 🔄', d: ['Ön Ad (Sıfat)', 'Eylem (Fiil)'], exp: 'İsim olmadığı halde ismin yerini tutan sözcüklere Adıl (Zamir) denir.', spokenText: 'Cümlede isimlerin yerine kullanılan ben, sen, o, biz, siz, onlar gibi sözcüklere ne ad verilir?' },
+      { q: '"Annem pazardan elma aldı ve elmayı yıkadı." cümlesinde "Annem" ve "elmayı" isimlerinin yerine sırasıyla hangi ZAMİRLERİ (ADILLARI) koyabiliriz? 🍎', a: '"O" pazardan elma aldı ve "onu" yıkadı. (O = Kişi Zamiri, Onu = İşaret Zamiri) 🍎', d: ['"Kırmızı" ve "tatlı"', '"Güzel" ve "büyük"'], exp: 'İnsan isminin (Annem) yerine "O" kişi zamiri, cansız varlığın (elmayı) yerine "onu" işaret zamiri kullanılır.', spokenText: 'Annem ve elmayı isimlerinin yerine sırasıyla hangi zamirleri koyabiliriz?' },
+      { q: '"Ben, sen, o, biz, siz, onlar" zamirleri sadece insan isimlerinin yerini tuttuğu için hangi zamir (adıl) türüne girer? 👥', a: 'Kişi (Şahıs) Zamirleri 👥', d: ['Soru Zamirleri', 'Belgisiz Zamirler'], exp: 'Türkçede 6 temel kişi zamiri vardır: Ben, sen, o, biz, siz, onlar.', spokenText: 'Ben, sen, o, biz, siz, onlar hangi zamir türüne girer?' },
+      { q: '"Bunu kitaplığa koy, şunu da masaya bırak." cümlesindeki "bunu" ve "şunu" kelimeleri varlıkların adını söylemeden işaret yoluyla yerini tuttuğu için nedir? 👉', a: 'İşaret Zamiri (İşaret Adılı) 👉', d: ['Kişi Zamiri', 'Niteleme Sıfatı'], exp: 'Varlıkların yerini işaret yoluyla tutan "bu, şu, o, bunlar, şunlar, onlar, burası, şurası" sözcükleri işaret zamiridir.', spokenText: 'Bunu kitaplığa koy şunu masaya bırak cümlesindeki bunu ve şunu nedir?' },
+      { q: 'Çoğul eki (-lar/-ler) almadığı halde anlamca birden çok varlığın oluşturduğu grubu anlatan "Orman, Sürü, Ordu, Aile, Düzine, Sınıf" gibi adlara ne denir? 🌲🐑', a: 'Topluluk Adı (Topluluk İsmi) 🌲🐑', d: ['Tekil Ad', 'Çoğul Ad'], exp: 'Ağaç ➡️ Tekil ad, Ağaçlar ➡️ Çoğul ad, Orman ➡️ Topluluk adıdır.', spokenText: 'Çoğul eki almadığı halde birden çok varlığın oluşturduğu grubu anlatan orman ve sürü gibi adlara ne denir?' },
+      { q: 'Aşağıdaki seçeneklerin hangisinde "Tekil Ad ➡️ Çoğul Ad ➡️ Topluluk Adı" sıralamasına uygun bir örnek verilmiştir? 🐑', a: 'Koyun (Tekil) ➡️ Koyunlar (Çoğul) ➡️ Sürü (Topluluk) 🐑', d: ['Sürü ➡️ Koyun ➡️ Koyunlar', 'Askerler ➡️ Ordu ➡️ Asker'], exp: 'Koyun tek bir varlığı, Koyunlar çoğul ekli varlıkları, Sürü ise çoğul eki olmadan topluluğu gösterir.', spokenText: 'Hangisinde tekil ad, çoğul ad ve topluluk adı sıralamasına uygun bir örnek verilmiştir?' },
+      { q: 'Anlamı güçlendirmek için "m, p, r, s" harfleriyle yapılan "Masmavi gökyüzü, tertemiz sınıf, sapsarı limon, bembeyaz kar" sözcüklerine ne ad verilir? 🌟', a: 'Pekiştirmeli Sözcükler 🌟', d: ['Birleşik Zamirler', 'Soru Ekleri'], exp: 'Mavi ➡️ masmavi, temiz ➡️ tertemiz, sarı ➡️ sapsarı, beyaz ➡️ bembeyaz anlamı kuvvetlendiren pekiştirmeli sözcüklerdir.', spokenText: 'Masmavi, tertemiz, sapsarı ve bembeyaz gibi sözcüklere ne ad verilir?' },
+      { q: 'Aşağıdaki cümlelerin hangisinde "O" sözcüğü İŞARET SIFATI (ÖN AD) olarak, hangisinde KİŞİ ZAMİRİ olarak kullanılmıştır? 🧠', a: '"O kitabı bana ver." (Sıfat) — "O bugün kütüphaneye gitti." (Kişi Zamiri) 🧠', d: ['İkisinde de bağlaçtır', 'İkisinde de çoğul addır'], exp: '"O kitap" derken ismin önünde olduğu için işaret sıfatıdır; "O gitti" derken insan isminin yerini tuttuğu için kişi zamiridir.', spokenText: 'O kitabı bana ver ve O bugün kütüphaneye gitti cümlelerinde O sözcüğünün türü nedir?' },
+      { q: '"Herkes bahçeye çıktı ama bazıları sınıfta kaldı." cümlesindeki "herkes" ve "bazıları" sözcükleri hangi zamir türüne örnektir? 👥❓', a: 'Belgisiz Zamir (Hangi kişilerin yerini tuttuğu tam belli olmayan adıllar) 👥', d: ['Soru Sıfatı', 'Birleşik Fiil'], exp: 'Herkes, kimse, bazıları, birçoğu, hepsi gibi sözcükler isimlerin yerini belirsiz şekilde tutan belgisiz zamirlerdir.', spokenText: 'Herkes ve bazıları sözcükleri hangi zamir türüne örnektir?' }
+    ],
+
+    // 6. ÖĞRENME ALANI: YAZIM KURALLARI VE NOKTALAMA İŞARETLERİ (16 ÖZGÜN SORU)
+    grade4TurkishSpellingPunctuationPool: [
+      { q: 'Bulunma durumu eki olan "-de/-da" kelimeye BİTİŞİK yazılırken, bağlaç olan "de/da" her zaman AYRI yazılır. Buna göre hangi cümlede "de/da"nın yazımı DOĞRUDUR? ✍️', a: 'Kitabımı evde unutmuşum, kalemim de çantamda kalmış. ✅', d: ['Kitabımı ev de unutmuşum. ❌', 'Sinemaya kardeşimde gelecek. ❌'], exp: '"Evde" ve "çantamda" bulunma ekidir (bitişik yazılır); "kalemim de" ise bağlaçtır (ayrı yazılır).', spokenText: 'Aşağıdaki cümlelerin hangisinde de ve danın yazımı doğrudur?' },
+      { q: 'Bir cümledeki "de / da"nın ek mi yoksa bağlaç mı olduğunu anlamak için uyguladığımız en pratik kural nedir? 💡', a: '"de/da"yı cümleden çıkardığımızda anlam bozulmuyorsa BAĞLAÇTIR (Ayrı yazılır); anlam bozuluyorsa EKTİR (Bitişik yazılır) 💡', d: ['Hepsi her zaman bitişik yazılır', 'Hepsi her zaman ayrı yazılır'], exp: 'Örn: "Sen de gel" ➡️ "Sen gel" (anlam bozulmadı = ayrı). "Sokakta oynadık" ➡️ "Sokak oynadık" (bozuldu = bitişik).', spokenText: 'Cümledeki de ve danın ek mi yoksa bağlaç mı olduğunu anlamak için hangi kuralı uygularız?' },
+      { q: 'Soru eki olan "mı / mi / mu / mü"nün yazımıyla ilgili aşağıdaki cümlelerden hangisi DOĞRUDUR? ❓✍️', a: 'Bizimle parka sen de gelecek misin? (Soru eki kelimeden ayrı, gelen ekler bitişik yazılır) ✅', d: ['Ödevlerini bitirdinmi? ❌', 'Güzel mi güzel bir çiçekti cümlesinde mi bitişik yazılır. ❌'], exp: '"mı, mi, mu, mü" kendisinden önceki kelimeden daima AYRI, kendisine gelen eklerle (misin, miyiz) BİTİŞİK yazılır.', spokenText: 'Soru eki olan mı, mi, mu, münün yazımıyla ilgili hangisi doğrudur?' },
+      { q: 'Aşağıdaki cümlelerin hangisinde BÜYÜK HARFLERİN kullanımıyla ilgili bir yazım yanlışı YAPILMIŞTIR? 🔍', a: 'Kedimiz pamuk bugün van gölü hakkında belgesel izledi. ❌ (Pamuk ve Van Gölü büyük olmalıydı)', d: ['29 Ekim Cumhuriyet Bayramı\'nı coşkuyla kutladık. ✅', 'Merkür, Güneş\'e en yakın gezegendir. ✅'], exp: 'Hayvanlara verilen özel adlar (Pamuk) ile şehir, göl, dağ ve nehir adları (Van Gölü) büyük harfle başlar.', spokenText: 'Aşağıdaki cümlelerin hangisinde büyük harflerin kullanımıyla ilgili bir yazım yanlışı yapılmıştır?' },
+      { q: 'Kurum ve kuruluş kısaltmalarına (TBMM, TDK, THY) ve ölçü birimi kısaltmalarına (cm, kg) ek getirilirken hangi yazım doğrudur? 🏛️📏', a: 'TBMM\'de — TDK\'nin — 25 cm\'den (Büyük harf kısaltmaları son harfin okunuşuna göre kesmeyle ayrılır; küçük harfli ölçü kısaltmaları okunuşa göre kesmeyle ayrılır) ✅', d: ['TBMM\'nde — TDK\'nun ❌', 'kg.\'dan (Küçük harfli ölçü kısaltmalarına nokta konur) ❌'], exp: 'Türkçede "ka" sesi yoktur, "ke" vardır: TDK\'nin! Ayrıca cm, m, kg, L gibi ölçü kısaltmalarının sonuna nokta konmaz.', spokenText: 'Kısaltmalara ek getirilirken hangi yazım doğrudur?' },
+      { q: 'Sayıların ve tarihlerin yazımıyla ilgili aşağıdaki seçeneklerden hangisi DOĞRUDUR? 📅🔢', a: 'Yarışmada 3\'üncü (veya 3.) oldum ve ödülümü 19 Mayıs 2026\'da aldım. ✅', d: ['Okulumuzda üçyüzellibeş öğrenci var. ❌ (Birden fazla kelimeli sayılar ayrı yazılır: üç yüz elli beş)', '2.inci sırada oturuyorum. ❌ (Hem nokta hem ek bir arada kullanılmaz)'], exp: 'Birden fazla kelimeden oluşan sayılar ayrı yazılır (üç yüz elli beş). Sıra sayılarında ya "2." ya da "2\'nci" yazılır.', spokenText: 'Sayıların ve tarihlerin yazımıyla ilgili hangisi doğrudur?' },
+      { q: 'Tamamlanmış cümlelerin sonuna, sıra bildiren sayıların sağına (4. sınıf), saat ve dakikaların arasına (09.30) hangi noktalama işareti konulur? ⏺️', a: 'Nokta ( . ) ⏺️', d: ['İki Nokta ( : )', 'Virgül ( , )'], exp: 'Dijital saatlerde bile yazıda saat ve dakika arasına iki nokta değil, tek NOKTA (09.30) konulur (TDK Kuralı!).', spokenText: 'Tamamlanmış cümlelerin sonuna ve saat ile dakikaların arasına hangi noktalama işareti konulur?' },
+      { q: 'Cümlede eş görevli kelimelerin arasına (pazardan elma, armut, muz aldım), sıralı cümleleri ayırmaya ve hitap sözlerinden sonra hangi işaret konur? 🍎🍐', a: 'Virgül ( , )', d: ['Nokta ( . )', 'Ünlem ( ! )'], exp: 'Eş görevli sözcükleri ayırmak ve anlam karışıklığını önlemek için virgül kullanılır.', spokenText: 'Cümlede eş görevli kelimelerin arasına hangi noktalama işareti konur?' },
+      { q: 'Kendisiyle ilgili örnek verilecek veya açıklama yapılacak cümlenin sonuna ve karşılıklı konuşmalarda konuşan kişinin adından sonra hangi işaret konur? 🗣️', a: 'İki Nokta ( : )', d: ['Üç Nokta ( ... )', 'Noktalı Virgül ( ; )'], exp: 'Örnekten, açıklamadan ve konuşma çizgisinden önce İki Nokta (:) kullanılır.', spokenText: 'Kendisiyle ilgili örnek verilecek veya açıklama yapılacak cümlenin sonuna hangi işaret konur?' },
+      { q: 'Herhangi bir nedenle bitmemiş (eksiltili) cümlelerin sonuna veya örneklerin devam ettiğini ("vb." anlamını) göstermek için hangi noktalama işareti konur? 🌄', a: 'Üç Nokta ( ... )', d: ['İki Nokta ( : )', 'Soru İşareti ( ? )'], exp: '"Karşıda yemyeşil tepeler, şırıl şırıl akan dereler..." gibi yüklemi olmayan bitmemiş cümlelerin sonuna üç nokta (...) konur.', spokenText: 'Bitmemiş cümlelerin sonuna veya örneklerin devam ettiğini göstermek için hangi noktalama işareti konur?' },
+      { q: 'Başka bir kimseden veya yazıdan olduğu gibi aktarılan sözleri (Örn: Atatürk\'ün "Yurtta sulh, cihanda sulh." sözü) ve özel olarak vurgulanmak istenen kelimeleri hangi işaret içine alırız? 💬', a: 'Tırnak İşareti ( " " ) 💬', d: ['Yay Ayraç ( )', 'Kısa Çizgi ( - )'], exp: 'Doğrudan aktarma cümleleri ve eser/kitap adları tırnak işareti (" ") içine alınır.', spokenText: 'Başka bir kimseden olduğu gibi aktarılan sözleri hangi işaret içine alırız?' },
+      { q: 'Cümle içindeki anlamı tamamlayan ek bilgileri, kelimelerin eş anlamlılarını veya tiyatro metinlerinde oyuncunun hareketlerini göstermek için hangi işaret kullanılır? 🎭', a: 'Yay Ayraç / Parantez ( ( ) )', d: ['Tırnak İşareti ( " " )', 'Eğik Çizgi ( / )'], exp: 'Örn: "Adıllar (Zamirler) ismin yerini tutar." cümlesinde açıklama yay ayraç (parantez) içinde verilmiştir.', spokenText: 'Cümle içindeki ek bilgileri veya eş anlamlı karşılıkları göstermek için hangi işaret kullanılır?' },
+      { q: 'Özel adlara getirilen çekim eklerini ayırmak için (Türkiye\'nin, Ankara\'dan, 1923\'te) kullanılan noktalama işareti hangisidir? 🇹🇷', a: 'Kesme İşareti ( \' )', d: ['Virgül ( , )', 'Kısa Çizgi ( - )'], exp: 'Özel isimlere gelen iyelik ve durum ekleri kesme işaretiyle ayrılır (Yapım ekleri ve -lar/-ler eki ayrılmaz: Türkler, Türkçe, Ankaralı).', spokenText: 'Özel adlara getirilen çekim eklerini ayırmak için kullanılan noktalama işareti hangisidir?' },
+      { q: 'Satır sonuna sığmayan kelimeleri hecelerinden bölerken, kelimelerin kök ve eklerini ayırırken (göz-lük-çü) veya "arasında" anlamında (Ankara-İstanbul yolu) hangi işaret kullanılır? ➖', a: 'Kısa Çizgi ( - )', d: ['Uzun Çizgi / Konuşma Çizgisi ( — )', 'Eğik Çizgi ( / )'], exp: 'Satır sonu hece bölmesinde ve ek-kök gösteriminde kısa çizgi (-), diyalog başında ise konuşma çizgisi (—) kullanılır.', spokenText: 'Satır sonuna sığmayan kelimeleri bölerken ve ekleri ayırırken hangi işaret kullanılır?' },
+      { q: 'Adres yazarken apartman numarası ile daire numarası arasına (No: 12/4), tarihlerin yazılışında gün-ay-yıl arasına (23/04/1920) ve yan yana yazılan şiir dizeleri arasına hangi işaret konur? 📬', a: 'Eğik Çizgi ( / )', d: ['Kısa Çizgi ( - )', 'İki Nokta ( : )'], exp: 'Tarihlerde, adreslerde (semt/şehir) ve internet adreslerinde (https://) eğik çizgi (/) kullanılır.', spokenText: 'Adres yazarken kapı ve daire numarası arasına ve tarihlerin arasına hangi işaret konur?' },
+      { q: '"Eyvah ( ) yangın var ( ) Hemen 112\'yi arayın ( )" cümlesinde yay ayraçlarla belirtilen yerlere sırasıyla hangi noktalama işaretleri getirilmelidir? 🚨🔥', a: '( , ) ( ! ) ( ! ) — veya — ( ! ) ( . ) ( ! ) 🚨', d: ['( ? ) ( ? ) ( . )', '( . ) ( , ) ( ? )'], exp: 'Korku, heyecan ve seslenme bildiren ifadelerde virgül ve ünlem işareti (!) kullanılır.', spokenText: 'Eyvah yangın var hemen yüz on ikiyi arayın cümlesinde yay ayraçlarla belirtilen yerlere hangi noktalama işaretleri getirilmelidir?' }
+    ],
+
+    // 4. Sınıf Türkçe Karma Üreteci (6 Öğrenme Alanından Dengeli Çekim)
+    generateGrade4TurkishKarma() {
+      const pools = [
+        this.grade4TurkishWordMeaningPool,
+        this.grade4TurkishIdiomsProverbsPool,
+        this.grade4TurkishSentenceMeaningPool,
+        this.grade4TurkishParagraphTextTypesPool,
+        this.grade4TurkishGrammarWordStructurePool,
+        this.grade4TurkishSpellingPunctuationPool
+      ];
+      const names = [
+        "grade4TurkishWordMeaningPool",
+        "grade4TurkishIdiomsProverbsPool",
+        "grade4TurkishSentenceMeaningPool",
+        "grade4TurkishParagraphTextTypesPool",
+        "grade4TurkishGrammarWordStructurePool",
+        "grade4TurkishSpellingPunctuationPool"
+      ];
+      const idx = Math.floor(Math.random() * pools.length);
+      return this.drawFromPool(pools[idx], names[idx]);
+    },
+
+    // 🏆 4. Sınıf Büyük Karma Düello Üreteci (Matematik + Türkçe + Fen Bilimleri + Sosyal Bilgiler)
+    generateGrade4GrandDuel() {
+      const subjectIdx = Math.floor(Math.random() * 4);
+      if (subjectIdx === 0) {
+        const raw = this.generateGrade4Math();
+        return { ...raw, category: '🧮 4. Sınıf Matematik' };
+      } else if (subjectIdx === 1) {
+        const raw = this.generateGrade4TurkishKarma();
+        return { ...raw, category: '📚 4. Sınıf Türkçe' };
+      } else if (subjectIdx === 2) {
+        const raw = this.generateGrade4ScienceKarma();
+        return { ...raw, category: '🔬 4. Sınıf Fen Bilimleri' };
+      } else {
+        const raw = this.generateGrade4SocialKarma();
+        return { ...raw, category: '🗺️ 4. Sınıf Sosyal Bilgiler' };
+      }
+    },
+
+    // Geriye dönük uyumluluk havuzları
+    get grade4IdiomsProverbsPool() {
+      return [...this.grade4TurkishWordMeaningPool, ...this.grade4TurkishIdiomsProverbsPool];
+    },
+    get grade4SentencesLogicPool() {
+      return [...this.grade4TurkishSentenceMeaningPool, ...this.grade4TurkishParagraphTextTypesPool, ...this.grade4TurkishGrammarWordStructurePool, ...this.grade4TurkishSpellingPunctuationPool];
+    },
 
     // =========================================================================
     // 4. SINIF FEN BİLİMLERİ: MEB / MAARİF MODELİ 7 ÜNİTE (105 ÖZGÜN SORU)
@@ -8509,22 +8608,31 @@
       } else if (gameType === 'math_perimeter_area_4') {
         const raw = this.generateGrade4PerimeterArea();
         return this.buildQuestionItem(raw, '📐 Çevre ve Alan Hesaplama');
+      // --- 4. SINIF: MEB / MAARİF MODELİ TÜRKÇE 6 ÖĞRENME ALANI & BÜYÜK KARMA ---
+      } else if (gameType === 'turkish_word_meaning_4') {
+        const raw = this.drawFromPool(this.grade4TurkishWordMeaningPool, "grade4TurkishWordMeaningPool");
+        return this.buildQuestionItem(raw, '🎭 Gerçek-Mecaz-Terim Anlam & Türkçe Karşılıklar Düellosu');
       } else if (gameType === 'turkish_idioms_proverbs_4') {
-        const raw = this.drawFromPool(this.grade4IdiomsProverbsPool, "grade4IdiomsProverbsPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🏆 Deyimler ve Atasözleri Düellosu');
-      } else if (gameType === 'turkish_sentences_logic_4') {
-        const raw = this.drawFromPool(this.grade4SentencesLogicPool, "grade4SentencesLogicPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '💡 Sebep-Sonuç, Amaç-Sonuç & Yargılar');
+        const raw = this.drawFromPool(this.grade4TurkishIdiomsProverbsPool, "grade4TurkishIdiomsProverbsPool");
+        return this.buildQuestionItem(raw, '🏆 Deyim, Atasözü ve Özdeyiş Ustası');
+      } else if (gameType === 'turkish_sentence_meaning_4' || gameType === 'turkish_sentences_logic_4') {
+        const raw = this.drawFromPool(this.grade4TurkishSentenceMeaningPool, "grade4TurkishSentenceMeaningPool");
+        return this.buildQuestionItem(raw, '💡 Öznel mi Nesnel mi? & Cümlede Anlam Dedektifi');
+      } else if (gameType === 'turkish_paragraph_text_types_4') {
+        const raw = this.drawFromPool(this.grade4TurkishParagraphTextTypesPool, "grade4TurkishParagraphTextTypesPool");
+        return this.buildQuestionItem(raw, '📖 Paragraf & Metin Türleri (Fabl-Masal-Anı) Şampiyonu');
+      } else if (gameType === 'turkish_grammar_word_structure_4') {
+        const raw = this.drawFromPool(this.grade4TurkishGrammarWordStructurePool, "grade4TurkishGrammarWordStructurePool");
+        return this.buildQuestionItem(raw, '🧱 Basit-Türemiş-Birleşik Sözcük & Zamir/Sıfat Avcısı');
+      } else if (gameType === 'turkish_spelling_punctuation_4') {
+        const raw = this.drawFromPool(this.grade4TurkishSpellingPunctuationPool, "grade4TurkishSpellingPunctuationPool");
+        return this.buildQuestionItem(raw, '✍️ De/Da - Mi Yazımı & Noktalama İşaretleri Düellosu');
+      } else if (gameType === 'turkish_4_karma') {
+        const raw = this.generateGrade4TurkishKarma();
+        return this.buildQuestionItem(raw, '🌟 4. Sınıf Türkçe Karma Düello');
+      } else if (gameType === 'grade4_grand_duel') {
+        const raw = this.generateGrade4GrandDuel();
+        return this.buildQuestionItem(raw, raw.category || '🏆 4. Sınıf Büyük Karma Düello');
       // --- 4. SINIF: MEB / MAARİF MODELİ FEN BİLİMLERİ 7 ÜNİTE ---
       } else if (gameType === 'science_crust_movements_4') {
         const raw = this.drawFromPool(this.grade4ScienceCrustMovementsPool, "grade4ScienceCrustMovementsPool");
@@ -8646,24 +8754,8 @@
             }, '✍️ Noktalama & 5N1K');
           }
         } else {
-          const r = Math.random();
-          if (r < 0.5) {
-            const raw = this.drawFromPool(this.grade4IdiomsProverbsPool, "grade4IdiomsProverbsPool");
-            return this.buildQuestionItem({
-              question: raw.q,
-              correct: raw.a,
-              distractors: raw.d,
-              explanation: raw.exp
-            }, '🏆 Deyimler ve Atasözleri');
-          } else {
-            const raw = this.drawFromPool(this.grade4SentencesLogicPool, "grade4SentencesLogicPool");
-            return this.buildQuestionItem({
-              question: raw.q,
-              correct: raw.a,
-              distractors: raw.d,
-              explanation: raw.exp
-            }, '💡 Cümlede Anlam & Mantık');
-          }
+          const raw = this.generateGrade4TurkishKarma();
+          return this.buildQuestionItem(raw, '🌟 4. Sınıf Türkçe Karma Düello');
         }
       } else if (gameType === 'lifescience') {
         if (g === 1) {
@@ -9807,7 +9899,15 @@
     math_time_data_4: '⏰ Zaman & Sütun Grafiği',
     math_geometry_angles_4: '📐 Açılar, Üçgen & Simetri',
     math_measurement_perimeter_area_4: '📏 Çevre, Alan & Ölçme',
-    math_4_karma: '🌟 4. Sınıf Matematik Karma'
+    math_4_karma: '🌟 4. Sınıf Matematik Karma',
+    turkish_word_meaning_4: '🎭 Sözcükte Anlam & Terim',
+    turkish_idioms_proverbs_4: '🏆 Deyim, Atasözü & Özdeyiş',
+    turkish_sentence_meaning_4: '💡 Cümlede Anlam & Yargılar',
+    turkish_paragraph_text_types_4: '📖 Paragraf & Metin Türleri',
+    turkish_grammar_word_structure_4: '🧱 Sözcük Yapısı & Zamir/Sıfat',
+    turkish_spelling_punctuation_4: '✍️ Yazım & Noktalama',
+    turkish_4_karma: '🌟 4. Sınıf Türkçe Karma',
+    grade4_grand_duel: '🏆 4. Sınıf Büyük Karma'
   };
 
   function getCurrentGameObject() {
@@ -9942,7 +10042,14 @@
       math_digits_operations_4: '4, 5, 6 Basamaklı Sayılar ve Dört İşlem',
       math_fractions_angles_4: 'Kesirler, Zaman ve Açılar',
       math_perimeter_area_4: 'Çevre ve Alan Hesaplama',
-      turkish_idioms_proverbs_4: 'Deyimler ve Atasözleri Düellosu',
+      turkish_word_meaning_4: 'Gerçek-Mecaz-Terim Anlam & Türkçe Karşılıklar Düellosu',
+      turkish_idioms_proverbs_4: 'Deyim, Atasözü ve Özdeyiş Ustası',
+      turkish_sentence_meaning_4: 'Öznel mi Nesnel mi? & Cümlede Anlam Dedektifi',
+      turkish_paragraph_text_types_4: 'Paragraf & Metin Türleri (Fabl-Masal-Anı) Şampiyonu',
+      turkish_grammar_word_structure_4: 'Basit-Türemiş-Birleşik Sözcük & Zamir/Sıfat Avcısı',
+      turkish_spelling_punctuation_4: 'De/Da - Mi Yazımı & Noktalama İşaretleri Düellosu',
+      turkish_4_karma: '4. Sınıf Türkçe Karma Düello',
+      grade4_grand_duel: '4. Sınıf Büyük Karma Düello (Tüm Dersler)',
       turkish_sentences_logic_4: 'Sebep-Sonuç, Amaç-Sonuç ve Yargılar',
       science_crust_movements_4: 'Kayaç-Maden-Fosil & Dünya\'nın Hareketleri Düellosu',
       science_nutrition_4: 'Besin İçerikleri (Protein/Karbonhidrat/Vitamin) Dedektifi',
@@ -12076,48 +12183,100 @@
         name: 'Türkçe',
         icon: '📚',
         colorTheme: 'theme-turkish',
-        tagline: 'Deyimler & Cümle Mantığı',
-        description: 'Zengin deyimler, atasözleri, sebep-sonuç ve öznel/nesnel yargı şampiyonası! 🏆📜',
-        badge: 'MEB Müfredatı',
+        tagline: '2026 Maarif Modeli',
+        description: 'Gerçek-mecaz-terim anlam ve Türkçe karşılıklar, deyim-atasözü-özdeyişler, öznel-nesnel ve cümlede anlam, paragraf ve metin türleri, basit-türemiş-birleşik sözcükler, zamir/sıfat ve yazım-noktalama! 🎭🏆💡📖🧱✍️',
+        badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'idioms_4', label: '🏆 Deyimler & Atasözleri' },
-          { id: 'logic_4', label: '💡 Cümlede Anlam & Mantık' }
+          { id: 'all', label: '🌟 Tüm Öğrenme Alanları / Karma' },
+          { id: 'word_meaning_4', label: '🎭 1. Sözcükte Anlam (Gerçek, Mecaz, Terim)' },
+          { id: 'idioms_proverbs_4', label: '🏆 2. Deyimler, Atasözleri ve Özdeyişler' },
+          { id: 'sentence_meaning_4', label: '💡 3. Cümlede Anlam (Öznel-Nesnel, Neden/Amaç)' },
+          { id: 'paragraph_text_types_4', label: '📖 4. Paragrafta Anlam ve Metin Türleri' },
+          { id: 'grammar_word_structure_4', label: '🧱 5. Sözcük Yapısı ve Sözcük Türleri' },
+          { id: 'spelling_punctuation_4', label: '✍️ 6. Yazım Kuralları ve Noktalama İşaretleri' }
         ],
         games: [
           {
+            id: 'turkish_word_meaning_4',
+            active: true,
+            title: 'Gerçek-Mecaz-Terim Anlam & Türkçe Karşılıklar Düellosu',
+            icon: '🎭',
+            badge: '🎭 1. Sözcükte Anlam & Söz Varlığı',
+            featureTag: '🔬 Gerçek, Mecaz, Terim & Özçekim',
+            description: 'Gerçek, Mecaz ve Terim anlam (futbol, müzik, matematik, tiyatro terimleri), ileri seviye eş/zıt/sesteş kelimeler ve yabancı kelimelerin Türkçe karşılıkları (selfie ➡️ özçekim, link ➡️ bağlantı)!',
+            tags: ['🎭 Gerçek, Mecaz & Terim Anlam', '✨ Eş, Zıt ve Sesteş Sözcükler', '📸 Selfie ➡️ Özçekim', '🖨️ Printer ➡️ Yazıcı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'word_meaning_4'
+          },
+          {
             id: 'turkish_idioms_proverbs_4',
             active: true,
-            title: 'Deyimler ve Atasözleri Düellosu',
+            title: 'Deyim, Atasözü ve Özdeyiş Ustası',
             icon: '🏆',
-            badge: '35 Özgün Soru',
-            featureTag: '🏆 Deyim & Atasözü',
-            description: 'En çok kullanılan 35 deyim ve atasözümüzün gerçek anlamını bulma şampiyonası! 🏆📜',
-            tags: ['🏆 Meşhur Deyimler', '📜 Öğüt Veren Atasözleri', '💡 Söz Varlığı'],
+            badge: '🏆 2. Deyim, Atasözü & Özdeyiş',
+            featureTag: '📜 Atasözleri & Atatürk Özdeyişleri',
+            description: 'Zengin deyimler (göz boyamak, burun kıvırmak, kulağına küpe olmak, ipe un sermek), öğüt veren atasözlerimiz ve söyleyeni belli özdeyişler/vecizeler (Atatürk ve Mevlana\'nın özdeyişleri)!',
+            tags: ['👀 Göz Boyamak & Küpe Olmak', '🌳 Ağaç Yaş İken Eğilir', '📜 Atatürk\'ün Özdeyişleri', '🤝 Birlik ve Tasarruf Atasözleri'],
             btnText: 'Düelloyu Başlat',
-            topic: 'idioms_4'
+            topic: 'idioms_proverbs_4'
           },
           {
-            id: 'turkish_sentences_logic_4',
+            id: 'turkish_sentence_meaning_4',
             active: true,
-            title: 'Sebep-Sonuç, Amaç-Sonuç & Yargılar',
+            title: 'Öznel mi Nesnel mi? & Cümlede Anlam Dedektifi',
             icon: '💡',
-            badge: '30 Özgün Soru',
-            featureTag: '💡 Cümlede Anlam',
-            description: 'Sebep-sonuç, amaç-sonuç, koşul-sonuç ve öznel/nesnel yargı analizi! 💡🔍',
-            tags: ['🎯 Sebep & Amaç Sonuç', '⚖️ Öznel ve Nesnel', '🔍 Koşul ve Benzetme'],
+            badge: '💡 3. Cümlede Anlam ve Yargılar',
+            featureTag: '⚖️ Öznel-Nesnel, Neden/Amaç & Duygular',
+            description: 'Öznel (kişisel görüş) ve Nesnel (kanıtlanabilir) yargıları ayırt etme, Neden-Sonuç, Amaç-Sonuç, Koşul-Sonuç, Karşılaştırma, Benzetme, Örneklendirme ve duygu ifadeleri (sitem, pişmanlık, özlem)!',
+            tags: ['⚖️ Öznel ve Nesnel Yargı', '🎯 Neden-Sonuç & Amaç-Sonuç', '🦁 Karşılaştırma ve Benzetme', '💬 Sitem, Pişmanlık & Özlem'],
             btnText: 'Düelloyu Başlat',
-            topic: 'logic_4'
+            topic: 'sentence_meaning_4'
           },
           {
-            id: 'turkish',
+            id: 'turkish_paragraph_text_types_4',
             active: true,
-            title: 'Hızlı Türkçe & Genel Kültür (Karma)',
-            icon: '🦉',
-            badge: '👑 Deyim & Kültür',
-            featureTag: '🏆 Deyim Ustası',
-            description: 'Zengin deyimler, atasözleri ve cümle anlamı labirentinde kelime ustası ol! 🏆',
-            tags: ['🏆 Zengin Deyimler', '📜 Atasözleri', '🗺️ Genel Kültür'],
+            title: 'Paragraf & Metin Türleri (Fabl-Masal-Anı) Şampiyonu',
+            icon: '📖',
+            badge: '📖 4. Paragraf, Metin Türleri & Görsel',
+            featureTag: '🐜 Fabl, Masal, Anı, Günlük & Ana Fikir',
+            description: 'Paragrafın konusu, ana fikri ve başlığı, hikaye unsurları (1. ve 3. kişi anlatıcı), metin türleri (Hikaye, Masal, Fabl, Şiir, Anı, Günlük, Mektup, Bilgilendirici Metin) ve Akıllı İşaretler!',
+            tags: ['💡 Konu, Ana Fikir & Başlık', '🐜 Fabl, Masal, Anı & Günlük', '🗣️ 1. ve 3. Kişi Ağzı Anlatım', '📺 Akıllı İşaretler & Görsel Okuma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'paragraph_text_types_4'
+          },
+          {
+            id: 'turkish_grammar_word_structure_4',
+            active: true,
+            title: 'Basit-Türemiş-Birleşik Sözcük & Zamir/Sıfat Avcısı',
+            icon: '🧱',
+            badge: '🧱 5. Sözcük Yapısı ve Türleri',
+            featureTag: '🌱 Basit-Türemiş-Birleşik, Sıfat & Zamir',
+            description: 'Yapısına göre Basit, Türemiş (gözlükçü, simitçi) ve Birleşik (ilkokul, bilgisayar, kahvaltı) kelimeler, Ön Adlar (Sıfatlar), Adıllar (Kişi, İşaret, Belgisiz, Soru Zamirleri), Topluluk adları ve Pekiştirme!',
+            tags: ['🧱 Basit, Türemiş & Birleşik', '🎨 Ön Adlar (Sıfatlar)', '🔄 Adıllar (Zamirler)', '🌲 Topluluk Adı & Pekiştirme'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'grammar_word_structure_4'
+          },
+          {
+            id: 'turkish_spelling_punctuation_4',
+            active: true,
+            title: 'De/Da - Mi Yazımı & Noktalama İşaretleri Düellosu',
+            icon: '✍️',
+            badge: '✍️ 6. Yazım Kuralları ve Noktalama',
+            featureTag: '❓ De/Da, Mi, Kısaltmalar & Noktalama',
+            description: 'Bulunma eki (-de/-da) ile bağlaç (de/da) ayrımı, soru eki "mı/mi"nin yazımı, büyük harfler, kısaltmalar (TBMM\'de, TDK\'nin), sayıların yazımı ve tüm noktalama işaretleri (. , ? ! : ... " " \' ( ) - /)!',
+            tags: ['✍️ Bulunma -de ve Bağlaç de/da', '❓ Soru Eki mı/mi ve Kısaltmalar', '💬 İki Nokta, Üç Nokta & Tırnak', '📏 Yay Ayraç, Kesme & Eğik Çizgi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'spelling_punctuation_4'
+          },
+          {
+            id: 'turkish_4_karma',
+            active: true,
+            title: '4. Sınıf Türkçe Karma Düello',
+            icon: '🌟',
+            badge: '🏆 96 Soru Büyük Karma',
+            featureTag: '🌟 6 Öğrenme Alanı Türkçe Yarışması',
+            description: 'Tüm 4. sınıf Türkçe konularını (Sözcükte Anlam, Deyim/Atasözü/Özdeyiş, Cümlede Anlam, Paragraf/Metin Türleri, Dil Bilgisi ve Yazım/Noktalama) harmanlayan genel tekrar ve sınıf içi yarışma modu!',
+            tags: ['🎭 Sözcükte & Cümlede Anlam', '🏆 Deyim, Atasözü & Özdeyiş', '📖 Paragraf & Metin Türleri', '🧱 Dil Bilgisi, Yazım & Noktalama'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
@@ -12353,6 +12512,32 @@
             description: '4. Sınıf Sosyal Bilgiler dersinin 7 öğrenme alanının tamamından rastgele sorular çeken büyük Sosyal Bilgiler yarışması! Hem Tek Kişilik Pratik hem İki Kişilik Düello!',
             tags: ['🪪 Birey & Kültür', '🧭 Yerler & Teknoloji', '🛒 Ekonomi & Vatandaşlık', '🌍 Küresel Bağlantılar'],
             btnText: 'Düelloyu Başlat',
+            topic: 'all'
+          }
+        ]
+      },
+      {
+        id: 'grade4_grand_duel',
+        name: '🏆 4. Sınıf Büyük Karma Düello',
+        icon: '🏆',
+        colorTheme: 'theme-science',
+        tagline: '4 Ana Ders Büyük Şampiyonası',
+        description: 'Matematik, Türkçe, Fen Bilimleri ve Sosyal Bilgiler derslerinin tamamından (402 özgün soru havuzundan) dengeli sorular çeken büyük 4. Sınıf Şampiyonası! 🏆🌟',
+        badge: '🌟 402 Soru Süper Şampiyona',
+        topics: [
+          { id: 'all', label: '🌟 4 Ana Ders Büyük Karma' }
+        ],
+        games: [
+          {
+            id: 'grade4_grand_duel',
+            active: true,
+            title: '4. Sınıf Büyük Karma Düello (Matematik • Türkçe • Fen • Sosyal)',
+            icon: '🏆',
+            badge: '🏆 402 Soru Büyük Şampiyona',
+            featureTag: '⭐ 4 Ana Ders Harmanı',
+            description: 'Matematik, Türkçe, Fen Bilimleri ve Sosyal Bilgiler derslerinin tüm ünite ve öğrenme alanlarından rastgele sorularla 4. sınıfın şampiyonu sen ol! Hem Tek Kişilik Pratik hem İki Kişilik Düello! 🥇🎯',
+            tags: ['🧮 Matematik (96 Soru)', '📚 Türkçe (96 Soru)', '🔬 Fen Bilimleri (105 Soru)', '🗺️ Sosyal Bilgiler (105 Soru)'],
+            btnText: 'Büyük Düelloyu Başlat',
             topic: 'all'
           }
         ]
