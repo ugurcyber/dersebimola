@@ -97,7 +97,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.7.0">
+  <link rel="stylesheet" href="style.css?v=8.8.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -741,39 +741,82 @@
           <div class="arcade-games-grid">
             <!-- Oyun 1: ⚔️ Çarpma Savaşı (Halat Çekme Düellosu) -->
             <div class="arcade-game-card theme-tug" data-arcade-game="tug" role="button" tabindex="0">
+              <div class="arcade-card-hero-banner banner-tug" aria-hidden="true">
+                <div class="banner-scene scene-tug">
+                  <div class="banner-tug-team team-blue">
+                    <span class="mini-puller-icon">🤖</span>
+                    <span class="mini-team-pill">Mavi</span>
+                  </div>
+                  <div class="banner-tug-rope">
+                    <div class="rope-line"></div>
+                    <div class="rope-center-badge">
+                      <span class="badge-shield">🛡️</span>
+                      <span class="badge-bolt">⚡</span>
+                    </div>
+                  </div>
+                  <div class="banner-tug-team team-orange">
+                    <span class="mini-puller-icon">🦊</span>
+                    <span class="mini-team-pill">Turuncu</span>
+                  </div>
+                </div>
+              </div>
               <div class="arcade-card-top">
-                <span class="arcade-card-emoji">⚔️</span>
-                <span class="arcade-card-tag">2 Kişilik Düello</span>
+                <span class="arcade-card-tag">⚔️ 2 Kişilik Düello</span>
+                <span class="arcade-card-chip chip-orange">🔥 Halat Çekme</span>
               </div>
               <h3 class="arcade-card-title">Çarpma Savaşı: Halat Çekme</h3>
               <p class="arcade-card-desc">Aynı anda çarpma ve 4 işlem sorularını çöz, halatı kendi bölgende +5 adıma çekerek kazan!</p>
               <div class="arcade-card-badges">
-                <span>🪢 Halat Çekme</span>
-                <span>⚡ Kolay / Orta / Zor / 4 İşlem</span>
+                <span>🪢 Yaylanan Halat</span>
+                <span>🔥 Kombo &amp; Alev Efekti</span>
               </div>
               <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
             </div>
 
             <!-- Oyun 2: 🧩 Çocuk Sudokusu -->
             <div class="arcade-game-card theme-sudoku" data-arcade-game="sudoku" role="button" tabindex="0">
+              <div class="arcade-card-hero-banner banner-sudoku" aria-hidden="true">
+                <div class="banner-scene scene-sudoku">
+                  <div class="mini-sdk-3d-box">
+                    <div class="mini-sdk-cell cell-apple"><img src="assets/icons/3d/apple.webp" alt="Elma" width="24" height="24"></div>
+                    <div class="mini-sdk-cell cell-banana"><img src="assets/icons/3d/banana.webp" alt="Muz" width="24" height="24"></div>
+                    <div class="mini-sdk-cell cell-strawberry"><img src="assets/icons/3d/strawberry.webp" alt="Çilek" width="24" height="24"></div>
+                    <div class="mini-sdk-cell cell-grape"><img src="assets/icons/3d/grapes.webp" alt="Üzüm" width="24" height="24"></div>
+                  </div>
+                  <span class="mini-sdk-sparkle">✨</span>
+                </div>
+              </div>
               <div class="arcade-card-top">
-                <span class="arcade-card-emoji">🧩</span>
-                <span class="arcade-card-tag">Mantık &amp; Zeka</span>
+                <span class="arcade-card-tag">🧩 Mantık &amp; Zeka</span>
+                <span class="arcade-card-chip chip-green">🍎 4x4 / 6x6</span>
               </div>
               <h3 class="arcade-card-title">Çocuk Sudokusu Atölyesi</h3>
               <p class="arcade-card-desc">4x4 Meyve/Şekil Sudokusu ile 4x4 ve 6x6 Rakam Sudokusu! İpucu al, kontrol et ve bulmacayı çöz.</p>
               <div class="arcade-card-badges">
-                <span>🍎 4x4 Simge/Meyve</span>
-                <span>🔢 4x4 &amp; 6x6 Rakam</span>
+                <span>🍎 3D Canlı Meyveler</span>
+                <span>💡 İpucu &amp; Işıklı Eksen</span>
               </div>
               <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
             </div>
 
             <!-- Oyun 3: ❌⭕ Akıllı XOX (Klasik & Sonsuz 3 Taş) -->
             <div class="arcade-game-card theme-xox" data-arcade-game="xox" role="button" tabindex="0">
+              <div class="arcade-card-hero-banner banner-xox" aria-hidden="true">
+                <div class="banner-scene scene-xox">
+                  <div class="mini-xox-arena">
+                    <span class="neon-piece piece-x">✕</span>
+                    <div class="mini-grid-bars">
+                      <span class="bar h-bar"></span>
+                      <span class="bar v-bar"></span>
+                    </div>
+                    <span class="neon-piece piece-o">○</span>
+                  </div>
+                  <span class="mini-flame-tag">🔥 Sonsuz</span>
+                </div>
+              </div>
               <div class="arcade-card-top">
-                <span class="arcade-card-emoji">❌⭕</span>
-                <span class="arcade-card-tag">2 Kişi &amp; 🤖 Moli AI</span>
+                <span class="arcade-card-tag">❌⭕ 2 Kişi &amp; 🤖 Moli AI</span>
+                <span class="arcade-card-chip chip-purple">🔥 Sonsuz 3 Taş</span>
               </div>
               <h3 class="arcade-card-title">Akıllı XOX: Sonsuz 3 Taş</h3>
               <p class="arcade-card-desc">Arkadaşınla veya Moli'ye karşı oyna! 🔥 Sonsuz Modda 4. taşı koyduğunda ilk taşın silinir, beraberlik yok!</p>
@@ -786,45 +829,90 @@
 
             <!-- Oyun 4: 🧠 Hafıza Kartları Düellosu -->
             <div class="arcade-game-card theme-memory" data-arcade-game="memory" role="button" tabindex="0">
+              <div class="arcade-card-hero-banner banner-memory" aria-hidden="true">
+                <div class="banner-scene scene-memory">
+                  <div class="mini-card-pair">
+                    <div class="mini-flip-card card-back">
+                      <span class="card-pattern-icon">❓</span>
+                    </div>
+                    <div class="mini-flip-card card-front">
+                      <img src="assets/icons/3d/star.webp" alt="Yıldız" width="28" height="28">
+                    </div>
+                  </div>
+                  <span class="mini-burst-sparkle">⭐</span>
+                </div>
+              </div>
               <div class="arcade-card-top">
-                <span class="arcade-card-emoji">🧠</span>
-                <span class="arcade-card-tag">1 veya 2 Kişilik</span>
+                <span class="arcade-card-tag">🧠 1 veya 2 Kişilik</span>
+                <span class="arcade-card-chip chip-sky">🐾 4 Tema</span>
               </div>
               <h3 class="arcade-card-title">Hafıza Kartları: Eşini Bul</h3>
               <p class="arcade-card-desc">4x3 veya 4x4 kartları çevir; Hayvanlar, Uzay, Meyveler veya Eş Anlamlı Kelimeleri eşleştirip puan topla!</p>
               <div class="arcade-card-badges">
                 <span>🐾 4 Farklı Tema</span>
-                <span>🔤 Eş Anlamlı Kelimeler</span>
+                <span>🔤 Eş Anlamlı Kartlar</span>
               </div>
               <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
             </div>
 
             <!-- Oyun 5: 🌸 Moli'nin Çiçeği: Kelime Bulmaca -->
             <div class="arcade-game-card theme-flower" data-arcade-game="flower" role="button" tabindex="0">
+              <div class="arcade-card-hero-banner banner-flower" aria-hidden="true">
+                <div class="banner-scene scene-flower">
+                  <div class="mini-flower-wrapper">
+                    <div class="mini-flower-petals">
+                      <span class="mini-petal p1"></span>
+                      <span class="mini-petal p2"></span>
+                      <span class="mini-petal p3"></span>
+                      <span class="mini-petal p4"></span>
+                      <span class="mini-petal p5"></span>
+                      <span class="mini-petal p6"></span>
+                      <span class="mini-petal p7"></span>
+                    </div>
+                    <div class="mini-flower-face">
+                      <span class="face-smile">😊</span>
+                    </div>
+                  </div>
+                  <span class="mini-floating-leaf">🍃</span>
+                </div>
+              </div>
               <div class="arcade-card-top">
-                <span class="arcade-card-emoji">🌸</span>
-                <span class="arcade-card-tag">Sınıfça Kelime Oyunu</span>
+                <span class="arcade-card-tag">🌸 Sınıfça Kelime</span>
+                <span class="arcade-card-chip chip-pink">📚 5 Kategori</span>
               </div>
               <h3 class="arcade-card-title">Moli'nin Çiçeği: Kelime Bulmaca</h3>
               <p class="arcade-card-desc">Çiçeğin 7 yaprağı dökülmeden Türkçe klavyeden harfleri seçerek gizli kelimeyi veya atasözünü bul!</p>
               <div class="arcade-card-badges">
-                <span>🌸 7 Yaprak Hakkı</span>
-                <span>📚 5 Zengin Kategori</span>
+                <span>🌸 7 Yaprak Can Hakkı</span>
+                <span>⌨️ Türkçe Klavye</span>
               </div>
               <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
             </div>
 
             <!-- Oyun 6: ⚡ Hızlı Parmaklar: Doğru mu Yanlış mı? -->
             <div class="arcade-game-card theme-buzzer" data-arcade-game="buzzer" role="button" tabindex="0">
+              <div class="arcade-card-hero-banner banner-buzzer" aria-hidden="true">
+                <div class="banner-scene scene-buzzer">
+                  <div class="mini-buzzer-unit buzzer-yes">
+                    <span class="buzzer-cap">✔</span>
+                  </div>
+                  <div class="mini-buzzer-lightning">
+                    <span class="lightning-flash">⚡</span>
+                  </div>
+                  <div class="mini-buzzer-unit buzzer-no">
+                    <span class="buzzer-cap">✖</span>
+                  </div>
+                </div>
+              </div>
               <div class="arcade-card-top">
-                <span class="arcade-card-emoji">⚡</span>
-                <span class="arcade-card-tag">2 Kişilik Buzzer</span>
+                <span class="arcade-card-tag">⚡ 2 Kişilik Buzzer</span>
+                <span class="arcade-card-chip chip-amber">⏱️ 1.5s Ceza</span>
               </div>
               <h3 class="arcade-card-title">Hızlı Parmaklar: Doğru / Yanlış</h3>
               <p class="arcade-card-desc">Ortadaki genel kültür, doğa, fen ve matematik ifadesini ilk doğru bilen +1 puan alır; yanlış basan 1.5sn kilitlenir!</p>
               <div class="arcade-card-badges">
-                <span>✅ 48 Soruluk Havuz</span>
-                <span>🔒 1.5sn Ceza Kilidi</span>
+                <span>✅ 48 Zengin İfade</span>
+                <span>🔒 Dokunsal Buzzer</span>
               </div>
               <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
             </div>
@@ -2120,6 +2208,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.7.0" defer></script>
+  <script src="app.js?v=8.8.0" defer></script>
 </body>
 </html>

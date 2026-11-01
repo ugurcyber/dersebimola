@@ -11527,6 +11527,10 @@
       p2Score: 0,
       p1Locked: false,
       p2Locked: false,
+      p1Streak: 0,
+      p2Streak: 0,
+      lastPullText: '',
+      lastPullSide: null,
       isOver: false,
       currentQ: null
     },
@@ -11715,6 +11719,10 @@
     t.ropePos = 0;
     t.p1Locked = false;
     t.p2Locked = false;
+    t.p1Streak = 0;
+    t.p2Streak = 0;
+    t.lastPullText = '';
+    t.lastPullSide = null;
     t.isOver = false;
     t.currentQ = generateTugQuestion(t.diff);
 
@@ -11748,69 +11756,151 @@
     const t = ArcadeHub.tug;
     const q = t.currentQ;
     // ropePos: -5 (Blue wins on left) .. 0 (Center) .. +5 (Orange wins on right)
-    const pct = 50 + (t.ropePos * 8.2);
-    const blueSteps = Math.max(0, -t.ropePos);
-    const orangeSteps = Math.max(0, t.ropePos);
+    const pct = 50 + (t.ropePos * 8.6);
+    const blueSteps = Math.max(0, -Math.floor(t.ropePos));
+    const orangeSteps = Math.max(0, Math.floor(t.ropePos));
 
     let stepsHtml = '';
     for (let i = -5; i <= 5; i++) {
-      const cls = i < 0 ? 'step-blue' : (i > 0 ? 'step-orange' : 'step-center');
-      const activeCls = (i < 0 && t.ropePos <= i) ? 'filled-blue' : ((i > 0 && t.ropePos >= i) ? 'filled-orange' : '');
-      stepsHtml += `<span class="tug-step-dot ${cls} ${activeCls}">${i === -5 ? '🔵' : (i === 5 ? '🟠' : (i === 0 ? '⚡' : ''))}</span>`;
+      const isBlue = i < 0;
+      const isOrange = i > 0;
+      const isCenter = i === 0;
+      let activeCls = '';
+      if (isBlue && t.ropePos <= i) activeCls = 'filled-blue';
+      else if (isOrange && t.ropePos >= i) activeCls = 'filled-orange';
+      else if (isCenter && Math.abs(t.ropePos) < 0.5) activeCls = 'active-center';
+
+      stepsHtml += `
+        <div class="ruler-step-tick ${isBlue ? 'tick-blue' : (isOrange ? 'tick-orange' : 'tick-center')} ${activeCls}">
+          <span class="tick-num">${i === 0 ? '0' : Math.abs(i)}</span>
+          <span class="tick-dot"></span>
+        </div>
+      `;
     }
 
     canvas.innerHTML = `
       <div class="arc-tug-arena">
-        <!-- Üst Halat Çekme Sahnesi -->
-        <div class="tug-rope-banner">
-          <div class="tug-team-side side-blue">
-            <span class="tug-team-badge">🔵 1. Oyuncu (Mavi)</span>
-            <span class="tug-team-steps">Çekilen: <strong>${blueSteps} / 5</strong> (Zafer: ${t.p1Score})</span>
+        <!-- Üst Halat Çekme Sahnesi & Durum Çubuğu -->
+        <div class="tug-top-scoreboard">
+          <div class="tug-team-pill team-blue">
+            <span class="team-dot">🔵</span>
+            <span class="team-name">1. Oyuncu (Mavi)</span>
+            <span class="team-wins">Zafer: <strong>${t.p1Score}</strong></span>
           </div>
-          <div class="tug-center-status" id="tugCenterStatus">
-            ${t.isOver
-              ? (t.ropePos <= -5 ? '🏆 1. OYUNCU (MAVİ) HALATI ÇEKTİ VE KAZANDI! 🎉' : '🏆 2. OYUNCU (TURUNCU) HALATI ÇEKTİ VE KAZANDI! 🎉')
-              : '🪢 Doğru şıkka ilk basan halatı kendi tarafına 1 adım çeker! (+5 adımda zafer)'}
+
+          <div class="tug-match-info">
+            <span class="tug-info-badge">
+              ${t.isOver
+                ? (t.ropePos <= -5 ? '🏆 MAVİ TAKIM HALATI ÇEKTİ VE KAZANDI! 🎉' : '🏆 TURUNCU TAKIM HALATI ÇEKTİ VE KAZANDI! 🎉')
+                : (t.p1Streak >= 3 ? '🔥 MAVİ TAKIM ALEV ALDI (Combo x2)!' : (t.p2Streak >= 3 ? '🔥 TURUNCU TAKIM ALEV ALDI (Combo x2)!' : '🪢 Doğru cevaba ilk basan halatı 1 adım çeker!'))}
+            </span>
           </div>
-          <div class="tug-team-side side-orange">
-            <span class="tug-team-badge">🟠 2. Oyuncu (Turuncu)</span>
-            <span class="tug-team-steps">Çekilen: <strong>${orangeSteps} / 5</strong> (Zafer: ${t.p2Score})</span>
+
+          <div class="tug-team-pill team-orange">
+            <span class="team-dot">🟠</span>
+            <span class="team-name">2. Oyuncu (Turuncu)</span>
+            <span class="team-wins">Zafer: <strong>${t.p2Score}</strong></span>
           </div>
         </div>
 
-        <div class="tug-rope-track-wrap">
-          <div class="tug-zone-label zone-blue">🔵 MAVİ ZAFER BÖLGESİ</div>
-          <div class="tug-rope-line">
-            <div class="tug-steps-row">${stepsHtml}</div>
-            <div class="tug-knot-marker" id="tugKnotMarker" style="left: ${pct}%;">
-              <span class="tug-knot-flag">🚩</span>
-              <img src="assets/mascot/moli.webp" class="tug-knot-moli" alt="Moli" width="44" height="44">
+        <!-- Gerçek Halat Çekme Sahnesi (3D Maskotlar, Halat ve Düğüm) -->
+        <div class="tug-stage-canvas-wrap">
+          <div class="tug-rope-scene-header">
+            <div class="tug-zone-target zone-left">⬅️ MAVİ HEDEF (+5)</div>
+            <div class="tug-center-pin">📍 ORTA ÇİZGİ</div>
+            <div class="tug-zone-target zone-right">TURUNCU HEDEF (+5) ➡️</div>
+          </div>
+
+          <div class="tug-rope-arena-field">
+            <!-- Sol Çekici (Mavi Maskot) -->
+            <div class="tug-puller puller-blue ${t.ropePos < 0 ? 'pulling-hard' : ''}">
+              <div class="puller-avatar-box">
+                <span class="puller-emoji">🤖</span>
+                <span class="puller-flag">🔵</span>
+              </div>
+              <div class="puller-hands-rope"></div>
+              <span class="puller-score-tag">${blueSteps} / 5</span>
+            </div>
+
+            <!-- Kalın Dokulu Halat ve Hareketli Düğüm -->
+            <div class="tug-braided-rope-body">
+              <div class="tug-rope-texture-strip"></div>
+              
+              <!-- Orta Düğüm ve Moli Hakem -->
+              <div class="tug-knot-carrier ${t.lastPullSide ? 'pull-active-' + t.lastPullSide : ''}" style="left: ${pct}%;">
+                <div class="tug-knot-ribbon">🎀</div>
+                <div class="tug-knot-referee">
+                  <img src="assets/mascot/moli.webp" alt="Hakem Moli" class="referee-moli-img" width="52" height="52">
+                </div>
+                <div class="tug-knot-needle"></div>
+                ${t.lastPullText ? `<div class="tug-floating-bubble float-${t.lastPullSide}">${t.lastPullText}</div>` : ''}
+              </div>
+            </div>
+
+            <!-- Sağ Çekici (Turuncu Maskot) -->
+            <div class="tug-puller puller-orange ${t.ropePos > 0 ? 'pulling-hard' : ''}">
+              <div class="puller-hands-rope"></div>
+              <div class="puller-avatar-box">
+                <span class="puller-emoji">🦊</span>
+                <span class="puller-flag">🟠</span>
+              </div>
+              <span class="puller-score-tag">${orangeSteps} / 5</span>
             </div>
           </div>
-          <div class="tug-zone-label zone-orange">🟠 TURUNCU ZAFER BÖLGESİ</div>
+
+          <!-- Adım İşaretçileri Cetveli (-5 .. 0 .. +5) -->
+          <div class="tug-ruler-track">
+            ${stepsHtml}
+          </div>
         </div>
 
-        <!-- İkiye Bölünmüş Oyuncu Soru Ekranları -->
+        <!-- İkiye Bölünmüş 3D Dokunsal Oyuncu Panelleri -->
         <div class="tug-split-players">
-          <!-- Sol: 1. Oyuncu (Mavi) -->
-          <div class="tug-player-card player-blue ${t.p1Locked ? 'is-locked' : ''}" id="tugP1Card">
-            <div class="tug-player-header">🔵 1. Oyuncu (Mavi Köşe)</div>
-            <div class="tug-question-box">${q.text}</div>
+          <!-- Sol: 1. Oyuncu (Mavi Köşe) -->
+          <div class="tug-player-card player-blue ${t.p1Locked ? 'is-locked' : ''} ${t.p1Streak >= 3 ? 'is-on-fire' : ''}" id="tugP1Card">
+            <div class="tug-card-top-bar">
+              <div class="player-corner-title">
+                <span class="corner-dot">🔵</span>
+                <span>1. Oyuncu (Mavi Köşe)</span>
+              </div>
+              ${t.p1Streak >= 3 ? '<div class="fire-combo-badge">🔥 ALEV ALDI (Combo x2)</div>' : (t.p1Streak > 1 ? `<div class="streak-badge">⭐ ${t.p1Streak}x Seri</div>` : '')}
+            </div>
+
+            <div class="tug-question-box">
+              <span class="q-label">Hemen Çöz:</span>
+              <span class="q-math-text">${q.text}</span>
+            </div>
+
             <div class="tug-options-row">
-              ${q.options.map((opt, idx) => `
-                <button class="tug-opt-btn btn-blue" data-tug-p="1" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>${opt}</button>
+              ${q.options.map((opt) => `
+                <button class="tug-opt-btn btn-blue" data-tug-p="1" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>
+                  <span class="btn-opt-num">${opt}</span>
+                </button>
               `).join('')}
             </div>
             <div class="tug-lock-msg">🔒 Yanlış cevap! 1.2 sn kilitlendi...</div>
           </div>
 
-          <!-- Sağ: 2. Oyuncu (Turuncu) -->
-          <div class="tug-player-card player-orange ${t.p2Locked ? 'is-locked' : ''}" id="tugP2Card">
-            <div class="tug-player-header">🟠 2. Oyuncu (Turuncu Köşe)</div>
-            <div class="tug-question-box">${q.text}</div>
+          <!-- Sağ: 2. Oyuncu (Turuncu Köşe) -->
+          <div class="tug-player-card player-orange ${t.p2Locked ? 'is-locked' : ''} ${t.p2Streak >= 3 ? 'is-on-fire' : ''}" id="tugP2Card">
+            <div class="tug-card-top-bar">
+              <div class="player-corner-title">
+                <span class="corner-dot">🟠</span>
+                <span>2. Oyuncu (Turuncu Köşe)</span>
+              </div>
+              ${t.p2Streak >= 3 ? '<div class="fire-combo-badge">🔥 ALEV ALDI (Combo x2)</div>' : (t.p2Streak > 1 ? `<div class="streak-badge">⭐ ${t.p2Streak}x Seri</div>` : '')}
+            </div>
+
+            <div class="tug-question-box">
+              <span class="q-label">Hemen Çöz:</span>
+              <span class="q-math-text">${q.text}</span>
+            </div>
+
             <div class="tug-options-row">
-              ${q.options.map((opt, idx) => `
-                <button class="tug-opt-btn btn-orange" data-tug-p="2" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>${opt}</button>
+              ${q.options.map((opt) => `
+                <button class="tug-opt-btn btn-orange" data-tug-p="2" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>
+                  <span class="btn-opt-num">${opt}</span>
+                </button>
               `).join('')}
             </div>
             <div class="tug-lock-msg">🔒 Yanlış cevap! 1.2 sn kilitlendi...</div>
@@ -11837,8 +11927,34 @@
 
     if (val === t.currentQ.answer) {
       audio.playCorrect();
-      // 1. Oyuncu sola (-1), 2. Oyuncu sağa (+1) çeker
-      t.ropePos += (playerNum === 1 ? -1 : 1);
+      audio.playPop();
+
+      let pullDist = 1;
+      if (playerNum === 1) {
+        t.p1Streak += 1;
+        t.p2Streak = 0;
+        if (t.p1Streak >= 3) {
+          pullDist = 1.5;
+          t.lastPullText = '🔥 ALEV ALDI! COMBO x2! (+1.5 Çekiş)';
+        } else {
+          t.lastPullText = '+1 ÇEKİŞ! 💪';
+        }
+        t.lastPullSide = 'blue';
+        t.ropePos -= pullDist;
+      } else {
+        t.p2Streak += 1;
+        t.p1Streak = 0;
+        if (t.p2Streak >= 3) {
+          pullDist = 1.5;
+          t.lastPullText = '🔥 ALEV ALDI! COMBO x2! (+1.5 Çekiş)';
+        } else {
+          t.lastPullText = '+1 ÇEKİŞ! 💪';
+        }
+        t.lastPullSide = 'orange';
+        t.ropePos += pullDist;
+      }
+
+      t.ropePos = Math.max(-5, Math.min(5, t.ropePos));
       t.p1Locked = false;
       t.p2Locked = false;
 
@@ -11850,7 +11966,7 @@
         audio.playFanfare();
         if (typeof launchConfetti === 'function') launchConfetti();
         if (!state.isMuted && state.soundEnabled) {
-          const winnerText = t.ropePos <= -5 ? 'Birinci oyuncu Mavi Takım halatı çekti ve kazandı!' : 'İkinci oyuncu Turuncu Takım halatı çekti ve kazandı!';
+          const winnerText = t.ropePos <= -5 ? 'Tebrikler! 1. Oyuncu Mavi Takım halatı çekti ve kazandı!' : 'Tebrikler! 2. Oyuncu Turuncu Takım halatı çekti ve kazandı!';
           audio.speakTurkishText(winnerText);
         }
       } else {
@@ -11860,6 +11976,7 @@
     } else {
       audio.playWrong();
       if (playerNum === 1) {
+        t.p1Streak = 0;
         t.p1Locked = true;
         const c1 = document.getElementById('tugP1Card');
         if (c1) c1.classList.add('is-locked');
@@ -11869,6 +11986,7 @@
           if (el) el.classList.remove('is-locked');
         }, 1200);
       } else {
+        t.p2Streak = 0;
         t.p2Locked = true;
         const c2 = document.getElementById('tugP2Card');
         if (c2) c2.classList.add('is-locked');

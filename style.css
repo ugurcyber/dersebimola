@@ -13275,211 +13275,894 @@ p,
   color: #92400E;
 }
 
-/* OYUN 1: ⚔️ ÇARPMA SAVAŞI (HALAT ÇEKME) */
-.arc-tug-arena {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+/* ==========================================================================
+   V8.8.0: 6 OYUN İÇİN MİNİ ÖNİZLEME VİTRİN SAHNELERİ (GAME BANNERS)
+   ========================================================================== */
 
-.tug-rope-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  background: #FFFFFF;
-  border: 2px solid #E2E8F0;
+.arcade-card-hero-banner {
+  width: 100%;
+  height: 94px;
   border-radius: 18px;
-  padding: 10px 16px;
-}
-
-.tug-team-side {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 0.85rem;
-}
-
-.tug-team-badge {
-  font-family: 'Fredoka', 'Nunito', sans-serif !important;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.tug-center-status {
-  font-family: 'Fredoka', 'Nunito', sans-serif !important;
-  font-size: 0.96rem;
-  font-weight: 600;
-  color: #0F172A;
-  text-align: center;
-}
-
-.tug-rope-track-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: linear-gradient(90deg, #EFF6FF 0%, #FFFBEB 50%, #FFF7ED 100%);
-  border: 2px solid #CBD5E1;
-  border-bottom: 4px solid #94A3B8;
-  border-radius: 22px;
-  padding: 20px 18px;
-}
-
-.tug-zone-label {
-  font-family: 'Fredoka', 'Nunito', sans-serif !important;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 6px 10px;
-  border-radius: 12px;
-  white-space: nowrap;
-}
-
-.tug-zone-label.zone-blue {
-  background: #DBEAFE;
-  color: #1D4ED8;
-}
-
-.tug-zone-label.zone-orange {
-  background: #FFEDD5;
-  color: #C2410C;
-}
-
-.tug-rope-line {
-  flex: 1;
-  height: 14px;
-  background: repeating-linear-gradient(45deg, #D97706, #D97706 10px, #F59E0B 10px, #F59E0B 20px);
-  border-radius: 9999px;
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
+  justify-content: center;
+  margin-bottom: 4px;
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.7), 0 4px 12px rgba(0, 0, 0, 0.05);
+  user-select: none;
 }
 
-.tug-steps-row {
+/* 1. Çarpma Savaşı Banner */
+.banner-tug {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 50%, #FED7AA 100%);
+  border: 2px solid #FDBA74;
+}
+
+.scene-tug {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1;
+  padding: 0 16px;
 }
 
-.tug-step-dot {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  border: 2px solid #94A3B8;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-}
-
-.tug-step-dot.filled-blue {
-  background: #3B82F6;
-  border-color: #1D4ED8;
-}
-
-.tug-step-dot.filled-orange {
-  background: #F97316;
-  border-color: #C2410C;
-}
-
-.tug-knot-marker {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+.banner-tug-team {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: left 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  gap: 2px;
+  z-index: 2;
 }
 
-.tug-knot-flag {
+.mini-puller-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+.team-blue .mini-puller-icon { transform: rotate(-12deg); }
+.team-orange .mini-puller-icon { transform: rotate(12deg); }
+
+.mini-team-pill {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.team-blue .mini-team-pill { background: #DBEAFE; color: #1D4ED8; }
+.team-orange .mini-team-pill { background: #FFEDD5; color: #C2410C; }
+
+.banner-tug-rope {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 8px;
+}
+
+.banner-tug-rope .rope-line {
+  width: 100%;
+  height: 8px;
+  background: repeating-linear-gradient(45deg, #D97706, #D97706 6px, #B45309 6px, #B45309 12px);
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(180, 83, 9, 0.35);
+}
+
+.rope-center-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border: 2px solid #F59E0B;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.35);
+  animation: bannerPulseGlow 2s infinite alternate;
+}
+
+.badge-shield { font-size: 1.15rem; }
+.badge-bolt { position: absolute; font-size: 0.85rem; top: -6px; right: -6px; }
+
+/* 2. Çocuk Sudokusu Banner */
+.banner-sudoku {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #BBF7D0 100%);
+  border: 2px solid #86EFAC;
+}
+
+.scene-sudoku {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.mini-sdk-3d-box {
+  display: grid;
+  grid-template-columns: repeat(2, 34px);
+  grid-template-rows: repeat(2, 34px);
+  gap: 4px;
+  background: #FFFFFF;
+  padding: 5px;
+  border-radius: 14px;
+  border: 2px solid #4ADE80;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2);
+  transform: rotate(-3deg);
+}
+
+.mini-sdk-cell {
+  background: #F0FDF4;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-sdk-cell img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.mini-sdk-sparkle {
+  position: absolute;
+  top: 8px;
+  right: 28px;
+  font-size: 1.3rem;
+  animation: bannerSparkleRotate 3s infinite linear;
+}
+
+/* 3. Akıllı XOX Banner */
+.banner-xox {
+  background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 50%, #E9D5FF 100%);
+  border: 2px solid #D8B4FE;
+}
+
+.scene-xox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  gap: 16px;
+}
+
+.mini-xox-arena {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #2E1065;
+  padding: 8px 18px;
+  border-radius: 18px;
+  border: 2px solid #A855F7;
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.3);
+}
+
+.neon-piece {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.7rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.neon-piece.piece-x {
+  color: #38BDF8;
+  text-shadow: 0 0 10px #0284C7, 0 0 20px #38BDF8;
+}
+
+.neon-piece.piece-o {
+  color: #FB923C;
+  text-shadow: 0 0 10px #EA580C, 0 0 20px #FB923C;
+}
+
+.mini-grid-bars {
+  width: 20px;
+  height: 28px;
+  position: relative;
+}
+
+.mini-grid-bars .bar {
+  background: rgba(255, 255, 255, 0.4);
+  position: absolute;
+}
+
+.mini-grid-bars .h-bar { width: 100%; height: 2px; top: 13px; left: 0; }
+.mini-grid-bars .v-bar { height: 100%; width: 2px; left: 9px; top: 0; }
+
+.mini-flame-tag {
+  position: absolute;
+  top: 6px;
+  right: 18px;
+  background: #FEF3C7;
+  border: 1.5px solid #F59E0B;
+  color: #92400E;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* 4. Hafıza Kartları Banner */
+.banner-memory {
+  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #BAE6FD 100%);
+  border: 2px solid #7DD3FC;
+}
+
+.scene-memory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.mini-card-pair {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mini-flip-card {
+  width: 44px;
+  height: 58px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 14px rgba(2, 132, 199, 0.18);
+  transition: transform 0.2s ease;
+}
+
+.mini-flip-card.card-back {
+  background: linear-gradient(135deg, #0284C7, #0369A1);
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
   font-size: 1.2rem;
-  margin-bottom: -6px;
+  transform: rotate(-8deg);
 }
 
-.tug-knot-moli {
+.mini-flip-card.card-front {
+  background: #FFFFFF;
+  border: 2px solid #38BDF8;
+  transform: rotate(6deg) scale(1.06);
+}
+
+.banner-star-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(245, 158, 11, 0.35));
+}
+
+.mini-burst-sparkle {
+  position: absolute;
+  top: 10px;
+  right: 28px;
+  font-size: 1.15rem;
+  color: #F59E0B;
+}
+
+/* 5. Moli'nin Çiçeği Banner */
+.banner-flower {
+  background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 50%, #FBCFE8 100%);
+  border: 2px solid #F472B6;
+}
+
+.scene-flower {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.mini-flower-wrapper {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-flower-petals {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.mini-petal {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  margin-left: -11px;
+  margin-top: -11px;
+}
+
+.mini-petal.p1 { transform: rotate(0deg) translate(22px); background: #FB7185; }
+.mini-petal.p2 { transform: rotate(51deg) translate(22px); background: #FBBF24; }
+.mini-petal.p3 { transform: rotate(102deg) translate(22px); background: #34D399; }
+.mini-petal.p4 { transform: rotate(154deg) translate(22px); background: #38BDF8; }
+.mini-petal.p5 { transform: rotate(205deg) translate(22px); background: #A78BFA; }
+.mini-petal.p6 { transform: rotate(257deg) translate(22px); background: #F472B6; }
+.mini-petal.p7 { transform: rotate(308deg) translate(22px); background: #FB923C; }
+
+.mini-flower-face {
+  position: relative;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #FEF08A;
+  border: 2.5px solid #F59E0B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25);
+}
+
+.mini-flower-face .face-smile {
+  font-size: 1.15rem;
+}
+
+.mini-floating-leaf {
+  position: absolute;
+  top: 10px;
+  right: 32px;
+  font-size: 1.3rem;
+  animation: bannerLeafFlutter 3s infinite ease-in-out;
+}
+
+/* 6. Hızlı Parmaklar Banner */
+.banner-buzzer {
+  background: linear-gradient(135deg, #FEFCE8 0%, #FEF9C3 50%, #FEF08A 100%);
+  border: 2px solid #FDE047;
+}
+
+.scene-buzzer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  gap: 16px;
+}
+
+.mini-buzzer-unit {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: #FFFFFF;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+}
+
+.mini-buzzer-unit.buzzer-yes {
+  background: linear-gradient(180deg, #10B981, #059669);
+  border: 3px solid #FFFFFF;
+  border-bottom: 5px solid #047857;
+}
+
+.mini-buzzer-unit.buzzer-no {
+  background: linear-gradient(180deg, #EF4444, #DC2626);
+  border: 3px solid #FFFFFF;
+  border-bottom: 5px solid #991B1B;
+}
+
+.mini-buzzer-lightning {
+  font-size: 1.7rem;
+  color: #F59E0B;
+  animation: bannerLightningFlicker 1.5s infinite;
+}
+
+@keyframes bannerPulseGlow {
+  0% { transform: scale(0.96); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25); }
+  100% { transform: scale(1.06); box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45); }
+}
+
+@keyframes bannerSparkleRotate {
+  0% { transform: rotate(0deg) scale(0.9); }
+  50% { transform: rotate(180deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(0.9); }
+}
+
+@keyframes bannerLeafFlutter {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(15deg); }
+}
+
+@keyframes bannerLightningFlicker {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.15); }
+}
+
+/* ==========================================================================
+   OYUN 1: ⚔️ ÇARPMA SAVAŞI (HALAT ÇEKME - GELİŞMİŞ OYUN İÇİ SAHNESİ)
+   ========================================================================== */
+.arc-tug-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 3px solid #E2E8F0;
+  border-bottom: 6px solid #CBD5E1;
+  border-radius: 28px;
+  padding: 18px 22px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Üst Skor Tablosu */
+.tug-top-scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  border-radius: 20px;
+  padding: 10px 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.tug-team-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.tug-team-pill.team-blue {
+  background: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  color: #1D4ED8;
+}
+
+.tug-team-pill.team-orange {
+  background: #FFF7ED;
+  border: 1.5px solid #FED7AA;
+  color: #C2410C;
+}
+
+.tug-match-info {
+  flex: 1;
+  text-align: center;
+}
+
+.tug-info-badge {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #1E293B;
+  background: #FEF3C7;
+  border: 1.5px solid #F59E0B;
+  padding: 6px 16px;
+  border-radius: 999px;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+
+/* Gerçek Halat Çekme Sahnesi (3D Maskotlar & Halat) */
+.tug-stage-canvas-wrap {
+  background: linear-gradient(180deg, #EFF6FF 0%, #F8FAFC 50%, #FFF7ED 100%);
+  border: 3px solid #CBD5E1;
+  border-bottom: 5px solid #94A3B8;
+  border-radius: 24px;
+  padding: 14px 20px 18px 20px;
+  position: relative;
+  overflow: visible;
+}
+
+.tug-rope-scene-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.tug-zone-target.zone-left { color: #1D4ED8; }
+.tug-zone-target.zone-right { color: #C2410C; }
+.tug-center-pin { color: #64748B; font-size: 0.76rem; }
+
+.tug-rope-arena-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 100px;
+  margin: 6px 0;
+}
+
+/* Çekici Karakterler (Pullers) */
+.tug-puller {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 5;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.puller-avatar-box {
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.puller-blue .puller-avatar-box {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  border: 3px solid #FFFFFF;
+}
+
+.puller-orange .puller-avatar-box {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  border: 3px solid #FFFFFF;
+}
+
+.puller-emoji {
+  font-size: 2.2rem;
+}
+
+.puller-flag {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 1rem;
+}
+
+.puller-score-tag {
+  font-family: 'Fredoka', sans-serif !important;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  color: #334155;
+}
+
+.puller-blue.pulling-hard {
+  transform: rotate(-14deg) scale(1.08);
+}
+
+.puller-orange.pulling-hard {
+  transform: rotate(14deg) scale(1.08);
+}
+
+/* Kalın Dokulu Halat */
+.tug-braided-rope-body {
+  flex: 1;
+  height: 22px;
+  margin: 0 16px;
+  background: repeating-linear-gradient(45deg, #B45309, #B45309 12px, #D97706 12px, #D97706 24px);
+  border: 3px solid #78350F;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 6px 14px rgba(120, 53, 15, 0.28);
+}
+
+/* Hareketli Düğüm ve Hakem Moli */
+.tug-knot-carrier {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: left 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tug-knot-ribbon {
+  font-size: 1.4rem;
+  margin-bottom: -10px;
+  z-index: 12;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.tug-knot-referee {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
   background: #FFFFFF;
   border: 3px solid #F59E0B;
-  border-radius: 50%;
-  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 8px 18px rgba(245, 158, 11, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 11;
 }
 
+.referee-moli-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tug-knot-needle {
+  width: 4px;
+  height: 18px;
+  background: #DC2626;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.7);
+  margin-top: -2px;
+}
+
+/* Uçan Yazı (Floating Bubble Pop) */
+.tug-floating-bubble {
+  position: absolute;
+  top: -46px;
+  background: linear-gradient(135deg, #FEF08A 0%, #F59E0B 100%);
+  color: #78350F;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 6px 16px;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+  border: 2px solid #FFFFFF;
+  white-space: nowrap;
+  animation: tugBubblePop 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  pointer-events: none;
+}
+
+.tug-floating-bubble.float-blue {
+  background: linear-gradient(135deg, #BAE6FD 0%, #38BDF8 100%);
+  color: #0369A1;
+  border-color: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.45);
+}
+
+.tug-floating-bubble.float-orange {
+  background: linear-gradient(135deg, #FED7AA 0%, #FB923C 100%);
+  color: #9A3412;
+  border-color: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(251, 146, 60, 0.45);
+}
+
+@keyframes tugBubblePop {
+  0% { transform: translateY(12px) scale(0.7); opacity: 0; }
+  35% { transform: translateY(-4px) scale(1.15); opacity: 1; }
+  75% { transform: translateY(-8px) scale(1); opacity: 1; }
+  100% { transform: translateY(-16px) scale(0.95); opacity: 0; }
+}
+
+/* Adım İşaretçileri Cetveli */
+.tug-ruler-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  padding: 0 40px;
+}
+
+.ruler-step-tick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.tick-num {
+  font-family: 'Fredoka', sans-serif !important;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #94A3B8;
+}
+
+.tick-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #CBD5E1;
+  transition: all 0.2s ease;
+}
+
+.ruler-step-tick.filled-blue .tick-dot {
+  background: #2563EB;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
+  transform: scale(1.3);
+}
+
+.ruler-step-tick.filled-orange .tick-dot {
+  background: #EA580C;
+  box-shadow: 0 0 8px rgba(234, 88, 12, 0.6);
+  transform: scale(1.3);
+}
+
+.ruler-step-tick.active-center .tick-dot {
+  background: #F59E0B;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+
+/* İkiye Bölünmüş 3D Dokunsal Oyuncu Panelleri */
 .tug-split-players {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 18px;
 }
 
 .tug-player-card {
   background: #FFFFFF;
-  border: 2px solid #E2E8F0;
-  border-bottom: 5px solid #CBD5E1;
-  border-radius: 24px;
-  padding: 18px;
+  border: 3px solid #E2E8F0;
+  border-bottom: 6px solid #CBD5E1;
+  border-radius: 26px;
+  padding: 18px 20px;
   text-align: center;
   position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .tug-player-card.player-blue {
-  border-color: #93C5FD;
+  border-color: #BFDBFE;
   border-bottom-color: #2563EB;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F7FF 100%);
 }
 
 .tug-player-card.player-orange {
-  border-color: #FDBA74;
+  border-color: #FED7AA;
   border-bottom-color: #EA580C;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%);
 }
 
-.tug-player-header {
-  font-family: 'Fredoka', 'Nunito', sans-serif !important;
-  font-size: 1.08rem;
-  font-weight: 700;
+/* 🔥 ALEV ALDI (Combo x2) Efekti */
+.tug-player-card.is-on-fire {
+  border-color: #F59E0B !important;
+  border-bottom-color: #DC2626 !important;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.35), 0 14px 34px rgba(239, 68, 68, 0.3) !important;
+  animation: tugFireCardPulse 1.2s infinite alternate;
+}
+
+@keyframes tugFireCardPulse {
+  0% { box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3), 0 12px 24px rgba(239, 68, 68, 0.2); }
+  100% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.55), 0 16px 36px rgba(239, 68, 68, 0.45); }
+}
+
+.tug-card-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.tug-question-box {
+.player-corner-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-family: 'Fredoka', 'Nunito', sans-serif !important;
-  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-size: 1.08rem;
   font-weight: 700;
   color: #0F172A;
-  background: #F8FAFC;
+}
+
+.fire-combo-badge {
+  background: linear-gradient(135deg, #EF4444 0%, #F97316 100%);
+  color: #FFFFFF;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+  animation: tugFireBadgeBounce 0.8s infinite alternate;
+}
+
+.streak-badge {
+  background: #FEF3C7;
+  color: #92400E;
+  font-family: 'Fredoka', sans-serif !important;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #F59E0B;
+}
+
+@keyframes tugFireBadgeBounce {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1.08); }
+}
+
+.tug-question-box {
+  background: #FFFFFF;
   border: 2px solid #E2E8F0;
-  border-radius: 18px;
-  padding: 16px;
+  border-radius: 20px;
+  padding: 14px 16px;
   margin-bottom: 14px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.q-label {
+  display: block;
+  font-family: 'Fredoka', sans-serif !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748B;
+  margin-bottom: 4px;
+}
+
+.q-math-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: clamp(2.2rem, 3.8vw, 3.1rem);
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.1;
+  display: block;
 }
 
 .tug-options-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
 
+/* 3D Dokunsal Butonlar (Büyük ve Basılabilir) */
 .tug-opt-btn {
-  border-radius: 16px;
-  padding: 16px 10px;
+  min-height: 72px;
+  padding: 14px 10px;
+  border-radius: 20px;
   font-family: 'Fredoka', 'Nunito', sans-serif !important;
-  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
   font-weight: 700;
   color: #FFFFFF;
   cursor: pointer;
+  transition: transform 0.1s ease, border-bottom 0.1s ease, box-shadow 0.1s ease;
+  user-select: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tug-opt-btn:active {
+  transform: translateY(4px);
+  border-bottom-width: 2px !important;
 }
 
 .tug-opt-btn.btn-blue {
-  background: linear-gradient(180deg, #3B82F6 0%, #2563EB 100%);
-  border: 1.5px solid #1D4ED8;
-  border-bottom: 4.5px solid #1E40AF;
+  background: linear-gradient(180deg, #3B82F6 0%, #1D4ED8 100%);
+  border-bottom: 6px solid #1E3A8A !important;
+  box-shadow: 0 6px 16px rgba(29, 78, 216, 0.35);
 }
 
 .tug-opt-btn.btn-orange {
   background: linear-gradient(180deg, #F97316 0%, #EA580C 100%);
-  border: 1.5px solid #C2410C;
-  border-bottom: 4.5px solid #9A3412;
+  border-bottom: 6px solid #9A3412 !important;
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.35);
 }
 
 .tug-lock-msg {
@@ -13488,9 +14171,10 @@ p,
   background: #FEE2E2;
   color: #DC2626;
   font-weight: 800;
-  font-size: 0.86rem;
-  padding: 6px 12px;
-  border-radius: 10px;
+  font-size: 0.88rem;
+  padding: 7px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #FCA5A5;
 }
 
 .tug-player-card.is-locked .tug-lock-msg {
@@ -13498,10 +14182,11 @@ p,
 }
 
 .tug-player-card.is-locked .tug-opt-btn {
-  opacity: 0.45;
+  opacity: 0.4;
   pointer-events: none;
 }
 
+/* ==========================================================================
 /* ==========================================================================
    OYUN 2: 🧩 ÇOCUK SUDOKUSU (MANTIK VE ZEKA ATÖLYESİ - PROFESYONEL 3D TASARIM)
    ========================================================================== */
