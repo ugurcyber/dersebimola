@@ -10423,6 +10423,119 @@
   }
 
   /* ==========================================================================
+     8.5. GÜNÜN BİLMECESİ VERİ HAVUZU VE ETKİLEŞİM MOTORU (36 EĞİTİCİ BİLMECE)
+     ========================================================================== */
+  const DAILY_RIDDLES_POOL = [
+    { q: "Uzun kulaklı, havuç sever, kırda zıp zıp zıplar. Bil bakalım bu nedir?", a: "Tavşan 🐰", spoken: "Tavşan" },
+    { q: "Gökte açık pencere, kalaylı bir tencere. Geceleri parıldar, karanlığı aydınlatır.", a: "Ay 🌙", spoken: "Ay" },
+    { q: "Bilgi verir herkese, en yakın dosttur bize, sayfaları çevrilir, okudukça sevilir.", a: "Kitap 📚", spoken: "Kitap" },
+    { q: "Sarıdır sarkmaz, düşer de korkmaz; gündüzleri parıldar, dünyamızı ısıtır.", a: "Güneş ☀️", spoken: "Güneş" },
+    { q: "Yağmur yağar ıslanır, güneş açar süslenir; yedi renkli köprüdür, gökyüzünde görünür.", a: "Gökkuşağı 🌈", spoken: "Gökkuşağı" },
+    { q: "Ben giderim o gider, güneşte beni takip eder; karanlıkta kaybolur, ışıkta ortaya çıkar.", a: "Gölge 👤", spoken: "Gölge" },
+    { q: "Daldan dala atlar, ceviz fındık toplar; kabarık kuyruğuyla ağaçlarda saklanır.", a: "Sincap 🐿️", spoken: "Sincap" },
+    { q: "Çiçekten çiçeğe konar, vız vız diye dolaşır; petek petek bal yapar, çalışkanlığıyla tanınır.", a: "Arı 🐝", spoken: "Arı" },
+    { q: "Kabuğu sert içi yumuşak, evini sırtında taşır; yavaş yavaş yürür ama yarıştan hiç vazgeçmez.", a: "Kaplumbağa 🐢", spoken: "Kaplumbağa" },
+    { q: "Kuyruğu var at değil, kanadı var kuş değil; pullu elbisesiyle suda yüzer hiç durmaz.", a: "Balık 🐟", spoken: "Balık" },
+    { q: "Gece gökte dizilir, göz kırparak süzülür; saymakla hiç bitmezler, sabah olunca gizlenir.", a: "Yıldızlar ⭐", spoken: "Yıldızlar" },
+    { q: "Gökyüzünden süzülür, pamuk gibi dökülür; her yeri bembeyaz yapar, güneşi görünce erir.", a: "Kar ❄️", spoken: "Kar" },
+    { q: "Ne eli var ne ayağı, sallıyor dalı yaprağı; görünmez ama hissedilir, uçurtmaları uçurur.", a: "Rüzgâr 🌬️", spoken: "Rüzgâr" },
+    { q: "Yazın giyinir yemyeşil olur, kışın soyunur yapraksız kalır; gölgesinde dinlenir, meyvesini toplarız.", a: "Ağaç 🌳", spoken: "Ağaç" },
+    { q: "Uzun boylu, benekli, ağaçların en üst yapraklarına yetişir. Bil bakalım bu hangi hayvan?", a: "Zürafa 🦒", spoken: "Zürafa" },
+    { q: "Büyük kulakları var, uzun bir hortumu var; karada yaşayan en büyük hayvandır.", a: "Fil 🐘", spoken: "Fil" },
+    { q: "Smokin giymiş gibi siyah beyaz tüyleri var; uçamaz ama buzların üzerinde paytak paytak yürür.", a: "Penguen 🐧", spoken: "Penguen" },
+    { q: "Sekiz kolu var, denizlerin dibinde yaşar; tehlike görünce mürekkep püskürtür.", a: "Ahtapot 🐙", spoken: "Ahtapot" },
+    { q: "Tırtılken yaprak yer, kozasında uyur; uyanınca rengârenk kanatlarıyla çiçeklere uçar.", a: "Kelebek 🦋", spoken: "Kelebek" },
+    { q: "Tık tık diye ses çıkarır, iki kolu durmadan döner; zamanı bize gösterir, okula geç kalmamızı önler.", a: "Saat ⏰", spoken: "Saat" },
+    { q: "Akıllı tahtada veya defterde yazar, yanlış yapınca silgiyle dost olur; yazdıkça boyu kısalır.", a: "Kalem ✏️", spoken: "Kalem" },
+    { q: "İçi dolu sevgi ve bilgi, zili çalınca koşarız; arkadaşlarımızla buluşup yeni şeyler öğreniriz.", a: "Okul 🏫", spoken: "Okul" },
+    { q: "Dışı yeşil kütük gibi, içi kırmızı şeker gibi; siyah çekirdekleri var, yazın serinletir bizi.", a: "Karpuz 🍉", spoken: "Karpuz" },
+    { q: "Kat kat elbisesi var, soyarken göz yaşartır; yemeklere lezzet katar, kışın şifa dağıtır.", a: "Soğan 🧅", spoken: "Soğan" },
+    { q: "Turuncu renkli, toprak altında büyür; gözlerimize çok faydalıdır, tavşanlar ona bayılır.", a: "Havuç 🥕", spoken: "Havuç" },
+    { q: "Sabah akşam fırçalarız, inci gibi parıldar; elmayı ısırırken bize yardım eder.", a: "Dişlerimiz 🦷", spoken: "Dişlerimiz" },
+    { q: "Açılınca kubbe gibi yağmurdan korur, kapanınca baston gibi elde durur.", a: "Şemsiye ☂️", spoken: "Şemsiye" },
+    { q: "Üzerinde ülkeler, denizler ve kıtalar var; top gibi yuvarlaktır, çevirdikçe dünyayı gezeriz.", a: "Dünya Küresi 🌍", spoken: "Dünya Küresi" },
+    { q: "İki tekeri var, pedalı çevirdikçe gider; ne benzin ister ne duman çıkarır.", a: "Bisiklet 🚲", spoken: "Bisiklet" },
+    { q: "Uzakları yakın eder, gökyüzündeki yıldızları ve gezegenleri büyütüp gözümüzün önüne getirir.", a: "Teleskop 🔭", spoken: "Teleskop" },
+    { q: "Yönümüzü bulmamıza yardım eder, renkli ibresi her zaman kuzeyi gösterir.", a: "Pusula 🧭", spoken: "Pusula" },
+    { q: "Suyu görünce köpürür, mikropları kovalayıp ellerimizi mis gibi tertemiz yapar.", a: "Sabun 🧼", spoken: "Sabun" },
+    { q: "Kırmızı şapkası var, üzerinde benekleri var; ormanda yağmurdan sonra şemsiye gibi açılır.", a: "Mantar 🍄", spoken: "Mantar" },
+    { q: "Minicik boyu var, kendinden büyük buğday tanesini taşır; yaz boyu çalışıp yuvasına kışlık biriktirir.", a: "Karınca 🐜", spoken: "Karınca" },
+    { q: "Kanatları var kuş değil, bulutların üstünde uçar, insanları şehirden şehre hızla taşır.", a: "Uçak ✈️", spoken: "Uçak" },
+    { q: "Bembeyazdır içilir, kemikleri güçlendirir; sabah kahvaltısında büyümek için bize enerji verir.", a: "Süt 🥛", spoken: "Süt" }
+  ];
+
+  let currentRiddleIndex = 0;
+  let isRiddleRevealed = false;
+
+  function renderDailyRiddle(idx, animateQuestion = false) {
+    const total = DAILY_RIDDLES_POOL.length;
+    currentRiddleIndex = ((idx % total) + total) % total;
+    isRiddleRevealed = false;
+    const item = DAILY_RIDDLES_POOL[currentRiddleIndex];
+
+    const card = document.getElementById('dailyRiddleCard');
+    const qEl = document.getElementById('dailyRiddleQuestion');
+    const aEl = document.getElementById('dailyRiddleAnswer');
+    const cEl = document.getElementById('dailyRiddleCounter');
+    const btnRevealText = document.getElementById('btnRevealRiddleText');
+
+    if (card) {
+      card.classList.remove('is-revealed');
+      if (animateQuestion) {
+        card.classList.remove('riddle-switching');
+        void card.offsetWidth;
+        card.classList.add('riddle-switching');
+      }
+    }
+    if (qEl) qEl.textContent = item.q;
+    if (aEl) aEl.textContent = item.a;
+    if (cEl) cEl.textContent = `#${currentRiddleIndex + 1} / ${total}`;
+    if (btnRevealText) btnRevealText.textContent = 'Cevabı Gör';
+  }
+
+  function initDailyRiddle() {
+    const now = new Date();
+    const startOfYear = new Date(now.getFullYear(), 0, 0);
+    const diff = now - startOfYear;
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const initialIdx = dayOfYear % DAILY_RIDDLES_POOL.length;
+    renderDailyRiddle(initialIdx, false);
+  }
+
+  function revealDailyRiddle() {
+    const card = document.getElementById('dailyRiddleCard');
+    const btnRevealText = document.getElementById('btnRevealRiddleText');
+    const item = DAILY_RIDDLES_POOL[currentRiddleIndex];
+    if (!card || !item) return;
+
+    if (!isRiddleRevealed) {
+      isRiddleRevealed = true;
+      card.classList.add('is-revealed');
+      if (btnRevealText) btnRevealText.textContent = 'Cevap Açıldı!';
+      audio.playCorrect();
+      if (!state.isMuted && state.soundEnabled) {
+        audio.speakTurkishText(`Cevap: ${item.spoken || item.a}`);
+      }
+    } else {
+      isRiddleRevealed = false;
+      card.classList.remove('is-revealed');
+      if (btnRevealText) btnRevealText.textContent = 'Cevabı Gör';
+      audio.playClick();
+    }
+  }
+
+  function nextDailyRiddle() {
+    const total = DAILY_RIDDLES_POOL.length;
+    let nextIdx = (currentRiddleIndex + 1 + Math.floor(Math.random() * (total - 1))) % total;
+    if (nextIdx === currentRiddleIndex) {
+      nextIdx = (currentRiddleIndex + 1) % total;
+    }
+    audio.playPop();
+    renderDailyRiddle(nextIdx, true);
+  }
+
+
+  /* ==========================================================================
      9. SINIF -> DERS -> KONU HİYERARŞİK MÜFREDAT YAPISI (DİNAMİK LOBİ SİSTEMİ)
      ========================================================================== */
 
@@ -17175,6 +17288,30 @@
       addTapListener(btnDesktopMenu, toggleMobileSidebar);
     }
 
+    const btnRevealRiddle = document.getElementById('btnRevealRiddle');
+    if (btnRevealRiddle) {
+      addTapListener(btnRevealRiddle, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        revealDailyRiddle();
+      });
+    }
+
+    const btnNextRiddle = document.getElementById('btnNextRiddle');
+    if (btnNextRiddle) {
+      addTapListener(btnNextRiddle, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        nextDailyRiddle();
+      });
+    }
+
+    const dailyRiddleAnswerBox = document.getElementById('dailyRiddleAnswerBox');
+    if (dailyRiddleAnswerBox) {
+      addTapListener(dailyRiddleAnswerBox, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        revealDailyRiddle();
+      });
+    }
+
     const btnDesktopHeroStart = document.getElementById('btnDesktopHeroStart');
     const modalSelectGrade = document.getElementById('modalSelectGrade');
     if (btnDesktopHeroStart) {
@@ -17334,6 +17471,7 @@
     updateTeacherAuthUI();
     updateGameModeUI();
     updatePlayerNamesUI();
+    initDailyRiddle();
     renderSubjects();
     openHomePage(); // Varsayılan olarak Ana Sayfa Vitrini ile başla!
 

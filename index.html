@@ -97,7 +97,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=7.6.0">
+  <link rel="stylesheet" href="style.css?v=7.7.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -423,6 +423,34 @@
                     </span>
                     <span class="btn-text">Hemen Başla</span>
                   </button>
+                </div>
+
+                <!-- 💡 GÜNÜN BİLMECESİ (İNTERAKTİF SABAH ETKİNLİĞİ KARTI) -->
+                <div class="daily-riddle-card" id="dailyRiddleCard" aria-label="Günün Bilmecesi">
+                  <div class="daily-riddle-header">
+                    <span class="daily-riddle-badge">
+                      <span class="riddle-bulb-icon" aria-hidden="true">💡</span>
+                      <span>Günün Bilmecesi</span>
+                    </span>
+                    <span class="daily-riddle-counter" id="dailyRiddleCounter">#1 / 36</span>
+                  </div>
+                  <p class="daily-riddle-question" id="dailyRiddleQuestion">
+                    Uzun kulaklı, havuç sever, kırda zıp zıp zıplar. Bil bakalım bu nedir?
+                  </p>
+                  <div class="daily-riddle-answer-box" id="dailyRiddleAnswerBox" aria-live="polite">
+                    <span class="riddle-answer-mystery" id="dailyRiddleMystery">❓ Cevap burada gizli!</span>
+                    <span class="riddle-answer-text" id="dailyRiddleAnswer">Tavşan 🐰</span>
+                  </div>
+                  <div class="daily-riddle-actions">
+                    <button class="riddle-action-btn btn-riddle-reveal" id="btnRevealRiddle" type="button">
+                      <span aria-hidden="true">👀</span>
+                      <span id="btnRevealRiddleText">Cevabı Gör</span>
+                    </button>
+                    <button class="riddle-action-btn btn-riddle-next" id="btnNextRiddle" type="button">
+                      <span aria-hidden="true">🔄</span>
+                      <span>Başka Bilmece</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1743,6 +1771,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=7.6.0" defer></script>
+  <script src="app.js?v=7.7.0" defer></script>
 </body>
 </html>

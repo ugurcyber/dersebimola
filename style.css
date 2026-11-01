@@ -12173,3 +12173,234 @@ p,
     font-size: 1rem;
   }
 }
+
+
+/* ==========================================================================
+   V7.7.0: 💡 GÜNÜN BİLMECESİ KARTI (İNTERAKTİF SABAH ETKİNLİĞİ)
+   ========================================================================== */
+
+.daily-riddle-card {
+  width: 100%;
+  max-width: 440px;
+  margin: clamp(10px, 1.8vh, 18px) auto 0 auto;
+  padding: clamp(10px, 1.4vh, 14px) clamp(14px, 1.6vw, 18px);
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%) !important;
+  border: 2px solid #FDE68A !important;
+  border-bottom: 4.5px solid #F59E0B !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.14) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+  position: relative;
+  perspective: 700px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.daily-riddle-card.riddle-switching {
+  animation: riddleCardPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes riddleCardPop {
+  0% { transform: scale(0.96); opacity: 0.75; }
+  60% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.daily-riddle-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.daily-riddle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  color: #B45309;
+  border: 1.5px solid #FCD34D;
+  border-radius: 9999px;
+  padding: 3px 11px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.12);
+}
+
+.riddle-bulb-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  animation: bulbPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes bulbPulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.15); filter: brightness(1.15); }
+}
+
+.daily-riddle-counter {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #92400E;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  border: 1px solid #FDE68A;
+}
+
+.daily-riddle-question {
+  font-family: 'Nunito', sans-serif !important;
+  font-size: clamp(0.88rem, 1.02vw, 0.98rem);
+  font-weight: 800;
+  color: #1E293B;
+  line-height: 1.38;
+  margin: 2px 0;
+}
+
+/* Cevap Alanı: Çevirme (3D Flip) ve Bulanıklıktan Netleşme Animasyonu */
+.daily-riddle-answer-box {
+  width: 100%;
+  min-height: 34px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1.5px dashed #F59E0B;
+  border-radius: 12px;
+  padding: 5px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.28s ease, border-color 0.28s ease, transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.riddle-answer-mystery {
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #B45309;
+  transition: opacity 0.22s ease, transform 0.25s ease;
+}
+
+.riddle-answer-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #047857;
+  opacity: 0;
+  filter: blur(6px);
+  transform: rotateX(-90deg) scale(0.9);
+  transition: opacity 0.3s ease, filter 0.3s ease, transform 0.36s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.daily-riddle-card.is-revealed .daily-riddle-answer-box {
+  background: #ECFDF5;
+  border: 1.5px solid #10B981;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.15);
+}
+
+.daily-riddle-card.is-revealed .riddle-answer-mystery {
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  pointer-events: none;
+}
+
+.daily-riddle-card.is-revealed .riddle-answer-text {
+  opacity: 1;
+  filter: blur(0);
+  transform: rotateX(0deg) scale(1);
+}
+
+/* Butonlar: 👀 Cevabı Gör & 🔄 Başka Bilmece */
+.daily-riddle-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.riddle-action-btn {
+  flex: 1;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease, background 0.14s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.riddle-action-btn:hover {
+  transform: translateY(-1.5px);
+}
+
+.riddle-action-btn:active {
+  transform: translateY(2px);
+}
+
+.btn-riddle-reveal {
+  background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%) !important;
+  border: 1.5px solid #D97706 !important;
+  border-bottom: 3.5px solid #B45309 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 3px 8px rgba(217, 119, 6, 0.22);
+}
+
+.daily-riddle-card.is-revealed .btn-riddle-reveal {
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%) !important;
+  border-color: #059669 !important;
+  border-bottom-color: #047857 !important;
+  box-shadow: 0 3px 8px rgba(16, 185, 129, 0.22);
+}
+
+.btn-riddle-next {
+  background: #FFFFFF !important;
+  border: 1.5px solid #FCD34D !important;
+  border-bottom: 3.5px solid #F59E0B !important;
+  color: #92400E !important;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.1);
+}
+
+.btn-riddle-next:hover {
+  background: #FFFBEB !important;
+}
+
+@media (max-height: 700px) {
+  .daily-riddle-card {
+    margin-top: 8px;
+    padding: 7px 12px;
+    gap: 4px;
+  }
+  .daily-riddle-question {
+    font-size: 0.82rem;
+    line-height: 1.28;
+  }
+  .daily-riddle-answer-box {
+    min-height: 28px;
+    padding: 3px 10px;
+  }
+  .riddle-action-btn {
+    padding: 4px 10px;
+    font-size: 0.76rem;
+  }
+}
