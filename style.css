@@ -101,15 +101,7 @@ h1, h2, h3, h4, h5, h6 {
    Göz yormayan, ferah buz mavisi / kırık beyaz zemin (#F8FAFC)
    ========================================================================== */
 .bg-mesh {
-  display: block !important;
-  position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse at 50% 20%, rgba(6, 182, 212, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse at 85% 75%, rgba(10, 147, 150, 0.22) 0%, transparent 55%),
-    radial-gradient(ellipse at 15% 80%, rgba(4, 43, 51, 0.4) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
+  display: none !important;
 }
 
 .bg-mesh::after {
@@ -11872,16 +11864,19 @@ input:checked + .slider:before {
    AKILLI TAHTA DOSTU SICAK ARKA PLAN + EĞİTİCİ DESENLER (DOODLES)
    ========================================================================== */
 
-/* 1. AKILLI TAHTA DOSTU SICAK KREM / FİLDİŞİ ARKA PLAN VE EĞİTİCİ DOODLE DESENİ */
+/* 1. ARKA PLAN: TERTEMİZ AYDINLIK BEYAZ (#FFFFFF) */
+html,
+body,
+.app-layout,
 .app-main-wrapper,
 #viewLobby,
 .app-main-wrapper:has(#homeShowcaseSection:not(.hide)) {
-  background: linear-gradient(135deg, #fdfbf7 0%, #f4efe6 50%, #eef5f9 100%) !important;
+  background: #FFFFFF !important;
   position: relative;
 }
 
 .home-showcase-section {
-  background: linear-gradient(135deg, #fdfbf7 0%, #f4efe6 50%, #eef5f9 100%) !important;
+  background: #FFFFFF !important;
   position: relative;
   isolation: isolate;
 }
@@ -14208,4 +14203,20 @@ moly-mascot,
   .moly-mascot-component {
     height: clamp(150px, 26vh, 195px) !important;
   }
+}
+
+
+/* ==========================================================================
+   V8.1.0: TAM BEYAZ ARKA PLAN (#FFFFFF)
+   ========================================================================== */
+html,
+body,
+.app-layout,
+.app-main-wrapper,
+#viewLobby,
+.home-showcase-section,
+.view-container,
+.bg-mesh {
+  background: #FFFFFF !important;
+  background-color: #FFFFFF !important;
 }
