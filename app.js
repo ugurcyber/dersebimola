@@ -11833,6 +11833,58 @@
   // =========================================================================
   // OYUN 2: 🧩 ÇOCUK SUDOKUSU (MANTIK VE ZEKA ATÖLYESİ)
   // =========================================================================
+  const SUDOKU_ITEMS_MAP = {
+    // 3D Canlı Meyveler
+    '🍎': { type: 'img', src: 'assets/icons/3d/apple.webp', alt: 'Elma', name: 'Elma' },
+    '🍌': { type: 'img', src: 'assets/icons/3d/banana.webp', alt: 'Muz', name: 'Muz' },
+    '🍓': { type: 'img', src: 'assets/icons/3d/strawberry.webp', alt: 'Çilek', name: 'Çilek' },
+    '🍇': { type: 'img', src: 'assets/icons/3d/grapes.webp', alt: 'Üzüm', name: 'Üzüm' },
+
+    // 3D Şekil & Uzay
+    '⭐': { type: 'img', src: 'assets/icons/3d/star.webp', alt: 'Yıldız', name: 'Yıldız' },
+    '💎': { type: 'img', src: 'assets/icons/3d/gem.webp', alt: 'Elmas', name: 'Elmas' },
+    '🔷': { type: 'img', src: 'assets/icons/3d/gem.webp', alt: 'Elmas', name: 'Elmas' },
+    '❤️': { type: 'img', src: 'assets/icons/3d/heart.webp', alt: 'Kalp', name: 'Kalp' },
+    '🟢': { type: 'img', src: 'assets/icons/3d/heart.webp', alt: 'Kalp', name: 'Kalp' },
+    '🚀': { type: 'img', src: 'assets/icons/3d/rocket.webp', alt: 'Roket', name: 'Roket' },
+    '🔺': { type: 'img', src: 'assets/icons/3d/rocket.webp', alt: 'Roket', name: 'Roket' },
+
+    // Canlı 3D Rakam Rozetleri (1 - 6)
+    '1': { type: 'num', num: '1', cls: 'sdk-n1', name: '1' },
+    '2': { type: 'num', num: '2', cls: 'sdk-n2', name: '2' },
+    '3': { type: 'num', num: '3', cls: 'sdk-n3', name: '3' },
+    '4': { type: 'num', num: '4', cls: 'sdk-n4', name: '4' },
+    '5': { type: 'num', num: '5', cls: 'sdk-n5', name: '5' },
+    '6': { type: 'num', num: '6', cls: 'sdk-n6', name: '6' }
+  };
+
+  function renderSudokuSymbolHtml(val, isKeypad = false) {
+    if (!val) return '';
+    const item = SUDOKU_ITEMS_MAP[val];
+    if (!item) {
+      return `<span class="sdk-raw-sym">${val}</span>`;
+    }
+    if (item.type === 'img') {
+      return `
+        <div class="sdk-symbol-wrap ${isKeypad ? 'is-pad-symbol' : 'is-cell-symbol'}">
+          <img src="${item.src}" alt="${item.alt}" class="sdk-3d-img" draggable="false" loading="eager" />
+          ${isKeypad ? `<span class="sdk-pad-label">${item.name}</span>` : ''}
+        </div>
+      `;
+    }
+    if (item.type === 'num') {
+      return `
+        <div class="sdk-symbol-wrap ${isKeypad ? 'is-pad-num-wrap' : 'is-cell-num-wrap'}">
+          <div class="sdk-num-badge ${item.cls}">
+            <span class="sdk-num-text">${item.num}</span>
+          </div>
+          ${isKeypad ? `<span class="sdk-pad-label">${item.name}</span>` : ''}
+        </div>
+      `;
+    }
+    return `<span class="sdk-raw-sym">${val}</span>`;
+  }
+
   function generateSudokuBoard(mode) {
     const s = ArcadeHub.sudoku;
     s.mode = mode;
@@ -11841,7 +11893,7 @@
       s.symbols = ['🍎', '🍌', '🍓', '🍇'];
     } else if (mode === 'shape4') {
       s.size = 4; s.boxR = 2; s.boxC = 2;
-      s.symbols = ['⭐', '🔷', '🟢', '🔺'];
+      s.symbols = ['⭐', '💎', '❤️', '🚀'];
     } else if (mode === 'num4') {
       s.size = 4; s.boxR = 2; s.boxC = 2;
       s.symbols = ['1', '2', '3', '4'];
@@ -11911,7 +11963,7 @@
       toolbarEl.innerHTML = `
         <div class="arc-toolbar-group">
           <button class="arc-pill-btn ${s.mode === 'fruit4' ? 'active' : ''}" data-sdk-mode="fruit4" type="button">🍎 4x4 Meyve</button>
-          <button class="arc-pill-btn ${s.mode === 'shape4' ? 'active' : ''}" data-sdk-mode="shape4" type="button">⭐ 4x4 Şekil</button>
+          <button class="arc-pill-btn ${s.mode === 'shape4' ? 'active' : ''}" data-sdk-mode="shape4" type="button">⭐ 4x4 Şekil & Uzay</button>
           <button class="arc-pill-btn ${s.mode === 'num4' ? 'active' : ''}" data-sdk-mode="num4" type="button">🔢 4x4 Rakam</button>
           <button class="arc-pill-btn ${s.mode === 'num6' ? 'active' : ''}" data-sdk-mode="num6" type="button">🧠 6x6 Rakam</button>
         </div>
@@ -11934,6 +11986,19 @@
     const s = ArcadeHub.sudoku;
     const N = s.size;
 
+    const selVal = (s.selectedCell && s.userGrid[s.selectedCell.r] && s.userGrid[s.selectedCell.r][s.selectedCell.c]) 
+      ? s.userGrid[s.selectedCell.r][s.selectedCell.c] 
+      : null;
+
+    let emptyCount = 0;
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        if (s.puzzle[r][c] === null && !s.userGrid[r][c]) {
+          emptyCount++;
+        }
+      }
+    }
+
     let gridHtml = '';
     for (let r = 0; r < N; r++) {
       for (let c = 0; c < N; c++) {
@@ -11941,12 +12006,33 @@
         const val = s.userGrid[r][c] || '';
         const isSel = s.selectedCell && s.selectedCell.r === r && s.selectedCell.c === c;
         const st = s.statusStates[r][c];
+
+        // Aktif hücrenin bulunduğu satır, sütun veya alt kutu yumuşak arka plan aydınlatması
+        let inAxis = false;
+        if (s.selectedCell) {
+          const sameRow = (s.selectedCell.r === r);
+          const sameCol = (s.selectedCell.c === c);
+          const sameBox = (Math.floor(r / s.boxR) === Math.floor(s.selectedCell.r / s.boxR) && Math.floor(c / s.boxC) === Math.floor(s.selectedCell.c / s.boxC));
+          if (sameRow || sameCol || sameBox) inAxis = true;
+        }
+
+        // Tahtadaki aynı simgeyi taşıyan diğer kutuları vurgulama (öğrencinin takip edebilmesi için)
+        const isSameVal = Boolean(selVal && val && val === selVal);
+
+        // Kutu bölme kalın çizgileri (4x4'te 2x2, 6x6'da 2x3 kutular)
         const borderRight = ((c + 1) % s.boxC === 0 && c < N - 1) ? 'sdk-box-right' : '';
         const borderBottom = ((r + 1) % s.boxR === 0 && r < N - 1) ? 'sdk-box-bottom' : '';
+
+        // Dama tahtası şeklinde kutu tonlaması
+        const boxRIdx = Math.floor(r / s.boxR);
+        const boxCIdx = Math.floor(c / s.boxC);
+        const boxTint = ((boxRIdx + boxCIdx) % 2 === 0) ? 'sdk-box-tint-a' : 'sdk-box-tint-b';
+
         gridHtml += `
-          <button class="sdk-cell ${isFixed ? 'is-fixed' : 'is-editable'} ${isSel ? 'is-selected' : ''} ${st ? 'cell-' + st : ''} ${borderRight} ${borderBottom}"
-                  data-sdk-r="${r}" data-sdk-c="${c}" type="button">
-            ${val}
+          <button class="sdk-cell ${isFixed ? 'is-fixed' : 'is-editable'} ${isSel ? 'is-selected' : ''} ${inAxis ? 'in-active-axis' : ''} ${isSameVal ? 'is-same-symbol' : ''} ${st ? 'cell-' + st : ''} ${borderRight} ${borderBottom} ${boxTint}"
+                  data-sdk-r="${r}" data-sdk-c="${c}" type="button" aria-label="${val ? val : 'Boş Kutu'}">
+            ${isFixed ? '<span class="sdk-fixed-badge" title="Sabit İpucu">🔒</span>' : ''}
+            ${renderSudokuSymbolHtml(val)}
           </button>
         `;
       }
@@ -11954,29 +12040,62 @@
 
     canvas.innerHTML = `
       <div class="arc-sudoku-arena">
-        <div class="sdk-instructions">
-          💡 <strong>Kural:</strong> Her satırda, her sütunda ve her kalın çerçeveli kutuda aynı simge veya rakam <strong>sadece 1 kez</strong> bulunabilir!
+        <!-- Üst Kural ve Durum Çubuğu -->
+        <div class="sdk-header-panel">
+          <div class="sdk-instructions-pill">
+            <span class="sdk-inst-icon">💡</span>
+            <span class="sdk-inst-text"><strong>Sudoku Kuralı:</strong> Her satır, sütun ve kalın kutuda her simge <strong>yalnızca 1 kez</strong> bulunabilir!</span>
+          </div>
+          <div class="sdk-progress-badge" title="Doldurulması gereken boş kutu sayısı">
+            <span>🎯 Kalan Boş: <strong>${emptyCount}</strong></span>
+          </div>
         </div>
-        ${bannerMsg ? `<div class="sdk-feedback-banner">${bannerMsg}</div>` : ''}
+
+        ${bannerMsg ? `<div class="sdk-feedback-banner ${bannerMsg.includes('TEBRİKLER') ? 'banner-win' : (bannerMsg.includes('hata') ? 'banner-err' : 'banner-info')}">${bannerMsg}</div>` : ''}
 
         <div class="sdk-main-layout">
-          <div class="sdk-board grid-${N}x${N}">
-            ${gridHtml}
+          <!-- Sol / Üst: Şık 3D Ahşap/Oyun Kartı Sudoku Tahtası -->
+          <div class="sdk-board-wrapper">
+            <div class="sdk-board grid-${N}x${N}">
+              ${gridHtml}
+            </div>
           </div>
 
+          <!-- Sağ / Alt: Etkileşimli Tuş Takımı ve Aksiyonlar -->
           <div class="sdk-side-controls">
-            <div class="sdk-pad-title">Seçili Kutuya Yerleştir:</div>
-            <div class="sdk-symbol-pad">
+            <div class="sdk-pad-header">
+              <span class="sdk-pad-icon">👇</span>
+              <span class="sdk-pad-title">Seçili Kutuya Yerleştir:</span>
+            </div>
+            <div class="sdk-symbol-pad sdk-pad-grid-${N}">
               ${s.symbols.map(sym => `
-                <button class="sdk-pad-btn" data-sdk-sym="${sym}" type="button">${sym}</button>
+                <button class="sdk-pad-btn" data-sdk-sym="${sym}" type="button" title="${sym}">
+                  ${renderSudokuSymbolHtml(sym, true)}
+                </button>
               `).join('')}
-              <button class="sdk-pad-btn sdk-btn-erase" id="btnSdkErase" type="button">🧹 Sil</button>
+              <button class="sdk-pad-btn sdk-btn-erase" id="btnSdkErase" type="button" title="Seçili kutuyu temizle">
+                <div class="sdk-symbol-wrap is-pad-symbol">
+                  <span class="sdk-erase-icon">🧹</span>
+                  <span class="sdk-pad-label">Sil</span>
+                </div>
+              </button>
             </div>
 
             <div class="sdk-action-buttons">
-              <button class="tt-ctrl-btn tt-btn-start" id="btnSdkCheck" type="button">✅ Kontrol Et</button>
-              <button class="tt-ctrl-btn tt-btn-bell" id="btnSdkHint" type="button">💡 İpucu Ver</button>
-              <button class="tt-ctrl-btn tt-btn-reset" id="btnSdkNew" type="button">🔄 Yeni Bulmaca</button>
+              <button class="sdk-action-btn sdk-btn-check" id="btnSdkCheck" type="button">
+                <span class="btn-icon">✅</span>
+                <span class="btn-text">Kontrol Et</span>
+              </button>
+              <div class="sdk-action-subgroup">
+                <button class="sdk-action-btn sdk-btn-hint" id="btnSdkHint" type="button">
+                  <span class="btn-icon">💡</span>
+                  <span class="btn-text">İpucu Ver</span>
+                </button>
+                <button class="sdk-action-btn sdk-btn-new" id="btnSdkNew" type="button">
+                  <span class="btn-icon">🔄</span>
+                  <span class="btn-text">Yeni Bulmaca</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -11987,7 +12106,6 @@
       addTapListener(cell, () => {
         const r = parseInt(cell.getAttribute('data-sdk-r'), 10);
         const c = parseInt(cell.getAttribute('data-sdk-c'), 10);
-        if (s.puzzle[r][c] !== null) return;
         s.selectedCell = { r, c };
         audio.playClick();
         renderArcadeSudokuStage();
@@ -11997,9 +12115,16 @@
     canvas.querySelectorAll('[data-sdk-sym]').forEach(btn => {
       addTapListener(btn, () => {
         const sym = btn.getAttribute('data-sdk-sym');
-        if (!s.selectedCell) return;
+        if (!s.selectedCell) {
+          showToast('Lütfen önce yerleştirmek istediğin kutuyu seç!');
+          return;
+        }
         const { r, c } = s.selectedCell;
-        if (s.puzzle[r][c] !== null) return;
+        if (s.puzzle[r][c] !== null) {
+          showToast('🔒 Bu kutu oyunun başında verilen sabit ipucudur, değiştirilemez.');
+          audio.playWrong();
+          return;
+        }
         s.userGrid[r][c] = sym;
         s.statusStates[r][c] = '';
         audio.playPop();
@@ -12011,9 +12136,16 @@
     const btnErase = document.getElementById('btnSdkErase');
     if (btnErase) {
       addTapListener(btnErase, () => {
-        if (!s.selectedCell) return;
+        if (!s.selectedCell) {
+          showToast('Lütfen önce temizlemek istediğin kutuyu seç!');
+          return;
+        }
         const { r, c } = s.selectedCell;
-        if (s.puzzle[r][c] !== null) return;
+        if (s.puzzle[r][c] !== null) {
+          showToast('🔒 Bu kutu oyunun başında verilen sabit ipucudur, silinemez.');
+          audio.playWrong();
+          return;
+        }
         s.userGrid[r][c] = null;
         s.statusStates[r][c] = '';
         audio.playClick();
@@ -12035,7 +12167,7 @@
     });
   }
 
-  function isSudokuCellConflict(grid, N, boxR, boxC, r, c, val) {
+    function isSudokuCellConflict(grid, N, boxR, boxC, r, c, val) {
     if (!val) return false;
     for (let k = 0; k < N; k++) {
       if (k !== c && grid[r][k] === val) return true;
