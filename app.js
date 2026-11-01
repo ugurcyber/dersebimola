@@ -11631,11 +11631,71 @@
 
   function closeArcadeStageToCards() {
     audio.playClick();
+    const oldModal = document.getElementById('arcadeVictoryModal');
+    if (oldModal) oldModal.remove();
     const cardsView = document.getElementById('arcadeCardsView');
     const stageView = document.getElementById('arcadeStageView');
     if (cardsView) cardsView.classList.remove('hide');
     if (stageView) stageView.classList.add('hide');
     ArcadeHub.activeGame = null;
+  }
+
+  function showArcadeVictoryModal({ title, subtitle = '', badgeText = 'ŞAMPİYON', icon = '🏆', onRestart }) {
+    audio.playFanfare();
+    if (typeof launchConfetti === 'function') {
+      launchConfetti();
+      setTimeout(launchConfetti, 450);
+    }
+    const oldModal = document.getElementById('arcadeVictoryModal');
+    if (oldModal) oldModal.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'arcadeVictoryModal';
+    overlay.className = 'arcade-victory-overlay';
+    overlay.innerHTML = `
+      <div class="arcade-victory-dialog">
+        <div class="vic-rays"></div>
+        <div class="vic-icon-ring">
+          <span class="vic-icon">${icon}</span>
+          <span class="vic-sparkle s1">✨</span>
+          <span class="vic-sparkle s2">⭐</span>
+          <span class="vic-sparkle s3">🌟</span>
+        </div>
+        <div class="vic-badge">${badgeText}</div>
+        <h2 class="vic-title">${title}</h2>
+        <p class="vic-sub">${subtitle}</p>
+        <div class="vic-actions">
+          <button class="vic-btn vic-btn-restart" id="btnVicRestart" type="button">
+            <span>🔄</span> Tekrar Oyna
+          </button>
+          <button class="vic-btn vic-btn-hub" id="btnVicHub" type="button">
+            <span>🏠</span> Oyun Merkezine Dön
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const bRestart = overlay.querySelector('#btnVicRestart');
+    if (bRestart) {
+      addTapListener(bRestart, () => {
+        audio.playClick();
+        overlay.classList.add('closing');
+        setTimeout(() => overlay.remove(), 240);
+        if (typeof onRestart === 'function') onRestart();
+      });
+    }
+
+    const bHub = overlay.querySelector('#btnVicHub');
+    if (bHub) {
+      addTapListener(bHub, () => {
+        audio.playClick();
+        overlay.classList.add('closing');
+        setTimeout(() => overlay.remove(), 240);
+        closeArcadeStageToCards();
+      });
+    }
   }
 
   function launchArcadeGame(gameId) {
@@ -11969,12 +12029,21 @@
           const winnerText = t.ropePos <= -5 ? 'Tebrikler! 1. Oyuncu Mavi Takım halatı çekti ve kazandı!' : 'Tebrikler! 2. Oyuncu Turuncu Takım halatı çekti ve kazandı!';
           audio.speakTurkishText(winnerText);
         }
+        const winnerTitle = t.ropePos <= -5 ? '1. OYUNCU (MAVİ) KAZANDI! 🏆' : '2. OYUNCU (TURUNCU) KAZANDI! 🏆';
+        showArcadeVictoryModal({
+          title: winnerTitle,
+          subtitle: 'Çarpma düellosunda halatı kendi tarafına çekerek şampiyon oldun!',
+          badgeText: 'HALAT ŞAMPİYONU',
+          icon: '⚔️',
+          onRestart: () => initArcadeTugGame()
+        });
       } else {
         t.currentQ = generateTugQuestion(t.diff);
         renderArcadeTugStage();
       }
     } else {
       audio.playWrong();
+      if (typeof audio.playIceFreeze === 'function') audio.playIceFreeze();
       if (playerNum === 1) {
         t.p1Streak = 0;
         t.p1Locked = true;
@@ -12197,8 +12266,11 @@
         const boxCIdx = Math.floor(c / s.boxC);
         const boxTint = ((boxRIdx + boxCIdx) % 2 === 0) ? 'sdk-box-tint-a' : 'sdk-box-tint-b';
 
+        const isLastPlaced = s.lastPlaced && s.lastPlaced.r === r && s.lastPlaced.c === c && (Date.now() - s.lastPlaced.time < 1300);
+        const animClass = isLastPlaced ? (s.lastPlaced.hasConflict ? 'cell-shake' : 'cell-pop-in') : '';
+
         gridHtml += `
-          <button class="sdk-cell ${isFixed ? 'is-fixed' : 'is-editable'} ${isSel ? 'is-selected' : ''} ${inAxis ? 'in-active-axis' : ''} ${isSameVal ? 'is-same-symbol' : ''} ${st ? 'cell-' + st : ''} ${borderRight} ${borderBottom} ${boxTint}"
+          <button class="sdk-cell ${isFixed ? 'is-fixed' : 'is-editable'} ${isSel ? 'is-selected' : ''} ${inAxis ? 'in-active-axis' : ''} ${isSameVal ? 'is-same-symbol' : ''} ${st ? 'cell-' + st : ''} ${animClass} ${borderRight} ${borderBottom} ${boxTint}"
                   data-sdk-r="${r}" data-sdk-c="${c}" type="button" aria-label="${val ? val : 'Boş Kutu'}">
             ${isFixed ? '<span class="sdk-fixed-badge" title="Sabit İpucu">🔒</span>' : ''}
             ${renderSudokuSymbolHtml(val)}
@@ -12294,9 +12366,18 @@
           audio.playWrong();
           return;
         }
+        const hasConflict = isSudokuCellConflict(s.userGrid, N, s.boxR, s.boxC, r, c, sym);
         s.userGrid[r][c] = sym;
-        s.statusStates[r][c] = '';
-        audio.playPop();
+        s.lastPlaced = { r, c, hasConflict, time: Date.now() };
+
+        if (hasConflict) {
+          audio.playWrong();
+          s.statusStates[r][c] = 'wrong';
+        } else {
+          audio.playPop();
+          s.statusStates[r][c] = '';
+        }
+        renderArcadeSudokuStage();
         // Otomatik tamamlama kontrolü
         checkSudokuIfFull();
       });
@@ -12398,6 +12479,16 @@
         audio.speakTurkishText('Harikasın! Sudoku bulmacasını hatasız tamamladın!');
       }
       renderArcadeSudokuStage('🎉 TEBRİKLER! Sudoku Bulmacasını Hatasız Tamamladın! 🏆');
+      showArcadeVictoryModal({
+        title: 'MÜKEMMEL ZEKA! 🧩',
+        subtitle: 'Sudoku bulmacasını hiç hata yapmadan eksiksiz tamamladın!',
+        badgeText: 'SUDOKU USTASI',
+        icon: '🧩',
+        onRestart: () => {
+          generateSudokuBoard(s.mode);
+          renderArcadeSudokuStage();
+        }
+      });
     } else if (wrongCount > 0) {
       audio.playWrong();
       renderArcadeSudokuStage(`⚠️ ${wrongCount} kutuda hata var (Kırmızı kutuları kontrol et).`);
@@ -12500,14 +12591,58 @@
     return null;
   }
 
+  function renderXoxPieceHtml(val) {
+    if (!val) return '';
+    if (val === 'X') {
+      return `
+        <div class="xox-stone stone-x">
+          <svg viewBox="0 0 72 72" class="xox-svg-glyph" aria-hidden="true">
+            <defs>
+              <filter id="xGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0284C7" flood-opacity="0.55"/>
+              </filter>
+              <linearGradient id="xGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38BDF8"/>
+                <stop offset="100%" stop-color="#0284C7"/>
+              </linearGradient>
+            </defs>
+            <line x1="18" y1="18" x2="54" y2="54" stroke="url(#xGrad)" stroke-width="12" stroke-linecap="round" filter="url(#xGlow)"/>
+            <line x1="54" y1="18" x2="18" y2="54" stroke="url(#xGrad)" stroke-width="12" stroke-linecap="round" filter="url(#xGlow)"/>
+            <circle cx="36" cy="36" r="4.5" fill="#E0F2FE"/>
+          </svg>
+        </div>
+      `;
+    }
+    if (val === 'O') {
+      return `
+        <div class="xox-stone stone-o">
+          <svg viewBox="0 0 72 72" class="xox-svg-glyph" aria-hidden="true">
+            <defs>
+              <filter id="oGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#EA580C" flood-opacity="0.55"/>
+              </filter>
+              <linearGradient id="oGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FB923C"/>
+                <stop offset="100%" stop-color="#EA580C"/>
+              </linearGradient>
+            </defs>
+            <circle cx="36" cy="36" r="23" stroke="url(#oGrad)" stroke-width="11" fill="none" stroke-linecap="round" filter="url(#oGlow)"/>
+            <circle cx="36" cy="36" r="14" stroke="#FFEDD5" stroke-width="2.5" fill="none" opacity="0.6"/>
+          </svg>
+        </div>
+      `;
+    }
+    return '';
+  }
+
   function renderArcadeXoxStage() {
     const canvas = document.getElementById('arcadeStageCanvas');
     if (!canvas) return;
     const x = ArcadeHub.xox;
 
-    // Sonsuz modda sıradaki hamlede silinecek en eski taşları işaretle
-    const fadingX = (x.infiniteMode && x.movesX.length === 3 && !x.winner) ? x.movesX[0] : -1;
-    const fadingO = (x.infiniteMode && x.movesO.length === 3 && !x.winner) ? x.movesO[0] : -1;
+    // Sonsuz modda 3 taşı olan oyuncuların en eski taşları
+    const oldestX = (x.movesX.length === 3 && !x.winner) ? x.movesX[0] : -1;
+    const oldestO = (x.movesO.length === 3 && !x.winner) ? x.movesO[0] : -1;
 
     let statusText = '';
     if (x.winner === 'X') {
@@ -12538,19 +12673,25 @@
 
         ${x.infiniteMode ? `
           <div class="xox-infinite-hint">
-            🔥 <strong>Sonsuz 3 Taş Kuralı Aktif:</strong> Her oyuncunun tahtada en fazla 3 taşı olabilir. 4. taşını koyduğunda yanıp sönen ilk taşın silinir!
+            🔥 <strong>Sonsuz 3 Taş Kuralı:</strong> Her oyuncunun tahtada en fazla 3 taşı olabilir. 4. taş koyulduğunda <strong>⏳ yanıp sönen ilk taş</strong> otomatik silinir!
           </div>
         ` : ''}
 
         <div class="xox-board-grid">
           ${x.board.map((val, idx) => {
             const isWin = x.winLine.includes(idx);
-            const isFading = (idx === fadingX && x.turn === 'X') || (idx === fadingO && x.turn === 'O');
+            const isOldestX = (x.infiniteMode && idx === oldestX);
+            const isOldestO = (x.infiniteMode && idx === oldestO);
+            const isFadingActive = (isOldestX && x.turn === 'X') || (isOldestO && x.turn === 'O');
+            const isFadingHint = (isOldestX && x.turn !== 'X') || (isOldestO && x.turn !== 'O');
+
             return `
-              <button class="xox-cell ${val ? 'cell-' + val.toLowerCase() : ''} ${isWin ? 'is-win-cell' : ''} ${isFading ? 'is-fading-piece' : ''}"
-                      data-xox-idx="${idx}" type="button" ${val || x.winner || x.aiThinking ? 'disabled' : ''}>
-                <span class="xox-piece-symbol">${val === 'X' ? '❌' : (val === 'O' ? '⭕' : '')}</span>
-                ${isFading ? '<span class="fading-badge">Silinecek</span>' : ''}
+              <button class="xox-cell ${val ? 'cell-' + val.toLowerCase() : ''} ${isWin ? 'is-win-cell' : ''} ${isFadingActive ? 'is-fading-piece is-active-fading' : ''} ${isFadingHint ? 'is-fading-hint' : ''}"
+                      data-xox-idx="${idx}" type="button" ${val || x.winner || x.aiThinking ? 'disabled' : ''} aria-label="${val ? val : 'Boş Kutu'}">
+                <div class="xox-cell-content">
+                  ${renderXoxPieceHtml(val)}
+                </div>
+                ${isFadingActive ? '<div class="fading-badge is-active"><span class="badge-icon">⏳</span><span>Silinecek</span></div>' : (isFadingHint ? '<div class="fading-badge is-hint"><span class="badge-icon">⏳</span><span>1. Taş</span></div>' : '')}
               </button>
             `;
           }).join('')}
@@ -12613,9 +12754,31 @@
         x.scoreX += 1;
         audio.playFanfare();
         if (typeof launchConfetti === 'function') launchConfetti();
+        showArcadeVictoryModal({
+          title: '1. OYUNCU (❌) KAZANDI! 🎉',
+          subtitle: 'Mükemmel bir hamle taktiğiyle 3\'lü sırayı tamamladın!',
+          badgeText: 'XOX ŞAMPİYONU',
+          icon: '❌',
+          onRestart: () => initArcadeXoxGame(true)
+        });
       } else if (res.winner === 'O') {
         x.scoreO += 1;
         audio.playCorrect();
+        showArcadeVictoryModal({
+          title: x.vsAi ? 'MOLİ KAZANDI! 🤖' : '2. OYUNCU (⭕) KAZANDI! 🎉',
+          subtitle: x.vsAi ? 'Moli bu turda harika hamleler yaptı! Rövanş için hemen tekrar dene!' : 'Mükemmel bir hamle taktiğiyle 3\'lü sırayı tamamladın!',
+          badgeText: x.vsAi ? 'MOLİ GALİP' : 'XOX ŞAMPİYONU',
+          icon: '⭕',
+          onRestart: () => initArcadeXoxGame(true)
+        });
+      } else if (res.winner === 'draw') {
+        showArcadeVictoryModal({
+          title: 'DOSTLUK KAZANDI! 🤝',
+          subtitle: 'Her iki taraf da harika savunma yaptı, tahtada beraberlik sağlandı!',
+          badgeText: 'BERABERE',
+          icon: '🤝',
+          onRestart: () => initArcadeXoxGame(true)
+        });
       }
     } else {
       x.turn = (symbol === 'X') ? 'O' : 'X';
@@ -12805,10 +12968,28 @@
         ${headerHtml}
         <div class="memory-cards-grid grid-${m.gridSize}">
           ${m.cards.map((card, idx) => `
-            <button class="mem-card-btn ${card.flipped || card.matched ? 'is-flipped' : ''} ${card.matched ? 'is-matched' : ''}"
-                    data-mem-idx="${idx}" type="button" ${card.flipped || card.matched || m.busy ? 'disabled' : ''}>
-              <span class="mem-card-back">❓</span>
-              <span class="mem-card-front">${card.label}</span>
+            <button class="mem-card-wrapper ${card.flipped || card.matched ? 'is-flipped' : ''} ${card.matched ? 'is-matched' : ''}"
+                    data-mem-idx="${idx}" type="button" ${card.flipped || card.matched || m.busy ? 'disabled' : ''} aria-label="Hafıza Kartı">
+              <div class="mem-card-inner">
+                <!-- Kart Sırtı (3D Arka Yüz) -->
+                <div class="mem-card-face mem-card-back">
+                  <div class="mem-back-border">
+                    <div class="mem-back-stars"><span>✦</span><span>✦</span></div>
+                    <div class="mem-back-moli-badge">
+                      <span class="moli-star-icon">⭐</span>
+                      <span class="moli-label">MOLİ</span>
+                    </div>
+                    <div class="mem-back-stars bottom"><span>✦</span><span>✦</span></div>
+                  </div>
+                </div>
+                <!-- Kart Ön Yüzü -->
+                <div class="mem-card-face mem-card-front">
+                  <div class="mem-card-front-content">
+                    <span class="mem-card-symbol">${card.label}</span>
+                  </div>
+                  ${card.matched ? '<span class="mem-match-burst">✨</span>' : ''}
+                </div>
+              </div>
             </button>
           `).join('')}
         </div>
@@ -12829,7 +13010,8 @@
 
     m.cards[idx].flipped = true;
     m.flippedIndices.push(idx);
-    audio.playPop();
+    if (typeof audio.playCardFlip === 'function') audio.playCardFlip();
+    else audio.playPop();
     renderArcadeMemoryStage();
 
     if (m.flippedIndices.length === 2) {
@@ -12854,6 +13036,30 @@
           if (m.matchedCount >= m.gridSize / 2) {
             audio.playFanfare();
             if (typeof launchConfetti === 'function') launchConfetti();
+            let vicTitle = '';
+            let vicSub = '';
+            if (m.players === 2) {
+              if (m.p1Score > m.p2Score) {
+                vicTitle = '1. ÖĞRENCİ (MAVİ) KAZANDI! 🏆';
+                vicSub = `${m.p1Score} kart çifti bularak hafıza düellosunu kazandın!`;
+              } else if (m.p2Score > m.p1Score) {
+                vicTitle = '2. ÖĞRENCİ (TURUNCU) KAZANDI! 🏆';
+                vicSub = `${m.p2Score} kart çifti bularak hafıza düellosunu kazandın!`;
+              } else {
+                vicTitle = 'DOSTLUK KAZANDI! 🤝';
+                vicSub = 'Her iki oyuncu da eşit sayıda kart eşleştirdi!';
+              }
+            } else {
+              vicTitle = 'TEBRİKLER HAFIZA USTASI! 🏆';
+              vicSub = `${m.moves} hamlede tüm kartları başarıyla eşleştirdin!`;
+            }
+            showArcadeVictoryModal({
+              title: vicTitle,
+              subtitle: vicSub,
+              badgeText: 'HAFIZA USTASI',
+              icon: '🧠',
+              onRestart: () => initArcadeMemoryGame()
+            });
           }
           renderArcadeMemoryStage();
         }, 400);
@@ -13001,16 +13207,63 @@
     const f = ArcadeHub.flower;
     const remainingPetals = Math.max(0, f.maxWrong - f.wrongCount);
 
-    // 7 Yapraklı SVG Çiçek
+    // 7 Yapraklı SVG Çiçek (Kopan yapraklar fiziksel dökülme animasyonlu)
     const petalColors = ['#F43F5E', '#FB7185', '#F59E0B', '#10B981', '#0EA5E9', '#8B5CF6', '#EC4899'];
     let petalsSvg = '';
     for (let i = 0; i < 7; i++) {
-      const angle = i * (360 / 7);
+      const angle = (i * (360 / 7)).toFixed(1);
       const isDropped = i >= remainingPetals;
       petalsSvg += `
-        <g transform="rotate(${angle} 100 100)" class="flower-petal-group ${isDropped ? 'petal-dropped' : ''}">
-          <ellipse cx="100" cy="44" rx="20" ry="34" fill="${petalColors[i]}" stroke="#FFFFFF" stroke-width="2.5"/>
+        <g transform="rotate(${angle} 100 100)" class="flower-petal-group ${isDropped ? 'petal-dropped' : ''}" style="--rot:${angle}deg">
+          <ellipse cx="100" cy="44" rx="20" ry="34" fill="${petalColors[i]}" stroke="#FFFFFF" stroke-width="2.5" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.12))"/>
         </g>
+      `;
+    }
+
+    // Dinamik Yüz İfadesi (Mutlu -> Şaşkın -> Endişeli -> Üzgün/Baygın)
+    let flowerFaceSvg = '';
+    if (f.isOver && !f.won) {
+      // Üzgün / baygın ifade
+      flowerFaceSvg = `
+        <circle cx="100" cy="100" r="28" fill="#FACC15" stroke="#CA8A04" stroke-width="3.5"/>
+        <path d="M85 91 L93 99 M93 91 L85 99" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+        <path d="M107 91 L115 99 M115 91 L107 99" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+        <path d="M88 114 Q100 102 112 114" stroke="#1E293B" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      `;
+    } else if (f.wrongCount >= 4) {
+      // Endişeli ifade + ter damlası
+      flowerFaceSvg = `
+        <circle cx="100" cy="100" r="28" fill="#FDE047" stroke="#CA8A04" stroke-width="3.5"/>
+        <circle cx="89" cy="95" r="3.5" fill="#1E293B"/>
+        <circle cx="111" cy="95" r="3.5" fill="#1E293B"/>
+        <path d="M85 89 Q90 86 94 90" stroke="#1E293B" stroke-width="2" fill="none"/>
+        <path d="M106 90 Q110 86 115 89" stroke="#1E293B" stroke-width="2" fill="none"/>
+        <path d="M89 111 Q100 104 111 111" stroke="#1E293B" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M123 85 Q126 89 126 92 A3 3 0 0 1 120 92 Q120 89 123 85 Z" fill="#38BDF8"/>
+      `;
+    } else if (f.wrongCount >= 1) {
+      // Şaşkın 'O' ağız
+      flowerFaceSvg = `
+        <circle cx="100" cy="100" r="28" fill="#FACC15" stroke="#CA8A04" stroke-width="3.5"/>
+        <circle cx="89" cy="94" r="4" fill="#1E293B"/>
+        <circle cx="111" cy="94" r="4" fill="#1E293B"/>
+        <circle cx="91" cy="92" r="1.5" fill="#FFF"/>
+        <circle cx="113" cy="92" r="1.5" fill="#FFF"/>
+        <ellipse cx="100" cy="110" rx="5" ry="6" stroke="#1E293B" stroke-width="3" fill="#FFE4E6"/>
+        <circle cx="83" cy="102" r="4" fill="#FB7185" opacity="0.6"/>
+        <circle cx="117" cy="102" r="4" fill="#FB7185" opacity="0.6"/>
+      `;
+    } else {
+      // Mutlu gülen yüz
+      flowerFaceSvg = `
+        <circle cx="100" cy="100" r="28" fill="#FACC15" stroke="#CA8A04" stroke-width="3.5"/>
+        <circle cx="88" cy="94" r="4.5" fill="#1E293B"/>
+        <circle cx="112" cy="94" r="4.5" fill="#1E293B"/>
+        <circle cx="90" cy="92" r="1.8" fill="#FFF"/>
+        <circle cx="114" cy="92" r="1.8" fill="#FFF"/>
+        <path d="M86 106 Q100 120 114 106" stroke="#1E293B" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <circle cx="82" cy="102" r="4.5" fill="#FB7185" opacity="0.65"/>
+        <circle cx="118" cy="102" r="4.5" fill="#FB7185" opacity="0.65"/>
       `;
     }
 
@@ -13029,19 +13282,13 @@
         <div class="flower-top-row">
           <!-- Sol: 7 Yapraklı Çiçek Görseli -->
           <div class="flower-visual-card">
-            <svg viewBox="0 0 200 220" width="145" height="155" class="moli-flower-svg" aria-label="Moli'nin Çiçeği">
+            <svg viewBox="0 0 200 220" width="155" height="165" class="moli-flower-svg ${f.lastCorrect ? 'flower-bounce-joy' : ''}" aria-label="Moli'nin Çiçeği">
               <!-- Gövde ve Yaprak -->
               <path d="M100 110 Q100 170 100 212" stroke="#16A34A" stroke-width="9" stroke-linecap="round" fill="none"/>
               <path d="M100 165 Q132 145 140 165 Q122 182 100 170 Z" fill="#22C55E"/>
               <path d="M100 175 Q68 155 60 175 Q78 192 100 180 Z" fill="#22C55E"/>
               ${petalsSvg}
-              <!-- Gülen Çiçek Merkezi -->
-              <circle cx="100" cy="100" r="28" fill="#FACC15" stroke="#CA8A04" stroke-width="3"/>
-              <circle cx="90" cy="94" r="3.5" fill="#1E293B"/>
-              <circle cx="110" cy="94" r="3.5" fill="#1E293B"/>
-              ${f.isOver && !f.won
-                ? '<path d="M89 112 Q100 103 111 112" stroke="#1E293B" stroke-width="3" fill="none" stroke-linecap="round"/>'
-                : '<path d="M88 106 Q100 116 112 106" stroke="#1E293B" stroke-width="3" fill="none" stroke-linecap="round"/>'}
+              ${flowerFaceSvg}
             </svg>
             <div class="flower-petals-badge">
               🌸 Kalan Yaprak: <strong>${remainingPetals} / ${f.maxWrong}</strong> | Seri: 🔥 ${f.streak}
@@ -13124,6 +13371,7 @@
     f.guessed.push(letter);
     if (f.word.includes(letter)) {
       audio.playCorrect();
+      f.lastCorrect = true;
       const allFound = Array.from(f.word).every(ch => f.guessed.includes(ch));
       if (allFound) {
         f.isOver = true;
@@ -13134,9 +13382,20 @@
         if (!state.isMuted && state.soundEnabled) {
           audio.speakTurkishText(`Tebrikler! Doğru kelime: ${f.word}`);
         }
+        showArcadeVictoryModal({
+          title: 'ÇİÇEĞİ KURTARDINIZ! 🌸',
+          subtitle: `Tebrikler! Çiçeğin taç yaprakları dökülmeden "${f.word}" kelimesini buldunuz!`,
+          badgeText: 'KELİME ŞAMPİYONU',
+          icon: '🌸',
+          onRestart: () => {
+            pickFlowerWord();
+            renderArcadeFlowerStage();
+          }
+        });
       }
     } else {
       f.wrongCount += 1;
+      f.lastCorrect = false;
       audio.playWrong();
       if (f.wrongCount >= f.maxWrong) {
         f.isOver = true;
@@ -13285,38 +13544,50 @@
           ${feedbackMsg ? `<div class="buzzer-explanation-box">${feedbackMsg}</div>` : ''}
         </div>
 
-        <!-- Sol & Sağ İki Oyuncu Buzzer Panelleri -->
+        <!-- Sol & Sağ İki Oyuncu TV Yarışması Kubbeli Buzzer Panelleri -->
         <div class="buzzer-split-panels">
           <!-- Sol: 1. Oyuncu -->
           <div class="buzzer-player-box player-blue ${b.p1Locked ? 'is-locked' : ''}" id="buzzerP1Box">
-            <div class="buzzer-player-title">🔵 1. Oyuncu Buzzer</div>
+            <div class="buzzer-player-title">🔵 1. Oyuncu (Mavi Buzzer)</div>
             <div class="buzzer-btns-grid">
-              <button class="buzzer-big-btn btn-true" data-bz-p="1" data-bz-val="true" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+              <button class="buzzer-big-btn btn-true" data-bz-p="1" data-bz-val="true" type="button" ${b.isOver || b.answered || b.p1Locked ? 'disabled' : ''} aria-label="1. Oyuncu Doğru Butonu">
+                <span class="bz-dome-glare"></span>
                 <span class="bz-icon">✅</span>
-                <span>DOĞRU</span>
+                <span class="bz-label">DOĞRU</span>
               </button>
-              <button class="buzzer-big-btn btn-false" data-bz-p="1" data-bz-val="false" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+              <button class="buzzer-big-btn btn-false" data-bz-p="1" data-bz-val="false" type="button" ${b.isOver || b.answered || b.p1Locked ? 'disabled' : ''} aria-label="1. Oyuncu Yanlış Butonu">
+                <span class="bz-dome-glare"></span>
                 <span class="bz-icon">❌</span>
-                <span>YANLIŞ</span>
+                <span class="bz-label">YANLIŞ</span>
               </button>
             </div>
-            <div class="buzzer-lock-overlay">🔒 Yanlış! 1.5 Saniye Kilitlendi!</div>
+            <div class="buzzer-lock-overlay">
+              <span class="lock-spin-icon">🔒</span>
+              <strong class="lock-title">KİLİTLENDİ (1.5 sn)</strong>
+              <div class="buzzer-lock-progress"><div class="lock-bar-fill"></div></div>
+            </div>
           </div>
 
           <!-- Sağ: 2. Oyuncu -->
           <div class="buzzer-player-box player-orange ${b.p2Locked ? 'is-locked' : ''}" id="buzzerP2Box">
-            <div class="buzzer-player-title">🟠 2. Oyuncu Buzzer</div>
+            <div class="buzzer-player-title">🟠 2. Oyuncu (Turuncu Buzzer)</div>
             <div class="buzzer-btns-grid">
-              <button class="buzzer-big-btn btn-true" data-bz-p="2" data-bz-val="true" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+              <button class="buzzer-big-btn btn-true" data-bz-p="2" data-bz-val="true" type="button" ${b.isOver || b.answered || b.p2Locked ? 'disabled' : ''} aria-label="2. Oyuncu Doğru Butonu">
+                <span class="bz-dome-glare"></span>
                 <span class="bz-icon">✅</span>
-                <span>DOĞRU</span>
+                <span class="bz-label">DOĞRU</span>
               </button>
-              <button class="buzzer-big-btn btn-false" data-bz-p="2" data-bz-val="false" type="button" ${b.isOver || b.answered ? 'disabled' : ''}>
+              <button class="buzzer-big-btn btn-false" data-bz-p="2" data-bz-val="false" type="button" ${b.isOver || b.answered || b.p2Locked ? 'disabled' : ''} aria-label="2. Oyuncu Yanlış Butonu">
+                <span class="bz-dome-glare"></span>
                 <span class="bz-icon">❌</span>
-                <span>YANLIŞ</span>
+                <span class="bz-label">YANLIŞ</span>
               </button>
             </div>
-            <div class="buzzer-lock-overlay">🔒 Yanlış! 1.5 Saniye Kilitlendi!</div>
+            <div class="buzzer-lock-overlay">
+              <span class="lock-spin-icon">🔒</span>
+              <strong class="lock-title">KİLİTLENDİ (1.5 sn)</strong>
+              <div class="buzzer-lock-progress"><div class="lock-bar-fill"></div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -13353,6 +13624,14 @@
         if (!state.isMuted && state.soundEnabled) {
           audio.speakTurkishText(b.p1Score >= b.targetScore ? 'Birinci oyuncu Mavi Takım kazandı!' : 'İkinci oyuncu Turuncu Takım kazandı!');
         }
+        const winnerTitle = b.p1Score >= b.targetScore ? '1. OYUNCU (MAVİ) ŞAMPİYON! 🏆' : '2. OYUNCU (TURUNCU) ŞAMPİYON! 🏆';
+        showArcadeVictoryModal({
+          title: winnerTitle,
+          subtitle: `Hedeflenen ${b.targetScore} puana ilk ulaşarak yarışmayı şampiyon tamamladın!`,
+          badgeText: 'BİLGİ ŞAMPİYONU',
+          icon: '⚡',
+          onRestart: () => initArcadeBuzzerGame()
+        });
       } else {
         renderArcadeBuzzerStage(`✨ ${who} +1 Puan Aldı! ${b.currentItem.exp}`);
         setTimeout(() => {
