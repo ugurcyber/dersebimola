@@ -15194,3 +15194,95 @@ body,
     box-sizing: border-box !important;
   }
 }
+
+
+/* ==========================================================================
+   V8.6.0: UI POLISH (POPÜLER OYUNLAR METNİ, AYIRICI ÇİZGİ & ORTA ALAN DİKEY HİZALAMA)
+   ========================================================================== */
+
+/* 1. "Popüler Oyunlar" Buton Metninin Kesilmeden Tek Satırda Tam Görünmesi */
+.stage-grade-card.card-duels {
+  padding-left: clamp(8px, 0.8vw, 11px) !important;
+  padding-right: clamp(8px, 0.8vw, 11px) !important;
+}
+
+.stage-grade-card.card-duels .grade-card-text-group {
+  min-width: 0 !important;
+  overflow: visible !important;
+}
+
+.stage-grade-card.card-duels .grade-card-label {
+  font-size: clamp(0.88rem, 0.95vw, 0.98rem) !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  letter-spacing: -0.35px !important;
+}
+
+.stage-grade-card.card-duels .grade-card-chevron {
+  margin-left: 2px !important;
+}
+
+/* 2. Sınıflar (1-4) ile Özel Butonlar (İngilizce & Popüler Oyunlar) Arasında Zarif Ayırıcı */
+.stage-sidebar-divider {
+  width: 94%;
+  margin: 6px auto;
+  height: 0;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  flex-shrink: 0;
+}
+
+/* 3. Orta Alan Dikey Hizalaması (Kompakt ve Ferah Görünüm) */
+.stage-heading-block {
+  margin-bottom: clamp(6px, 1.1vh, 10px) !important;
+}
+
+.stage-heading-block .hero-center-brand-logo {
+  margin-bottom: 2px !important;
+}
+
+.stage-main-title {
+  line-height: 1.12 !important;
+}
+
+.stage-bubbly-3d {
+  margin-top: 2px !important;
+  margin-bottom: 0px !important;
+}
+
+.stage-cta-container {
+  margin-top: clamp(6px, 1vh, 10px) !important;
+  margin-bottom: 0 !important;
+  gap: 8px !important;
+}
+
+.daily-riddle-card {
+  margin-top: clamp(8px, 1.2vh, 12px) !important;
+  padding: clamp(8px, 1vh, 12px) clamp(12px, 1.4vw, 16px) !important;
+  gap: 5px !important;
+}
+
+.daily-riddle-header {
+  margin-bottom: 3px !important;
+}
+
+.daily-riddle-question {
+  margin: 2px 0 5px 0 !important;
+  font-size: clamp(0.86rem, 0.92vw, 0.94rem) !important;
+  line-height: 1.35 !important;
+}
+
+.daily-riddle-answer-box {
+  margin-bottom: 5px !important;
+  padding: 5px 12px !important;
+  min-height: 38px !important;
+}
+
+.daily-riddle-actions {
+  gap: 8px !important;
+}
+
+.riddle-action-btn {
+  padding: 6px 12px !important;
+}
