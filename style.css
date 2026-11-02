@@ -17031,3 +17031,50 @@ a.grade-chip {
   margin-top: 4px;
 }
 
+
+a.stage-grade-card { text-decoration: none !important; color: inherit !important; cursor: pointer !important; }
+
+/* ==========================================================================
+   V8.9.5: MOBİLDE DÜELLO MODU GİZLEME (AKILLI TAHTA ÖZELLİĞİ)
+   - 768px ve altı (Telefonlar): Düello butonu/kartı, 2 kişilik halat çekme ve düello ayarları gizlenir.
+     Menüde sadece bireysel oyunlar ve sınıflar görünür.
+   - 769px ve üzeri (Akıllı Tahta, Tablet, Bilgisayar): Düello modu ve tüm sınıf düelloları aktif kalır.
+   ========================================================================== */
+
+/* 1. Geniş Ekranlar (Akıllı Tahta & Tablet: min-width: 769px) */
+@media (min-width: 769px) {
+  .duel-suffix-desktop {
+    display: inline !important;
+  }
+  .duel-mode-desktop-only {
+    display: flex !important;
+  }
+  span.duel-mode-desktop-only {
+    display: inline !important;
+  }
+  div.arcade-game-card.duel-mode-desktop-only {
+    display: flex !important;
+  }
+}
+
+/* 2. Mobil Cihazlar (Telefonlar: max-width: 768px) */
+@media (max-width: 768px) {
+  .duel-mode-desktop-only,
+  .duel-suffix-desktop,
+  .topbar-action-pill.pill-gamemode,
+  #btnDesktopGameMode,
+  #modeSwitchContainer,
+  .mode-switch-container,
+  #btnModeDuel,
+  .duel-settings-bar,
+  #btnPickerModeDuel,
+  .arcade-game-card.theme-tug,
+  .setting-item-duel-mode {
+    display: none !important;
+  }
+
+  .sidebar-grade-nav .grade-chip.chip-duels .duel-suffix-desktop,
+  .grade-modal-card.card-grade-duels .duel-suffix-desktop {
+    display: none !important;
+  }
+}

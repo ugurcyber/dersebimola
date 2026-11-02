@@ -9659,6 +9659,7 @@
           const parsed = JSON.parse(settings);
           if (parsed.targetScore) state.targetScore = parsed.targetScore;
           if (parsed.gameMode) state.gameMode = parsed.gameMode;
+        if (window.innerWidth <= 768) state.gameMode = 'solo';
           if (parsed.soundEnabled !== undefined) state.soundEnabled = parsed.soundEnabled;
           if (parsed.isMuted !== undefined) {
             state.isMuted = Boolean(parsed.isMuted);
@@ -11790,7 +11791,7 @@
 
     const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
     if (btnSidebarEnglish) {
-      addTapListener(btnSidebarEnglish, handleSidebarEnglishClick);
+      addTapListener(btnSidebarEnglish, openEnglishModule);
     }
 
     const btnSidebarDuels = document.getElementById('btnSidebarDuels');
@@ -16298,6 +16299,54 @@
   }
 
   // Ders Seçildiğinde 2. Kademeye (Oyunlar & Konular) Geç
+  
+  /* ==========================================================================
+     GERÇEK İNGİLİZCE MODÜLÜ VE ROUTING (/ingilizce)
+     ========================================================================== */
+  function openEnglishModule(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+    if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
+    const modalSelectGrade = document.getElementById('modalSelectGrade');
+    if (modalSelectGrade && typeof closeModal === 'function') closeModal(modalSelectGrade);
+
+    state.isDirectEnglishMode = true;
+    state.currentGrade = 2; // İçerik havuzu için 2. sınıfı referans al
+
+    if (typeof selectSubject === 'function') {
+      selectSubject('english');
+    }
+
+    // Başlıkları özel EdTech İngilizce modülü olarak güncelle (2. Sınıf yerine)
+    if (DOM.currentSubjectTitle) {
+      DOM.currentSubjectTitle.textContent = 'İngilizce';
+    }
+    if (DOM.currentSubjectGrade) {
+      DOM.currentSubjectGrade.textContent = '🇬🇧 Fotoğraflı & Görselli Kelime Düelloları';
+    }
+
+    // "← Tüm Dersler" butonunu "← Ana Sayfa" olarak güncelle
+    const btnBack = DOM.btnSubjectBackHome || document.getElementById('btnSubjectBackHome');
+    if (btnBack) {
+      btnBack.innerHTML = '<span class="back-icon" aria-hidden="true">‹</span><span>Ana Sayfa</span>';
+    }
+
+    // Sidebar'da İngilizce butonunu aktif yap, sınıfları pasifleştir
+    if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
+    if (DOM.gradeChips) DOM.gradeChips.forEach(c => c.classList.remove('active'));
+    const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
+    if (btnSidebarEnglish) btnSidebarEnglish.classList.add('active');
+
+    // URL'yi /ingilizce (#ingilizce) olarak senkronize et
+    try {
+      if (window.location.hash !== '#ingilizce') {
+        history.pushState({ route: 'ingilizce' }, '', '#ingilizce');
+      }
+    } catch (err) {}
+  }
+  window.openEnglishModule = openEnglishModule;
+
   function selectSubject(subjectId) {
     lockInteractions(400);
     const g = state.currentGrade;
@@ -16346,6 +16395,20 @@
 
   // "← Tüm Dersler" Butonuna Basıldığında 1. Kademeye Dönüş
   function returnToSubjectsList() {
+    if (state.isDirectEnglishMode) {
+      state.isDirectEnglishMode = false;
+      const btnBack = DOM.btnSubjectBackHome || document.getElementById('btnSubjectBackHome');
+      if (btnBack) {
+        btnBack.innerHTML = '<span class="back-icon" aria-hidden="true">‹</span><span>Tüm Dersler</span>';
+      }
+      openHomePage();
+      try {
+        if (window.location.hash === '#ingilizce') {
+          history.pushState(null, '', window.location.pathname);
+        }
+      } catch (e) {}
+      return;
+    }
     lockInteractions(400);
     state.currentSection = 'subjects';
     state.currentSubject = null;
@@ -16785,6 +16848,7 @@
 
   // Oyun Modu Değiştirme (İki Kişilik Düello & Tek Kişilik Pratik)
   function setGameMode(mode) {
+    if (window.innerWidth <= 768 && mode === 'duel') mode = 'solo';
     if (state.gameMode === mode) return;
     state.gameMode = mode;
     StorageManager.saveSettings();
@@ -18067,6 +18131,7 @@
   }
 
   function startDuel(gameType) {
+    if (window.innerWidth <= 768) state.gameMode = 'solo';
     lockInteractions(500);
     state.currentGameType = gameType;
     state.matchStartTime = Date.now();
@@ -20917,16 +20982,7 @@
 
     const btnModalEnglish = document.getElementById('btnModalEnglish');
     if (btnModalEnglish) {
-      addTapListener(btnModalEnglish, (e) => {
-        audio.playClick();
-        if (modalSelectGrade) {
-          closeModal(modalSelectGrade);
-        }
-        setGrade(2);
-        if (typeof selectSubject === 'function') {
-          selectSubject('english');
-        }
-      });
+      addTapListener(btnModalEnglish, openEnglishModule);
     }
 
     // 7 Adet Dikey Sınıf / Ders Kartı (Sol Sütun)
@@ -20990,13 +21046,7 @@
 
     const btnStageQuickEnglish = document.getElementById('btnStageQuickEnglish');
     if (btnStageQuickEnglish) {
-      addTapListener(btnStageQuickEnglish, (e) => {
-        audio.playClick();
-        setGrade(2);
-        if (typeof selectSubject === 'function') {
-          selectSubject('english');
-        }
-      });
+      addTapListener(btnStageQuickEnglish, openEnglishModule);
     }
 
     // Sağ Sütundaki Rozetler
@@ -21075,12 +21125,7 @@
       }
     } else if (hash === '#ingilizce' || hash === '#/ingilizce' || path.endsWith('/ingilizce')) {
       setTimeout(() => {
-        const curG = state.currentGrade;
-        const targetGrade = (curG >= 2 && curG <= 4) ? curG : 2;
-        if (typeof setGrade === 'function') setGrade(targetGrade);
-        if (typeof selectSubject === 'function') selectSubject('english');
-        const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
-        if (btnSidebarEnglish) btnSidebarEnglish.classList.add('active');
+        if (typeof openEnglishModule === 'function') openEnglishModule();
       }, 100);
     }
   }
@@ -21118,6 +21163,20 @@
     }
 
     updateSettingsModalUI();
+
+    // Mobil Ekran Denetimi: Mobilde Düello Modu Devre Dışı, Yalnızca Bireysel / Solo Pratik
+    function enforceMobileGameMode() {
+      if (window.innerWidth <= 768) {
+        if (state.gameMode !== 'solo') {
+          state.gameMode = 'solo';
+          if (typeof updateGameModeUI === 'function') updateGameModeUI();
+        }
+      }
+    }
+    enforceMobileGameMode();
+    window.addEventListener('resize', enforceMobileGameMode);
+    window.addEventListener('orientationchange', enforceMobileGameMode);
+
     setupEventListeners();
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
   }

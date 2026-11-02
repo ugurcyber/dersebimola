@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.3">
+  <link rel="stylesheet" href="style.css?v=8.9.5">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -190,7 +190,7 @@
           <!-- 2) OYUNLAR MENÜSÜ (/oyunlar Yönlendirmesi) -->
           <a class="grade-chip chip-duels" href="#oyunlar" data-route="/oyunlar" id="btnSidebarDuels" title="Popüler Oyunlar & Düellolar - Zeka ve Rekabet Merkezi">
             <span class="grade-icon-box grade-icon-duels"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="Popüler Oyunlar" width="22" height="22" loading="lazy" decoding="async"></span>
-            <span class="grade-chip-name">🔥 Popüler Oyunlar &amp; Düellolar</span>
+            <span class="grade-chip-name">🔥 Popüler Oyunlar<span class="duel-suffix-desktop"> &amp; Düellolar</span></span>
           </a>
         </nav>
       </div>
@@ -257,7 +257,7 @@
         </div>
 
         <div class="topbar-unified-actions">
-          <button class="topbar-action-pill pill-gamemode" id="btnDesktopGameMode" type="button" aria-label="Oyun Modu" title="Düello / Pratik Modunu Değiştir">
+          <button class="topbar-action-pill pill-gamemode duel-mode-desktop-only" id="btnDesktopGameMode" type="button" aria-label="Oyun Modu" title="Düello / Pratik Modunu Değiştir">
             <span class="pill-icon" id="desktopModeIcon">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
@@ -403,7 +403,7 @@
                 <!-- Sınıflar ile Özel Butonlar Arasında Zarif Ayırıcı Çizgi -->
                 <div class="stage-sidebar-divider" aria-hidden="true"></div>
 
-                <div class="stage-grade-card card-english" id="btnStageQuickEnglish" role="button" tabindex="0" title="İngilizce">
+                <a class="stage-grade-card card-english" id="btnStageQuickEnglish" href="#ingilizce" data-route="/ingilizce" role="button" tabindex="0" title="İngilizce (Fotoğraflı &amp; Görselli Kelime Düelloları)">
                   <div class="grade-icon-cube icon-theme-indigo">
                     <img src="assets/icons/3d/globe.webp" class="grade-card-3d-img" alt="İngilizce" width="30" height="30" loading="lazy" decoding="async">
                   </div>
@@ -411,7 +411,7 @@
                     <span class="grade-card-label">İngilizce</span>
                   </div>
                   <span class="grade-card-chevron" aria-hidden="true">›</span>
-                </div>
+                </a>
 
                 <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Popüler Oyunlar & Düellolar">
                   <div class="grade-icon-cube icon-theme-duel">
@@ -624,7 +624,7 @@
           </div>
 
           <!-- Oyun Modu Seçici (Düello vs Tek Kişilik Pratik) -->
-          <div class="mode-switch-container" id="modeSwitchContainer">
+          <div class="mode-switch-container duel-mode-desktop-only" id="modeSwitchContainer">
             <button class="mode-switch-btn active" id="btnModeDuel" data-mode="duel" type="button" title="İki Kişilik Sınıf Düellosu">
               <span class="mode-icon" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -673,7 +673,7 @@
         </div>
 
         <!-- Düello Ayarları ve Hızlı Bilgi -->
-        <div class="duel-settings-bar">
+        <div class="duel-settings-bar duel-mode-desktop-only">
           <div class="setting-item">
             <span class="setting-icon" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
@@ -745,7 +745,7 @@
               <div class="section-ribbon-banner">
                 <span class="section-pill-badge">⚡ ZEKA VE REKABET MERKEZİ</span>
               </div>
-              <h2 class="section-title">🔥 Popüler Oyunlar &amp; Düellolar</h2>
+              <h2 class="section-title">🔥 Popüler Oyunlar<span class="duel-suffix-desktop"> &amp; Düellolar</span></h2>
               <p class="section-desc">Akıllı tahtada iki kişilik, sınıfça veya Moli'ye karşı oynanan 6 interaktif mini oyun:</p>
             </div>
             <span class="subjects-count-badge">6 Mini Oyun Aktif</span>
@@ -753,7 +753,7 @@
 
           <div class="arcade-games-grid">
             <!-- Oyun 1: ⚔️ Çarpma Savaşı (Halat Çekme Düellosu) -->
-            <div class="arcade-game-card theme-tug" data-arcade-game="tug" role="button" tabindex="0">
+            <div class="arcade-game-card theme-tug duel-mode-desktop-only" data-arcade-game="tug" role="button" tabindex="0">
               <div class="arcade-card-hero-banner banner-tug" aria-hidden="true">
                 <div class="banner-scene scene-tug">
                   <div class="banner-tug-team team-blue">
@@ -1401,7 +1401,7 @@
             <img src="assets/icons/3d/lightning.webp" class="grade-modal-3d-icon" alt="Düellolar" width="46" height="46" loading="lazy">
           </div>
           <div class="grade-modal-info">
-            <span class="grade-modal-name">🔥 Popüler Oyunlar &amp; Düellolar</span>
+            <span class="grade-modal-name">🔥 Popüler Oyunlar<span class="duel-suffix-desktop"> &amp; Düellolar</span></span>
             <span class="grade-modal-badge">Halat Çekme, Sudoku, XOX, Hafıza, Çiçek &amp; Buzzer</span>
           </div>
           <span class="grade-modal-arrow">→</span>
@@ -1758,7 +1758,7 @@
         <button class="picker-tab-btn active" id="btnPickerModeSingle" data-picker-mode="single">
           <span>🎯</span> Tek Öğrenci (Sözlü / Soru)
         </button>
-        <button class="picker-tab-btn" id="btnPickerModeDuel" data-picker-mode="duel">
+        <button class="picker-tab-btn duel-mode-desktop-only" id="btnPickerModeDuel" data-picker-mode="duel">
           <span>⚔️</span> 2 Öğrenci (Düello Maçı)
         </button>
         <button class="picker-tab-btn tab-roster-manage" id="btnPickerTabRoster">
@@ -2357,6 +2357,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.3" defer></script>
+  <script src="app.js?v=8.9.5" defer></script>
 </body>
 </html>
