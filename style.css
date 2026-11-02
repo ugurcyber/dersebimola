@@ -18515,3 +18515,154 @@ body:has(#viewDuel.active) .floating-bug-btn {
   70% { transform: scale(1.12); }
   100% { transform: scale(1); opacity: 1; }
 }
+
+
+/* ============================================================== */
+/* ANA SAYFA ÖZEL ARKA PLAN MÜZİĞİ VE SEVİMLİ FAB SES KONTROLÜ     */
+/* ============================================================== */
+.home-music-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 950;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  min-height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #7C3AED 0%, #6366F1 100%);
+  color: #FFFFFF !important;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 3.5px solid #4F46E5;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.38), 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  user-select: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.home-music-fab:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.48);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.home-music-fab:active {
+  transform: translateY(1px) scale(0.96);
+}
+
+/* Çalarken Dinamik Nabız ve Renk Geçişi */
+.home-music-fab.is-playing {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 50%, #EC4899 100%);
+  border-color: #F472B6;
+  border-bottom-color: #BE185D;
+  box-shadow: 0 8px 26px rgba(236, 72, 153, 0.42), 0 0 18px rgba(139, 92, 246, 0.45);
+  animation: pulseMusicFab 2.8s infinite ease-in-out;
+}
+
+@keyframes pulseMusicFab {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4), 0 0 0 0 rgba(236, 72, 153, 0.45);
+  }
+  50% {
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.52), 0 0 0 10px rgba(236, 72, 153, 0);
+  }
+}
+
+.music-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* Canlı Ses Dalgası / Equalizer Animasyonu */
+.music-equalizer-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 16px;
+  width: 14px;
+}
+
+.music-equalizer-bars span {
+  display: block;
+  width: 3px;
+  background: #FFFFFF;
+  border-radius: 2px;
+  height: 5px;
+}
+
+.home-music-fab.is-playing .music-equalizer-bars span:nth-child(1) {
+  animation: eqBounce1 0.75s ease-in-out infinite alternate;
+}
+.home-music-fab.is-playing .music-equalizer-bars span:nth-child(2) {
+  animation: eqBounce2 0.55s ease-in-out infinite alternate;
+}
+.home-music-fab.is-playing .music-equalizer-bars span:nth-child(3) {
+  animation: eqBounce3 0.85s ease-in-out infinite alternate;
+}
+
+@keyframes eqBounce1 {
+  0% { height: 4px; }
+  100% { height: 16px; }
+}
+@keyframes eqBounce2 {
+  0% { height: 15px; }
+  100% { height: 6px; }
+}
+@keyframes eqBounce3 {
+  0% { height: 5px; }
+  100% { height: 14px; }
+}
+
+/* Sessizdeyken / Muted Durum */
+.home-music-fab.is-muted {
+  background: rgba(30, 41, 59, 0.88) !important;
+  border-color: #64748B !important;
+  border-bottom: 3.5px solid #334155 !important;
+  color: #E2E8F0 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28) !important;
+  animation: none !important;
+}
+
+.home-music-fab.is-muted:hover {
+  background: rgba(51, 65, 85, 0.95) !important;
+  border-color: #94A3B8 !important;
+  color: #FFFFFF !important;
+}
+
+.music-label-text {
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+/* SADECE ANA SAYFADA RENDER / GÖRÜNME KURALI: */
+/* Ana sayfa gizlendiğinde (başka sayfaya geçildiğinde) buton kesinlikle gizlenir */
+#homeShowcaseSection.hide .home-music-fab,
+#homeShowcaseSection.hide + * .home-music-fab,
+body:has(#homeShowcaseSection.hide) .home-music-fab {
+  display: none !important;
+}
+
+/* Mobil Cihazlar & Dikey Ekranlar */
+@media (max-width: 640px) {
+  .home-music-fab {
+    bottom: 16px;
+    right: 16px;
+    padding: 8px 14px;
+    min-height: 42px;
+    font-size: 0.82rem;
+  }
+  .music-label-text {
+    font-size: 0.8rem;
+  }
+}

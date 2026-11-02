@@ -12157,6 +12157,7 @@
   function openArcadeHub() {
     lockInteractions(300);
     state.currentSection = 'arcade';
+    if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
     if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
     if (DOM.gradeChips) DOM.gradeChips.forEach(chip => chip.classList.remove('active'));
 
@@ -17575,6 +17576,7 @@
     }
     lockInteractions(400);
     state.currentSection = 'subjects';
+    if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
     state.currentSubject = null;
     state.currentCategory = 'all';
 
@@ -22455,6 +22457,179 @@
   window.addEventListener('hashchange', handleUrlRoute);
   window.addEventListener('popstate', handleUrlRoute);
 
+
+  // ==============================================================
+  // SADECE ANA SAYFAYA ÖZEL ARKA PLAN MÜZİĞİ MOTORU (AUDIO ENGINE)
+  // ==============================================================
+  function initHomeBackgroundMusic() {
+    const homeAudio = document.getElementById('homeBgMusic');
+    const btnToggle = document.getElementById('btnHomeMusicToggle');
+    const homeMusicIcon = document.getElementById('homeMusicIcon');
+    const homeMusicEqualizer = document.getElementById('homeMusicEqualizer');
+    const homeMusicLabel = document.getElementById('homeMusicLabel');
+    const homeSection = document.getElementById('homeShowcaseSection');
+
+    if (!homeAudio) return;
+
+    // Rahatsız etmeyecek, berrak ve dengeli fon müziği seviyesi (%32)
+    homeAudio.volume = 0.32;
+
+    let isMutedByUser = localStorage.getItem('dersebimola_home_music_muted') === 'true';
+    let hasInteracted = false;
+    let isCurrentlyPlaying = false;
+
+    function isAtHome() {
+      return homeSection && !homeSection.classList.contains('hide');
+    }
+
+    function updateUi(playing) {
+      if (!btnToggle) return;
+      if (isMutedByUser) {
+        btnToggle.classList.remove('is-playing');
+        btnToggle.classList.add('is-muted');
+        if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🔇</span>';
+        if (homeMusicEqualizer) homeMusicEqualizer.style.display = 'none';
+        if (homeMusicLabel) homeMusicLabel.textContent = 'Sessiz';
+        btnToggle.setAttribute('title', 'Fon Müziğini Başlat (🎵)');
+        btnToggle.setAttribute('aria-label', 'Fon Müziğini Başlat');
+      } else if (playing) {
+        btnToggle.classList.add('is-playing');
+        btnToggle.classList.remove('is-muted');
+        if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🎵</span>';
+        if (homeMusicEqualizer) homeMusicEqualizer.style.display = 'inline-flex';
+        if (homeMusicLabel) homeMusicLabel.textContent = 'Müzik';
+        btnToggle.setAttribute('title', 'Fon Müziğini Kapat (🔇)');
+        btnToggle.setAttribute('aria-label', 'Fon Müziğini Kapat');
+      } else {
+        btnToggle.classList.remove('is-playing');
+        btnToggle.classList.remove('is-muted');
+        if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🎵</span>';
+        if (homeMusicEqualizer) homeMusicEqualizer.style.display = 'inline-flex';
+        if (homeMusicLabel) homeMusicLabel.textContent = 'Müzik';
+        btnToggle.setAttribute('title', 'Fon Müziğini Başlat (🎵)');
+        btnToggle.setAttribute('aria-label', 'Fon Müziğini Başlat');
+      }
+    }
+
+    function playMusic() {
+      if (!homeAudio) return;
+      if (!isAtHome()) {
+        stopMusic(true);
+        return;
+      }
+      if (isMutedByUser) {
+        updateUi(false);
+        return;
+      }
+
+      const p = homeAudio.play();
+      if (p !== undefined) {
+        p.then(() => {
+          isCurrentlyPlaying = true;
+          updateUi(true);
+        }).catch(err => {
+          // Tarayıcı Autoplay Engeli: İlk kullanıcı tıklaması bekleniyor
+          isCurrentlyPlaying = false;
+          updateUi(false);
+        });
+      }
+    }
+
+    function stopMusic(reset = true) {
+      if (!homeAudio) return;
+      homeAudio.pause();
+      if (reset) {
+        try { homeAudio.currentTime = 0; } catch (e) {}
+      }
+      isCurrentlyPlaying = false;
+      updateUi(false);
+    }
+
+    function toggleMusic() {
+      if (isMutedByUser) {
+        isMutedByUser = false;
+        localStorage.setItem('dersebimola_home_music_muted', 'false');
+        playMusic();
+      } else {
+        isMutedByUser = true;
+        localStorage.setItem('dersebimola_home_music_muted', 'true');
+        stopMusic(false);
+      }
+    }
+
+    // Modern Tarayıcı Autoplay Engelini İlk Kullanıcı Etkileşiminde Pürüzsüzce Aş
+    function onFirstUserInteraction() {
+      hasInteracted = true;
+      window.removeEventListener('pointerdown', onFirstUserInteraction);
+      window.removeEventListener('touchstart', onFirstUserInteraction);
+      window.removeEventListener('click', onFirstUserInteraction);
+      window.removeEventListener('keydown', onFirstUserInteraction);
+
+      if (isAtHome() && !isMutedByUser && !isCurrentlyPlaying) {
+        playMusic();
+      }
+    }
+
+    window.addEventListener('pointerdown', onFirstUserInteraction, { passive: true, once: true });
+    window.addEventListener('touchstart', onFirstUserInteraction, { passive: true, once: true });
+    window.addEventListener('click', onFirstUserInteraction, { passive: true, once: true });
+    window.addEventListener('keydown', onFirstUserInteraction, { passive: true, once: true });
+
+    // "Hemen Başla" butonu ile etkileşim
+    const btnHeroStart = document.getElementById('btnDesktopHeroStart');
+    if (btnHeroStart) {
+      btnHeroStart.addEventListener('click', () => {
+        if (!hasInteracted) onFirstUserInteraction();
+      }, { passive: true });
+    }
+
+    // FAB Tıklama Dinleyicisi
+    if (btnToggle) {
+      addTapListener(btnToggle, (e) => {
+        if (e && e.stopPropagation) e.stopPropagation();
+        toggleMusic();
+      });
+    }
+
+    // Routing ve Sayfa Değişikliği Gözlemcisi (MutationObserver):
+    // Kullanıcı başka sayfaya geçtiği an MÜZİK ANINDA DURUR VE SIFIRLANIR!
+    if (homeSection) {
+      const observer = new MutationObserver(() => {
+        if (isAtHome()) {
+          if (!isMutedByUser) {
+            playMusic();
+          } else {
+            updateUi(false);
+          }
+        } else {
+          stopMusic(true);
+        }
+      });
+      observer.observe(homeSection, { attributes: true, attributeFilter: ['class', 'style'] });
+    }
+
+    // Sekme arka plana atıldığında duraklat, geri gelince ana sayfadaysa devam et
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (isCurrentlyPlaying) homeAudio.pause();
+      } else {
+        if (isAtHome() && !isMutedByUser) playMusic();
+      }
+    });
+
+    // Dışarıdan tetiklenebilmesi için global pencereye bağla
+    window.playHomeMusic = playMusic;
+    window.stopHomeMusic = stopMusic;
+    window.toggleHomeMusic = toggleMusic;
+
+    updateUi(false);
+    setTimeout(() => {
+      if (isAtHome() && !isMutedByUser) {
+        playMusic();
+      }
+    }, 250);
+  }
+
   function init() {
     StorageManager.loadAll();
     loadTeacherToolsState();
@@ -22500,6 +22675,7 @@
     window.addEventListener('orientationchange', enforceMobileGameMode);
 
     setupEventListeners();
+    initHomeBackgroundMusic();
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
   }
 
