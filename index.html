@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.14">
+  <link rel="stylesheet" href="style.css?v=8.9.15">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -584,6 +584,123 @@
               <div class="trust-badges-group">
                 <div class="trust-right-tag">
                   <span class="trust-check-mark">✓</span> GÜVENLİ &amp; PARDUS UYUMLU
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============================================================== -->
+          <!-- 🇬🇧 İNGİLİZCE SEVİYE & SINIF SEÇİM EKRANI (Route: /ingilizce)    -->
+          <!-- ============================================================== -->
+          <section class="english-hub-section hide" id="englishHubSection" aria-label="İngilizce Seviye ve Sınıf Seçimi">
+            <div class="english-hub-header">
+              <button class="btn-back-to-home" id="btnEnglishBackHome" type="button" title="Ana Sayfaya Dön">
+                <span class="back-home-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
+                </span>
+                <span>Ana Sayfa</span>
+              </button>
+
+              <div class="english-hero-banner">
+                <div class="english-moli-wrap">
+                  <div class="english-detective-badge" aria-hidden="true">🕵️‍♂️</div>
+                  <img src="assets/mascot/moli.webp" class="english-moli-avatar" alt="Moli English Detective" width="76" height="76" loading="lazy" decoding="async">
+                  <span class="english-flag-tag">🇬🇧 EN</span>
+                </div>
+                <div class="english-title-group">
+                  <div class="english-pill-tag">✨ Welcome to English World!</div>
+                  <h1 class="english-main-title">Ready? Lütfen Sınıfını Seç!</h1>
+                  <p class="english-sub-desc">Fotoğraflı kelime düelloları, sesli dinleme ve interaktif oyunlarla İngilizce öğrenmek artık çok eğlenceli!</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- SINIF KARTLARI (3D GÖLGELİ & DOKUNSAL GRID) -->
+            <div class="english-grades-grid">
+              <!-- 1. Sınıf Kartı -->
+              <div class="english-grade-card card-en-grade1" data-grade="1" role="button" tabindex="0" title="1. Sınıf İngilizce - İlk Kelimeler">
+                <div class="en-card-glow" aria-hidden="true"></div>
+                <div class="en-card-icon-box theme-coral">
+                  <span class="en-primary-emoji">🐱</span>
+                  <span class="en-secondary-emoji">🎨</span>
+                </div>
+                <div class="en-card-badge">Starters (İlk Adım)</div>
+                <h2 class="en-card-title">1. Sınıf</h2>
+                <p class="en-card-subtitle">İlk Kelimeler & Renkler</p>
+                <div class="en-card-pills">
+                  <span>🎨 Renkler</span>
+                  <span>🐾 Hayvanlar</span>
+                  <span>🍎 Meyveler</span>
+                </div>
+                <div class="en-card-action">
+                  <span>Kelimeleri Keşfet</span>
+                  <span class="en-arrow">›</span>
+                </div>
+              </div>
+
+              <!-- 2. Sınıf Kartı -->
+              <div class="english-grade-card card-en-grade2" data-grade="2" role="button" tabindex="0" title="2. Sınıf İngilizce - Okul Eşyaları & Sayılar">
+                <div class="en-card-glow" aria-hidden="true"></div>
+                <div class="en-card-icon-box theme-amber">
+                  <span class="en-primary-emoji">🔤</span>
+                  <span class="en-secondary-emoji">🎒</span>
+                </div>
+                <div class="en-card-badge">MEB Müfredatı</div>
+                <h2 class="en-card-title">2. Sınıf</h2>
+                <p class="en-card-subtitle">Okul Eşyaları & Sayılar</p>
+                <div class="en-card-pills">
+                  <span>🎒 School Items</span>
+                  <span>🔢 Numbers 1-20</span>
+                  <span>🥪 Food</span>
+                </div>
+                <div class="en-card-action">
+                  <span>Düellolara Başla</span>
+                  <span class="en-arrow">›</span>
+                </div>
+              </div>
+
+              <!-- 3. Sınıf Kartı -->
+              <div class="english-grade-card card-en-grade3" data-grade="3" role="button" tabindex="0" title="3. Sınıf İngilizce - Duygular & Aile">
+                <div class="en-card-glow" aria-hidden="true"></div>
+                <div class="en-card-icon-box theme-blue">
+                  <span class="en-primary-emoji">🚌</span>
+                  <span class="en-secondary-emoji">🌍</span>
+                </div>
+                <div class="en-card-badge">İletişim & Konuşma</div>
+                <h2 class="en-card-title">3. Sınıf</h2>
+                <p class="en-card-subtitle">Duygular, Aile & Evimiz</p>
+                <div class="en-card-pills">
+                  <span>👨‍👩‍👦 My Family</span>
+                  <span>🏠 In My House</span>
+                  <span>😃 Feelings</span>
+                </div>
+                <div class="en-card-action">
+                  <span>Yarışmaya Katıl</span>
+                  <span class="en-arrow">›</span>
+                </div>
+              </div>
+
+              <!-- 4. Sınıf Kartı -->
+              <div class="english-grade-card card-en-grade4" data-grade="4" role="button" tabindex="0" title="4. Sınıf İngilizce - Saatler & Meslekler">
+                <div class="en-card-glow" aria-hidden="true"></div>
+                <div class="en-card-icon-box theme-purple">
+                  <span class="en-primary-emoji">🔍</span>
+                  <span class="en-secondary-emoji">⏰</span>
+                </div>
+                <div class="en-card-badge">İleri Seviye Quiz</div>
+                <h2 class="en-card-title">4. Sınıf</h2>
+                <p class="en-card-subtitle">Saatler, Meslekler & Günlük Yaşam</p>
+                <div class="en-card-pills">
+                  <span>⏰ Time & Routine</span>
+                  <span>🩺 My Jobs</span>
+                  <span>🌍 Countries</span>
+                </div>
+                <div class="en-card-action">
+                  <span>Maceraya Başla</span>
+                  <span class="en-arrow">›</span>
                 </div>
               </div>
             </div>
@@ -2667,6 +2784,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.14" defer></script>
+  <script src="app.js?v=8.9.15" defer></script>
 </body>
 </html>

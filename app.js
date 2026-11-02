@@ -9194,6 +9194,48 @@
           englishWord: raw.englishWord,
           lang: 'en'
         }, '🔢 Sayılar (Numbers Matching)');
+      } else if (gameType === 'english_first_words_1') {
+        const pool1 = [...this.englishColorsPool, ...this.englishAnimalsPool];
+        const raw = this.drawFromPool(pool1, "englishFirstWords1");
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '🐱 İlk Kelimeler (Colors & Animals)');
+      } else if (gameType === 'english_fruits_numbers_1') {
+        const pool2 = [...this.englishAnimalsAndFruitsPool, ...this.englishNumbersPool];
+        const raw = this.drawFromPool(pool2, "englishFruitsNumbers1");
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '🍎 Meyveler & Sayılar (1-10)');
+      } else if (gameType === 'english_time_jobs_4') {
+        const raw = this.drawFromPool(this.grade4CountriesRoutinesPool, "englishTimeJobs4");
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '⏰ Saatler & Meslekler (Time & Jobs)');
+      } else if (gameType === 'english_daily_life_4') {
+        const raw = this.drawFromPool(this.grade4CountriesRoutinesPool, "englishDailyLife4");
+        return this.buildQuestionItem({
+          question: raw.q,
+          correct: raw.a,
+          distractors: raw.d,
+          explanation: raw.exp,
+          englishWord: raw.englishWord,
+          lang: 'en'
+        }, '🌍 Ülkeler & Yaşam (Daily Life)');
       } else if (gameType === 'english_greetings') {
         const raw = this.drawFromPool(this.englishGreetingsPool, "englishGreetingsPool");
         return this.buildQuestionItem({
@@ -15297,6 +15339,46 @@
     // -------------------------------------------------------------
     1: [
       {
+        id: 'english',
+        name: 'İngilizce (Starters)',
+        icon: '🐱',
+        colorTheme: 'theme-english',
+        tagline: 'İlk Kelimeler & Renkler',
+        description: 'Sevimli hayvanlar, canlı renkler, lezzetli meyveler ve 1-10 arası İngilizce sayılar! 🐱🎨🍎',
+        badge: '1. Sınıf',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'first_words', label: '🎨 Renkler & Hayvanlar' },
+          { id: 'fruits_numbers', label: '🍎 Meyveler & Sayılar (1-10)' }
+        ],
+        games: [
+          {
+            id: 'english_first_words_1',
+            active: true,
+            title: 'Colors & Animals (Renkler & Hayvanlar)',
+            icon: '🐱',
+            badge: '🐱 İlk Kelimeler',
+            featureTag: '⭐ Görsel & Sesli',
+            description: 'Cat, dog, red, blue, green gibi ilk İngilizce kelimeleri fotoğraflarla keşfet! 🐱🎨',
+            tags: ['🐱 Animals', '🎨 Colors', '🔊 Sesli Okuma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'first_words'
+          },
+          {
+            id: 'english_fruits_numbers_1',
+            active: true,
+            title: 'Fruits & Numbers 1-10 (Meyveler & Sayılar)',
+            icon: '🍎',
+            badge: '🍎 Meyve & Sayı',
+            featureTag: '⭐ 1-10 Arası Sayılar',
+            description: 'Apple, banana, orange ve 1-10 arası İngilizce sayıları eğlenceli sorularla öğren! 🍎🔢',
+            tags: ['🍎 Fruits', '🔢 Numbers 1-10', '🎉 Eğlenceli'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'fruits_numbers'
+          }
+        ]
+      },
+      {
         id: 'firstreading',
         name: 'İlk Okuma Yazma',
         icon: '🔤',
@@ -16755,6 +16837,46 @@
     // -------------------------------------------------------------
     4: [
       {
+        id: 'english',
+        name: 'İngilizce',
+        icon: '🔍',
+        colorTheme: 'theme-english',
+        tagline: 'Time, Jobs & Countries',
+        description: 'Saatler, meslekler, ülkeler ve günlük yaşam kalıpları! ⏰🩺🌍',
+        badge: '4. Sınıf',
+        topics: [
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'time_jobs', label: '⏰ Saatler & Meslekler' },
+          { id: 'daily_life', label: '🌍 Ülkeler & Günlük Yaşam' }
+        ],
+        games: [
+          {
+            id: 'english_time_jobs_4',
+            active: true,
+            title: 'Time & Jobs (Saatler ve Meslekler)',
+            icon: '⏰',
+            badge: '⏰ Saatler & Meslekler',
+            featureTag: '⭐ İleri Seviye',
+            description: 'Doctor, teacher, pilot gibi meslekler ve "What time is it?" saat kalıpları! ⏰🩺',
+            tags: ['⏰ Time', '🩺 Jobs', '🔊 Sesli Okuma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'time_jobs'
+          },
+          {
+            id: 'english_daily_life_4',
+            active: true,
+            title: 'Countries & Daily Life (Ülkeler & Günlük Yaşam)',
+            icon: '🌍',
+            badge: '🌍 Ülkeler & Yaşam',
+            featureTag: '⭐ Düello Arenası',
+            description: 'Ülkeler, milliyetler ve günlük rutin kalıpları ile İngilizce şampiyonu ol! 🌍✈️',
+            tags: ['🌍 Countries', '🏃 Routines', '👑 Şampiyon'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'daily_life'
+          }
+        ]
+      },
+      {
         id: 'math',
         name: 'Matematik',
         icon: '🧮',
@@ -17481,51 +17603,111 @@
   // Ders Seçildiğinde 2. Kademeye (Oyunlar & Konular) Geç
   
   /* ==========================================================================
-     GERÇEK İNGİLİZCE MODÜLÜ VE ROUTING (/ingilizce)
+     🇬🇧 YENİ İNGİLİZCE MODÜLÜ MİMARİSİ VE SEVİYE SEÇİMİ (ENGLISH HUB)
      ========================================================================== */
-  function openEnglishModule(e) {
+  function openEnglishHub(e) {
     if (e && e.preventDefault) e.preventDefault();
     if (e && e.stopPropagation) e.stopPropagation();
     if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
     if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
+
     const modalSelectGrade = document.getElementById('modalSelectGrade');
     if (modalSelectGrade && typeof closeModal === 'function') closeModal(modalSelectGrade);
 
+    // Müzik kontrolü: Ana sayfa ve oyun müziklerini durdur
+    if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+    if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.stop(true);
+
+    state.currentSection = 'english_hub';
     state.isDirectEnglishMode = true;
-    state.currentGrade = 2; // İçerik havuzu için 2. sınıfı referans al
 
-    if (typeof selectSubject === 'function') {
-      selectSubject('english');
-    }
+    // Tüm diğer bölümleri gizle, sadece English Hub'ı aç!
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+    if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    if (arcadeSec) arcadeSec.classList.add('hide');
+    const adminSec = document.getElementById('adminPanelSection');
+    if (adminSec) adminSec.classList.add('hide');
 
-    // Başlıkları özel EdTech İngilizce modülü olarak güncelle (2. Sınıf yerine)
-    if (DOM.currentSubjectTitle) {
-      DOM.currentSubjectTitle.textContent = 'İngilizce';
-    }
-    if (DOM.currentSubjectGrade) {
-      DOM.currentSubjectGrade.textContent = '🇬🇧 Fotoğraflı & Görselli Kelime Düelloları';
-    }
+    const englishHub = document.getElementById('englishHubSection');
+    if (englishHub) englishHub.classList.remove('hide');
 
-    // "← Tüm Dersler" butonunu "← Ana Sayfa" olarak güncelle
-    const btnBack = DOM.btnSubjectBackHome || document.getElementById('btnSubjectBackHome');
-    if (btnBack) {
-      btnBack.innerHTML = '<span class="back-icon" aria-hidden="true">‹</span><span>Ana Sayfa</span>';
-    }
-
-    // Sidebar'da İngilizce butonunu aktif yap, sınıfları pasifleştir
+    // Sol panel aktifliği
     if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
     if (DOM.gradeChips) DOM.gradeChips.forEach(c => c.classList.remove('active'));
     const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
     if (btnSidebarEnglish) btnSidebarEnglish.classList.add('active');
 
-    // URL'yi /ingilizce (#ingilizce) olarak senkronize et
+    // Moli ifadesi
+    if (typeof changeMoliExpression === 'function') changeMoliExpression('happy');
+
+    // URL senkronizasyonu
     try {
       if (window.location.hash !== '#ingilizce') {
         history.pushState({ route: 'ingilizce' }, '', '#ingilizce');
       }
     } catch (err) {}
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.openEnglishHub = openEnglishHub;
+
+  // Geriye dönük uyumluluk
+  function openEnglishModule(e) {
+    openEnglishHub(e);
   }
   window.openEnglishModule = openEnglishModule;
+
+  // İngilizce Sınıf Kartına Dokunulduğunda İlgili Sınıfın İngilizce Oyun Havuzuna Geçiş
+  function openEnglishGradeGames(grade) {
+    const g = parseInt(grade, 10) || 2;
+    if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+    if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
+
+    state.isDirectEnglishMode = true;
+    state.currentGrade = g;
+
+    // English Hub bölümünü gizle
+    const englishHub = document.getElementById('englishHubSection');
+    if (englishHub) englishHub.classList.add('hide');
+
+    // Doğrudan o sınıfın İngilizce dersini seç ve oyunları render et
+    if (typeof selectSubject === 'function') {
+      selectSubject('english');
+    }
+
+    // Başlıkları özel EdTech İngilizce olarak güncelle
+    if (DOM.currentSubjectTitle) {
+      DOM.currentSubjectTitle.textContent = `${g}. Sınıf İngilizce Düelloları`;
+    }
+    if (DOM.currentSubjectGrade) {
+      DOM.currentSubjectGrade.textContent = `🇬🇧 Fotoğraflı & Sesli Kelime Havuzu (${g}. Sınıf)`;
+    }
+
+    // "← Tüm Dersler" butonunu "← İngilizce Sınıf Seçimi" olarak güncelle
+    const btnBack = DOM.btnSubjectBackHome || document.getElementById('btnSubjectBackHome');
+    if (btnBack) {
+      btnBack.innerHTML = '<span class="back-icon" aria-hidden="true">‹</span><span>İngilizce Sınıfları</span>';
+      btnBack.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openEnglishHub();
+      };
+    }
+
+    // URL Senkronizasyonu (/ingilizce/X-sinif)
+    try {
+      const hash = `#ingilizce/${g}-sinif`;
+      if (window.location.hash !== hash) {
+        history.pushState({ route: `ingilizce-${g}` }, '', hash);
+      }
+    } catch (err) {}
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.openEnglishGradeGames = openEnglishGradeGames;
 
   function selectSubject(subjectId) {
     lockInteractions(400);
@@ -18099,6 +18281,7 @@
     if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
     const arcadeSec = document.getElementById('arcadeHubSection');
     if (arcadeSec) arcadeSec.classList.add('hide');
+    const enHub = document.getElementById('englishHubSection'); if (enHub) enHub.classList.add('hide');
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.remove('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -22384,8 +22567,26 @@
 
     const btnStageQuickEnglish = document.getElementById('btnStageQuickEnglish');
     if (btnStageQuickEnglish) {
-      addTapListener(btnStageQuickEnglish, openEnglishModule);
+      addTapListener(btnStageQuickEnglish, openEnglishHub);
     }
+    // 🇬🇧 İngilizce Hub & Sınıf Kartları Dinleyicileri
+    const btnEnglishBackHome = document.getElementById('btnEnglishBackHome');
+    if (btnEnglishBackHome) {
+      addTapListener(btnEnglishBackHome, () => {
+        if (typeof openHomePage === 'function') openHomePage();
+      });
+    }
+
+    const enCards = document.querySelectorAll('.english-grade-card');
+    enCards.forEach(card => {
+      addTapListener(card, () => {
+        const grade = parseInt(card.getAttribute('data-grade'), 10) || 2;
+        if (typeof openEnglishGradeGames === 'function') {
+          openEnglishGradeGames(grade);
+        }
+      });
+    });
+
 
     // Sağ Sütundaki Rozetler
     const btnPillMath = document.getElementById('btnPillMath');
@@ -22465,9 +22666,15 @@
       if (typeof openArcadeHub === 'function') {
         setTimeout(openArcadeHub, 100);
       }
+    } else if (hash.startsWith('#ingilizce/') || hash.startsWith('#/ingilizce/') || path.includes('/ingilizce/')) {
+      const gMatch = (hash + path).match(/([1-4])(?:-sinif)?/);
+      const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
+      setTimeout(() => {
+        if (typeof openEnglishGradeGames === 'function') openEnglishGradeGames(grade);
+      }, 100);
     } else if (hash === '#ingilizce' || hash === '#/ingilizce' || path.endsWith('/ingilizce')) {
       setTimeout(() => {
-        if (typeof openEnglishModule === 'function') openEnglishModule();
+        if (typeof openEnglishHub === 'function') openEnglishHub();
       }, 100);
     }
   }
