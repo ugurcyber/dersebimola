@@ -778,6 +778,66 @@
       });
     }
 
+    // Alkış & Tezahürat Sesi (Web Audio API Gerçekçi Kalabalık Alkış Sentezleyici)
+    playApplause(durationSec = 1.8) {
+      if (!state.soundEnabled || !this.ensureContext()) return;
+      try {
+        const ctx = this.ctx;
+        const now = ctx.currentTime;
+        const sampleRate = ctx.sampleRate;
+        const bufferSize = Math.floor(sampleRate * durationSec);
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        const whiteNoise = ctx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+
+        // Bandpass filtre: Alkış frekans aralığı (800Hz - 1800Hz)
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1100, now);
+        filter.Q.setValueAtTime(1.2, now);
+
+        // Zarflama (Envelope): Başlangıçta yüksel, sonra sönümlen
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.28, now + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + durationSec);
+
+        whiteNoise.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        whiteNoise.start(now);
+        whiteNoise.stop(now + durationSec + 0.05);
+
+        // Bireysel alkış darbeleri (Claps)
+        const clapCount = 14;
+        for (let c = 0; c < clapCount; c++) {
+          const clapTime = now + 0.05 + Math.random() * (durationSec * 0.75);
+          const clapOsc = ctx.createOscillator();
+          const clapGain = ctx.createGain();
+          clapOsc.type = 'triangle';
+          clapOsc.frequency.setValueAtTime(320 + Math.random() * 180, clapTime);
+          clapGain.gain.setValueAtTime(0.18 + Math.random() * 0.12, clapTime);
+          clapGain.gain.exponentialRampToValueAtTime(0.001, clapTime + 0.06);
+          clapOsc.connect(clapGain);
+          clapGain.connect(ctx.destination);
+          clapOsc.start(clapTime);
+          clapOsc.stop(clapTime + 0.07);
+        }
+      } catch (e) {}
+    }
+
+    // Zafer & Fanfare Melodisi + Alkış Efekti
+    playFanfare() {
+      this.playVictory();
+      this.playApplause(2.2);
+    }
+
     // Kura / Çark Çevirme Tık Sesi: Tok ahşap çark tıkı
     playTick() {
       if (!state.soundEnabled || !this.ensureContext()) return;
@@ -9194,6 +9254,92 @@
   };
 
   /* ==========================================================================
+     4.0. GLOBAL KONFETİ MOTORU (confetti.js / launchConfetti)
+     ========================================================================== */
+  function launchConfetti(originX, originY) {
+    try {
+      let canvas = document.getElementById('globalConfettiCanvas');
+      if (!canvas) {
+        canvas = document.createElement('canvas');
+        canvas.id = 'globalConfettiCanvas';
+        canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:100002;';
+        document.body.appendChild(canvas);
+      }
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#F59E0B', '#38BDF8', '#EF4444', '#10B981', '#EC4899', '#8B5CF6', '#FBBF24', '#F97316', '#FFFFFF'];
+      const particles = [];
+      const count = 180;
+
+      const ox = originX !== undefined ? originX : canvas.width / 2;
+      const oy = originY !== undefined ? originY : canvas.height * 0.42;
+
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 19 + 7;
+        particles.push({
+          x: ox + (Math.random() - 0.5) * 80,
+          y: oy + (Math.random() - 0.5) * 50,
+          w: Math.random() * 12 + 6,
+          h: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 6.5,
+          gravity: 0.36,
+          friction: 0.965,
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 14,
+          tilt: Math.random() * 10,
+          tiltSpeed: Math.random() * 0.15 + 0.05,
+          opacity: 1
+        });
+      }
+
+      let animId = null;
+      function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = 0;
+        for (const p of particles) {
+          p.vx *= p.friction;
+          p.vy = p.vy * p.friction + p.gravity;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.rotSpeed;
+          p.tilt += p.tiltSpeed;
+          p.opacity -= 0.0055;
+
+          if (p.opacity > 0 && p.y < canvas.height + 60) {
+            alive++;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rot * Math.PI) / 180);
+            ctx.scale(Math.cos(p.tilt), 1);
+            ctx.globalAlpha = Math.max(0, p.opacity);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            ctx.restore();
+          }
+        }
+
+        if (alive > 0) {
+          animId = requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (animId) cancelAnimationFrame(animId);
+        }
+      }
+      requestAnimationFrame(render);
+    } catch (e) {
+      console.warn('launchConfetti error:', e);
+    }
+  }
+  window.launchConfetti = launchConfetti;
+
+  /* ==========================================================================
      4. KONFETİ SİSTEMİ: CANVAS PARTİKÜL MOTORU (SADECE OYUN/ZAFER EKRANINDA)
      ========================================================================== */
   class ConfettiCanon {
@@ -12677,7 +12823,7 @@
           </div>
         ` : ''}
 
-        <div class="xox-board-grid">
+        <div class="xox-board-grid ${x.winner ? 'is-game-over' : ''}">
           ${x.board.map((val, idx) => {
             const isWin = x.winLine.includes(idx);
             const isOldestX = (x.infiniteMode && idx === oldestX);
@@ -12736,6 +12882,8 @@
 
   function placeXoxPiece(idx, symbol) {
     const x = ArcadeHub.xox;
+    if (x.winner) return;
+
     const queue = symbol === 'X' ? x.movesX : x.movesO;
 
     if (x.infiniteMode && queue.length >= 3) {
@@ -12748,42 +12896,65 @@
 
     const res = checkXoxWinner(x.board);
     if (res) {
+      // 1) KAZANMA DURUMUNDA OYUNU ANINDA DURDUR (Tahtayı anında kilitle)
       x.winner = res.winner;
       x.winLine = res.line;
+      x.aiThinking = false;
+      renderArcadeXoxStage();
+
+      // 2) KAZANAN EKRANI (MODAL) VE GÖRSEL ŞÖLEN (Konfeti + Alkış/Zafer Sesi)
       if (res.winner === 'X') {
         x.scoreX += 1;
         audio.playFanfare();
-        if (typeof launchConfetti === 'function') launchConfetti();
-        showArcadeVictoryModal({
-          title: '1. OYUNCU (❌) KAZANDI! 🎉',
-          subtitle: 'Mükemmel bir hamle taktiğiyle 3\'lü sırayı tamamladın!',
-          badgeText: 'XOX ŞAMPİYONU',
-          icon: '❌',
-          onRestart: () => initArcadeXoxGame(true)
-        });
+        if (typeof launchConfetti === 'function') {
+          launchConfetti();
+          setTimeout(launchConfetti, 380);
+        }
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: "🎉 TEBRİKLER! 'X' KAZANDI!",
+            subtitle: "Mükemmel bir hamle taktiğiyle 3'lü sırayı tamamladın!",
+            badgeText: 'XOX ŞAMPİYONU',
+            icon: '❌',
+            onRestart: () => initArcadeXoxGame(true)
+          });
+        }, 280);
       } else if (res.winner === 'O') {
         x.scoreO += 1;
-        audio.playCorrect();
-        showArcadeVictoryModal({
-          title: x.vsAi ? 'MOLİ KAZANDI! 🤖' : '2. OYUNCU (⭕) KAZANDI! 🎉',
-          subtitle: x.vsAi ? 'Moli bu turda harika hamleler yaptı! Rövanş için hemen tekrar dene!' : 'Mükemmel bir hamle taktiğiyle 3\'lü sırayı tamamladın!',
-          badgeText: x.vsAi ? 'MOLİ GALİP' : 'XOX ŞAMPİYONU',
-          icon: '⭕',
-          onRestart: () => initArcadeXoxGame(true)
-        });
+        audio.playFanfare();
+        if (typeof launchConfetti === 'function') {
+          launchConfetti();
+          setTimeout(launchConfetti, 380);
+        }
+        const oTitle = x.vsAi ? "🎉 TEBRİKLER! 'O' (MOLİ) KAZANDI!" : "🎉 TEBRİKLER! 'O' KAZANDI!";
+        const oSub = x.vsAi
+          ? "Moli bu turda zekice hamlelerle kazandı! Rövanş için hemen tekrar dene!"
+          : "Mükemmel bir hamle taktiğiyle 3'lü sırayı tamamladın!";
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: oTitle,
+            subtitle: oSub,
+            badgeText: x.vsAi ? 'MOLİ GALİP' : 'XOX ŞAMPİYONU',
+            icon: '⭕',
+            onRestart: () => initArcadeXoxGame(true)
+          });
+        }, 280);
       } else if (res.winner === 'draw') {
-        showArcadeVictoryModal({
-          title: 'DOSTLUK KAZANDI! 🤝',
-          subtitle: 'Her iki taraf da harika savunma yaptı, tahtada beraberlik sağlandı!',
-          badgeText: 'BERABERE',
-          icon: '🤝',
-          onRestart: () => initArcadeXoxGame(true)
-        });
+        audio.playVictory();
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: '🤝 OYUN BERABERE!',
+            subtitle: 'Her iki taraf da harika oynadı, tahtada beraberlik sağlandı!',
+            badgeText: 'DOSTLUK KAZANDI',
+            icon: '🤝',
+            onRestart: () => initArcadeXoxGame(true)
+          });
+        }, 280);
       }
     } else {
       x.turn = (symbol === 'X') ? 'O' : 'X';
+      renderArcadeXoxStage();
     }
-    renderArcadeXoxStage();
   }
 
   function computeMoliXoxMove() {

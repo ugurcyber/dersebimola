@@ -14922,6 +14922,10 @@ p,
   max-width: 820px;
 }
 
+.xox-board-grid.is-game-over {
+  pointer-events: none !important;
+}
+
 .xox-board-grid {
   display: grid;
   grid-template-columns: repeat(3, 114px);
@@ -15742,11 +15746,12 @@ p,
 
 .vic-title {
   font-family: 'Fredoka', 'Nunito', sans-serif !important;
-  font-size: 1.65rem;
-  font-weight: 800;
+  font-size: 1.85rem;
+  font-weight: 900;
   color: #0F172A;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   line-height: 1.25;
+  letter-spacing: 0.5px;
 }
 
 .vic-sub {
@@ -15784,9 +15789,16 @@ p,
 .vic-btn-restart {
   background: linear-gradient(180deg, #F97316 0%, #EA580C 100%);
   border: 2px solid #C2410C;
-  border-bottom: 5px solid #9A3412;
+  border-bottom: 6px solid #9A3412;
   color: #FFFFFF;
-  box-shadow: 0 8px 18px rgba(234, 88, 12, 0.35);
+  box-shadow: 0 10px 24px rgba(234, 88, 12, 0.42);
+  min-height: 54px;
+  padding: 15px 28px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  border-radius: 20px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .vic-btn-hub {
