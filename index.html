@@ -181,15 +181,14 @@
             <span class="grade-chip-name">4. Sınıf</span>
           </button>
           <!-- 1) İNGİLİZCE MENÜSÜ (🇬🇧 İngilizce Yönlendirmesi) -->
-          <a class="grade-chip chip-english" href="#ingilizce" data-route="/ingilizce" id="btnSidebarEnglish" title="İngilizce Eğlenceli Kelime ve Soru Düelloları">
+          <a class="grade-chip chip-english" href="#ingilizce" data-route="/ingilizce" id="btnSidebarEnglish" title="İngilizce Eğlenceli Kelime ve Soru Düelloları" onclick="if(window.navigateTo){window.navigateTo('ingilizce'); return false;}">
             <span class="grade-icon-box grade-icon-english">
               <span class="chip-flag-icon" aria-hidden="true">🇬🇧</span>
             </span>
             <span class="grade-chip-name">🇬🇧 İngilizce</span>
           </a>
-          <!-- 2) OYUNLAR MENÜSÜ (/oyunlar Yönlendirmesi) -->
           <!-- 2) OYUNLAR MENÜSÜ (/populer-oyunlar Yönlendirmesi) -->
-          <a class="grade-chip chip-duels" href="#populer-oyunlar" data-route="/populer-oyunlar" id="btnSidebarDuels" title="Popüler Oyunlar - Zeka ve Beceri Merkezi">
+          <a class="grade-chip chip-duels" href="#populer-oyunlar" data-route="/populer-oyunlar" id="btnSidebarDuels" title="Popüler Oyunlar - Zeka ve Beceri Merkezi" onclick="if(window.navigateTo){window.navigateTo('populer-oyunlar'); return false;} else if(window.handleQuickDuelsClick){window.handleQuickDuelsClick(event); return false;}">
             <span class="grade-icon-box grade-icon-duels"><img src="assets/icons/3d/lightning.webp" class="chip-3d-icon" alt="Popüler Oyunlar" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">🔥 Popüler Oyunlar</span>
           </a>
@@ -418,7 +417,7 @@
                   <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </a>
 
-                <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Popüler Oyunlar & Düellolar">
+                <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Popüler Oyunlar & Düellolar" onclick="if(window.navigateTo){window.navigateTo('populer-oyunlar');}else if(typeof openArcadeHub==='function'){openArcadeHub();}">
                   <div class="grade-icon-cube icon-theme-duel">
                     <img src="assets/icons/3d/lightning.webp" class="grade-card-3d-img" alt="Düellolar" width="30" height="30" loading="lazy" decoding="async">
                   </div>
@@ -1915,7 +1914,7 @@
           <span class="grade-modal-arrow">→</span>
         </button>
 
-        <button class="grade-modal-card card-grade-duels" id="btnModalDuels" type="button">
+        <button class="grade-modal-card card-grade-duels" id="btnModalDuels" type="button" onclick="if(window.navigateTo){window.navigateTo('populer-oyunlar');}else if(typeof openArcadeHub==='function'){openArcadeHub();}">
           <div class="grade-modal-icon-wrap">
             <img src="assets/icons/3d/lightning.webp" class="grade-modal-3d-icon" alt="Düellolar" width="46" height="46" loading="lazy">
           </div>
@@ -2936,6 +2935,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.18" defer></script>
+  <script src="app.js?v=8.9.19" defer></script>
 </body>
 </html>

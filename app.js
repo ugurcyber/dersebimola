@@ -22903,7 +22903,54 @@
       if (appSidebar) appSidebar.classList.remove('sidebar-mobile-open');
       if (mobileDrawerBackdrop) mobileDrawerBackdrop.classList.remove('active');
       document.body.classList.remove('mobile-drawer-locked');
+      const modalSelectGrade = document.getElementById('modalSelectGrade');
+      if (modalSelectGrade && typeof closeModal === 'function') {
+        closeModal(modalSelectGrade);
+      }
     };
+    window.closeMobileSidebar = closeMobileSidebar;
+    window.closeMenu = closeMobileSidebar;
+
+    function navigateTo(route) {
+      if (typeof audio !== 'undefined' && audio.playClick) {
+        audio.playClick();
+      }
+      closeMobileSidebar();
+      const clean = (route || '').replace(/^#\/?/, '').replace(/^\//, '').toLowerCase();
+      if (clean === 'populer-oyunlar' || clean === 'oyunlar') {
+        if (typeof openArcadeHub === 'function') {
+          openArcadeHub();
+        }
+        if (window.location.hash !== '#populer-oyunlar') {
+          window.location.hash = '#populer-oyunlar';
+        }
+      } else if (clean === 'ingilizce') {
+        if (typeof openEnglishHub === 'function') {
+          openEnglishHub();
+        }
+        if (window.location.hash !== '#ingilizce') {
+          window.location.hash = '#ingilizce';
+        }
+      } else if (clean.startsWith('ingilizce/')) {
+        const gMatch = clean.match(/([1-4])(?:-sinif)?/);
+        const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
+        if (typeof openEnglishGradeGames === 'function') {
+          openEnglishGradeGames(grade);
+        }
+        window.location.hash = '#' + clean;
+      } else if (clean === 'admin-panel') {
+        if (typeof openAdminPanel === 'function') {
+          openAdminPanel();
+        }
+        window.location.hash = '#admin-panel';
+      } else if (clean === 'home' || clean === '') {
+        if (typeof openHomePage === 'function') {
+          openHomePage();
+        }
+        window.location.hash = '';
+      }
+    }
+    window.navigateTo = navigateTo;
 
     const toggleMobileSidebar = (e) => {
       if (e) {
@@ -22940,7 +22987,7 @@
 
     // Mobil menüdeki herhangi bir öğeye tıklandığında çekmeceyi otomatik kapat
     if (appSidebar) {
-      appSidebar.querySelectorAll('.sidebar-item, .grade-chip, .sidebar-home-btn, .sidebar-sub-item').forEach(el => {
+      appSidebar.querySelectorAll('.sidebar-item, .grade-chip:not(#btnSidebarDuels):not(#btnSidebarEnglish), .sidebar-home-btn, .sidebar-sub-item').forEach(el => {
         addTapListener(el, () => {
           setTimeout(closeMobileSidebar, 150);
         });
@@ -23571,17 +23618,9 @@
 
     function handleQuickDuelsClick(e) {
       if (e && e.preventDefault) e.preventDefault();
-      audio.playClick();
-      if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
-      const modalSelectGrade = document.getElementById('modalSelectGrade');
-      if (modalSelectGrade) closeModal(modalSelectGrade);
-      openArcadeHub();
-      try {
-        if (window.location.hash !== '#populer-oyunlar' && window.location.hash !== '#oyunlar') {
-          history.pushState({ route: 'populer-oyunlar' }, '', '#populer-oyunlar');
-        }
-      } catch (err) {}
+      navigateTo('populer-oyunlar');
     }
+    window.handleQuickDuelsClick = handleQuickDuelsClick;
 
     const btnArcadeBackHome = document.getElementById('btnArcadeBackHome');
     if (btnArcadeBackHome) {
@@ -23615,12 +23654,23 @@
 
     const btnSidebarDuels = document.getElementById('btnSidebarDuels');
     if (btnSidebarDuels) {
-      addTapListener(btnSidebarDuels, handleQuickDuelsClick);
+      addTapListener(btnSidebarDuels, (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        navigateTo('populer-oyunlar');
+      });
+    }
+
+    const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
+    if (btnSidebarEnglish) {
+      addTapListener(btnSidebarEnglish, (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        navigateTo('ingilizce');
+      });
     }
 
     const btnStageQuickEnglish = document.getElementById('btnStageQuickEnglish');
     if (btnStageQuickEnglish) {
-      addTapListener(btnStageQuickEnglish, openEnglishHub);
+      addTapListener(btnStageQuickEnglish, () => navigateTo('ingilizce'));
     }
     // 🇬🇧 İngilizce Hub & Sınıf Kartları Dinleyicileri
     
