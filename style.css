@@ -19818,3 +19818,641 @@ body:has(#homeShowcaseSection.hide) .home-music-fab {
     padding: 14px;
   }
 }
+
+
+/* ============================================================== */
+/* 🇬🇧 İNGİLİZCE 3. & 4. SINIF INTERAKTİF OYUN ARENASI              */
+/* (Prepositions, Sentence Builder, Clock & Weather, Jobs & City) */
+/* ============================================================== */
+.english-advanced-arena {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+  animation: fadeInArena 0.3s ease-out;
+}
+
+/* Üst Kontrol Barı */
+.adv-arena-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #FFFFFF;
+  border: 2px solid #E0E7FF;
+  border-bottom: 4px solid #4F46E5;
+  border-radius: 24px;
+  padding: 10px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.12);
+}
+
+.adv-arena-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adv-grade-badge {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  font-size: 0.74rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+}
+
+.adv-game-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1E1B4B;
+  margin: 0;
+}
+
+/* 4 Oyun Seçim Sekmeleri */
+.adv-game-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F8FAFC;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1.5px solid #E2E8F0;
+}
+
+.adv-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  background: transparent;
+  color: #64748B;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.adv-tab-btn:hover {
+  color: #1E293B;
+  background: #EDF2F7;
+}
+
+.adv-tab-btn.active {
+  background: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+.adv-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adv-star-score {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: #FFFBEB;
+  border: 1.5px solid #FCD34D;
+  border-radius: 999px;
+  font-weight: 900;
+  color: #B45309;
+  font-size: 0.85rem;
+}
+
+/* Moli Yönerge Bandı */
+.adv-moli-prompt-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #EEF2FF 100%);
+  border: 2px solid #C7D2FE;
+  border-left: 6px solid #4F46E5;
+  border-radius: 20px;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.1);
+}
+
+.adv-moli-avatar-box {
+  position: relative;
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: #E0E7FF;
+  border: 2px solid #A5B4FC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adv-moli-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.adv-moli-hat {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font-size: 1.2rem;
+}
+
+.adv-prompt-content {
+  flex: 1;
+}
+
+.adv-speech-bubble {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.adv-speech-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1E1B4B;
+}
+
+.adv-hint-text {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.adv-stage-container {
+  min-height: 480px;
+  background: #FFFFFF;
+  border: 2.5px solid #E2E8F0;
+  border-radius: 26px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================== */
+/* 1. MOLİ'NİN ODASI: NEREDE? (PREPOSITIONS ROOM ENGINE)          */
+/* ============================================================== */
+.room-game-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.room-isometric-canvas {
+  width: min(92vw, 760px);
+  height: 330px;
+  background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%);
+  border: 2.5px solid #CBD5E1;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.room-furniture {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-size: 3.5rem;
+}
+
+.furniture-bed { left: 40px; bottom: 30px; }
+.furniture-table { left: 310px; bottom: 30px; font-size: 4.2rem; }
+.furniture-box { right: 50px; bottom: 40px; font-size: 3.8rem; }
+.furniture-chair { right: 180px; bottom: 35px; font-size: 3.4rem; }
+
+.furniture-label {
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #64748B;
+  background: #FFFFFF;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #E2E8F0;
+  margin-top: 4px;
+}
+
+.room-drop-slot {
+  position: absolute;
+  border: 2px dashed #818CF8;
+  background: rgba(224, 231, 255, 0.65);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #3730A3;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.room-drop-slot.slot-on-bed { left: 50px; bottom: 105px; width: 85px; height: 50px; }
+.room-drop-slot.slot-under-table { left: 320px; bottom: 10px; width: 90px; height: 45px; }
+.room-drop-slot.slot-in-box { right: 55px; bottom: 110px; width: 85px; height: 50px; }
+.room-drop-slot.slot-next-to-chair { right: 100px; bottom: 40px; width: 70px; height: 50px; }
+
+.room-drop-slot.drag-over {
+  border-color: #10B981;
+  background: #D1FAE5;
+  transform: scale(1.1);
+}
+
+.room-items-tray {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.room-item-card {
+  width: 82px;
+  height: 85px;
+  border-radius: 18px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.room-item-card:hover {
+  transform: translateY(-4px);
+  border-color: #818CF8;
+}
+
+.room-item-card:active {
+  cursor: grabbing;
+  transform: scale(1.12);
+}
+
+/* ============================================================== */
+/* 2. CÜMLE TRENİ (SENTENCE BUILDER TRAIN ENGINE)                 */
+/* ============================================================== */
+.train-game-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.train-hint-visual {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  background: #F1F5F9;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.train-rail-container {
+  width: min(92vw, 800px);
+  min-height: 140px;
+  background: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%);
+  border-radius: 20px;
+  border: 2px solid #CBD5E1;
+  border-bottom: 6px solid #475569;
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  gap: 10px;
+  overflow-x: auto;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.train-rail-container.driving-away {
+  animation: trainChooChoo 1.6s forwards ease-in;
+}
+
+@keyframes trainChooChoo {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-15px); }
+  100% { transform: translateX(950px); opacity: 0; }
+}
+
+.train-locomotive {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+}
+
+.loco-body {
+  font-size: 3.6rem;
+  line-height: 1;
+}
+
+.loco-label {
+  font-size: 0.68rem;
+  font-weight: 900;
+  background: #1E1B4B;
+  color: #FFFFFF;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-top: 2px;
+}
+
+.train-slots-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.train-slot-box {
+  width: 95px;
+  height: 70px;
+  border: 2px dashed #94A3B8;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #64748B;
+  transition: all 0.2s ease;
+}
+
+.train-slot-box.drag-over {
+  border-color: #6366F1;
+  background: #EEF2FF;
+  transform: scale(1.05);
+}
+
+.train-wagons-pool {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.train-wagon-card {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #64748B;
+  border-radius: 16px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1E293B;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.train-wagon-card:hover {
+  transform: translateY(-3px);
+  border-color: #818CF8;
+}
+
+.train-wagon-card.placed {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ============================================================== */
+/* 3. SAAT VE HAVA DURUMU STÜDYOSU (CLOCK & WEATHER ENGINE)       */
+/* ============================================================== */
+.clock-game-stage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.analog-clock-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 8px solid #3B82F6;
+  box-shadow: 0 10px 28px rgba(59, 130, 246, 0.25), inset 0 2px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-center-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #1E293B;
+  z-index: 10;
+}
+
+.clock-hand-hour {
+  position: absolute;
+  bottom: 50%;
+  left: calc(50% - 3px);
+  width: 6px;
+  height: 55px;
+  background: #1E293B;
+  border-radius: 4px;
+  transform-origin: bottom center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 8;
+}
+
+.clock-hand-minute {
+  position: absolute;
+  bottom: 50%;
+  left: calc(50% - 2px);
+  width: 4px;
+  height: 80px;
+  background: #EF4444;
+  border-radius: 4px;
+  transform-origin: bottom center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 9;
+}
+
+.clock-numbers {
+  position: absolute;
+  inset: 10px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-weight: 800;
+  color: #334155;
+  font-size: 0.95rem;
+}
+.c-num-12 { position: absolute; top: 0; left: calc(50% - 8px); }
+.c-num-3 { position: absolute; top: calc(50% - 10px); right: 2px; }
+.c-num-6 { position: absolute; bottom: 0; left: calc(50% - 5px); }
+.c-num-9 { position: absolute; top: calc(50% - 10px); left: 2px; }
+
+.clock-options-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 220px;
+}
+
+.clock-option-btn {
+  padding: 12px 20px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1E1B4B;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.clock-option-btn:hover {
+  transform: translateX(4px);
+  border-color: #60A5FA;
+}
+
+/* ============================================================== */
+/* 4. ŞEHİR REHBERİ VE MESLEKLER (JOBS & PLACES ENGINE)          */
+/* ============================================================== */
+.city-game-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.city-buildings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 780px;
+}
+
+.city-building-card {
+  background: #F8FAFC;
+  border: 2px dashed #94A3B8;
+  border-radius: 20px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.city-building-card.drag-over {
+  border-color: #10B981;
+  background: #ECFDF5;
+  transform: scale(1.05);
+}
+
+.city-building-card.matched {
+  border-style: solid;
+  border-color: #10B981;
+  background: #D1FAE5;
+}
+
+.building-emoji { font-size: 3rem; line-height: 1; margin-bottom: 6px; }
+.building-title { font-weight: 800; font-size: 0.95rem; color: #1E293B; }
+.building-desc { font-size: 0.76rem; color: #64748B; font-weight: 700; }
+
+.city-workers-rack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.city-worker-card {
+  width: 90px;
+  height: 100px;
+  border-radius: 18px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.city-worker-card:hover {
+  transform: translateY(-4px);
+  border-color: #F59E0B;
+}
+
+.city-worker-card:active {
+  cursor: grabbing;
+  transform: scale(1.12);
+}
+
+@media (max-width: 768px) {
+  .adv-game-tabs {
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 8px;
+  }
+  .adv-tab-btn {
+    padding: 6px 8px;
+    font-size: 0.74rem;
+  }
+  .city-buildings-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

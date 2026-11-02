@@ -18198,6 +18198,447 @@
   window.EnglishKidsEngine = EnglishKidsEngine;
 
   /* ==========================================================================
+     🇬🇧 3. & 4. SINIF İNGİLİZCE İNTERAKTİF OYUN ARENASI (ADVANCED ENGINE)
+     (Prepositions, Sentence Builder Train, Clock & Weather, Jobs & City)
+     ========================================================================== */
+  const EnglishAdvancedEngine = {
+    currentGrade: 3,
+    currentGame: 'room',
+    score: 0,
+    maxScore: 5,
+    activePromptText: '',
+
+    // 3. ve 4. Sınıf Müfredat JSON Veri Havuzu
+    pools: {
+      3: {
+        roomTasks: [
+          { item: { name: 'CAT', emoji: '🐱', tr: 'Kedi' }, prep: 'UNDER', place: 'table', slotId: 'slot-under-table', en: 'Put the cat UNDER the table!', trHint: 'Kediyi masanın altına koy!' },
+          { item: { name: 'BALL', emoji: '⚽', tr: 'Top' }, prep: 'IN', place: 'box', slotId: 'slot-in-box', en: 'Put the ball IN the box!', trHint: 'Topu kutunun içine koy!' },
+          { item: { name: 'BOOK', emoji: '📚', tr: 'Kitap' }, prep: 'ON', place: 'bed', slotId: 'slot-on-bed', en: 'Put the book ON the bed!', trHint: 'Kitabı yatağın üzerine koy!' },
+          { item: { name: 'TEDDY', emoji: '🧸', tr: 'Ayıcık' }, prep: 'NEXT TO', place: 'chair', slotId: 'slot-next-to-chair', en: 'Put the teddy NEXT TO the chair!', trHint: 'Ayıcığı sandalyenin yanına koy!' }
+        ],
+        sentences: [
+          { words: ['I', 'can', 'swim', 'fast'], correct: 'I can swim fast', hint: '🏊 Hızlı yüzebilirim', icon: '🏊‍♂️' },
+          { words: ['The', 'weather', 'is', 'sunny'], correct: 'The weather is sunny', hint: '☀️ Hava güneşli', icon: '☀️' },
+          { words: ['I', 'love', 'my', 'family'], correct: 'I love my family', hint: '👨‍👩‍👧 Ailemi seviyorum', icon: '👨‍👩‍👧' },
+          { words: ['This', 'is', 'my', 'house'], correct: 'This is my house', hint: '🏡 Bu benim evim', icon: '🏡' }
+        ],
+        clocks: [
+          { en: "It is three o'clock!", hour: 3, min: 0, text: "3:00" },
+          { en: 'It is half past six!', hour: 6, min: 30, text: '6:30' },
+          { en: "It is eight o'clock!", hour: 8, min: 0, text: "8:00" },
+          { en: 'It is half past ten!', hour: 10, min: 30, text: '10:30' }
+        ],
+        jobs: [
+          { job: 'Doctor', emoji: '🩺', place: 'Hospital', bEmoji: '🏥', bDesc: 'I help sick people!' },
+          { job: 'Teacher', emoji: '👩‍🏫', place: 'School', bEmoji: '🏫', bDesc: 'I teach students!' },
+          { job: 'Fireman', emoji: '👨‍🚒', place: 'Fire Station', bEmoji: '🚒', bDesc: 'I put out fires!' }
+        ]
+      },
+      4: {
+        roomTasks: [
+          { item: { name: 'GUITAR', emoji: '🎸', tr: 'Gitar' }, prep: 'ON', place: 'bed', slotId: 'slot-on-bed', en: 'Put the guitar ON the bed!', trHint: 'Gitarı yatağın üzerine koy!' },
+          { item: { name: 'MICROSCOPE', emoji: '🔬', tr: 'Mikroskop' }, prep: 'UNDER', place: 'table', slotId: 'slot-under-table', en: 'Put the microscope UNDER the table!', trHint: 'Mikroskobu masanın altına koy!' },
+          { item: { name: 'FLAG', emoji: '🚩', tr: 'Bayrak' }, prep: 'IN', place: 'box', slotId: 'slot-in-box', en: 'Put the flag IN the box!', trHint: 'Bayrağı kutunun içine koy!' },
+          { item: { name: 'BAG', emoji: '🎒', tr: 'Çanta' }, prep: 'NEXT TO', place: 'chair', slotId: 'slot-next-to-chair', en: 'Put the bag NEXT TO the chair!', trHint: 'Çantayı sandalyenin yanına koy!' }
+        ],
+        sentences: [
+          { words: ['I', 'wake', 'up', 'early'], correct: 'I wake up early', hint: '⏰ Erken uyanırım', icon: '⏰' },
+          { words: ['He', 'is', 'from', 'Japan'], correct: 'He is from Japan', hint: '🇯🇵 O Japonyalıdır', icon: '🇯🇵' },
+          { words: ['I', 'like', 'playing', 'chess'], correct: 'I like playing chess', hint: '♟️ Satranç oynamayı severim', icon: '♟️' },
+          { words: ['Mix', 'blue', 'and', 'yellow'], correct: 'Mix blue and yellow', hint: '🎨 Mavi ile sarıyı karıştır', icon: '🎨' }
+        ],
+        clocks: [
+          { en: 'It is a quarter past four!', hour: 4, min: 15, text: '4:15' },
+          { en: 'It is half past seven!', hour: 7, min: 30, text: '7:30' },
+          { en: 'It is a quarter to nine!', hour: 8, min: 45, text: '8:45' },
+          { en: "It is twelve o'clock!", hour: 12, min: 0, text: "12:00" }
+        ],
+        jobs: [
+          { job: 'Chef', emoji: '👨‍🍳', place: 'Restaurant', bEmoji: '🍽️', bDesc: 'I cook delicious food!' },
+          { job: 'Pilot', emoji: '👨‍✈️', place: 'Airport', bEmoji: '✈️', bDesc: 'I fly airplanes!' },
+          { job: 'Police', emoji: '👮', place: 'Police Station', bEmoji: '🚓', bDesc: 'I protect the city!' }
+        ]
+      }
+    },
+
+    setPrompt(enText, trHint) {
+      this.activePromptText = enText;
+      const speechEl = document.getElementById('advSpeechText');
+      const hintEl = document.getElementById('advHintText');
+      if (speechEl) speechEl.textContent = `"${enText}"`;
+      if (hintEl) hintEl.textContent = `💡 İpucu: ${trHint}`;
+      speakEnglish(enText);
+    },
+
+    repeatVoice() {
+      if (this.activePromptText) {
+        speakEnglish(this.activePromptText);
+      }
+    },
+
+    addStar() {
+      this.score++;
+      if (typeof audio !== 'undefined' && audio.playCorrect) audio.playCorrect();
+      const scoreEl = document.getElementById('advScoreText');
+      if (scoreEl) scoreEl.textContent = `${this.score} / ${this.maxScore}`;
+      if (this.score >= this.maxScore) {
+        setTimeout(() => this.showVictoryModal(), 600);
+      }
+    },
+
+    showVictoryModal() {
+      if (typeof audio !== 'undefined' && audio.playFanfare) audio.playFanfare();
+      if (typeof launchConfetti === 'function') launchConfetti();
+      speakEnglish("Brilliant! You are an English master!");
+
+      const container = document.getElementById('advStageContainer');
+      if (!container) return;
+
+      const overlay = document.createElement('div');
+      overlay.className = 'kids-win-overlay';
+      overlay.innerHTML = `
+        <div class="kids-win-trophy">🌟</div>
+        <h2 class="kids-win-title">Tebrikler Şampiyon!</h2>
+        <p style="font-size:1.15rem; color:#334155; font-weight:700;">Harika bir iş çıkardın! 5 yıldızı da kazandın! 🏆</p>
+        <button class="kids-win-btn" type="button" id="btnRestartAdvGame">Yeniden Oyna 🚀</button>
+      `;
+      container.appendChild(overlay);
+
+      const btn = overlay.querySelector('#btnRestartAdvGame');
+      if (btn) {
+        btn.onclick = () => {
+          overlay.remove();
+          this.score = 0;
+          const scoreEl = document.getElementById('advScoreText');
+          if (scoreEl) scoreEl.textContent = `0 / ${this.maxScore}`;
+          this.switchGame(this.currentGame, this.currentGrade);
+        };
+      }
+    },
+
+    // 1) MOLİ'NİN ODASI: NEREDE? (PREPOSITIONS ROOM ENGINE)
+    initRoomGame(grade = 3) {
+      const container = document.getElementById('advStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[3];
+      const task = pool.roomTasks[Math.floor(Math.random() * pool.roomTasks.length)];
+
+      this.setPrompt(task.en, task.trHint);
+
+      container.innerHTML = `
+        <div class="room-game-stage">
+          <div class="room-isometric-canvas" id="roomCanvas">
+            <!-- Mobilyalar -->
+            <div class="room-furniture furniture-bed">
+              <span>🛏️</span>
+              <span class="furniture-label">Bed</span>
+            </div>
+            <div class="room-furniture furniture-table">
+              <span>🪵</span>
+              <span class="furniture-label">Table</span>
+            </div>
+            <div class="room-furniture furniture-chair">
+              <span>🪑</span>
+              <span class="furniture-label">Chair</span>
+            </div>
+            <div class="room-furniture furniture-box">
+              <span>📦</span>
+              <span class="furniture-label">Box</span>
+            </div>
+
+            <!-- Hedef Yuvalar -->
+            <div class="room-drop-slot slot-on-bed" data-slot="slot-on-bed">ON the bed</div>
+            <div class="room-drop-slot slot-under-table" data-slot="slot-under-table">UNDER table</div>
+            <div class="room-drop-slot slot-in-box" data-slot="slot-in-box">IN the box</div>
+            <div class="room-drop-slot slot-next-to-chair" data-slot="slot-next-to-chair">NEXT TO chair</div>
+          </div>
+
+          <!-- Alt Nesneler -->
+          <div class="room-items-tray">
+            ${pool.roomTasks.map(t => `
+              <div class="room-item-card" data-name="${t.item.name}" data-item="${t.item.name}">
+                <span style="font-size:2.2rem;">${t.item.emoji}</span>
+                <span style="font-size:0.75rem; font-weight:800; color:#334155;">${t.item.name}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      const targetSlot = container.querySelector(`.${task.slotId}`);
+
+      container.querySelectorAll('.room-item-card').forEach(card => {
+        makeDraggable(card, `.${task.slotId}`, (draggedEl) => {
+          if (draggedEl.dataset.name === task.item.name) {
+            if (typeof audio !== 'undefined' && audio.playSnap) audio.playSnap();
+            speakEnglish(`Great! The ${task.item.name} is ${task.prep} the ${task.place}!`);
+            targetSlot.innerHTML = `<span style="font-size:1.8rem;">${task.item.emoji}</span>`;
+            targetSlot.style.borderColor = '#10B981';
+            targetSlot.style.background = '#D1FAE5';
+            draggedEl.style.opacity = '0.4';
+            draggedEl.style.pointerEvents = 'none';
+            this.addStar();
+            setTimeout(() => this.initRoomGame(this.currentGrade), 1600);
+          } else {
+            speakEnglish(`No, find the ${task.item.name}!`);
+          }
+        }, (draggedEl) => {
+          speakEnglish(draggedEl.dataset.name);
+        });
+      });
+    },
+
+    // 2) CÜMLE TRENİ (SENTENCE BUILDER TRAIN ENGINE)
+    initTrainGame(grade = 3) {
+      const container = document.getElementById('advStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[3];
+      const sentenceObj = pool.sentences[Math.floor(Math.random() * pool.sentences.length)];
+      const shuffledWords = [...sentenceObj.words].sort(() => 0.5 - Math.random());
+
+      this.setPrompt("Build the sentence!", `Vagonları sırayla tak ve treni hareket ettir: "${sentenceObj.hint}"`);
+
+      container.innerHTML = `
+        <div class="train-game-stage">
+          <div class="train-hint-visual">
+            <span style="font-size:1.5rem;">${sentenceObj.icon}</span>
+            <span>İpucu: ${sentenceObj.hint}</span>
+          </div>
+
+          <div class="train-rail-container" id="trainRail">
+            <div class="train-locomotive">
+              <span class="loco-body">🚂</span>
+              <span class="loco-label">Moli Express</span>
+            </div>
+            <div class="train-slots-row" id="trainSlotsRow">
+              ${sentenceObj.words.map((w, idx) => `
+                <div class="train-slot-box" data-idx="${idx}" id="trainSlot_${idx}">
+                  <span>Vagon ${idx + 1}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="train-wagons-pool" id="trainWagonsPool">
+            ${shuffledWords.map(w => `
+              <div class="train-wagon-card" data-word="${w}">
+                <span>${w}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      let placedWords = [];
+      const rail = container.querySelector('#trainRail');
+
+      container.querySelectorAll('.train-wagon-card').forEach(card => {
+        card.onclick = () => {
+          const word = card.dataset.word;
+          const targetSlotIdx = placedWords.length;
+          if (targetSlotIdx < sentenceObj.words.length) {
+            placedWords.push(word);
+            card.classList.add('placed');
+            const slot = container.querySelector(`#trainSlot_${targetSlotIdx}`);
+            if (slot) {
+              slot.innerHTML = `<span style="font-weight:900; color:#1E1B4B; font-size:1.1rem;">${word}</span>`;
+              slot.style.background = '#EEF2FF';
+              slot.style.borderColor = '#6366F1';
+            }
+            speakEnglish(word);
+
+            // Cümle tamamlandı mı kontrolü
+            if (placedWords.length === sentenceObj.words.length) {
+              const fullSentence = placedWords.join(' ');
+              if (fullSentence.toLowerCase() === sentenceObj.correct.toLowerCase()) {
+                // DOĞRU CÜMLE!
+                if (typeof audio !== 'undefined' && audio.playFanfare) audio.playFanfare();
+                speakEnglish(`Choo Choo! ${sentenceObj.correct}!`);
+                rail.classList.add('driving-away');
+                this.addStar();
+                setTimeout(() => this.initTrainGame(this.currentGrade), 2000);
+              } else {
+                // YANLIŞ SIRA!
+                if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+                speakEnglish("Oops! Try again!");
+                setTimeout(() => this.initTrainGame(this.currentGrade), 1200);
+              }
+            }
+          }
+        };
+      });
+    },
+
+    // 3) SAAT VE HAVA DURUMU STÜDYOSU (CLOCK & WEATHER ENGINE)
+    initClockGame(grade = 3) {
+      const container = document.getElementById('advStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[3];
+      const targetClock = pool.clocks[Math.floor(Math.random() * pool.clocks.length)];
+
+      this.setPrompt(targetClock.en, `Saati dinle ve doğru seçeneği işaretle: "${targetClock.text}"`);
+
+      const hAngle = (targetClock.hour % 12) * 30 + (targetClock.min * 0.5);
+      const mAngle = targetClock.min * 6;
+
+      // Seçenekler oluştur
+      const options = [targetClock];
+      while (options.length < 3) {
+        const rand = pool.clocks[Math.floor(Math.random() * pool.clocks.length)];
+        if (!options.some(o => o.text === rand.text)) options.push(rand);
+      }
+      options.sort(() => 0.5 - Math.random());
+
+      container.innerHTML = `
+        <div class="clock-game-stage">
+          <div class="analog-clock-wrapper">
+            <div class="clock-numbers">
+              <span class="c-num-12">12</span>
+              <span class="c-num-3">3</span>
+              <span class="c-num-6">6</span>
+              <span class="c-num-9">9</span>
+            </div>
+            <div class="clock-hand-hour" style="transform: rotate(${hAngle}deg);"></div>
+            <div class="clock-hand-minute" style="transform: rotate(${mAngle}deg);"></div>
+            <div class="clock-center-dot"></div>
+          </div>
+
+          <div class="clock-options-rack">
+            ${options.map(opt => `
+              <button class="clock-option-btn" type="button" data-text="${opt.text}">
+                <span>⏰</span>
+                <span>${opt.en}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      container.querySelectorAll('.clock-option-btn').forEach(btn => {
+        btn.onclick = () => {
+          if (btn.dataset.text === targetClock.text) {
+            btn.style.background = '#D1FAE5';
+            btn.style.borderColor = '#10B981';
+            speakEnglish(`Awesome! It is ${targetClock.text}!`);
+            this.addStar();
+            setTimeout(() => this.initClockGame(this.currentGrade), 1600);
+          } else {
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            btn.style.background = '#FEE2E2';
+            speakEnglish("Try again!");
+          }
+        };
+      });
+    },
+
+    // 4) ŞEHİR REHBERİ VE MESLEKLER (JOBS & PLACES ENGINE)
+    initCityGame(grade = 3) {
+      const container = document.getElementById('advStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[3];
+      const jobs = pool.jobs;
+      const target = jobs[Math.floor(Math.random() * jobs.length)];
+
+      this.setPrompt(`Where does the ${target.job} work?`, `${target.job} (${target.bDesc}) nerede çalışır?`);
+
+      container.innerHTML = `
+        <div class="city-game-stage">
+          <div class="city-buildings-grid">
+            ${jobs.map(j => `
+              <div class="city-building-card" data-place="${j.place}" id="bldg_${j.place}">
+                <span class="building-emoji">${j.bEmoji}</span>
+                <span class="building-title">${j.place}</span>
+                <span class="building-desc">${j.bDesc}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="city-workers-rack">
+            ${jobs.map(j => `
+              <div class="city-worker-card" data-job="${j.job}" data-place="${j.place}">
+                <span style="font-size:2.4rem;">${j.emoji}</span>
+                <span style="font-size:0.82rem; font-weight:800; color:#1E1B4B; margin-top:4px;">${j.job}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      jobs.forEach(j => {
+        const bldgEl = container.querySelector(`#bldg_${j.place}`);
+        if (!bldgEl) return;
+
+        bldgEl.ondragover = (e) => { e.preventDefault(); bldgEl.classList.add('drag-over'); };
+        bldgEl.ondragleave = () => { bldgEl.classList.remove('drag-over'); };
+        bldgEl.ondrop = (e) => {
+          e.preventDefault();
+          bldgEl.classList.remove('drag-over');
+          const droppedPlace = e.dataTransfer.getData('text/plain');
+          if (droppedPlace === j.place) {
+            this.handleCityMatch(j, bldgEl, container);
+          } else {
+            speakEnglish(`No, the ${j.job} does not work here!`);
+          }
+        };
+      });
+
+      container.querySelectorAll('.city-worker-card').forEach(card => {
+        const place = card.dataset.place;
+        makeDraggable(card, `#bldg_${place}`, () => {
+          const j = jobs.find(x => x.place === place);
+          const bldgEl = container.querySelector(`#bldg_${place}`);
+          this.handleCityMatch(j, bldgEl, container);
+        }, (draggedEl) => {
+          speakEnglish(draggedEl.dataset.job);
+        });
+      });
+    },
+
+    handleCityMatch(j, bldgEl, container) {
+      if (typeof audio !== 'undefined' && audio.playSnap) audio.playSnap();
+      speakEnglish(`Perfect! The ${j.job} works at the ${j.place}!`);
+      bldgEl.classList.add('matched');
+      const card = container.querySelector(`.city-worker-card[data-job="${j.job}"]`);
+      if (card) {
+        card.style.opacity = '0.4';
+        card.style.pointerEvents = 'none';
+      }
+      this.addStar();
+      setTimeout(() => this.initCityGame(this.currentGrade), 1600);
+    },
+
+    switchGame(gameKey, grade) {
+      this.currentGame = gameKey;
+      this.currentGrade = grade || this.currentGrade;
+
+      document.querySelectorAll('.adv-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.game === gameKey);
+      });
+
+      const titleEl = document.getElementById('advArenaTitle');
+      const gameTitles = {
+        room: "Moli'nin Odası: Nerede? (Prepositions)",
+        train: 'Cümle Treni (Sentence Builder)',
+        clock: 'Saat & Hava Durumu (Time & Weather)',
+        city: 'Şehir & Meslekler (Jobs & Places)'
+      };
+      if (titleEl) titleEl.textContent = gameTitles[gameKey] || 'İngilizce Oyun Sahnesi';
+
+      if (gameKey === 'room') this.initRoomGame(this.currentGrade);
+      else if (gameKey === 'train') this.initTrainGame(this.currentGrade);
+      else if (gameKey === 'clock') this.initClockGame(this.currentGrade);
+      else if (gameKey === 'city') this.initCityGame(this.currentGrade);
+    }
+  };
+  window.EnglishAdvancedEngine = EnglishAdvancedEngine;
+
+
+  /* ==========================================================================
      🇬🇧 YENİ İNGİLİZCE MODÜLÜ MİMARİSİ VE SEVİYE SEÇİMİ (ENGLISH HUB)
      ========================================================================== */
   function openEnglishHub(e) {
@@ -18256,7 +18697,7 @@
   window.openEnglishModule = openEnglishModule;
 
   // İngilizce Sınıf Kartına Dokunulduğunda İlgili Sınıfın İngilizce Oyun Havuzuna Geçiş
-    function openEnglishGradeGames(grade) {
+      function openEnglishGradeGames(grade) {
     const g = parseInt(grade, 10) || 2;
     if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
     if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
@@ -18264,75 +18705,58 @@
     state.isDirectEnglishMode = true;
     state.currentGrade = g;
 
-    // 1. ve 2. Sınıflar İçin: %100 Görsel, Okuma-Yazmasız İnteraktif Çocuk Oyunları Arenası!
-    if (g === 1 || g === 2) {
-      // Diğer tüm bölümleri gizle
-      if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
-      if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
-      if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
-      const enHub = document.getElementById('englishHubSection');
-      if (enHub) enHub.classList.add('hide');
-      const arcadeSec = document.getElementById('arcadeHubSection');
-      if (arcadeSec) arcadeSec.classList.add('hide');
+    // Ortak Gizlemeler
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+    const enHub = document.getElementById('englishHubSection');
+    if (enHub) enHub.classList.add('hide');
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    if (arcadeSec) arcadeSec.classList.add('hide');
 
+    // 1. ve 2. Sınıflar İçin: EnglishKidsEngine
+    if (g === 1 || g === 2) {
+      const advArena = document.getElementById('englishAdvancedArena');
+      if (advArena) advArena.classList.add('hide');
       const kidsArena = document.getElementById('englishKidsArena');
       if (kidsArena) kidsArena.classList.remove('hide');
 
-      // Üst başlık rozeti
       const gradeBadge = document.getElementById('kidsArenaGradeBadge');
       if (gradeBadge) gradeBadge.textContent = `${g}. Sınıf`;
 
-      // Oyun fon müziğini (Zeka & Bulmaca BGM) fısıltı fonunda başlat
-      if (typeof GameMusicEngine !== 'undefined') {
-        GameMusicEngine.play('puzzle');
-      }
-
-      // Varsayılan Sihirli Boya Kovası oyununu başlat
+      if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.play('puzzle');
       EnglishKidsEngine.switchGame('paint', g);
 
-      // URL Senkronizasyonu
       try {
         const hash = `#ingilizce/${g}-sinif`;
-        if (window.location.hash !== hash) {
-          history.pushState({ route: `ingilizce-${g}` }, '', hash);
-        }
+        if (window.location.hash !== hash) history.pushState({ route: `ingilizce-${g}` }, '', hash);
       } catch (err) {}
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
-    // 3. ve 4. Sınıflar İçin: Standart Soru & Düello Modülü
-    const englishHub = document.getElementById('englishHubSection');
-    if (englishHub) englishHub.classList.add('hide');
-    const kidsArena = document.getElementById('englishKidsArena');
-    if (kidsArena) kidsArena.classList.add('hide');
+    // 3. ve 4. Sınıflar İçin: EnglishAdvancedEngine (Moli'nin Odası, Cümle Treni, Saat & Meslekler)
+    if (g === 3 || g === 4) {
+      const kidsArena = document.getElementById('englishKidsArena');
+      if (kidsArena) kidsArena.classList.add('hide');
+      const advArena = document.getElementById('englishAdvancedArena');
+      if (advArena) advArena.classList.remove('hide');
 
-    if (typeof selectSubject === 'function') {
-      selectSubject('english');
+      const gradeBadge = document.getElementById('advArenaGradeBadge');
+      if (gradeBadge) gradeBadge.textContent = `${g}. Sınıf`;
+
+      if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.play('puzzle');
+      EnglishAdvancedEngine.switchGame('room', g);
+
+      try {
+        const hash = `#ingilizce/${g}-sinif`;
+        if (window.location.hash !== hash) history.pushState({ route: `ingilizce-${g}` }, '', hash);
+      } catch (err) {}
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
-
-    if (DOM.currentSubjectTitle) DOM.currentSubjectTitle.textContent = `${g}. Sınıf İngilizce Düelloları`;
-    if (DOM.currentSubjectGrade) DOM.currentSubjectGrade.textContent = `🇬🇧 Fotoğraflı & Sesli Kelime Havuzu (${g}. Sınıf)`;
-
-    const btnBack = DOM.btnSubjectBackHome || document.getElementById('btnSubjectBackHome');
-    if (btnBack) {
-      btnBack.innerHTML = '<span class="back-icon" aria-hidden="true">‹</span><span>İngilizce Sınıfları</span>';
-      btnBack.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        openEnglishHub();
-      };
-    }
-
-    try {
-      const hash = `#ingilizce/${g}-sinif`;
-      if (window.location.hash !== hash) {
-        history.pushState({ route: `ingilizce-${g}` }, '', hash);
-      }
-    } catch (err) {}
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   window.openEnglishGradeGames = openEnglishGradeGames;
 
@@ -18910,6 +19334,7 @@
     if (arcadeSec) arcadeSec.classList.add('hide');
     const enHub = document.getElementById('englishHubSection'); if (enHub) enHub.classList.add('hide');
     const kidsAr = document.getElementById('englishKidsArena'); if (kidsAr) kidsAr.classList.add('hide');
+    const advAr = document.getElementById('englishAdvancedArena'); if (advAr) advAr.classList.add('hide');
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.remove('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -23226,6 +23651,35 @@
         const gameKey = btn.dataset.game;
         if (EnglishKidsEngine && EnglishKidsEngine.switchGame) {
           EnglishKidsEngine.switchGame(gameKey);
+        }
+      });
+    });
+
+    
+    // 🇬🇧 3. & 4. Sınıf İngilizce İleri Seviye Çocuk Oyunları Dinleyicileri
+    const btnBackToEnHubFromAdv = document.getElementById('btnBackToEnHubFromAdv');
+    if (btnBackToEnHubFromAdv) {
+      addTapListener(btnBackToEnHubFromAdv, () => {
+        const advArena = document.getElementById('englishAdvancedArena');
+        if (advArena) advArena.classList.add('hide');
+        if (typeof openEnglishHub === 'function') openEnglishHub();
+      });
+    }
+
+    const btnAdvRepeatVoice = document.getElementById('btnAdvRepeatVoice');
+    if (btnAdvRepeatVoice) {
+      addTapListener(btnAdvRepeatVoice, () => {
+        if (EnglishAdvancedEngine && EnglishAdvancedEngine.repeatVoice) {
+          EnglishAdvancedEngine.repeatVoice();
+        }
+      });
+    }
+
+    document.querySelectorAll('.adv-tab-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const gameKey = btn.dataset.game;
+        if (EnglishAdvancedEngine && EnglishAdvancedEngine.switchGame) {
+          EnglishAdvancedEngine.switchGame(gameKey);
         }
       });
     });

@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.16">
+  <link rel="stylesheet" href="style.css?v=8.9.17">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -776,6 +776,79 @@
             <!-- İnteraktif Oyun Sahnesi (Stage Container) -->
             <div class="kids-stage-container" id="kidsStageContainer">
               <!-- Oyun sahneleri JS tarafından render edilir -->
+            </div>
+          </section>
+
+          <!-- ============================================================== -->
+          <!-- 🇬🇧 İNGİLİZCE 3. & 4. SINIF INTERAKTİF OYUN ARENASI              -->
+          <!-- (Cümle Kurma, Mekansal Yerleşim, Saat & Hava, Meslek & Şehir)  -->
+          <!-- ============================================================== -->
+          <section class="english-advanced-arena hide" id="englishAdvancedArena" aria-label="İngilizce 3. ve 4. Sınıf Oyun Arenası">
+            <!-- Üst Kontrol & Navigasyon Barı -->
+            <div class="adv-arena-header">
+              <button class="btn-back-to-english-hub" id="btnBackToEnHubFromAdv" type="button" title="İngilizce Sınıflarına Dön">
+                <span class="back-icon" aria-hidden="true">‹</span>
+                <span>Sınıf Seçimi</span>
+              </button>
+
+              <div class="adv-arena-title-wrap">
+                <span class="adv-grade-badge" id="advArenaGradeBadge">3. Sınıf</span>
+                <h2 class="adv-game-title" id="advArenaTitle">Moli'nin Odası: Nerede?</h2>
+              </div>
+
+              <!-- 4 Oyun Seçim Sekmeleri (Tabs) -->
+              <div class="adv-game-tabs" id="advGameTabs" role="tablist">
+                <button class="adv-tab-btn active" data-game="room" type="button" role="tab" title="Moli'nin Odası: Nerede?">
+                  <span class="tab-icon">🏠</span>
+                  <span class="tab-text">Moli'nin Odası</span>
+                </button>
+                <button class="adv-tab-btn" data-game="train" type="button" role="tab" title="Cümle Treni">
+                  <span class="tab-icon">🚂</span>
+                  <span class="tab-text">Cümle Treni</span>
+                </button>
+                <button class="adv-tab-btn" data-game="clock" type="button" role="tab" title="Saat & Hava Durumu">
+                  <span class="tab-icon">⏰</span>
+                  <span class="tab-text">Saat & Hava</span>
+                </button>
+                <button class="adv-tab-btn" data-game="city" type="button" role="tab" title="Şehir & Meslekler">
+                  <span class="tab-icon">🏙️</span>
+                  <span class="tab-text">Şehir & Meslek</span>
+                </button>
+              </div>
+
+              <!-- Skor & Ses Kontrolü -->
+              <div class="adv-hud-right">
+                <div class="adv-star-score" id="advStarScore" title="Kazanılan Yıldızlar">
+                  <span class="star-icon">⭐</span>
+                  <span class="score-text" id="advScoreText">0 / 5</span>
+                </div>
+                <button class="kids-sound-btn btn-game-music-toggle" id="btnAdvSoundToggle" type="button" title="Oyun Müziği Aç / Kapat">
+                  <span class="game-music-icon">🎵</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Moli Sesli Yönerge ve Konuşma Bandı -->
+            <div class="adv-moli-prompt-card">
+              <div class="adv-moli-avatar-box">
+                <img src="assets/mascot/moli.webp" class="adv-moli-img" alt="Moli English Detective" width="56" height="56" loading="lazy">
+                <span class="adv-moli-hat" aria-hidden="true">🕵️‍♂️</span>
+              </div>
+              <div class="adv-prompt-content">
+                <div class="adv-speech-bubble">
+                  <span class="adv-speech-text" id="advSpeechText">"Put the cat UNDER the table!"</span>
+                  <button class="btn-repeat-voice" id="btnAdvRepeatVoice" type="button" title="İngilizce Seslendir (en-US)">
+                    <span class="voice-wave-icon">🔊</span>
+                    <span>Tekrar Dinle</span>
+                  </button>
+                </div>
+                <div class="adv-hint-text" id="advHintText">💡 İpucu: Kediyi masanın altına sürükle ve bırak!</div>
+              </div>
+            </div>
+
+            <!-- İnteraktif Oyun Sahnesi (Stage Container) -->
+            <div class="adv-stage-container" id="advStageContainer">
+              <!-- Oyun sahneleri dinamik render edilir -->
             </div>
           </section>
 
@@ -2857,6 +2930,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.16" defer></script>
+  <script src="app.js?v=8.9.17" defer></script>
 </body>
 </html>
