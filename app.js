@@ -23999,6 +23999,12 @@
   // OYUNLARA ÖZEL ARKA PLAN MÜZİĞİ MOTORU (GAME BGM ENGINE)
   // Zeka (Puzzle), Aksiyon (Düello) & Mini Oyun Fon Müzikleri
   // ==============================================================
+  // ==============================================================
+  // OYUNLARA ÖZEL ARKA PLAN MÜZİĞİ MOTORU (GAME BGM ENGINE)
+  // 1) Yuvarlak & Yarı Saydam Oyun İçi BGM Butonu (🎵 vs 🔇)
+  // 2) Bağımsız Ses Yönetimi (Yalnızca Müziği Durdurur, Efektleri Etkilemez)
+  // 3) Tercihi Hatırlama (localStorage: 'isGameMusicMuted')
+  // ==============================================================
   const GameMusicEngine = (function() {
     const gameAudio = document.getElementById('gameBgMusic');
     const tracks = {
@@ -24010,33 +24016,47 @@
     // ÇOK KRİTİK: Oyun içi ses efektlerini (alkış, balon, Moli, spiker vb.) asla bastırmasın
     const BGM_VOLUME = 0.22;
 
+    const STORAGE_KEY = 'isGameMusicMuted';
     let currentCategory = null;
-    let isMutedByUser = localStorage.getItem('dersebimola_game_music_muted') === 'true';
+
+    // Kullanıcının tercihi hafızadan oku (Varsayılan: açık, kapatıldıysa kapalı kalır)
+    let isMutedByUser = localStorage.getItem(STORAGE_KEY) === 'true' ||
+                        localStorage.getItem('dersebimola_game_music_muted') === 'true';
     let isPlaying = false;
 
     function updateButtons(playing) {
+      // Sayfadaki tüm oyun içi müzik butonlarını tek merkezden güncelle
       const btns = document.querySelectorAll('.btn-game-music-toggle');
       btns.forEach(btn => {
-        const icon = btn.querySelector('.game-music-icon');
+        const icon = btn.querySelector('.game-music-icon') || btn.querySelector('.tab-icon') || btn;
         const label = btn.querySelector('.game-music-label') || btn.querySelector('.hud-music-text');
+        
         if (isMutedByUser) {
+          // Susturulmuş Durum (🔇)
           btn.classList.add('is-muted');
           btn.classList.remove('is-playing');
-          if (icon) icon.textContent = '🔇';
+          if (icon && icon !== btn) icon.textContent = '🔇';
+          else if (btn.tagName === 'BUTTON' && !btn.querySelector('span')) btn.textContent = '🔇';
           if (label) label.textContent = 'Sessiz';
           btn.setAttribute('title', 'Oyun Müziğini Aç (🎵)');
+          btn.setAttribute('aria-label', 'Oyun Müziği Kapalı');
         } else if (playing) {
+          // Çalıyor Durumu (🎵)
           btn.classList.remove('is-muted');
           btn.classList.add('is-playing');
-          if (icon) icon.textContent = '🎵';
+          if (icon && icon !== btn) icon.textContent = '🎵';
+          else if (btn.tagName === 'BUTTON' && !btn.querySelector('span')) btn.textContent = '🎵';
           if (label) label.textContent = 'Müzik';
           btn.setAttribute('title', 'Oyun Müziğini Kapat (🔇)');
+          btn.setAttribute('aria-label', 'Oyun Müziği Açık');
         } else {
+          // Hazır / Bekliyor
           btn.classList.remove('is-muted');
           btn.classList.remove('is-playing');
-          if (icon) icon.textContent = '🎵';
+          if (icon && icon !== btn) icon.textContent = '🎵';
           if (label) label.textContent = 'Müzik';
           btn.setAttribute('title', 'Oyun Müziğini Aç (🎵)');
+          btn.setAttribute('aria-label', 'Oyun Müziği');
         }
       });
     }
@@ -24059,7 +24079,11 @@
       gameAudio.volume = BGM_VOLUME;
       gameAudio.loop = true;
 
+      // 3) TERCİHİ HATIRLAMA: Kullanıcı daha önce kapattıysa MÜZİK OTOMATİK KAPALI GELSİN!
       if (isMutedByUser) {
+        gameAudio.pause();
+        try { gameAudio.currentTime = 0; } catch (e) {}
+        isPlaying = false;
         updateButtons(false);
         return;
       }
@@ -24090,6 +24114,7 @@
       }
     }
 
+    // 2) BAĞIMSIZ SES YÖNETİMİ: YALNIZCA MÜZİĞİ KAPATIR (REAKSİYON SESLERİNİ ETKİLEMEZ!)
     function stop(reset = true) {
       if (!gameAudio) return;
       gameAudio.pause();
@@ -24101,9 +24126,12 @@
       updateButtons(false);
     }
 
+    // 1 & 3) BUTONLA AÇ/KAPAT & LOCALSTORAGE KAYDI
     function toggle() {
       if (isMutedByUser) {
+        // Müziği Aç
         isMutedByUser = false;
+        localStorage.setItem(STORAGE_KEY, 'false');
         localStorage.setItem('dersebimola_game_music_muted', 'false');
         if (currentCategory) {
           play(currentCategory);
@@ -24111,13 +24139,15 @@
           play('action');
         }
       } else {
+        // Müziği Kapat (Sadece Arka Plan Müziği Durur)
         isMutedByUser = true;
+        localStorage.setItem(STORAGE_KEY, 'true');
         localStorage.setItem('dersebimola_game_music_muted', 'true');
         stop(false);
       }
     }
 
-    // Buton dinleyicisi (delegation)
+    // Tıklama delegasyonu (Tüm oyun içi müzik butonları için tek tetikleyici)
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('.btn-game-music-toggle');
       if (btn) {
@@ -24127,13 +24157,18 @@
       }
     });
 
-    // Otomatik Emniyet: Düello ve Arcade sahneleri kapanırsa müziği kes
+    // Otomatik Emniyet: Oyun sahneleri kapandığında arka plan müziğini kes
     const viewDuel = document.getElementById('viewDuel');
     if (viewDuel) {
       const observer = new MutationObserver(() => {
         if (!viewDuel.classList.contains('active')) {
           const stageView = document.getElementById('arcadeStageView');
-          if (!stageView || stageView.classList.contains('hide')) {
+          const kidsArena = document.getElementById('englishKidsArena');
+          const advArena = document.getElementById('englishAdvancedArena');
+          const anyActive = (stageView && !stageView.classList.contains('hide')) ||
+                            (kidsArena && !kidsArena.classList.contains('hide')) ||
+                            (advArena && !advArena.classList.contains('hide'));
+          if (!anyActive) {
             stop(true);
           }
         }
@@ -24146,7 +24181,12 @@
       const observer = new MutationObserver(() => {
         if (stageView.classList.contains('hide')) {
           const viewDuel = document.getElementById('viewDuel');
-          if (!viewDuel || !viewDuel.classList.contains('active')) {
+          const kidsArena = document.getElementById('englishKidsArena');
+          const advArena = document.getElementById('englishAdvancedArena');
+          const anyActive = (viewDuel && viewDuel.classList.contains('active')) ||
+                            (kidsArena && !kidsArena.classList.contains('hide')) ||
+                            (advArena && !advArena.classList.contains('hide'));
+          if (!anyActive) {
             stop(true);
           }
         }
@@ -24154,20 +24194,29 @@
       observer.observe(stageView, { attributes: true, attributeFilter: ['class', 'style'] });
     }
 
-    // Sekme arkaya atıldığında duraklat, geri gelince oyundaysak devam et
+    // Sekme arka plana atıldığında müziği duraklat, geri gelince oyundaysak devam et
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        if (isPlaying) gameAudio.pause();
+        if (isPlaying && gameAudio) gameAudio.pause();
       } else {
         if (!isMutedByUser && currentCategory) {
-          const isInDuel = viewDuel && viewDuel.classList.contains('active');
-          const isInArcade = stageView && !stageView.classList.contains('hide');
-          if (isInDuel || isInArcade) {
+          const viewDuel = document.getElementById('viewDuel');
+          const stageView = document.getElementById('arcadeStageView');
+          const kidsArena = document.getElementById('englishKidsArena');
+          const advArena = document.getElementById('englishAdvancedArena');
+          const isInGame = (viewDuel && viewDuel.classList.contains('active')) ||
+                           (stageView && !stageView.classList.contains('hide')) ||
+                           (kidsArena && !kidsArena.classList.contains('hide')) ||
+                           (advArena && !advArena.classList.contains('hide'));
+          if (isInGame) {
             play(currentCategory);
           }
         }
       }
     });
+
+    // İlk yüklemede butonların ikon durumunu hafızadaki tercihe göre ayarla
+    updateButtons(false);
 
     return {
       play,
@@ -24175,6 +24224,7 @@
       toggle,
       updateButtons,
       isPlaying: () => isPlaying,
+      isMuted: () => isMutedByUser,
       getCurrentCategory: () => currentCategory
     };
   })();
