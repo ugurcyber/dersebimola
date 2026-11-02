@@ -11847,42 +11847,10 @@
     lockInteractions(300);
     state.currentSection = 'arcade';
     if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
-    DOM.gradeChips.forEach(chip => chip.classList.remove('active'));
-    
-    function handleSidebarEnglishClick(e) {
-      if (e && e.preventDefault) e.preventDefault();
-      audio.playClick();
-      if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
-      const modalSelectGrade = document.getElementById('modalSelectGrade');
-      if (modalSelectGrade) closeModal(modalSelectGrade);
-
-      // İngilizce dersini aç: Eğer aktif sınıf 2, 3 veya 4 ise koru, yoksa varsayılan 2. sınıfı aç
-      const curG = state.currentGrade;
-      const targetGrade = (curG >= 2 && curG <= 4) ? curG : 2;
-      setGrade(targetGrade);
-      if (typeof selectSubject === 'function') {
-        selectSubject('english');
-      }
-
-      // Sidebar çip aktifliğini İngilizce'ye ver
-      if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
-      if (DOM.gradeChips) DOM.gradeChips.forEach(c => c.classList.remove('active'));
-      const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
-      if (btnSidebarEnglish) btnSidebarEnglish.classList.add('active');
-      const btnSidebarDuels = document.getElementById('btnSidebarDuels');
-      if (btnSidebarDuels) btnSidebarDuels.classList.remove('active');
-
-      try {
-        if (window.location.hash !== '#ingilizce') {
-          history.pushState({ route: 'ingilizce' }, '', '#ingilizce');
-        }
-      } catch (err) {}
-    }
+    if (DOM.gradeChips) DOM.gradeChips.forEach(chip => chip.classList.remove('active'));
 
     const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
-    if (btnSidebarEnglish) {
-      addTapListener(btnSidebarEnglish, openEnglishModule);
-    }
+    if (btnSidebarEnglish) btnSidebarEnglish.classList.remove('active');
 
     const btnSidebarDuels = document.getElementById('btnSidebarDuels');
     if (btnSidebarDuels) btnSidebarDuels.classList.add('active');
@@ -11899,6 +11867,12 @@
     if (cardsView) cardsView.classList.remove('hide');
     if (stageView) stageView.classList.add('hide');
     ArcadeHub.activeGame = null;
+
+    try {
+      if (window.location.hash !== '#populer-oyunlar' && window.location.hash !== '#oyunlar') {
+        history.pushState({ route: 'populer-oyunlar' }, '', '#populer-oyunlar');
+      }
+    } catch (err) {}
   }
   window.openArcadeHub = openArcadeHub;
 
@@ -21151,8 +21125,8 @@
       if (modalSelectGrade) closeModal(modalSelectGrade);
       openArcadeHub();
       try {
-        if (window.location.hash !== '#oyunlar') {
-          history.pushState({ route: 'oyunlar' }, '', '#oyunlar');
+        if (window.location.hash !== '#populer-oyunlar' && window.location.hash !== '#oyunlar') {
+          history.pushState({ route: 'populer-oyunlar' }, '', '#populer-oyunlar');
         }
       } catch (err) {}
     }
@@ -21267,7 +21241,7 @@
     const hash = (window.location.hash || '').toLowerCase();
     const path = (window.location.pathname || '').toLowerCase();
 
-    if (hash === '#oyunlar' || hash === '#/oyunlar' || path.endsWith('/oyunlar')) {
+    if (hash === '#populer-oyunlar' || hash === '#/populer-oyunlar' || path.endsWith('/populer-oyunlar') || hash === '#oyunlar' || hash === '#/oyunlar' || path.endsWith('/oyunlar')) {
       if (typeof openArcadeHub === 'function') {
         setTimeout(openArcadeHub, 100);
       }
