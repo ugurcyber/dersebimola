@@ -22483,21 +22483,30 @@
   // SADECE ANA SAYFAYA ÖZEL ARKA PLAN MÜZİĞİ MOTORU (AUDIO ENGINE)
   // TIKLAMADAN OTOMATİK BAŞLAMA & KULLANICI KONTROLÜ
   // ==============================================================
+  // ==============================================================
+  // SADECE ANA SAYFAYA ÖZEL MOLI ARKA PLAN MÜZİĞİ (MOLI-BGM)
+  // 1) Zorunlu Autoplay & Try/Catch (NotAllowedError Yakalama)
+  // 2) Gizli Tetikleyici (Global Interaction Listener: click/touchstart once)
+  // 3) Sevimli Ses Aç/Kapat Butonu (Hoparlör 🔊 vs Çarpılı Hoparlör 🔇)
+  // 4) Kesin Routing Kontrolü (Sadece Ana Sayfa, Diğer Sayfalarda Anında Pause)
+  // ==============================================================
   function initHomeBackgroundMusic() {
-    const homeAudio = document.getElementById('homeBgMusic');
+    const moliAudio = document.getElementById('moli-bgm') || document.getElementById('homeBgMusic');
     const btnToggle = document.getElementById('btnHomeMusicToggle');
     const homeMusicIcon = document.getElementById('homeMusicIcon');
     const homeMusicEqualizer = document.getElementById('homeMusicEqualizer');
     const homeMusicLabel = document.getElementById('homeMusicLabel');
     const homeSection = document.getElementById('homeShowcaseSection');
 
-    if (!homeAudio) return;
+    if (!moliAudio) return;
 
-    // Rahatsız etmeyecek, berrak ve dengeli fon müziği seviyesi (%32)
-    homeAudio.volume = 0.32;
+    // Çocuk ve öğretmenleri rahatsız etmeyecek tatlı arka plan fon seviyesi (%32)
+    moliAudio.volume = 0.32;
+    moliAudio.loop = true;
 
     let isMutedByUser = localStorage.getItem('dersebimola_home_music_muted') === 'true';
     let isCurrentlyPlaying = false;
+    let fallbackBound = false;
 
     function isAtHome() {
       return homeSection && !homeSection.classList.contains('hide');
@@ -22506,34 +22515,65 @@
     function updateUi(playing) {
       if (!btnToggle) return;
       if (isMutedByUser) {
+        // Ses Kapalı Durumu (Çarpılı Hoparlör)
         btnToggle.classList.remove('is-playing');
         btnToggle.classList.add('is-muted');
         if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🔇</span>';
         if (homeMusicEqualizer) homeMusicEqualizer.style.display = 'none';
-        if (homeMusicLabel) homeMusicLabel.textContent = 'Sessiz';
-        btnToggle.setAttribute('title', 'Fon Müziğini Başlat (🎵)');
-        btnToggle.setAttribute('aria-label', 'Fon Müziğini Başlat');
+        if (homeMusicLabel) homeMusicLabel.textContent = 'Ses Kapalı';
+        btnToggle.setAttribute('title', 'Moli Müziğini Başlat (Ses Aç)');
+        btnToggle.setAttribute('aria-label', 'Ses Kapalı');
       } else if (playing) {
+        // Ses Açık Durumu (Hoparlör)
         btnToggle.classList.add('is-playing');
         btnToggle.classList.remove('is-muted');
-        if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🎵</span>';
+        if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🔊</span>';
         if (homeMusicEqualizer) homeMusicEqualizer.style.display = 'inline-flex';
-        if (homeMusicLabel) homeMusicLabel.textContent = 'Müzik';
-        btnToggle.setAttribute('title', 'Fon Müziğini Kapat (🔇)');
-        btnToggle.setAttribute('aria-label', 'Fon Müziğini Kapat');
+        if (homeMusicLabel) homeMusicLabel.textContent = 'Ses Açık';
+        btnToggle.setAttribute('title', 'Moli Müziğini Kapat (Ses Kapat)');
+        btnToggle.setAttribute('aria-label', 'Ses Açık');
       } else {
         btnToggle.classList.remove('is-playing');
         btnToggle.classList.remove('is-muted');
-        if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🎵</span>';
+        if (homeMusicIcon) homeMusicIcon.innerHTML = '<span class="music-note-icon">🔊</span>';
         if (homeMusicEqualizer) homeMusicEqualizer.style.display = 'inline-flex';
-        if (homeMusicLabel) homeMusicLabel.textContent = 'Müzik';
-        btnToggle.setAttribute('title', 'Fon Müziğini Başlat (🎵)');
-        btnToggle.setAttribute('aria-label', 'Fon Müziğini Başlat');
+        if (homeMusicLabel) homeMusicLabel.textContent = 'Ses Açık';
+        btnToggle.setAttribute('title', 'Moli Müziğini Başlat (Ses Aç)');
+        btnToggle.setAttribute('aria-label', 'Ses Açık');
       }
     }
 
+    // 2) GİZLİ TETİKLEYİCİ (Global Interaction Listener)
+    function setupGlobalInteractionFallback() {
+      if (fallbackBound) return;
+      fallbackBound = true;
+
+      function onFirstUserInteraction(e) {
+        // Tek seferlik dinleyicileri kaldır
+        document.removeEventListener('click', onFirstUserInteraction);
+        document.removeEventListener('touchstart', onFirstUserInteraction);
+        document.removeEventListener('pointerdown', onFirstUserInteraction);
+        window.removeEventListener('click', onFirstUserInteraction);
+        window.removeEventListener('touchstart', onFirstUserInteraction);
+        fallbackBound = false;
+
+        // Kullanıcı ana sayfadaysa ve kapatmamışsa müziği hemen başlat
+        if (isAtHome() && !isMutedByUser) {
+          playMusic();
+        }
+      }
+
+      document.addEventListener('click', onFirstUserInteraction, { once: true, passive: true });
+      document.addEventListener('touchstart', onFirstUserInteraction, { once: true, passive: true });
+      document.addEventListener('pointerdown', onFirstUserInteraction, { once: true, passive: true });
+      window.addEventListener('click', onFirstUserInteraction, { once: true, passive: true });
+      window.addEventListener('touchstart', onFirstUserInteraction, { once: true, passive: true });
+    }
+
+    // 1) ZORUNLU AUTOPLAY VE HATA YAKALAMA (Try/Catch)
     function playMusic() {
-      if (!homeAudio) return;
+      if (!moliAudio) return;
+      // 4) ROUTING KONTROLÜ: Sadece Ana Sayfada Çal!
       if (!isAtHome()) {
         stopMusic(true);
         return;
@@ -22543,65 +22583,43 @@
         return;
       }
 
-      homeAudio.muted = false;
-      homeAudio.volume = 0.32;
-      const p = homeAudio.play();
-      if (p !== undefined) {
-        p.then(() => {
-          isCurrentlyPlaying = true;
-          updateUi(true);
-        }).catch((err) => {
-          // Tarayıcı doğrudan sesli autoplay'i kısıtladıysa:
-          // 1. Arka planda anında sessiz (muted) başlat
-          homeAudio.muted = true;
-          homeAudio.play().then(() => {
+      moliAudio.muted = false;
+      moliAudio.volume = 0.32;
+
+      try {
+        const playPromise = moliAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
             isCurrentlyPlaying = true;
             updateUi(true);
-          }).catch(() => {});
-
-          // 2. Kullanıcı tıklamaya bile gerek kalmadan fareyi oynattığı, tekerleği çevirdiği
-          //    veya dokunduğu ilk milisaniyede sesi anında aç (unmute)!
-          function instantUnmute() {
-            window.removeEventListener('pointermove', instantUnmute);
-            window.removeEventListener('mousemove', instantUnmute);
-            window.removeEventListener('wheel', instantUnmute);
-            window.removeEventListener('scroll', instantUnmute);
-            window.removeEventListener('touchstart', instantUnmute);
-            window.removeEventListener('pointerdown', instantUnmute);
-            window.removeEventListener('keydown', instantUnmute);
-
-            if (isAtHome() && !isMutedByUser) {
-              homeAudio.muted = false;
-              homeAudio.volume = 0.32;
-              if (homeAudio.paused) {
-                homeAudio.play().catch(() => {});
-              }
-              isCurrentlyPlaying = true;
-              updateUi(true);
-            }
-          }
-
-          window.addEventListener('pointermove', instantUnmute, { passive: true, once: true });
-          window.addEventListener('mousemove', instantUnmute, { passive: true, once: true });
-          window.addEventListener('wheel', instantUnmute, { passive: true, once: true });
-          window.addEventListener('scroll', instantUnmute, { passive: true, once: true });
-          window.addEventListener('touchstart', instantUnmute, { passive: true, once: true });
-          window.addEventListener('pointerdown', instantUnmute, { passive: true, once: true });
-          window.addEventListener('keydown', instantUnmute, { passive: true, once: true });
-        });
+          }).catch((err) => {
+            // Autoplay Policy kuralı devreye girdiğinde hatayı yakala
+            console.warn('Autoplay Policy devreye girdi (NotAllowedError):', err.message);
+            isCurrentlyPlaying = false;
+            updateUi(false);
+            // 2. Adım: İlk kullanıcı dokunmasında başlatacak gizli tetikleyiciyi kur
+            setupGlobalInteractionFallback();
+          });
+        }
+      } catch (err) {
+        console.warn('moliAudio play genel hatası yakalandı:', err);
+        isCurrentlyPlaying = false;
+        updateUi(false);
+        setupGlobalInteractionFallback();
       }
     }
 
     function stopMusic(reset = true) {
-      if (!homeAudio) return;
-      homeAudio.pause();
+      if (!moliAudio) return;
+      moliAudio.pause();
       if (reset) {
-        try { homeAudio.currentTime = 0; } catch (e) {}
+        try { moliAudio.currentTime = 0; } catch (e) {}
       }
       isCurrentlyPlaying = false;
       updateUi(false);
     }
 
+    // 3) MÜZİK AÇ/KAPAT BUTONU (Toggle & State Yönetimi)
     function toggleMusic() {
       if (isMutedByUser) {
         isMutedByUser = false;
@@ -22614,7 +22632,7 @@
       }
     }
 
-    // FAB Tıklama Dinleyicisi (Açma / Kapatma)
+    // FAB Buton Tıklama Dinleyicisi
     if (btnToggle) {
       addTapListener(btnToggle, (e) => {
         if (e && e.stopPropagation) e.stopPropagation();
@@ -22622,8 +22640,8 @@
       });
     }
 
-    // Routing ve Sayfa Değişikliği Gözlemcisi (MutationObserver):
-    // Kullanıcı başka sayfaya geçtiği an MÜZİK ANINDA DURUR VE SIFIRLANIR!
+    // 4) ROUTING KONTROLÜ (MutationObserver):
+    // Kullanıcı Oyunlar, 1. Sınıf vb. başka sayfaya geçtiğinde müzik anında KAPANIR ve SIFIRLANIR!
     if (homeSection) {
       const observer = new MutationObserver(() => {
         if (isAtHome()) {
@@ -22642,7 +22660,7 @@
     // Sekme arka plana atıldığında duraklat, geri gelince ana sayfadaysa devam et
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        if (isCurrentlyPlaying) homeAudio.pause();
+        if (isCurrentlyPlaying) moliAudio.pause();
       } else {
         if (isAtHome() && !isMutedByUser) playMusic();
       }
@@ -22652,6 +22670,10 @@
     window.playHomeMusic = playMusic;
     window.stopHomeMusic = stopMusic;
     window.toggleHomeMusic = toggleMusic;
+
+    // Sayfa mount olduğunda ZORUNLU AUTOPLAY çağrısı!
+    playMusic();
+
   // ==============================================================
   // OYUNLARA ÖZEL ARKA PLAN MÜZİĞİ MOTORU (GAME BGM ENGINE)
   // Zeka (Puzzle), Aksiyon (Düello) & Mini Oyun Fon Müzikleri
