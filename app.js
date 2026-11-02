@@ -12120,6 +12120,37 @@
       usedIndices: [],
       answered: false,
       isOver: false
+    },
+
+    // 7) 🧩 Sihirli Tangram
+    tangram: {
+      level: 0,
+      snappedCount: 0,
+      slots: []
+    },
+
+    // 8) ⚗️ Kavram Atölyesi
+    craft: {
+      discovered: ['fire', 'water', 'earth', 'sun', 'seed', 'two', 'three'],
+      slotA: null,
+      slotB: null,
+      lastCraft: null
+    },
+
+    // 9) ⚡ Moli'nin Enerji Hattı
+    energy: {
+      round: 0,
+      connectedCount: 0,
+      connections: [],
+      activeStart: null
+    },
+
+    // 10) 🤝 Senkronize Görev
+    sync: {
+      level: 1,
+      p1Pct: 0,
+      p2Pct: 0,
+      isOver: false
     }
   };
 
@@ -12239,6 +12270,10 @@
     else if (gameId === 'memory') initArcadeMemoryGame();
     else if (gameId === 'flower') initArcadeFlowerGame();
     else if (gameId === 'buzzer') initArcadeBuzzerGame();
+    else if (gameId === 'tangram') initArcadeTangramGame();
+    else if (gameId === 'craft') initArcadeCraftGame();
+    else if (gameId === 'energy') initArcadeEnergyGame();
+    else if (gameId === 'sync') initArcadeSyncGame();
   }
 
   // =========================================================================
@@ -14215,6 +14250,791 @@
         }, 1500);
       }
     }
+  }
+
+  /* ==========================================================================
+     OYUN 7: 🧩 SİHİRLİ TANGRAM (DRAG & DROP GEOMETRİK ZEKA MOTORU)
+     ========================================================================== */
+  const TANGRAM_LEVELS = [
+    {
+      name: 'Sevimli Ev 🏠',
+      desc: 'Çatıyı ve duvarları hedefe yerleştir!',
+      slots: [
+        { id: 'tg_roof', label: 'Çatı', type: 'triangle_large', x: 100, y: 30, w: 120, h: 70, shape: 'polygon(50% 0%, 0% 100%, 100% 100%)', color: '#EC4899' },
+        { id: 'tg_wall_l', label: 'Sol Duvar', type: 'square', x: 60, y: 110, w: 90, h: 90, shape: 'none', color: '#8B5CF6' },
+        { id: 'tg_wall_r', label: 'Sağ Duvar', type: 'triangle_med', x: 160, y: 110, w: 90, h: 90, shape: 'polygon(0% 0%, 100% 100%, 0% 100%)', color: '#06B6D4' },
+        { id: 'tg_door', label: 'Kapı', type: 'rect', x: 125, y: 210, w: 70, h: 80, shape: 'none', color: '#F59E0B' }
+      ]
+    },
+    {
+      name: 'Uzay Roketi 🚀',
+      desc: 'Roket burun ve kanatlarını monte et!',
+      slots: [
+        { id: 'tg_nose', label: 'Burun', type: 'triangle_large', x: 100, y: 20, w: 120, h: 70, shape: 'polygon(50% 0%, 0% 100%, 100% 100%)', color: '#EF4444' },
+        { id: 'tg_body', label: 'Gövde', type: 'square', x: 110, y: 100, w: 100, h: 100, shape: 'none', color: '#3B82F6' },
+        { id: 'tg_wing_l', label: 'Sol Kanat', type: 'triangle_med', x: 30, y: 160, w: 70, h: 80, shape: 'polygon(100% 0%, 100% 100%, 0% 100%)', color: '#F97316' },
+        { id: 'tg_wing_r', label: 'Sağ Kanat', type: 'triangle_med', x: 220, y: 160, w: 70, h: 80, shape: 'polygon(0% 0%, 100% 100%, 0% 100%)', color: '#F97316' }
+      ]
+    },
+    {
+      name: 'Yelkenli Tekne ⛵',
+      desc: 'Rüzgarı yakalayacak yelkenleri tak!',
+      slots: [
+        { id: 'tg_sail_main', label: 'Ana Yelken', type: 'triangle_large', x: 120, y: 30, w: 110, h: 140, shape: 'polygon(0% 0%, 100% 100%, 0% 100%)', color: '#10B981' },
+        { id: 'tg_sail_small', label: 'Ön Yelken', type: 'triangle_med', x: 40, y: 70, w: 70, h: 100, shape: 'polygon(100% 0%, 100% 100%, 0% 100%)', color: '#6366F1' },
+        { id: 'tg_hull_l', label: 'Gövde', type: 'square', x: 70, y: 180, w: 180, h: 50, shape: 'none', color: '#D97706' }
+      ]
+    }
+  ];
+
+  function initArcadeTangramGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🧩';
+    if (titleEl) titleEl.textContent = 'Sihirli Tangram: Şekil Avcısı';
+
+    const t = ArcadeHub.tangram;
+    const curLevel = TANGRAM_LEVELS[t.level % TANGRAM_LEVELS.length];
+    t.snappedCount = 0;
+    t.slots = curLevel.slots.map(s => ({ ...s, isSnapped: false }));
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          ${TANGRAM_LEVELS.map((lvl, idx) => `
+            <button class="arc-pill-btn ${idx === t.level ? 'active' : ''}" data-tangram-level="${idx}" type="button">${lvl.name}</button>
+          `).join('')}
+        </div>
+      `;
+      toolbarEl.querySelectorAll('[data-tangram-level]').forEach(btn => {
+        addTapListener(btn, () => {
+          t.level = parseInt(btn.getAttribute('data-tangram-level'), 10);
+          initArcadeTangramGame();
+        });
+      });
+    }
+
+    renderTangramStage();
+  }
+
+  function renderTangramStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const t = ArcadeHub.tangram;
+    const curLevel = TANGRAM_LEVELS[t.level % TANGRAM_LEVELS.length];
+
+    canvas.innerHTML = `
+      <div class="tangram-stage-container">
+        <div class="tangram-header-info">
+          <span style="font-size:0.95rem; font-weight:800; color:#86198F;">🎯 ${curLevel.desc}</span>
+          <span style="font-size:0.85rem; font-weight:750; color:#64748B;">Yerleşen: <strong>${t.snappedCount} / ${t.slots.length}</strong></span>
+        </div>
+
+        <div class="tangram-board-area" id="tangramBoardArea">
+          <div class="tangram-silhouette">
+            ${t.slots.map(s => `
+              <div class="tangram-slot ${s.isSnapped ? 'snapped' : ''}" 
+                   id="slot_${s.id}"
+                   style="left:${s.x}px; top:${s.y}px; width:${s.w}px; height:${s.h}px; ${s.shape !== 'none' ? 'clip-path:' + s.shape + ';' : 'border-radius:12px;'} background:${s.isSnapped ? s.color : 'rgba(216, 180, 254, 0.35)'}; border:2px dashed ${s.isSnapped ? 'transparent' : '#A855F7'};">
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="tangram-tray" id="tangramTray">
+          ${t.slots.map(s => `
+            <div class="tangram-piece ${s.isSnapped ? 'locked' : ''}" 
+                 id="piece_${s.id}" 
+                 data-slot-id="${s.id}"
+                 style="width:${s.w}px; height:${s.h}px; ${s.shape !== 'none' ? 'clip-path:' + s.shape + ';' : 'border-radius:12px;'} background:${s.color}; box-shadow:0 6px 14px rgba(0,0,0,0.15);">
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    setupTangramDragDrop();
+  }
+
+  function setupTangramDragDrop() {
+    const t = ArcadeHub.tangram;
+    const pieces = document.querySelectorAll('.tangram-piece:not(.locked)');
+
+    pieces.forEach(p => {
+      let isDragging = false;
+      let startX, startY, origX, origY;
+      const slotId = p.getAttribute('data-slot-id');
+      const targetSlot = t.slots.find(s => s.id === slotId);
+
+      const onPointerDown = (e) => {
+        if (targetSlot && targetSlot.isSnapped) return;
+        isDragging = true;
+        p.setPointerCapture(e.pointerId);
+        startX = e.clientX;
+        startY = e.clientY;
+        const rect = p.getBoundingClientRect();
+        origX = rect.left;
+        origY = rect.top;
+        p.style.position = 'fixed';
+        p.style.zIndex = '9999';
+        p.style.left = origX + 'px';
+        p.style.top = origY + 'px';
+        audio.playClick();
+      };
+
+      const onPointerMove = (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        p.style.left = (origX + dx) + 'px';
+        p.style.top = (origY + dy) + 'px';
+      };
+
+      const onPointerUp = (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        try { p.releasePointerCapture(e.pointerId); } catch(err){}
+
+        const slotEl = document.getElementById('slot_' + slotId);
+        if (slotEl && targetSlot) {
+          const sRect = slotEl.getBoundingClientRect();
+          const pRect = p.getBoundingClientRect();
+          const dist = Math.hypot((pRect.left + pRect.width/2) - (sRect.left + sRect.width/2),
+                                  (pRect.top + pRect.height/2) - (sRect.top + sRect.height/2));
+
+          if (dist < 60) {
+            targetSlot.isSnapped = true;
+            t.snappedCount++;
+            audio.playCorrect();
+            slotEl.classList.add('snapped');
+            slotEl.style.background = targetSlot.color;
+            slotEl.style.borderColor = 'transparent';
+            p.remove();
+
+            if (t.snappedCount >= t.slots.length) {
+              setTimeout(() => {
+                showArcadeVictoryModal({
+                  title: '🎉 TEBRİKLER! FİGÜR TAMAMLANDI!',
+                  subtitle: 'Tüm parçalar manyetik olarak kusursuz yerleşti.',
+                  badgeText: 'TANGRAM USTASI',
+                  icon: '🧩',
+                  onRestart: () => {
+                    t.level = (t.level + 1) % TANGRAM_LEVELS.length;
+                    initArcadeTangramGame();
+                  }
+                });
+              }, 400);
+            }
+            return;
+          }
+        }
+
+        p.style.position = '';
+        p.style.zIndex = '';
+        p.style.left = '';
+        p.style.top = '';
+      };
+
+      p.addEventListener('pointerdown', onPointerDown);
+      p.addEventListener('pointermove', onPointerMove);
+      p.addEventListener('pointerup', onPointerUp);
+      p.addEventListener('pointercancel', onPointerUp);
+    });
+  }
+
+  /* ==========================================================================
+     OYUN 8: ⚗️ KAVRAM ATÖLYESİ (CRAFTING / MERGE SENTEZ MOTORU)
+     ========================================================================== */
+  const CRAFT_ELEMENTS = [
+    { id: 'fire', name: 'Ateş', icon: '🔥', type: 'nature' },
+    { id: 'water', name: 'Su', icon: '💧', type: 'nature' },
+    { id: 'earth', name: 'Toprak', icon: '🌍', type: 'nature' },
+    { id: 'sun', name: 'Güneş', icon: '☀️', type: 'nature' },
+    { id: 'rain', name: 'Yağmur', icon: '🌧️', type: 'nature' },
+    { id: 'seed', name: 'Tohum', icon: '🌱', type: 'nature' },
+    { id: 'two', name: '2 (İki)', icon: '2️⃣', type: 'math' },
+    { id: 'three', name: '3 (Üç)', icon: '3️⃣', type: 'math' },
+    { id: 'four', name: '4 (Dört)', icon: '4️⃣', type: 'math' },
+    { id: 'syl_el', name: 'El', icon: '🖐️', type: 'word' },
+    { id: 'syl_ma', name: 'Ma', icon: '🐴', type: 'word' },
+    { id: 'book', name: 'Kitap', icon: '📚', type: 'mind' },
+    { id: 'idea', name: 'Fikir', icon: '💡', type: 'mind' }
+  ];
+
+  const CRAFT_RECIPES = [
+    { a: 'fire', b: 'water', result: { id: 'steam', name: 'Buhar', icon: '💨', desc: 'Ateş suyu kaynattı!' } },
+    { a: 'sun', b: 'water', result: { id: 'rain', name: 'Yağmur', icon: '🌧️', desc: 'Buharlaşan sular yağmura dönüştü!' } },
+    { a: 'sun', b: 'rain', result: { id: 'rainbow', name: 'Gökkuşağı', icon: '🌈', desc: 'Işık damlacıklardan kırıldı!' } },
+    { a: 'seed', b: 'water', result: { id: 'flower_elem', name: 'Güzel Çiçek', icon: '🌻', desc: 'Tohum suyla filizlendi!' } },
+    { a: 'two', b: 'three', result: { id: 'five', name: '5 (Beş)', icon: '5️⃣', desc: '2 + 3 = 5 oldu!' } },
+    { a: 'two', b: 'two', result: { id: 'four_elem', name: '4 (Dört)', icon: '4️⃣', desc: '2 + 2 = 4 oldu!' } },
+    { a: 'four', b: 'two', result: { id: 'eight', name: '8 (Sekiz)', icon: '8️⃣', desc: '4 x 2 = 8 etti!' } },
+    { a: 'syl_el', b: 'syl_ma', result: { id: 'apple', name: 'Elma', icon: '🍎', desc: 'El + Ma = Elma heceleri birleşti!' } },
+    { a: 'book', b: 'idea', result: { id: 'scientist', name: 'Bilim İnsanı', icon: '🎓', desc: 'Bilgi ve fikir dahilik yarattı!' } },
+    { a: 'earth', b: 'water', result: { id: 'mud', name: 'Çamur / Tuğla', icon: '🧱', desc: 'Toprak ve su yapı malzemesi oldu!' } }
+  ];
+
+  function initArcadeCraftGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '⚗️';
+    if (titleEl) titleEl.textContent = 'Kavram Atölyesi: Keşif Laboratuvarı';
+
+    const c = ArcadeHub.craft;
+    c.slotA = null;
+    c.slotB = null;
+    c.lastCraft = null;
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn active" id="btnCraftResetTable" type="button">🔄 Masayı Temizle</button>
+        </div>
+      `;
+      const btnReset = document.getElementById('btnCraftResetTable');
+      if (btnReset) {
+        addTapListener(btnReset, () => {
+          c.slotA = null;
+          c.slotB = null;
+          c.lastCraft = null;
+          renderCraftStage();
+        });
+      }
+    }
+
+    renderCraftStage();
+  }
+
+  function renderCraftStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const c = ArcadeHub.craft;
+    const availableElements = CRAFT_ELEMENTS;
+
+    canvas.innerHTML = `
+      <div class="craft-stage-container">
+        <div class="craft-header-bar" style="font-weight:800; color:#0F766E; font-size:0.95rem;">
+          🔬 İki nesneyi yuvalara seçip ekle, sentezle!
+        </div>
+
+        <div class="craft-cauldron-area">
+          ${c.lastCraft ? `<div class="craft-result-bubble">✨ YENİ: ${c.lastCraft.icon} ${c.lastCraft.name} - ${c.lastCraft.desc}</div>` : ''}
+
+          <div class="craft-drop-slot ${c.slotA ? 'filled' : ''}" id="craftSlotA" role="button" tabindex="0">
+            ${c.slotA ? `<span class="craft-slot-icon">${c.slotA.icon}</span><span style="font-size:0.75rem;font-weight:750;">${c.slotA.name}</span>` : '<span style="font-size:0.8rem;color:#94A3B8;">1. Öğe</span>'}
+          </div>
+
+          <span class="craft-plus-sign">+</span>
+
+          <div class="craft-drop-slot ${c.slotB ? 'filled' : ''}" id="craftSlotB" role="button" tabindex="0">
+            ${c.slotB ? `<span class="craft-slot-icon">${c.slotB.icon}</span><span style="font-size:0.75rem;font-weight:750;">${c.slotB.name}</span>` : '<span style="font-size:0.8rem;color:#94A3B8;">2. Öğe</span>'}
+          </div>
+
+          <button class="arc-pill-btn" id="btnExecuteCraft" style="padding:14px 22px; font-size:1rem; font-weight:850; background:#10B981; color:white; border-radius:18px;" type="button">
+            ⚡ Sentezle
+          </button>
+        </div>
+
+        <div class="craft-elements-grid">
+          ${availableElements.map(elem => `
+            <div class="craft-card-item" data-elem-id="${elem.id}" role="button" tabindex="0">
+              <span class="craft-card-emoji">${elem.icon}</span>
+              <span class="craft-card-name">${elem.name}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll('.craft-card-item').forEach(card => {
+      addTapListener(card, () => {
+        const id = card.getAttribute('data-elem-id');
+        const elem = CRAFT_ELEMENTS.find(x => x.id === id);
+        if (!elem) return;
+        audio.playClick();
+
+        if (!c.slotA) {
+          c.slotA = elem;
+        } else if (!c.slotB) {
+          c.slotB = elem;
+        } else {
+          c.slotA = elem;
+          c.slotB = null;
+        }
+        renderCraftStage();
+      });
+    });
+
+    const slotA = document.getElementById('craftSlotA');
+    if (slotA) {
+      addTapListener(slotA, () => {
+        c.slotA = null;
+        renderCraftStage();
+      });
+    }
+
+    const slotB = document.getElementById('craftSlotB');
+    if (slotB) {
+      addTapListener(slotB, () => {
+        c.slotB = null;
+        renderCraftStage();
+      });
+    }
+
+    const btnCraft = document.getElementById('btnExecuteCraft');
+    if (btnCraft) {
+      addTapListener(btnCraft, executeCraftSynthesis);
+    }
+  }
+
+  function executeCraftSynthesis() {
+    const c = ArcadeHub.craft;
+    if (!c.slotA || !c.slotB) {
+      audio.playWrong();
+      showToast('⚠️ Lütfen sentezlemek için iki farklı öğe seçin!');
+      return;
+    }
+
+    const recipe = CRAFT_RECIPES.find(r => 
+      (r.a === c.slotA.id && r.b === c.slotB.id) || 
+      (r.a === c.slotB.id && r.b === c.slotA.id)
+    );
+
+    if (recipe) {
+      audio.playCorrect();
+      c.lastCraft = recipe.result;
+      if (!c.discovered.includes(recipe.result.id)) {
+        c.discovered.push(recipe.result.id);
+      }
+      c.slotA = null;
+      c.slotB = null;
+      renderCraftStage();
+
+      if (c.discovered.length >= 8) {
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: '⚗️ HARİKA KEŞİF! ATÖLYE TAMAMLANDI!',
+            subtitle: 'Elementler ve kavramlar başarıyla sentezlendi.',
+            badgeText: 'BAŞ SİMYACI',
+            icon: '🧪',
+            onRestart: () => initArcadeCraftGame()
+          });
+        }, 500);
+      }
+    } else {
+      audio.playWrong();
+      showToast('❌ Bu iki öğe birbiriyle tepkimeye girmedi. Farklı kombinasyonlar deneyin!');
+      c.slotA = null;
+      c.slotB = null;
+      renderCraftStage();
+    }
+  }
+
+  /* ==========================================================================
+     OYUN 9: ⚡ MOLİ'NİN ENERJİ HATTI (LINE DRAW CONNECT MOTORU)
+     ========================================================================== */
+  const ENERGY_SETS = [
+    {
+      title: 'Matematik Çarpım Şebekesi',
+      left: [
+        { id: 'q1', text: '3 × 4', ans: 'a1' },
+        { id: 'q2', text: '5 × 2', ans: 'a2' },
+        { id: 'q3', text: '6 × 3', ans: 'a3' },
+        { id: 'q4', text: '4 × 4', ans: 'a4' }
+      ],
+      right: [
+        { id: 'a2', text: '⚡ 10' },
+        { id: 'a1', text: '⚡ 12' },
+        { id: 'a4', text: '⚡ 16' },
+        { id: 'a3', text: '⚡ 18' }
+      ]
+    },
+    {
+      title: 'Zıt Anlamlılar Şebekesi',
+      left: [
+        { id: 'q1', text: 'Sıcak 🔥', ans: 'a1' },
+        { id: 'q2', text: 'Büyük 🐘', ans: 'a2' },
+        { id: 'q3', text: 'Hızlı 🐆', ans: 'a3' },
+        { id: 'q4', text: 'Aydınlık ☀️', ans: 'a4' }
+      ],
+      right: [
+        { id: 'a3', text: '⚡ Yavaş 🐢' },
+        { id: 'a1', text: '⚡ Soğuk ❄️' },
+        { id: 'a4', text: '⚡ Karanlık 🌙' },
+        { id: 'a2', text: '⚡ Küçük 🐭' }
+      ]
+    }
+  ];
+
+  function initArcadeEnergyGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '⚡';
+    if (titleEl) titleEl.textContent = "Moli'nin Enerji Hattı: Şebeke Tamiri";
+
+    const e = ArcadeHub.energy;
+    e.connectedCount = 0;
+    e.connections = [];
+    e.activeStart = null;
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${e.round === 0 ? 'active' : ''}" data-energy-round="0" type="button">Çarpma Şebekesi</button>
+          <button class="arc-pill-btn ${e.round === 1 ? 'active' : ''}" data-energy-round="1" type="button">Zıt Anlam Şebekesi</button>
+        </div>
+      `;
+      toolbarEl.querySelectorAll('[data-energy-round]').forEach(btn => {
+        addTapListener(btn, () => {
+          e.round = parseInt(btn.getAttribute('data-energy-round'), 10);
+          initArcadeEnergyGame();
+        });
+      });
+    }
+
+    renderEnergyStage();
+  }
+
+  function renderEnergyStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const e = ArcadeHub.energy;
+    const currentSet = ENERGY_SETS[e.round % ENERGY_SETS.length];
+
+    canvas.innerHTML = `
+      <div class="energy-stage-container">
+        <div style="font-weight:800; color:#0284C7; font-size:0.95rem;">
+          🔌 Soldaki kutuya tıkla/parmağını basılı tut, sağdaki doğru cevaba çizgi çek!
+        </div>
+
+        <div class="energy-arena-wrap" id="energyArenaWrap">
+          <canvas class="energy-canvas-layer" id="energyLineCanvas"></canvas>
+
+          <div class="energy-terminals-column energy-terminals-left">
+            ${currentSet.left.map(item => `
+              <button class="energy-node-btn node-left ${e.connections.some(c => c.from === item.id) ? 'connected' : ''}" 
+                      data-node-id="${item.id}" 
+                      data-ans="${item.ans}"
+                      type="button">
+                <span>${item.text}</span>
+                <span class="node-plug-dot"></span>
+              </button>
+            `).join('')}
+          </div>
+
+          <div class="energy-terminals-column energy-terminals-right">
+            ${currentSet.right.map(item => `
+              <button class="energy-node-btn node-right ${e.connections.some(c => c.to === item.id) ? 'connected' : ''}" 
+                      data-node-id="${item.id}"
+                      type="button">
+                <span class="node-plug-dot"></span>
+                <span>${item.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    setupEnergyLineCanvas();
+  }
+
+  function setupEnergyLineCanvas() {
+    const wrap = document.getElementById('energyArenaWrap');
+    const cvs = document.getElementById('energyLineCanvas');
+    if (!wrap || !cvs) return;
+
+    cvs.width = wrap.clientWidth;
+    cvs.height = wrap.clientHeight;
+    const ctx = cvs.getContext('2d');
+    const e = ArcadeHub.energy;
+
+    let isDrawing = false;
+    let startNode = null;
+    let currentPos = { x: 0, y: 0 };
+
+    function drawAllLines() {
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
+      const wrapRect = wrap.getBoundingClientRect();
+
+      e.connections.forEach(conn => {
+        const fromEl = document.querySelector(`.node-left[data-node-id="${conn.from}"] .node-plug-dot`);
+        const toEl = document.querySelector(`.node-right[data-node-id="${conn.to}"] .node-plug-dot`);
+        if (fromEl && toEl) {
+          const r1 = fromEl.getBoundingClientRect();
+          const r2 = toEl.getBoundingClientRect();
+          const x1 = r1.left + r1.width/2 - wrapRect.left;
+          const y1 = r1.top + r1.height/2 - wrapRect.top;
+          const x2 = r2.left + r2.width/2 - wrapRect.left;
+          const y2 = r2.top + r2.height/2 - wrapRect.top;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.bezierCurveTo(x1 + 80, y1, x2 - 80, y2, x2, y2);
+          ctx.strokeStyle = '#10B981';
+          ctx.lineWidth = 5;
+          ctx.shadowColor = '#34D399';
+          ctx.shadowBlur = 14;
+          ctx.stroke();
+          ctx.restore();
+        }
+      });
+
+      if (isDrawing && startNode) {
+        const fromEl = startNode.querySelector('.node-plug-dot');
+        if (fromEl) {
+          const r1 = fromEl.getBoundingClientRect();
+          const x1 = r1.left + r1.width/2 - wrapRect.left;
+          const y1 = r1.top + r1.height/2 - wrapRect.top;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.bezierCurveTo(x1 + 60, y1, currentPos.x - 60, currentPos.y, currentPos.x, currentPos.y);
+          ctx.strokeStyle = '#FDE047';
+          ctx.lineWidth = 4;
+          ctx.shadowColor = '#FACC15';
+          ctx.shadowBlur = 12;
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+
+    drawAllLines();
+
+    document.querySelectorAll('.node-left').forEach(btn => {
+      btn.addEventListener('pointerdown', (evt) => {
+        const id = btn.getAttribute('data-node-id');
+        if (e.connections.some(c => c.from === id)) return;
+        isDrawing = true;
+        startNode = btn;
+        const rect = wrap.getBoundingClientRect();
+        currentPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+        audio.playClick();
+      });
+    });
+
+    wrap.addEventListener('pointermove', (evt) => {
+      if (!isDrawing) return;
+      const rect = wrap.getBoundingClientRect();
+      currentPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+      drawAllLines();
+    });
+
+    const onPointerUp = (evt) => {
+      if (!isDrawing) return;
+      isDrawing = false;
+
+      const targetRight = document.elementFromPoint(evt.clientX, evt.clientY);
+      const rightBtn = targetRight ? targetRight.closest('.node-right') : null;
+
+      if (rightBtn && startNode) {
+        const fromId = startNode.getAttribute('data-node-id');
+        const expectedAns = startNode.getAttribute('data-ans');
+        const toId = rightBtn.getAttribute('data-node-id');
+
+        if (toId === expectedAns) {
+          audio.playCorrect();
+          e.connections.push({ from: fromId, to: toId });
+          e.connectedCount++;
+          startNode.classList.add('connected');
+          rightBtn.classList.add('connected');
+
+          if (e.connectedCount >= 4) {
+            drawAllLines();
+            setTimeout(() => {
+              showArcadeVictoryModal({
+                title: '⚡ ENERJİ ŞEBEKESİ TAMAMLANDI!',
+                subtitle: 'Tüm neon hatlar bağlandı, tam güç sağlandı!',
+                badgeText: 'ŞEBEKE MÜHENDİSİ',
+                icon: '⚡',
+                onRestart: () => {
+                  e.round = (e.round + 1) % ENERGY_SETS.length;
+                  initArcadeEnergyGame();
+                }
+              });
+            }, 400);
+          }
+        } else {
+          audio.playWrong();
+          showToast('⚡ Kısa devre! Yanlış terminale bağlandı.');
+        }
+      }
+
+      startNode = null;
+      drawAllLines();
+    };
+
+    wrap.addEventListener('pointerup', onPointerUp);
+    wrap.addEventListener('pointercancel', onPointerUp);
+  }
+
+  /* ==========================================================================
+     OYUN 10: 🤝 SENKRONİZE GÖREV (CO-OP MULTI-TOUCH EŞLİ MOTOR)
+     ========================================================================== */
+  function initArcadeSyncGame() {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🤝';
+    if (titleEl) titleEl.textContent = 'Senkronize Görev: Ortak Güç (2 Kişilik Co-op)';
+
+    const s = ArcadeHub.sync;
+    s.p1Pct = 0;
+    s.p2Pct = 0;
+    s.isOver = false;
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <span style="font-weight:800; font-size:0.85rem; color:#EA580C;">Akıllı Tahtada Yan Yana 2 Oyuncu!</span>
+        </div>
+      `;
+    }
+
+    renderSyncStage();
+  }
+
+  function renderSyncStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const s = ArcadeHub.sync;
+
+    canvas.innerHTML = `
+      <div class="sync-stage-container">
+        <div class="sync-status-bar">
+          <span style="color:#2563EB;">🔵 Mavi Oyuncu: %<strong id="syncP1Txt">0</strong></span>
+          <span style="color:#D97706;" id="syncStatusMsg">🎯 İki küreyi AYNI ANDA merkeze sürükleyin!</span>
+          <span style="color:#EA580C;">🟠 Turuncu Oyuncu: %<strong id="syncP2Txt">0</strong></span>
+        </div>
+
+        <div class="sync-arena" id="syncArena">
+          <div class="sync-center-reactor" id="syncReactor">
+            <span class="reactor-icon">🌀</span>
+            <span style="font-size:0.75rem; font-weight:850; letter-spacing:0.5px;">FÜZYON PORTALI</span>
+          </div>
+
+          <div class="sync-player-orb orb-p1" id="orbP1" role="button" tabindex="0">
+            <span>🔵</span>
+          </div>
+
+          <div class="sync-player-orb orb-p2" id="orbP2" role="button" tabindex="0">
+            <span>🟠</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    setupSyncCoopDrag();
+  }
+
+  function setupSyncCoopDrag() {
+    const arena = document.getElementById('syncArena');
+    const orbP1 = document.getElementById('orbP1');
+    const orbP2 = document.getElementById('orbP2');
+    const p1Txt = document.getElementById('syncP1Txt');
+    const p2Txt = document.getElementById('syncP2Txt');
+    const statusMsg = document.getElementById('syncStatusMsg');
+    const s = ArcadeHub.sync;
+
+    if (!arena || !orbP1 || !orbP2) return;
+
+    let p1Done = false;
+    let p2Done = false;
+    let p1DoneTime = 0;
+    let p2DoneTime = 0;
+
+    function handleOrbDrag(orb, isP1) {
+      let isDragging = false;
+      let startX = 0;
+
+      orb.addEventListener('pointerdown', (e) => {
+        if (s.isOver) return;
+        isDragging = true;
+        orb.setPointerCapture(e.pointerId);
+        startX = e.clientX;
+        audio.playClick();
+      });
+
+      orb.addEventListener('pointermove', (e) => {
+        if (!isDragging || s.isOver) return;
+        const rect = arena.getBoundingClientRect();
+        const center = rect.width / 2;
+        let progress = 0;
+
+        if (isP1) {
+          const currentX = e.clientX - rect.left;
+          progress = Math.max(0, Math.min(100, Math.round((currentX / center) * 100)));
+          s.p1Pct = progress;
+          if (p1Txt) p1Txt.textContent = progress;
+          orb.style.left = Math.min(center - 50, Math.max(30, currentX - 35)) + 'px';
+          if (progress >= 90) {
+            p1Done = true;
+            if (!p1DoneTime) p1DoneTime = Date.now();
+          }
+        } else {
+          const currentX = rect.right - e.clientX;
+          progress = Math.max(0, Math.min(100, Math.round((currentX / center) * 100)));
+          s.p2Pct = progress;
+          if (p2Txt) p2Txt.textContent = progress;
+          orb.style.right = Math.min(center - 50, Math.max(30, currentX - 35)) + 'px';
+          if (progress >= 90) {
+            p2Done = true;
+            if (!p2DoneTime) p2DoneTime = Date.now();
+          }
+        }
+
+        const diff = Math.abs(s.p1Pct - s.p2Pct);
+        if (diff > 35) {
+          if (statusMsg) {
+            statusMsg.textContent = '⚠️ DİKKAT! Senkron koptu, biri çok hızlı!';
+            statusMsg.style.color = '#EF4444';
+          }
+        } else {
+          if (statusMsg) {
+            statusMsg.textContent = '⚡ Harika! Senkronize ilerliyorsunuz!';
+            statusMsg.style.color = '#10B981';
+          }
+        }
+
+        if (p1Done && p2Done && !s.isOver) {
+          const timeDiff = Math.abs(p1DoneTime - p2DoneTime);
+          if (timeDiff < 700) {
+            s.isOver = true;
+            audio.playFanfare();
+            showArcadeVictoryModal({
+              title: '🚀 PORTAL ATEŞLENDİ! SÜPER SENKRON!',
+              subtitle: 'İki oyuncu kusursuz bir uyumla görevi tamamladı.',
+              badgeText: 'CO-OP ŞAMPİYONLARI',
+              icon: '🤝',
+              onRestart: () => initArcadeSyncGame()
+            });
+          }
+        }
+      });
+
+      const onUp = (e) => {
+        isDragging = false;
+        try { orb.releasePointerCapture(e.pointerId); } catch(err){}
+        if (!s.isOver && (!p1Done || !p2Done)) {
+          orb.style.left = isP1 ? '40px' : '';
+          orb.style.right = isP1 ? '' : '40px';
+          if (isP1) { s.p1Pct = 0; p1Done = false; p1DoneTime = 0; if (p1Txt) p1Txt.textContent = 0; }
+          else { s.p2Pct = 0; p2Done = false; p2DoneTime = 0; if (p2Txt) p2Txt.textContent = 0; }
+        }
+      };
+
+      orb.addEventListener('pointerup', onUp);
+      orb.addEventListener('pointercancel', onUp);
+    }
+
+    handleOrbDrag(orbP1, true);
+    handleOrbDrag(orbP2, false);
   }
 
   function syncTeacherToolsUI() {

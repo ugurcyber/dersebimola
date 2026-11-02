@@ -18020,3 +18020,488 @@ body:has(#viewDuel.active) .floating-bug-btn {
     justify-content: space-between;
   }
 }
+
+/* ==========================================================================
+   V8.9.9: 4 YENİ OYUN MOTORU & KARTLARI (TANGRAM, CRAFT, ENERGY, SYNC)
+   ========================================================================== */
+
+/* 1. KART TEMALARI & HERO BANNER'LARI */
+/* A) Sihirli Tangram */
+.theme-tangram {
+  border-color: #F0ABFC !important;
+}
+.theme-tangram:hover {
+  border-color: #D946EF !important;
+  box-shadow: 0 16px 36px rgba(217, 70, 239, 0.22) !important;
+}
+.banner-tangram {
+  background: linear-gradient(135deg, #7E22CE 0%, #C026D3 50%, #EC4899 100%) !important;
+}
+.scene-tangram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.mini-tangram-house {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.8rem;
+  line-height: 0.9;
+  color: #FDF4FF;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+.mini-sparkle-snap {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  font-size: 1.4rem;
+  animation: pulseSnap 1.5s infinite alternate;
+}
+
+/* B) Kavram Atölyesi */
+.theme-craft {
+  border-color: #99F6E4 !important;
+}
+.theme-craft:hover {
+  border-color: #14B8A6 !important;
+  box-shadow: 0 16px 36px rgba(20, 184, 166, 0.22) !important;
+}
+.banner-craft {
+  background: linear-gradient(135deg, #0F766E 0%, #0D9488 50%, #10B981 100%) !important;
+}
+.mini-craft-pot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.4rem;
+  color: #FFFFFF;
+}
+.craft-plus, .craft-equals {
+  font-weight: 900;
+  color: #A7F3D0;
+}
+
+/* C) Moli'nin Enerji Hattı */
+.theme-energy {
+  border-color: #BAE6FD !important;
+}
+.theme-energy:hover {
+  border-color: #0284C7 !important;
+  box-shadow: 0 16px 36px rgba(2, 132, 199, 0.25) !important;
+}
+.banner-energy {
+  background: linear-gradient(135deg, #0369A1 0%, #0284C7 50%, #F59E0B 100%) !important;
+}
+.mini-energy-line-demo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.energy-node {
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1.5px solid #E0F2FE;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 850;
+  color: #FFFFFF;
+}
+.energy-laser-spark {
+  width: 28px;
+  height: 4px;
+  background: linear-gradient(90deg, #FDE047, #38BDF8);
+  box-shadow: 0 0 10px #FDE047, 0 0 16px #38BDF8;
+  border-radius: 999px;
+  animation: laserPulse 1s infinite alternate;
+}
+
+/* D) Senkronize Görev */
+.theme-sync {
+  border-color: #FED7AA !important;
+}
+.theme-sync:hover {
+  border-color: #EA580C !important;
+  box-shadow: 0 16px 36px rgba(234, 88, 12, 0.25) !important;
+}
+.banner-sync {
+  background: linear-gradient(135deg, #C2410C 0%, #EA580C 50%, #DC2626 100%) !important;
+}
+.mini-coop-demo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+}
+.coop-core {
+  animation: spinSlow 4s linear infinite;
+}
+
+/* Chip Rozetleri */
+.chip-pink { background: #FDF4FF; color: #A21CAF; border: 1px solid #F0ABFC; }
+.chip-teal { background: #F0FDFA; color: #0F766E; border: 1px solid #99F6E4; }
+.chip-electric { background: #F0F9FF; color: #0369A1; border: 1px solid #BAE6FD; }
+
+@keyframes pulseSnap {
+  0% { transform: scale(0.9) rotate(-6deg); }
+  100% { transform: scale(1.15) rotate(12deg); }
+}
+
+@keyframes laserPulse {
+  0% { opacity: 0.6; filter: brightness(1); }
+  100% { opacity: 1; filter: brightness(1.6); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   2. SAHNE ALTYAPILARI (STAGE ENGINES)
+   ========================================================================== */
+
+/* A) TANGRAM STAGE */
+.tangram-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  user-select: none;
+}
+.tangram-board-area {
+  position: relative;
+  width: min(88vw, 420px);
+  height: min(88vw, 420px);
+  background: rgba(255, 255, 255, 0.85);
+  border: 3px dashed #C084FC;
+  border-radius: 28px;
+  box-shadow: 0 12px 36px rgba(168, 85, 247, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.tangram-silhouette {
+  position: relative;
+  width: 320px;
+  height: 320px;
+}
+.tangram-slot {
+  position: absolute;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+.tangram-slot.snapped {
+  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.7));
+}
+.tangram-tray {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #E9D5FF;
+  border-radius: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+}
+.tangram-piece {
+  cursor: grab;
+  touch-action: none;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.tangram-piece:active {
+  cursor: grabbing;
+  transform: scale(1.08);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+  z-index: 100;
+}
+.tangram-piece.locked {
+  cursor: default;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* B) CRAFTING ATÖLYESİ STAGE */
+.craft-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.craft-cauldron-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 3px solid #99F6E4;
+  border-radius: 30px;
+  box-shadow: 0 12px 35px rgba(20, 184, 166, 0.15);
+  width: 100%;
+  max-width: 580px;
+  box-sizing: border-box;
+  position: relative;
+}
+.craft-drop-slot {
+  width: 110px;
+  height: 110px;
+  border: 3px dashed #14B8A6;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #F0FDFA;
+  font-size: 2.2rem;
+  transition: all 0.25s ease;
+}
+.craft-drop-slot.drag-over {
+  background: #CCFBF1;
+  border-color: #0D9488;
+  transform: scale(1.06);
+}
+.craft-plus-sign {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #0D9488;
+}
+.craft-result-bubble {
+  position: absolute;
+  top: -24px;
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-weight: 850;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+  animation: bounceIn 0.4s ease;
+}
+.craft-elements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 12px;
+  width: 100%;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #E2E8F0;
+  border-radius: 24px;
+  box-sizing: border-box;
+}
+.craft-card-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: 18px;
+  cursor: grab;
+  touch-action: none;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.craft-card-item:hover {
+  background: #FFFFFF;
+  border-color: #14B8A6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.15);
+}
+.craft-card-item:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+.craft-card-emoji { font-size: 2.2rem; }
+.craft-card-name { font-size: 0.78rem; font-weight: 800; color: #1E293B; text-align: center; }
+
+/* C) ENERGY LINE CONNECT STAGE */
+.energy-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  user-select: none;
+}
+.energy-arena-wrap {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  background: linear-gradient(180deg, #0C1E36 0%, #081220 100%);
+  border: 3px solid #0284C7;
+  border-radius: 28px;
+  box-shadow: 0 16px 40px rgba(2, 132, 199, 0.35);
+  overflow: hidden;
+  touch-action: none;
+}
+.energy-canvas-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+.energy-terminals-column {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 16px;
+  z-index: 20;
+}
+.energy-terminals-left { left: 16px; }
+.energy-terminals-right { right: 16px; }
+.energy-node-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 2.5px solid #38BDF8;
+  border-radius: 18px;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 850;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+  transition: all 0.2s ease;
+}
+.energy-node-btn:hover {
+  background: rgba(2, 132, 199, 0.4);
+  border-color: #FDE047;
+  box-shadow: 0 0 18px rgba(253, 224, 71, 0.5);
+}
+.energy-node-btn.connected {
+  border-color: #10B981;
+  background: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.5);
+  pointer-events: none;
+}
+.node-plug-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #38BDF8;
+  box-shadow: 0 0 10px #38BDF8;
+}
+.energy-node-btn.connected .node-plug-dot {
+  background: #10B981;
+  box-shadow: 0 0 12px #10B981;
+}
+
+/* D) SYNCHRONIZED CO-OP STAGE */
+.sync-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  user-select: none;
+}
+.sync-arena {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: linear-gradient(135deg, #1E1B4B 0%, #311042 50%, #450A0A 100%);
+  border: 3px solid #EA580C;
+  border-radius: 28px;
+  box-shadow: 0 16px 40px rgba(234, 88, 12, 0.3);
+  overflow: hidden;
+  touch-action: none;
+}
+.sync-center-reactor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 3px dashed #F59E0B;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(234, 88, 12, 0.1) 70%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: 0 0 35px rgba(245, 158, 11, 0.4);
+}
+.reactor-icon { font-size: 2.8rem; animation: pulseSnap 1.5s infinite alternate; }
+.sync-player-orb {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  cursor: grab;
+  touch-action: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.1s ease;
+  z-index: 30;
+}
+.sync-player-orb:active {
+  cursor: grabbing;
+  transform: scale(1.12);
+}
+.orb-p1 {
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  border: 3px solid #60A5FA;
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.6);
+}
+.orb-p2 {
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+  border: 3px solid #FDBA74;
+  box-shadow: 0 0 25px rgba(234, 88, 12, 0.6);
+}
+.sync-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #E2E8F0;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: #1E293B;
+  box-sizing: border-box;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.12); }
+  100% { transform: scale(1); opacity: 1; }
+}
