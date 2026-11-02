@@ -22461,6 +22461,10 @@
   // ==============================================================
   // SADECE ANA SAYFAYA ÖZEL ARKA PLAN MÜZİĞİ MOTORU (AUDIO ENGINE)
   // ==============================================================
+  // ==============================================================
+  // SADECE ANA SAYFAYA ÖZEL ARKA PLAN MÜZİĞİ MOTORU (AUDIO ENGINE)
+  // TIKLAMADAN OTOMATİK BAŞLAMA & KULLANICI KONTROLÜ
+  // ==============================================================
   function initHomeBackgroundMusic() {
     const homeAudio = document.getElementById('homeBgMusic');
     const btnToggle = document.getElementById('btnHomeMusicToggle');
@@ -22475,7 +22479,6 @@
     homeAudio.volume = 0.32;
 
     let isMutedByUser = localStorage.getItem('dersebimola_home_music_muted') === 'true';
-    let hasInteracted = false;
     let isCurrentlyPlaying = false;
 
     function isAtHome() {
@@ -22522,15 +22525,51 @@
         return;
       }
 
+      homeAudio.muted = false;
+      homeAudio.volume = 0.32;
       const p = homeAudio.play();
       if (p !== undefined) {
         p.then(() => {
           isCurrentlyPlaying = true;
           updateUi(true);
-        }).catch(err => {
-          // Tarayıcı Autoplay Engeli: İlk kullanıcı tıklaması bekleniyor
-          isCurrentlyPlaying = false;
-          updateUi(false);
+        }).catch((err) => {
+          // Tarayıcı doğrudan sesli autoplay'i kısıtladıysa:
+          // 1. Arka planda anında sessiz (muted) başlat
+          homeAudio.muted = true;
+          homeAudio.play().then(() => {
+            isCurrentlyPlaying = true;
+            updateUi(true);
+          }).catch(() => {});
+
+          // 2. Kullanıcı tıklamaya bile gerek kalmadan fareyi oynattığı, tekerleği çevirdiği
+          //    veya dokunduğu ilk milisaniyede sesi anında aç (unmute)!
+          function instantUnmute() {
+            window.removeEventListener('pointermove', instantUnmute);
+            window.removeEventListener('mousemove', instantUnmute);
+            window.removeEventListener('wheel', instantUnmute);
+            window.removeEventListener('scroll', instantUnmute);
+            window.removeEventListener('touchstart', instantUnmute);
+            window.removeEventListener('pointerdown', instantUnmute);
+            window.removeEventListener('keydown', instantUnmute);
+
+            if (isAtHome() && !isMutedByUser) {
+              homeAudio.muted = false;
+              homeAudio.volume = 0.32;
+              if (homeAudio.paused) {
+                homeAudio.play().catch(() => {});
+              }
+              isCurrentlyPlaying = true;
+              updateUi(true);
+            }
+          }
+
+          window.addEventListener('pointermove', instantUnmute, { passive: true, once: true });
+          window.addEventListener('mousemove', instantUnmute, { passive: true, once: true });
+          window.addEventListener('wheel', instantUnmute, { passive: true, once: true });
+          window.addEventListener('scroll', instantUnmute, { passive: true, once: true });
+          window.addEventListener('touchstart', instantUnmute, { passive: true, once: true });
+          window.addEventListener('pointerdown', instantUnmute, { passive: true, once: true });
+          window.addEventListener('keydown', instantUnmute, { passive: true, once: true });
         });
       }
     }
@@ -22557,33 +22596,7 @@
       }
     }
 
-    // Modern Tarayıcı Autoplay Engelini İlk Kullanıcı Etkileşiminde Pürüzsüzce Aş
-    function onFirstUserInteraction() {
-      hasInteracted = true;
-      window.removeEventListener('pointerdown', onFirstUserInteraction);
-      window.removeEventListener('touchstart', onFirstUserInteraction);
-      window.removeEventListener('click', onFirstUserInteraction);
-      window.removeEventListener('keydown', onFirstUserInteraction);
-
-      if (isAtHome() && !isMutedByUser && !isCurrentlyPlaying) {
-        playMusic();
-      }
-    }
-
-    window.addEventListener('pointerdown', onFirstUserInteraction, { passive: true, once: true });
-    window.addEventListener('touchstart', onFirstUserInteraction, { passive: true, once: true });
-    window.addEventListener('click', onFirstUserInteraction, { passive: true, once: true });
-    window.addEventListener('keydown', onFirstUserInteraction, { passive: true, once: true });
-
-    // "Hemen Başla" butonu ile etkileşim
-    const btnHeroStart = document.getElementById('btnDesktopHeroStart');
-    if (btnHeroStart) {
-      btnHeroStart.addEventListener('click', () => {
-        if (!hasInteracted) onFirstUserInteraction();
-      }, { passive: true });
-    }
-
-    // FAB Tıklama Dinleyicisi
+    // FAB Tıklama Dinleyicisi (Açma / Kapatma)
     if (btnToggle) {
       addTapListener(btnToggle, (e) => {
         if (e && e.stopPropagation) e.stopPropagation();
@@ -22622,12 +22635,8 @@
     window.stopHomeMusic = stopMusic;
     window.toggleHomeMusic = toggleMusic;
 
-    updateUi(false);
-    setTimeout(() => {
-      if (isAtHome() && !isMutedByUser) {
-        playMusic();
-      }
-    }, 250);
+    // Sayfa açılır açılmaz HİÇBİR TIKLAMA BEKLEMEDEN anında başlat!
+    playMusic();
   }
 
   function init() {
