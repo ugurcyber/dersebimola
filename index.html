@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.7">
+  <link rel="stylesheet" href="style.css?v=8.9.8">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -956,6 +956,123 @@
 
           <div class="arcade-stage-canvas" id="arcadeStageCanvas">
             <!-- Seçilen oyunun interaktif sahnesi buraya dinamik render edilir -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================== -->
+      <!-- 4. KADEME: 🛡️ YÖNETİCİ PANELİ (#adminPanelSection - Şifre Korumalı) -->
+      <!-- ============================================================== -->
+      <section class="admin-panel-section hide" id="adminPanelSection" aria-label="Yönetici Paneli">
+        <!-- 1) Şifre Giriş Ekranı (Oturum Açılmamışsa) -->
+        <div class="admin-auth-gate" id="adminAuthGate">
+          <div class="admin-login-card">
+            <div class="admin-lock-icon" aria-hidden="true">🔐</div>
+            <h2 class="admin-gate-title">Yetkili Yönetici Girişi</h2>
+            <p class="admin-gate-desc">
+              Bu panel yalnızca sistem yöneticisi (Uğur Hoca) erişimine açıktır. Devam etmek için yönetici şifrenizi girin.
+            </p>
+            <form class="admin-gate-form" id="adminGateForm">
+              <div class="admin-input-wrap">
+                <span class="admin-key-icon" aria-hidden="true">🔑</span>
+                <input type="password" id="adminPasswordInput" class="admin-password-input" placeholder="Yönetici Şifresi..." autocomplete="current-password" required>
+                <button type="button" class="btn-toggle-admin-pw" id="btnToggleAdminPw" aria-label="Şifreyi Göster/Gizle">👁️</button>
+              </div>
+              <p class="admin-gate-error hide" id="adminGateError">⚠️ Hatalı şifre! Lütfen tekrar deneyin.</p>
+              <button type="submit" class="btn-admin-login-submit" id="btnAdminLoginSubmit">
+                <span>Giriş Yap</span>
+                <span class="btn-arrow">→</span>
+              </button>
+            </form>
+            <button type="button" class="btn-admin-gate-back" id="btnAdminGateBackHome">← Ana Sayfaya Dön</button>
+          </div>
+        </div>
+
+        <!-- 2) Yönetici Kontrol Paneli (Şifre Doğrulandıktan Sonra) -->
+        <div class="admin-dashboard-container hide" id="adminDashboardContainer">
+          <!-- Üst Bilgi Barı -->
+          <div class="admin-topbar-banner">
+            <div class="admin-banner-left">
+              <button class="btn-admin-back-btn" id="btnAdminBackHome" type="button" title="Ana Sayfaya Dön">
+                <span aria-hidden="true">‹</span> Ana Sayfa
+              </button>
+              <div class="admin-header-titles">
+                <div class="admin-badge-pill">🛡️ YÖNETİM MERKEZİ</div>
+                <h1 class="admin-dashboard-title">Hata Bildirimleri &amp; Öğretmen Geri Bildirimleri</h1>
+              </div>
+            </div>
+            <div class="admin-banner-actions">
+              <span class="admin-status-badge">🟢 Yönetici Oturumu Aktif</span>
+              <button class="btn-admin-export" id="btnAdminExportData" type="button" title="Geri Bildirimleri JSON İndir">
+                📥 Dışa Aktar
+              </button>
+              <button class="btn-admin-logout" id="btnAdminLogout" type="button" title="Admin Oturumunu Kapat">
+                🔒 Çıkış Yap
+              </button>
+            </div>
+          </div>
+
+          <!-- Sayaç Kartları (Metrics Grid) -->
+          <div class="admin-metrics-grid">
+            <div class="metric-card metric-total">
+              <div class="metric-icon">📊</div>
+              <div class="metric-data">
+                <span class="metric-val" id="adminMetricTotal">0</span>
+                <span class="metric-label">Toplam Bildirim</span>
+              </div>
+            </div>
+            <div class="metric-card metric-pending">
+              <div class="metric-icon">⏳</div>
+              <div class="metric-data">
+                <span class="metric-val" id="adminMetricPending">0</span>
+                <span class="metric-label">İncelenmeyi Bekleyen</span>
+              </div>
+            </div>
+            <div class="metric-card metric-resolved">
+              <div class="metric-icon">✅</div>
+              <div class="metric-data">
+                <span class="metric-val" id="adminMetricResolved">0</span>
+                <span class="metric-label">Çözülen Hatalar</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtreleme ve Arama Barı -->
+          <div class="admin-filter-bar">
+            <div class="admin-filter-tabs" role="tablist">
+              <button class="admin-filter-btn active" data-filter="all" id="btnFilterAll">Tümü (<span id="countAll">0</span>)</button>
+              <button class="admin-filter-btn" data-filter="pending" id="btnFilterPending">⏳ Bekleyenler (<span id="countPending">0</span>)</button>
+              <button class="admin-filter-btn" data-filter="resolved" id="btnFilterResolved">✅ Çözülenler (<span id="countResolved">0</span>)</button>
+            </div>
+            <div class="admin-search-wrap">
+              <input type="search" id="adminSearchInput" class="admin-search-input" placeholder="Bildirimlerde ara (kullanıcı, mesaj, konu)...">
+            </div>
+          </div>
+
+          <!-- Tablo Alanı -->
+          <div class="admin-table-card">
+            <div class="admin-table-responsive">
+              <table class="admin-feedbacks-table" id="adminFeedbacksTable">
+                <thead>
+                  <tr>
+                    <th style="width: 140px;">Tarih</th>
+                    <th style="width: 180px;">Kategori &amp; Konum</th>
+                    <th>Kullanıcı / Mesaj Detayı</th>
+                    <th style="width: 120px;">Durum</th>
+                    <th style="width: 160px; text-align: center;">İşlem</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTableBody">
+                  <!-- JS ile doldurulacak -->
+                </tbody>
+              </table>
+            </div>
+            <!-- Boş Durum (Empty State) -->
+            <div class="admin-empty-state hide" id="adminEmptyState">
+              <div class="empty-icon">🎉</div>
+              <h3>Kayıtlı Bildirim Bulunmuyor</h3>
+              <p>Öğretmenler "Hata Bildir" formuyla geri bildirim gönderdiğinde burada anlık listelenecektir.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -2428,6 +2545,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.7" defer></script>
+  <script src="app.js?v=8.9.8" defer></script>
 </body>
 </html>

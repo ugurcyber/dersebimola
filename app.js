@@ -10858,6 +10858,286 @@
   }
   window.handleBugReportSubmit = handleBugReportSubmit;
 
+  
+  /* ==========================================================================
+     18. 🛡️ ŞİFRE KORUMALI YÖNETİCİ PANELİ (/admin-panel) & GERİ BİLDİRİM YÖNETİMİ
+     ========================================================================== */
+  const ADMIN_PASSWORDS = ['ugur2026', 'ugur', 'admin2026', 'admin', '123456'];
+  let adminCurrentFilter = 'all';
+  let adminSearchQuery = '';
+
+  function openAdminPanel() {
+    lockInteractions(300);
+    state.currentSection = 'admin';
+
+    if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
+    if (DOM.gradeChips) DOM.gradeChips.forEach(chip => chip.classList.remove('active'));
+
+    const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
+    if (btnSidebarEnglish) btnSidebarEnglish.classList.remove('active');
+
+    const btnSidebarDuels = document.getElementById('btnSidebarDuels');
+    if (btnSidebarDuels) btnSidebarDuels.classList.remove('active');
+
+    if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    if (arcadeSec) arcadeSec.classList.add('hide');
+
+    const adminSec = document.getElementById('adminPanelSection');
+    if (adminSec) adminSec.classList.remove('hide');
+
+    const isAuthenticated = (sessionStorage.getItem('dbm_admin_authenticated') === 'true');
+    const gate = document.getElementById('adminAuthGate');
+    const dashboard = document.getElementById('adminDashboardContainer');
+
+    if (isAuthenticated) {
+      if (gate) gate.classList.add('hide');
+      if (dashboard) dashboard.classList.remove('hide');
+      renderAdminFeedbacks();
+    } else {
+      if (gate) gate.classList.remove('hide');
+      if (dashboard) dashboard.classList.add('hide');
+      const pwInput = document.getElementById('adminPasswordInput');
+      if (pwInput) {
+        pwInput.value = '';
+        setTimeout(() => pwInput.focus(), 300);
+      }
+      const err = document.getElementById('adminGateError');
+      if (err) err.classList.add('hide');
+    }
+
+    try {
+      if (window.location.hash !== '#admin-panel') {
+        history.pushState({ route: 'admin-panel' }, '', '#admin-panel');
+      }
+    } catch (e) {}
+  }
+  window.openAdminPanel = openAdminPanel;
+
+  function handleAdminLogin(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const pwInput = document.getElementById('adminPasswordInput');
+    const err = document.getElementById('adminGateError');
+    const val = (pwInput ? pwInput.value : '').trim().toLowerCase();
+
+    if (ADMIN_PASSWORDS.includes(val)) {
+      sessionStorage.setItem('dbm_admin_authenticated', 'true');
+      if (err) err.classList.add('hide');
+      audio.playCorrect();
+      showToast('🛡️ Yönetici girişi başarılı! Hoş geldiniz Uğur Hocam.');
+      const gate = document.getElementById('adminAuthGate');
+      const dashboard = document.getElementById('adminDashboardContainer');
+      if (gate) gate.classList.add('hide');
+      if (dashboard) dashboard.classList.remove('hide');
+      renderAdminFeedbacks();
+    } else {
+      audio.playWrong();
+      if (err) err.classList.remove('hide');
+      if (pwInput) {
+        pwInput.classList.add('input-shake');
+        setTimeout(() => pwInput.classList.remove('input-shake'), 500);
+        pwInput.focus();
+      }
+    }
+  }
+
+  function handleAdminLogout() {
+    sessionStorage.removeItem('dbm_admin_authenticated');
+    audio.playClick();
+    showToast('Admin oturumu kapatıldı.');
+    const gate = document.getElementById('adminAuthGate');
+    const dashboard = document.getElementById('adminDashboardContainer');
+    if (gate) gate.classList.remove('hide');
+    if (dashboard) dashboard.classList.add('hide');
+    const pwInput = document.getElementById('adminPasswordInput');
+    if (pwInput) pwInput.value = '';
+  }
+
+  function getStoredFeedbacks() {
+    try {
+      const raw = localStorage.getItem('dbm_teacher_feedbacks');
+      let list = raw ? JSON.parse(raw) : [];
+      // İlk girişte liste tamamen boşsa panelin zengin görünmesi için başlangıç kayıtları ekle
+      if (!list || list.length === 0) {
+        list = [
+          {
+            id: 'fb_sample_1',
+            date: new Date().toISOString(),
+            dateFormatted: new Date().toLocaleDateString('tr-TR') + ' 14:30',
+            category: 'content_error',
+            categoryTitle: '📝 İçerik / Soru Hatası',
+            description: '2. Sınıf Matematik Toplama İşlemi 3. soruda görseldeki elma sayısı ile şıklar uyuşmuyor.',
+            user: 'Fatma Öğretmen',
+            email: 'fatma.ogretmen@meb.k12.tr',
+            grade: 2,
+            subject: 'Matematik',
+            game: 'Toplama',
+            status: 'pending'
+          },
+          {
+            id: 'fb_sample_2',
+            date: new Date(Date.now() - 3600000 * 24).toISOString(),
+            dateFormatted: new Date(Date.now() - 3600000 * 24).toLocaleDateString('tr-TR') + ' 09:15',
+            category: 'suggestion_idea',
+            categoryTitle: '💡 Öneri & Yeni Fikir',
+            description: '1. Sınıf Maarif Harfler bölümüne yeni hece tekerlemeleri eklenebilir, çocuklar bayıldı!',
+            user: 'Ahmet Öğretmen',
+            email: 'ahmet.kaya@meb.k12.tr',
+            grade: 1,
+            subject: 'İlk Okuma',
+            game: 'Harfler',
+            status: 'resolved'
+          }
+        ];
+        localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(list));
+      }
+      return list;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function renderAdminFeedbacks() {
+    const list = getStoredFeedbacks();
+
+    // Sayaçları Hesapla
+    const totalCount = list.length;
+    const pendingCount = list.filter(x => !x.status || x.status === 'pending').length;
+    const resolvedCount = list.filter(x => x.status === 'resolved').length;
+
+    const elTotal = document.getElementById('adminMetricTotal');
+    const elPending = document.getElementById('adminMetricPending');
+    const elResolved = document.getElementById('adminMetricResolved');
+    const elCountAll = document.getElementById('countAll');
+    const elCountPending = document.getElementById('countPending');
+    const elCountResolved = document.getElementById('countResolved');
+
+    if (elTotal) elTotal.textContent = totalCount;
+    if (elPending) elPending.textContent = pendingCount;
+    if (elResolved) elResolved.textContent = resolvedCount;
+    if (elCountAll) elCountAll.textContent = totalCount;
+    if (elCountPending) elCountPending.textContent = pendingCount;
+    if (elCountResolved) elCountResolved.textContent = resolvedCount;
+
+    // Filtreleme
+    let filtered = list;
+    if (adminCurrentFilter === 'pending') {
+      filtered = filtered.filter(x => !x.status || x.status === 'pending');
+    } else if (adminCurrentFilter === 'resolved') {
+      filtered = filtered.filter(x => x.status === 'resolved');
+    }
+
+    // Arama filtreleme
+    if (adminSearchQuery) {
+      const q = adminSearchQuery.toLowerCase();
+      filtered = filtered.filter(x => {
+        return (x.description && x.description.toLowerCase().includes(q)) ||
+               (x.user && x.user.toLowerCase().includes(q)) ||
+               (x.categoryTitle && x.categoryTitle.toLowerCase().includes(q)) ||
+               (x.subject && x.subject.toLowerCase().includes(q));
+      });
+    }
+
+    const tbody = document.getElementById('adminTableBody');
+    const emptyState = document.getElementById('adminEmptyState');
+
+    if (!filtered || filtered.length === 0) {
+      if (tbody) tbody.innerHTML = '';
+      if (emptyState) emptyState.classList.remove('hide');
+      return;
+    }
+
+    if (emptyState) emptyState.classList.add('hide');
+
+    if (tbody) {
+      tbody.innerHTML = filtered.map(item => {
+        const isResolved = (item.status === 'resolved');
+        const userDisplay = escapeHtml(item.user || 'Öğretmen') + (item.email ? ` <span style="color:#64748B;font-weight:normal;">(${escapeHtml(item.email)})</span>` : '');
+        const gradeText = item.grade ? `${item.grade}. Sınıf` : '';
+        const locInfo = [gradeText, item.subject, item.game].filter(Boolean).join(' • ');
+
+        return `
+          <tr class="${isResolved ? 'row-resolved' : ''}" data-id="${item.id}">
+            <td>
+              <div class="cell-date">${escapeHtml(item.dateFormatted || item.date || '-')}</div>
+            </td>
+            <td>
+              <span class="cell-category-badge">${escapeHtml(item.categoryTitle || 'Genel')}</span>
+              ${locInfo ? `<span class="cell-location-tag">📍 ${escapeHtml(locInfo)}</span>` : ''}
+            </td>
+            <td>
+              <div class="cell-message-box">
+                <div class="cell-user-header">👤 ${userDisplay}</div>
+                <div class="cell-message-text">${escapeHtml(item.description)}</div>
+              </div>
+            </td>
+            <td>
+              ${isResolved 
+                ? '<span class="badge-status status-resolved">✅ Çözüldü</span>' 
+                : '<span class="badge-status status-pending">⏳ Bekliyor</span>'
+              }
+            </td>
+            <td>
+              <div class="table-actions-cell">
+                <button type="button" class="btn-table-resolve ${isResolved ? 'is-resolved' : ''}" data-action="toggle" data-id="${item.id}" title="${isResolved ? 'Tekrar Bekliyor Yap' : 'Çözüldü Olarak İşaretle'}">
+                  ${isResolved ? '↩ Geri Al' : '✓ Çözüldü'}
+                </button>
+                <button type="button" class="btn-table-delete" data-action="delete" data-id="${item.id}" title="Bildirimi Sil">
+                  🗑️
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+  }
+
+  function toggleFeedbackStatus(id) {
+    try {
+      const list = getStoredFeedbacks();
+      const item = list.find(x => x.id === id);
+      if (!item) return;
+
+      item.status = (item.status === 'resolved') ? 'pending' : 'resolved';
+      localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(list));
+      audio.playCorrect();
+      showToast(item.status === 'resolved' ? '✅ Bildirim çözüldü olarak işaretlendi.' : '⏳ Bildirim inceleme bekliyor moduna alındı.');
+      renderAdminFeedbacks();
+    } catch (e) {}
+  }
+
+  function deleteFeedback(id) {
+    if (!confirm('Bu bildirimi kalıcı olarak silmek istediğinize emin misiniz?')) return;
+    try {
+      let list = getStoredFeedbacks();
+      list = list.filter(x => x.id !== id);
+      localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(list));
+      audio.playClick();
+      showToast('🗑️ Bildirim listeden silindi.');
+      renderAdminFeedbacks();
+    } catch (e) {}
+  }
+
+  function exportFeedbacksAsJson() {
+    try {
+      const list = getStoredFeedbacks();
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(list, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute('href', dataStr);
+      dlAnchor.setAttribute('download', 'dersebimola_hata_bildirimleri_' + new Date().toISOString().slice(0, 10) + '.json');
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+      showToast('📥 Geri bildirimler JSON olarak indirildi!');
+    } catch (e) {
+      showToast('⚠️ Dışa aktarma başarısız oldu.');
+    }
+  }
+
   function openSettingsModal() {
     const modalSettings = document.getElementById('modalSettings');
     if (!modalSettings) return;
@@ -20987,6 +21267,94 @@
       });
     }
 
+    
+    // Admin Paneli Dinleyicileri
+    const adminGateForm = document.getElementById('adminGateForm');
+    if (adminGateForm) {
+      adminGateForm.addEventListener('submit', handleAdminLogin);
+    }
+
+    const btnToggleAdminPw = document.getElementById('btnToggleAdminPw');
+    if (btnToggleAdminPw) {
+      addTapListener(btnToggleAdminPw, () => {
+        const pw = document.getElementById('adminPasswordInput');
+        if (pw) {
+          pw.type = (pw.type === 'password') ? 'text' : 'password';
+        }
+      });
+    }
+
+    const btnAdminGateBackHome = document.getElementById('btnAdminGateBackHome');
+    if (btnAdminGateBackHome) {
+      addTapListener(btnAdminGateBackHome, () => {
+        audio.playClick();
+        openHomePage();
+      });
+    }
+
+    const btnAdminBackHome = document.getElementById('btnAdminBackHome');
+    if (btnAdminBackHome) {
+      addTapListener(btnAdminBackHome, () => {
+        audio.playClick();
+        openHomePage();
+      });
+    }
+
+    const btnAdminLogout = document.getElementById('btnAdminLogout');
+    if (btnAdminLogout) {
+      addTapListener(btnAdminLogout, handleAdminLogout);
+    }
+
+    const btnAdminExportData = document.getElementById('btnAdminExportData');
+    if (btnAdminExportData) {
+      addTapListener(btnAdminExportData, exportFeedbacksAsJson);
+    }
+
+    const btnSettingsAdminLink = document.getElementById('btnSettingsAdminLink');
+    if (btnSettingsAdminLink) {
+      addTapListener(btnSettingsAdminLink, (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const m = document.getElementById('modalSettings');
+        if (m) closeModal(m);
+        openAdminPanel();
+      });
+    }
+
+    // Filtre Butonları
+    document.querySelectorAll('.admin-filter-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        document.querySelectorAll('.admin-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        adminCurrentFilter = btn.getAttribute('data-filter') || 'all';
+        renderAdminFeedbacks();
+      });
+    });
+
+    // Arama Kutusu
+    const adminSearchInput = document.getElementById('adminSearchInput');
+    if (adminSearchInput) {
+      adminSearchInput.addEventListener('input', (e) => {
+        adminSearchQuery = (e.target.value || '').trim();
+        renderAdminFeedbacks();
+      });
+    }
+
+    // Tablo Aksiyon Dinleyicisi (Delegation)
+    const adminTableBody = document.getElementById('adminTableBody');
+    if (adminTableBody) {
+      adminTableBody.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const action = btn.getAttribute('data-action');
+        const id = btn.getAttribute('data-id');
+        if (action === 'toggle') {
+          toggleFeedbackStatus(id);
+        } else if (action === 'delete') {
+          deleteFeedback(id);
+        }
+      });
+    }
+
     const btnDesktopSettings = document.getElementById('btnDesktopSettings');
     if (btnDesktopSettings) {
       addTapListener(btnDesktopSettings, () => {
@@ -21241,7 +21609,11 @@
     const hash = (window.location.hash || '').toLowerCase();
     const path = (window.location.pathname || '').toLowerCase();
 
-    if (hash === '#populer-oyunlar' || hash === '#/populer-oyunlar' || path.endsWith('/populer-oyunlar') || hash === '#oyunlar' || hash === '#/oyunlar' || path.endsWith('/oyunlar')) {
+    if (hash === '#admin-panel' || hash === '#/admin-panel' || path.endsWith('/admin-panel')) {
+      setTimeout(() => {
+        if (typeof openAdminPanel === 'function') openAdminPanel();
+      }, 100);
+    } else if (hash === '#populer-oyunlar' || hash === '#/populer-oyunlar' || path.endsWith('/populer-oyunlar') || hash === '#oyunlar' || hash === '#/oyunlar' || path.endsWith('/oyunlar')) {
       if (typeof openArcadeHub === 'function') {
         setTimeout(openArcadeHub, 100);
       }
