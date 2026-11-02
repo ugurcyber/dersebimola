@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.5">
+  <link rel="stylesheet" href="style.css?v=8.9.6">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -301,6 +301,10 @@
           </button>
           <button class="topbar-sound-btn" id="btnTopbarMute" type="button" aria-label="Tüm Sesleri Aç / Kapat" aria-pressed="false" title="Tüm Sesleri Aç / Kapat (Hızlı Sessize Alma)">
             <span class="topbar-sound-icon" id="topbarMuteIcon" aria-hidden="true">🔊</span>
+          </button>
+                    <button class="topbar-action-pill pill-feedback hide" id="btnDesktopBugReport" type="button" aria-label="Hata Bildir" title="Uğur Hoca'ya Hata veya Geri Bildirim Gönder">
+            <span class="pill-icon" aria-hidden="true">🐞</span>
+            <span class="pill-text">Hata Bildir</span>
           </button>
           <button class="topbar-action-pill pill-settings" id="btnDesktopSettings" type="button" aria-label="Ayarlar" onclick="window.openSettingsModal ? window.openSettingsModal() : (document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.remove('hide'))">
             <span class="pill-icon">
@@ -2012,6 +2016,72 @@
   </div>
 
   <!-- MODAL: AYARLAR (AKILLI TAHTA, SES VE OYUN TERCİHLERİ) -->
+  
+  <!-- ============================================================== -->
+  <!-- ÖĞRETMEN HATA BİLDİR & GERİ BİLDİRİM MODALI (#modalBugReport) -->
+  <!-- ============================================================== -->
+  <div class="modal-backdrop hide" id="modalBugReport" role="dialog" aria-modal="true" aria-labelledby="bugReportTitle">
+    <div class="modal-window bug-report-modal-window">
+      <button class="modal-close-btn" data-close-modal="modalBugReport" id="btnCloseBugReport" aria-label="Kapat">✕</button>
+
+      <div class="modal-header bug-report-modal-header">
+        <div class="modal-badge-icon badge-icon-feedback" aria-hidden="true">🐞</div>
+        <div>
+          <h3 class="modal-title" id="bugReportTitle">Hata Bildir &amp; Geri Bildirim</h3>
+          <p class="modal-desc">
+            Soru hataları, teknik aksaklıklar veya yeni fikirlerinizi doğrudan <strong>Uğur Hoca'ya</strong> iletin.
+          </p>
+        </div>
+      </div>
+
+      <form class="bug-report-form" id="bugReportForm">
+        <div class="form-group">
+          <label class="form-label" for="bugCategorySelect">
+            <span class="label-icon">📂</span> Bildirim Kategorisi
+          </label>
+          <div class="custom-select-wrap">
+            <select class="bug-form-select" id="bugCategorySelect" required>
+              <option value="content_error" selected>📝 İçerik / Soru Hatası</option>
+              <option value="technical_bug">⚙️ Oyun / Teknik Hata</option>
+              <option value="design_issue">🎨 Tasarım / Görünüm Sorunu</option>
+              <option value="suggestion_idea">💡 Öneri &amp; Yeni Fikir</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bugDescriptionText">
+            <span class="label-icon">✍️</span> Detaylı Açıklama
+          </label>
+          <textarea
+            class="bug-form-textarea"
+            id="bugDescriptionText"
+            rows="4"
+            placeholder="Lütfen karşılaştığınız sorunu veya önerinizi açıklayın... (Örn: 2. Sınıf Matematik Toplama 4. sorusunda şıklar hatalı / ses efekti kesildi vb.)"
+            required></textarea>
+        </div>
+
+        <div class="bug-report-meta-info" id="bugReportMetaInfo">
+          <span class="meta-tag" id="bugMetaLocation">📍 Konum: Otomatik tespit ediliyor</span>
+          <span class="meta-tag" id="bugMetaUser">👤 Bildiren: Öğretmen</span>
+        </div>
+
+        <div class="bug-form-actions">
+          <button type="button" class="btn-bug-cancel" id="btnCancelBugReport">Vazgeç</button>
+          <button type="submit" class="btn-bug-submit" id="btnSubmitBugReport">
+            <span>🚀 Bildirimi Gönder</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Öğretmenler İçin Sağ Altta Sabit Hızlı Hata Bildir İkonu (Giriş Yapılınca Aktif) -->
+  <button class="floating-bug-btn hide" id="btnFloatingBugReport" type="button" aria-label="Uğur Hoca'ya Hata Bildir" title="Uğur Hoca'ya Hata Bildir / Geri Bildirim">
+    <span class="floating-bug-icon">🐞</span>
+    <span class="floating-bug-label">Hata Bildir</span>
+  </button>
+
   <div class="modal-backdrop hide" id="modalSettings">
     <div class="modal-window settings-modal-window">
       <button class="modal-close-btn" data-close-modal="modalSettings" onclick="document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.add('hide')">✕</button>
@@ -2357,6 +2427,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.5" defer></script>
+  <script src="app.js?v=8.9.6" defer></script>
 </body>
 </html>

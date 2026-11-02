@@ -10768,6 +10768,96 @@
     }
   }
 
+  
+  /* ==========================================================================
+     ÖĞRETMEN HATA BİLDİR & GERİ BİLDİRİM SİSTEMİ (REPORT A BUG)
+     ========================================================================== */
+  function openBugReportModal() {
+    const modalBugReport = document.getElementById('modalBugReport');
+    if (!modalBugReport) return;
+    audio.playClick();
+
+    // Otomatik bağlam ve konum etiketleri
+    const metaLocation = document.getElementById('bugMetaLocation');
+    const metaUser = document.getElementById('bugMetaUser');
+
+    const gradeLabel = (state.currentGrade === 0) ? 'Anasınıfı' : `${state.currentGrade}. Sınıf`;
+    let locInfo = gradeLabel;
+    if (state.currentSubject) {
+      locInfo += ` • ${state.currentSubject}`;
+    }
+    if (state.currentGameType) {
+      locInfo += ` • ${state.currentGameType}`;
+    }
+    if (metaLocation) metaLocation.textContent = `📍 Konum: ${locInfo}`;
+
+    const isTeacher = !!(state.teacherSession && state.teacherSession.isLoggedIn);
+    const uName = isTeacher
+      ? (state.teacherSession.name || 'Öğretmenim')
+      : ((state.studentSession && state.studentSession.isLoggedIn) ? state.studentSession.name : 'Giriş Yapmış Kullanıcı');
+    if (metaUser) metaUser.textContent = `👤 Bildiren: ${uName}`;
+
+    openModal(modalBugReport);
+    const textarea = document.getElementById('bugDescriptionText');
+    if (textarea) {
+      setTimeout(() => textarea.focus(), 300);
+    }
+  }
+  window.openBugReportModal = openBugReportModal;
+
+  function handleBugReportSubmit(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const textarea = document.getElementById('bugDescriptionText');
+    const select = document.getElementById('bugCategorySelect');
+    const modalBugReport = document.getElementById('modalBugReport');
+
+    const desc = textarea ? textarea.value.trim() : '';
+    if (!desc) {
+      audio.playWrong();
+      showToast('⚠️ Lütfen bir hata açıklaması veya öneri yazın.');
+      if (textarea) textarea.focus();
+      return;
+    }
+
+    const category = select ? select.value : 'general';
+    const categoryTitle = select ? select.options[select.selectedIndex].text : 'Genel';
+    const isTeacher = !!(state.teacherSession && state.teacherSession.isLoggedIn);
+    const userName = isTeacher
+      ? (state.teacherSession.name || 'Öğretmen')
+      : ((state.studentSession && state.studentSession.isLoggedIn) ? state.studentSession.name : 'Kullanıcı');
+    const userEmail = (isTeacher && state.teacherSession.email) || '';
+
+    const report = {
+      id: 'bug_' + Date.now(),
+      date: new Date().toISOString(),
+      dateFormatted: new Date().toLocaleString('tr-TR'),
+      category: category,
+      categoryTitle: categoryTitle,
+      description: desc,
+      user: userName,
+      email: userEmail,
+      grade: state.currentGrade,
+      subject: state.currentSubject || '',
+      game: state.currentGameType || '',
+      url: window.location.href
+    };
+
+    try {
+      const existing = JSON.parse(localStorage.getItem('dbm_teacher_feedbacks') || '[]');
+      existing.unshift(report);
+      if (existing.length > 50) existing.length = 50;
+      localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(existing));
+    } catch (err) {
+      console.warn('Feedback kaydedilirken hata:', err);
+    }
+
+    if (textarea) textarea.value = '';
+    if (modalBugReport) closeModal(modalBugReport);
+    audio.playCorrect();
+    showToast("✅ Teşekkürler! Geri bildiriminiz Uğur Hoca'ya başarıyla iletildi.", 4500);
+  }
+  window.handleBugReportSubmit = handleBugReportSubmit;
+
   function openSettingsModal() {
     const modalSettings = document.getElementById('modalSettings');
     if (!modalSettings) return;
@@ -17102,7 +17192,27 @@
       }
       if (desktopLoginText) desktopLoginText.textContent = 'Giriş Yap';
       if (btnDesktopLogin) btnDesktopLogin.classList.remove('logged-in');
-      if (authActiveSessionBox) authActiveSessionBox.classList.add('hide');
+            if (authActiveSessionBox) authActiveSessionBox.classList.add('hide');
+    }
+
+    // Hata Bildir Butonları: Sadece oturum açıldığında (öğretmen/kullanıcı) görünür
+    const btnDesktopBugReport = document.getElementById('btnDesktopBugReport');
+    const btnFloatingBugReport = document.getElementById('btnFloatingBugReport');
+    const isLoggedIn = isTeacher || isStudent;
+
+    if (btnDesktopBugReport) {
+      if (isLoggedIn) {
+        btnDesktopBugReport.classList.remove('hide');
+      } else {
+        btnDesktopBugReport.classList.add('hide');
+      }
+    }
+    if (btnFloatingBugReport) {
+      if (isLoggedIn) {
+        btnFloatingBugReport.classList.remove('hide');
+      } else {
+        btnFloatingBugReport.classList.add('hide');
+      }
     }
   }
 
@@ -20862,6 +20972,44 @@
       addTapListener(btnTopbarMute, (e) => {
         if (e && e.cancelable) e.preventDefault();
         toggleSound();
+      });
+    }
+
+    // Öğretmen Hata Bildir / Geri Bildirim Buton Dinleyicileri
+    const btnDesktopBugReport = document.getElementById('btnDesktopBugReport');
+    if (btnDesktopBugReport) {
+      addTapListener(btnDesktopBugReport, () => {
+        if (typeof openBugReportModal === 'function') openBugReportModal();
+      });
+    }
+
+    const btnFloatingBugReport = document.getElementById('btnFloatingBugReport');
+    if (btnFloatingBugReport) {
+      addTapListener(btnFloatingBugReport, () => {
+        if (typeof openBugReportModal === 'function') openBugReportModal();
+      });
+    }
+
+    const btnCloseBugReport = document.getElementById('btnCloseBugReport');
+    if (btnCloseBugReport) {
+      addTapListener(btnCloseBugReport, () => {
+        const m = document.getElementById('modalBugReport');
+        if (m) closeModal(m);
+      });
+    }
+
+    const btnCancelBugReport = document.getElementById('btnCancelBugReport');
+    if (btnCancelBugReport) {
+      addTapListener(btnCancelBugReport, () => {
+        const m = document.getElementById('modalBugReport');
+        if (m) closeModal(m);
+      });
+    }
+
+    const bugReportForm = document.getElementById('bugReportForm');
+    if (bugReportForm) {
+      bugReportForm.addEventListener('submit', (e) => {
+        if (typeof handleBugReportSubmit === 'function') handleBugReportSubmit(e);
       });
     }
 
