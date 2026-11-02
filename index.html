@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.12">
+  <link rel="stylesheet" href="style.css?v=8.9.13">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -559,6 +559,8 @@
 
             <!-- SADECE ANA SAYFAYA ÖZEL GİZLİ FON MÜZİĞİ VE SEVİMLİ KONTROL BUTONU -->
             <audio id="homeBgMusic" src="sounds/bg_music_home.mp3" autoplay loop preload="auto" playsinline style="display:none;"></audio>
+            <!-- OYUNLARA ÖZEL BGM ÇALAR (Zeka, Aksiyon & Mini Oyun Fon Müzikleri) -->
+            <audio id="gameBgMusic" loop preload="auto" playsinline style="display:none;"></audio>
 
             <button class="home-music-fab is-playing" id="btnHomeMusicToggle" type="button" aria-label="Ana Sayfa Fon Müziği Aç / Kapat" title="Fon Müziğini Aç / Kapat">
               <span class="music-icon-wrap" id="homeMusicIcon" aria-hidden="true">
@@ -1067,7 +1069,12 @@
               <span class="arcade-stage-icon" id="arcadeStageIcon">⚔️</span>
               <h2 class="arcade-stage-title" id="arcadeStageTitle">Çarpma Savaşı</h2>
             </div>
-            <div class="arcade-stage-toolbar" id="arcadeStageToolbar"></div>
+            <div class="arcade-stage-toolbar" id="arcadeStageToolbar">
+              <button class="arcade-tool-pill btn-game-music-toggle" id="btnArcadeMusicToggle" type="button" title="Oyun Müziğini Aç / Kapat (🎵)" aria-label="Oyun Müziği">
+                <span class="game-music-icon">🎵</span>
+                <span class="game-music-label">Müzik</span>
+              </button>
+            </div>
           </div>
 
           <div class="arcade-stage-canvas" id="arcadeStageCanvas">
@@ -1224,6 +1231,10 @@
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
           </svg>
           <span>Soruyu Oku</span>
+        </button>
+        <button class="hud-btn hud-music-btn btn-game-music-toggle" id="btnHudMusicToggle" type="button" title="Oyun Müziğini Aç / Kapat (🎵)" aria-label="Oyun Müziği">
+          <span class="game-music-icon">🎵</span>
+          <span class="hud-music-text">Müzik</span>
         </button>
         <button class="hud-btn hud-announcer-btn" id="btnToggleAnnouncerDuel" title="Sunucu Seslendirmesini Aç / Kapat">
           <span id="announcerHudIcon" style="display:inline-flex; align-items:center;">
@@ -2655,6 +2666,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.12" defer></script>
+  <script src="app.js?v=8.9.13" defer></script>
 </body>
 </html>

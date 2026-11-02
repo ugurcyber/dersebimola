@@ -18666,3 +18666,87 @@ body:has(#homeShowcaseSection.hide) .home-music-fab {
     font-size: 0.8rem;
   }
 }
+
+
+/* ============================================================== */
+/* OYUNLARA ÖZEL ARKA PLAN MÜZİĞİ (GAME BGM) BUTON VE EFEKTLERİ   */
+/* ============================================================== */
+.btn-game-music-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  font-family: inherit;
+  font-weight: 800;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 1. Arcade Sahnesi Müzik Butonu */
+.arcade-tool-pill.btn-game-music-toggle {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  color: #FFFFFF !important;
+  border: 1.5px solid #C4B5FD;
+  border-bottom: 3px solid #5B21B6;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.32);
+}
+
+.arcade-tool-pill.btn-game-music-toggle:hover {
+  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.44);
+}
+
+.arcade-tool-pill.btn-game-music-toggle:active {
+  transform: translateY(1px);
+}
+
+.arcade-tool-pill.btn-game-music-toggle.is-muted {
+  background: #F1F5F9 !important;
+  color: #64748B !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-bottom: 3px solid #94A3B8 !important;
+  box-shadow: none !important;
+}
+
+/* 2. Düello & Soru Arenası HUD Müzik Butonu */
+.hud-btn.hud-music-btn {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%) !important;
+  border: 1.5px solid #A78BFA !important;
+  border-bottom: 3px solid #4C1D95 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 3px 10px rgba(109, 40, 217, 0.3) !important;
+}
+
+.hud-btn.hud-music-btn:hover {
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%) !important;
+  border-color: #DDD6FE !important;
+  box-shadow: 0 5px 14px rgba(109, 40, 217, 0.45) !important;
+}
+
+.hud-btn.hud-music-btn.is-muted {
+  background: #334155 !important;
+  border-color: #64748B !important;
+  border-bottom: 3px solid #1E293B !important;
+  color: #94A3B8 !important;
+  box-shadow: none !important;
+}
+
+.game-music-icon {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+/* Mobilde küçük ekran optimizasyonu */
+@media (max-width: 640px) {
+  .hud-btn.hud-music-btn .hud-music-text {
+    display: none;
+  }
+  .hud-btn.hud-music-btn {
+    padding: 6px 10px;
+  }
+}
