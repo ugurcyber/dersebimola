@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.15">
+  <link rel="stylesheet" href="style.css?v=8.9.16">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -703,6 +703,79 @@
                   <span class="en-arrow">›</span>
                 </div>
               </div>
+            </div>
+          </section>
+
+          <!-- ============================================================== -->
+          <!-- 🇬🇧 İNGİLİZCE 1. & 2. SINIF INTERAKTİF ÇOCUK OYUNLARI ARENASI   -->
+          <!-- (Okuma-Yazmasız, %100 Görsel, Web Speech 'en-US' & Drag-Drop)   -->
+          <!-- ============================================================== -->
+          <section class="english-kids-arena hide" id="englishKidsArena" aria-label="İngilizce İnteraktif Çocuk Oyunları Arenası">
+            <!-- Üst Kontrol & Navigasyon Barı -->
+            <div class="kids-arena-header">
+              <button class="btn-back-to-english-hub" id="btnBackToEnglishHub" type="button" title="İngilizce Sınıflarına Dön">
+                <span class="back-icon" aria-hidden="true">‹</span>
+                <span>Sınıf Seçimi</span>
+              </button>
+
+              <div class="kids-arena-title-wrap">
+                <span class="kids-grade-badge" id="kidsArenaGradeBadge">1. Sınıf</span>
+                <h2 class="kids-game-title" id="kidsArenaTitle">Sihirli Boya Kovası</h2>
+              </div>
+
+              <!-- 4 Oyun Seçim Sekmeleri (Tabs) -->
+              <div class="kids-game-tabs" id="kidsGameTabs" role="tablist">
+                <button class="kids-tab-btn active" data-game="paint" type="button" role="tab" title="Sihirli Boya Kovası">
+                  <span class="tab-icon">🎨</span>
+                  <span class="tab-text">Boya Kovası</span>
+                </button>
+                <button class="kids-tab-btn" data-game="monster" type="button" role="tab" title="Canavarı Besle">
+                  <span class="tab-icon">👾</span>
+                  <span class="tab-text">Canavarı Besle</span>
+                </button>
+                <button class="kids-tab-btn" data-game="body" type="button" role="tab" title="Vücudumuz Yapbozu">
+                  <span class="tab-icon">🧩</span>
+                  <span class="tab-text">Vücudumuz</span>
+                </button>
+                <button class="kids-tab-btn" data-game="balloon" type="button" role="tab" title="Sesli Balon Avcısı">
+                  <span class="tab-icon">🎈</span>
+                  <span class="tab-text">Balon Avcısı</span>
+                </button>
+              </div>
+
+              <!-- Skor & Ses Kontrolü -->
+              <div class="kids-hud-right">
+                <div class="kids-star-score" id="kidsStarScore" title="Kazanılan Yıldızlar">
+                  <span class="star-icon">⭐</span>
+                  <span class="score-text" id="kidsScoreText">0 / 5</span>
+                </div>
+                <button class="kids-sound-btn btn-game-music-toggle" id="btnKidsSoundToggle" type="button" title="Oyun Müziği Aç / Kapat">
+                  <span class="game-music-icon">🎵</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Moli Sesli Yönerge ve Konuşma Bandı -->
+            <div class="kids-moli-prompt-card">
+              <div class="kids-moli-avatar-box">
+                <img src="assets/mascot/moli.webp" class="kids-moli-img" alt="Moli English" width="56" height="56" loading="lazy">
+                <span class="kids-moli-hat" aria-hidden="true">🕵️‍♂️</span>
+              </div>
+              <div class="kids-prompt-content">
+                <div class="kids-speech-bubble">
+                  <span class="kids-speech-text" id="kidsSpeechText">"Paint the apple RED!"</span>
+                  <button class="btn-repeat-voice" id="btnKidsRepeatVoice" type="button" title="İngilizce Seslendir (en-US)">
+                    <span class="voice-wave-icon">🔊</span>
+                    <span>Tekrar Dinle</span>
+                  </button>
+                </div>
+                <div class="kids-hint-text" id="kidsHintText">💡 İpucu: Kırmızı boya kovasını elmanın üzerine sürükle!</div>
+              </div>
+            </div>
+
+            <!-- İnteraktif Oyun Sahnesi (Stage Container) -->
+            <div class="kids-stage-container" id="kidsStageContainer">
+              <!-- Oyun sahneleri JS tarafından render edilir -->
             </div>
           </section>
 
@@ -2784,6 +2857,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.15" defer></script>
+  <script src="app.js?v=8.9.16" defer></script>
 </body>
 </html>

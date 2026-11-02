@@ -19140,3 +19140,681 @@ body:has(#homeShowcaseSection.hide) .home-music-fab {
     gap: 16px;
   }
 }
+
+
+/* ============================================================== */
+/* 🇬🇧 İNGİLİZCE 1. & 2. SINIF INTERAKTİF ÇOCUK OYUNLARI ARENASI   */
+/* (%100 Görsel, Sürükle-Bırak, Web Speech API 'en-US' & Dokunsal)*/
+/* ============================================================== */
+.english-kids-arena {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+  animation: fadeInArena 0.3s ease-out;
+}
+
+@keyframes fadeInArena {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Üst Kontrol Barı */
+.kids-arena-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #FFFFFF;
+  border: 2px solid #E0E7FF;
+  border-bottom: 4px solid #6366F1;
+  border-radius: 24px;
+  padding: 10px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12);
+}
+
+.btn-back-to-english-hub {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #EEF2FF;
+  color: #4F46E5;
+  border: 1.5px solid #C7D2FE;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-back-to-english-hub:hover {
+  background: #E0E7FF;
+  transform: translateX(-2px);
+}
+
+.kids-arena-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kids-grade-badge {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #FFFFFF;
+  font-size: 0.74rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+}
+
+.kids-game-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1E1B4B;
+  margin: 0;
+}
+
+/* 4 Oyun Seçim Sekmeleri */
+.kids-game-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F8FAFC;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1.5px solid #E2E8F0;
+}
+
+.kids-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  background: transparent;
+  color: #64748B;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kids-tab-btn:hover {
+  color: #1E293B;
+  background: #EDF2F7;
+}
+
+.kids-tab-btn.active {
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+.kids-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kids-star-score {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: #FFFBEB;
+  border: 1.5px solid #FCD34D;
+  border-radius: 999px;
+  font-weight: 900;
+  color: #B45309;
+  font-size: 0.85rem;
+}
+
+.kids-sound-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F1F5F9;
+  border: 1.5px solid #CBD5E1;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Moli Sesli Yönerge Bandı */
+.kids-moli-prompt-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 100%);
+  border: 2px solid #DDD6FE;
+  border-left: 6px solid #7C3AED;
+  border-radius: 20px;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.1);
+}
+
+.kids-moli-avatar-box {
+  position: relative;
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: #EDE9FE;
+  border: 2px solid #C4B5FD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kids-moli-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.kids-moli-hat {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font-size: 1.2rem;
+}
+
+.kids-prompt-content {
+  flex: 1;
+}
+
+.kids-speech-bubble {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.kids-speech-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #4C1D95;
+}
+
+.btn-repeat-voice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.btn-repeat-voice:hover {
+  transform: scale(1.05);
+}
+
+.kids-hint-text {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+/* ============================================================== */
+/* İNTERAKTİF OYUN SAHNESİ VE MOTORLARI                           */
+/* ============================================================== */
+.kids-stage-container {
+  min-height: 460px;
+  background: #FFFFFF;
+  border: 2.5px solid #E2E8F0;
+  border-radius: 26px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 1. SİHİRLİ BOYA KOVASI (PAINT ENGINE) */
+.paint-game-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.paint-canvas-target {
+  width: min(90vw, 360px);
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3px dashed #CBD5E1;
+  border-radius: 24px;
+  background: #F8FAFC;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.paint-canvas-target.drag-over {
+  border-color: #6366F1;
+  background: #EEF2FF;
+  transform: scale(1.03);
+}
+
+.paint-canvas-target.painted {
+  border-style: solid;
+  animation: paintPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes paintPop {
+  0% { transform: scale(0.9); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.paint-target-svg {
+  width: 170px;
+  height: 170px;
+  object-fit: contain;
+  transition: filter 0.3s ease, fill 0.3s ease;
+}
+
+.paint-target-label {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #334155;
+  margin-top: 8px;
+}
+
+.paint-buckets-rack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.paint-bucket-item {
+  width: 80px;
+  height: 90px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.paint-bucket-item:active {
+  cursor: grabbing;
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.paint-bucket-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+/* 2. CANAVARI BESLE (FEED THE MONSTER ENGINE) */
+.monster-game-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.monster-character-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.monster-character-wrap.mouth-open {
+  transform: scale(1.1);
+}
+
+.monster-character-wrap.chewing {
+  animation: monsterChew 0.7s infinite alternate;
+}
+
+@keyframes monsterChew {
+  0% { transform: scaleY(0.9) scaleX(1.05); }
+  100% { transform: scaleY(1.05) scaleX(0.95); }
+}
+
+.monster-svg-body {
+  width: 200px;
+  height: 200px;
+}
+
+.monster-drop-zone {
+  position: absolute;
+  top: 75px;
+  width: 110px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+}
+
+.monster-speech-toast {
+  position: absolute;
+  top: -16px;
+  right: -24px;
+  background: #FFFFFF;
+  color: #1E1B4B;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-weight: 900;
+  font-size: 0.88rem;
+  border: 2px solid #818CF8;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+}
+
+.monster-food-rack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.monster-food-card {
+  width: 85px;
+  height: 95px;
+  border-radius: 20px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.monster-food-card:hover {
+  transform: translateY(-4px);
+  border-color: #A5B4FC;
+}
+
+.monster-food-card:active {
+  cursor: grabbing;
+  transform: scale(1.12);
+}
+
+.monster-food-emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.monster-food-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #334155;
+  margin-top: 4px;
+}
+
+/* 3. VÜCUDUMUZ YAPBOZU (BODY PARTS PUZZLE) */
+.body-game-stage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.body-silhouette-board {
+  position: relative;
+  width: 320px;
+  height: 380px;
+  background: #F8FAFC;
+  border: 2.5px solid #CBD5E1;
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.body-drop-slot {
+  position: absolute;
+  border: 2px dashed #94A3B8;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #64748B;
+  transition: all 0.2s ease;
+}
+
+.body-drop-slot.slot-head { top: 18px; width: 85px; height: 85px; border-radius: 50%; }
+.body-drop-slot.slot-eyes { top: 46px; width: 56px; height: 26px; }
+.body-drop-slot.slot-nose { top: 76px; width: 30px; height: 24px; }
+.body-drop-slot.slot-mouth { top: 104px; width: 44px; height: 24px; }
+.body-drop-slot.slot-ears { top: 58px; width: 92px; height: 32px; }
+.body-drop-slot.slot-hands { top: 200px; width: 140px; height: 45px; }
+
+.body-drop-slot.drag-over {
+  border-color: #7C3AED;
+  background: #EDE9FE;
+  transform: scale(1.08);
+}
+
+.body-drop-slot.placed {
+  border: 2px solid #10B981;
+  background: #D1FAE5;
+  color: #065F46;
+  font-size: 1.6rem;
+}
+
+.body-parts-tray {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 160px;
+}
+
+.body-part-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  border-radius: 16px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  font-weight: 800;
+  color: #1E293B;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+.body-part-item:hover {
+  transform: translateX(4px);
+  border-color: #C084FC;
+}
+
+.body-part-item:active {
+  cursor: grabbing;
+  transform: scale(1.08);
+}
+
+.body-part-item.is-placed {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+/* 4. SESLİ BALON AVCISI (BALLOON POP) */
+.balloon-game-stage {
+  width: 100%;
+  height: 380px;
+  position: relative;
+  background: linear-gradient(180deg, #E0F2FE 0%, #BAE6FD 100%);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 2px solid #7DD3FC;
+}
+
+.flying-pop-balloon {
+  position: absolute;
+  width: 78px;
+  height: 98px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  color: #FFFFFF;
+  font-weight: 900;
+  transition: transform 0.15s ease;
+}
+
+.flying-pop-balloon:hover {
+  transform: scale(1.1);
+}
+
+.flying-pop-balloon:active {
+  transform: scale(0.92);
+}
+
+.balloon-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.balloon-label {
+  font-size: 0.72rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.balloon-string {
+  position: absolute;
+  bottom: -14px;
+  width: 2px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Zafer / Tebrik Modalı */
+.kids-win-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  border-radius: 26px;
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 50;
+}
+
+.kids-win-trophy {
+  font-size: 4rem;
+  margin-bottom: 8px;
+}
+
+.kids-win-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1E1B4B;
+  margin: 0 0 8px 0;
+}
+
+.kids-win-btn {
+  margin-top: 16px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.kids-win-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+  .kids-game-tabs {
+    order: 3;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 8px;
+  }
+  .kids-tab-btn {
+    padding: 6px 10px;
+    font-size: 0.76rem;
+  }
+  .kids-stage-container {
+    min-height: 400px;
+    padding: 14px;
+  }
+}

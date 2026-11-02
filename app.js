@@ -17602,6 +17602,601 @@
 
   // Ders Seçildiğinde 2. Kademeye (Oyunlar & Konular) Geç
   
+
+  /* ==========================================================================
+     🇬🇧 1. & 2. SINIF İNGİLİZCE İNTERAKTİF ÇOCUK OYUNLARI MOTORU
+     (Okuma-Yazmasız, %100 Görsel, Web Speech API 'en-US' & Sürükle-Bırak)
+     ========================================================================== */
+
+  function speakEnglish(text, onEnd) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = 0.86;
+      u.pitch = 1.05;
+      const voices = window.speechSynthesis.getVoices();
+      const enVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en')) || null;
+      if (enVoice) u.voice = enVoice;
+      if (onEnd) u.onend = onEnd;
+      window.speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  window.speakEnglish = speakEnglish;
+
+  // Touch & Drag-Drop Yardımcısı (Akıllı Tahta ve Mobil %100 Uyumlu)
+  function makeDraggable(el, dropTargetSelector, onDropSuccess, onDragStart) {
+    let startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
+    let isDragging = false;
+
+    // HTML5 Drag
+    el.setAttribute('draggable', 'true');
+    el.ondragstart = (e) => {
+      e.dataTransfer.setData('text/plain', el.dataset.val || '');
+      if (onDragStart) onDragStart(el);
+    };
+
+    // Touch Events (Akıllı Tahta / iPad / Telefon)
+    el.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      const rect = el.getBoundingClientRect();
+      initialLeft = rect.left;
+      initialTop = rect.top;
+      isDragging = true;
+      el.style.transition = 'none';
+      el.style.zIndex = '999';
+      if (onDragStart) onDragStart(el);
+    }, { passive: true });
+
+    el.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      el.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(1.1)`;
+
+      // Hedef kontrolü
+      const target = document.querySelector(dropTargetSelector);
+      if (target) {
+        const tRect = target.getBoundingClientRect();
+        if (touch.clientX >= tRect.left && touch.clientX <= tRect.right &&
+            touch.clientY >= tRect.top && touch.clientY <= tRect.bottom) {
+          target.classList.add('drag-over');
+        } else {
+          target.classList.remove('drag-over');
+        }
+      }
+    }, { passive: true });
+
+    el.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      el.style.zIndex = '';
+      el.style.transition = 'transform 0.25s ease';
+      const touch = e.changedTouches[0];
+      const target = document.querySelector(dropTargetSelector);
+      let dropped = false;
+
+      if (target) {
+        target.classList.remove('drag-over');
+        const tRect = target.getBoundingClientRect();
+        if (touch.clientX >= tRect.left && touch.clientX <= tRect.right &&
+            touch.clientY >= tRect.top && touch.clientY <= tRect.bottom) {
+          dropped = true;
+          onDropSuccess(el, target);
+        }
+      }
+
+      if (!dropped) {
+        el.style.transform = 'translate3d(0, 0, 0)';
+      }
+    });
+  }
+
+  const EnglishKidsEngine = {
+    currentGrade: 1,
+    currentGame: 'paint',
+    score: 0,
+    maxScore: 5,
+    activePromptText: '',
+    balloonInterval: null,
+
+    // JSON Veri Havuzu (1. Sınıf ve 2. Sınıf Müfredatı)
+    pools: {
+      1: {
+        colors: [
+          { name: 'RED', hex: '#EF4444', icon: '🔴', tr: 'Kırmızı' },
+          { name: 'BLUE', hex: '#3B82F6', icon: '🔵', tr: 'Mavi' },
+          { name: 'YELLOW', hex: '#EAB308', icon: '🟡', tr: 'Sarı' },
+          { name: 'GREEN', hex: '#22C55E', icon: '🟢', tr: 'Yeşil' },
+          { name: 'PURPLE', hex: '#A855F7', icon: '🟣', tr: 'Mor' },
+          { name: 'ORANGE', hex: '#F97316', icon: '🟠', tr: 'Turuncu' }
+        ],
+        paintObjects: [
+          { name: 'apple', tr: 'Elma', emoji: '🍎', svgPath: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z' },
+          { name: 'car', tr: 'Araba', emoji: '🚗', svgPath: 'M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z' },
+          { name: 'cat', tr: 'Kedi', emoji: '🐱', svgPath: 'M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 20.35c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.74-2.74C9.77 19.64 10.86 20 12 20s2.23-.36 3.5-.98l2.74 2.74c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41l-.62-2.74C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z' },
+          { name: 'fish', tr: 'Balık', emoji: '🐟', svgPath: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z' }
+        ],
+        foodsAndItems: [
+          { name: 'BANANA', emoji: '🍌', tr: 'Muz' },
+          { name: 'APPLE', emoji: '🍎', tr: 'Elma' },
+          { name: 'STRAWBERRY', emoji: '🍓', tr: 'Çilek' },
+          { name: 'MILK', emoji: '🥛', tr: 'Süt' },
+          { name: 'CAT', emoji: '🐱', tr: 'Kedi' },
+          { name: 'DOG', emoji: '🐶', tr: 'Köpek' },
+          { name: 'TWO', emoji: '2️⃣', tr: 'İki' },
+          { name: 'THREE', emoji: '3️⃣', tr: 'Üç' }
+        ],
+        bodyParts: [
+          { id: 'eyes', name: 'EYES', emoji: '👀', tr: 'Gözler', slot: 'slot-eyes' },
+          { id: 'nose', name: 'NOSE', emoji: '👃', tr: 'Burun', slot: 'slot-nose' },
+          { id: 'mouth', name: 'MOUTH', emoji: '👄', tr: 'Ağız', slot: 'slot-mouth' },
+          { id: 'ears', name: 'EARS', emoji: '👂', tr: 'Kulaklar', slot: 'slot-ears' },
+          { id: 'head', name: 'HEAD', emoji: '👦', tr: 'Baş / Kafa', slot: 'slot-head' }
+        ],
+        balloons: [
+          { name: 'HAPPY', emoji: '😄', tr: 'Mutlu' },
+          { name: 'SAD', emoji: '😢', tr: 'Üzgün' },
+          { name: 'HELLO', emoji: '👋', tr: 'Merhaba' },
+          { name: 'CAT', emoji: '🐱', tr: 'Kedi' },
+          { name: 'RED', emoji: '🔴', tr: 'Kırmızı' },
+          { name: 'ONE', emoji: '1️⃣', tr: 'Bir' }
+        ]
+      },
+      2: {
+        colors: [
+          { name: 'RED', hex: '#EF4444', icon: '🔴', tr: 'Kırmızı' },
+          { name: 'BLUE', hex: '#3B82F6', icon: '🔵', tr: 'Mavi' },
+          { name: 'YELLOW', hex: '#EAB308', icon: '🟡', tr: 'Sarı' },
+          { name: 'GREEN', hex: '#22C55E', icon: '🟢', tr: 'Yeşil' },
+          { name: 'PURPLE', hex: '#A855F7', icon: '🟣', tr: 'Mor' },
+          { name: 'ORANGE', hex: '#F97316', icon: '🟠', tr: 'Turuncu' },
+          { name: 'BLACK', hex: '#0F172A', icon: '⚫', tr: 'Siyah' }
+        ],
+        paintObjects: [
+          { name: 'book', tr: 'Kitap', emoji: '📚' },
+          { name: 'pencil', tr: 'Kalem', emoji: '✏️' },
+          { name: 'school bag', tr: 'Okul Çantası', emoji: '🎒' },
+          { name: 'bus', tr: 'Otobüs', emoji: '🚌' }
+        ],
+        foodsAndItems: [
+          { name: 'BOOK', emoji: '📚', tr: 'Kitap' },
+          { name: 'PENCIL', emoji: '✏️', tr: 'Kalem' },
+          { name: 'ERASER', emoji: '🧼', tr: 'Silgi' },
+          { name: 'BAG', emoji: '🎒', tr: 'Çanta' },
+          { name: 'DESK', emoji: '🪑', tr: 'Sıra' },
+          { name: 'FIVE', emoji: '5️⃣', tr: 'Beş' },
+          { name: 'TEN', emoji: '🔟', tr: 'On' }
+        ],
+        bodyParts: [
+          { id: 'eyes', name: 'EYES', emoji: '👀', tr: 'Gözler', slot: 'slot-eyes' },
+          { id: 'nose', name: 'NOSE', emoji: 'NOSE', emoji: '👃', tr: 'Burun', slot: 'slot-nose' },
+          { id: 'mouth', name: 'MOUTH', emoji: '👄', tr: 'Ağız', slot: 'slot-mouth' },
+          { id: 'ears', name: 'EARS', emoji: '👂', tr: 'Kulaklar', slot: 'slot-ears' },
+          { id: 'hands', name: 'HANDS', emoji: '✋', tr: 'Eller', slot: 'slot-hands' },
+          { id: 'head', name: 'HEAD', emoji: '👦', tr: 'Kafa', slot: 'slot-head' }
+        ],
+        balloons: [
+          { name: 'PENCIL', emoji: '✏️', tr: 'Kalem' },
+          { name: 'BOOK', emoji: '📚', tr: 'Kitap' },
+          { name: 'SCHOOL BUS', emoji: '🚌', tr: 'Okul Servisi' },
+          { name: 'FRIENDS', emoji: '👫', tr: 'Arkadaşlar' },
+          { name: 'HAPPY', emoji: '😄', tr: 'Mutlu' },
+          { name: 'SEVEN', emoji: '7️⃣', tr: 'Yedi' }
+        ]
+      }
+    },
+
+    setPrompt(enText, trHint) {
+      this.activePromptText = enText;
+      const speechEl = document.getElementById('kidsSpeechText');
+      const hintEl = document.getElementById('kidsHintText');
+      if (speechEl) speechEl.textContent = `"${enText}"`;
+      if (hintEl) hintEl.textContent = `💡 İpucu: ${trHint}`;
+      speakEnglish(enText);
+    },
+
+    repeatVoice() {
+      if (this.activePromptText) {
+        speakEnglish(this.activePromptText);
+      }
+    },
+
+    addStar() {
+      this.score++;
+      if (typeof audio !== 'undefined' && audio.playCorrect) audio.playCorrect();
+      const scoreEl = document.getElementById('kidsScoreText');
+      if (scoreEl) scoreEl.textContent = `${this.score} / ${this.maxScore}`;
+      if (this.score >= this.maxScore) {
+        setTimeout(() => this.showVictoryModal(), 600);
+      }
+    },
+
+    showVictoryModal() {
+      if (typeof audio !== 'undefined' && audio.playFanfare) audio.playFanfare();
+      if (typeof launchConfetti === 'function') launchConfetti();
+      speakEnglish("Awesome! Great job, super star!");
+
+      const container = document.getElementById('kidsStageContainer');
+      if (!container) return;
+
+      const overlay = document.createElement('div');
+      overlay.className = 'kids-win-overlay';
+      overlay.innerHTML = `
+        <div class="kids-win-trophy">🏆</div>
+        <h2 class="kids-win-title">Tebrikler Şampiyon!</h2>
+        <p style="font-size:1.1rem; color:#475569; font-weight:700;">Harika! 5 yıldızı da topladın! 🌟</p>
+        <button class="kids-win-btn" type="button" id="btnRestartKidsGame">Yeniden Oyna 🚀</button>
+      `;
+      container.appendChild(overlay);
+
+      const btn = overlay.querySelector('#btnRestartKidsGame');
+      if (btn) {
+        btn.onclick = () => {
+          overlay.remove();
+          this.score = 0;
+          const scoreEl = document.getElementById('kidsScoreText');
+          if (scoreEl) scoreEl.textContent = `0 / ${this.maxScore}`;
+          this.switchGame(this.currentGame, this.currentGrade);
+        };
+      }
+    },
+
+    // 1) SİHİRLİ BOYA KOVASI (COLOR & PAINT ENGINE)
+    initPaintGame(grade = 1) {
+      clearInterval(this.balloonInterval);
+      const container = document.getElementById('kidsStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[1];
+      const targetObj = pool.paintObjects[Math.floor(Math.random() * pool.paintObjects.length)];
+      const targetColor = pool.colors[Math.floor(Math.random() * pool.colors.length)];
+
+      const enPrompt = `Paint the ${targetObj.name} ${targetColor.name}!`;
+      const trHint = `${targetObj.tr}'i ${targetColor.tr.toLowerCase()} renge boyamak için kovayı üzerine sürükle!`;
+      this.setPrompt(enPrompt, trHint);
+
+      container.innerHTML = `
+        <div class="paint-game-stage">
+          <div class="paint-canvas-target" id="paintTargetArea" data-color="${targetColor.name}">
+            <div style="font-size: 5.5rem; line-height: 1; filter: grayscale(1) opacity(0.5); transition: all 0.4s ease;" id="paintTargetEmoji">
+              ${targetObj.emoji}
+            </div>
+            <span class="paint-target-label" id="paintTargetLabel">${targetObj.name.toUpperCase()}</span>
+          </div>
+
+          <div class="paint-buckets-rack">
+            ${pool.colors.map(c => `
+              <div class="paint-bucket-item" style="background: ${c.hex};" data-color="${c.name}" data-hex="${c.hex}" data-val="${c.name}">
+                <span class="paint-bucket-icon">🪣</span>
+                <span>${c.name}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      const targetArea = container.querySelector('#paintTargetArea');
+      const emojiEl = container.querySelector('#paintTargetEmoji');
+
+      // Drag over and drop handlers
+      targetArea.ondragover = (e) => { e.preventDefault(); targetArea.classList.add('drag-over'); };
+      targetArea.ondragleave = () => { targetArea.classList.remove('drag-over'); };
+      targetArea.ondrop = (e) => {
+        e.preventDefault();
+        targetArea.classList.remove('drag-over');
+        const colorName = e.dataTransfer.getData('text/plain');
+        this.checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea);
+      };
+
+      // Akıllı tahta ve mobil için touch-move
+      container.querySelectorAll('.paint-bucket-item').forEach(bucket => {
+        makeDraggable(bucket, '#paintTargetArea', (draggedEl) => {
+          const colorName = draggedEl.dataset.color;
+          this.checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea);
+        }, (draggedEl) => {
+          speakEnglish(draggedEl.dataset.color);
+        });
+      });
+    },
+
+    checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea) {
+      if (colorName === targetColor.name) {
+        emojiEl.style.filter = 'none';
+        emojiEl.style.transform = 'scale(1.25)';
+        targetArea.classList.add('painted');
+        targetArea.style.borderColor = targetColor.hex;
+        targetArea.style.background = targetColor.hex + '18';
+        speakEnglish(`Great job! The ${targetObj.name} is ${targetColor.name}!`);
+        this.addStar();
+        setTimeout(() => this.initPaintGame(this.currentGrade), 1500);
+      } else {
+        if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+        speakEnglish(`No, that is ${colorName}! Try ${targetColor.name}!`);
+      }
+    },
+
+    // 2) CANAVARI BESLE (FEED THE MONSTER ENGINE)
+    initMonsterGame(grade = 1) {
+      clearInterval(this.balloonInterval);
+      const container = document.getElementById('kidsStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[1];
+      const shuffledItems = [...pool.foodsAndItems].sort(() => 0.5 - Math.random()).slice(0, 5);
+      const targetFood = shuffledItems[Math.floor(Math.random() * shuffledItems.length)];
+
+      const enPrompt = `I want a ${targetFood.name}!`;
+      const trHint = `Canavar acıktı! Ona "${targetFood.tr}" ver.`;
+      this.setPrompt(enPrompt, trHint);
+
+      container.innerHTML = `
+        <div class="monster-game-stage">
+          <div class="monster-character-wrap" id="monsterWrap">
+            <div style="font-size: 7.5rem; line-height: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));" id="monsterEmoji">👾</div>
+            <div class="monster-drop-zone" id="monsterDropZone"></div>
+            <div class="monster-speech-toast" id="monsterToast">"Feed me!" 😋</div>
+          </div>
+
+          <div class="monster-food-rack">
+            ${shuffledItems.map(item => `
+              <div class="monster-food-card" data-val="${item.name}" data-item="${item.name}">
+                <span class="monster-food-emoji">${item.emoji}</span>
+                <span class="monster-food-label">${item.name}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      const monsterWrap = container.querySelector('#monsterWrap');
+      const dropZone = container.querySelector('#monsterDropZone');
+      const toast = container.querySelector('#monsterToast');
+
+      dropZone.ondragover = (e) => { e.preventDefault(); monsterWrap.classList.add('mouth-open'); };
+      dropZone.ondragleave = () => { monsterWrap.classList.remove('mouth-open'); };
+      dropZone.ondrop = (e) => {
+        e.preventDefault();
+        monsterWrap.classList.remove('mouth-open');
+        const val = e.dataTransfer.getData('text/plain');
+        this.checkMonsterFeed(val, targetFood, monsterWrap, toast);
+      };
+
+      container.querySelectorAll('.monster-food-card').forEach(card => {
+        makeDraggable(card, '#monsterDropZone', (draggedEl) => {
+          this.checkMonsterFeed(draggedEl.dataset.val, targetFood, monsterWrap, toast);
+        }, (draggedEl) => {
+          speakEnglish(draggedEl.dataset.val);
+        });
+      });
+    },
+
+    checkMonsterFeed(val, targetFood, monsterWrap, toast) {
+      if (val === targetFood.name) {
+        monsterWrap.classList.add('chewing');
+        toast.textContent = "YUMMY! 😋";
+        toast.style.background = "#D1FAE5";
+        toast.style.color = "#065F46";
+        speakEnglish("Yummy! Thank you!");
+        this.addStar();
+        setTimeout(() => {
+          monsterWrap.classList.remove('chewing');
+          this.initMonsterGame(this.currentGrade);
+        }, 1500);
+      } else {
+        if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+        toast.textContent = "No, thank you! 😅";
+        toast.style.background = "#FEE2E2";
+        toast.style.color = "#991B1B";
+        speakEnglish(`No, thank you! I want a ${targetFood.name}!`);
+      }
+    },
+
+    // 3) VÜCUDUMUZ YAPBOZU (BODY PARTS PUZZLE)
+    initBodyGame(grade = 1) {
+      clearInterval(this.balloonInterval);
+      const container = document.getElementById('kidsStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[1];
+      const parts = pool.bodyParts;
+
+      this.setPrompt("Place the body parts!", "Vücudun parçalarını dinle ve silüetteki doğru yuvalara yerleştir!");
+
+      container.innerHTML = `
+        <div class="body-game-stage">
+          <div class="body-silhouette-board" id="bodySilhouetteBoard">
+            <div style="font-size: 8rem; opacity: 0.15; position: absolute; pointer-events: none;">🤖</div>
+            ${parts.map(p => `
+              <div class="body-drop-slot ${p.slot}" data-part="${p.id}" id="slot_${p.id}">
+                <span>${p.tr}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="body-parts-tray" id="bodyPartsTray">
+            ${parts.map(p => `
+              <div class="body-part-item" data-part="${p.id}" data-val="${p.id}" data-name="${p.name}">
+                <span style="font-size: 1.8rem;">${p.emoji}</span>
+                <span>${p.name}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      let placedCount = 0;
+
+      parts.forEach(p => {
+        const slotEl = container.querySelector(`#slot_${p.id}`);
+        if (!slotEl) return;
+
+        slotEl.ondragover = (e) => { e.preventDefault(); slotEl.classList.add('drag-over'); };
+        slotEl.ondragleave = () => { slotEl.classList.remove('drag-over'); };
+        slotEl.ondrop = (e) => {
+          e.preventDefault();
+          slotEl.classList.remove('drag-over');
+          const droppedPart = e.dataTransfer.getData('text/plain');
+          if (droppedPart === p.id) {
+            this.handlePartSnap(p, slotEl, container);
+            placedCount++;
+            if (placedCount === parts.length) {
+              this.addStar();
+              setTimeout(() => this.initBodyGame(this.currentGrade), 1800);
+            }
+          } else {
+            speakEnglish("Try another place!");
+          }
+        };
+      });
+
+      container.querySelectorAll('.body-part-item').forEach(item => {
+        const partId = item.dataset.part;
+        makeDraggable(item, `#slot_${partId}`, () => {
+          const p = parts.find(x => x.id === partId);
+          const slotEl = container.querySelector(`#slot_${partId}`);
+          this.handlePartSnap(p, slotEl, container);
+          placedCount++;
+          if (placedCount === parts.length) {
+            this.addStar();
+            setTimeout(() => this.initBodyGame(this.currentGrade), 1800);
+          }
+        }, (draggedEl) => {
+          speakEnglish(draggedEl.dataset.name);
+        });
+      });
+    },
+
+    handlePartSnap(p, slotEl, container) {
+      if (typeof audio !== 'undefined' && audio.playSnap) audio.playSnap();
+      speakEnglish(p.name);
+      slotEl.classList.add('placed');
+      slotEl.innerHTML = `<span>${p.emoji}</span>`;
+      const trayItem = container.querySelector(`.body-part-item[data-part="${p.id}"]`);
+      if (trayItem) trayItem.classList.add('is-placed');
+    },
+
+    // 4) SESLİ BALON AVCISI (LISTEN & POP ENGINE)
+    initBalloonGame(grade = 1) {
+      clearInterval(this.balloonInterval);
+      const container = document.getElementById('kidsStageContainer');
+      if (!container) return;
+
+      const pool = this.pools[grade] || this.pools[1];
+      const targetBalloon = pool.balloons[Math.floor(Math.random() * pool.balloons.length)];
+
+      const enPrompt = `Find ${targetBalloon.name}! ${targetBalloon.name}!`;
+      const trHint = `Uçan balonlardan "${targetBalloon.tr}" olanına dokun ve patlat!`;
+      this.setPrompt(enPrompt, trHint);
+
+      container.innerHTML = `
+        <div class="balloon-game-stage" id="balloonSkyStage">
+          <div style="position: absolute; top: 12px; left: 16px; font-weight: 800; font-size: 0.88rem; color: #0284C7; z-index: 5;">
+            🎈 Hedef: ${targetBalloon.name} (${targetBalloon.tr})
+          </div>
+        </div>
+      `;
+
+      const skyStage = container.querySelector('#balloonSkyStage');
+      const colors = ['#EF4444', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899'];
+
+      const spawnBalloon = () => {
+        if (!document.getElementById('balloonSkyStage')) return;
+
+        // %45 ihtimalle hedef balon, %55 ihtimalle yanıltıcı balon
+        const isTarget = Math.random() < 0.45;
+        const bData = isTarget ? targetBalloon : pool.balloons[Math.floor(Math.random() * pool.balloons.length)];
+        const bColor = colors[Math.floor(Math.random() * colors.length)];
+
+        const balloon = document.createElement('div');
+        balloon.className = 'flying-pop-balloon';
+        balloon.style.background = bColor;
+        const leftPercent = Math.floor(Math.random() * 75) + 8;
+        balloon.style.left = `${leftPercent}%`;
+        balloon.style.bottom = '-110px';
+
+        balloon.innerHTML = `
+          <span class="balloon-emoji">${bData.emoji}</span>
+          <span class="balloon-label">${bData.name}</span>
+          <div class="balloon-string"></div>
+        `;
+
+        skyStage.appendChild(balloon);
+
+        // Uçuş Animasyonu (Alttan yukarı)
+        let pos = -110;
+        const speed = Math.random() * 1.5 + 2.0;
+        const animInterval = setInterval(() => {
+          pos += speed;
+          balloon.style.bottom = `${pos}px`;
+          if (pos > 400) {
+            clearInterval(animInterval);
+            balloon.remove();
+          }
+        }, 20);
+
+        // Dokunulduğunda / Tıklandığında Patlat
+        const onPop = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          clearInterval(animInterval);
+
+          if (bData.name === targetBalloon.name) {
+            // DOĞRU BALON PATLADI!
+            if (typeof audio !== 'undefined' && audio.playPop) audio.playPop();
+            speakEnglish(`Awesome! ${targetBalloon.name}!`);
+            balloon.style.transform = 'scale(1.4)';
+            balloon.style.opacity = '0';
+            setTimeout(() => balloon.remove(), 200);
+            this.addStar();
+            setTimeout(() => this.initBalloonGame(this.currentGrade), 1400);
+          } else {
+            // YANLIŞ BALON
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            speakEnglish(`No, that is ${bData.name}! Find ${targetBalloon.name}!`);
+            balloon.style.transform = 'scale(0.8)';
+            setTimeout(() => balloon.remove(), 200);
+          }
+        };
+
+        balloon.addEventListener('pointerdown', onPop);
+      };
+
+      // Balonları periyodik olarak uçur
+      spawnBalloon();
+      this.balloonInterval = setInterval(spawnBalloon, 1400);
+    },
+
+    switchGame(gameKey, grade) {
+      this.currentGame = gameKey;
+      this.currentGrade = grade || this.currentGrade;
+
+      // Tabları güncelle
+      document.querySelectorAll('.kids-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.game === gameKey);
+      });
+
+      const titleEl = document.getElementById('kidsArenaTitle');
+      const gameTitles = {
+        paint: 'Sihirli Boya Kovası (Color & Paint)',
+        monster: 'Canavarı Besle (Feed the Monster)',
+        body: 'Vücudumuz Yapbozu (Body Parts)',
+        balloon: 'Sesli Balon Avcısı (Listen & Pop)'
+      };
+      if (titleEl) titleEl.textContent = gameTitles[gameKey] || 'İngilizce Oyun Sahnesi';
+
+      if (gameKey === 'paint') this.initPaintGame(this.currentGrade);
+      else if (gameKey === 'monster') this.initMonsterGame(this.currentGrade);
+      else if (gameKey === 'body') this.initBodyGame(this.currentGrade);
+      else if (gameKey === 'balloon') this.initBalloonGame(this.currentGrade);
+    }
+  };
+  window.EnglishKidsEngine = EnglishKidsEngine;
+
   /* ==========================================================================
      🇬🇧 YENİ İNGİLİZCE MODÜLÜ MİMARİSİ VE SEVİYE SEÇİMİ (ENGLISH HUB)
      ========================================================================== */
@@ -17661,7 +18256,7 @@
   window.openEnglishModule = openEnglishModule;
 
   // İngilizce Sınıf Kartına Dokunulduğunda İlgili Sınıfın İngilizce Oyun Havuzuna Geçiş
-  function openEnglishGradeGames(grade) {
+    function openEnglishGradeGames(grade) {
     const g = parseInt(grade, 10) || 2;
     if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
     if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
@@ -17669,24 +18264,57 @@
     state.isDirectEnglishMode = true;
     state.currentGrade = g;
 
-    // English Hub bölümünü gizle
+    // 1. ve 2. Sınıflar İçin: %100 Görsel, Okuma-Yazmasız İnteraktif Çocuk Oyunları Arenası!
+    if (g === 1 || g === 2) {
+      // Diğer tüm bölümleri gizle
+      if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+      if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+      if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+      const enHub = document.getElementById('englishHubSection');
+      if (enHub) enHub.classList.add('hide');
+      const arcadeSec = document.getElementById('arcadeHubSection');
+      if (arcadeSec) arcadeSec.classList.add('hide');
+
+      const kidsArena = document.getElementById('englishKidsArena');
+      if (kidsArena) kidsArena.classList.remove('hide');
+
+      // Üst başlık rozeti
+      const gradeBadge = document.getElementById('kidsArenaGradeBadge');
+      if (gradeBadge) gradeBadge.textContent = `${g}. Sınıf`;
+
+      // Oyun fon müziğini (Zeka & Bulmaca BGM) fısıltı fonunda başlat
+      if (typeof GameMusicEngine !== 'undefined') {
+        GameMusicEngine.play('puzzle');
+      }
+
+      // Varsayılan Sihirli Boya Kovası oyununu başlat
+      EnglishKidsEngine.switchGame('paint', g);
+
+      // URL Senkronizasyonu
+      try {
+        const hash = `#ingilizce/${g}-sinif`;
+        if (window.location.hash !== hash) {
+          history.pushState({ route: `ingilizce-${g}` }, '', hash);
+        }
+      } catch (err) {}
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    // 3. ve 4. Sınıflar İçin: Standart Soru & Düello Modülü
     const englishHub = document.getElementById('englishHubSection');
     if (englishHub) englishHub.classList.add('hide');
+    const kidsArena = document.getElementById('englishKidsArena');
+    if (kidsArena) kidsArena.classList.add('hide');
 
-    // Doğrudan o sınıfın İngilizce dersini seç ve oyunları render et
     if (typeof selectSubject === 'function') {
       selectSubject('english');
     }
 
-    // Başlıkları özel EdTech İngilizce olarak güncelle
-    if (DOM.currentSubjectTitle) {
-      DOM.currentSubjectTitle.textContent = `${g}. Sınıf İngilizce Düelloları`;
-    }
-    if (DOM.currentSubjectGrade) {
-      DOM.currentSubjectGrade.textContent = `🇬🇧 Fotoğraflı & Sesli Kelime Havuzu (${g}. Sınıf)`;
-    }
+    if (DOM.currentSubjectTitle) DOM.currentSubjectTitle.textContent = `${g}. Sınıf İngilizce Düelloları`;
+    if (DOM.currentSubjectGrade) DOM.currentSubjectGrade.textContent = `🇬🇧 Fotoğraflı & Sesli Kelime Havuzu (${g}. Sınıf)`;
 
-    // "← Tüm Dersler" butonunu "← İngilizce Sınıf Seçimi" olarak güncelle
     const btnBack = DOM.btnSubjectBackHome || document.getElementById('btnSubjectBackHome');
     if (btnBack) {
       btnBack.innerHTML = '<span class="back-icon" aria-hidden="true">‹</span><span>İngilizce Sınıfları</span>';
@@ -17697,7 +18325,6 @@
       };
     }
 
-    // URL Senkronizasyonu (/ingilizce/X-sinif)
     try {
       const hash = `#ingilizce/${g}-sinif`;
       if (window.location.hash !== hash) {
@@ -18282,6 +18909,7 @@
     const arcadeSec = document.getElementById('arcadeHubSection');
     if (arcadeSec) arcadeSec.classList.add('hide');
     const enHub = document.getElementById('englishHubSection'); if (enHub) enHub.classList.add('hide');
+    const kidsAr = document.getElementById('englishKidsArena'); if (kidsAr) kidsAr.classList.add('hide');
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.remove('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -22570,6 +23198,38 @@
       addTapListener(btnStageQuickEnglish, openEnglishHub);
     }
     // 🇬🇧 İngilizce Hub & Sınıf Kartları Dinleyicileri
+    
+    // 🇬🇧 1. & 2. Sınıf İngilizce Çocuk Oyunları Dinleyicileri
+    const btnBackToEnHub = document.getElementById('btnBackToEnglishHub');
+    if (btnBackToEnHub) {
+      addTapListener(btnBackToEnHub, () => {
+        if (EnglishKidsEngine && EnglishKidsEngine.balloonInterval) {
+          clearInterval(EnglishKidsEngine.balloonInterval);
+        }
+        const arena = document.getElementById('englishKidsArena');
+        if (arena) arena.classList.add('hide');
+        if (typeof openEnglishHub === 'function') openEnglishHub();
+      });
+    }
+
+    const btnRepeatVoice = document.getElementById('btnKidsRepeatVoice');
+    if (btnRepeatVoice) {
+      addTapListener(btnRepeatVoice, () => {
+        if (EnglishKidsEngine && EnglishKidsEngine.repeatVoice) {
+          EnglishKidsEngine.repeatVoice();
+        }
+      });
+    }
+
+    document.querySelectorAll('.kids-tab-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const gameKey = btn.dataset.game;
+        if (EnglishKidsEngine && EnglishKidsEngine.switchGame) {
+          EnglishKidsEngine.switchGame(gameKey);
+        }
+      });
+    });
+
     const btnEnglishBackHome = document.getElementById('btnEnglishBackHome');
     if (btnEnglishBackHome) {
       addTapListener(btnEnglishBackHome, () => {
