@@ -22064,6 +22064,14 @@
       });
     }
 
+    const btnSidebarBugReport = document.getElementById('btnSidebarBugReport');
+    if (btnSidebarBugReport) {
+      addTapListener(btnSidebarBugReport, () => {
+        if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
+        if (typeof openBugReportModal === 'function') openBugReportModal();
+      });
+    }
+
     const btnCloseBugReport = document.getElementById('btnCloseBugReport');
     if (btnCloseBugReport) {
       addTapListener(btnCloseBugReport, () => {

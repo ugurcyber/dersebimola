@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.9">
+  <link rel="stylesheet" href="style.css?v=8.9.10">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -220,6 +220,10 @@
             </span>
             <span class="tool-label">Paylaş / WhatsApp</span>
           </button>
+          <button class="sidebar-tool-btn btn-sidebar-bug-report" id="btnSidebarBugReport" title="Uğur Hoca'ya Hata veya Geri Bildirim Gönder">
+            <span class="tool-icon" aria-hidden="true">🐞</span>
+            <span class="tool-label">Hata Bildir</span>
+          </button>
           <button class="sidebar-tool-btn" id="btnSidebarSettings" title="Sistem ve Akıllı Tahta Ayarları" onclick="window.openSettingsModal ? window.openSettingsModal() : (document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.remove('hide'))">
             <span class="tool-icon" aria-hidden="true">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -302,10 +306,6 @@
           </button>
           <button class="topbar-sound-btn" id="btnTopbarMute" type="button" aria-label="Tüm Sesleri Aç / Kapat" aria-pressed="false" title="Tüm Sesleri Aç / Kapat (Hızlı Sessize Alma)">
             <span class="topbar-sound-icon" id="topbarMuteIcon" aria-hidden="true">🔊</span>
-          </button>
-                    <button class="topbar-action-pill pill-feedback hide" id="btnDesktopBugReport" type="button" aria-label="Hata Bildir" title="Uğur Hoca'ya Hata veya Geri Bildirim Gönder">
-            <span class="pill-icon" aria-hidden="true">🐞</span>
-            <span class="pill-text">Hata Bildir</span>
           </button>
           <button class="topbar-action-pill pill-settings" id="btnDesktopSettings" type="button" aria-label="Ayarlar" onclick="window.openSettingsModal ? window.openSettingsModal() : (document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.remove('hide'))">
             <span class="pill-icon">
@@ -2297,12 +2297,6 @@
     </div>
   </div>
 
-  <!-- Öğretmenler İçin Sağ Altta Sabit Hızlı Hata Bildir İkonu (Giriş Yapılınca Aktif) -->
-  <button class="floating-bug-btn hide" id="btnFloatingBugReport" type="button" aria-label="Uğur Hoca'ya Hata Bildir" title="Uğur Hoca'ya Hata Bildir / Geri Bildirim">
-    <span class="floating-bug-icon">🐞</span>
-    <span class="floating-bug-label">Hata Bildir</span>
-  </button>
-
   <div class="modal-backdrop hide" id="modalSettings">
     <div class="modal-window settings-modal-window">
       <button class="modal-close-btn" data-close-modal="modalSettings" onclick="document.getElementById('modalSettings') && document.getElementById('modalSettings').classList.add('hide')">✕</button>
@@ -2648,6 +2642,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.9" defer></script>
+  <script src="app.js?v=8.9.10" defer></script>
 </body>
 </html>
