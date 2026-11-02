@@ -9731,7 +9731,7 @@
     moliBubbleText: document.getElementById('moliBubbleText'),
     logoBtn: document.getElementById('logoBtn'),
     btnNavHome: document.getElementById('btnNavHome'),
-    gradeChips: document.querySelectorAll('.grade-chip'),
+    gradeChips: document.querySelectorAll('.grade-chip[data-grade]'),
     gradeCards: document.querySelectorAll('.grade-card'),
     btnToggleSound: document.getElementById('btnToggleSound'),
     btnTopbarMute: document.getElementById('btnTopbarMute'),
@@ -11757,6 +11757,42 @@
     state.currentSection = 'arcade';
     if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
     DOM.gradeChips.forEach(chip => chip.classList.remove('active'));
+    
+    function handleSidebarEnglishClick(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      audio.playClick();
+      if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
+      const modalSelectGrade = document.getElementById('modalSelectGrade');
+      if (modalSelectGrade) closeModal(modalSelectGrade);
+
+      // İngilizce dersini aç: Eğer aktif sınıf 2, 3 veya 4 ise koru, yoksa varsayılan 2. sınıfı aç
+      const curG = state.currentGrade;
+      const targetGrade = (curG >= 2 && curG <= 4) ? curG : 2;
+      setGrade(targetGrade);
+      if (typeof selectSubject === 'function') {
+        selectSubject('english');
+      }
+
+      // Sidebar çip aktifliğini İngilizce'ye ver
+      if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
+      if (DOM.gradeChips) DOM.gradeChips.forEach(c => c.classList.remove('active'));
+      const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
+      if (btnSidebarEnglish) btnSidebarEnglish.classList.add('active');
+      const btnSidebarDuels = document.getElementById('btnSidebarDuels');
+      if (btnSidebarDuels) btnSidebarDuels.classList.remove('active');
+
+      try {
+        if (window.location.hash !== '#ingilizce') {
+          history.pushState({ route: 'ingilizce' }, '', '#ingilizce');
+        }
+      } catch (err) {}
+    }
+
+    const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
+    if (btnSidebarEnglish) {
+      addTapListener(btnSidebarEnglish, handleSidebarEnglishClick);
+    }
+
     const btnSidebarDuels = document.getElementById('btnSidebarDuels');
     if (btnSidebarDuels) btnSidebarDuels.classList.add('active');
 
@@ -20903,11 +20939,18 @@
       });
     });
 
-    function handleQuickDuelsClick() {
+    function handleQuickDuelsClick(e) {
+      if (e && e.preventDefault) e.preventDefault();
       audio.playClick();
+      if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
       const modalSelectGrade = document.getElementById('modalSelectGrade');
       if (modalSelectGrade) closeModal(modalSelectGrade);
       openArcadeHub();
+      try {
+        if (window.location.hash !== '#oyunlar') {
+          history.pushState({ route: 'oyunlar' }, '', '#oyunlar');
+        }
+      } catch (err) {}
     }
 
     const btnArcadeBackHome = document.getElementById('btnArcadeBackHome');
@@ -21018,6 +21061,33 @@
   /* ==========================================================================
      18. BAŞLANGIÇ (BOOTSTRAP)
      ========================================================================== */
+  
+  /* ==========================================================================
+     ROUTING & URL NAVİGASYON MOTORU (/oyunlar, #oyunlar, /ingilizce, #ingilizce)
+     ========================================================================== */
+  function handleUrlRoute() {
+    const hash = (window.location.hash || '').toLowerCase();
+    const path = (window.location.pathname || '').toLowerCase();
+
+    if (hash === '#oyunlar' || hash === '#/oyunlar' || path.endsWith('/oyunlar')) {
+      if (typeof openArcadeHub === 'function') {
+        setTimeout(openArcadeHub, 100);
+      }
+    } else if (hash === '#ingilizce' || hash === '#/ingilizce' || path.endsWith('/ingilizce')) {
+      setTimeout(() => {
+        const curG = state.currentGrade;
+        const targetGrade = (curG >= 2 && curG <= 4) ? curG : 2;
+        if (typeof setGrade === 'function') setGrade(targetGrade);
+        if (typeof selectSubject === 'function') selectSubject('english');
+        const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
+        if (btnSidebarEnglish) btnSidebarEnglish.classList.add('active');
+      }, 100);
+    }
+  }
+
+  window.addEventListener('hashchange', handleUrlRoute);
+  window.addEventListener('popstate', handleUrlRoute);
+
   function init() {
     StorageManager.loadAll();
     loadTeacherToolsState();
