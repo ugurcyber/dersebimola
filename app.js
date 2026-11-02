@@ -17280,6 +17280,34 @@
     }, 600);
   }
 
+  
+  /* ==========================================================================
+     GÜVENLİ GİRİŞ: ŞİFRE GÖSTER / GİZLE (EYE TOGGLE) FONKSİYONU
+     ========================================================================== */
+  function initAuthPasswordToggles() {
+    const toggleBtns = document.querySelectorAll('.auth-toggle-pass-btn');
+    toggleBtns.forEach(btn => {
+      if (btn.dataset.toggleBound === 'true') return;
+      btn.dataset.toggleBound = 'true';
+      btn.addEventListener('click', (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const targetId = btn.getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        const eyeOpen = btn.querySelector('.eye-open');
+        const eyeClosed = btn.querySelector('.eye-closed');
+        if (eyeOpen && eyeClosed) {
+          eyeOpen.classList.toggle('hide', isPassword);
+          eyeClosed.classList.toggle('hide', !isPassword);
+        }
+        btn.setAttribute('aria-label', isPassword ? 'Şifreyi Gizle' : 'Şifreyi Göster');
+      });
+    });
+  }
+
   function handleAuthClick() {
     updateTeacherAuthUI();
     openModal(DOM.modalAuth);
@@ -19897,6 +19925,7 @@
     const btnStudentGoogleLogin = document.getElementById('btnStudentGoogleLogin');
     if (btnStudentGoogleLogin) addTapListener(btnStudentGoogleLogin, handleStudentGoogleLogin);
 
+    initAuthPasswordToggles(); // Auth eye toggle
     const btnTeacherLoginSubmit = document.getElementById('btnTeacherLoginSubmit');
     if (btnTeacherLoginSubmit) addTapListener(btnTeacherLoginSubmit, handleTeacherEmailLogin);
 

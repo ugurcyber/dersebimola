@@ -16658,3 +16658,307 @@ moly-mascot,
     font-size: 0.86rem !important;
   }
 }
+
+
+/* ==========================================================================
+   GÜVENLİ & MODERN EDTECH GİRİŞ KARTI (GLASSMORPHISM & TRUST BADGES)
+   ========================================================================== */
+.modal-backdrop#modalAuth {
+  background: radial-gradient(circle at 50% 25%, rgba(224, 242, 254, 0.78) 0%, rgba(15, 23, 42, 0.68) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.auth-modal-window {
+  max-width: 540px !important;
+  width: min(94vw, 540px) !important;
+  padding: 24px 28px 24px 28px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 2.5px solid rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 6px solid #93C5FD !important;
+  border-radius: 30px !important;
+  box-shadow: 0 25px 60px -10px rgba(15, 23, 42, 0.28), 0 0 35px rgba(56, 189, 248, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+  color: #0F172A !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 1) Üst Marka Başlık Kartı & Moli Maskot */
+.auth-header-card {
+  background: linear-gradient(135deg, rgba(239, 246, 255, 0.96) 0%, rgba(240, 253, 244, 0.96) 100%);
+  border: 2px solid #DBEAFE;
+  border-bottom: 4px solid #BFDBFE;
+  border-radius: 22px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.08);
+}
+
+.auth-brand-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.auth-logo-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-brand-title-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.auth-brand-heading {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.auth-brand-subtitle {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #0284C7;
+  letter-spacing: 0.2px;
+}
+
+.auth-moli-mascot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.auth-moli-avatar-ring {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2.5px solid #F59E0B;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: authMoliFloat 3s infinite ease-in-out;
+}
+
+@keyframes authMoliFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(2deg); }
+}
+
+.auth-moli-wave-img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.auth-moli-bubble-chip {
+  font-size: 0.68rem;
+  font-weight: 850;
+  color: #B45309;
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* 2) İnput Kapsayıcı, İkonlar ve Glow Efektleri */
+.auth-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 15px;
+  color: #94A3B8;
+  pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.auth-input-field {
+  width: 100%;
+  min-height: 52px !important;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 2px solid #CBD5E1;
+  background: #F8FAFC;
+  color: #0F172A;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 750;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+}
+
+.auth-input-field.has-left-icon {
+  padding-left: 48px;
+}
+
+.auth-input-field.has-right-btn {
+  padding-right: 50px;
+}
+
+/* Mavi Parlama (Glow) Efekti - Öğretmen Formu */
+.teacher-auth-form-box .auth-input-box:focus-within .auth-input-field {
+  outline: none;
+  background: #FFFFFF !important;
+  border-color: #0284C7 !important;
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.22), 0 4px 16px rgba(14, 165, 233, 0.15) !important;
+}
+
+.teacher-auth-form-box .auth-input-box:focus-within .auth-input-icon {
+  color: #0284C7 !important;
+  transform: scale(1.12);
+}
+
+/* Turuncu Parlama (Glow) Efekti - Öğrenci Formu */
+#authPaneStudent .auth-input-box:focus-within .auth-input-field {
+  outline: none;
+  background: #FFFFFF !important;
+  border-color: #F97316 !important;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.22), 0 4px 16px rgba(249, 115, 22, 0.15) !important;
+}
+
+#authPaneStudent .auth-input-box:focus-within .auth-input-icon {
+  color: #EA580C !important;
+  transform: scale(1.12);
+}
+
+/* Şifre Göster / Gizle Butonu */
+.auth-toggle-pass-btn {
+  position: absolute;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  transition: all 0.15s ease;
+  touch-action: manipulation;
+}
+
+.auth-toggle-pass-btn:hover {
+  background: #EFF6FF;
+  color: #0284C7;
+  transform: scale(1.08);
+}
+
+.auth-toggle-pass-btn:active {
+  transform: scale(0.95);
+}
+
+/* 3) Güvenlik Rozetleri (Trust Badges) */
+.auth-trust-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding: 9px 14px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+}
+
+.auth-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 850;
+  color: #475569;
+}
+
+.auth-trust-icon {
+  font-size: 0.95rem;
+}
+
+.auth-trust-icon.check-green {
+  color: #16A34A;
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.auth-trust-dot {
+  color: #CBD5E1;
+  font-weight: 900;
+  font-size: 0.85rem;
+}
+
+/* 4) Buton Yükseklikleri & Dokunmatik Akıllı Tahta Uyumu */
+.btn-auth-primary-submit {
+  min-height: 52px !important;
+  font-size: 1.1rem !important;
+  font-weight: 900 !important;
+  border-radius: 16px !important;
+  touch-action: manipulation;
+  letter-spacing: 0.3px;
+}
+
+.btn-teacher-submit {
+  background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%) !important;
+  border: 2px solid #0369A1 !important;
+  box-shadow: 0 4px 0 #075985, 0 8px 20px rgba(2, 132, 199, 0.3) !important;
+}
+
+.btn-student-submit {
+  background: linear-gradient(180deg, #FF7A00 0%, #EA580C 100%) !important;
+  border: 2px solid #C2410C !important;
+  box-shadow: 0 4px 0 #9A3412, 0 8px 20px rgba(234, 88, 12, 0.3) !important;
+}
+
+@media (max-width: 640px) {
+  .auth-modal-window {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    padding: 20px 16px 20px 16px !important;
+    border-radius: 24px !important;
+  }
+  .auth-header-card {
+    padding: 10px 12px;
+  }
+  .auth-brand-heading {
+    font-size: 1.1rem;
+  }
+  .auth-moli-bubble-chip {
+    display: none;
+  }
+  .auth-trust-badges {
+    font-size: 0.74rem;
+    gap: 6px;
+    padding: 7px 10px;
+  }
+}
+
