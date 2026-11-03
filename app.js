@@ -17705,7 +17705,7 @@
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'en-US';
-      u.rate = 0.86;
+      u.rate = 0.85;
       u.pitch = 1.05;
       const voices = window.speechSynthesis.getVoices();
       const enVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en')) || null;
@@ -17766,7 +17766,6 @@
       if (!isDragging) return;
       isDragging = false;
       el.style.zIndex = '';
-      el.style.transition = 'transform 0.25s ease';
       const touch = e.changedTouches[0];
       const target = document.querySelector(dropTargetSelector);
       let dropped = false;
@@ -17782,104 +17781,190 @@
       }
 
       if (!dropped) {
+        el.classList.add('spring-back');
         el.style.transform = 'translate3d(0, 0, 0)';
+        setTimeout(() => el.classList.remove('spring-back'), 550);
       }
     });
   }
 
   const EnglishKidsEngine = {
     currentGrade: 1,
+    currentUnitId: null,
     currentGame: 'paint',
     score: 0,
     maxScore: 5,
     activePromptText: '',
     balloonInterval: null,
 
-    // JSON Veri Havuzu (1. Sınıf ve 2. Sınıf Müfredatı)
-    pools: {
-      1: {
-        colors: [
-          { name: 'RED', hex: '#EF4444', icon: '🔴', tr: 'Kırmızı' },
-          { name: 'BLUE', hex: '#3B82F6', icon: '🔵', tr: 'Mavi' },
-          { name: 'YELLOW', hex: '#EAB308', icon: '🟡', tr: 'Sarı' },
-          { name: 'GREEN', hex: '#22C55E', icon: '🟢', tr: 'Yeşil' },
-          { name: 'PURPLE', hex: '#A855F7', icon: '🟣', tr: 'Mor' },
-          { name: 'ORANGE', hex: '#F97316', icon: '🟠', tr: 'Turuncu' }
-        ],
-        paintObjects: [
-          { name: 'apple', tr: 'Elma', emoji: '🍎', svgPath: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z' },
-          { name: 'car', tr: 'Araba', emoji: '🚗', svgPath: 'M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z' },
-          { name: 'cat', tr: 'Kedi', emoji: '🐱', svgPath: 'M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 20.35c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.74-2.74C9.77 19.64 10.86 20 12 20s2.23-.36 3.5-.98l2.74 2.74c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41l-.62-2.74C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z' },
-          { name: 'fish', tr: 'Balık', emoji: '🐟', svgPath: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z' }
-        ],
-        foodsAndItems: [
-          { name: 'BANANA', emoji: '🍌', tr: 'Muz' },
-          { name: 'APPLE', emoji: '🍎', tr: 'Elma' },
-          { name: 'STRAWBERRY', emoji: '🍓', tr: 'Çilek' },
-          { name: 'MILK', emoji: '🥛', tr: 'Süt' },
+    // MEB Müfredat Üniteleri ve Zengin JSON Havuzu
+    units: {
+      1: [
+        { id: 'colors', name: 'Colors', icon: '🎨', words: [
+          { name: 'RED', emoji: '🔴', tr: 'Kırmızı', colorHex: '#EF4444' },
+          { name: 'BLUE', emoji: '🔵', tr: 'Mavi', colorHex: '#3B82F6' },
+          { name: 'YELLOW', emoji: '🟡', tr: 'Sarı', colorHex: '#EAB308' },
+          { name: 'GREEN', emoji: '🟢', tr: 'Yeşil', colorHex: '#22C55E' },
+          { name: 'PINK', emoji: '🌸', tr: 'Pembe', colorHex: '#EC4899' },
+          { name: 'ORANGE', emoji: '🟠', tr: 'Turuncu', colorHex: '#F97316' }
+        ]},
+        { id: 'animals', name: 'Animals', icon: '🐶', words: [
           { name: 'CAT', emoji: '🐱', tr: 'Kedi' },
           { name: 'DOG', emoji: '🐶', tr: 'Köpek' },
+          { name: 'BIRD', emoji: '🐦', tr: 'Kuş' },
+          { name: 'FISH', emoji: '🐟', tr: 'Balık' },
+          { name: 'LION', emoji: '🦁', tr: 'Aslan' },
+          { name: 'MONKEY', emoji: '🐵', tr: 'Maymun' }
+        ]},
+        { id: 'numbers', name: 'Numbers 1-5', icon: '🔢', words: [
+          { name: 'ONE', emoji: '1️⃣', tr: 'Bir' },
           { name: 'TWO', emoji: '2️⃣', tr: 'İki' },
-          { name: 'THREE', emoji: '3️⃣', tr: 'Üç' }
-        ],
-        bodyParts: [
+          { name: 'THREE', emoji: '3️⃣', tr: 'Üç' },
+          { name: 'FOUR', emoji: '4️⃣', tr: 'Dört' },
+          { name: 'FIVE', emoji: '5️⃣', tr: 'Beş' }
+        ]},
+        { id: 'fruits', name: 'Fruits', icon: '🍎', words: [
+          { name: 'APPLE', emoji: '🍎', tr: 'Elma' },
+          { name: 'BANANA', emoji: '🍌', tr: 'Muz' },
+          { name: 'ORANGE', emoji: '🍊', tr: 'Portakal' },
+          { name: 'STRAWBERRY', emoji: '🍓', tr: 'Çilek' }
+        ]}
+      ],
+      2: [
+        { id: 'u1', name: 'Unit 1: Words', icon: '🔤', words: [
+          { name: 'AMBULANCE', emoji: '🚑', tr: 'Ambulans' },
+          { name: 'BALLOON', emoji: '🎈', tr: 'Balon' },
+          { name: 'CAKE', emoji: '🎂', tr: 'Pasta' },
+          { name: 'DOCTOR', emoji: '👨‍⚕️', tr: 'Doktor' },
+          { name: 'GORILLA', emoji: '🦍', tr: 'Goril' },
+          { name: 'LEMON', emoji: '🍋', tr: 'Limon' },
+          { name: 'PANDA', emoji: '🐼', tr: 'Panda' },
+          { name: 'ZEBRA', emoji: '🦓', tr: 'Zebra' }
+        ]},
+        { id: 'u2', name: 'Unit 2: Friends', icon: '👋', words: [
+          { name: 'HELLO', emoji: '👋', tr: 'Merhaba' },
+          { name: 'GOOD MORNING', emoji: '🌅', tr: 'Günaydın' },
+          { name: 'HOW ARE YOU?', emoji: '❓', tr: 'Nasılsın?' },
+          { name: 'FINE', emoji: '😊', tr: 'İyiyim' },
+          { name: 'THANK YOU', emoji: '🙏', tr: 'Teşekkür ederim' }
+        ]},
+        { id: 'u3', name: 'Unit 3: In the Classroom', icon: '✏️', words: [
+          { id: 'pencil', name: 'PENCIL', emoji: '✏️', tr: 'Kurşun Kalem' },
+          { id: 'book', name: 'BOOK', emoji: '📚', tr: 'Kitap' },
+          { id: 'bag', name: 'BAG', emoji: '🎒', tr: 'Çanta' },
+          { id: 'desk', name: 'DESK', emoji: '🪑', tr: 'Sıra' },
+          { id: 'door', name: 'DOOR', emoji: '🚪', tr: 'Kapı' },
+          { id: 'window', name: 'WINDOW', emoji: '🪟', tr: 'Pencere' },
+          { id: 'open', name: 'OPEN', emoji: '📖', tr: 'Aç' },
+          { id: 'close', name: 'CLOSE', emoji: '📕', tr: 'Kapat' }
+        ]},
+        { id: 'u4', name: 'Unit 4: Numbers 1-10', icon: '🔟', words: [
+          { name: 'ONE', emoji: '1️⃣', tr: 'Bir' },
+          { name: 'TWO', emoji: '2️⃣', tr: 'İki' },
+          { name: 'THREE', emoji: '3️⃣', tr: 'Üç' },
+          { name: 'FOUR', emoji: '4️⃣', tr: 'Dört' },
+          { name: 'FIVE', emoji: '5️⃣', tr: 'Beş' },
+          { name: 'SIX', emoji: '6️⃣', tr: 'Altı' },
+          { name: 'SEVEN', emoji: '7️⃣', tr: 'Yedi' },
+          { name: 'EIGHT', emoji: '8️⃣', tr: 'Sekiz' },
+          { name: 'NINE', emoji: '9️⃣', tr: 'Dokuz' },
+          { name: 'TEN', emoji: '🔟', tr: 'On' }
+        ]},
+        { id: 'u5', name: 'Unit 5: Colors', icon: '🖍️', words: [
+          { name: 'RED', emoji: '🔴', tr: 'Kırmızı', colorHex: '#EF4444' },
+          { name: 'BLUE', emoji: '🔵', tr: 'Mavi', colorHex: '#3B82F6' },
+          { name: 'YELLOW', emoji: '🟡', tr: 'Sarı', colorHex: '#EAB308' },
+          { name: 'GREEN', emoji: '🟢', tr: 'Yeşil', colorHex: '#22C55E' },
+          { name: 'PINK', emoji: '🌸', tr: 'Pembe', colorHex: '#EC4899' },
+          { name: 'PURPLE', emoji: '🟣', tr: 'Mor', colorHex: '#A855F7' },
+          { name: 'ORANGE', emoji: '🟠', tr: 'Turuncu', colorHex: '#F97316' },
+          { name: 'BLACK', emoji: '⚫', tr: 'Siyah', colorHex: '#0F172A' },
+          { name: 'WHITE', emoji: '⚪', tr: 'Beyaz', colorHex: '#F8FAFC' },
+          { name: 'BROWN', emoji: '🟤', tr: 'Kahverengi', colorHex: '#78350F' }
+        ]},
+        { id: 'u6', name: 'Unit 6: At the Playground', icon: '🛝', words: [
+          { name: 'RUN', emoji: '🏃', tr: 'Koşmak' },
+          { name: 'WALK', emoji: '🚶', tr: 'Yürümek' },
+          { name: 'JUMP', emoji: '🦘', tr: 'Zıplamak' },
+          { name: 'DANCE', emoji: '💃', tr: 'Dans etmek' },
+          { name: 'SING', emoji: '🎤', tr: 'Şarkı söylemek' },
+          { name: 'PLAY', emoji: '⚽', tr: 'Oynamak' },
+          { name: 'SLIDE', emoji: '🛝', tr: 'Kaydıraktan kaymak' },
+          { name: 'SWING', emoji: '🎪', tr: 'Salıncakta sallanmak' }
+        ]},
+        { id: 'u7', name: 'Unit 7: Body Parts', icon: '👀', words: [
+          { id: 'head', name: 'HEAD', emoji: '👦', tr: 'Baş / Kafa', slot: 'slot-head' },
           { id: 'eyes', name: 'EYES', emoji: '👀', tr: 'Gözler', slot: 'slot-eyes' },
+          { id: 'ears', name: 'EARS', emoji: '👂', tr: 'Kulaklar', slot: 'slot-ears' },
           { id: 'nose', name: 'NOSE', emoji: '👃', tr: 'Burun', slot: 'slot-nose' },
           { id: 'mouth', name: 'MOUTH', emoji: '👄', tr: 'Ağız', slot: 'slot-mouth' },
-          { id: 'ears', name: 'EARS', emoji: '👂', tr: 'Kulaklar', slot: 'slot-ears' },
-          { id: 'head', name: 'HEAD', emoji: '👦', tr: 'Baş / Kafa', slot: 'slot-head' }
-        ],
-        balloons: [
-          { name: 'HAPPY', emoji: '😄', tr: 'Mutlu' },
-          { name: 'SAD', emoji: '😢', tr: 'Üzgün' },
-          { name: 'HELLO', emoji: '👋', tr: 'Merhaba' },
-          { name: 'CAT', emoji: '🐱', tr: 'Kedi' },
-          { name: 'RED', emoji: '🔴', tr: 'Kırmızı' },
-          { name: 'ONE', emoji: '1️⃣', tr: 'Bir' }
-        ]
-      },
-      2: {
-        colors: [
-          { name: 'RED', hex: '#EF4444', icon: '🔴', tr: 'Kırmızı' },
-          { name: 'BLUE', hex: '#3B82F6', icon: '🔵', tr: 'Mavi' },
-          { name: 'YELLOW', hex: '#EAB308', icon: '🟡', tr: 'Sarı' },
-          { name: 'GREEN', hex: '#22C55E', icon: '🟢', tr: 'Yeşil' },
-          { name: 'PURPLE', hex: '#A855F7', icon: '🟣', tr: 'Mor' },
-          { name: 'ORANGE', hex: '#F97316', icon: '🟠', tr: 'Turuncu' },
-          { name: 'BLACK', hex: '#0F172A', icon: '⚫', tr: 'Siyah' }
-        ],
-        paintObjects: [
-          { name: 'book', tr: 'Kitap', emoji: '📚' },
-          { name: 'pencil', tr: 'Kalem', emoji: '✏️' },
-          { name: 'school bag', tr: 'Okul Çantası', emoji: '🎒' },
-          { name: 'bus', tr: 'Otobüs', emoji: '🚌' }
-        ],
-        foodsAndItems: [
-          { name: 'BOOK', emoji: '📚', tr: 'Kitap' },
-          { name: 'PENCIL', emoji: '✏️', tr: 'Kalem' },
-          { name: 'ERASER', emoji: '🧼', tr: 'Silgi' },
-          { name: 'BAG', emoji: '🎒', tr: 'Çanta' },
-          { name: 'DESK', emoji: '🪑', tr: 'Sıra' },
-          { name: 'FIVE', emoji: '5️⃣', tr: 'Beş' },
-          { name: 'TEN', emoji: '🔟', tr: 'On' }
-        ],
-        bodyParts: [
-          { id: 'eyes', name: 'EYES', emoji: '👀', tr: 'Gözler', slot: 'slot-eyes' },
-          { id: 'nose', name: 'NOSE', emoji: 'NOSE', emoji: '👃', tr: 'Burun', slot: 'slot-nose' },
-          { id: 'mouth', name: 'MOUTH', emoji: '👄', tr: 'Ağız', slot: 'slot-mouth' },
-          { id: 'ears', name: 'EARS', emoji: '👂', tr: 'Kulaklar', slot: 'slot-ears' },
           { id: 'hands', name: 'HANDS', emoji: '✋', tr: 'Eller', slot: 'slot-hands' },
-          { id: 'head', name: 'HEAD', emoji: '👦', tr: 'Kafa', slot: 'slot-head' }
-        ],
-        balloons: [
-          { name: 'PENCIL', emoji: '✏️', tr: 'Kalem' },
-          { name: 'BOOK', emoji: '📚', tr: 'Kitap' },
-          { name: 'SCHOOL BUS', emoji: '🚌', tr: 'Okul Servisi' },
-          { name: 'FRIENDS', emoji: '👫', tr: 'Arkadaşlar' },
-          { name: 'HAPPY', emoji: '😄', tr: 'Mutlu' },
-          { name: 'SEVEN', emoji: '7️⃣', tr: 'Yedi' }
-        ]
+          { id: 'arms', name: 'ARMS', emoji: '💪', tr: 'Kollar', slot: 'slot-arms' },
+          { id: 'legs', name: 'LEGS', emoji: '🦵', tr: 'Bacaklar', slot: 'slot-legs' }
+        ]},
+        { id: 'u8', name: 'Unit 8: Pets', icon: '🐱', words: [
+          { id: 'cat', name: 'CAT', emoji: '🐱', tr: 'Kedi' },
+          { id: 'dog', name: 'DOG', emoji: '🐶', tr: 'Köpek' },
+          { id: 'bird', name: 'BIRD', emoji: '🐦', tr: 'Kuş' },
+          { id: 'rabbit', name: 'RABBIT', emoji: '🐰', tr: 'Tavşan' },
+          { id: 'turtle', name: 'TURTLE', emoji: '🐢', tr: 'Kaplumbağa' },
+          { id: 'fish', name: 'FISH', emoji: '🐟', tr: 'Balık' }
+        ]},
+        { id: 'u9', name: 'Unit 9: Fruits', icon: '🍓', words: [
+          { name: 'MELON', emoji: '🍈', tr: 'Kavun' },
+          { name: 'WATERMELON', emoji: '🍉', tr: 'Karpuz' },
+          { name: 'GRAPES', emoji: '🍇', tr: 'Üzüm' },
+          { name: 'PEACH', emoji: '🍑', tr: 'Şeftali' },
+          { name: 'APPLE', emoji: '🍎', tr: 'Elma' },
+          { name: 'BANANA', emoji: '🍌', tr: 'Muz' }
+        ]},
+        { id: 'u10', name: 'Unit 10: Animals', icon: '🦒', words: [
+          { name: 'ELEPHANT', emoji: '🐘', tr: 'Fil' },
+          { name: 'GIRAFFE', emoji: '🦒', tr: 'Zürafa' },
+          { name: 'HORSE', emoji: '🐴', tr: 'At' },
+          { name: 'BEAR', emoji: '🐻', tr: 'Ayı' },
+          { name: 'DUCK', emoji: '🦆', tr: 'Ördek' },
+          { name: 'COW', emoji: '🐮', tr: 'İnek' }
+        ]}
+      ]
+    },
+
+    getCurrentUnit() {
+      const list = this.units[this.currentGrade] || this.units[1];
+      if (!this.currentUnitId) {
+        return list[0];
       }
+      return list.find(u => u.id === this.currentUnitId) || list[0];
+    },
+
+    renderUnitSelector() {
+      const track = document.getElementById('kidsUnitScrollTrack');
+      if (!track) return;
+      const list = this.units[this.currentGrade] || this.units[1];
+      const curUnit = this.getCurrentUnit();
+
+      track.innerHTML = list.map(u => {
+        const isActive = u.id === curUnit.id;
+        return `
+          <button class="kids-unit-chip-btn ${isActive ? 'active' : ''}" data-unit="${u.id}" type="button" role="tab" aria-selected="${isActive}">
+            <span class="kids-unit-icon">${u.icon}</span>
+            <span>${u.name}</span>
+          </button>
+        `;
+      }).join('');
+
+      track.querySelectorAll('.kids-unit-chip-btn').forEach(btn => {
+        addTapListener(btn, () => {
+          const uid = btn.dataset.unit;
+          if (this.currentUnitId === uid) return;
+          this.currentUnitId = uid;
+          this.score = 0;
+          const scoreEl = document.getElementById('kidsScoreText');
+          if (scoreEl) scoreEl.textContent = `0 / ${this.maxScore}`;
+          this.renderUnitSelector();
+          this.switchGame(this.currentGame, this.currentGrade);
+        });
+      });
     },
 
     setPrompt(enText, trHint) {
@@ -17937,18 +18022,30 @@
       }
     },
 
-    // 1) SİHİRLİ BOYA KOVASI (COLOR & PAINT ENGINE)
+    // 1) SİHİRLİ BOYA KOVASI & DOKUNMATİK SAHNE (COLOR & PAINT ENGINE)
     initPaintGame(grade = 1) {
       clearInterval(this.balloonInterval);
       const container = document.getElementById('kidsStageContainer');
       if (!container) return;
 
-      const pool = this.pools[grade] || this.pools[1];
-      const targetObj = pool.paintObjects[Math.floor(Math.random() * pool.paintObjects.length)];
-      const targetColor = pool.colors[Math.floor(Math.random() * pool.colors.length)];
+      const unit = this.getCurrentUnit();
+      const colorWords = [
+        { name: 'RED', hex: '#EF4444', icon: '🔴', tr: 'Kırmızı' },
+        { name: 'BLUE', hex: '#3B82F6', icon: '🔵', tr: 'Mavi' },
+        { name: 'YELLOW', hex: '#EAB308', icon: '🟡', tr: 'Sarı' },
+        { name: 'GREEN', hex: '#22C55E', icon: '🟢', tr: 'Yeşil' },
+        { name: 'PINK', hex: '#EC4899', icon: '🌸', tr: 'Pembe' },
+        { name: 'ORANGE', hex: '#F97316', icon: '🟠', tr: 'Turuncu' },
+        { name: 'PURPLE', hex: '#A855F7', icon: '🟣', tr: 'Mor' }
+      ];
+
+      // Ünite kelimelerinden boyanacak hedef nesne
+      const nonColors = unit.words.filter(w => !w.colorHex);
+      const targetObj = (nonColors.length > 0) ? nonColors[Math.floor(Math.random() * nonColors.length)] : unit.words[Math.floor(Math.random() * unit.words.length)];
+      const targetColor = colorWords[Math.floor(Math.random() * colorWords.length)];
 
       const enPrompt = `Paint the ${targetObj.name} ${targetColor.name}!`;
-      const trHint = `${targetObj.tr}'i ${targetColor.tr.toLowerCase()} renge boyamak için kovayı üzerine sürükle!`;
+      const trHint = `"${targetObj.tr}" görselini ${targetColor.tr.toLowerCase()} renge boyamak için ${targetColor.name} kovasını üzerine sürükle veya dokun!`;
       this.setPrompt(enPrompt, trHint);
 
       container.innerHTML = `
@@ -17957,12 +18054,12 @@
             <div style="font-size: 5.5rem; line-height: 1; filter: grayscale(1) opacity(0.5); transition: all 0.4s ease;" id="paintTargetEmoji">
               ${targetObj.emoji}
             </div>
-            <span class="paint-target-label" id="paintTargetLabel">${targetObj.name.toUpperCase()}</span>
+            <span class="paint-target-label" id="paintTargetLabel">${targetObj.name}</span>
           </div>
 
           <div class="paint-buckets-rack">
-            ${pool.colors.map(c => `
-              <div class="paint-bucket-item" style="background: ${c.hex};" data-color="${c.name}" data-hex="${c.hex}" data-val="${c.name}">
+            ${colorWords.map(c => `
+              <div class="paint-bucket-item" style="background: ${c.hex};" data-color="${c.name}" data-hex="${c.hex}" data-val="${c.name}" role="button" tabindex="0">
                 <span class="paint-bucket-icon">🪣</span>
                 <span>${c.name}</span>
               </div>
@@ -17974,68 +18071,85 @@
       const targetArea = container.querySelector('#paintTargetArea');
       const emojiEl = container.querySelector('#paintTargetEmoji');
 
-      // Drag over and drop handlers
+      // Dokunarak da boyayabilme (Listen & Touch)
+      container.querySelectorAll('.paint-bucket-item').forEach(bucket => {
+        addTapListener(bucket, () => {
+          const colorName = bucket.dataset.color;
+          this.checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea, bucket);
+        });
+      });
+
+      // Drag-Drop
       targetArea.ondragover = (e) => { e.preventDefault(); targetArea.classList.add('drag-over'); };
       targetArea.ondragleave = () => { targetArea.classList.remove('drag-over'); };
       targetArea.ondrop = (e) => {
         e.preventDefault();
         targetArea.classList.remove('drag-over');
         const colorName = e.dataTransfer.getData('text/plain');
-        this.checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea);
+        this.checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea, null);
       };
 
-      // Akıllı tahta ve mobil için touch-move
       container.querySelectorAll('.paint-bucket-item').forEach(bucket => {
         makeDraggable(bucket, '#paintTargetArea', (draggedEl) => {
           const colorName = draggedEl.dataset.color;
-          this.checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea);
+          this.checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea, draggedEl);
         }, (draggedEl) => {
           speakEnglish(draggedEl.dataset.color);
         });
       });
     },
 
-    checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea) {
+    checkPaintResult(colorName, targetColor, targetObj, emojiEl, targetArea, bucketEl) {
       if (colorName === targetColor.name) {
         emojiEl.style.filter = 'none';
         emojiEl.style.transform = 'scale(1.25)';
         targetArea.classList.add('painted');
         targetArea.style.borderColor = targetColor.hex;
         targetArea.style.background = targetColor.hex + '18';
-        speakEnglish(`Great job! The ${targetObj.name} is ${targetColor.name}!`);
+        speakEnglish(`Great job! The ${targetObj.name} is ${targetColor.name}!`, () => {
+          speakEnglish(targetObj.name);
+        });
         this.addStar();
         setTimeout(() => this.initPaintGame(this.currentGrade), 1500);
       } else {
         if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+        if (bucketEl) {
+          bucketEl.classList.add('spring-back');
+          setTimeout(() => bucketEl.classList.remove('spring-back'), 550);
+        }
         speakEnglish(`No, that is ${colorName}! Try ${targetColor.name}!`);
       }
     },
 
-    // 2) CANAVARI BESLE (FEED THE MONSTER ENGINE)
+    // 2) MOLİ'Yİ BESLE / SEPETE TOPLA (FEED MOLI - DRAG & DROP)
     initMonsterGame(grade = 1) {
       clearInterval(this.balloonInterval);
       const container = document.getElementById('kidsStageContainer');
       if (!container) return;
 
-      const pool = this.pools[grade] || this.pools[1];
-      const shuffledItems = [...pool.foodsAndItems].sort(() => 0.5 - Math.random()).slice(0, 5);
-      const targetFood = shuffledItems[Math.floor(Math.random() * shuffledItems.length)];
+      const unit = this.getCurrentUnit();
+      const allWords = [...unit.words];
+      const shuffledItems = [...allWords].sort(() => 0.5 - Math.random()).slice(0, Math.min(5, allWords.length));
+      const targetItem = shuffledItems[Math.floor(Math.random() * shuffledItems.length)];
 
-      const enPrompt = `I want a ${targetFood.name}!`;
-      const trHint = `Canavar acıktı! Ona "${targetFood.tr}" ver.`;
+      const isFoodOrPet = unit.id === 'fruits' || unit.id === 'animals' || unit.id === 'u8' || unit.id === 'u9' || unit.id === 'u10';
+      const enPrompt = isFoodOrPet ? `I want a ${targetItem.name}!` : `Put the ${targetItem.name} in the box!`;
+      const trHint = isFoodOrPet ? `Moli acıktı! Ona "${targetItem.tr}" ver.` : `"${targetItem.tr}" nesnesini Moli'nin kutusuna bırak!`;
       this.setPrompt(enPrompt, trHint);
 
       container.innerHTML = `
         <div class="monster-game-stage">
           <div class="monster-character-wrap" id="monsterWrap">
-            <div style="font-size: 7.5rem; line-height: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));" id="monsterEmoji">👾</div>
+            <div style="font-size: 7.5rem; line-height: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));" id="monsterEmoji">
+              ${isFoodOrPet ? '👾' : '🎒'}
+            </div>
             <div class="monster-drop-zone" id="monsterDropZone"></div>
-            <div class="monster-speech-toast" id="monsterToast">"Feed me!" 😋</div>
+            <div class="monster-speech-toast" id="monsterToast">${isFoodOrPet ? '"Feed me!" 😋' : '"Put it here!" 📥'}</div>
           </div>
 
           <div class="monster-food-rack">
             ${shuffledItems.map(item => `
-              <div class="monster-food-card" data-val="${item.name}" data-item="${item.name}">
+              <div class="monster-food-card" data-val="${item.name}" data-item="${item.name}" role="button" tabindex="0">
                 <span class="monster-food-emoji">${item.emoji}</span>
                 <span class="monster-food-label">${item.name}</span>
               </div>
@@ -18048,31 +18162,40 @@
       const dropZone = container.querySelector('#monsterDropZone');
       const toast = container.querySelector('#monsterToast');
 
+      // Tıklayarak da hedefe gönderebilme
+      container.querySelectorAll('.monster-food-card').forEach(card => {
+        addTapListener(card, () => {
+          this.checkMonsterFeed(card.dataset.val, targetItem, monsterWrap, toast, card);
+        });
+      });
+
       dropZone.ondragover = (e) => { e.preventDefault(); monsterWrap.classList.add('mouth-open'); };
       dropZone.ondragleave = () => { monsterWrap.classList.remove('mouth-open'); };
       dropZone.ondrop = (e) => {
         e.preventDefault();
         monsterWrap.classList.remove('mouth-open');
         const val = e.dataTransfer.getData('text/plain');
-        this.checkMonsterFeed(val, targetFood, monsterWrap, toast);
+        this.checkMonsterFeed(val, targetItem, monsterWrap, toast, null);
       };
 
       container.querySelectorAll('.monster-food-card').forEach(card => {
         makeDraggable(card, '#monsterDropZone', (draggedEl) => {
-          this.checkMonsterFeed(draggedEl.dataset.val, targetFood, monsterWrap, toast);
+          this.checkMonsterFeed(draggedEl.dataset.val, targetItem, monsterWrap, toast, draggedEl);
         }, (draggedEl) => {
           speakEnglish(draggedEl.dataset.val);
         });
       });
     },
 
-    checkMonsterFeed(val, targetFood, monsterWrap, toast) {
-      if (val === targetFood.name) {
+    checkMonsterFeed(val, targetItem, monsterWrap, toast, cardEl) {
+      if (val === targetItem.name) {
         monsterWrap.classList.add('chewing');
-        toast.textContent = "YUMMY! 😋";
+        toast.textContent = "YUMMY! / GREAT JOB! ⭐";
         toast.style.background = "#D1FAE5";
         toast.style.color = "#065F46";
-        speakEnglish("Yummy! Thank you!");
+        speakEnglish(`Yummy! Great job! ${targetItem.name}!`, () => {
+          speakEnglish(targetItem.name);
+        });
         this.addStar();
         setTimeout(() => {
           monsterWrap.classList.remove('chewing');
@@ -18080,50 +18203,85 @@
         }, 1500);
       } else {
         if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
-        toast.textContent = "No, thank you! 😅";
+        if (cardEl) {
+          cardEl.classList.add('spring-back');
+          setTimeout(() => cardEl.classList.remove('spring-back'), 550);
+        }
+        toast.textContent = "Try again! 😅";
         toast.style.background = "#FEE2E2";
         toast.style.color = "#991B1B";
-        speakEnglish(`No, thank you! I want a ${targetFood.name}!`);
+        speakEnglish(`No! I want ${targetItem.name}! Find ${targetItem.name}!`);
       }
     },
 
-    // 3) VÜCUDUMUZ YAPBOZU (BODY PARTS PUZZLE)
+    // 3) PARÇALARI YERLEŞTİR (PUZZLE & SNAP ENGINE)
     initBodyGame(grade = 1) {
       clearInterval(this.balloonInterval);
       const container = document.getElementById('kidsStageContainer');
       if (!container) return;
 
-      const pool = this.pools[grade] || this.pools[1];
-      const parts = pool.bodyParts;
+      const unit = this.getCurrentUnit();
+      // Ünitedeki kelimeleri parçalara dönüştür (varsa slot'lu body parts, yoksa genel puzzle)
+      const isBodyUnit = unit.id === 'u7';
+      const parts = unit.words.slice(0, 6);
 
-      this.setPrompt("Place the body parts!", "Vücudun parçalarını dinle ve silüetteki doğru yuvalara yerleştir!");
+      this.setPrompt(`Snap the ${unit.name} parts!`, `Parçaları dinle ve doğru yuvalara yerleştir!`);
 
-      container.innerHTML = `
-        <div class="body-game-stage">
-          <div class="body-silhouette-board" id="bodySilhouetteBoard">
-            <div style="font-size: 8rem; opacity: 0.15; position: absolute; pointer-events: none;">🤖</div>
-            ${parts.map(p => `
-              <div class="body-drop-slot ${p.slot}" data-part="${p.id}" id="slot_${p.id}">
-                <span>${p.tr}</span>
-              </div>
-            `).join('')}
+      if (isBodyUnit) {
+        container.innerHTML = `
+          <div class="body-game-stage">
+            <div class="body-silhouette-board" id="bodySilhouetteBoard">
+              <div style="font-size: 8rem; opacity: 0.15; position: absolute; pointer-events: none;">👦</div>
+              ${parts.map(p => `
+                <div class="body-drop-slot ${p.slot || 'slot-head'}" data-part="${p.id || p.name}" id="slot_${p.id || p.name}">
+                  <span>${p.tr}</span>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="body-parts-tray" id="bodyPartsTray">
+              ${parts.map(p => `
+                <div class="body-part-item" data-part="${p.id || p.name}" data-val="${p.id || p.name}" data-name="${p.name}">
+                  <span style="font-size: 1.8rem;">${p.emoji}</span>
+                  <span>${p.name}</span>
+                </div>
+              `).join('')}
+            </div>
           </div>
-
-          <div class="body-parts-tray" id="bodyPartsTray">
-            ${parts.map(p => `
-              <div class="body-part-item" data-part="${p.id}" data-val="${p.id}" data-name="${p.name}">
-                <span style="font-size: 1.8rem;">${p.emoji}</span>
-                <span>${p.name}</span>
+        `;
+      } else {
+        // Classroom, Pets, Words veya diğer temalar için oda/sahne yapbozu
+        container.innerHTML = `
+          <div class="puzzle-room-stage">
+            <div class="puzzle-scene-board" id="puzzleSceneBoard">
+              <div style="position: absolute; top: 8px; left: 14px; font-weight: 800; color: #166534; font-size: 0.85rem;">
+                🏠 ${unit.name} Sahnesi
               </div>
-            `).join('')}
+              ${parts.map(p => `
+                <div class="puzzle-room-slot" data-part="${p.id || p.name}" id="slot_${p.id || p.name}">
+                  <span style="font-size: 1.6rem; opacity: 0.35;">${p.emoji}</span>
+                  <span>${p.tr}</span>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="puzzle-tray-rack" id="puzzleTrayRack">
+              ${parts.map(p => `
+                <div class="puzzle-piece-chip" data-part="${p.id || p.name}" data-val="${p.id || p.name}" data-name="${p.name}">
+                  <span style="font-size: 1.4rem;">${p.emoji}</span>
+                  <span>${p.name}</span>
+                </div>
+              `).join('')}
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      }
 
       let placedCount = 0;
 
       parts.forEach(p => {
-        const slotEl = container.querySelector(`#slot_${p.id}`);
+        const partKey = p.id || p.name;
+        const slotEl = container.querySelector(`#slot_${partKey}`);
         if (!slotEl) return;
 
         slotEl.ondragover = (e) => { e.preventDefault(); slotEl.classList.add('drag-over'); };
@@ -18132,7 +18290,7 @@
           e.preventDefault();
           slotEl.classList.remove('drag-over');
           const droppedPart = e.dataTransfer.getData('text/plain');
-          if (droppedPart === p.id) {
+          if (droppedPart === partKey) {
             this.handlePartSnap(p, slotEl, container);
             placedCount++;
             if (placedCount === parts.length) {
@@ -18145,11 +18303,26 @@
         };
       });
 
-      container.querySelectorAll('.body-part-item').forEach(item => {
-        const partId = item.dataset.part;
-        makeDraggable(item, `#slot_${partId}`, () => {
-          const p = parts.find(x => x.id === partId);
-          const slotEl = container.querySelector(`#slot_${partId}`);
+      const pieceSelector = isBodyUnit ? '.body-part-item' : '.puzzle-piece-chip';
+      container.querySelectorAll(pieceSelector).forEach(item => {
+        const partKey = item.dataset.part;
+        // Dokunulduğunda da yerine yerleşebilsin
+        addTapListener(item, () => {
+          const p = parts.find(x => (x.id || x.name) === partKey);
+          const slotEl = container.querySelector(`#slot_${partKey}`);
+          if (slotEl && !slotEl.classList.contains('placed')) {
+            this.handlePartSnap(p, slotEl, container);
+            placedCount++;
+            if (placedCount === parts.length) {
+              this.addStar();
+              setTimeout(() => this.initBodyGame(this.currentGrade), 1800);
+            }
+          }
+        });
+
+        makeDraggable(item, `#slot_${partKey}`, () => {
+          const p = parts.find(x => (x.id || x.name) === partKey);
+          const slotEl = container.querySelector(`#slot_${partKey}`);
           this.handlePartSnap(p, slotEl, container);
           placedCount++;
           if (placedCount === parts.length) {
@@ -18164,30 +18337,33 @@
 
     handlePartSnap(p, slotEl, container) {
       if (typeof audio !== 'undefined' && audio.playSnap) audio.playSnap();
-      speakEnglish(p.name);
+      speakEnglish(p.name, () => {
+        speakEnglish(p.name);
+      });
       slotEl.classList.add('placed');
-      slotEl.innerHTML = `<span>${p.emoji}</span>`;
-      const trayItem = container.querySelector(`.body-part-item[data-part="${p.id}"]`);
+      slotEl.innerHTML = `<span style="font-size:2rem;">${p.emoji}</span><span style="font-size:0.75rem; font-weight:900;">${p.name}</span>`;
+      const partKey = p.id || p.name;
+      const trayItem = container.querySelector(`[data-part="${partKey}"]`);
       if (trayItem) trayItem.classList.add('is-placed');
     },
 
-    // 4) SESLİ BALON AVCISI (LISTEN & POP ENGINE)
+    // 4) SESLİ BALON AVCISI (VOICE BALLOON POP ENGINE)
     initBalloonGame(grade = 1) {
       clearInterval(this.balloonInterval);
       const container = document.getElementById('kidsStageContainer');
       if (!container) return;
 
-      const pool = this.pools[grade] || this.pools[1];
-      const targetBalloon = pool.balloons[Math.floor(Math.random() * pool.balloons.length)];
+      const unit = this.getCurrentUnit();
+      const targetBalloon = unit.words[Math.floor(Math.random() * unit.words.length)];
 
-      const enPrompt = `Find ${targetBalloon.name}! ${targetBalloon.name}!`;
+      const enPrompt = `Pop the ${targetBalloon.name}! ${targetBalloon.name}!`;
       const trHint = `Uçan balonlardan "${targetBalloon.tr}" olanına dokun ve patlat!`;
       this.setPrompt(enPrompt, trHint);
 
       container.innerHTML = `
         <div class="balloon-game-stage" id="balloonSkyStage">
           <div style="position: absolute; top: 12px; left: 16px; font-weight: 800; font-size: 0.88rem; color: #0284C7; z-index: 5;">
-            🎈 Hedef: ${targetBalloon.name} (${targetBalloon.tr})
+            🎈 Target: ${targetBalloon.name} (${targetBalloon.tr})
           </div>
         </div>
       `;
@@ -18198,9 +18374,9 @@
       const spawnBalloon = () => {
         if (!document.getElementById('balloonSkyStage')) return;
 
-        // %45 ihtimalle hedef balon, %55 ihtimalle yanıltıcı balon
+        // %45 ihtimalle hedef balon, %55 ihtimalle diğer balonlar
         const isTarget = Math.random() < 0.45;
-        const bData = isTarget ? targetBalloon : pool.balloons[Math.floor(Math.random() * pool.balloons.length)];
+        const bData = isTarget ? targetBalloon : unit.words[Math.floor(Math.random() * unit.words.length)];
         const bColor = colors[Math.floor(Math.random() * colors.length)];
 
         const balloon = document.createElement('div');
@@ -18218,7 +18394,6 @@
 
         skyStage.appendChild(balloon);
 
-        // Uçuş Animasyonu (Alttan yukarı)
         let pos = -110;
         const speed = Math.random() * 1.5 + 2.0;
         const animInterval = setInterval(() => {
@@ -18230,23 +18405,22 @@
           }
         }, 20);
 
-        // Dokunulduğunda / Tıklandığında Patlat
         const onPop = (e) => {
           e.preventDefault();
           e.stopPropagation();
           clearInterval(animInterval);
 
           if (bData.name === targetBalloon.name) {
-            // DOĞRU BALON PATLADI!
             if (typeof audio !== 'undefined' && audio.playPop) audio.playPop();
-            speakEnglish(`Awesome! ${targetBalloon.name}!`);
+            speakEnglish(`Awesome! ${targetBalloon.name}!`, () => {
+              speakEnglish(targetBalloon.name);
+            });
             balloon.style.transform = 'scale(1.4)';
             balloon.style.opacity = '0';
             setTimeout(() => balloon.remove(), 200);
             this.addStar();
             setTimeout(() => this.initBalloonGame(this.currentGrade), 1400);
           } else {
-            // YANLIŞ BALON
             if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
             speakEnglish(`No, that is ${bData.name}! Find ${targetBalloon.name}!`);
             balloon.style.transform = 'scale(0.8)';
@@ -18257,7 +18431,6 @@
         balloon.addEventListener('pointerdown', onPop);
       };
 
-      // Balonları periyodik olarak uçur
       spawnBalloon();
       this.balloonInterval = setInterval(spawnBalloon, 1400);
     },
@@ -18266,6 +18439,9 @@
       this.currentGame = gameKey;
       this.currentGrade = grade || this.currentGrade;
 
+      // Ünite seçici rayını çiz
+      this.renderUnitSelector();
+
       // Tabları güncelle
       document.querySelectorAll('.kids-tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.game === gameKey);
@@ -18273,10 +18449,10 @@
 
       const titleEl = document.getElementById('kidsArenaTitle');
       const gameTitles = {
-        paint: 'Sihirli Boya Kovası (Color & Paint)',
-        monster: 'Canavarı Besle (Feed the Monster)',
-        body: 'Vücudumuz Yapbozu (Body Parts)',
-        balloon: 'Sesli Balon Avcısı (Listen & Pop)'
+        paint: 'Sihirli Boya Kovası & Dokun (Listen & Touch / Paint)',
+        monster: "Moli'yi Besle / Sepete Topla (Feed Moli)",
+        body: 'Parçaları Yerleştir (Puzzle & Snap)',
+        balloon: 'Sesli Balon Avcısı (Voice Balloon Pop)'
       };
       if (titleEl) titleEl.textContent = gameTitles[gameKey] || 'İngilizce Oyun Sahnesi';
 
@@ -18285,8 +18461,7 @@
       else if (gameKey === 'body') this.initBodyGame(this.currentGrade);
       else if (gameKey === 'balloon') this.initBalloonGame(this.currentGrade);
     }
-  };
-  window.EnglishKidsEngine = EnglishKidsEngine;
+  };  window.EnglishKidsEngine = EnglishKidsEngine;
 
   /* ==========================================================================
      🇬🇧 3. & 4. SINIF İNGİLİZCE İNTERAKTİF OYUN ARENASI (ADVANCED ENGINE)

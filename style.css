@@ -20753,3 +20753,157 @@ body.is-game-active .universal-game-bgm-fab {
 .k1-spatial-bars { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 480px; }
 .k1-bar { min-height: 44px; min-width: 0; height: 48px; justify-content: flex-end; padding: 0 10px; background: var(--kc); border-radius: 999px; }
 .k1-bar-end { font-size: 1.6rem; pointer-events: none; }
+/* 🇬🇧 İNGİLİZCE ÜNİTE VE TEMA SEÇİM SİSTEMİ (UNITS SELECTOR) */
+.kids-unit-selection-bar {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.kids-unit-scroll-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 6px 4px 10px 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.kids-unit-scroll-track::-webkit-scrollbar {
+  height: 6px;
+}
+.kids-unit-scroll-track::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 999px;
+}
+.kids-unit-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-bottom: 4px solid #CBD5E1;
+  border-radius: 999px;
+  color: #334155;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+.kids-unit-chip-btn:hover {
+  transform: translateY(-2px);
+  border-color: #818CF8;
+}
+.kids-unit-chip-btn.active {
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+  color: #FFFFFF !important;
+  border-color: #4338CA;
+  border-bottom: 4px solid #312E81;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+  transform: translateY(-2px) scale(1.04);
+}
+.kids-unit-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* Yay (Spring) Geri Dönüş Efekti */
+.spring-back {
+  animation: springBackAnim 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+}
+@keyframes springBackAnim {
+  0% { transform: scale(1.1); }
+  40% { transform: scale(0.9) translate3d(0, -10px, 0); }
+  75% { transform: scale(1.04) translate3d(0, 4px, 0); }
+  100% { transform: scale(1) translate3d(0, 0, 0); }
+}
+
+/* Sınıf / Oda / Puzzle Sahnesi */
+.puzzle-room-stage {
+  width: 100%;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.puzzle-scene-board {
+  width: min(94vw, 440px);
+  min-height: 240px;
+  background: linear-gradient(180deg, #F0FDF4 0%, #DCFCE7 100%);
+  border: 3px solid #86EFAC;
+  border-bottom: 6px solid #22C55E;
+  border-radius: 26px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.12);
+}
+.puzzle-room-slot {
+  width: 90px;
+  height: 90px;
+  border: 3px dashed #86EFAC;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #166534;
+  transition: all 0.25s ease;
+}
+.puzzle-room-slot.drag-over {
+  border-color: #22C55E;
+  background: #BBF7D0;
+  transform: scale(1.08);
+}
+.puzzle-room-slot.placed {
+  border-style: solid;
+  border-color: #22C55E;
+  background: #FFFFFF;
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.25);
+  transform: scale(1.02);
+}
+.puzzle-tray-rack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+.puzzle-piece-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #1E293B;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  user-select: none;
+  touch-action: none;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.puzzle-piece-chip:active {
+  transform: scale(1.1);
+}
+.puzzle-piece-chip.is-placed {
+  opacity: 0.3;
+  pointer-events: none;
+  filter: grayscale(1);
+}
