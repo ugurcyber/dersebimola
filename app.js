@@ -6652,6 +6652,1112 @@
       };
     },
 
+    grade3TurkishTheme1Pool: [
+      {
+            "q": "\"Erdemli\" sözcüğü kaç heceden oluşmaktadır? 📖",
+            "a": "3 hece (Er-dem-li)",
+            "d": [
+                  "2 hece",
+                  "4 hece"
+            ],
+            "exp": "Türkçe kelimelerdeki hece sayısı, o kelimedeki ünlü harf sayısına eşittir: Er-dem-li (3 hece)."
+      },
+      {
+            "q": "Aşağıdaki kelimelerden hangisinde diğerlerinden DAHA FAZLA hece vardır?",
+            "a": "Sorumluluk 🌟",
+            "d": [
+                  "Dürüstlük",
+                  "Yardım"
+            ],
+            "exp": "\"So-rum-lu-luk\" 4 heceden oluşur."
+      },
+      {
+            "q": "Sözlük sırasına göre dizildiğinde EN BAŞTA hangi kelime yer alır? 📚",
+            "a": "Adalet ⚖️",
+            "d": [
+                  "Cömertlik",
+                  "Dostluk"
+            ],
+            "exp": "Alfabe sıramıza göre \"A\" harfi ile başlayan \"Adalet\" en başta yer alır."
+      },
+      {
+            "q": "Sözlük sırasına göre dizildiğinde EN SONDA hangi erdem kavramı yer alır?",
+            "a": "Yardımseverlik 🤝",
+            "d": [
+                  "Saygı",
+                  "Sevgi"
+            ],
+            "exp": "\"Y\" harfi alfabemizin sonlarına yakın olduğu için en sonda yer alır."
+      },
+      {
+            "q": "\"Sabır - Saygı - Sevgi\" kelimelerinin sözlükteki DOĞRU sıralaması hangisidir? 📑",
+            "a": "Sabır - Saygı - Sevgi",
+            "d": [
+                  "Sevgi - Sabır - Saygı",
+                  "Saygı - Sabır - Sevgi"
+            ],
+            "exp": "İlk harfleri aynı (S) olduğundan ikinci harflere bakarız: Sa-bır, Sa-ygı, Se-vgi."
+      },
+      {
+            "q": "Aşağıdaki kelimelerden hangisi satır sonunda DOĞRU hecelenmiştir? ✍️",
+            "a": "Ha-yır-se-ver 💖",
+            "d": [
+                  "Hay-ır-se-ver",
+                  "Hayır-se-ver"
+            ],
+            "exp": "Doğru heceleme \"ha-yır-se-ver\" biçimindedir."
+      },
+      {
+            "q": "Alfabemizde kaç ünlü (sesli) harf vardır? 🔤",
+            "a": "8 ünlü harf (a, e, ı, i, o, ö, u, ü)",
+            "d": [
+                  "6 ünlü harf",
+                  "10 ünlü harf"
+            ],
+            "exp": "Alfabemizde 8 ünlü, 21 ünsüz olmak üzere toplam 29 harf vardır."
+      },
+      {
+            "q": "Bir hecede EN FAZLA kaç harf bulunabilir? 🔤",
+            "a": "4 harf (Örn: Türk, kurt, dört)",
+            "d": [
+                  "3 harf",
+                  "5 harf"
+            ],
+            "exp": "Türkçede bir hece en fazla 4 harften oluşabilir (örneğin \"Türk\", \"kurt\")."
+      },
+      {
+            "q": "\"Dürüstlük - İyilik - Hoşgörü\" sözcüklerinin sözlük sıralaması nasıldır? 📖",
+            "a": "Dürüstlük - Hoşgörü - İyilik",
+            "d": [
+                  "Hoşgörü - Dürüstlük - İyilik",
+                  "İyilik - Dürüstlük - Hoşgörü"
+            ],
+            "exp": "Alfabe sırası: D, H, İ."
+      },
+      {
+            "q": "\"Teşekkür\" kelimesi kaç harf ve kaç heceden oluşur? 🙏",
+            "a": "8 harf, 3 hece (Te-şek-kür)",
+            "d": [
+                  "8 harf, 2 hece",
+                  "7 harf, 3 hece"
+            ],
+            "exp": "T-E-Ş-E-K-K-Ü-R (8 harf), Te-şek-kür (3 hece)."
+      }
+],
+    grade3TurkishTheme2Pool: [
+      {
+            "q": "\"Vatan\" kelimesinin EŞ ANLAMLISI hangisidir? 🇹🇷",
+            "a": "Yurt 🇹🇷",
+            "d": [
+                  "Millet",
+                  "Toprak"
+            ],
+            "exp": "Vatan ve Yurt aynı anlamı taşır (eş anlamlıdır)."
+      },
+      {
+            "q": "\"Millet\" sözcüğünün EŞ ANLAMLISI hangisidir? 👥",
+            "a": "Ulus 👥",
+            "d": [
+                  "Devlet",
+                  "Halk"
+            ],
+            "exp": "Millet ve Ulus eş anlamlı sözcüklerdir."
+      },
+      {
+            "q": "\"Önder\" kelimesinin EŞ ANLAMLISI hangisidir? ⭐",
+            "a": "Lider ⭐",
+            "d": [
+                  "Asker",
+                  "Komutan"
+            ],
+            "exp": "Gazi Mustafa Kemal Atatürk büyük bir önder yani liderdir."
+      },
+      {
+            "q": "\"İstiklal\" sözcüğünün anlamdaşı (eş anlamlısı) nedir? 🕊️",
+            "a": "Bağımsızlık 🕊️",
+            "d": [
+                  "Özgürlük",
+                  "Zafer"
+            ],
+            "exp": "İstiklal = Bağımsızlık demektir."
+      },
+      {
+            "q": "\"Barış\" kelimesinin ZIT ANLAMLISI hangisidir? ⚔️",
+            "a": "Savaş ⚔️",
+            "d": [
+                  "Zafer",
+                  "Düşman"
+            ],
+            "exp": "Barış sözcüğünün karşıt (zıt) anlamlısı savaştır."
+      },
+      {
+            "q": "\"Tutsak\" (Esir) sözcüğünün ZIT ANLAMLISI hangisidir? 🕊️",
+            "a": "Hür / Özgür 🕊️",
+            "d": [
+                  "Köle",
+                  "Yaralı"
+            ],
+            "exp": "Tutsak olmanın zıttı hür veya özgür olmaktır."
+      },
+      {
+            "q": "\"Cesur\" Türk askerinin ZIT ANLAMLISI hangi seçenektir? 🛡️",
+            "a": "Korkak 🛡️",
+            "d": [
+                  "Kahraman",
+                  "Yenilmez"
+            ],
+            "exp": "Cesur kelimesinin karşıt anlamı korkaktır."
+      },
+      {
+            "q": "\"Galibiyet\" sözcüğünün ZIT ANLAMLISI nedir? 🏆",
+            "a": "Mağlubiyet / Yenilgi ❌",
+            "d": [
+                  "Zafer",
+                  "Başarı"
+            ],
+            "exp": "Galibiyet (kazanmak), mağlubiyet (yenilmek) ile zıttır."
+      },
+      {
+            "q": "\"Muallim\" sözcüğünün günümüzdeki eş anlamlısı nedir? 👨‍🏫",
+            "a": "Öğretmen 👨‍🏫",
+            "d": [
+                  "Öğrenci",
+                  "Müdür"
+            ],
+            "exp": "Başöğretmen Atatürk: Muallim = Öğretmen demektir."
+      },
+      {
+            "q": "\"Cümle\" sözcüğünün EŞ ANLAMLISI hangisidir? ✍️",
+            "a": "Tümce ✍️",
+            "d": [
+                  "Kelime",
+                  "Paragraf"
+            ],
+            "exp": "Cümle ile tümce aynı anlamdadır."
+      }
+],
+    grade3TurkishTheme3Pool: [
+      {
+            "q": "\"Yaz\" kelimesi hangi özelliğiyle eş seslidir? ☀️✍️",
+            "a": "Hem sıcak mevsim hem de yazı yazmak eylemidir.",
+            "d": [
+                  "Sadece bir mevsim adıdır.",
+                  "Kış kelimesinin zıttıdır."
+            ],
+            "exp": "Yaz hem yılın en sıcak mevsimi hem de yazı yazmaktır (sesteştir)."
+      },
+      {
+            "q": "\"Yüz\" kelimesi aşağıdaki cümlelerin hangisinde SAYI anlamında kullanılmıştır? 💯",
+            "a": "Sınavdan tam yüz puan aldım. 💯",
+            "d": [
+                  "Havuza atlayıp yüzdü.",
+                  "Gülümseyen bir yüzü vardı."
+            ],
+            "exp": "Yüz puan ifadesindeki yüz, 100 sayısıdır."
+      },
+      {
+            "q": "\"Bulutlar neşeyle gökyüzünde dans ediyordu.\" cümlesi nasıl bir ifadedir? ☁️",
+            "a": "Hayal Ürünü (Düşsel) ☁️",
+            "d": [
+                  "Gerçekleşebilir Olay",
+                  "Bilimsel Kanıt"
+            ],
+            "exp": "Bulutların dans etmesi insan zihninde kurgulanan hayal ürünü bir durumdur."
+      },
+      {
+            "q": "\"Güneş doğunca hava aydınlandı ve kuşlar öttü.\" cümlesi ne tür bir ifadedir? 🌅",
+            "a": "Gerçek (Gerçekleşebilir) İfade 🌅",
+            "d": [
+                  "Hayal Ürünü",
+                  "Mitolojik Masal"
+            ],
+            "exp": "Güneşin doğması ve kuşların ötmesi günlük hayatta yaşanan gerçek bir durumdur."
+      },
+      {
+            "q": "\"Ağacın dalına sevimli bir sincap kondu.\" cümlesinde \"dal\" kelimesinin diğer eş sesli anlamı nedir? 🏊‍♂️",
+            "a": "Suya dalmak 🏊‍♂️",
+            "d": [
+                  "Ağaç yaprağı",
+                  "Toprak kazmak"
+            ],
+            "exp": "Ağaç dalı ve denize dalmak sesteştir."
+      },
+      {
+            "q": "\"Ayşe rüyasında konuşan bir yıldızla arkadaş oldu.\" cümlesi hangisine örnektir? ⭐",
+            "a": "Hayal Ürünü ⭐",
+            "d": [
+                  "Gerçek Yaşam Olayı",
+                  "Tarihi Olay"
+            ],
+            "exp": "Yıldızların konuşması hayal ürünüdür."
+      },
+      {
+            "q": "\"Kır\" kelimesi hangisinde \"doğa, yeşil alan\" anlamında kullanılmıştır? 🌸",
+            "a": "İlkbaharda kır çiçekleri topladık. 🌸",
+            "d": [
+                  "Bardağı yere düşürüp kırdı.",
+                  "Dedemin saçlarına kırlar düştü."
+            ],
+            "exp": "Kır çiçekleri doğadaki yeşil alanları ifade eder."
+      },
+      {
+            "q": "\"Çay\" kelimesi eş sesli olarak hangi iki varlığı temsil eder? ☕🌊",
+            "a": "İçilen sıcak çay ve küçük akarsu 🌊",
+            "d": [
+                  "Deniz ve göl",
+                  "Meyve suyu ve süt"
+            ],
+            "exp": "Çay hem kahvaltı içeceği hem de akarsudur."
+      },
+      {
+            "q": "\"Gül\" kelimesi hangisinde ÇİÇEK anlamında kullanılmıştır? 🌹",
+            "a": "Vazodaki kırmızı gül çok güzel kokuyor. 🌹",
+            "d": [
+                  "Fıkraya herkes çok güldü.",
+                  "Bize bakıp tatlı tatlı gül."
+            ],
+            "exp": "Vazodaki kırmızı gül bitki olan çiçektir."
+      },
+      {
+            "q": "\"Kedi kanatlanıp gökyüzünde uçmaya başladı.\" ifadesi nedir? 🐱🕊️",
+            "a": "Hayal Ürünü 🐱🕊️",
+            "d": [
+                  "Gerçek Durum",
+                  "Haber Metni"
+            ],
+            "exp": "Kedilerin kanatlanıp uçması masalsı bir hayal ürünüdür."
+      }
+],
+    grade3TurkishTheme4Pool: [
+      {
+            "q": "\"Astronotlar uzayda ne araştırıyor( )\" Cümlesinin sonuna hangi noktalama işareti gelmelidir? 🚀",
+            "a": "Soru İşareti (?) ❓",
+            "d": [
+                  "Nokta (.)",
+                  "Ünlem (!)"
+            ],
+            "exp": "Soru sorulduğu için cümlenin sonuna soru işareti konur."
+      },
+      {
+            "q": "\"Laboratuvarda mikroskop( ) deney tüpü ve büyüteç var.\" Paranteze hangi işaret konmalıdır? 🔬",
+            "a": "Virgül (,) 🔬",
+            "d": [
+                  "Nokta (.)",
+                  "İki Nokta (:)"
+            ],
+            "exp": "Art arda sıralanan eş görevli araç-gereçlerin arasına virgül konur."
+      },
+      {
+            "q": "\"Robot aniden durdu ve çalışmadı\" Tamamlanmış cümlenin sonuna ne konur? 🤖",
+            "a": "Nokta (.) 🛑",
+            "d": [
+                  "Virgül (,)",
+                  "Soru İşareti (?)"
+            ],
+            "exp": "Tamamlanmış yargı bildiren cümlelerin sonuna nokta konur."
+      },
+      {
+            "q": "\"TÜBİTAK'ın bilim sergisi Ankara'da açıldı.\" Cümlesinde hangi işaret ekleri ayırmıştır? 🏛️",
+            "a": "Kesme İşareti (') ✂️",
+            "d": [
+                  "Kısa Çizgi (-)",
+                  "Noktalı Virgül (;)"
+            ],
+            "exp": "Özel isimlere ve kısaltmalara gelen ekler kesme işaretiyle (') ayrılır."
+      },
+      {
+            "q": "Aşağıdaki tarih yazımlarından hangisi DOĞRUDUR? 📅",
+            "a": "19.05.1919 (veya 19 Mayıs 1919) 📅",
+            "d": [
+                  "19/Mayıs/1919",
+                  "19-Mayıs-1919."
+            ],
+            "exp": "Ay adı yazıyla yazıldığında araya noktalama işareti konmaz, rakamla yazıldığında nokta kullanılır."
+      },
+      {
+            "q": "Hangisinde \"ki\" veya \"de\" bağlacının yazımı DOĞRUDUR? 💡",
+            "a": "Bilgisayar da bir teknolojik araçtır. 💻",
+            "d": [
+                  "Bilgisayarda bir teknolojik araçtır.",
+                  "Ev de televizyon açık kaldı."
+            ],
+            "exp": "Dahi anlamındaki \"de/da\" bağlacı ayrı yazılır."
+      },
+      {
+            "q": "\"Yaşasın, bilim yarışmasında projemiz birinci oldu( )\" Sonuna ne konur? 🏆",
+            "a": "Ünlem İşareti (!) 🎉",
+            "d": [
+                  "Nokta (.)",
+                  "Soru İşareti (?)"
+            ],
+            "exp": "Büyük sevinç ve coşku bildirdiği için ünlem işareti konur."
+      },
+      {
+            "q": "Dijital saatlerin yazımında TDK kuralına göre saat ile dakika arasına ne konur? ⏰",
+            "a": "Tek Nokta (.) [Örn: 14.30] ⏰",
+            "d": [
+                  "İki Nokta (:) [14:30]",
+                  "Virgül (,) [14,30]"
+            ],
+            "exp": "Türkçede saat ve dakikaların arasına tek nokta konur."
+      },
+      {
+            "q": "Satır sonuna sığmayan sözcükler bölünürken satır sonuna hangi işaret konur? ✍️",
+            "a": "Kısa Çizgi (-) ✍️",
+            "d": [
+                  "Uzun Çizgi (—)",
+                  "Eğik Çizgi (/)"
+            ],
+            "exp": "Hece bölmelerinde kısa çizgi kullanılır."
+      },
+      {
+            "q": "Hangisinde büyük harflerin kullanımıyla ilgili YANLIŞLIK yapılmıştır? ❌",
+            "a": "Gelecek hafta istanbul'a gideceğiz. ❌",
+            "d": [
+                  "Türkçe dersinde robotları öğrendik.",
+                  "Cumhuriyet Bayramı kutlandı."
+            ],
+            "exp": "İstanbul özel isim olduğundan büyük harfle başlamalıdır."
+      }
+],
+    grade3TurkishTheme5Pool: [
+      {
+            "q": "\"Ali dün akşam kütüphanede arkadaşlarıyla ders çalıştı.\" cümlesinde Ali NEREDE ders çalışmıştır? 🏛️",
+            "a": "Kütüphanede 🏛️",
+            "d": [
+                  "Dün akşam",
+                  "Arkadaşlarıyla"
+            ],
+            "exp": "\"Nerede?\" sorusu mekanı bildirir: Kütüphanede."
+      },
+      {
+            "q": "\"Çocuklar parkın temizlenmesi için belediyeye dilekçe verdi.\" Çocuklar NİÇİN (NEDEN) dilekçe verdi? 📝",
+            "a": "Parkın temizlenmesi için 🌳",
+            "d": [
+                  "Belediyeye",
+                  "Dün sabah"
+            ],
+            "exp": "Amacı ve gerekçeyi açıklayan ifade \"Parkın temizlenmesi için\"dir."
+      },
+      {
+            "q": "\"Zeynep her sabah okula yürüyerek gider.\" Zeynep okula NASIL gider? 🚶‍♀️",
+            "a": "Yürüyerek 🚶‍♀️",
+            "d": [
+                  "Zeynep",
+                  "Her sabah"
+            ],
+            "exp": "\"Nasıl?\" sorusu eylemin yapılma biçimini açıklar: Yürüyerek."
+      },
+      {
+            "q": "Bir hikayede olayın geçtiği mekana ne ad verilir? 🗺️",
+            "a": "Yer (Mekan) 🗺️",
+            "d": [
+                  "Zaman",
+                  "Kişiler"
+            ],
+            "exp": "Olayın yaşandığı çevreye Yer (Mekan) denir."
+      },
+      {
+            "q": "Bir hikayeyi yaşayan canlı varlıklara ne ad verilir? 👥",
+            "a": "Karakterler / Kişiler 👥",
+            "d": [
+                  "Ana Fikir",
+                  "Konu"
+            ],
+            "exp": "Hikayedeki olayları gerçekleştiren kahramanlara Kişiler / Şahıs kadrosu denir."
+      },
+      {
+            "q": "\"Her çocuğun eğitim ve oyun oynama hakkı vardır.\" Bu cümlenin ana konusu nedir? 🛝",
+            "a": "Çocuk Hakları 🛝",
+            "d": [
+                  "Okul Kuralları",
+                  "Trafik Kuralları"
+            ],
+            "exp": "Eğitim ve oyun en temel çocuk hakları arasındadır."
+      },
+      {
+            "q": "\"Ahmet yarışmayı azimle çalışarak kazandı.\" cümlesinde KİM yarışmayı kazanmıştır? 🏃‍♂️",
+            "a": "Ahmet 🏃‍♂️",
+            "d": [
+                  "Yarışmayı",
+                  "Çalışarak"
+            ],
+            "exp": "\"Kim?\" sorusunun cevabı eylemi gerçekleştiren kişi yani Ahmet'tir."
+      },
+      {
+            "q": "\"Tören 23 Nisan sabahı okul bahçesinde başladı.\" Tören NE ZAMAN başlamıştır? ⏰",
+            "a": "23 Nisan sabahı ⏰",
+            "d": [
+                  "Okul bahçesinde",
+                  "Tören"
+            ],
+            "exp": "\"Ne zaman?\" sorusu zaman öğesini bildirir: 23 Nisan sabahı."
+      },
+      {
+            "q": "Metnin bütününde okuyucuya verilmek istenen temel mesaja ne denir? 💡",
+            "a": "Ana Fikir (Ana Düşünce) 💡",
+            "d": [
+                  "Konu",
+                  "Başlık"
+            ],
+            "exp": "Metinden çıkarılan asıl ders veya mesaja Ana Fikir denir."
+      },
+      {
+            "q": "Bir metinde \"Ne, Nerede, Ne Zaman, Nasıl, Neden, Kim\" sorularına ne ad verilir? 🔍",
+            "a": "5N1K Soruları 🔍",
+            "d": [
+                  "Hece Bilgisi",
+                  "Zıt Anlam"
+            ],
+            "exp": "Okuduğunu anlamada kullanılan 6 soruya 5N1K denir."
+      }
+],
+    grade3TurkishTheme6Pool: [
+      {
+            "q": "\"Kırmızı elma, sıcak çorba, temiz su\" tamlamalarındaki \"Kırmızı, Sıcak, Temiz\" ne tür kelimelerdir? 🎨",
+            "a": "Sıfat (Ön Ad - Varlığın özelliğini belirten) 🎨",
+            "d": [
+                  "İsim (Ad)",
+                  "Eylem (Fiil)"
+            ],
+            "exp": "Varlıkların rengini, durumunu, şeklini niteleyen sözcüklere Sıfat (Ön ad) denir."
+      },
+      {
+            "q": "\"Koştu, yüzdü, zıpladı, oynuyor\" sözcükleri neyi ifade eder? 🏃‍♂️",
+            "a": "Eylem (Fiil - İş, oluş, hareket) ⚽",
+            "d": [
+                  "İsim (Ad)",
+                  "Sıfat"
+            ],
+            "exp": "Bir hareket, iş ve oluş bildiren kelimelere Eylem (Fiil) denir."
+      },
+      {
+            "q": "\"Top, raket, forma, saha\" sözcükleri dil bilgisinde hangisidir? 🎾",
+            "a": "İsim (Ad) 🎾",
+            "d": [
+                  "Fiil (Eylem)",
+                  "Zamir"
+            ],
+            "exp": "Canlı ve cansız varlıkları tanıtan sözcüklere İsim (Ad) denir."
+      },
+      {
+            "q": "\"Hızlı koşucu yarışı birinci bitirdi.\" cümlesindeki \"Hızlı\" kelimesi hangi türdedir? ⚡",
+            "a": "Sıfat (Koşucunun özelliğini belirtir) ⚡",
+            "d": [
+                  "İsim",
+                  "Fiil"
+            ],
+            "exp": "Koşucunun nasıl olduğunu bildirdiği için niteleme sıfatıdır."
+      },
+      {
+            "q": "Aşağıdaki kelimelerden hangisi bir EYLEM (FİİL) bildirmektedir? 🏊‍♂️",
+            "a": "Yüzüyor 🏊‍♂️",
+            "d": [
+                  "Havuz",
+                  "Mavi mayo"
+            ],
+            "exp": "\"Yüzüyor\" bir iş ve hareket (fiil) bildirmektedir."
+      },
+      {
+            "q": "Aşağıdakilerden hangisi bir ÖZEL İSİMDİR? 🇹🇷",
+            "a": "Türkiye 🇹🇷",
+            "d": [
+                  "Ülke",
+                  "Şehir"
+            ],
+            "exp": "Türkiye tek ve eşi benzeri olmayan bir ülke özel adıdır."
+      },
+      {
+            "q": "\"Üç basketbolcu sahaya çıktı.\" cümlesinde varlığın SAYISINI belirten sıfat hangisidir? 🏀",
+            "a": "Üç 🏀",
+            "d": [
+                  "Basketbolcu",
+                  "Saha"
+            ],
+            "exp": "\"Üç\" sözcüğü basketbolcuların sayısını belirten sayı sıfatıdır."
+      },
+      {
+            "q": "Hangisi bir \"Çoğul İsim\"dir (-ler / -lar eki almış)? ⚽",
+            "a": "Toplar ⚽⚽",
+            "d": [
+                  "Top",
+                  "Topaç"
+            ],
+            "exp": "\"Toplar\" birden fazla topu ifade ettiği için çoğul isimdir."
+      },
+      {
+            "q": "\"Doktor hastayı muayene etti.\" cümlesinde eylem (fiil) hangisidir? 🩺",
+            "a": "Muayene etti 🩺",
+            "d": [
+                  "Doktor",
+                  "Hasta"
+            ],
+            "exp": "\"Muayene etti\" yapılan işi ve hareketi ifade eden eylemdir."
+      },
+      {
+            "q": "\"Taze sebzeler ve sulu meyveler yemeliyiz.\" cümlesinde sıfatlar hangileridir? 🥗",
+            "a": "Taze ve Sulu 🥗",
+            "d": [
+                  "Sebze ve Meyve",
+                  "Yemeliyiz"
+            ],
+            "exp": "Sebzenin özelliği \"taze\", meyvenin özelliği \"sulu\" olmasıdır."
+      }
+],
+
+    grade3MathUnit1Pool: [
+      {
+            "q": "478 sayısındaki \"7\" rakamının BASAMAK DEĞERİ kaçtır? 📦",
+            "a": "70 (Onlar basamağı)",
+            "d": [
+                  "7",
+                  "700"
+            ],
+            "exp": "7 rakamı onlar basamağındadır: 7 × 10 = 70."
+      },
+      {
+            "q": "852 sayısındaki \"8\" rakamının BASAMAK DEĞERİ kaçtır? 🏛️",
+            "a": "800 (Yüzler basamağı)",
+            "d": [
+                  "80",
+                  "8"
+            ],
+            "exp": "8 rakamı yüzler basamağındadır: 8 × 100 = 800."
+      },
+      {
+            "q": "Romen rakamlarında \"XIV\" sayısı hangi doğal sayıya eşittir? 🏛️",
+            "a": "14",
+            "d": [
+                  "16",
+                  "15"
+            ],
+            "exp": "X (10) + IV (4) = 14."
+      },
+      {
+            "q": "Romen rakamlarında \"XIX\" sayısı kaça eşittir? 🏛️",
+            "a": "19",
+            "d": [
+                  "21",
+                  "18"
+            ],
+            "exp": "X (10) + IX (9) = 19."
+      },
+      {
+            "q": "364 sayısı en yakın ONLUĞA yuvarlandığında kaç olur? 🎯",
+            "a": "360",
+            "d": [
+                  "370",
+                  "400"
+            ],
+            "exp": "Birler basamağında 4 olduğu için (5'ten küçük) kendi onluğuna yani 360'a yuvarlanır."
+      },
+      {
+            "q": "547 sayısı en yakın YÜZLÜĞE yuvarlandığında kaç olur? 🎯",
+            "a": "500",
+            "d": [
+                  "600",
+                  "550"
+            ],
+            "exp": "Son iki basamağı 47'dir (50'den küçük olduğu için kendi yüzlüğüne yani 500'e yuvarlanır)."
+      },
+      {
+            "q": "685 sayısı en yakın YÜZLÜĞE yuvarlandığında kaç olur? 🎯",
+            "a": "700",
+            "d": [
+                  "600",
+                  "680"
+            ],
+            "exp": "Son iki basamağı 85'tir (50 ve üzeri olduğu için bir üst yüzlüğe yani 700'e yuvarlanır)."
+      },
+      {
+            "q": "3, 0, 7 rakamları birer kez kullanılarak yazılabilecek EN BÜYÜK 3 basamaklı sayı kaçtır? 🔢",
+            "a": "730",
+            "d": [
+                  "703",
+                  "370"
+            ],
+            "exp": "Büyükten küçüğe sıralarız: 7, 3, 0 -> 730."
+      },
+      {
+            "q": "4, 1, 9 rakamlarıyla yazılabilecek EN KÜÇÜK 3 basamaklı sayı kaçtır? 🔢",
+            "a": "149",
+            "d": [
+                  "194",
+                  "419"
+            ],
+            "exp": "Küçükten büyüğe sıralarız: 1, 4, 9 -> 149."
+      },
+      {
+            "q": "6 yüzlük, 4 birlikten oluşan 3 basamaklı sayı kaçtır? 📦",
+            "a": "604",
+            "d": [
+                  "640",
+                  "460"
+            ],
+            "exp": "Yüzler: 6, Onlar: 0, Birler: 4 -> 604."
+      }
+],
+    grade3MathUnit2Pool: [
+      {
+            "q": "348 + 275 işleminin sonucu kaçtır? ➕",
+            "a": "623",
+            "d": [
+                  "613",
+                  "625"
+            ],
+            "exp": "348 + 275 = 623 (Eldeli toplama)."
+      },
+      {
+            "q": "516 + 189 işleminin sonucu kaçtır? ➕",
+            "a": "705",
+            "d": [
+                  "695",
+                  "715"
+            ],
+            "exp": "516 + 189 = 705."
+      },
+      {
+            "q": "640 - 275 işleminin sonucu kaçtır? ➖",
+            "a": "365",
+            "d": [
+                  "375",
+                  "465"
+            ],
+            "exp": "640 - 275 = 365 (Onluk bozarak çıkarma)."
+      },
+      {
+            "q": "800 - 346 işleminin sonucu kaçtır? ➖",
+            "a": "454",
+            "d": [
+                  "464",
+                  "554"
+            ],
+            "exp": "800 - 346 = 454."
+      },
+      {
+            "q": "Bir çıkarma işleminde Eksilen 750, Çıkan 280 ise KALAN (FARK) kaçtır? ➖",
+            "a": "470",
+            "d": [
+                  "460",
+                  "530"
+            ],
+            "exp": "750 - 280 = 470."
+      },
+      {
+            "q": "Eksilenin 620, Farkın 190 olduğu bir çıkarma işleminde ÇIKAN sayı kaçtır? ❓",
+            "a": "430",
+            "d": [
+                  "420",
+                  "810"
+            ],
+            "exp": "Çıkan = Eksilen - Fark -> 620 - 190 = 430."
+      },
+      {
+            "q": "Zihinden toplama: 450 + 300 işleminin sonucu nedir? 🧠",
+            "a": "750",
+            "d": [
+                  "850",
+                  "700"
+            ],
+            "exp": "450 + 300 = 750."
+      },
+      {
+            "q": "Bir çiftlikte 245 koyun, koyunlardan 130 fazla inek vardır. Çiftlikte kaç inek vardır? 🐮",
+            "a": "375 inek",
+            "d": [
+                  "365 inek",
+                  "475 inek"
+            ],
+            "exp": "245 + 130 = 375 inek vardır."
+      },
+      {
+            "q": "520 sayfalık kitabın 185 sayfasını okuyan Zeynep'in okuyacağı kaç sayfa kalmıştır? 📖",
+            "a": "335 sayfa",
+            "d": [
+                  "345 sayfa",
+                  "435 sayfa"
+            ],
+            "exp": "520 - 185 = 335 sayfa kalmıştır."
+      },
+      {
+            "q": "Tahmin: 394 + 208 işlemini en yakın onluğa yuvarlayarak tahmin edersek sonuç kaç olur? 🎯",
+            "a": "390 + 210 = 600",
+            "d": [
+                  "400 + 200 = 600",
+                  "390 + 200 = 590"
+            ],
+            "exp": "394 -> 390, 208 -> 210. 390 + 210 = 600."
+      }
+],
+    grade3MathUnit3Pool: [
+      {
+            "q": "8 × 7 işleminin sonucu kaçtır? ✖️",
+            "a": "56",
+            "d": [
+                  "54",
+                  "64"
+            ],
+            "exp": "8 kere 7 = 56 eder."
+      },
+      {
+            "q": "9 × 6 işleminin sonucu kaçtır? ✖️",
+            "a": "54",
+            "d": [
+                  "56",
+                  "63"
+            ],
+            "exp": "9 kere 6 = 54 eder."
+      },
+      {
+            "q": "7 × 7 işleminin sonucu kaçtır? ✖️",
+            "a": "49",
+            "d": [
+                  "42",
+                  "56"
+            ],
+            "exp": "7 kere 7 = 49 eder."
+      },
+      {
+            "q": "24 × 10 kısa yoldan çarpma işleminin sonucu kaçtır? ⚡",
+            "a": "240",
+            "d": [
+                  "2400",
+                  "204"
+            ],
+            "exp": "10 ile çarparken sayının sağına bir sıfır eklenir: 24 × 10 = 240."
+      },
+      {
+            "q": "72 ÷ 8 bölme işleminin sonucu (bölüm) kaçtır? ➗",
+            "a": "9",
+            "d": [
+                  "8",
+                  "7"
+            ],
+            "exp": "72 içinde 8 tam 9 kere vardır (9 × 8 = 72)."
+      },
+      {
+            "q": "63 ÷ 7 işleminin sonucu kaçtır? ➗",
+            "a": "9",
+            "d": [
+                  "8",
+                  "6"
+            ],
+            "exp": "63 ÷ 7 = 9 eder."
+      },
+      {
+            "q": "48 cevizi 4 arkadaş eşit paylaştığında her birine kaç ceviz düşer? 🌰",
+            "a": "12 ceviz",
+            "d": [
+                  "11 ceviz",
+                  "14 ceviz"
+            ],
+            "exp": "48 ÷ 4 = 12 ceviz."
+      },
+      {
+            "q": "35 sayısının 4'e bölümünden KALAN kaçtır? ➗",
+            "a": "Kalan 3 (Bölüm: 8)",
+            "d": [
+                  "Kalan 2",
+                  "Kalan 1"
+            ],
+            "exp": "35 ÷ 4 = 8 defa vardır (8 × 4 = 32). Kalan: 35 - 32 = 3."
+      },
+      {
+            "q": "Bir bölme işleminde bölen 6 ise KALAN en fazla kaç olabilir? 🛑",
+            "a": "5",
+            "d": [
+                  "6",
+                  "7"
+            ],
+            "exp": "Bir bölme işleminde kalan her zaman bölenden küçük olmalıdır (en fazla 6 - 1 = 5 olabilir)."
+      },
+      {
+            "q": "15 × 6 işleminin sonucu kaçtır? ✖️",
+            "a": "90",
+            "d": [
+                  "80",
+                  "95"
+            ],
+            "exp": "15 × 6 = 90 eder."
+      }
+],
+    grade3MathUnit4Pool: [
+      {
+            "q": "Payı 1 olan kesirlere (örneğin 1/2, 1/4, 1/8) ne ad verilir? 🍕",
+            "a": "Birim Kesir 🍕",
+            "d": [
+                  "Bileşik Kesir",
+                  "Tam Kesir"
+            ],
+            "exp": "Payı 1 olan bütün kesirler \"birim kesir\"dir."
+      },
+      {
+            "q": "40 liranın 1/4'ü (çeyreği) kaç liradır? 💵",
+            "a": "10 TL 💵",
+            "d": [
+                  "20 TL",
+                  "5 TL"
+            ],
+            "exp": "40 ÷ 4 = 10 TL."
+      },
+      {
+            "q": "36 elmanın 1/6'sı kaç elma eder? 🍎",
+            "a": "6 elma 🍎",
+            "d": [
+                  "8 elma",
+                  "4 elma"
+            ],
+            "exp": "36 ÷ 6 = 6 elma."
+      },
+      {
+            "q": "1 saat 25 dakika toplam kaç dakikadır? ⏳",
+            "a": "85 dakika",
+            "d": [
+                  "75 dakika",
+                  "90 dakika"
+            ],
+            "exp": "1 saat = 60 dakika. 60 + 25 = 85 dakika."
+      },
+      {
+            "q": "Öğleden sonra saat 15.45 analog saatte nasıl okunur? ⏰",
+            "a": "Dörde çeyrek var (3'ü 45 geçiyor)",
+            "d": [
+                  "Üçe çeyrek var",
+                  "Dördü çeyrek geçiyor"
+            ],
+            "exp": "15.45 öğleden sonra 3.45 demektir, bu da 4'e 15 dakika var (çeyrek var) demektir."
+      },
+      {
+            "q": "200 kuruş kaç liraya eşittir? 🪙",
+            "a": "2 TL 🪙",
+            "d": [
+                  "20 TL",
+                  "1 TL"
+            ],
+            "exp": "100 kuruş = 1 TL olduğu için 200 kuruş = 2 TL eder."
+      },
+      {
+            "q": "Tanesi 15 TL olan defterlerden 4 tane alan Ali satıcıya 100 TL verirse kaç TL para üstü alır? 💵",
+            "a": "40 TL para üstü",
+            "d": [
+                  "30 TL",
+                  "50 TL"
+            ],
+            "exp": "4 × 15 = 60 TL. 100 - 60 = 40 TL para üstü."
+      },
+      {
+            "q": "Bir yılda kaç hafta vardır? 📅",
+            "a": "52 hafta 📅",
+            "d": [
+                  "48 hafta",
+                  "54 hafta"
+            ],
+            "exp": "1 yıl 52 haftadır."
+      },
+      {
+            "q": "Bir günde kaç saat vardır? ⏰",
+            "a": "24 saat ⏰",
+            "d": [
+                  "12 saat",
+                  "48 saat"
+            ],
+            "exp": "Dünya kendi etrafındaki dönüşünü 24 saatte (1 gün) tamamlar."
+      },
+      {
+            "q": "3 tane 50 TL, 2 tane 20 TL toplam kaç TL eder? 💵",
+            "a": "190 TL",
+            "d": [
+                  "170 TL",
+                  "200 TL"
+            ],
+            "exp": "(3 × 50 = 150) + (2 × 20 = 40) = 190 TL."
+      }
+],
+    grade3MathUnit5Pool: [
+      {
+            "q": "Küpün kaç yüzü, kaç köşesi ve kaç ayrıtı vardır? 🧊",
+            "a": "6 yüzü, 8 köşesi, 12 ayrıtı 🧊",
+            "d": [
+                  "6 yüzü, 6 köşesi, 8 ayrıtı",
+                  "8 yüzü, 12 köşesi, 6 ayrıtı"
+            ],
+            "exp": "Küpün 6 kare yüzü, 8 köşesi ve 12 ayrıtı bulunur."
+      },
+      {
+            "q": "Tüm yüzleri kare olan geometrik cisim hangisidir? 🧊",
+            "a": "Küp 🧊",
+            "d": [
+                  "Kare Prizma",
+                  "Dikdörtgen Prizma"
+            ],
+            "exp": "Küpün 6 yüzünün tamamı karedir."
+      },
+      {
+            "q": "Kare prizmanın kaç karesel yüzü vardır? 📦",
+            "a": "2 kare yüzü (4 dikdörtgen yüzü)",
+            "d": [
+                  "4 kare yüzü",
+                  "6 kare yüzü"
+            ],
+            "exp": "Kare prizmada alt ve üst 2 kare, yanlarda 4 dikdörtgen yüz bulunur."
+      },
+      {
+            "q": "Köşesi ve ayrıtı OLMAYAN, eğri yüzeyli uzay cismi hangisidir? ⚽",
+            "a": "Küre ⚽",
+            "d": [
+                  "Küp",
+                  "Prizma"
+            ],
+            "exp": "Kürenin köşesi ve ayrıtı yoktur."
+      },
+      {
+            "q": "İki ucu da sonsuza kadar uzayan çizgi modeline ne ad verilir? ↔️",
+            "a": "Doğru ↔️",
+            "d": [
+                  "Işın",
+                  "Doğru Parçası"
+            ],
+            "exp": "Her iki ucu sınırsız uzayan çizgiye \"Doğru\" denir."
+      },
+      {
+            "q": "Bir ucu kapalı, diğer ucu sonsuza uzayan çizgiye (Örn: El feneri ışığı) ne ad verilir? 🔦",
+            "a": "Işın 🔦",
+            "d": [
+                  "Doğru",
+                  "Açı"
+            ],
+            "exp": "Başlangıç noktası sabit olup diğer yöne uzayana \"Işın\" denir."
+      },
+      {
+            "q": "Başlangıç noktaları aynı olan iki ışının oluşturduğu açıklığa ne denir? 📐",
+            "a": "Açı 📐",
+            "d": [
+                  "Doğru",
+                  "Kenar"
+            ],
+            "exp": "İki ışın arasındaki açıklığa \"Açı\" adı verilir."
+      },
+      {
+            "q": "Ölçüsü 90 derece olan açıya ne ad verilir? 📐",
+            "a": "Dik Açı (90°) 📐",
+            "d": [
+                  "Dar Açı",
+                  "Geniş Açı"
+            ],
+            "exp": "90 derecelik açı dik açıdır."
+      },
+      {
+            "q": "Bir şekli iki eş parçaya bölen çizgiye ne ad verilir? 🦋",
+            "a": "Simetri Doğrusu 🦋",
+            "d": [
+                  "Köşegen",
+                  "Ayrıt"
+            ],
+            "exp": "Şekli katlandığında üst üste çakışacak iki eş parçaya ayıran çizgi simetri doğrusudur."
+      },
+      {
+            "q": "Üçgen prizmanın kaç yüzü vardır? 📐",
+            "a": "5 yüzü (2 üçgen, 3 dikdörtgen)",
+            "d": [
+                  "6 yüzü",
+                  "4 yüzü"
+            ],
+            "exp": "Üçgen prizmanın 2 üçgen tabanı ve 3 dikdörtgen yüzü vardır."
+      }
+],
+    grade3MathUnit6Pool: [
+      {
+            "q": "1 metre kaç santimetredir? 📏",
+            "a": "100 cm 📏",
+            "d": [
+                  "10 cm",
+                  "1000 cm"
+            ],
+            "exp": "1 metre = 100 santimetredir."
+      },
+      {
+            "q": "Kenar uzunlukları 8 cm, 6 cm ve 10 cm olan bir üçgenin ÇEVRESİ kaç cm'dir? 📐",
+            "a": "24 cm",
+            "d": [
+                  "22 cm",
+                  "26 cm"
+            ],
+            "exp": "Çevre = 8 + 6 + 10 = 24 cm."
+      },
+      {
+            "q": "Bir kenarı 9 cm olan KARENİN ÇEVRESİ kaç cm'dir? ⏹️",
+            "a": "36 cm (4 × 9)",
+            "d": [
+                  "18 cm",
+                  "81 cm"
+            ],
+            "exp": "Karede 4 eşit kenar vardır: 4 × 9 = 36 cm."
+      },
+      {
+            "q": "Kısa kenarı 5 cm, uzun kenarı 12 cm olan DİKDÖRTGENİN ÇEVRESİ kaç cm'dir? 🚪",
+            "a": "34 cm [2 × (5 + 12)]",
+            "d": [
+                  "17 cm",
+                  "60 cm"
+            ],
+            "exp": "Çevre = (5 + 12) × 2 = 17 × 2 = 34 cm."
+      },
+      {
+            "q": "1 kilogram kaç grama eşittir? ⚖️",
+            "a": "1000 gram (g) ⚖️",
+            "d": [
+                  "100 gram",
+                  "500 gram"
+            ],
+            "exp": "1 kg = 1000 g eder."
+      },
+      {
+            "q": "Yarım kilogram kaç gramdır? ⚖️",
+            "a": "500 gram ⚖️",
+            "d": [
+                  "250 gram",
+                  "750 gram"
+            ],
+            "exp": "1000 ÷ 2 = 500 gram."
+      },
+      {
+            "q": "1 litre kaç yarım litre eder? 🥛",
+            "a": "2 yarım litre 🥛",
+            "d": [
+                  "4 yarım litre",
+                  "1 yarım litre"
+            ],
+            "exp": "1 litrede 2 yarım litre (veya 4 çeyrek litre) bulunur."
+      },
+      {
+            "q": "Günde 2 litre su içen bir kişi 1 haftada kaç litre su içer? 💧",
+            "a": "14 litre 💧",
+            "d": [
+                  "10 litre",
+                  "16 litre"
+            ],
+            "exp": "7 gün × 2 litre = 14 litre su içer."
+      },
+      {
+            "q": "Aşağıdaki maddelerden hangisi LİTRE ile ölçülür? 🛢️",
+            "a": "Süt, zeytinyağı ve su 🥛",
+            "d": [
+                  "Pirinç ve un",
+                  "Kumaş ve ip"
+            ],
+            "exp": "Sıvı maddeler litre ile ölçülür."
+      },
+      {
+            "q": "3 metre 45 cm toplam kaç santimetredir? 📏",
+            "a": "345 cm",
+            "d": [
+                  "3045 cm",
+                  "75 cm"
+            ],
+            "exp": "3 m = 300 cm. 300 + 45 = 345 cm."
+      }
+],
+
     // 3. SINIF: KESİRLER VE GEOMETRİK CİSİMLER (26 ÖZGÜN SORU)
     grade3FractionsAndShapesPool: [
       { q: 'Payı 1 olan kesirlere (örneğin 1/2, 1/3, 1/5) ne ad verilir? 🍕', a: 'Birim Kesir 🍕', d: ['Bileşik Kesir', 'Tam Sayılı Kesir'], exp: 'Payı 1 olan bütün kesirler "birim kesir" olarak adlandırılır.' },
@@ -8853,36 +9959,55 @@
           englishWord: raw.englishWord,
           lang: 'en'
         }, '🍎 Animals & Fruits');
-      } else if (gameType === 'math_romen_place_3') {
-        const raw = this.generateGrade3RomenAndPlace();
-        return this.buildQuestionItem(raw, '🏛️ 3 Basamaklı Sayılar & Romen Rakamları');
-      } else if (gameType === 'math_mult_div_3') {
-        const raw = this.generateGrade3MultDiv();
-        return this.buildQuestionItem(raw, '🌪️ Çarpım Tablosu & Bölme Düellosu');
-      } else if (gameType === 'math_fractions_shapes_3') {
-        const raw = this.drawFromPool(this.grade3FractionsAndShapesPool, "grade3FractionsAndShapesPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🧊 Kesirler & Geometrik Cisimler');
-      } else if (gameType === 'turkish_homonyms_figurative_3') {
-        const raw = this.drawFromPool(this.grade3HomonymsFigurativePool, "grade3HomonymsFigurativePool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '🎭 Eş Sesli Kelimeler & Mecaz Anlam');
-      } else if (gameType === 'turkish_punctuation_5n1k_3') {
-        const raw = this.drawFromPool(this.grade3Punctuation5N1KPool, "grade3Punctuation5N1KPool");
-        return this.buildQuestionItem({
-          question: raw.q,
-          correct: raw.a,
-          distractors: raw.d,
-          explanation: raw.exp
-        }, '✍️ Noktalama, Yazım Kuralları & 5N1K');
+      // --- 3. SINIF: 6 TÜRKÇE TEMASI ---
+      } else if (gameType === 'turkish_theme1_3') {
+        const raw = this.drawFromPool(this.grade3TurkishTheme1Pool, "grade3TurkishTheme1Pool");
+        return this.buildQuestionItem(raw, '💖 Tema 1: Erdemler');
+      } else if (gameType === 'turkish_theme2_3') {
+        const raw = this.drawFromPool(this.grade3TurkishTheme2Pool, "grade3TurkishTheme2Pool");
+        return this.buildQuestionItem(raw, '🇹🇷 Tema 2: Milli Mücadele ve Atatürk');
+      } else if (gameType === 'turkish_theme3_3' || gameType === 'turkish_homonyms_figurative_3') {
+        const raw = this.drawFromPool(this.grade3TurkishTheme3Pool, "grade3TurkishTheme3Pool");
+        return this.buildQuestionItem(raw, '🌿 Tema 3: Doğa ve Evren');
+      } else if (gameType === 'turkish_theme4_3' || gameType === 'turkish_punctuation_5n1k_3') {
+        const raw = this.drawFromPool(this.grade3TurkishTheme4Pool, "grade3TurkishTheme4Pool");
+        return this.buildQuestionItem(raw, '💡 Tema 4: Bilim ve Teknoloji');
+      } else if (gameType === 'turkish_theme5_3') {
+        const raw = this.drawFromPool(this.grade3TurkishTheme5Pool, "grade3TurkishTheme5Pool");
+        return this.buildQuestionItem(raw, '⚖️ Tema 5: Vatandaşlık ve Haklarımız');
+      } else if (gameType === 'turkish_theme6_3') {
+        const raw = this.drawFromPool(this.grade3TurkishTheme6Pool, "grade3TurkishTheme6Pool");
+        return this.buildQuestionItem(raw, '🏃 Tema 6: Sağlık ve Spor');
+      } else if (gameType === 'turkish_3_karma' || (gameType === 'turkish' && parseInt(grade, 10) === 3)) {
+        const pools = [this.grade3TurkishTheme1Pool, this.grade3TurkishTheme2Pool, this.grade3TurkishTheme3Pool, this.grade3TurkishTheme4Pool, this.grade3TurkishTheme5Pool, this.grade3TurkishTheme6Pool];
+        const p = pools[Math.floor(Math.random() * pools.length)];
+        const raw = this.drawFromPool(p, "grade3TurkishKarmaPool");
+        return this.buildQuestionItem(raw, '🦉 3. Sınıf Türkçe Süper Karma');
+
+      // --- 3. SINIF: 6 MATEMATİK ÜNİTESİ ---
+      } else if (gameType === 'math_unit1_3' || gameType === 'math_romen_place_3') {
+        const raw = this.drawFromPool(this.grade3MathUnit1Pool, "grade3MathUnit1Pool");
+        return this.buildQuestionItem(raw, '🏛️ Ünite 1: Doğal Sayılar');
+      } else if (gameType === 'math_unit2_3') {
+        const raw = this.drawFromPool(this.grade3MathUnit2Pool, "grade3MathUnit2Pool");
+        return this.buildQuestionItem(raw, '➕ Ünite 2: Toplama ve Çıkarma');
+      } else if (gameType === 'math_unit3_3' || gameType === 'math_mult_div_3') {
+        const raw = this.drawFromPool(this.grade3MathUnit3Pool, "grade3MathUnit3Pool");
+        return this.buildQuestionItem(raw, '✖️ Ünite 3: Çarpma ve Bölme');
+      } else if (gameType === 'math_unit4_3') {
+        const raw = this.drawFromPool(this.grade3MathUnit4Pool, "grade3MathUnit4Pool");
+        return this.buildQuestionItem(raw, '🍕 Ünite 4: Kesir, Zaman ve Paralarımız');
+      } else if (gameType === 'math_unit5_3' || gameType === 'math_fractions_shapes_3') {
+        const raw = this.drawFromPool(this.grade3MathUnit5Pool, "grade3MathUnit5Pool");
+        return this.buildQuestionItem(raw, '🧊 Ünite 5: Geometrik Cisimler ve Şekiller');
+      } else if (gameType === 'math_unit6_3') {
+        const raw = this.drawFromPool(this.grade3MathUnit6Pool, "grade3MathUnit6Pool");
+        return this.buildQuestionItem(raw, '📏 Ünite 6: Uzunluk, Çevre ve Ölçme');
+      } else if (gameType === 'math_3_karma' || (gameType === 'math' && parseInt(grade, 10) === 3)) {
+        const pools = [this.grade3MathUnit1Pool, this.grade3MathUnit2Pool, this.grade3MathUnit3Pool, this.grade3MathUnit4Pool, this.grade3MathUnit5Pool, this.grade3MathUnit6Pool];
+        const p = pools[Math.floor(Math.random() * pools.length)];
+        const raw = this.drawFromPool(p, "grade3MathKarmaPool");
+        return this.buildQuestionItem(raw, '🧮 3. Sınıf Matematik Süper Karma');
       // --- 3. SINIF: 2026 MAARİF MODELİ FEN BİLİMLERİ 7 ÖĞRENME ALANI ---
       } else if (gameType === 'science_planet_layers_3') {
         const raw = this.drawFromPool(this.grade3SciencePlanetLayersPool, "grade3SciencePlanetLayersPool");
@@ -10538,7 +11663,21 @@
       english_colors: 'İngilizce Renkler',
       english_animals: 'İngilizce Hayvanlar',
       english_numbers: 'İngilizce Sayılar',
-      math_romen_place_3: '3 Basamaklı Sayılar ve Romen Rakamları',
+      turkish_theme1_3: '💖 Tema 1: Erdemler',
+    turkish_theme2_3: '🇹🇷 Tema 2: Milli Mücadele',
+    turkish_theme3_3: '🌿 Tema 3: Doğa ve Evren',
+    turkish_theme4_3: '💡 Tema 4: Bilim ve Teknoloji',
+    turkish_theme5_3: '⚖️ Tema 5: Haklarımız',
+    turkish_theme6_3: '🏃 Tema 6: Sağlık ve Spor',
+    turkish_3_karma: '🦉 3. Sınıf Türkçe Karma',
+    math_unit1_3: '🏛️ Ünite 1: Doğal Sayılar',
+    math_unit2_3: '➕ Ünite 2: Toplama & Çıkarma',
+    math_unit3_3: '✖️ Ünite 3: Çarpma & Bölme',
+    math_unit4_3: '🍕 Ünite 4: Kesir, Zaman & Para',
+    math_unit5_3: '🧊 Ünite 5: Geometri & Şekiller',
+    math_unit6_3: '📏 Ünite 6: Çevre & Ölçme',
+    math_3_karma: '🧮 3. Sınıf Matematik Karma',
+    math_romen_place_3: '3 Basamaklı Sayılar ve Romen Rakamları',
       math_mult_div_3: 'Çarpım Tablosu Şampiyonası ve Bölme',
       math_fractions_shapes_3: 'Kesirler ve Geometrik Cisimler',
       turkish_homonyms_figurative_3: 'Eş Sesli Kelimeler ve Mecaz Anlam',
@@ -16399,121 +17538,212 @@
     ],
 
     // -------------------------------------------------------------
-    // 3. SINIF: Matematik, Türkçe, Hayat Bilgisi, Fen Bilimleri, İngilizce, Akıl ve Zeka Oyunları
+    // 3. SINIF: Matematik (6 Ünite), Türkçe (6 Tema), Hayat Bilgisi, Fen Bilimleri, İngilizce, Akıl ve Zeka Oyunları
     // -------------------------------------------------------------
     3: [
       {
-        id: 'math',
-        name: 'Matematik',
-        icon: '🧮',
-        colorTheme: 'theme-math',
-        tagline: 'Çarpım Tablosu & Bölme',
-        description: 'Çarpım tablosu fırtınası, zihinden bölme ve basamak değerleri! 🌪️➗',
+        id: 'turkish',
+        name: 'Türkçe',
+        icon: '📕',
+        colorTheme: 'theme-turkish',
+        tagline: '6 Tema & Dil Bilgisi',
+        description: 'Erdemler, Milli Mücadele, Doğa, Bilim, Haklarımız ve Sağlık-Spor üniteleri! 📕✨',
         badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'mult_table', label: '🌪️ Çarpım & Bölme' },
-          { id: 'place_value', label: '🏛️ Basamak & Romen' },
-          { id: 'fractions_3', label: '🍕 Kesirler & Şekiller' }
+          { id: 'all', label: '🌟 Tüm Temalar / Karma Düello' },
+          { id: 'theme1', label: '💖 Tema 1: Erdemler' },
+          { id: 'theme2', label: '🇹🇷 Tema 2: Milli Mücadele & Atatürk' },
+          { id: 'theme3', label: '🌿 Tema 3: Doğa ve Evren' },
+          { id: 'theme4', label: '💡 Tema 4: Bilim ve Teknoloji' },
+          { id: 'theme5', label: '⚖️ Tema 5: Vatandaşlık ve Haklarımız' },
+          { id: 'theme6', label: '🏃 Tema 6: Sağlık ve Spor' }
         ],
         games: [
           {
-            id: 'math_romen_place_3',
+            id: 'turkish_theme1_3',
             active: true,
-            title: '3 Basamaklı Sayılar & Romen Rakamları',
-            icon: '🏛️',
-            badge: 'Dinamik Soru',
-            featureTag: '🏛️ Basamak & Romen',
-            description: 'Basamak değerleri, yüzlüğe yuvarlama ve I\'dan XX\'ye Romen rakamları! 🏛️📦',
-            tags: ['🏛️ Romen Rakamları', '📦 Basamak Değeri', '🎯 Yüzlüğe Yuvarlama'],
+            title: 'Tema 1: Erdemler',
+            icon: '💖',
+            badge: '1. Tema',
+            featureTag: '📖 Harf, Hece & Sözlük',
+            description: 'Harf/hece bilgisi, satır sonu heceleme ve sözlük sıralaması şampiyonluğu! 💖📑',
+            tags: ['📖 Hece Sayısı', '🔤 Sözlük Sırası', '✍️ Satır Sonu'],
             btnText: 'Düelloyu Başlat',
-            topic: 'place_value'
+            topic: 'theme1'
           },
           {
-            id: 'math_mult_div_3',
+            id: 'turkish_theme2_3',
             active: true,
-            title: 'Çarpım Tablosu & Bölme Düellosu',
-            icon: '🌪️',
-            badge: 'Sınırsız İşlem',
-            featureTag: '⚡ 6, 7, 8, 9 Fırtınası',
-            description: '6, 7, 8 ve 9\'lar çarpım tablosu ve bölme işlemlerinde sınırsız pratik! 🌪️➗',
-            tags: ['🌪️ Çarpım Tablosu', '➗ Bölme İşlemi', '📖 Sözel Problemler'],
+            title: 'Tema 2: Milli Mücadele ve Atatürk',
+            icon: '🇹🇷',
+            badge: '2. Tema',
+            featureTag: '⭐ Eş & Zıt Anlam',
+            description: 'Vatan, bağımsızlık, lider kavramları, eş ve zıt anlamlı kelimeler düellosu! 🇹🇷⚔️',
+            tags: ['🇹🇷 Vatan & Bağımsızlık', '✨ Eş Anlam', '🔄 Zıt Anlam'],
             btnText: 'Düelloyu Başlat',
-            topic: 'mult_table'
+            topic: 'theme2'
           },
           {
-            id: 'math_fractions_shapes_3',
+            id: 'turkish_theme3_3',
             active: true,
-            title: 'Kesirler & Geometrik Cisimler',
-            icon: '🧊',
-            badge: '26 Özgün Soru',
-            featureTag: '🍕 Kesir & Prizma',
-            description: 'Birim kesir, pay-payda ve küp/prizmaların yüz-köşe-ayrıt hesapları! 🧊🍕',
-            tags: ['🍕 Birim Kesir', '🧊 Küp & Prizma', '📐 Yüz, Köşe & Ayrıt'],
+            title: 'Tema 3: Doğa ve Evren',
+            icon: '🌿',
+            badge: '3. Tema',
+            featureTag: '🎭 Eş Sesli & Hayal',
+            description: 'Yüz, çay, dal gibi eş sesli sözcükler ve gerçek-hayal ürünü ifadeler! 🌿☁️',
+            tags: ['🎭 Eş Sesli (Sesteş)', '☁️ Hayal Ürünü', '🌅 Gerçek Yaşam'],
             btnText: 'Düelloyu Başlat',
-            topic: 'fractions_3'
+            topic: 'theme3'
           },
           {
-            id: 'math',
+            id: 'turkish_theme4_3',
             active: true,
-            title: 'Kafa Kafaya Matematik (Karma)',
-            icon: '🧮',
-            badge: '⚡ Sınıf Düellosu',
-            featureTag: '🌪️ Fırtına Hesap',
-            description: 'Çarpım tablosu, bölme, kesirler ve Romen rakamlarından karma meydan okuma! 🌪️',
-            tags: ['🌪️ Çarpım Tablosu', '➗ Hızlı Bölme', '📐 Basamak Değeri'],
+            title: 'Tema 4: Bilim ve Teknoloji',
+            icon: '💡',
+            badge: '4. Tema',
+            featureTag: '✍️ Noktalama & Yazım',
+            description: 'Noktalama işaretleri, büyük harfler, "de/ki" bağlaçları ve yazım kuralları! 💡🚀',
+            tags: ['✍️ Noktalama İşaretleri', '✂️ Kesme İşareti', '📝 Yazım Kuralları'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'theme4'
+          },
+          {
+            id: 'turkish_theme5_3',
+            active: true,
+            title: 'Tema 5: Vatandaşlık ve Haklarımız',
+            icon: '⚖️',
+            badge: '5. Tema',
+            featureTag: '🔍 5N1K & Hikaye',
+            description: '5N1K metin analizi, yer-zaman-şahıs unsurları ve çocuk hakları! ⚖️📖',
+            tags: ['🔍 5N1K Dedektifi', '👥 Hikaye Unsurları', '💡 Ana Fikir'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'theme5'
+          },
+          {
+            id: 'turkish_theme6_3',
+            active: true,
+            title: 'Tema 6: Sağlık ve Spor',
+            icon: '🏃',
+            badge: '6. Tema',
+            featureTag: '🎨 İsim, Sıfat & Fiil',
+            description: 'Varlıkların adları (isimler), özelliklerini belirten sıfatlar ve eylemler (fiiller)! 🏃⚽',
+            tags: ['🏷️ İsim (Ad)', '🎨 Sıfat (Ön Ad)', '⚡ Fiil (Eylem)'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'theme6'
+          },
+          {
+            id: 'turkish_3_karma',
+            active: true,
+            title: '3. Sınıf Türkçe Süper Karma',
+            icon: '🦉',
+            badge: '⚡ Süper Düello',
+            featureTag: '🏆 6 Tema Karma',
+            description: '6 temanın tüm soru havuzlarından seçilen büyük Türkçe düellosu! 🦉🌟',
+            tags: ['📚 6 Tema Karma', '🏆 Büyük Mücadele', '⭐ Zirve Yarışı'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
         ]
       },
       {
-        id: 'turkish',
-        name: 'Türkçe',
-        icon: '📚',
-        colorTheme: 'theme-turkish',
-        tagline: 'Eş Sesli & Deyimler',
-        description: 'Eş sesli sözcükler, 5N1K paragraf analizi ve zengin Türkçe! 🎭📖',
+        id: 'math',
+        name: 'Matematik',
+        icon: '🔢',
+        colorTheme: 'theme-math',
+        tagline: '6 Ana Ünite',
+        description: 'Doğal sayılar, 4 işlem, kesirler, zaman, geometri ve ölçme üniteleri! 🔢🧮',
         badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'homonyms', label: '🎭 Eş Sesli & Mecaz' },
-          { id: 'grammar_3', label: '✍️ Noktalama & 5N1K' }
+          { id: 'all', label: '🌟 Tüm Üniteler / Karma Düello' },
+          { id: 'unit1', label: '🏛️ Ünite 1: Doğal Sayılar' },
+          { id: 'unit2', label: '➕ Ünite 2: Toplama & Çıkarma' },
+          { id: 'unit3', label: '✖️ Ünite 3: Çarpma & Bölme' },
+          { id: 'unit4', label: '🍕 Ünite 4: Kesir, Zaman & Para' },
+          { id: 'unit5', label: '📐 Ünite 5: Geometri & Şekiller' },
+          { id: 'unit6', label: '📏 Ünite 6: Uzunluk, Çevre & Ölçme' }
         ],
         games: [
           {
-            id: 'turkish_homonyms_figurative_3',
+            id: 'math_unit1_3',
             active: true,
-            title: 'Eş Sesli Kelimeler & Mecaz Anlam',
-            icon: '🎭',
-            badge: '30 Özgün Soru',
-            featureTag: '🎭 Sözcükte Anlam',
-            description: 'Yüz, çay, kaz gibi eş sesli sözcükler ve gerçek-mecaz anlam ayrımı! 🎭📖',
-            tags: ['🎭 Eş Sesli (Sesteş)', '💔 Mecaz Anlam', '📖 Gerçek Anlam'],
+            title: 'Ünite 1: Doğal Sayılar',
+            icon: '🏛️',
+            badge: '1. Ünite',
+            featureTag: '🏛️ 3 Basamak & Romen',
+            description: '3 basamaklı sayılar, basamak değerleri, onluğa-yüzlüğe yuvarlama ve Romen rakamları! 🏛️📦',
+            tags: ['📦 Basamak Değeri', '🎯 En Yakın Yüzlük', '🏛️ Romen Rakamları'],
             btnText: 'Düelloyu Başlat',
-            topic: 'homonyms'
+            topic: 'unit1'
           },
           {
-            id: 'turkish_punctuation_5n1k_3',
+            id: 'math_unit2_3',
             active: true,
-            title: 'Noktalama, Yazım Kuralları & 5N1K',
-            icon: '✍️',
-            badge: '26 Özgün Soru',
-            featureTag: '🔍 Dedektif 5N1K',
-            description: 'Noktalama işaretleri, büyük harf kuralları ve metinlerde 5N1K analizi! 🕵️‍♂️✍️',
-            tags: ['✍️ Noktalama İşaretleri', '🕵️ 5N 1K Analizi', '📝 Yazım Kuralları'],
+            title: 'Ünite 2: Toplama ve Çıkarma İşlemi',
+            icon: '➕',
+            badge: '2. Ünite',
+            featureTag: '➕ Eldeli & Onluk Bozmalı',
+            description: '3 basamaklı sayılarla eldeli toplama, onluk bozarak çıkarma ve zihinden tahmin! ➕➖⚡',
+            tags: ['➕ Eldeli Toplama', '➖ Onluk Bozmalı Çıkarma', '🎯 Zihinden Tahmin'],
             btnText: 'Düelloyu Başlat',
-            topic: 'grammar_3'
+            topic: 'unit2'
           },
           {
-            id: 'turkish',
+            id: 'math_unit3_3',
             active: true,
-            title: 'Hızlı Türkçe & Bilgi Avcısı (Karma)',
-            icon: '🦉',
-            badge: '⚡ Eş Sesli & Bilgi',
-            featureTag: '🌟 Keşif Zamanı',
-            description: 'Eş sesli kelimeler, 5N1K ve eğlenceli Türkçe meydan okuması! 🌟',
-            tags: ['🎭 Eş Sesliler', '📜 Deyimler', '✍️ Noktalama'],
+            title: 'Ünite 3: Çarpma ve Bölme İşlemi',
+            icon: '✖️',
+            badge: '3. Ünite',
+            featureTag: '⚡ Çarpım & Kalanlı Bölme',
+            description: 'Çarpım tablosu fırtınası, 10 ile kısa yoldan çarpma ve kalanlı bölme işlemleri! 🌪️➗',
+            tags: ['🌪️ Çarpım Tablosu', '➗ Kalanlı Bölme', '⚡ Kısa Yoldan Çarpma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'unit3'
+          },
+          {
+            id: 'math_unit4_3',
+            active: true,
+            title: 'Ünite 4: Kesirler, Zaman ve Paralarımız',
+            icon: '🍕',
+            badge: '4. Ünite',
+            featureTag: '⏰ Birim Kesir & Saatler',
+            description: 'Birim kesirler, saatleri okuma (çeyrek geçe/kala) ve TL-Kuruş hesapları! 🍕⏰🪙',
+            tags: ['🍕 Birim Kesir', '⏰ Analog/Dijital Saat', '🪙 TL & Kuruş'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'unit4'
+          },
+          {
+            id: 'math_unit5_3',
+            active: true,
+            title: 'Ünite 5: Geometrik Cisimler ve Şekiller',
+            icon: '🧊',
+            badge: '5. Ünite',
+            featureTag: '📐 Küp, Doğru, Açı & Simetri',
+            description: 'Küp, prizma, yüz-köşe-ayrıt özellikleri, simetri doğrusu ve dik açı! 🧊📐🦋',
+            tags: ['🧊 Küp & Prizmalar', '↔️ Doğru & Işın', '📐 Dik Açı (90°)', '🦋 Simetri'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'unit5'
+          },
+          {
+            id: 'math_unit6_3',
+            active: true,
+            title: 'Ünite 6: Uzunluk, Çevre ve Ölçme',
+            icon: '📏',
+            badge: '6. Ünite',
+            featureTag: '📐 Çevre, Gram & Litre',
+            description: 'Metre-santimetre, üçgen-kare-dikdörtgen çevresi, kg-gram ve litre ölçümleri! 📏⚖️🥛',
+            tags: ['📏 Metre & Santimetre', '📐 Çevre Hesaplama', '⚖️ Kilogram & Gram', '🥛 Sıvı Ölçme (Litre)'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'unit6'
+          },
+          {
+            id: 'math_3_karma',
+            active: true,
+            title: '3. Sınıf Matematik Süper Karma',
+            icon: '🧮',
+            badge: '⚡ Süper Düello',
+            featureTag: '🏆 6 Ünite Karma',
+            description: '6 ünitenin tamamından hazırlanan büyük matematik meydan okuması! 🧮🔥',
+            tags: ['🔢 6 Ünite Karma', '🏆 Matematik Şampiyonası', '⚡ Hızlı İşlem'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
