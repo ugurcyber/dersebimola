@@ -20564,3 +20564,25 @@ body.is-game-active .universal-game-bgm-fab {
     display: none;
   }
 }
+
+/* ===== Hata / Öneri Bildir: Moli rozet, hap butonlar, yüzen buton konumu ===== */
+.floating-bug-btn { bottom: 96px; right: 16px; z-index: 940; padding: 10px 16px; min-height: 44px; }
+.floating-bug-btn.hide { display: none !important; }
+@media (max-width: 640px) {
+  .floating-bug-btn { bottom: 84px; right: 12px; padding: 10px 12px; }
+  .floating-bug-label { display: none; }
+  .floating-bug-icon { font-size: 1.35rem; }
+}
+.bug-moli-badge { position: relative; display: flex; align-items: center; justify-content: center; overflow: visible; }
+.bug-moli-badge img { width: 52px; height: 52px; object-fit: contain; border-radius: 50%; }
+.bug-moli-tools { position: absolute; right: -8px; bottom: -6px; font-size: 1.05rem; line-height: 1; background: #fff; border-radius: 999px; padding: 2px 4px; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+.bug-type-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.bug-type-pill {
+  font-family: inherit; font-size: 0.9rem; font-weight: 800; color: #475569;
+  background: #fff; border: 2px solid #CBD5E1; border-bottom-width: 4px; border-radius: 999px;
+  padding: 10px 14px; min-height: 44px; cursor: pointer; touch-action: manipulation;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.bug-type-pill:active { transform: translateY(1px) scale(.98); }
+.bug-type-pill.is-active { background: #FFEDD5; border-color: #FB923C; color: #9A3412; }
+.bug-contact-input { min-height: 44px; resize: none; }

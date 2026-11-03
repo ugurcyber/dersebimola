@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.18">
+  <link rel="stylesheet" href="style.css?v=8.9.19">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -2539,52 +2539,44 @@
       <button class="modal-close-btn" data-close-modal="modalBugReport" id="btnCloseBugReport" aria-label="Kapat">✕</button>
 
       <div class="modal-header bug-report-modal-header">
-        <div class="modal-badge-icon badge-icon-feedback" aria-hidden="true">🐞</div>
+        <div class="modal-badge-icon badge-icon-feedback bug-moli-badge" aria-hidden="true"><img src="assets/mascot/moli.webp" alt="" width="52" height="52" loading="lazy"><span class="bug-moli-tools">🛠️🔍</span></div>
         <div>
-          <h3 class="modal-title" id="bugReportTitle">Hata Bildir &amp; Geri Bildirim</h3>
+          <h3 class="modal-title" id="bugReportTitle">Bir Sorun mu Buldun? Moli'ye Haber Ver!</h3>
           <p class="modal-desc">
-            Soru hataları, teknik aksaklıklar veya yeni fikirlerinizi doğrudan <strong>Uğur Hoca'ya</strong> iletin.
+            Moli tamir çantasını hazırladı! Sorunu veya fikrini birkaç saniyede bize ilet.
           </p>
         </div>
       </div>
 
       <form class="bug-report-form" id="bugReportForm">
         <div class="form-group">
-          <label class="form-label" for="bugCategorySelect">
-            <span class="label-icon">📂</span> Bildirim Kategorisi
-          </label>
-          <div class="custom-select-wrap">
-            <select class="bug-form-select" id="bugCategorySelect" required>
-              <option value="content_error" selected>📝 İçerik / Soru Hatası</option>
-              <option value="technical_bug">⚙️ Oyun / Teknik Hata</option>
-              <option value="design_issue">🎨 Tasarım / Görünüm Sorunu</option>
-              <option value="suggestion_idea">💡 Öneri &amp; Yeni Fikir</option>
-            </select>
+          <span class="form-label"><span class="label-icon">📂</span> Sorun Türü</span>
+          <div class="bug-type-pills" id="bugTypePills" role="radiogroup" aria-label="Sorun Türü">
+            <button type="button" class="bug-type-pill is-active" role="radio" aria-checked="true" data-type="sound_issue">🔊 Ses Çıkmıyor</button>
+            <button type="button" class="bug-type-pill" role="radio" aria-checked="false" data-type="content_error">❓ Soru/İçerik Hatalı</button>
+            <button type="button" class="bug-type-pill" role="radio" aria-checked="false" data-type="touch_issue">📱 Ekran/Dokunmatik Sorunu</button>
+            <button type="button" class="bug-type-pill" role="radio" aria-checked="false" data-type="suggestion_idea">💡 Yeni Fikir/Öneri</button>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="bugDescriptionText">
-            <span class="label-icon">✍️</span> Detaylı Açıklama
-          </label>
-          <textarea
-            class="bug-form-textarea"
-            id="bugDescriptionText"
-            rows="4"
-            placeholder="Lütfen karşılaştığınız sorunu veya önerinizi açıklayın... (Örn: 2. Sınıf Matematik Toplama 4. sorusunda şıklar hatalı / ses efekti kesildi vb.)"
-            required></textarea>
+          <label class="form-label" for="bugDescriptionText"><span class="label-icon">✍️</span> Açıklama</label>
+          <textarea class="bug-form-textarea" id="bugDescriptionText" rows="4" maxlength="1000" placeholder="Kısaca ne olduğunu yazar mısın?" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bugContactInput"><span class="label-icon">📧</span> İletişim <small>(isteğe bağlı)</small></label>
+          <input type="text" class="bug-form-textarea bug-contact-input" id="bugContactInput" maxlength="120" placeholder="Adınız / Okulunuz veya E-posta" autocomplete="off">
         </div>
 
         <div class="bug-report-meta-info" id="bugReportMetaInfo">
           <span class="meta-tag" id="bugMetaLocation">📍 Konum: Otomatik tespit ediliyor</span>
-          <span class="meta-tag" id="bugMetaUser">👤 Bildiren: Öğretmen</span>
+          <span class="meta-tag" id="bugMetaUser">🖥️ Cihaz bilgisi otomatik eklenir</span>
         </div>
 
         <div class="bug-form-actions">
           <button type="button" class="btn-bug-cancel" id="btnCancelBugReport">Vazgeç</button>
-          <button type="submit" class="btn-bug-submit" id="btnSubmitBugReport">
-            <span>🚀 Bildirimi Gönder</span>
-          </button>
+          <button type="submit" class="btn-bug-submit" id="btnSubmitBugReport"><span>🚀 Gönder</span></button>
         </div>
       </form>
     </div>
@@ -2923,6 +2915,9 @@
     </div>
   </div>
 
+  <!-- Yüzen Hata Bildir Butonu -->
+  <button class="floating-bug-btn" id="btnFloatingBugReport" type="button" aria-label="Hata veya Öneri Bildir" title="Hata / Öneri Bildir"><span class="floating-bug-icon" aria-hidden="true">🛠️</span><span class="floating-bug-label">Hata Bildir</span></button>
+
   <!-- Bildirim Toast'ı -->
   <div class="toast-notification hide" id="globalToast">
     <span class="toast-msg" id="toastMsg">Bildirim</span>
@@ -2935,6 +2930,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.19" defer></script>
+  <script src="app.js?v=8.9.20" defer></script>
 </body>
 </html>

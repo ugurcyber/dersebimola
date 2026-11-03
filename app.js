@@ -10814,30 +10814,62 @@
   /* ==========================================================================
      ÖĞRETMEN HATA BİLDİR & GERİ BİLDİRİM SİSTEMİ (REPORT A BUG)
      ========================================================================== */
+  // Hata bildirimlerinin gönderileceği hedef: e-posta adresi (FormSubmit.co) veya Webhook/API URL'si.
+  // Örn: 'ornek@mail.com'  veya  'https://example.com/api/hata-bildir'. Boşsa yalnızca yerel kayıt tutulur.
+  const ADMIN_EMAIL_OR_WEBHOOK = '';
+  const BUG_REPORTS_KEY = 'moli_bug_reports';
+
+  function getBugTechInfo() {
+    return {
+      page: window.location.href,
+      hash: window.location.hash || '#home',
+      screen: `${window.innerWidth}x${window.innerHeight}`,
+      userAgent: navigator.userAgent,
+      timestamp: new Date().toISOString()
+    };
+  }
+
+  function sendBugReportRemote(report) {
+    const target = (ADMIN_EMAIL_OR_WEBHOOK || '').trim();
+    if (!target || typeof fetch !== 'function') return;
+    const isUrl = /^https?:\/\//i.test(target);
+    const url = isUrl ? target : `https://formsubmit.co/ajax/${encodeURIComponent(target)}`;
+    const payload = {
+      _subject: `Moli Hata/Öneri: ${report.categoryTitle}`,
+      tur: report.categoryTitle,
+      aciklama: report.description,
+      iletisim: report.contact || '-',
+      sayfa: report.url,
+      ekran: report.screen,
+      cihaz: report.userAgent,
+      tarih: report.dateFormatted
+    };
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(isUrl ? report : payload)
+    }).catch(err => console.warn('Rapor uzak sunucuya gönderilemedi:', err));
+  }
+
+  function setBugType(type) {
+    document.querySelectorAll('#bugTypePills .bug-type-pill').forEach(p => {
+      const on = p.dataset.type === type;
+      p.classList.toggle('is-active', on);
+      p.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+  }
+
   function openBugReportModal() {
     const modalBugReport = document.getElementById('modalBugReport');
     if (!modalBugReport) return;
     audio.playClick();
+    if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
 
-    // Otomatik bağlam ve konum etiketleri
+    const tech = getBugTechInfo();
     const metaLocation = document.getElementById('bugMetaLocation');
     const metaUser = document.getElementById('bugMetaUser');
-
-    const gradeLabel = (state.currentGrade === 0) ? 'Anasınıfı' : `${state.currentGrade}. Sınıf`;
-    let locInfo = gradeLabel;
-    if (state.currentSubject) {
-      locInfo += ` • ${state.currentSubject}`;
-    }
-    if (state.currentGameType) {
-      locInfo += ` • ${state.currentGameType}`;
-    }
-    if (metaLocation) metaLocation.textContent = `📍 Konum: ${locInfo}`;
-
-    const isTeacher = !!(state.teacherSession && state.teacherSession.isLoggedIn);
-    const uName = isTeacher
-      ? (state.teacherSession.name || 'Öğretmenim')
-      : ((state.studentSession && state.studentSession.isLoggedIn) ? state.studentSession.name : 'Giriş Yapmış Kullanıcı');
-    if (metaUser) metaUser.textContent = `👤 Bildiren: ${uName}`;
+    if (metaLocation) metaLocation.textContent = `📍 Sayfa: ${tech.hash}`;
+    if (metaUser) metaUser.textContent = `🖥️ Ekran: ${tech.screen}`;
 
     openModal(modalBugReport);
     const textarea = document.getElementById('bugDescriptionText');
@@ -10850,55 +10882,57 @@
   function handleBugReportSubmit(e) {
     if (e && e.preventDefault) e.preventDefault();
     const textarea = document.getElementById('bugDescriptionText');
-    const select = document.getElementById('bugCategorySelect');
+    const contactEl = document.getElementById('bugContactInput');
     const modalBugReport = document.getElementById('modalBugReport');
 
     const desc = textarea ? textarea.value.trim() : '';
     if (!desc) {
       audio.playWrong();
-      showToast('⚠️ Lütfen bir hata açıklaması veya öneri yazın.');
+      showToast('⚠️ Lütfen kısaca ne olduğunu yazın.');
       if (textarea) textarea.focus();
       return;
     }
 
-    const category = select ? select.value : 'general';
-    const categoryTitle = select ? select.options[select.selectedIndex].text : 'Genel';
-    const isTeacher = !!(state.teacherSession && state.teacherSession.isLoggedIn);
-    const userName = isTeacher
-      ? (state.teacherSession.name || 'Öğretmen')
-      : ((state.studentSession && state.studentSession.isLoggedIn) ? state.studentSession.name : 'Kullanıcı');
-    const userEmail = (isTeacher && state.teacherSession.email) || '';
+    const activePill = document.querySelector('#bugTypePills .bug-type-pill.is-active');
+    const category = activePill ? activePill.dataset.type : 'general';
+    const categoryTitle = activePill ? activePill.textContent.trim() : 'Genel';
+    const tech = getBugTechInfo();
+    const now = new Date();
+    const contact = contactEl ? contactEl.value.trim() : '';
 
     const report = {
       id: 'bug_' + Date.now(),
-      date: new Date().toISOString(),
-      dateFormatted: new Date().toLocaleString('tr-TR'),
+      date: tech.timestamp,
+      dateFormatted: now.toLocaleString('tr-TR'),
       category: category,
       categoryTitle: categoryTitle,
       description: desc,
-      user: userName,
-      email: userEmail,
-      grade: state.currentGrade,
-      subject: state.currentSubject || '',
-      game: state.currentGameType || '',
-      url: window.location.href
+      user: contact || 'Anonim',
+      contact: contact,
+      url: tech.page,
+      hash: tech.hash,
+      screen: tech.screen,
+      userAgent: tech.userAgent,
+      status: 'pending'
     };
 
     try {
-      const existing = JSON.parse(localStorage.getItem('dbm_teacher_feedbacks') || '[]');
+      const existing = JSON.parse(localStorage.getItem(BUG_REPORTS_KEY) || '[]');
       existing.unshift(report);
-      if (existing.length > 50) existing.length = 50;
-      localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(existing));
+      if (existing.length > 200) existing.length = 200;
+      localStorage.setItem(BUG_REPORTS_KEY, JSON.stringify(existing));
     } catch (err) {
-      console.warn('Feedback kaydedilirken hata:', err);
+      console.warn('Rapor kaydedilirken hata:', err);
     }
+    sendBugReportRemote(report);
 
     if (textarea) textarea.value = '';
+    if (contactEl) contactEl.value = '';
+    setBugType('sound_issue');
     if (modalBugReport) closeModal(modalBugReport);
     audio.playCorrect();
-    showToast("✅ Teşekkürler! Geri bildiriminiz Uğur Hoca'ya başarıyla iletildi.", 4500);
-  }
-  window.handleBugReportSubmit = handleBugReportSubmit;
+    showToast('✅ Teşekkürler! Moli tamir çantasını aldı, hemen ilgilenecek!', 3000);
+  }  window.handleBugReportSubmit = handleBugReportSubmit;
 
   
   /* ==========================================================================
@@ -10953,7 +10987,7 @@
     }
 
     try {
-      if (window.location.hash !== '#admin-panel') {
+      if (window.location.hash !== '#admin-panel' && window.location.hash !== '#admin-raporlar') {
         history.pushState({ route: 'admin-panel' }, '', '#admin-panel');
       }
     } catch (e) {}
@@ -11001,48 +11035,21 @@
 
   function getStoredFeedbacks() {
     try {
-      const raw = localStorage.getItem('dbm_teacher_feedbacks');
-      let list = raw ? JSON.parse(raw) : [];
-      // İlk girişte liste tamamen boşsa panelin zengin görünmesi için başlangıç kayıtları ekle
-      if (!list || list.length === 0) {
-        list = [
-          {
-            id: 'fb_sample_1',
-            date: new Date().toISOString(),
-            dateFormatted: new Date().toLocaleDateString('tr-TR') + ' 14:30',
-            category: 'content_error',
-            categoryTitle: '📝 İçerik / Soru Hatası',
-            description: '2. Sınıf Matematik Toplama İşlemi 3. soruda görseldeki elma sayısı ile şıklar uyuşmuyor.',
-            user: 'Fatma Öğretmen',
-            email: 'fatma.ogretmen@meb.k12.tr',
-            grade: 2,
-            subject: 'Matematik',
-            game: 'Toplama',
-            status: 'pending'
-          },
-          {
-            id: 'fb_sample_2',
-            date: new Date(Date.now() - 3600000 * 24).toISOString(),
-            dateFormatted: new Date(Date.now() - 3600000 * 24).toLocaleDateString('tr-TR') + ' 09:15',
-            category: 'suggestion_idea',
-            categoryTitle: '💡 Öneri & Yeni Fikir',
-            description: '1. Sınıf Maarif Harfler bölümüne yeni hece tekerlemeleri eklenebilir, çocuklar bayıldı!',
-            user: 'Ahmet Öğretmen',
-            email: 'ahmet.kaya@meb.k12.tr',
-            grade: 1,
-            subject: 'İlk Okuma',
-            game: 'Harfler',
-            status: 'resolved'
-          }
-        ];
-        localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(list));
+      let raw = localStorage.getItem(BUG_REPORTS_KEY);
+      if (raw === null) {
+        // Eski anahtardan (dbm_teacher_feedbacks) tek seferlik taşıma
+        const old = localStorage.getItem('dbm_teacher_feedbacks');
+        if (old) {
+          const oldList = (JSON.parse(old) || []).filter(x => !String(x.id).startsWith('fb_sample_'));
+          raw = JSON.stringify(oldList);
+          localStorage.setItem(BUG_REPORTS_KEY, raw);
+        }
       }
-      return list;
+      return raw ? JSON.parse(raw) : [];
     } catch (e) {
       return [];
     }
   }
-
   function renderAdminFeedbacks() {
     const list = getStoredFeedbacks();
 
@@ -11110,6 +11117,8 @@
             <td>
               <span class="cell-category-badge">${escapeHtml(item.categoryTitle || 'Genel')}</span>
               ${locInfo ? `<span class="cell-location-tag">📍 ${escapeHtml(locInfo)}</span>` : ''}
+              ${item.hash ? `<span class="cell-location-tag" title="${escapeHtml(item.url || '')}">🔗 ${escapeHtml(item.hash)}</span>` : ''}
+              ${item.screen ? `<span class="cell-location-tag" title="${escapeHtml(item.userAgent || '')}">🖥️ ${escapeHtml(item.screen)}</span>` : ''}
             </td>
             <td>
               <div class="cell-message-box">
@@ -11146,7 +11155,7 @@
       if (!item) return;
 
       item.status = (item.status === 'resolved') ? 'pending' : 'resolved';
-      localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(list));
+      localStorage.setItem(BUG_REPORTS_KEY, JSON.stringify(list));
       audio.playCorrect();
       showToast(item.status === 'resolved' ? '✅ Bildirim çözüldü olarak işaretlendi.' : '⏳ Bildirim inceleme bekliyor moduna alındı.');
       renderAdminFeedbacks();
@@ -11158,7 +11167,7 @@
     try {
       let list = getStoredFeedbacks();
       list = list.filter(x => x.id !== id);
-      localStorage.setItem('dbm_teacher_feedbacks', JSON.stringify(list));
+      localStorage.setItem(BUG_REPORTS_KEY, JSON.stringify(list));
       audio.playClick();
       showToast('🗑️ Bildirim listeden silindi.');
       renderAdminFeedbacks();
@@ -19534,13 +19543,7 @@
         btnDesktopBugReport.classList.add('hide');
       }
     }
-    if (btnFloatingBugReport) {
-      if (isLoggedIn) {
-        btnFloatingBugReport.classList.remove('hide');
-      } else {
-        btnFloatingBugReport.classList.add('hide');
-      }
-    }
+    if (btnFloatingBugReport) btnFloatingBugReport.classList.remove('hide');
   }
 
   function switchAuthRoleTab(role) {
@@ -22938,11 +22941,11 @@
           openEnglishGradeGames(grade);
         }
         window.location.hash = '#' + clean;
-      } else if (clean === 'admin-panel') {
+      } else if (clean === 'admin-panel' || clean === 'admin-raporlar') {
         if (typeof openAdminPanel === 'function') {
           openAdminPanel();
         }
-        window.location.hash = '#admin-panel';
+        window.location.hash = '#' + (clean === 'admin-raporlar' ? 'admin-raporlar' : 'admin-panel');
       } else if (clean === 'home' || clean === '') {
         if (typeof openHomePage === 'function') {
           openHomePage();
@@ -23383,6 +23386,10 @@
       });
     }
 
+    document.querySelectorAll('#bugTypePills .bug-type-pill').forEach(p => {
+      addTapListener(p, () => { audio.playClick(); setBugType(p.dataset.type); });
+    });
+
     const btnCancelBugReport = document.getElementById('btnCancelBugReport');
     if (btnCancelBugReport) {
       addTapListener(btnCancelBugReport, () => {
@@ -23822,7 +23829,7 @@
     const hash = (window.location.hash || '').toLowerCase();
     const path = (window.location.pathname || '').toLowerCase();
 
-    if (hash === '#admin-panel' || hash === '#/admin-panel' || path.endsWith('/admin-panel')) {
+    if (hash === '#admin-panel' || hash === '#/admin-panel' || path.endsWith('/admin-panel') || hash === '#admin-raporlar' || hash === '#/admin-raporlar') {
       setTimeout(() => {
         if (typeof openAdminPanel === 'function') openAdminPanel();
       }, 100);
