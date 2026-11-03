@@ -18728,7 +18728,7 @@
       EnglishKidsEngine.switchGame('paint', g);
 
       try {
-        const hash = `#ingilizce/${g}-sinif`;
+        const hash = `#ingilizce-${g}`;
         if (window.location.hash !== hash) history.pushState({ route: `ingilizce-${g}` }, '', hash);
       } catch (err) {}
 
@@ -18750,7 +18750,7 @@
       EnglishAdvancedEngine.switchGame('room', g);
 
       try {
-        const hash = `#ingilizce/${g}-sinif`;
+        const hash = `#ingilizce-${g}`;
         if (window.location.hash !== hash) history.pushState({ route: `ingilizce-${g}` }, '', hash);
       } catch (err) {}
 
@@ -22931,7 +22931,7 @@
         if (window.location.hash !== '#ingilizce') {
           window.location.hash = '#ingilizce';
         }
-      } else if (clean.startsWith('ingilizce/')) {
+      } else if (/^ingilizce[-\/]/.test(clean)) {
         const gMatch = clean.match(/([1-4])(?:-sinif)?/);
         const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
         if (typeof openEnglishGradeGames === 'function') {
@@ -23830,7 +23830,7 @@
       if (typeof openArcadeHub === 'function') {
         setTimeout(openArcadeHub, 100);
       }
-    } else if (hash.startsWith('#ingilizce/') || hash.startsWith('#/ingilizce/') || path.includes('/ingilizce/')) {
+    } else if (/^#\/?ingilizce[-\/]/.test(hash) || path.includes('/ingilizce/')) {
       const gMatch = (hash + path).match(/([1-4])(?:-sinif)?/);
       const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
       setTimeout(() => {
