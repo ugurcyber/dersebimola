@@ -1676,8 +1676,8 @@
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
       { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
       { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
-      { id: 'g4', name: '4. Grup', code: 'ÇBGCŞ', letters: ['ç', 'b', 'g', 'c', 'ş'] },
-      { id: 'g5', name: '5. Grup', code: 'PHVĞFJ', letters: ['p', 'h', 'v', 'ğ', 'f', 'j'] }
+      { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c', 'ş', 'p'] },
+      { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
     ],
     letterOrder: ['a', 'n', 'e', 't', 'i', 'l', 'o', 'k', 'u', 'r', 'ı', 'm', 'ü', 's', 'ö', 'y', 'd', 'z', 'ç', 'b', 'g', 'c', 'ş', 'p', 'h', 'v', 'ğ', 'f', 'j'],
     letters: {
@@ -2198,9 +2198,9 @@
         ]
       },
 
-      // 4. GRUP (ÇBGCŞ)
+      // 4. GRUP (ÇBGCŞP)
       'ç': {
-        letter: 'ç', upper: 'Ç', group: 'g4', groupName: '4. Grup (ÇBGCŞ)',
+        letter: 'ç', upper: 'Ç', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Çilek', emoji: '🍓', position: 'başta', hasSound: true },
           { word: 'Çiçek', emoji: '🌸', position: 'başta', hasSound: true },
@@ -2222,7 +2222,7 @@
         ]
       },
       'b': {
-        letter: 'b', upper: 'B', group: 'g4', groupName: '4. Grup (ÇBGCŞ)',
+        letter: 'b', upper: 'B', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Balık', emoji: '🐟', position: 'başta', hasSound: true },
           { word: 'Bebek', emoji: '👶', position: 'başta', hasSound: true },
@@ -2246,7 +2246,7 @@
         ]
       },
       'g': {
-        letter: 'g', upper: 'G', group: 'g4', groupName: '4. Grup (ÇBGCŞ)',
+        letter: 'g', upper: 'G', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Gemi', emoji: '🚢', position: 'başta', hasSound: true },
           { word: 'Gül', emoji: '🌹', position: 'başta', hasSound: true },
@@ -2268,7 +2268,7 @@
         ]
       },
       'c': {
-        letter: 'c', upper: 'C', group: 'g4', groupName: '4. Grup (ÇBGCŞ)',
+        letter: 'c', upper: 'C', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Civciv', emoji: '🐥', position: 'başta', hasSound: true },
           { word: 'Ceviz', emoji: '🌰', position: 'başta', hasSound: true },
@@ -2290,7 +2290,7 @@
         ]
       },
       'ş': {
-        letter: 'ş', upper: 'Ş', group: 'g4', groupName: '4. Grup (ÇBGCŞ)',
+        letter: 'ş', upper: 'Ş', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Şapka', emoji: '🧢', position: 'başta', hasSound: true },
           { word: 'Şeker', emoji: '🍬', position: 'başta', hasSound: true },
@@ -2315,9 +2315,9 @@
         ]
       },
 
-      // 5. GRUP (PHVĞFJ)
+      // 5. GRUP (HVĞFJ)
       'p': {
-        letter: 'p', upper: 'P', group: 'g5', groupName: '5. Grup (PHVĞFJ)',
+        letter: 'p', upper: 'P', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Portakal', emoji: '🍊', position: 'başta', hasSound: true },
           { word: 'Pasta', emoji: '🎂', position: 'başta', hasSound: true },
@@ -2342,7 +2342,7 @@
         ]
       },
       'h': {
-        letter: 'h', upper: 'H', group: 'g5', groupName: '5. Grup (PHVĞFJ)',
+        letter: 'h', upper: 'H', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
           { word: 'Havuç', emoji: '🥕', position: 'başta', hasSound: true },
           { word: 'Horoz', emoji: '🐓', position: 'başta', hasSound: true },
@@ -2366,7 +2366,7 @@
         ]
       },
       'v': {
-        letter: 'v', upper: 'V', group: 'g5', groupName: '5. Grup (PHVĞFJ)',
+        letter: 'v', upper: 'V', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
           { word: 'Vapur', emoji: '⛴️', position: 'başta', hasSound: true },
           { word: 'Vazo', emoji: '🏺', position: 'başta', hasSound: true },
@@ -2390,7 +2390,7 @@
         ]
       },
       'ğ': {
-        letter: 'ğ', upper: 'Ğ', group: 'g5', groupName: '5. Grup (PHVĞFJ)',
+        letter: 'ğ', upper: 'Ğ', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
           { word: 'Ağaç', emoji: '🌳', position: 'ortada', hasSound: true },
           { word: 'Yağmur', emoji: '🌧️', position: 'ortada', hasSound: true },
@@ -2414,7 +2414,7 @@
         ]
       },
       'f': {
-        letter: 'f', upper: 'F', group: 'g5', groupName: '5. Grup (PHVĞFJ)',
+        letter: 'f', upper: 'F', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
           { word: 'Fil', emoji: '🐘', position: 'başta', hasSound: true },
           { word: 'Fare', emoji: '🐭', position: 'başta', hasSound: true },
@@ -2438,7 +2438,7 @@
         ]
       },
       'j': {
-        letter: 'j', upper: 'J', group: 'g5', groupName: '5. Grup (PHVĞFJ)',
+        letter: 'j', upper: 'J', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
           { word: 'Jelibon', emoji: '🍬', position: 'başta', hasSound: true },
           { word: 'Jant', emoji: '🛞', position: 'başta', hasSound: true },
@@ -2473,7 +2473,7 @@
 
   /**
    * TÜRKİYE YÜZYILI MAARİF MODELİ DİNAMİK KÜMÜLATİF DOĞRULAMA MOTORU
-   * 5 Ses Grubu (ANETİL, OKURIM, ÜSÖYDZ, ÇBGCŞ, PHVĞFJ) için harf indeksine göre
+   * 5 Ses Grubu (ANETİL, OKURIM, ÜSÖYDZ, ÇBGCŞP, HVĞFJ) için harf indeksine göre
    * henüz öğrenilmemiş sesleri içeren hece/kelimeleri KESİNLİKLE filtreler ve eler.
    */
   function isWordAllowedUpTo(wordOrObj, selectedLetter) {
@@ -8626,6 +8626,10 @@
 
       // 2. Yerleşik Dinamik Motor
       const g = parseInt(grade, 10);
+      if (g === 1) {
+        const k1q = generateKidsGrade1Question(gameType);
+        if (k1q) return this.buildQuestionItem(k1q, k1q.category);
+      }
       if (g === 0) {
         // ANASINIFI (OKUL ÖNCESİ): Okuma yazma gerektirmeyen, 100% görsel, işitsel ve motor oyun motorları
         if (gameType === 'color_balloon' || gameType === 'balloon') {
@@ -10341,6 +10345,14 @@
     true_false: '✅ Doğru / Yanlış',
     matching: '🎯 Dokun & Eşleştir',
     firstreading: '🔤 İlk Okuma Yazma',
+    maarif_phoneme_pop: '🎈 Sesi Hisset ve Patlat',
+    maarif_word_train: '🚂 Hece ve Kelime Treni',
+    maarif_letter_basket: '🧺 Akıllı Harf Sepeti',
+    math_apple_count_1: '🍎 Elma Ağacı & Sayma',
+    math_add_sub_drag_1: '➕ Görsel Toplama & Çıkarma',
+    math_spatial_pattern_1: '🧩 Konum & Örüntü',
+    lifescience_healthy_basket_1: '🥗 Sağlıklı Beslenme Sepeti',
+    lifescience_school_bag_1: '🎒 Çantamı Hazırlıyorum',
     math_spatial_geo_1: '📐 Geometri & Uzamsal',
     math_numbers_quantities_1: '🔢 Sayılar (1-20)',
     math_operations_patterns_1: '➕➖ İşlemler & Örüntü',
@@ -10452,6 +10464,9 @@
     }
     const fallbackTitles = {
       maarif_sound_find: 'Sesi Hisset / Balon Patlatma',
+      maarif_phoneme_pop: 'Sesi Hisset ve Patlat',
+      maarif_word_train: 'Hece ve Kelime Treni',
+      maarif_letter_basket: 'Akıllı Harf Sepeti',
       maarif_position: 'Başta mı, Ortada mı, Sonda mı?',
       maarif_case_match: 'Büyük-Küçük Harf Eşleştirme',
       maarif_syllable_build: 'Hece Birleştirme Atölyesi',
@@ -15477,6 +15492,42 @@
         ],
         games: [
           {
+            id: 'math_apple_count_1',
+            active: true,
+            title: 'Elma Ağacı & Nesne Sayma',
+            icon: '🍎',
+            badge: '🍎 Say & Topla',
+            featureTag: '🔢 1-20 Sayma',
+            description: 'Moli "Sepete tam 7 elma topla!" der; elmaları tek tek sürükle, sesli say! 🍎🧺',
+            tags: ['🍎 Elma Topla', '🔊 Sesli Sayma', '🔢 1-20'],
+            btnText: 'Pratiğe Başla',
+            topic: 'numbers_quantities'
+          },
+          {
+            id: 'math_add_sub_drag_1',
+            active: true,
+            title: 'Görsel Toplama & Çıkarma Atölyesi',
+            icon: '➕',
+            badge: '➕➖ Somut İşlem',
+            featureTag: '🍓 Nesnelerle',
+            description: 'Çilekleri say, sonucu gösteren rakam balonunu "=" kutusuna sürükle! 🍓➕',
+            tags: ['🍓 Somut Nesneler', '➕ Toplama', '➖ Çıkarma'],
+            btnText: 'Pratiğe Başla',
+            topic: 'operations_patterns'
+          },
+          {
+            id: 'math_spatial_pattern_1',
+            active: true,
+            title: 'Uzamsal İlişkiler & Örüntü Vagonu',
+            icon: '🧩',
+            badge: '🧩 Konum & Örüntü',
+            featureTag: '🚃 Örüntü Treni',
+            description: 'Üstünde-altında, içinde-dışında, sağında-solunda, uzun-kısa ve renkli örüntü vagonunu tamamla! 🚃',
+            tags: ['📍 Konum', '📏 Uzun-Kısa', '🚃 Örüntü'],
+            btnText: 'Pratiğe Başla',
+            topic: 'spatial_geo'
+          },
+          {
             id: 'math_spatial_geo_1',
             active: true,
             title: 'Şekilleri Yakala & Neredeyim?',
@@ -15632,6 +15683,30 @@
           { id: 'nature_recycling', label: '🌿 Tema 5: Doğa ve Çevre' }
         ],
         games: [
+          {
+            id: 'lifescience_healthy_basket_1',
+            active: true,
+            title: 'Sağlıklı Beslenme Sepeti',
+            icon: '🥗',
+            badge: '🥗 Sağlıklı Hayat',
+            featureTag: '🧺 İki Sepet',
+            description: 'Yiyecekleri sürükle: Sağlıklı mı, zararlı mı? 🍎🍟',
+            tags: ['🥗 Sağlıklı', '🍟 Zararlı', '🧺 Sınıflandır'],
+            btnText: 'Pratiğe Başla',
+            topic: 'health_traffic'
+          },
+          {
+            id: 'lifescience_school_bag_1',
+            active: true,
+            title: 'Çantamı Hazırlıyorum',
+            icon: '🎒',
+            badge: '🎒 Okulumuzda Hayat',
+            featureTag: '🧺 İki Sepet',
+            description: 'Okul eşyalarını çantaya, oyuncakları oyuncak sepetine sürükle! ✏️🧸',
+            tags: ['🎒 Okul Eşyaları', '🧸 Oyuncaklar', '🧺 Sınıflandır'],
+            btnText: 'Pratiğe Başla',
+            topic: 'school'
+          },
           {
             id: 'lifescience_school_1',
             active: true,
@@ -19136,6 +19211,36 @@
 
     const games = [
       {
+        id: 'maarif_phoneme_pop',
+        title: `Sesi Hisset ve Patlat (${letterUpper})`,
+        icon: '🎈',
+        badge: '👂 Fonolojik Farkındalık',
+        featureTag: '🎈 Uçuşan Balonlar',
+        description: `Moli'yi dinle! İçinde "${letterUpper}" sesi olan görselli balonları patlat! 🎯`,
+        tags: [`🔤 "${letterUpper}" Sesi`, '🎈 Görselli Balonlar', '🔊 Sesli Yönerge'],
+        active: true
+      },
+      {
+        id: 'maarif_word_train',
+        title: 'Hece ve Kelime Treni',
+        icon: '🚂',
+        badge: '🚂 Sürükle & Birleştir',
+        featureTag: '🧩 Harf Vagonları',
+        description: 'Harf vagonlarını Moli\'nin lokomotifine sürükle, kelimeyi oluştur ve resmin ortaya çıkışını izle! 🚂✨',
+        tags: ['🚂 Vagon Birleştir', '🔊 Kelime Seslendirme', '🖼️ Görsel Ödül'],
+        active: true
+      },
+      {
+        id: 'maarif_letter_basket',
+        title: 'Akıllı Harf Sepeti',
+        icon: '🧺',
+        badge: '🧺 Baş Harf Eşleştirme',
+        featureTag: '✋ Sürükle & Bırak',
+        description: 'Gelen nesneyi tut ve baş harfinin sepetine bırak! 🧺🔤',
+        tags: ['🧺 Harf Sepetleri', '🔤 Baş Harf', '🔊 Sesli Yönerge'],
+        active: true
+      },
+      {
         id: 'maarif_sound_find',
         title: 'Sesi Hisset / Balon Patlatma',
         icon: '🎈',
@@ -21857,10 +21962,689 @@
       pool.appendChild(chip);
     });
   }
+  /* ==========================================================================
+     1. SINIF MAARİF MODELİ ÖZEL ETKİLEŞİMLİ MOTORLARI
+     Türkçe (Ses/Tren/Sepet) | Matematik (Sayma/İşlem/Konum-Örüntü) | Hayat Bilgisi (Sepet)
+     ========================================================================== */
+  const K1_NUM_WORDS = ['sıfır', 'bir', 'iki', 'üç', 'dört', 'beş', 'altı', 'yedi', 'sekiz', 'dokuz', 'on', 'on bir', 'on iki', 'on üç', 'on dört', 'on beş', 'on altı', 'on yedi', 'on sekiz', 'on dokuz', 'yirmi'];
+
+  const K1_TRAIN_WORDS = {
+    g1: [
+      { word: 'ANNE', emoji: '👩' }, { word: 'AT', emoji: '🐴' }, { word: 'EL', emoji: '✋' },
+      { word: 'NANE', emoji: '🌿' }, { word: 'TEL', emoji: '🧵' }, { word: 'LALE', emoji: '🌷' }
+    ],
+    g2: [
+      { word: 'OKUL', emoji: '🏫' }, { word: 'ARI', emoji: '🐝' }, { word: 'KAR', emoji: '❄️' },
+      { word: 'ORMAN', emoji: '🌳' }, { word: 'ROKET', emoji: '🚀' }, { word: 'KOL', emoji: '💪' }
+    ],
+    g3: [
+      { word: 'SÜT', emoji: '🥛' }, { word: 'YAZ', emoji: '☀️' }, { word: 'DERS', emoji: '📚' },
+      { word: 'ÜZÜM', emoji: '🍇' }, { word: 'DENİZ', emoji: '🌊' }, { word: 'SÖZ', emoji: '🗣️' }
+    ],
+    g4: [
+      { word: 'ÇAY', emoji: '🍵' }, { word: 'BEBEK', emoji: '👶' }, { word: 'GÜL', emoji: '🌹' },
+      { word: 'ŞEKER', emoji: '🍬' }, { word: 'PASTA', emoji: '🎂' }, { word: 'BALIK', emoji: '🐟' }
+    ],
+    g5: [
+      { word: 'HAVUÇ', emoji: '🥕' }, { word: 'FİL', emoji: '🐘' }, { word: 'DAĞ', emoji: '⛰️' },
+      { word: 'VAZO', emoji: '🏺' }, { word: 'FINDIK', emoji: '🌰' }, { word: 'JET', emoji: '✈️' }
+    ]
+  };
+
+  function k1Shuffle(a) { return QuestionEngine.fisherYatesShuffle(a.slice()); }
+  function k1Pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function k1Upper(s) { return String(s).toLocaleUpperCase('tr-TR'); }
+  function k1Lower(s) { return String(s).toLocaleLowerCase('tr-TR'); }
+
+  function k1CumulativeLetters(groupId) {
+    const groups = MAARIF_2026_CONFIG.groups;
+    const idx = Math.max(0, groups.findIndex(g => g.id === groupId));
+    const out = [];
+    groups.slice(0, idx + 1).forEach(g => g.letters.forEach(l => out.push(k1Upper(l))));
+    return out;
+  }
+
+  // ---------------- Soru Üreticileri ----------------
+  function generateKidsGrade1Question(gameType) {
+    switch (gameType) {
+      case 'maarif_phoneme_pop': return generateK1PhonemePop();
+      case 'maarif_word_train': return generateK1WordTrain();
+      case 'maarif_letter_basket': return generateK1LetterBasket();
+      case 'math_apple_count_1': return generateK1AppleCount();
+      case 'math_add_sub_drag_1': return generateK1AddSub();
+      case 'math_spatial_pattern_1': return Math.random() < 0.6 ? generateK1Spatial() : generateK1Pattern();
+      case 'lifescience_healthy_basket_1': return generateK1Sort('healthy');
+      case 'lifescience_school_bag_1': return generateK1Sort('school');
+      default: return null;
+    }
+  }
+
+  function k1Base(type, category, text, spoken, explanation, data) {
+    return {
+      type: type,
+      category: category,
+      question: text,
+      questionHtml: `<div class="kids-prompt"><span class="kids-prompt-text">${replaceEmojisWith3D(text, 'q-3d-item')}</span></div>`,
+      spokenText: spoken || text,
+      correct: 'ok',
+      distractors: [],
+      explanation: explanation,
+      interactiveData: data
+    };
+  }
+
+  function generateK1PhonemePop() {
+    const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
+    const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
+    const lower = data.letter;
+    const upper = data.upper;
+    const hasIt = (w) => k1Lower(w.word).includes(lower);
+
+    let targets = k1Shuffle((data.soundWords || []).filter(hasIt)).slice(0, 3);
+    let wrongPool = (data.noSoundWords || []).filter(w => !hasIt(w));
+    MAARIF_2026_CONFIG.letterOrder.forEach(l => {
+      if (l === lower) return;
+      ((MAARIF_2026_CONFIG.letters[l] || {}).soundWords || []).forEach(w => {
+        if (!hasIt(w)) wrongPool.push(w);
+      });
+    });
+    const seen = new Set(targets.map(t => t.word));
+    const unique = [];
+    k1Shuffle(wrongPool).forEach(w => { if (!seen.has(w.word)) { seen.add(w.word); unique.push(w); } });
+    const wrongs = unique.slice(0, 3);
+
+    const phonetic = getMaarifLetterSoundName(activeL);
+    return k1Base('k1_phoneme_pop', '🎈 Sesi Hisset ve Patlat',
+      `İçinde "${upper}" sesi olan balonları patlat!`,
+      `İçinde ${phonetic} sesi olan balonları patlat!`,
+      `Harika kulak! "${upper}" sesini duydun ve doğru balonları patlattın! 🎈👏`,
+      {
+        letter: upper,
+        balloons: k1Shuffle([
+          ...targets.map(t => ({ emoji: t.emoji, word: t.word, isTarget: true })),
+          ...wrongs.map(t => ({ emoji: t.emoji, word: t.word, isTarget: false }))
+        ])
+      });
+  }
+
+  function generateK1WordTrain() {
+    const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
+    const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
+    const groupId = data.group || 'g1';
+    const pool = K1_TRAIN_WORDS[groupId] || K1_TRAIN_WORDS.g1;
+    const item = k1Pick(pool);
+    const parts = Array.from(item.word);
+    const learned = k1CumulativeLetters(groupId);
+    const groupLetters = (MAARIF_2026_CONFIG.groups.find(g => g.id === groupId) || MAARIF_2026_CONFIG.groups[0]).letters.map(k1Upper);
+    const extraSrc = groupLetters.filter(l => !parts.includes(l));
+    const extras = k1Shuffle(extraSrc.length ? extraSrc : learned.filter(l => !parts.includes(l))).slice(0, parts.length <= 3 ? 1 : 2);
+    return k1Base('k1_train', '🚂 Hece ve Kelime Treni',
+      'Harf vagonlarını sırayla trene bağla!',
+      'Harf vagonlarını sırayla trene bağla!',
+      `${item.word} ${item.emoji} kelimesini oluşturdun! Tren yola çıktı! 🚂🎉`,
+      { word: item.word, emoji: item.emoji, parts: parts, wagons: k1Shuffle([...parts, ...extras]) });
+  }
+
+  function generateK1LetterBasket() {
+    const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
+    const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
+    const groupId = data.group || 'g1';
+    const grp = MAARIF_2026_CONFIG.groups.find(g => g.id === groupId) || MAARIF_2026_CONFIG.groups[0];
+    const startWords = (l) => ((MAARIF_2026_CONFIG.letters[l] || {}).soundWords || []).filter(w => w.position === 'başta' && k1Lower(w.word)[0] === l);
+    let eligible = grp.letters.filter(l => startWords(l).length > 0);
+    if (eligible.length < 2) {
+      eligible = eligible.concat(MAARIF_2026_CONFIG.letterOrder.filter(l => !eligible.includes(l) && startWords(l).length > 0).slice(0, 2));
+    }
+    const n = (eligible.length >= 3 && Math.random() < 0.5) ? 3 : 2;
+    let chosen = k1Shuffle(eligible).slice(0, n);
+    if (eligible.includes(activeL) && !chosen.includes(activeL)) chosen[0] = activeL;
+    chosen = k1Shuffle(chosen);
+    const letter = k1Pick(chosen);
+    const w = k1Pick(startWords(letter));
+    return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
+      `${w.word} hangi harfle başlar? Sepete bırak!`,
+      `${w.word} hangi harfle başlar? Doğru sepete bırak!`,
+      `${w.word} ${w.emoji} "${k1Upper(letter)}" harfiyle başlar! 🧺👏`,
+      { baskets: chosen.map(l => ({ letter: k1Upper(l) })), item: { emoji: w.emoji, word: w.word, letter: k1Upper(letter) } });
+  }
+
+  function generateK1AppleCount() {
+    const n = Math.random() < 0.7 ? (1 + Math.floor(Math.random() * 10)) : (11 + Math.floor(Math.random() * 10));
+    const themes = [
+      { item: '🍎', name: 'elma', source: '🌳', container: '🧺', verb: 'Sepete tam %n% tane elma topla!' },
+      { item: '🐟', name: 'balık', source: '🌊', container: '🫧', verb: 'Akvaryuma tam %n% tane balık at!' }
+    ];
+    const th = k1Pick(themes);
+    const text = th.verb.replace('%n%', String(n));
+    return k1Base('k1_count', '🍎 Elma Ağacı & Sayma', text, text,
+      `Tam ${n} tane ${th.name} saydın! Harikasın! ${th.item}🎉`,
+      { n: n, item: th.item, name: th.name, source: th.source, container: th.container, total: Math.min(n + 4, 24) });
+  }
+
+  function generateK1AddSub() {
+    const isAdd = Math.random() < 0.55;
+    let a, b, result;
+    if (isAdd) {
+      a = 1 + Math.floor(Math.random() * 8);
+      b = 1 + Math.floor(Math.random() * Math.min(10 - a, 6) || 1);
+      result = a + b;
+    } else {
+      a = 3 + Math.floor(Math.random() * 8);
+      b = 1 + Math.floor(Math.random() * (a - 1));
+      result = a - b;
+    }
+    const icon = k1Pick(['🍓', '🧱', '⭐', '🍎']);
+    const wrongs = [];
+    k1Shuffle([result - 2, result - 1, result + 1, result + 2, result + 3]).forEach(v => {
+      if (v >= 0 && v <= 20 && v !== result && wrongs.length < 2) wrongs.push(v);
+    });
+    const spoken = isAdd ? `${K1_NUM_WORDS[a]} artı ${K1_NUM_WORDS[b]} kaç eder? Doğru rakamı kutuya sürükle!` : `${K1_NUM_WORDS[a]} eksi ${K1_NUM_WORDS[b]} kaç eder? Doğru rakamı kutuya sürükle!`;
+    return k1Base('k1_addsub', '➕ Görsel Toplama & Çıkarma',
+      isAdd ? `${a} + ${b} = ?` : `${a} − ${b} = ?`, spoken,
+      isAdd ? `${a} + ${b} = ${result}. Nesneleri sayarak buldun! ${icon}👏` : `${a} − ${b} = ${result}. Nesneleri sayarak buldun! ${icon}👏`,
+      { a: a, b: b, isAdd: isAdd, result: result, icon: icon, options: k1Shuffle([result, ...wrongs]) });
+  }
+
+  function generateK1Spatial() {
+    const objs = [
+      { e: '⚽', gen: 'Topun' }, { e: '🐱', gen: 'Kedinin' }, { e: '🏠', gen: 'Evin' }, { e: '🌳', gen: 'Ağacın' },
+      { e: '🚗', gen: 'Arabanın' }, { e: '🍎', gen: 'Elmanın' }, { e: '🎈', gen: 'Balonun' }, { e: '🐶', gen: 'Köpeğin' }
+    ];
+    const three = k1Shuffle(objs).slice(0, 3);
+    const kind = k1Pick(['vertical', 'horizontal', 'box', 'length']);
+    let prompt, items, layout = kind;
+    if (kind === 'vertical') {
+      const ask = k1Pick(['üst', 'alt']);
+      prompt = `${three[1].gen} ${ask === 'üst' ? 'ÜSTÜNDEKİ' : 'ALTINDAKİ'} nesneye dokun!`;
+      items = three.map((o, i) => ({ e: o.e, correct: ask === 'üst' ? i === 0 : i === 2 }));
+    } else if (kind === 'horizontal') {
+      const ask = k1Pick(['sağ', 'sol']);
+      prompt = `${three[1].gen} ${ask === 'sağ' ? 'SAĞINDAKİ' : 'SOLUNDAKİ'} nesneye dokun!`;
+      items = three.map((o, i) => ({ e: o.e, correct: ask === 'sol' ? i === 0 : i === 2 }));
+    } else if (kind === 'box') {
+      const ask = k1Pick(['in', 'out']);
+      const minorityIdx = Math.floor(Math.random() * 3);
+      prompt = ask === 'in' ? 'Kutunun İÇİNDEKİ nesneye dokun!' : 'Kutunun DIŞINDAKİ nesneye dokun!';
+      items = three.map((o, i) => {
+        const isMinor = (i === minorityIdx);
+        const inside = (ask === 'in') ? isMinor : !isMinor;
+        return { e: o.e, inside: inside, correct: isMinor };
+      });
+    } else {
+      const ask = k1Pick(['uzun', 'kısa']);
+      const lens = k1Shuffle([40, 70, 100]);
+      prompt = ask === 'uzun' ? 'En UZUN olana dokun!' : 'En KISA olana dokun!';
+      items = lens.map(len => ({ len: len, correct: ask === 'uzun' ? len === 100 : len === 40 }));
+    }
+    return k1Base('k1_spatial', '📍 Uzamsal İlişkiler', prompt, prompt.replace('İÇİNDEKİ', 'içindeki').replace('DIŞINDAKİ', 'dışındaki'),
+      'Harika gözlem! Konum kavramını doğru buldun! 📍👏', { layout: layout, items: items });
+  }
+
+  function generateK1Pattern() {
+    const sets = [['🔴', '🔵', '🟡', '🟢'], ['🟥', '🟦', '🟨', '🟩'], ['🍎', '🍌', '🍇', '🍓'], ['⭐', '❤️', '🔷', '🟣']];
+    const set = k1Shuffle(k1Pick(sets));
+    const A = set[0], B = set[1], C = set[2];
+    const unit = k1Pick([[A, B], [A, A, B], [A, B, C], [A, B, B]]);
+    const full = [];
+    for (let i = 0; i < 6; i++) full.push(unit[i % unit.length]);
+    const answer = full[5];
+    const wrongs = k1Shuffle(set.filter(x => x !== answer)).slice(0, 2);
+    return k1Base('k1_pattern', '🚃 Örüntü Vagonu', 'Örüntüyü tamamla! Sırada hangisi var?', 'Örüntüyü tamamla! Sırada hangisi var?',
+      'Süper! Örüntünün kuralını buldun! 🚃🎉',
+      { shown: full.slice(0, 5), answer: answer, options: k1Shuffle([answer, ...wrongs]) });
+  }
+
+  function generateK1Sort(kind) {
+    let baskets, good, bad, text;
+    if (kind === 'healthy') {
+      baskets = [{ id: 'a', emoji: '🥗', label: 'Sağlıklı' }, { id: 'b', emoji: '🍟', label: 'Zararlı' }];
+      good = [{ e: '🍎', w: 'Elma' }, { e: '🥕', w: 'Havuç' }, { e: '🥛', w: 'Süt' }, { e: '🍌', w: 'Muz' }, { e: '🥦', w: 'Brokoli' }, { e: '🐟', w: 'Balık' }];
+      bad = [{ e: '🍭', w: 'Şeker' }, { e: '🍟', w: 'Patates kızartması' }, { e: '🍫', w: 'Çikolata' }, { e: '🥤', w: 'Gazlı içecek' }, { e: '🍩', w: 'Çörek' }];
+      text = 'Sağlıklı yiyecekleri yeşil sepete, zararlıları diğer sepete at!';
+    } else {
+      baskets = [{ id: 'a', emoji: '🎒', label: 'Okul Eşyaları' }, { id: 'b', emoji: '🧸', label: 'Oyuncaklar' }];
+      good = [{ e: '✏️', w: 'Kalem' }, { e: '📚', w: 'Kitap' }, { e: '📏', w: 'Cetvel' }, { e: '📓', w: 'Defter' }, { e: '🖍️', w: 'Boya kalemi' }, { e: '✂️', w: 'Makas' }];
+      bad = [{ e: '🧸', w: 'Ayıcık' }, { e: '⚽', w: 'Top' }, { e: '🪀', w: 'Yoyo' }, { e: '🚗', w: 'Oyuncak araba' }, { e: '🪁', w: 'Uçurtma' }];
+      text = 'Okul eşyalarını çantaya, oyuncakları oyuncak sepetine koy!';
+    }
+    const items = k1Shuffle([
+      ...k1Shuffle(good).slice(0, 3).map(i => ({ e: i.e, w: i.w, basket: 'a' })),
+      ...k1Shuffle(bad).slice(0, 2).map(i => ({ e: i.e, w: i.w, basket: 'b' }))
+    ]);
+    return k1Base('k1_sort', kind === 'healthy' ? '🥗 Sağlıklı Beslenme Sepeti' : '🎒 Çantamı Hazırlıyorum', text, text,
+      'Harika! Hepsini doğru sepete yerleştirdin! 🧺🎉', { baskets: baskets, items: items });
+  }
+
+  // ---------------- Ortak Yardımcılar ----------------
+  function k1Mount(q, build) {
+    [1, 2].forEach(pn => {
+      const zone = (pn === 1) ? DOM.p1InteractiveZone : DOM.p2InteractiveZone;
+      if (!zone) return;
+      zone.innerHTML = '';
+      const root = document.createElement('div');
+      root.className = `kids-engine k1-engine k1-${q.type}`;
+      zone.appendChild(root);
+
+      const listen = document.createElement('button');
+      listen.type = 'button';
+      listen.className = 'kids-listen-btn';
+      listen.setAttribute('aria-label', 'Moli\'yi Dinle');
+      listen.innerHTML = '<span class="kids-listen-icon">🔊</span><span>Dinle</span>';
+      attachInstantTouch(listen, () => readCurrentQuestion(true));
+      root.appendChild(listen);
+
+      build(root, pn, q.interactiveData);
+    });
+  }
+
+  function k1Active(pn) {
+    return !state.isQuestionAnswered && !(state.gameMode === 'solo' && pn !== 1);
+  }
+
+  function k1El(cls, html) {
+    const d = document.createElement('div');
+    d.className = cls;
+    if (html !== undefined) d.innerHTML = html;
+    return d;
+  }
+
+  function k1Reset(el) {
+    el.style.transition = 'transform .25s ease';
+    el.style.transform = '';
+    setTimeout(() => { el.style.transition = ''; el.style.zIndex = ''; }, 280);
+  }
+
+  function k1Place(el, container) {
+    el.style.transition = '';
+    el.style.transform = '';
+    el.style.zIndex = '';
+    el.classList.add('k1-placed');
+    el.style.pointerEvents = 'none';
+    container.appendChild(el);
+  }
+
+  function k1Drag(el, opts) {
+    el.addEventListener('pointerdown', (e) => {
+      if (opts.canStart && !opts.canStart()) return;
+      if (e.cancelable) e.preventDefault();
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+      const sx = e.clientX, sy = e.clientY;
+      let moved = false;
+      el.style.transition = 'none';
+      el.style.zIndex = '60';
+      el.classList.add('kids-dragging');
+
+      const move = (ev) => {
+        const dx = ev.clientX - sx, dy = ev.clientY - sy;
+        if (Math.abs(dx) + Math.abs(dy) > 8) moved = true;
+        el.style.transform = `translate(${dx}px, ${dy}px) scale(1.08)`;
+      };
+      const up = (ev) => {
+        el.removeEventListener('pointermove', move);
+        el.removeEventListener('pointerup', up);
+        el.removeEventListener('pointercancel', up);
+        el.classList.remove('kids-dragging');
+        if (!moved) {
+          k1Reset(el);
+          if (opts.onTap) opts.onTap();
+          return;
+        }
+        let hit = null;
+        (opts.targets() || []).forEach(t => {
+          const r = t.getBoundingClientRect();
+          if (!hit && ev.clientX >= r.left - 14 && ev.clientX <= r.right + 14 && ev.clientY >= r.top - 14 && ev.clientY <= r.bottom + 14) hit = t;
+        });
+        if (hit) opts.onDrop(hit);
+        else k1Reset(el);
+      };
+      el.addEventListener('pointermove', move);
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+    });
+  }
+
+  function k1Face(emoji, cls) {
+    return `<span class="kids-face">${replaceEmojisWith3D(emoji, cls || 'kids-card-icon')}</span>`;
+  }
+
+  function renderK1Engine(q) {
+    switch (q.type) {
+      case 'k1_phoneme_pop': return k1Mount(q, k1BuildPhonemePop);
+      case 'k1_train': return k1Mount(q, k1BuildTrain);
+      case 'k1_basket': return k1Mount(q, k1BuildLetterBasket);
+      case 'k1_count': return k1Mount(q, k1BuildCount);
+      case 'k1_addsub': return k1Mount(q, k1BuildAddSub);
+      case 'k1_spatial': return k1Mount(q, k1BuildSpatial);
+      case 'k1_pattern': return k1Mount(q, k1BuildPattern);
+      case 'k1_sort': return k1Mount(q, k1BuildSort);
+    }
+  }
+
+  // ---------------- a) Sesi Hisset ve Patlat ----------------
+  function k1BuildPhonemePop(root, pn, d) {
+    const targetCount = d.balloons.filter(b => b.isTarget).length;
+    let popped = 0;
+    const progress = k1El('k1-progress', '');
+    const renderProgress = () => {
+      progress.innerHTML = Array.from({ length: targetCount }, (_, i) => `<span class="k1-dot${i < popped ? ' on' : ''}">${i < popped ? '⭐' : '○'}</span>`).join('');
+    };
+    renderProgress();
+    root.appendChild(progress);
+
+    const sky = k1El('kids-balloon-sky kids-count-4', '');
+    d.balloons.forEach((b, i) => {
+      const el = k1El(`kids-item kids-balloon k1-visual-balloon kids-color-${i % 4}`, `<span class="kids-face">${replaceEmojisWith3D(b.emoji, 'kids-card-icon')}</span><span class="k1-balloon-word">${b.word}</span><span class="kids-balloon-string"></span>`);
+      el.setAttribute('role', 'button');
+      el.tabIndex = 0;
+      el.style.animationDelay = `${-i * 0.7}s`;
+      let done = false;
+      attachInstantTouch(el, () => {
+        if (!k1Active(pn) || done) return;
+        if (!b.isTarget) { kidsGentleWrong(el); return; }
+        done = true;
+        audio.playPop();
+        el.classList.add('kids-correct');
+        popped++;
+        renderProgress();
+        if (popped >= targetCount) kidsPointAnswer(pn, el, true);
+      });
+      sky.appendChild(el);
+    });
+    root.appendChild(sky);
+  }
+
+  // ---------------- b) Hece ve Kelime Treni ----------------
+  function k1BuildTrain(root, pn, d) {
+    const reveal = k1El('k1-reveal', replaceEmojisWith3D(d.emoji, 'kids-card-icon'));
+    reveal.style.opacity = '0.08';
+    reveal.style.filter = 'blur(10px) grayscale(1)';
+    root.appendChild(reveal);
+
+    const row = k1El('k1-train-row', '<div class="k1-loco" aria-hidden="true">🚂</div>');
+    const slots = d.parts.map(() => { const s = k1El('k1-slot', ''); row.appendChild(s); return s; });
+    root.appendChild(row);
+
+    const pool = k1El('k1-wagon-pool', '');
+    root.appendChild(pool);
+    let filled = 0;
+
+    const tryPlace = (wagon, letter) => {
+      if (!k1Active(pn) || filled >= d.parts.length) return;
+      if (letter !== d.parts[filled]) { k1Reset(wagon); kidsGentleWrong(wagon); return; }
+      const slot = slots[filled];
+      slot.textContent = letter;
+      slot.classList.add('filled');
+      wagon.remove();
+      filled++;
+      const ratio = filled / d.parts.length;
+      reveal.style.opacity = String(0.08 + ratio * 0.92);
+      reveal.style.filter = `blur(${Math.round((1 - ratio) * 10)}px) grayscale(${1 - ratio})`;
+      audio.playClick();
+      if (filled === d.parts.length) {
+        reveal.classList.add('k1-reveal-done');
+        row.classList.add('k1-train-go');
+        audio.speakTurkishText(k1Lower(d.word));
+        setTimeout(() => kidsPointAnswer(pn, row, true), 150);
+      }
+    };
+
+    d.wagons.forEach((letter, i) => {
+      const w = k1El(`kids-item k1-wagon kids-color-${i % 4}`, letter);
+      w.setAttribute('role', 'button');
+      w.tabIndex = 0;
+      k1Drag(w, {
+        canStart: () => k1Active(pn),
+        targets: () => [row],
+        onDrop: () => tryPlace(w, letter),
+        onTap: () => tryPlace(w, letter)
+      });
+      pool.appendChild(w);
+    });
+  }
+
+  // ---------------- c) Akıllı Harf Sepeti ----------------
+  function k1BuildLetterBasket(root, pn, d) {
+    const item = k1El('kids-item k1-falling kids-color-1', `${k1Face(d.item.emoji, 'kids-card-icon')}<span class="k1-item-word">${d.item.word}</span>`);
+    item.setAttribute('role', 'button');
+    item.tabIndex = 0;
+    const stage = k1El('k1-falling-stage', '');
+    stage.appendChild(item);
+    root.appendChild(stage);
+
+    const row = k1El('k1-baskets-row', '');
+    const boxes = d.baskets.map((b, i) => {
+      const box = k1El(`k1-basket-box kids-color-${i % 4}`, `<span class="k1-basket-letter">${b.letter}</span><span class="k1-basket-emoji">🧺</span>`);
+      box.dataset.letter = b.letter;
+      row.appendChild(box);
+      return box;
+    });
+    root.appendChild(row);
+
+    k1Drag(item, {
+      canStart: () => k1Active(pn),
+      targets: () => boxes,
+      onDrop: (box) => {
+        if (!k1Active(pn)) return;
+        if (box.dataset.letter === d.item.letter) {
+          k1Place(item, box);
+          kidsPointAnswer(pn, box, true);
+        } else {
+          k1Reset(item);
+          kidsGentleWrong(item);
+        }
+      }
+    });
+  }
+
+  // ---------------- Matematik: Nesne Sayma ----------------
+  function k1BuildCount(root, pn, d) {
+    const source = k1El('k1-orchard', `<div class="k1-source-icon">${replaceEmojisWith3D(d.source, 'kids-card-icon')}</div>`);
+    const field = k1El('k1-orchard-field', '');
+    source.appendChild(field);
+    root.appendChild(source);
+
+    const counter = k1El('k1-counter', `0 / ${d.n}`);
+    const box = k1El('k1-container', `<span class="k1-container-icon">${replaceEmojisWith3D(d.container, 'kids-card-icon')}</span>`);
+    const inside = k1El('k1-container-items', '');
+    box.appendChild(inside);
+    root.appendChild(counter);
+    root.appendChild(box);
+
+    let count = 0;
+    const take = (el) => {
+      if (!k1Active(pn) || count >= d.n) { k1Reset(el); return; }
+      k1Place(el, inside);
+      count++;
+      counter.textContent = `${count} / ${d.n}`;
+      audio.speakTurkishText(K1_NUM_WORDS[count] || String(count));
+      if (count === d.n) {
+        counter.classList.add('k1-counter-done');
+        setTimeout(() => kidsPointAnswer(pn, box, true), 700);
+      }
+    };
+
+    for (let i = 0; i < d.total; i++) {
+      const it = k1El('kids-item k1-apple', replaceEmojisWith3D(d.item, 'kids-card-icon'));
+      it.setAttribute('role', 'button');
+      it.tabIndex = 0;
+      k1Drag(it, {
+        canStart: () => k1Active(pn),
+        targets: () => [box],
+        onDrop: () => take(it),
+        onTap: () => take(it)
+      });
+      field.appendChild(it);
+    }
+  }
+
+  // ---------------- Matematik: Görsel Toplama / Çıkarma ----------------
+  function k1BuildAddSub(root, pn, d) {
+    const objs = (n, struckFrom) => {
+      let h = '';
+      for (let i = 0; i < n; i++) {
+        h += `<span class="k1-obj${(struckFrom !== undefined && i >= struckFrom) ? ' k1-struck' : ''}">${replaceEmojisWith3D(d.icon, 'k1-obj-icon')}</span>`;
+      }
+      return h;
+    };
+    const eq = k1El('k1-equation', '');
+    if (d.isAdd) {
+      eq.innerHTML = `
+        <div class="k1-num-group"><div class="k1-big-num">${d.a}</div><div class="k1-objs">${objs(d.a)}</div></div>
+        <div class="k1-op">+</div>
+        <div class="k1-num-group"><div class="k1-big-num">${d.b}</div><div class="k1-objs">${objs(d.b)}</div></div>
+        <div class="k1-op">=</div>`;
+    } else {
+      eq.innerHTML = `
+        <div class="k1-num-group"><div class="k1-big-num">${d.a}</div><div class="k1-objs">${objs(d.a, d.a - d.b)}</div></div>
+        <div class="k1-op">−</div>
+        <div class="k1-num-group"><div class="k1-big-num">${d.b}</div></div>
+        <div class="k1-op">=</div>`;
+    }
+    const answerBox = k1El('k1-answer-box', '?');
+    eq.appendChild(answerBox);
+    root.appendChild(eq);
+
+    const pool = k1El('k1-number-pool', '');
+    root.appendChild(pool);
+    const attempt = (el, val) => {
+      if (!k1Active(pn)) { k1Reset(el); return; }
+      if (val === d.result) {
+        answerBox.textContent = String(val);
+        answerBox.classList.add('filled');
+        el.remove();
+        kidsPointAnswer(pn, answerBox, true);
+      } else {
+        k1Reset(el);
+        kidsGentleWrong(el);
+      }
+    };
+    d.options.forEach((val, i) => {
+      const b = k1El(`kids-item kids-balloon k1-num-balloon kids-color-${i % 4}`, `<span class="kids-face">${val}</span><span class="kids-balloon-string"></span>`);
+      b.setAttribute('role', 'button');
+      b.tabIndex = 0;
+      k1Drag(b, {
+        canStart: () => k1Active(pn),
+        targets: () => [answerBox],
+        onDrop: () => attempt(b, val),
+        onTap: () => attempt(b, val)
+      });
+      pool.appendChild(b);
+    });
+  }
+
+  // ---------------- Matematik: Uzamsal İlişkiler ----------------
+  function k1BuildSpatial(root, pn, d) {
+    const mk = (it, i, inner, extra) => {
+      const el = k1El(`kids-item k1-obj-card ${extra || ''} kids-color-${i % 4}`, inner);
+      el.setAttribute('role', 'button');
+      el.tabIndex = 0;
+      el.setAttribute('data-kid-idx', String(i));
+      attachInstantTouch(el, () => kidsPointAnswer(pn, el, !!it.correct));
+      return el;
+    };
+    if (d.layout === 'vertical' || d.layout === 'horizontal') {
+      const wrap = k1El(`k1-spatial-${d.layout === 'vertical' ? 'col' : 'row'}`, '');
+      d.items.forEach((it, i) => wrap.appendChild(mk(it, i, k1Face(it.e, 'kids-card-icon'))));
+      root.appendChild(wrap);
+    } else if (d.layout === 'box') {
+      const box = k1El('k1-spatial-box', '<span class="k1-box-label">📦</span>');
+      const outside = k1El('k1-spatial-outside', '');
+      d.items.forEach((it, i) => (it.inside ? box : outside).appendChild(mk(it, i, k1Face(it.e, 'kids-card-icon'))));
+      root.appendChild(box);
+      root.appendChild(outside);
+    } else {
+      const wrap = k1El('k1-spatial-bars', '');
+      d.items.forEach((it, i) => {
+        const bar = mk(it, i, '<span class="k1-bar-end">✏️</span>', 'k1-bar');
+        bar.style.width = `${it.len}%`;
+        wrap.appendChild(bar);
+      });
+      root.appendChild(wrap);
+    }
+  }
+
+  // ---------------- Matematik: Örüntü Vagonu ----------------
+  function k1BuildPattern(root, pn, d) {
+    const row = k1El('k1-train-row k1-pattern-row', '<div class="k1-loco" aria-hidden="true">🚂</div>');
+    d.shown.forEach(s => row.appendChild(k1El('k1-wagon k1-pattern-wagon', replaceEmojisWith3D(s, 'k1-obj-icon'))));
+    const slot = k1El('k1-slot k1-pattern-slot', '?');
+    row.appendChild(slot);
+    root.appendChild(row);
+
+    const pool = k1El('k1-number-pool', '');
+    root.appendChild(pool);
+    const attempt = (el, val) => {
+      if (!k1Active(pn)) { k1Reset(el); return; }
+      if (val === d.answer) {
+        slot.innerHTML = replaceEmojisWith3D(val, 'k1-obj-icon');
+        slot.classList.add('filled');
+        el.remove();
+        kidsPointAnswer(pn, slot, true);
+      } else {
+        k1Reset(el);
+        kidsGentleWrong(el);
+      }
+    };
+    d.options.forEach((val, i) => {
+      const c = k1El(`kids-item kids-chip k1-pattern-chip kids-color-${i % 4}`, `<span class="kids-face">${replaceEmojisWith3D(val, 'kids-card-icon')}</span>`);
+      c.setAttribute('role', 'button');
+      c.tabIndex = 0;
+      k1Drag(c, {
+        canStart: () => k1Active(pn),
+        targets: () => [slot],
+        onDrop: () => attempt(c, val),
+        onTap: () => attempt(c, val)
+      });
+      pool.appendChild(c);
+    });
+  }
+
+  // ---------------- Hayat Bilgisi: İki Sepet Sınıflandırma ----------------
+  function k1BuildSort(root, pn, d) {
+    const row = k1El('k1-baskets-row k1-sort-baskets', '');
+    const boxes = d.baskets.map((b, i) => {
+      const box = k1El(`k1-basket-box k1-sort-box ${i === 0 ? 'kids-color-2' : 'kids-color-0'}`, `<span class="k1-basket-emoji">${replaceEmojisWith3D(b.emoji, 'kids-card-icon')}</span><span class="k1-sort-label">${b.label}</span>`);
+      box.dataset.basket = b.id;
+      const inner = k1El('k1-container-items', '');
+      box.appendChild(inner);
+      box._inner = inner;
+      row.appendChild(box);
+      return box;
+    });
+    root.appendChild(row);
+
+    const pool = k1El('k1-sort-pool', '');
+    root.appendChild(pool);
+    let placed = 0;
+    d.items.forEach((it, i) => {
+      const el = k1El(`kids-item k1-sort-item kids-color-${i % 4}`, `${k1Face(it.e, 'kids-card-icon')}<span class="k1-item-word">${it.w}</span>`);
+      el.setAttribute('role', 'button');
+      el.tabIndex = 0;
+      k1Drag(el, {
+        canStart: () => k1Active(pn),
+        targets: () => boxes,
+        onDrop: (box) => {
+          if (!k1Active(pn)) { k1Reset(el); return; }
+          if (box.dataset.basket === it.basket) {
+            k1Place(el, box._inner);
+            audio.playClick();
+            placed++;
+            if (placed >= d.items.length) kidsPointAnswer(pn, row, true);
+          } else {
+            k1Reset(el);
+            kidsGentleWrong(el);
+          }
+        }
+      });
+      pool.appendChild(el);
+    });
+  }
   function renderInteractiveQuestion(q) {
     if (!q) return;
 
-    if (q.type === 'kids_cards' || q.type === 'kids_drag' || q.type === 'kids_balloon') {
+    if (typeof q.type === 'string' && q.type.indexOf('k1_') === 0) {
+      renderK1Engine(q);
+    } else if (q.type === 'kids_cards' || q.type === 'kids_drag' || q.type === 'kids_balloon') {
       renderKidsEngine(q);
     } else if (q.type === 'visual_choice') {
       renderVisualChoiceArena(q);
