@@ -1427,6 +1427,13 @@
   const audio = new SoundEngine();
   window.__DERSE_BI_MOLA_AUDIO__ = audio;
 
+  // Anasınıfı / 1. / 2. sınıf düello ekranında korkutucu "yanlış" sesi çalmaz (Sınav stresi yok)
+  const _origPlayWrong = audio.playWrong.bind(audio);
+  audio.playWrong = function () {
+    if (typeof state !== 'undefined' && state.currentView === 'duel' && isKidsGrade(state.currentGrade)) return;
+    return _origPlayWrong();
+  };
+
   // Google TTS (Ses motoru) başlatma fonksiyonunu sayfa yüklendikten (window.onload) sonraya ertele (defer)
   if (document.readyState === 'complete') {
     audio.initTTSDeferred();
@@ -8579,7 +8586,7 @@
       if (parseInt(grade, 10) > 1 && isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
         let catFilter = gameType;
         if (gameType === 'social') catFilter = 'lifescience';
-        if (Math.random() < 0.5) {
+        if (parseInt(grade, 10) > 2 && Math.random() < 0.5) {
           return this.generateTrueFalseQuestion(grade, catFilter);
         } else {
           return this.generateMatchingQuestion(grade, catFilter);
@@ -20882,6 +20889,9 @@
 
     // Yeni soruyu üret
     state.currentQuestion = QuestionEngine.getNextQuestion(state.currentGrade, state.currentGameType);
+    // Anasınıfı / 1. / 2. sınıf: klasik A-B-C-D testini şıksız etkileşimli motora dönüştür (Adapter)
+    state.currentQuestion = adaptQuestionForKids(state.currentQuestion);
+    [DOM.p1OptionsGrid, DOM.p2OptionsGrid].forEach(gr => { if (gr) gr.classList.toggle('kids-no-letters', isKidsGrade(state.currentGrade)); });
 
     // Mavi Tarafına Bas
     DOM.p1QuestionCategory.innerHTML = replaceEmojisWith3D(state.currentQuestion.category, 'chip-3d-icon');
@@ -20954,7 +20964,7 @@
     DOM.p2WinToast.classList.add('hide');
 
     // Otomatik Soru Sesli Okuma (Edge-TTS Stüdyo & Web Speech)
-    if (state.autoReadQuestion && state.soundEnabled) {
+    if ((state.autoReadQuestion || parseInt(state.currentGrade, 10) <= 1) && state.soundEnabled) {
       const readDelay = (state.questionNumber === 1 && state.announcerEnabled) ? 1900 : 400;
       setDuelTimeout(() => {
         if (state.currentView === 'duel' && !state.isQuestionAnswered) {
@@ -21116,6 +21126,15 @@
   }
 
   function applyLockout(playerNum, optionIndex) {
+    if (isKidsGrade(state.currentGrade) && state.currentView === 'duel') {
+      const gEl = (playerNum === 1) ? DOM.p1OptionsGrid : DOM.p2OptionsGrid;
+      let target = null;
+      if (gEl && optionIndex !== null && optionIndex !== undefined) {
+        target = gEl.querySelectorAll('.duel-option-btn')[optionIndex] || null;
+      }
+      kidsGentleWrong(target || kidsLastTouched);
+      return;
+    }
     const isP1 = (playerNum === 1);
     const lockOverlay = isP1 ? DOM.p1LockOverlay : DOM.p2LockOverlay;
     const lockProgress = isP1 ? DOM.p1LockProgress : DOM.p2LockProgress;
@@ -21615,10 +21634,235 @@
     }
   }
 
+  /* ==========================================================================
+     ŞIKSIZ ETKİLEŞİMLİ GÖRSEL OYUN MOTORU (Anasınıfı, 1. ve 2. Sınıf)
+     Motor A: Dinle & Dokun (dev kartlar) | Motor B: Sürükle & Sepete Bırak
+     Motor C: Balon Patlatma
+     ========================================================================== */
+  function isKidsGrade(g) {
+    const n = parseInt(g, 10);
+    return n === 0 || n === 1 || n === 2;
+  }
+
+  let kidsLastTouched = null;
+  let kidsLastRetryAt = 0;
+  document.addEventListener('pointerdown', (e) => {
+    kidsLastTouched = (e.target && e.target.closest && e.target.closest('#p1InteractiveZone, #p2InteractiveZone, #p1OptionsGrid, #p2OptionsGrid')) ? e.target : null;
+  }, true);
+
+  function kidsGentleWrong(el) {
+    let node = el;
+    if (node && node.closest) node = node.closest('[role="button"], button, .kids-item') || node;
+    if (node && node.classList) {
+      node.classList.remove('kids-shake');
+      void node.offsetWidth;
+      node.classList.add('kids-shake');
+      setTimeout(() => node.classList.remove('kids-shake'), 650);
+    }
+    const now = Date.now();
+    if (now - kidsLastRetryAt > 2500) {
+      kidsLastRetryAt = now;
+      audio.speakTurkishText('Hımm, tekrar deneyelim mi?');
+    }
+  }
+
+  function kidsStripLetter(s) {
+    return String(s).replace(/^\s*[A-DÇ]\s*[\)\.:]\s+/, '').trim();
+  }
+
+  function adaptQuestionForKids(q) {
+    if (!q || (q.type && q.type !== 'standard')) return q;
+    if (!isKidsGrade(state.currentGrade)) return q;
+    const rawOpts = (q.options || []).map(kidsStripLetter);
+    const correct = kidsStripLetter(q.correct);
+    if (rawOpts.length < 2 || !rawOpts.includes(correct)) return q;
+
+    // En fazla 3 kart: doğru cevap + 2 yanıltıcı
+    const wrongs = QuestionEngine.fisherYatesShuffle(rawOpts.filter(o => o !== correct)).slice(0, 2);
+    const options = QuestionEngine.fisherYatesShuffle([correct, ...wrongs]);
+
+    const g = parseInt(state.currentGrade, 10);
+    const maxLen = Math.max(...options.map(o => o.replace(/\p{Extended_Pictographic}/gu, '').trim().length));
+    const r = Math.random();
+    let mode;
+    if (maxLen > 18) mode = r < 0.6 ? 'cards' : 'drag';
+    else if (g === 2) mode = r < 0.34 ? 'cards' : (r < 0.67 ? 'drag' : 'balloon');
+    else mode = r < 0.5 ? 'cards' : (r < 0.75 ? 'drag' : 'balloon');
+
+    // Anasınıfı & 1. sınıf: minimum metin, dev ikon / sesli yönerge
+    let questionHtml = q.questionHtml;
+    if (g < 2 && !q.englishWord) {
+      const plain = String(q.question || '').replace(/\s+/g, ' ').trim();
+      const emojis = (plain.match(/\p{Extended_Pictographic}/gu) || []).join('');
+      const shortText = plain.length <= 40 ? plain : '';
+      if (shortText) {
+        questionHtml = `<div class="kids-prompt"><span class="kids-prompt-text">${replaceEmojisWith3D(shortText, 'q-3d-item')}</span></div>`;
+      } else {
+        questionHtml = `<div class="kids-prompt"><span class="kids-prompt-emoji">${emojis ? replaceEmojisWith3D(emojis, 'q-3d-item') : '🔊'}</span></div>`;
+      }
+    }
+
+    return Object.assign({}, q, {
+      type: 'kids_' + mode,
+      questionHtml: questionHtml,
+      kids: { options: options, correct: correct, mode: mode }
+    });
+  }
+
+  function kidsPointAnswer(pn, el, isCorrect) {
+    if (state.isQuestionAnswered) return;
+    if (state.gameMode === 'solo' && pn !== 1) return;
+    if (!isCorrect) {
+      kidsGentleWrong(el);
+      return;
+    }
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    el.classList.add('kids-correct');
+    const idx = el.getAttribute('data-kid-idx');
+    const otherZone = (pn === 1) ? DOM.p2InteractiveZone : DOM.p1InteractiveZone;
+    if (otherZone && idx !== null) {
+      const twin = otherZone.querySelector(`.kids-item[data-kid-idx="${idx}"]`);
+      if (twin) twin.classList.add('kids-correct');
+    }
+    if (el.classList.contains('kids-balloon')) audio.playPop();
+    awardPointAndProgress(pn, null, cx, cy);
+  }
+
+  function renderKidsEngine(q) {
+    const k = q.kids;
+    [1, 2].forEach(pn => {
+      const zone = (pn === 1) ? DOM.p1InteractiveZone : DOM.p2InteractiveZone;
+      if (!zone) return;
+      zone.innerHTML = '';
+      const root = document.createElement('div');
+      root.className = `kids-engine kids-mode-${k.mode} kids-grade-${state.currentGrade}`;
+      zone.appendChild(root);
+
+      const listen = document.createElement('button');
+      listen.type = 'button';
+      listen.className = 'kids-listen-btn';
+      listen.setAttribute('aria-label', 'Soruyu Dinle');
+      listen.innerHTML = '<span class="kids-listen-icon">🔊</span><span>Dinle</span>';
+      attachInstantTouch(listen, () => readCurrentQuestion(true));
+      root.appendChild(listen);
+
+      if (k.mode === 'drag') buildKidsDrag(root, pn, k);
+      else buildKidsChoices(root, pn, k);
+    });
+  }
+
+  function kidsLabelClass(o) {
+    const len = o.replace(/\p{Extended_Pictographic}/gu, '').trim().length;
+    return len > 18 ? ' kids-long' : (len > 8 ? ' kids-medium' : '');
+  }
+
+  // Motor A (Dev Kartlar) ve Motor C (Balonlar)
+  function buildKidsChoices(root, pn, k) {
+    const wrap = document.createElement('div');
+    const isBalloon = (k.mode === 'balloon');
+    wrap.className = (isBalloon ? 'kids-balloon-sky' : 'kids-cards-grid') + ` kids-count-${k.options.length}`;
+    k.options.forEach((o, i) => {
+      const el = document.createElement('div');
+      el.setAttribute('role', 'button');
+      el.tabIndex = 0;
+      el.setAttribute('data-kid-idx', String(i));
+      el.className = 'kids-item ' + (isBalloon ? 'kids-balloon' : 'kids-card') + ` kids-color-${i % 4}` + kidsLabelClass(o);
+      if (isBalloon) el.style.animationDelay = `${-i * 0.8}s`;
+      el.innerHTML = `<span class="kids-face">${replaceEmojisWith3D(o, 'kids-card-icon')}</span>` + (isBalloon ? '<span class="kids-balloon-string"></span>' : '');
+      attachInstantTouch(el, () => kidsPointAnswer(pn, el, o === k.correct));
+      wrap.appendChild(el);
+    });
+    root.appendChild(wrap);
+  }
+
+  // Motor B: Sürükle ve Sepete Bırak
+  function buildKidsDrag(root, pn, k) {
+    const basket = document.createElement('div');
+    basket.className = 'kids-basket';
+    basket.innerHTML = '<span class="kids-basket-icon">🧺</span><span class="kids-basket-hint">⬇️</span>';
+    root.appendChild(basket);
+
+    const pool = document.createElement('div');
+    pool.className = `kids-drag-pool kids-count-${k.options.length}`;
+    root.appendChild(pool);
+
+    k.options.forEach((o, i) => {
+      const chip = document.createElement('div');
+      chip.setAttribute('role', 'button');
+      chip.tabIndex = 0;
+      chip.setAttribute('data-kid-idx', String(i));
+      chip.className = 'kids-item kids-chip' + ` kids-color-${i % 4}` + kidsLabelClass(o);
+      chip.innerHTML = `<span class="kids-face">${replaceEmojisWith3D(o, 'kids-card-icon')}</span>`;
+      const isRight = (o === k.correct);
+
+      const resetChip = () => {
+        chip.style.transition = 'transform .25s ease';
+        chip.style.transform = '';
+        setTimeout(() => { chip.style.transition = ''; chip.style.zIndex = ''; }, 280);
+      };
+      const flyToBasket = () => {
+        const bc = basket.getBoundingClientRect();
+        const cc = chip.getBoundingClientRect();
+        const curT = chip.style.transform.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
+        const ox = curT ? parseFloat(curT[1]) : 0;
+        const oy = curT ? parseFloat(curT[2]) : 0;
+        const dx = (bc.left + bc.width / 2) - (cc.left + cc.width / 2) + ox;
+        const dy = (bc.top + bc.height / 2) - (cc.top + cc.height / 2) + oy;
+        chip.style.transition = 'transform .25s ease';
+        chip.style.transform = `translate(${dx}px, ${dy}px) scale(.8)`;
+      };
+      const evaluate = () => {
+        if (isRight) {
+          flyToBasket();
+          basket.classList.add('kids-basket-happy');
+          kidsPointAnswer(pn, chip, true);
+        } else {
+          resetChip();
+          kidsPointAnswer(pn, chip, false);
+        }
+      };
+
+      chip.addEventListener('pointerdown', (e) => {
+        if (state.isQuestionAnswered) return;
+        if (state.gameMode === 'solo' && pn !== 1) return;
+        if (e.cancelable) e.preventDefault();
+        try { chip.setPointerCapture(e.pointerId); } catch (err) {}
+        const sx = e.clientX, sy = e.clientY;
+        let moved = false;
+        chip.style.transition = 'none';
+        chip.style.zIndex = '60';
+        chip.classList.add('kids-dragging');
+
+        const move = (ev) => {
+          const dx = ev.clientX - sx, dy = ev.clientY - sy;
+          if (Math.abs(dx) + Math.abs(dy) > 8) moved = true;
+          chip.style.transform = `translate(${dx}px, ${dy}px) scale(1.08)`;
+        };
+        const up = (ev) => {
+          chip.removeEventListener('pointermove', move);
+          chip.removeEventListener('pointerup', up);
+          chip.removeEventListener('pointercancel', up);
+          chip.classList.remove('kids-dragging');
+          const br = basket.getBoundingClientRect();
+          const over = ev.clientX >= br.left - 20 && ev.clientX <= br.right + 20 && ev.clientY >= br.top - 20 && ev.clientY <= br.bottom + 20;
+          if (!moved || over) evaluate();
+          else resetChip();
+        };
+        chip.addEventListener('pointermove', move);
+        chip.addEventListener('pointerup', up);
+        chip.addEventListener('pointercancel', up);
+      });
+      pool.appendChild(chip);
+    });
+  }
   function renderInteractiveQuestion(q) {
     if (!q) return;
 
-    if (q.type === 'visual_choice') {
+    if (q.type === 'kids_cards' || q.type === 'kids_drag' || q.type === 'kids_balloon') {
+      renderKidsEngine(q);
+    } else if (q.type === 'visual_choice') {
       renderVisualChoiceArena(q);
     } else if (q.type === 'floating_balloon') {
       renderFloatingBalloonArena(q.interactiveData || q);
