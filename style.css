@@ -20907,3 +20907,60 @@ body.is-game-active .universal-game-bgm-fab {
   pointer-events: none;
   filter: grayscale(1);
 }
+
+/* ==========================================================================
+   🎮 & 🏆 4. SINIF ÇİFT AKSİYON BUTONLARI (ETKİNLİK & TEST)
+   ========================================================================== */
+.card-action-dual-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.card-action-dual-buttons .btn-play-game {
+  width: 100% !important;
+  margin-top: 0 !important;
+  padding: 10px 10px !important;
+  font-size: 0.88rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.3px !important;
+  border-radius: 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  cursor: pointer !important;
+}
+
+.card-action-dual-buttons .btn-activity-action {
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.card-action-dual-buttons .btn-activity-action:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35) !important;
+}
+
+.card-action-dual-buttons .btn-quiz-action {
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.card-action-dual-buttons .btn-quiz-action:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.35) !important;
+}
+
+@media (max-width: 480px) {
+  .card-action-dual-buttons {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}

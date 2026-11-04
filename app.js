@@ -10136,25 +10136,25 @@
         const raw = this.generateGrade4GrandDuel();
         return this.buildQuestionItem(raw, raw.category || '🏆 4. Sınıf Büyük Karma Düello');
       // --- 4. SINIF: MEB / MAARİF MODELİ FEN BİLİMLERİ 7 ÜNİTE ---
-      } else if (gameType === 'science_crust_movements_4') {
+      } else if (gameType === 'science_crust_movements_4' || gameType === 'science_unit1_4') {
         const raw = this.drawFromPool(this.grade4ScienceCrustMovementsPool, "grade4ScienceCrustMovementsPool");
         return this.buildQuestionItem(raw, '🌍 Kayaç-Maden-Fosil & Dünya\'nın Hareketleri Düellosu');
-      } else if (gameType === 'science_nutrition_4') {
+      } else if (gameType === 'science_nutrition_4' || gameType === 'science_unit2_4') {
         const raw = this.drawFromPool(this.grade4ScienceNutritionPool, "grade4ScienceNutritionPool");
         return this.buildQuestionItem(raw, '🍎 Besin İçerikleri (Protein/Karbonhidrat/Vitamin) Dedektifi');
-      } else if (gameType === 'science_force_magnets_4') {
+      } else if (gameType === 'science_force_magnets_4' || gameType === 'science_unit3_4') {
         const raw = this.drawFromPool(this.grade4ScienceForceMagnetsPool, "grade4ScienceForceMagnetsPool");
         return this.buildQuestionItem(raw, '🧲 Mıknatıs Kutupları (N-S) & Kuvvet Etkileri');
-      } else if (gameType === 'science_matter_properties_4') {
+      } else if (gameType === 'science_matter_properties_4' || gameType === 'science_unit4_4') {
         const raw = this.drawFromPool(this.grade4ScienceMatterPropertiesPool, "grade4ScienceMatterPropertiesPool");
         return this.buildQuestionItem(raw, '🧪 Kütle-Hacim Hesaplama & Karışımları Ayırma Atölyesi');
-      } else if (gameType === 'science_lighting_sound_4') {
+      } else if (gameType === 'science_lighting_sound_4' || gameType === 'science_unit5_4') {
         const raw = this.drawFromPool(this.grade4ScienceLightingSoundPool, "grade4ScienceLightingSoundPool");
         return this.buildQuestionItem(raw, '💡 Aydınlatma/Ses Tarihi & Işık-Ses Kirliliği Avcısı');
-      } else if (gameType === 'science_human_environment_4') {
+      } else if (gameType === 'science_human_environment_4' || gameType === 'science_unit6_4') {
         const raw = this.drawFromPool(this.grade4ScienceHumanEnvironmentPool, "grade4ScienceHumanEnvironmentPool");
         return this.buildQuestionItem(raw, '♻️ Tasarruf ve Geri Dönüşüm Kahramanı');
-      } else if (gameType === 'science_simple_circuits_4') {
+      } else if (gameType === 'science_simple_circuits_4' || gameType === 'science_unit7_4') {
         const raw = this.drawFromPool(this.grade4ScienceSimpleCircuitsPool, "grade4ScienceSimpleCircuitsPool");
         return this.buildQuestionItem(raw, '⚡ Basit Elektrik Devresi Kurucu & Arıza Dedektifi');
       } else if (gameType === 'science_4_karma') {
@@ -10167,25 +10167,25 @@
         const raw = this.drawFromPool(this.grade4CircuitsMagnetsPool, "grade4CircuitsMagnetsPool");
         return this.buildQuestionItem(raw, '💡 Kuvvet, Mıknatıslar & Devreler');
       // --- 4. SINIF: MEB / MAARİF MODELİ SOSYAL BİLGİLER 7 ÖĞRENME ALANI ---
-      } else if (gameType === 'social_individual_society_4') {
+      } else if (gameType === 'social_individual_society_4' || gameType === 'social_unit1_4') {
         const raw = this.drawFromPool(this.grade4SocialIndividualSocietyPool, "grade4SocialIndividualSocietyPool");
         return this.buildQuestionItem(raw, '🪪 Kronoloji Ustası & Kimlik/Empati Düellosu');
-      } else if (gameType === 'social_culture_heroes_4') {
+      } else if (gameType === 'social_culture_heroes_4' || gameType === 'social_unit2_4') {
         const raw = this.drawFromPool(this.grade4SocialCultureHeroesPool, "grade4SocialCultureHeroesPool");
         return this.buildQuestionItem(raw, '🇹🇷 Milli Mücadele Kahramanları & Kültür Mirasımız');
-      } else if (gameType === 'social_places_environment_4') {
+      } else if (gameType === 'social_places_environment_4' || gameType === 'social_unit3_4') {
         const raw = this.drawFromPool(this.grade4SocialPlacesEnvironmentPool, "grade4SocialPlacesEnvironmentPool");
         return this.buildQuestionItem(raw, '🧭 Yönler, Yeryüzü Şekilleri & Deprem Bilinci');
-      } else if (gameType === 'social_science_tech_4') {
+      } else if (gameType === 'social_science_tech_4' || gameType === 'social_unit4_4') {
         const raw = this.drawFromPool(this.grade4SocialScienceTechPool, "grade4SocialScienceTechPool");
         return this.buildQuestionItem(raw, '💡 İcatlar Zaman Tüneli & Teknoloji Dedektifi');
-      } else if (gameType === 'social_production_economy_4') {
+      } else if (gameType === 'social_production_economy_4' || gameType === 'social_unit5_4') {
         const raw = this.drawFromPool(this.grade4SocialProductionEconomyPool, "grade4SocialProductionEconomyPool");
         return this.buildQuestionItem(raw, '🛒 Üretimden Tüketime & Bilinçli Tüketici Avcısı');
-      } else if (gameType === 'social_active_citizenship_4') {
+      } else if (gameType === 'social_active_citizenship_4' || gameType === 'social_unit6_4') {
         const raw = this.drawFromPool(this.grade4SocialActiveCitizenshipPool, "grade4SocialActiveCitizenshipPool");
         return this.buildQuestionItem(raw, '🏛️ Çocuk Hakları & Bağımsızlık Sembollerimiz');
-      } else if (gameType === 'social_global_connections_4') {
+      } else if (gameType === 'social_global_connections_4' || gameType === 'social_unit7_4') {
         const raw = this.drawFromPool(this.grade4SocialGlobalConnectionsPool, "grade4SocialGlobalConnectionsPool");
         return this.buildQuestionItem(raw, '🌍 Komşu Ülkeler & Dünya Kültürleri Turu');
       } else if (gameType === 'social_4_karma') {
@@ -18419,118 +18419,118 @@
           }
         ]
       },
-     {
+      {
         id: 'science',
         name: 'Fen Bilimleri',
         icon: '🔬',
         colorTheme: 'theme-science',
-        tagline: '2026 Maarif Modeli',
-        description: 'Kayaç-maden-fosil ve Dünya\'nın hareketleri, besin içerikleri, mıknatıslar ve kuvvet, kütle-hacim ve karışımlar, aydınlatma ve ses, geri dönüşüm ve basit elektrik devreleri! 🌍🍎🧲🧪💡♻️⚡',
-        badge: 'Maarif Modeli 2026',
+        tagline: '7 Ana Ünite & 2026 Maarif Modeli',
+        description: 'Yer kabuğu ve Dünya\'nın hareketleri, besinlerimiz, kuvvetin etkileri, maddenin özellikleri, aydınlatma ve ses, insan ve çevre, basit elektrik devreleri! 🌍🍞🧲🧊💡🌱⚡',
+        badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tüm Üniteler / Karma Düello' },
-          { id: 'crust_movements', label: '🌍 Ünite 1: Yer Kabuğu ve Dünya\'mızın Hareketleri' },
-          { id: 'nutrition', label: '🍎 Ünite 2: Besinlerimiz' },
-          { id: 'force_magnets', label: '🧲 Ünite 3: Kuvvetin Etkileri ve Mıknatıslar' },
-          { id: 'matter_properties', label: '🧪 Ünite 4: Maddenin Özellikleri' },
-          { id: 'lighting_sound', label: '💡 Ünite 5: Aydınlatma ve Ses Teknolojileri' },
-          { id: 'human_environment', label: '♻️ Ünite 6: İnsan ve Çevre' },
-          { id: 'simple_circuits', label: '⚡ Ünite 7: Basit Elektrik Devreleri' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'sci_unit1', label: '1️⃣ Yer Kabuğu & Hareketler' },
+          { id: 'sci_unit2', label: '2️⃣ Besinlerimiz' },
+          { id: 'sci_unit3', label: '3️⃣ Kuvvetin Etkileri' },
+          { id: 'sci_unit4', label: '4️⃣ Maddenin Özellikleri' },
+          { id: 'sci_unit5', label: '5️⃣ Aydınlatma & Ses' },
+          { id: 'sci_unit6', label: '6️⃣ İnsan ve Çevre' },
+          { id: 'sci_unit7', label: '7️⃣ Basit Elektrik Devreleri' }
         ],
         games: [
           {
-            id: 'science_crust_movements_4',
+            id: 'science_unit1_4',
             active: true,
-            title: 'Kayaç-Maden-Fosil & Dünya\'nın Hareketleri Düellosu',
+            title: 'Ünite 1: Yer Kabuğu ve Dünya\'mızın Hareketleri (Kayaçlar, Madenler, Fosiller; Dönme ve Dolanma)',
             icon: '🌍',
-            badge: '🌍 Ünite 1: Yer Kabuğu & Dünya',
-            featureTag: '🦖 Kayaç, Maden, Fosil & Mevsimler',
-            description: 'Yer kabuğunun yapısı (kayaç, taş, çakıl, kum), ekonomik değeri olan madenler (bor, altın, bakır, kömür, mermer), fosiller, Dünya\'nın dönme (24 saat) ve dolanma (365 gün 6 saat) hareketleri!',
-            tags: ['💎 Kayaçlar & Madenler (Bor/Bakır)', '🦖 Fosiller & Paleontoloji', '🌓 24 Saat: Gece-Gündüz', '🍂 365 Gün 6 Saat: Mevsimler'],
+            badge: '1. Ünite',
+            featureTag: '💎 Kayaç, Maden & Gece-Gündüz',
+            description: 'Kayaçlar, madenlerin ekonomik değeri, fosillerin oluşumu, Dünya\'nın dönme (gece-gündüz) ve Güneş etrafında dolanma (mevsimler) hareketi!',
+            tags: ['⛏️ Madenler & Kayaçlar', '🦕 Fosillerin Oluşumu', '🌍 Gece ve Gündüz', '☀️ Mevsimlerin Oluşumu'],
             btnText: 'Düelloyu Başlat',
-            topic: 'crust_movements'
+            topic: 'sci_unit1'
           },
           {
-            id: 'science_nutrition_4',
+            id: 'science_unit2_4',
             active: true,
-            title: 'Besin İçerikleri (Protein/Karbonhidrat/Vitamin) Dedektifi',
-            icon: '🍎',
-            badge: '🍎 Ünite 2: Besinlerimiz',
-            featureTag: '🥩 Yapıcı-Onarıcı, Enerji & Düzenleyici',
-            description: 'Karbonhidratlar (enerji), Proteinler (yapıcı-onarıcı), Yağlar (enerji), Vitaminler ile Su ve Mineraller (düzenleyici), doğal beslenme, obezite, besin israfı, sigara ve alkolün zararları!',
-            tags: ['🥩 Protein & Karbonhidrat', '🍊 Vitamin, Su & Mineral', '⚖️ Dengeli Beslenme & Obezite', '🚭 Sigara & Alkolün Zararları'],
+            title: 'Ünite 2: Besinlerimiz (Karbonhidrat, Protein, Yağ, Vitamin, Su ve Mineraller; Sağlıklı Yaşam)',
+            icon: '🍞',
+            badge: '2. Ünite',
+            featureTag: '🥩 Protein, Karbonhidrat & Vitamin',
+            description: 'Besin içerikleri ve vücuttaki öncelikli görevleri (yapıcı-onarıcı, enerji verici, düzenleyici), dengeli beslenme ve obeziteden korunma!',
+            tags: ['🥚 Protein (Yapıcı-Onarıcı)', '🍞 Karbonhidrat (Enerji)', '🍎 Vitaminler (Düzenleyici)', '💧 Su ve Mineraller'],
             btnText: 'Düelloyu Başlat',
-            topic: 'nutrition'
+            topic: 'sci_unit2'
           },
           {
-            id: 'science_force_magnets_4',
+            id: 'science_unit3_4',
             active: true,
-            title: 'Mıknatıs Kutupları (N-S) & Kuvvet Etkileri',
+            title: 'Ünite 3: Kuvvetin Etkileri (Kuvvetin Cisimler Üzerindeki Etkileri, Mıknatısların Kutupları)',
             icon: '🧲',
-            badge: '🧲 Ünite 3: Kuvvet & Mıknatıslar',
-            featureTag: '🧲 N-S Kutupları & Esnek Cisimler',
-            description: 'Kuvvetin hızlandırma, yavaşlatma, yön ve şekil değiştirme (kalıcı/esnek) etkileri, mıknatısın N ve S kutupları, itme-çekme, demir-nikel-kobalt ve günlük hayatta mıknatıslar (pusula, Maglev treni)!',
-            tags: ['🧲 Kuzey (N) & Güney (S)', '📌 Demir, Nikel & Kobalt', '🔄 Esnek ve Kalıcı Şekil', '🚄 Pusula & Maglev Treni'],
+            badge: '3. Ünite',
+            featureTag: '🧲 Mıknatıs Kutupları & Kuvvet Etkisi',
+            description: 'Kuvvetin hızlandırıcı, yavaşlatıcı, durdurucu, yön ve şekil değiştirici etkileri; mıknatısların N-S kutupları, çekme ve itme kuvveti!',
+            tags: ['🛑 Durdurma & Hızlandırma', '🧲 N ve S Kutupları', '🔄 Yön ve Şekil Değiştirme', '⚡ Temassız Çekim Kuvveti'],
             btnText: 'Düelloyu Başlat',
-            topic: 'force_magnets'
+            topic: 'sci_unit3'
           },
           {
-            id: 'science_matter_properties_4',
+            id: 'science_unit4_4',
             active: true,
-            title: 'Kütle-Hacim Hesaplama & Karışımları Ayırma Atölyesi',
-            icon: '🧪',
-            badge: '🧪 Ünite 4: Maddenin Özellikleri',
-            featureTag: '⚖️ Kütle, Hacim, Hal Değişimi & Ayırma',
-            description: 'Suda yüzme-batma, suyu emme, Kütle (terazi, kg/g, brüt-net-dara) ve Hacim (dereceli silindir, L/mL, suda taşırma), katı-sıvı-gaz, erime-donma-buharlaşma, saf madde-karışım ve eleme-süzme-mıknatısla ayırma!',
-            tags: ['⚖️ Kütle (Brüt-Net-Dara)', '🧪 Dereceli Silindir & Hacim', '🧊 Erime, Donma & Buharlaşma', '🧲 Eleme, Süzme & Mıknatıs'],
+            title: 'Ünite 4: Maddenin Özellikleri (Yüzme/Batma, Suyu Emme, Kütle ve Hacim, Saf Madde ve Karışımlar)',
+            icon: '🧊',
+            badge: '4. Ünite',
+            featureTag: '⚖️ Kütle, Hacim & Karışımları Ayırma',
+            description: 'Maddenin suda yüzme ve batması, suyu emmesi, kütle ve hacim ölçümleri, saf madde ve karışım ayrımı, karışımları ayırma yöntemleri ve hal değişimi!',
+            tags: ['⚖️ Kütle (g, kg)', '🧪 Hacim (mL, L)', '🥗 Saf Madde & Karışım', '🧽 Suyu Emme & Yüzme'],
             btnText: 'Düelloyu Başlat',
-            topic: 'matter_properties'
+            topic: 'sci_unit4'
           },
           {
-            id: 'science_lighting_sound_4',
+            id: 'science_unit5_4',
             active: true,
-            title: 'Aydınlatma/Ses Tarihi & Işık-Ses Kirliliği Avcısı',
+            title: 'Ünite 5: Aydınlatma ve Ses Teknolojileri (Geçmişten Günümüze Aydınlatma, Işık ve Ses Kirliliği)',
             icon: '💡',
-            badge: '💡 Ünite 5: Aydınlatma ve Ses',
-            featureTag: '🎙️ Edison, Fonograf, LED & Kirlilik',
-            description: 'Ateşten LED lambaya aydınlatma tarihi, uygun aydınlatma ve göz sağlığı, ışık kirliliği (Caretta caretta ve gökbilim), megafon-fonograf-gramofon-kasetçalar ses teknolojileri ve ses kirliliği!',
-            tags: ['💡 Meşale ➡️ Ampul ➡️ LED', '🐢 Işık Kirliliği & Göz Sağlığı', '🎙️ Fonograf, Gramofon & Megafon', '🔊 Ses Kirliliği & Yalıtım'],
+            badge: '5. Ünite',
+            featureTag: '💡 Edison, Fonograf & Kirlilik Avcısı',
+            description: 'Ateşten LED\'e aydınlatma teknolojilerinin gelişimi, Thomas Edison, ışık kirliliğinin zararları, ses teknolojileri ve ses kirliliğinin önlenmesi!',
+            tags: ['💡 Geçmişten Günümüze Işık', '🌃 Işık Kirliliği', '🎙️ Ses Kayıt & Fonograf', '🎧 Ses Kirliliği & Sağlık'],
             btnText: 'Düelloyu Başlat',
-            topic: 'lighting_sound'
+            topic: 'sci_unit5'
           },
           {
-            id: 'science_human_environment_4',
+            id: 'science_unit6_4',
             active: true,
-            title: 'Tasarruf ve Geri Dönüşüm Kahramanı',
-            icon: '♻️',
-            badge: '♻️ Ünite 6: İnsan ve Çevre',
-            featureTag: '🌱 Su, Elektrik Tasarrufu & Sıfır Atık',
-            description: 'Su, elektrik ve besin kaynaklarının tasarruflu kullanımı, yeniden kullanım, kağıt-cam-plastik-metal-atık yağ ve atık pillerin geri dönüşümü ve ülke ekonomisine katkısı!',
-            tags: ['💧 Su ve Elektrik Tasarrufu', '♻️ Kağıt, Cam, Plastik & Metal', '🔋 Atık Pil & Bitkisel Atık Yağ', '🇹🇷 Sıfır Atık & Ekonomi'],
+            title: 'Ünite 6: İnsan ve Çevre (Bilinçli Tüketici, Kaynakların Tasarruflu Kullanımı, Geri Dönüşüm)',
+            icon: '🌱',
+            badge: '6. Ünite',
+            featureTag: '♻️ Geri Dönüşüm & Kaynak Tasarrufu',
+            description: 'Bilinçli tüketici davranışları, elektrik ve su tasarrufu, plastik-cam-kağıt geri dönüşümü ve doğayı koruma sorumluluğu!',
+            tags: ['♻️ Geri Dönüşüm (Plastik, Cam)', '💧 Su ve Enerji Tasarrufu', '🛒 Bilinçli Tüketici', '🌲 Doğal Çevreyi Koruma'],
             btnText: 'Düelloyu Başlat',
-            topic: 'human_environment'
+            topic: 'sci_unit6'
           },
           {
-            id: 'science_simple_circuits_4',
+            id: 'science_unit7_4',
             active: true,
-            title: 'Basit Elektrik Devresi Kurucu & Arıza Dedektifi',
+            title: 'Ünite 7: Basit Elektrik Devreleri (Devre Elemanları: Pil, Ampul, Anahtar, Kablo; Çalışma Durumu)',
             icon: '⚡',
-            badge: '⚡ Ünite 7: Basit Elektrik Devreleri',
-            featureTag: '🔋 Pil, Ampul, Anahtar, Kablo & Arıza',
-            description: 'Basit elektrik devresi elemanları ve görevleri (pil, ampul, kablo, anahtar, duy, pil yatağı), devrenin çalışmama nedenleri (açık anahtar, kopuk kablo, ters pil, patlak ampul) ve güvenli elektrik!',
-            tags: ['🔋 Pil, Ampul, Kablo & Anahtar', '💡 Duy ve Pil Yatağı', '🛠️ Devre Neden Çalışmaz?', '🛡️ Güvenli Elektrik Kullanımı'],
+            badge: '7. Ünite',
+            featureTag: '🔋 Pil, Ampul, Anahtar & Devre',
+            description: 'Basit elektrik devresi elemanları (pil, ampul, anahtar, kablo, duy, pil yatağı), elektrik akımının yolu ve ampulün ışık verme koşulları!',
+            tags: ['🔋 Pil & Enerji Kaynağı', '💡 Ampul & Aydınlatma', '🔘 Anahtar & Akım Kontrolü', '🔌 Bağlantı Kablosu'],
             btnText: 'Düelloyu Başlat',
-            topic: 'simple_circuits'
+            topic: 'sci_unit7'
           },
           {
             id: 'science_4_karma',
             active: true,
-            title: '4. Sınıf Fen Bilimleri Karma Düello',
-            icon: '🌟',
-            badge: '🏆 105 Soru Büyük Karma',
-            featureTag: '🌟 7 Ünite Büyük Fen Yarışması',
-            description: '4. Sınıf Fen Bilimleri dersinin 7 ünitesinin tamamından rastgele ve dengeli sorular çeken büyük Fen Bilimleri yarışması! Hem Tek Kişilik Pratik hem İki Kişilik Düello!',
-            tags: ['🌍 Yer Kabuğu & Besinler', '🧲 Mıknatıs & Madde', '💡 Aydınlatma & Ses', '♻️ Çevre & Elektrik Devresi'],
+            title: '4. Sınıf Fen Bilimleri Süper Karma Düello',
+            icon: '🔬',
+            badge: '⚡ 7 Ünite Karma',
+            featureTag: '🌟 7 Ünite Büyük Fen Düellosu',
+            description: 'Tüm 4. sınıf Fen Bilimleri ünitelerinden rastgele, zengin ve düşündürücü sorularla sınıf şampiyonası!',
+            tags: ['🌍 Yer Kabuğu', '🍞 Besinler', '🧲 Kuvvet', '🧊 Madde', '💡 Aydınlatma', '🌱 Çevre', '⚡ Devreler'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
@@ -18539,147 +18539,121 @@
       {
         id: 'social',
         name: 'Sosyal Bilgiler',
-        icon: '🗺️',
+        icon: '🌍',
         colorTheme: 'theme-social',
-        tagline: '2026 Maarif Modeli',
-        description: 'Kimlik ve empati, Milli Mücadele kahramanlarımız, yönler ve deprem bilinci, icatlar zaman tüneli, bilinçli tüketici, çocuk hakları ve komşu ülkeler! 🪪🇹🇷🧭💡🛒🏛️🌍',
-        badge: 'Maarif Modeli 2026',
+        tagline: '7 Ana Öğrenme Alanı & 2026 Maarif Modeli',
+        description: 'Birey ve toplum, kültür ve miras, insanlar-yerler-çevreler, bilim-teknoloji, üretim-dağıtım-tüketim, etkin vatandaşlık ve küresel bağlantılar! 🆔🎖️🗺️🔬🪙🇹🇷🌏',
+        badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tüm Öğrenme Alanları / Karma' },
-          { id: 'birey_toplum', label: '🪪 1. Birey ve Toplum' },
-          { id: 'kultur_miras', label: '🇹🇷 2. Kültür ve Miras (Milli Mücadele)' },
-          { id: 'insanlar_yerler', label: '🧭 3. İnsanlar, Yerler ve Çevreler' },
-          { id: 'bilim_teknoloji', label: '💡 4. Bilim, Teknoloji ve Toplum' },
-          { id: 'uretim_tuketim', label: '🛒 5. Üretim, Dağıtım ve Tüketim' },
-          { id: 'etkin_vatandaslik', label: '🏛️ 6. Etkin Vatandaşlık' },
-          { id: 'kuresel_baglantilar', label: '🌍 7. Küresel Bağlantılar' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'soc_unit1', label: '1️⃣ Birey ve Toplum' },
+          { id: 'soc_unit2', label: '2️⃣ Kültür ve Miras' },
+          { id: 'soc_unit3', label: '3️⃣ İnsanlar, Yerler & Çevre' },
+          { id: 'soc_unit4', label: '4️⃣ Bilim, Teknoloji & Toplum' },
+          { id: 'soc_unit5', label: '5️⃣ Üretim, Dağıtım & Tüketim' },
+          { id: 'soc_unit6', label: '6️⃣ Etkin Vatandaşlık' },
+          { id: 'soc_unit7', label: '7️⃣ Küresel Bağlantılar' }
         ],
         games: [
           {
-            id: 'social_individual_society_4',
+            id: 'social_unit1_4',
             active: true,
-            title: 'Kronoloji Ustası & Kimlik/Empati Düellosu',
-            icon: '🪪',
-            badge: '🪪 Birey ve Toplum',
-            featureTag: '⏳ Kimlik, Kronoloji & Empati',
-            description: 'Resmi T.C. Kimlik Kartımız (çip, seri no, 11 hane), olayları kronolojik sıraya koyma, bireysel ilgi-ihtiyaç-yeteneklerimiz, empati ve farklılıklara saygı!',
-            tags: ['🪪 T.C. Kimlik Kartı & Çip', '⏳ Kronolojik Sıralama', '🎨 İlgi & Yetenekler', '🤝 Empati ve Saygı'],
+            title: 'Ünite 1: Birey ve Toplum (Kimlik Belgesi, Kronolojik Sıralama, İlgi ve Yetenekler, Empati)',
+            icon: '🆔',
+            badge: '1. Ünite',
+            featureTag: '🆔 T.C. Kimlik & Kronoloji',
+            description: 'T.C. Kimlik Kartı özellikleri, yaşamımızdaki önemli olayların kronolojik sıralaması, ilgi ve yeteneklerimizi keşfetme ve empati kurma!',
+            tags: ['🆔 T.C. Kimlik Kartı', '📅 Kronolojik Sıralama', '🤝 Empati & Farklılıklara Saygı', '🎨 İlgi ve Yetenekler'],
             btnText: 'Düelloyu Başlat',
-            topic: 'birey_toplum'
+            topic: 'soc_unit1'
           },
           {
-            id: 'social_culture_heroes_4',
+            id: 'social_unit2_4',
             active: true,
-            title: 'Milli Mücadele Kahramanları & Kültür Mirasımız',
+            title: 'Ünite 2: Kültür ve Miras (Aile Tarihi, Milli Kültür Öğeleri, Çocuk Oyunları, Milli Mücadele)',
+            icon: '🎖️',
+            badge: '2. Ünite',
+            featureTag: '🇹🇷 Şerife Bacı & Sütçü İmam',
+            description: 'Sözlü tarih ve aile geçmişi, milli kültür öğelerimiz (kına, bayram, halı), geleneksel sokak oyunları ve Kurtuluş Savaşı\'nın unutulmaz kahramanları!',
+            tags: ['🇹🇷 Milli Mücadele Kahramanları', '🏺 Milli Kültür Ögelerimiz', '🎲 Geleneksel Çocuk Oyunları', '📜 Sözlü Tarih & Aile'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'soc_unit2'
+          },
+          {
+            id: 'social_unit3_4',
+            active: true,
+            title: 'Ünite 3: İnsanlar, Yerler ve Çevreler (Yönler, Kroki, Doğal ve Beşeri Unsurlar, Deprem Çantası)',
+            icon: '🗺️',
+            badge: '3. Ünite',
+            featureTag: '🎒 Deprem Çantası & Doğal/Beşeri Çevre',
+            description: 'Ana ve ara yönler, kroki çizimi, doğal ve beşeri unsurlar, hava durumu gözlemleri, doğal afetler ve afet/deprem çantası hazırlığı!',
+            tags: ['🧭 Yönler & Kroki Çizimi', '🌲 Doğal ve Beşeri Unsurlar', '🎒 Afet & Deprem Çantası', '🌪️ Doğal Afetlerden Korunma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'soc_unit3'
+          },
+          {
+            id: 'social_unit4_4',
+            active: true,
+            title: 'Ünite 4: Bilim, Teknoloji ve Toplum (Teknolojik Ürünlerin Değişimi, Mucitler, Doğru Kullanım)',
+            icon: '🔬',
+            badge: '4. Ünite',
+            featureTag: '☎️ Graham Bell & Teknoloji Tarihi',
+            description: 'Teknolojik ürünlerin geçmişten bugüne değişimi, ünlü mucitler ve icatları, teknolojinin doğru ve bilinçli kullanımı!',
+            tags: ['☎️ Graham Bell & İcatlar', '💡 Mucitler ve Buluşları', '💻 Bilinçli Teknoloji Kullanımı', '🚀 İletişim & Ulaşım Tarihi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'soc_unit4'
+          },
+          {
+            id: 'social_unit5_4',
+            active: true,
+            title: 'Ünite 5: Üretim, Dağıtım ve Tüketim (İstek ve İhtiyaçlar, Ekonomik Faaliyetler, Bütçe, İsraf)',
+            icon: '🪙',
+            badge: '5. Ünite',
+            featureTag: '🪙 Aile Bütçesi & İsrafı Önleme',
+            description: 'Temel ihtiyaçlar ve istekler ayrımı, çevremizdeki ekonomik faaliyetler (tarım, sanayi, hayvancılık), aile bütçesi ve ekmek/su israfını önleme!',
+            tags: ['🪙 Aile Bütçesi Hazırlama', '🍞 İhtiyaç ve İstek Ayrımı', '🌾 Ekonomik Faaliyetler', '🥖 İsrafı Önleme Bilinci'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'soc_unit5'
+          },
+          {
+            id: 'social_unit6_4',
+            active: true,
+            title: 'Ünite 6: Etkin Vatandaşlık (Çocuk Hakları, Sorumluluklarımız, Bağımsızlık Sembollerimiz)',
             icon: '🇹🇷',
-            badge: '🇹🇷 Kültür ve Miras',
-            featureTag: '🎖️ Kurtuluş Savaşı & Kültür',
-            description: 'Sözlü tarih, milli kültür ögelerimiz, geleneksel çocuk oyunları, Milli Mücadele cepheleri (Doğu, Güney, Batı) ve kahramanlarımız (Atatürk, Kazım Karabekir, Sütçü İmam, Şahin Bey, Hasan Tahsin, Şerife Bacı, Halime Çavuş, Ali Saip Bey, Yörük Ali Efe)!',
-            tags: ['🎖️ Milli Mücadele Kahramanları', '🗺️ Doğu-Güney-Batı Cepheleri', '🏺 Milli Kültür & El Sanatları', '🎙️ Aile & Sözlü Tarih'],
+            badge: '6. Ünite',
+            featureTag: '🧒 Çocuk Hakları & Bağımsızlık',
+            description: 'Birleşmiş Milletler Çocuk Hakları Sözleşmesi, evde ve okulda sorumluluklarımız, bağımsızlık sembollerimiz (Bayrak, Marş, TBMM)!',
+            tags: ['🧒 Çocuk Hakları Sözleşmesi', '🤝 Hak ve Sorumluluklar', '🇹🇷 Bağımsızlık Sembollerimiz', '🗳️ Katılım ve Demokrasi'],
             btnText: 'Düelloyu Başlat',
-            topic: 'kultur_miras'
+            topic: 'soc_unit6'
           },
           {
-            id: 'social_places_environment_4',
+            id: 'social_unit7_4',
             active: true,
-            title: 'Yönler, Yeryüzü Şekilleri & Deprem Bilinci',
-            icon: '🧭',
-            badge: '🧭 İnsanlar, Yerler ve Çevreler',
-            featureTag: '🏔️ Yeryüzü & Deprem Bilinci',
-            description: 'Ana ve ara yönler (Kuzeydoğu, Güneybatı), doğal ve beşeri unsurlar, hava durumu sembolleri, yeryüzü şekilleri (dağ, ova, vadi, ada, yarımada, körfez), deprem çantası ve Çök-Kapan-Tutun!',
-            tags: ['🧭 Ana ve Ara Yönler', '🏔️ Dağ, Ova, Vadi & Yarımada', '🎒 Deprem Çantası', '🛡️ Çök-Kapan-Tutun'],
+            title: 'Ünite 7: Küresel Bağlantılar (Dünya Üzerindeki Ülkeler, Türkiye\'nin Komşuları, Kültürler)',
+            icon: '🌏',
+            badge: '7. Ünite',
+            featureTag: '🌏 Komşu Ülkeler & Kültür Mozaiği',
+            description: 'Farklı ülkeler ve kıtalar, Türkiye\'nin sınır komşuları (Yunanistan, Bulgaristan, Gürcistan vb.), kültürel farklılıklar ve hoşgörü!',
+            tags: ['🌍 Türkiye\'nin Komşuları', '🌏 Dünya Kültürleri', '🤝 Kültürel Hoşgörü', '🗺️ Kıtalar ve Ülkeler'],
             btnText: 'Düelloyu Başlat',
-            topic: 'insanlar_yerler'
-          },
-          {
-            id: 'social_science_tech_4',
-            active: true,
-            title: 'İcatlar Zaman Tüneli & Teknoloji Dedektifi',
-            icon: '💡',
-            badge: '💡 Bilim, Teknoloji ve Toplum',
-            featureTag: '⏳ Zaman Tüneli & Mucitler',
-            description: 'Aydınlatma, iletişim ve ulaşım araçlarının geçmişten günümüze gelişimi (zaman tüneli), icatların ortaya çıkış nedenleri, ünlü mucitler ve teknolojiyi doğru kullanma!',
-            tags: ['⏳ Aydınlatma & İletişim Tüneli', '✈️ Mucitler ve İcatlar', '📖 Kullanma Kılavuzu', '♻️ E-Atık & Göz Sağlığı'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'bilim_teknoloji'
-          },
-          {
-            id: 'social_production_economy_4',
-            active: true,
-            title: 'Üretimden Tüketime & Bilinçli Tüketici Avcısı',
-            icon: '🛒',
-            badge: '🛒 Üretim, Dağıtım ve Tüketim',
-            featureTag: '🛡️ TSE, CE, Bütçe & Tasarruf',
-            description: 'İstek ve ihtiyaç ayrımı, ekonomik faaliyetler (tarım, sanayi, hizmet, madencilik), buğdaydan ekmeğe üretim-dağıtım-tüketim ağı, fiş/fatura, TSE-CE-Geri Dönüşüm logoları, bütçe ve israfı önleme!',
-            tags: ['🍞 Üretim-Dağıtım-Tüketim', '🛡️ Fiş, Garanti, TSE & CE', '🚜 Ekonomik Faaliyetler', '💰 Bütçe & İsrafı Önleme'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'uretim_tuketim'
-          },
-          {
-            id: 'social_active_citizenship_4',
-            active: true,
-            title: 'Çocuk Hakları & Bağımsızlık Sembollerimiz',
-            icon: '🏛️',
-            badge: '🏛️ Etkin Vatandaşlık',
-            featureTag: '🇹🇷 Çocuk Hakları & 23 Nisan',
-            description: 'Çocuk Hakları Sözleşmesi, hak ve sorumluluklarımız, ailede ve okulda demokratik karar alma, bağımsızlık sembollerimiz (Bayrak, İstiklal Marşı, Başkent, Fors) ve TBMM\'nin açılışı!',
-            tags: ['👧 Çocuk Hakları Sözleşmesi', '🇹🇷 Bağımsızlık Sembollerimiz', '🏛️ 23 Nisan & Ulusal Egemenlik', '🗳️ Demokratik Katılım'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'etkin_vatandaslik'
-          },
-          {
-            id: 'social_global_connections_4',
-            active: true,
-            title: 'Komşu Ülkeler & Dünya Kültürleri Turu',
-            icon: '🌍',
-            badge: '🌍 Küresel Bağlantılar',
-            featureTag: '🗺️ Komşularımız & Kültürler',
-            description: 'Komşu ülkelerimiz (Yunanistan, Bulgaristan, Gürcistan, Ermenistan, Nahçıvan, İran, Irak, Suriye), sınır kapılarımız ve farklı dünya kültürlerinin yemek, giyim ve özel günlerine saygı!',
-            tags: ['🗺️ 8 Komşu Ülkemiz', '🚛 Kapıkule, Sarp & Habur', '🇯🇵🇮🇹 Dünya Kültürleri', '🤝 Hoşgörü ve Empati'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'kuresel_baglantilar'
+            topic: 'soc_unit7'
           },
           {
             id: 'social_4_karma',
             active: true,
-            title: '4. Sınıf Sosyal Bilgiler Karma Düello',
-            icon: '🌟',
-            badge: '🏆 105 Soru Büyük Karma',
-            featureTag: '🌟 7 Öğrenme Alanı Karma',
-            description: '4. Sınıf Sosyal Bilgiler dersinin 7 öğrenme alanının tamamından rastgele sorular çeken büyük Sosyal Bilgiler yarışması! Hem Tek Kişilik Pratik hem İki Kişilik Düello!',
-            tags: ['🪪 Birey & Kültür', '🧭 Yerler & Teknoloji', '🛒 Ekonomi & Vatandaşlık', '🌍 Küresel Bağlantılar'],
+            title: '4. Sınıf Sosyal Bilgiler Süper Karma Düello',
+            icon: '🌍',
+            badge: '⚡ 7 Ünite Karma',
+            featureTag: '🌟 7 Ünite Büyük Sosyal Düellosu',
+            description: 'Tüm 4. sınıf Sosyal Bilgiler ünitelerinden harmanlanan genel kültür ve bilgi düellosu!',
+            tags: ['🆔 Birey', '🎖️ Kültür & Miras', '🗺️ Çevre', '🔬 Teknoloji', '🪙 Üretim', '🇹🇷 Vatandaşlık', '🌏 Küresel'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
         ]
       },
-      {
-        id: 'grade4_grand_duel',
-        name: '🏆 4. Sınıf Büyük Karma Düello',
-        icon: '🏆',
-        colorTheme: 'theme-science',
-        tagline: '4 Ana Ders Büyük Şampiyonası',
-        description: 'Matematik, Türkçe, Fen Bilimleri ve Sosyal Bilgiler derslerinin tamamından (402 özgün soru havuzundan) dengeli sorular çeken büyük 4. Sınıf Şampiyonası! 🏆🌟',
-        badge: '🌟 402 Soru Süper Şampiyona',
-        topics: [
-          { id: 'all', label: '🌟 4 Ana Ders Büyük Karma' }
-        ],
-        games: [
-          {
-            id: 'grade4_grand_duel',
-            active: true,
-            title: '4. Sınıf Büyük Karma Düello (Matematik • Türkçe • Fen • Sosyal)',
-            icon: '🏆',
-            badge: '🏆 402 Soru Büyük Şampiyona',
-            featureTag: '⭐ 4 Ana Ders Harmanı',
-            description: 'Matematik, Türkçe, Fen Bilimleri ve Sosyal Bilgiler derslerinin tüm ünite ve öğrenme alanlarından rastgele sorularla 4. sınıfın şampiyonu sen ol! Hem Tek Kişilik Pratik hem İki Kişilik Düello! 🥇🎯',
-            tags: ['🧮 Matematik (96 Soru)', '📚 Türkçe (96 Soru)', '🔬 Fen Bilimleri (105 Soru)', '🗺️ Sosyal Bilgiler (105 Soru)'],
-            btnText: 'Büyük Düelloyu Başlat',
-            topic: 'all'
-          }
-        ]
-      },
-      {
+     {
         id: 'english',
         name: 'İngilizce',
         icon: '🌍',
@@ -26808,6 +26782,31 @@
   window.loadSpeechIndex = loadSpeechIndex;
   window.GRADE_SUBJECTS_CONFIG = GRADE_SUBJECTS_CONFIG;
   window.QuestionEngine = QuestionEngine;
+
+  // 4. SINIF FEN BİLİMLERİ & SOSYAL BİLGİLER 2026 MAARİF MODELİ EKSTRA KAZANIM SORULARI
+  try {
+    const extraSci4 = {"science_unit1_4":[{"q":"Ekonomik değeri olan kayaç ve minerallere ne ad verilir (Örn: Altın, gümüş, bor, kömür, mermer)? ⛏️","a":"Maden ⛏️","d":["Toprak","Fosil"],"exp":"Ekonomik değeri yüksek minerallere maden adı verilir."},{"q":"Milyonlarca yıl önce yaşamış bitki ve hayvanların kayaçlar arasında taşlaşmış kalıntılarına ne denir? 🦕","a":"Fosil 🦕","d":["Maden","Magma"],"exp":"Canlıların sert kısımlarının tortul kayaçlar arasında korunmuş haline fosil denir."},{"q":"Dünya'nın kendi ekseni etrafında 24 saatte tamamladığı DÖNME hareketi sonucunda ne oluşur? 🌍","a":"Gece ve gündüz 🌍","d":["Mevsimler","Yıllar"],"exp":"Dünya kendi ekseni etrafında 1 günde (24 saat) döner ve gece-gündüz oluşur."},{"q":"Dünya'nın Güneş etrafında 365 gün 6 saatte tamamladığı DOLANMA hareketi sonucunda ne oluşur? ☀️","a":"Mevsimler ☀️","d":["Gece ve gündüz","Saatler"],"exp":"Güneş etrafındaki 1 yıllık dolanma hareketi mevsimleri meydana getirir."}],"science_unit2_4":[{"q":"Vücudumuzda yapıcı ve onarıcı olarak görev yapan, kas ve kemik gelişimini sağlayan besin içeriği hangisidir? 🥚","a":"Proteinler 🥚","d":["Karbonhidratlar","Yağlar"],"exp":"Et, süt, yumurta ve balıkta bol bulunan proteinler vücudun büyümesini ve yaraların onarılmasını sağlar."},{"q":"Günlük aktivitelerimizde vücudumuza İLK SIRADA enerji sağlayan besin grubu hangisidir? 🍞","a":"Karbonhidratlar 🍞","d":["Vitaminler","Su ve Mineraller"],"exp":"Ekmek, tahıl, makarna ve pirinç gibi karbonhidratlar vücudun temel enerji kaynağıdır."},{"q":"Vücudumuzu hastalıklara karşı koruyan, bağışıklık sistemini güçlendiren ve sebze-meyvelerde bol bulunan besin içeriği nedir? 🍎","a":"Vitaminler 🍎","d":["Proteinler","Yağlar"],"exp":"Vitaminler vücutta düzenleyici olarak görev yapar ve bağışıklığı güçlendirir."}],"science_unit3_4":[{"q":"Bir kalecinin kendisine doğru hızla gelen futbol topunu tutarak durdurması kuvvetin hangi etkisidir? 🛑","a":"Durdurma etkisi 🛑","d":["Hızlandırma etkisi","Döndürme etkisi"],"exp":"Hareket eden cisme ters yönde kuvvet uygulandığında durdurma etkisi oluşur."},{"q":"Bir mıknatısın aynı kutupları (N-N veya S-S) birbirine yaklaştırıldığında ne gözlenir? 🧲","a":"Birbirini iter 🧲","d":["Birbirini çeker","Hiçbir şey olmaz"],"exp":"Mıknatısların aynı kutupları birbirini iter, zıt kutupları çeker."},{"q":"Aşağıdaki cisimlerden hangisi mıknatıs tarafından ÇEKİLİR? 🧲","a":"Demir çivi ve ataş 🧲","d":["Plastik cetvel","Cam bilye"],"exp":"Mıknatıs demir, nikel ve kobalt gibi metalleri çeker."}],"science_unit4_4":[{"q":"Maddenin miktarını belirten ve eşit kollu terazi veya baskülle ölçülen büyüklük nedir? ⚖️","a":"Kütle (kg ve g) ⚖️","d":["Hacim (Litre)","Sıcaklık (Derece)"],"exp":"Madde miktarına kütle denir ve gram/kilogram ile ölçülür."},{"q":"Maddenin uzayda kapladığı alana ne ad verilir ve dereceli silindirle ölçülür? 🧪","a":"Hacim (L ve mL) 🧪","d":["Kütle","Ağırlık"],"exp":"Maddelerin kapladığı yere hacim denir."},{"q":"Birden fazla saf maddenin kimyasal özelliklerini kaybetmeden bir araya gelmesiyle ne oluşur (Örn: Salata, limonata)? 🥗","a":"Karışım 🥗","d":["Saf madde","Fosil"],"exp":"Maddelerin kendi özelliğini koruyarak karışmasıyla karışımlar oluşur."}],"science_unit5_4":[{"q":"Aydınlatma araçlarının geçmişten günümüze doğru kronolojik sıralaması hangisidir? 💡","a":"Meşale ➡️ Kandil ➡️ Mum ➡️ Gaz lambası ➡️ Ampul ➡️ LED 💡","d":["LED ➡️ Ampul ➡️ Meşale","Mum ➡️ LED ➡️ Meşale"],"exp":"Aydınlatma ateşi ve meşaleden başlayıp modern LED lambalara kadar gelişmiştir."},{"q":"Işığın yanlış yerde, yanlış zamanda ve gereğinden fazla kullanılmasına ne denir? 🌃","a":"Işık kirliliği 🌃","d":["Ses kirliliği","Geri dönüşüm"],"exp":"Aşırı ve yanlış aydınlatma ışık kirliliğine yol açar."},{"q":"Tarihte sesi kaydedip tekrar dinlemeyi sağlayan ilk cihaz olan 'Fonograf'ı kim icat etmiştir? 🎙️","a":"Thomas Edison 🎙️","d":["Graham Bell","Albert Einstein"],"exp":"Edison fonografı icat ederek ses kayıt teknolojisinin temelini atmıştır."}],"science_unit6_4":[{"q":"Kullanılmış plastik, cam, kağıt ve metal atıkların yeniden hammadde olarak üretime kazandırılmasına ne denir? ♻️","a":"Geri dönüşüm ♻️","d":["İsraf","Tüketim"],"exp":"Geri dönüşüm doğal kaynakları korur ve çevre kirliliğini önler."},{"q":"Elektrik ve su gibi kaynakları ihtiyacımız kadar kullanarak israfı önlemeye ne ad verilir? 💡💧","a":"Tasarruf 💡💧","d":["Savurganlık","Kirlilik"],"exp":"Bilinçli kaynak kullanımı tasarruf olarak adlandırılır."}],"science_unit7_4":[{"q":"Basit bir elektrik devresinde elektrik akımının geçişini kontrol eden (açıp kapatan) devre elemanı hangisidir? 🔘","a":"Anahtar 🔘","d":["Ampul","Duy"],"exp":"Anahtar devredeki akımı kesmeye veya iletmeye yarar."},{"q":"Basit elektrik devresinde anahtar AÇIK konumdayken ampul neden ışık VERMEZ? 💡","a":"Devre tamamlanmadığı ve akım kesildiği için 💡","d":["Pilde enerji bittiği için","Ampul patladığı için"],"exp":"Anahtar açıkken devreden akım geçmez, anahtar kapatıldığında ampul yanar."},{"q":"Elektrik enerjisini pilden ampule taşıyan iletken devre elemanı hangisidir? 🔌","a":"Bağlantı kablosu 🔌","d":["Pil yatağı","Anahtar"],"exp":"Elektrik akımı iletken kablolar üzerinden akar."}]};
+    const extraSoc4 = {"social_unit1_4":[{"q":"Türkiye Cumhuriyeti Kimlik Kartımızda her vatandaş için özel ve benzersiz olan numara hangisidir? 🆔","a":"T.C. Kimlik Numarası (11 haneli) 🆔","d":["Seri No","Cilt No"],"exp":"T.C. Kimlik Numarası her bireye özeldir ve tektir."},{"q":"Yaşadığımız olayları tarih ve zaman sırasına göre dizmeye ne ad verilir? 📅","a":"Kronolojik sıralama 📅","d":["Kroki çizimi","Soy ağacı"],"exp":"Zaman dizinine göre olayları sıralama kronolojidir."},{"q":"Kendimizi başkasının yerine koyarak onun duygularını anlama becerisine ne denir? 🤝","a":"Empati 🤝","d":["Sempatiklik","Bencillik"],"exp":"Empati başkalarının hislerini doğru anlamamızı sağlar."}],"social_unit2_4":[{"q":"Kurtuluş Savaşı'nda Güney Cephesi'nde Maraş savunmasını başlatan milli kahramanımız kimdir? 🎖️","a":"Sütçü İmam 🎖️","d":["Hasan Tahsin","Ali Saip Bey"],"exp":"Sütçü İmam Maraş'ta bağımsızlık meşalesini yakan kahramanımızdır."},{"q":"Milli Mücadele'de cepheye mermi taşırken donarak şehit olan kahraman Türk kadını kimdir? 🇹🇷","a":"Şerife Bacı 🇹🇷","d":["Halide Edip","Nene Hatun"],"exp":"Şerife Bacı İnebolu'dan Kastamonu'ya cephane taşırken şehit olmuştur."},{"q":"Halı dokuma, kına gecesi, cirit oyunu ve bayramlaşma geleneklerimiz neyi oluşturur? 🏺","a":"Milli kültür ögelerimizi 🏺","d":["Yapay çevreyi","Teknolojik ürünleri"],"exp":"Geçmişten gelen adet ve gelenekler milli kültürümüzdür."}],"social_unit3_4":[{"q":"Doğada insan müdahalesi olmadan kendiliğinden var olan dağ, göl ve nehirler nasıl unsurlardır? 🌲","a":"Doğal unsurlar 🌲","d":["Beşeri unsurlar","Kültürel unsurlar"],"exp":"İnsan eli değmeden oluşan çevre doğal unsurdur."},{"q":"İnsanlar tarafından inşa edilen köprü, yol, bina ve barajlar hangi unsurlara örnektir? 🌉","a":"Beşeri unsurlar 🌉","d":["Doğal unsurlar","Hava olayları"],"exp":"İnsanların yaptığı yapay çevre ögeleri beşeri unsurlardır."},{"q":"Deprem sonrasında ilk yardım ve temel ihtiyaçları karşılamak için hazırlanan çantaya ne denir? 🎒","a":"Afet ve Deprem Çantası 🎒","d":["Okul çantası","Piknik sepeti"],"exp":"Deprem çantası acil durumlarda hayat kurtarır."}],"social_unit4_4":[{"q":"Telefonu icat ederek haberleşme teknolojisinde çığır açan ünlü mucit kimdir? ☎️","a":"Alexander Graham Bell ☎️","d":["Thomas Edison","Wright Kardeşler"],"exp":"Graham Bell 1876 yılında telefonu icat etmiştir."},{"q":"Teknolojik ürünleri kullanırken sağlığımızı korumak için hangisine dikkat etmeliyiz? 💻","a":"Ekran karşısında dik oturmalı ve gözlerimizi dinlendirmeliyiz 💻","d":["Karanlıkta saatlerce oyun oynamalıyız","Sesi sonuna kadar açmalıyız"],"exp":"Doğru duruş ve ekran süresi sınırlandırması sağlığımızı korur."}],"social_unit5_4":[{"q":"Ailemizin gelir ve giderlerini dengede tutmak için önceden hazırlanan plana ne ad verilir? 🪙","a":"Aile Bütçesi 🪙","d":["Market fişi","Tasarruf kutusu"],"exp":"Bütçe gelir ve giderlerin dengeli planlanmasıdır."},{"q":"Alışveriş yaparken öncelikle hangisine pay ayırmalıyız? 🍞","a":"Temel İhtiyaçlarımıza 🍞","d":["Lüks İsteklerimize","Eğlenceye"],"exp":"Önce beslenme, barınma gibi temel ihtiyaçlar karşılanmalıdır."}],"social_unit6_4":[{"q":"Birleşmiş Milletler Çocuk Hakları Sözleşmesi'ne göre kaç yaşına kadar her birey çocuk kabul edilir? 🧒","a":"18 yaşına kadar 🧒","d":["12 yaşına kadar","15 yaşına kadar"],"exp":"18 yaşını doldurmamış herkes kanunen çocuktur."},{"q":"Milletimizin bağımsızlık ve egemenliğinin en kutsal simgesi hangisidir? 🇹🇷","a":"Ay Yıldızlı Al Bayrağımız ve İstiklal Marşı'mız 🇹🇷","d":["Nüfus cüzdanı","Sürücü belgesi"],"exp":"Bayrağımız ve İstiklal Marşı bağımsızlığımızın sembolüdür."}],"social_unit7_4":[{"q":"Türkiye'nin batı komşuları olan ülkeler hangileridir? 🌍","a":"Yunanistan ve Bulgaristan 🌍","d":["İran ve Irak","Suriye ve Gürcistan"],"exp":"Trakya sınırımızda Yunanistan ve Bulgaristan yer alır."},{"q":"Farklı ülkelerin yemeklerine, kıyafetlerine ve adetlerine saygı duymak neyi güçlendirir? 🌏","a":"Dünya barışını ve kültürel hoşgörüyü 🌏","d":["Kültür çatışmasını","İsrafı"],"exp":"Farklılıklara saygı küresel anlayışı geliştirir."}]};
+
+    if (QuestionEngine.grade4ScienceCrustMovementsPool && extraSci4.science_unit1_4) QuestionEngine.grade4ScienceCrustMovementsPool.push(...extraSci4.science_unit1_4);
+    if (QuestionEngine.grade4ScienceNutritionPool && extraSci4.science_unit2_4) QuestionEngine.grade4ScienceNutritionPool.push(...extraSci4.science_unit2_4);
+    if (QuestionEngine.grade4ScienceForceMagnetsPool && extraSci4.science_unit3_4) QuestionEngine.grade4ScienceForceMagnetsPool.push(...extraSci4.science_unit3_4);
+    if (QuestionEngine.grade4ScienceMatterPropertiesPool && extraSci4.science_unit4_4) QuestionEngine.grade4ScienceMatterPropertiesPool.push(...extraSci4.science_unit4_4);
+    if (QuestionEngine.grade4ScienceLightingSoundPool && extraSci4.science_unit5_4) QuestionEngine.grade4ScienceLightingSoundPool.push(...extraSci4.science_unit5_4);
+    if (QuestionEngine.grade4ScienceHumanEnvironmentPool && extraSci4.science_unit6_4) QuestionEngine.grade4ScienceHumanEnvironmentPool.push(...extraSci4.science_unit6_4);
+    if (QuestionEngine.grade4ScienceSimpleCircuitsPool && extraSci4.science_unit7_4) QuestionEngine.grade4ScienceSimpleCircuitsPool.push(...extraSci4.science_unit7_4);
+
+    if (QuestionEngine.grade4SocialIndividualSocietyPool && extraSoc4.social_unit1_4) QuestionEngine.grade4SocialIndividualSocietyPool.push(...extraSoc4.social_unit1_4);
+    if (QuestionEngine.grade4SocialCultureHeroesPool && extraSoc4.social_unit2_4) QuestionEngine.grade4SocialCultureHeroesPool.push(...extraSoc4.social_unit2_4);
+    if (QuestionEngine.grade4SocialPlacesEnvironmentPool && extraSoc4.social_unit3_4) QuestionEngine.grade4SocialPlacesEnvironmentPool.push(...extraSoc4.social_unit3_4);
+    if (QuestionEngine.grade4SocialScienceTechPool && extraSoc4.social_unit4_4) QuestionEngine.grade4SocialScienceTechPool.push(...extraSoc4.social_unit4_4);
+    if (QuestionEngine.grade4SocialProductionEconomyPool && extraSoc4.social_unit5_4) QuestionEngine.grade4SocialProductionEconomyPool.push(...extraSoc4.social_unit5_4);
+    if (QuestionEngine.grade4SocialActiveCitizenshipPool && extraSoc4.social_unit6_4) QuestionEngine.grade4SocialActiveCitizenshipPool.push(...extraSoc4.social_unit6_4);
+    if (QuestionEngine.grade4SocialGlobalConnectionsPool && extraSoc4.social_unit7_4) QuestionEngine.grade4SocialGlobalConnectionsPool.push(...extraSoc4.social_unit7_4);
+  } catch (e) {
+    console.warn("Could not append extra G4 sci/soc questions:", e);
+  }
+
 
   // 4. SINIF MATEMATİK & TÜRKÇE 2026 MAARİF MODELİ EKSTRA KAZANIM SORULARI
   try {
