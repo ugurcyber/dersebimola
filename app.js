@@ -32,7 +32,7 @@
     currentGameType: 'math',
 
     // Türkiye Yüzyılı Maarif Modeli (2026) 1. Sınıf İlk Okuma Durumu
-    maarifGroup: 'g1',
+    maarifGroup: 'g0_prep',
     activeMaarifLetter: 'a',
     isMaarifGeneral: false,
 
@@ -1673,6 +1673,7 @@
      ========================================================================== */
   const MAARIF_2026_CONFIG = {
     groups: [
+      { id: 'g0_prep', name: '✏️ Hazırlık', code: 'Çizgi & Algı', isPrep: true, label: '✏️ Okuma Yazmaya Hazırlık (Yazısız Etkinlikler)', letters: [] },
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
       { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
       { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
@@ -1699,19 +1700,8 @@
           { word: 'Süt', emoji: '🥛', hasSound: false },
           { word: 'Fil', emoji: '🐘', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'A', parts: ['A'], distractors: ['a'], icon: '🅰️' },
-          { word: 'a', parts: ['a'], distractors: ['A'], icon: '🔤' },
-          { word: 'Aa', parts: ['A', 'a'], distractors: ['a'], icon: '🅰️' },
-          { word: 'aA', parts: ['a', 'A'], distractors: ['A'], icon: '🔤' },
-          { word: 'AA', parts: ['A', 'A'], distractors: ['a'], icon: '🗣️' },
-          { word: 'AAA', parts: ['A', 'A', 'A'], distractors: ['A'], icon: '📣' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'A a a!', blankSentence: 'A a _____!', missing: 'a', options: ['a', 'A', 'Aa'], fullText: 'A a a!' },
-          { sentence: 'A A A!', blankSentence: 'A A _____!', missing: 'A', options: ['A', 'a', 'Aa'], fullText: 'A A A!' },
-          { sentence: 'A, a, a!', blankSentence: '_____, a, a!', missing: 'A', options: ['A', 'a', 'Aa'], fullText: 'A, a, a!' }
-        ]
+        cumulativeWords: [],
+        cumulativeSentences: []
       },
       'n': {
         letter: 'n', upper: 'N', group: 'g1', groupName: '1. Grup (ANETİL)',
@@ -1733,11 +1723,11 @@
         cumulativeWords: [
           { word: 'AN', parts: ['A', 'N'], distractors: ['NA'], icon: '⏳' },
           { word: 'NA', parts: ['N', 'A'], distractors: ['AN'], icon: '🔤' },
-          { word: 'ANA', parts: ['A', 'NA'], distractors: ['AN'], icon: '👩' },
-          { word: 'NANA', parts: ['NA', 'NA'], distractors: ['AN'], icon: '👶' }
+          { word: 'ANA', parts: ['A', 'NA'], distractors: ['AN', 'NA'], icon: '👩' }
         ],
         cumulativeSentences: [
-          { sentence: 'Ana an.', blankSentence: 'Ana _____.', missing: 'an', options: ['an', 'na', 'ana'], fullText: 'Ana an.' }
+          { sentence: 'Ana an.', blankSentence: 'Ana _____.', missing: 'an', options: ['an', 'na', 'ana'], fullText: 'Ana an.' },
+          { sentence: 'An ana.', blankSentence: 'An _____.', missing: 'ana', options: ['ana', 'an', 'na'], fullText: 'An ana.' }
         ]
       },
       'e': {
@@ -1761,12 +1751,13 @@
           { word: 'EN', parts: ['E', 'N'], distractors: ['AN', 'NE'], icon: '📏' },
           { word: 'NE', parts: ['N', 'E'], distractors: ['NA', 'EN'], icon: '❓' },
           { word: 'ANE', parts: ['A', 'NE'], distractors: ['NA', 'EN'], icon: '👵' },
-          { word: 'ANNE', parts: ['AN', 'NE'], distractors: ['NA', 'EN'], icon: '❤️' },
-          { word: 'NANE', parts: ['NA', 'NE'], distractors: ['EN', 'AN'], icon: '🌿' }
+          { word: 'NANE', parts: ['NA', 'NE'], distractors: ['EN', 'AN'], icon: '🌿' },
+          { word: 'ANNE', parts: ['AN', 'NE'], distractors: ['NA', 'EN'], icon: '❤️' }
         ],
         cumulativeSentences: [
-          { sentence: 'Anne nane.', blankSentence: 'Anne _____.', missing: 'nane', options: ['nane', 'an', 'en'], fullText: 'Anne nane.' },
-          { sentence: 'Ana ne?', blankSentence: 'Ana _____?', missing: 'ne', options: ['ne', 'en', 'an'], fullText: 'Ana ne?' }
+          { sentence: 'Anne nane.', blankSentence: 'Anne _____.', missing: 'nane', options: ['nane', 'anne', 'en'], fullText: 'Anne nane.' },
+          { sentence: 'Ana ne?', blankSentence: 'Ana _____?', missing: 'ne', options: ['ne', 'en', 'nane'], fullText: 'Ana ne?' },
+          { sentence: 'Nane en ana.', blankSentence: 'Nane en _____.', missing: 'ana', options: ['ana', 'anne', 'ne'], fullText: 'Nane en ana.' }
         ]
       },
       't': {
@@ -1790,21 +1781,18 @@
         cumulativeWords: [
           { word: 'AT', parts: ['A', 'T'], distractors: ['ET', 'TA'], icon: '🐴' },
           { word: 'ET', parts: ['E', 'T'], distractors: ['AT', 'TE'], icon: '🥩' },
-          { word: 'TA', parts: ['T', 'A'], distractors: ['TE', 'NA'], icon: '🔤' },
-          { word: 'TE', parts: ['T', 'E'], distractors: ['TA', 'NE'], icon: '🔤' },
-          { word: 'TAN', parts: ['T', 'AN'], distractors: ['TEN', 'TA'], icon: '🌅' },
           { word: 'TEN', parts: ['T', 'EN'], distractors: ['TAN', 'TE'], icon: '🧴' },
-          { word: 'NET', parts: ['N', 'ET'], distractors: ['TEN', 'NE'], icon: '🎯' },
-          { word: 'TAT', parts: ['T', 'AT'], distractors: ['ET', 'TA'], icon: '👅' },
           { word: 'ATA', parts: ['A', 'TA'], distractors: ['TE', 'AN'], icon: '🇹🇷' },
-          { word: 'TANE', parts: ['TA', 'NE'], distractors: ['TE', 'NA'], icon: '🌾' },
+          { word: 'TENE', parts: ['TE', 'NE'], distractors: ['TA', 'NE'], icon: '🪨' },
           { word: 'ANTEN', parts: ['AN', 'TEN'], distractors: ['TAN', 'TA'], icon: '📡' },
-          { word: 'NATA', parts: ['NA', 'TA'], distractors: ['TE', 'AN'], icon: '⛵' }
+          { word: 'NANE', parts: ['NA', 'NE'], distractors: ['TA', 'NE'], icon: '🌿' },
+          { word: 'TANE', parts: ['TA', 'NE'], distractors: ['TE', 'NA'], icon: '🌾' }
         ],
         cumulativeSentences: [
-          { sentence: 'Ata at.', blankSentence: 'Ata _____.', missing: 'at', options: ['at', 'et', 'tat'], fullText: 'Ata at.' },
+          { sentence: 'Ata at.', blankSentence: 'Ata _____.', missing: 'at', options: ['at', 'et', 'tane'], fullText: 'Ata at.' },
           { sentence: 'Anne et tat.', blankSentence: 'Anne _____ tat.', missing: 'et', options: ['et', 'at', 'anten'], fullText: 'Anne et tat.' },
-          { sentence: 'Ata tane tane tat.', blankSentence: 'Ata tane _____ tat.', missing: 'tane', options: ['tane', 'anten', 'ata'], fullText: 'Ata tane tane tat.' }
+          { sentence: 'Ata tane tane tat.', blankSentence: 'Ata tane _____ tat.', missing: 'tane', options: ['tane', 'anten', 'ata'], fullText: 'Ata tane tane tat.' },
+          { sentence: 'Ata et tat.', blankSentence: 'Ata et _____.', missing: 'tat', options: ['tat', 'at', 'ten'], fullText: 'Ata et tat.' }
         ]
       },
       'i': {
@@ -1821,27 +1809,29 @@
         noSoundWords: [
           { word: 'Ayı', emoji: '🐻', hasSound: false },
           { word: 'At', emoji: '🐴', hasSound: false },
-          { word: 'Top', emoji: '⚽', hasSound: false },
-          { word: 'Kuş', emoji: '🐦', hasSound: false }
+          { word: 'Kuş', emoji: '🐦', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
         cumulativeWords: [
           { word: 'İN', parts: ['İ', 'N'], distractors: ['AN', 'EN'], icon: '⬇️' },
           { word: 'İT', parts: ['İ', 'T'], distractors: ['AT', 'ET'], icon: '👉' },
-          { word: 'Nİ', parts: ['N', 'İ'], distractors: ['NE', 'NA'], icon: '🔤' },
           { word: 'Tİ', parts: ['T', 'İ'], distractors: ['TE', 'TA'], icon: '🔤' },
+          { word: 'Nİ', parts: ['N', 'İ'], distractors: ['NE', 'NA'], icon: '🔤' },
           { word: 'NİN', parts: ['N', 'İN'], distractors: ['TİN', 'Nİ'], icon: '🔤' },
-          { word: 'TİN', parts: ['T', 'İN'], distractors: ['NİN', 'Tİ'], icon: '🔤' },
-          { word: 'NİNE', parts: ['Nİ', 'NE'], distractors: ['Tİ', 'NA'], icon: '👵' },
+          { word: 'NİNİ', parts: ['Nİ', 'Nİ'], distractors: ['Tİ', 'NE'], icon: '👶' },
+          { word: 'TİNE', parts: ['Tİ', 'NE'], distractors: ['TE', 'NA'], icon: '🌾' },
           { word: 'ANİ', parts: ['A', 'Nİ'], distractors: ['NE', 'Tİ'], icon: '⚡' },
-          { word: 'İNAT', parts: ['İ', 'NAT'], distractors: ['AN', 'AT'], icon: '🐐' },
+          { word: 'ANT', parts: ['A', 'NT'], distractors: ['AT', 'ET'], icon: '🤝' },
+          { word: 'NİNE', parts: ['Nİ', 'NE'], distractors: ['Tİ', 'NA'], icon: '👵' },
           { word: 'ETİ', parts: ['E', 'Tİ'], distractors: ['TE', 'TA'], icon: '🥩' },
-          { word: 'TENİ', parts: ['TE', 'Nİ'], distractors: ['Tİ', 'NE'], icon: '🧴' }
+          { word: 'İNAT', parts: ['İ', 'NAT'], distractors: ['AN', 'AT'], icon: '🐐' }
         ],
         cumulativeSentences: [
           { sentence: 'Nine et tat.', blankSentence: 'Nine _____ tat.', missing: 'et', options: ['et', 'it', 'inat'], fullText: 'Nine et tat.' },
           { sentence: 'Ata in.', blankSentence: 'Ata _____.', missing: 'in', options: ['in', 'it', 'et'], fullText: 'Ata in.' },
           { sentence: 'Nine nane tat.', blankSentence: 'Nine _____ tat.', missing: 'nane', options: ['nane', 'tane', 'anten'], fullText: 'Nine nane tat.' },
-          { sentence: 'Ata eti tat.', blankSentence: 'Ata _____ tat.', missing: 'eti', options: ['eti', 'teni', 'nine'], fullText: 'Ata eti tat.' }
+          { sentence: 'Ata eti tat.', blankSentence: 'Ata _____ tat.', missing: 'eti', options: ['eti', 'nine', 'nini'], fullText: 'Ata eti tat.' },
+          { sentence: 'Nine ata it.', blankSentence: 'Nine _____ it.', missing: 'ata', options: ['ata', 'eti', 'in'], fullText: 'Nine ata it.' }
         ]
       },
       'l': {
@@ -1864,27 +1854,26 @@
         cumulativeWords: [
           { word: 'EL', parts: ['E', 'L'], distractors: ['AL', 'İL'], icon: '✋' },
           { word: 'AL', parts: ['A', 'L'], distractors: ['EL', 'LA'], icon: '🔴' },
-          { word: 'İL', parts: ['İ', 'L'], distractors: ['AL', 'Lİ'], icon: '🏙️' },
           { word: 'LA', parts: ['L', 'A'], distractors: ['LE', 'AL'], icon: '🔤' },
           { word: 'LE', parts: ['L', 'E'], distractors: ['LA', 'EL'], icon: '🔤' },
+          { word: 'İL', parts: ['İ', 'L'], distractors: ['AL', 'Lİ'], icon: '🏙️' },
           { word: 'Lİ', parts: ['L', 'İ'], distractors: ['LE', 'İL'], icon: '🔤' },
           { word: 'TEL', parts: ['T', 'EL'], distractors: ['TAL', 'TE'], icon: '🧶' },
           { word: 'NAL', parts: ['N', 'AL'], distractors: ['NEL', 'NA'], icon: '🐎' },
-          { word: 'ELA', parts: ['E', 'LA'], distractors: ['LE', 'NA'], icon: '👧' },
           { word: 'LALE', parts: ['LA', 'LE'], distractors: ['Lİ', 'TE'], icon: '🌷' },
-          { word: 'ALİ', parts: ['A', 'Lİ'], distractors: ['LA', 'Tİ'], icon: '👦' },
+          { word: 'ELA', parts: ['E', 'LA'], distractors: ['LE', 'NA'], icon: '👧' },
           { word: 'AİLE', parts: ['A', 'İ', 'LE'], distractors: ['LA', 'NA'], icon: '👨‍👩‍👦' },
-          { word: 'ELTİ', parts: ['EL', 'Tİ'], distractors: ['AL', 'TE'], icon: '👩‍🦰' },
-          { word: 'TALAN', parts: ['TA', 'LAN'], distractors: ['TEL', 'TAN'], icon: '🌪️' },
-          { word: 'ATLET', parts: ['AT', 'LET'], distractors: ['AL', 'TET'], icon: '🏃' },
           { word: 'NANELİ', parts: ['NA', 'NE', 'Lİ'], distractors: ['LE', 'LA'], icon: '🌿' },
+          { word: 'ATLET', parts: ['AT', 'LET'], distractors: ['AL', 'TET'], icon: '🏃' },
+          { word: 'ALİ', parts: ['A', 'Lİ'], distractors: ['LA', 'Tİ'], icon: '👦' },
           { word: 'TATİL', parts: ['TA', 'TİL'], distractors: ['TE', 'TEL'], icon: '🏖️' }
         ],
         cumulativeSentences: [
           { sentence: 'Ali lale al.', blankSentence: 'Ali _____ al.', missing: 'lale', options: ['lale', 'ela', 'nal'], fullText: 'Ali lale al.' },
           { sentence: 'Ela nane al.', blankSentence: 'Ela _____ al.', missing: 'nane', options: ['nane', 'atlet', 'lale'], fullText: 'Ela nane al.' },
           { sentence: 'Ali ata nal ilet.', blankSentence: 'Ali ata _____ ilet.', missing: 'nal', options: ['nal', 'tel', 'et'], fullText: 'Ali ata nal ilet.' },
-          { sentence: 'Aile tatil et.', blankSentence: 'Aile _____ et.', missing: 'tatil', options: ['tatil', 'atlet', 'lale'], fullText: 'Aile tatil et.' }
+          { sentence: 'Aile tatil et.', blankSentence: 'Aile _____ et.', missing: 'tatil', options: ['tatil', 'atlet', 'lale'], fullText: 'Aile tatil et.' },
+          { sentence: 'Ela naneli tel al.', blankSentence: 'Ela _____ tel al.', missing: 'naneli', options: ['naneli', 'lale', 'aile'], fullText: 'Ela naneli tel al.' }
         ]
       },
 
@@ -3115,43 +3104,33 @@
     // 1. SINIF: 42 SEVİYELİK BALON PATLATMA HAVUZU (HARF, HECE, SAYI, RİTMİK)
     // -------------------------------------------------------------------------
     grade1BalloonLevelsPool: [
-      // 1. Grup Harfler (E-L-A-K-İ-N) - 12 Bölüm
-      { id: 'b_e_up', instruction: '🎈 Sadece "E" harfi olan balonları patlat!', spokenText: 'Sadece e! sesi olan balonları patlat.', target: 'E', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['E'], distractors: ['L', 'A', 'K', 'İ', 'N'], exp: 'Harika refleks! "E" harfini yakaladın! 🎈👏' },
-      { id: 'b_e_low', instruction: '🎈 Sadece küçük "e" harfi olan balonları patlat!', spokenText: 'Sadece küçük e! sesi olan balonları patlat.', target: 'e', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['e'], distractors: ['l', 'a', 'k', 'i', 'n'], exp: 'Süpersin! Küçük "e" balonlarını patlattın! 🎈✨' },
-      { id: 'b_l_up', instruction: '🎈 Sadece "L" harfi olan balonları patlat!', spokenText: 'Sadece le! sesi olan balonları patlat.', target: 'L', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['L'], distractors: ['E', 'A', 'K', 'T', 'N'], exp: 'Tebrikler! "L" harfi balonları patladı! 🎈🎉' },
-      { id: 'b_l_low', instruction: '🎈 Sadece küçük "l" harfi olan balonları patlat!', spokenText: 'Sadece küçük le! sesi olan balonları patlat.', target: 'l', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['l'], distractors: ['e', 'i', 't', 'k', 'a'], exp: 'Çok hızlısın! Küçük "l" harfini buldun! 🎈⭐' },
-      { id: 'b_a_up', instruction: '🎈 Sadece "A" harfi olan balonları patlat!', spokenText: 'Sadece a! sesi olan balonları patlat.', target: 'A', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['A'], distractors: ['E', 'L', 'O', 'K', 'İ'], exp: 'Muhteşem! "A" sesi balonunu avladın! 🎈👏' },
-      { id: 'b_a_low', instruction: '🎈 Sadece küçük "a" harfi olan balonları patlat!', spokenText: 'Sadece küçük a! sesi olan balonları patlat.', target: 'a', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['a'], distractors: ['e', 'o', 'u', 'k', 'n'], exp: 'Bravo! Küçük "a" harfini kaçırmadın! 🎈💖' },
-      { id: 'b_k_up', instruction: '🎈 Sadece "K" harfi olan balonları patlat!', spokenText: 'Sadece ke! sesi olan balonları patlat.', target: 'K', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['K'], distractors: ['L', 'E', 'N', 'T', 'İ'], exp: 'Harika atış! "K" harfi patladı! 🎈💥' },
-      { id: 'b_k_low', instruction: '🎈 Sadece küçük "k" harfi olan balonları patlat!', spokenText: 'Sadece küçük ke! sesi olan balonları patlat.', target: 'k', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['k'], distractors: ['l', 't', 'b', 'h', 'n'], exp: 'Nefis gözlem! Küçük "k" balonunu patlattın! 🎈👍' },
-      { id: 'b_i_up', instruction: '🎈 Sadece "İ" harfi olan balonları patlat!', spokenText: 'Sadece i! sesi olan balonları patlat.', target: 'İ', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['İ'], distractors: ['E', 'L', 'A', 'K', 'T'], exp: 'Süper! Noktalı "İ" harfini hemen yakaladın! 🎈🌟' },
-      { id: 'b_i_low', instruction: '🎈 Sadece küçük "i" harfi olan balonları patlat!', spokenText: 'Sadece küçük i! sesi olan balonları patlat.', target: 'i', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['i'], distractors: ['l', 'e', 't', 'k', 'j'], exp: 'Çok dikkatlisin! Küçük "i" harfini buldun! 🎈👏' },
-      { id: 'b_n_up', instruction: '🎈 Sadece "N" harfi olan balonları patlat!', spokenText: 'Sadece ne! sesi olan balonları patlat.', target: 'N', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['N'], distractors: ['M', 'K', 'L', 'Z', 'H'], exp: 'Tebrikler! "N" harfi balonlarını patlattın! 🎈🎉' },
-      { id: 'b_n_low', instruction: '🎈 Sadece küçük "n" harfi olan balonları patlat!', spokenText: 'Sadece küçük ne! sesi olan balonları patlat.', target: 'n', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['n'], distractors: ['u', 'm', 'h', 'r', 'k'], exp: 'Harikasın! Küçük "n" harfini ustalıkla patlattın! 🎈💥' },
+      // 1. Grup Harfler (2026 Maarif Modeli: A - N - E - T - İ - L) - Kümülatif Bölümler
+      { id: 'b_a_up', instruction: '🎈 Sadece "A" harfi olan balonları patlat!', spokenText: 'Sadece a! sesi olan balonları patlat.', target: 'A', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['A'], distractors: ['E', 'O', 'U', 'N', 'İ'], exp: 'Muhteşem! "A" sesi balonunu avladın! 🎈👏' },
+      { id: 'b_a_low', instruction: '🎈 Sadece küçük "a" harfi olan balonları patlat!', spokenText: 'Sadece küçük a! sesi olan balonları patlat.', target: 'a', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['a'], distractors: ['e', 'o', 'u', 'n', 'i'], exp: 'Bravo! Küçük "a" harfini kaçırmadın! 🎈💖' },
+      { id: 'b_n_up', instruction: '🎈 Sadece "N" harfi olan balonları patlat!', spokenText: 'Sadece ne! sesi olan balonları patlat.', target: 'N', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['N'], distractors: ['A', 'E', 'T', 'İ', 'L'], exp: 'Tebrikler! "N" harfi balonlarını patlattın! 🎈🎉' },
+      { id: 'b_n_low', instruction: '🎈 Sadece küçük "n" harfi olan balonları patlat!', spokenText: 'Sadece küçük ne! sesi olan balonları patlat.', target: 'n', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['n'], distractors: ['a', 'e', 't', 'i', 'l'], exp: 'Harikasın! Küçük "n" harfini ustalıkla patlattın! 🎈💥' },
+      { id: 'b_e_up', instruction: '🎈 Sadece "E" harfi olan balonları patlat!', spokenText: 'Sadece e! sesi olan balonları patlat.', target: 'E', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['E'], distractors: ['A', 'N', 'T', 'İ', 'L'], exp: 'Harika refleks! "E" harfini yakaladın! 🎈👏' },
+      { id: 'b_e_low', instruction: '🎈 Sadece küçük "e" harfi olan balonları patlat!', spokenText: 'Sadece küçük e! sesi olan balonları patlat.', target: 'e', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['e'], distractors: ['a', 'n', 't', 'i', 'l'], exp: 'Süpersin! Küçük "e" balonlarını patlattın! 🎈✨' },
+      { id: 'b_t_up', instruction: '🎈 Sadece "T" harfi olan balonları patlat!', spokenText: 'Sadece te! sesi olan balonları patlat.', target: 'T', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['T'], distractors: ['A', 'N', 'E', 'İ', 'L'], exp: 'Çok hızlısın! "T" harfi patladı! 🎈💥' },
+      { id: 'b_t_low', instruction: '🎈 Sadece küçük "t" harfi olan balonları patlat!', spokenText: 'Sadece küçük te! sesi olan balonları patlat.', target: 't', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['t'], distractors: ['a', 'n', 'e', 'i', 'l'], exp: 'Bravo! Küçük "t" balonunu tam zamanında patlattın! 🎈👍' },
+      { id: 'b_i_up', instruction: '🎈 Sadece "İ" harfi olan balonları patlat!', spokenText: 'Sadece i! sesi olan balonları patlat.', target: 'İ', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['İ'], distractors: ['A', 'N', 'E', 'T', 'L'], exp: 'Süper! Noktalı "İ" harfini hemen yakaladın! 🎈🌟' },
+      { id: 'b_i_low', instruction: '🎈 Sadece küçük "i" harfi olan balonları patlat!', spokenText: 'Sadece küçük i! sesi olan balonları patlat.', target: 'i', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['i'], distractors: ['a', 'n', 'e', 't', 'l'], exp: 'Çok dikkatlisin! Küçük "i" harfini buldun! 🎈👏' },
+      { id: 'b_l_up', instruction: '🎈 Sadece "L" harfi olan balonları patlat!', spokenText: 'Sadece le! sesi olan balonları patlat.', target: 'L', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['L'], distractors: ['A', 'N', 'E', 'T', 'İ'], exp: 'Tebrikler! "L" harfi balonları patladı! 🎈🎉' },
+      { id: 'b_l_low', instruction: '🎈 Sadece küçük "l" harfi olan balonları patlat!', spokenText: 'Sadece küçük le! sesi olan balonları patlat.', target: 'l', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['l'], distractors: ['a', 'n', 'e', 't', 'i'], exp: 'Çok hızlısın! Küçük "l" harfini buldun! 🎈⭐' },
 
-      // 2. Grup Harfler (O-M-U-T-Ü-Y) - 10 Bölüm
-      { id: 'b_o_up', instruction: '🎈 Sadece "O" harfi olan balonları patlat!', spokenText: 'Sadece o! sesi olan balonları patlat.', target: 'O', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['O'], distractors: ['U', 'A', 'E', 'C', 'D'], exp: 'Tıpkı bir çember gibi olan "O" harfini patlattın! 🎈⭕' },
-      { id: 'b_m_up', instruction: '🎈 Sadece "M" harfi olan balonları patlat!', spokenText: 'Sadece me! sesi olan balonları patlat.', target: 'M', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['M'], distractors: ['N', 'K', 'T', 'W', 'V'], exp: 'Nefis refleks! "M" sesini yakaladın! 🎈👏' },
-      { id: 'b_m_low', instruction: '🎈 Sadece küçük "m" harfi olan balonları patlat!', spokenText: 'Sadece küçük me! sesi olan balonları patlat.', target: 'm', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['m'], distractors: ['n', 'u', 'w', 'v', 'h'], exp: 'İki tepeli küçük "m" harfini buldun! 🎈✨' },
-      { id: 'b_u_up', instruction: '🎈 Sadece "U" harfi olan balonları patlat!', spokenText: 'Sadece u! sesi olan balonları patlat.', target: 'U', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['U'], distractors: ['O', 'Ü', 'A', 'V', 'C'], exp: 'Harika! "U" harfi balonlarını patlattın! 🎈⭐' },
-      { id: 'b_t_up', instruction: '🎈 Sadece "T" harfi olan balonları patlat!', spokenText: 'Sadece te! sesi olan balonları patlat.', target: 'T', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['T'], distractors: ['L', 'K', 'Y', 'F', 'İ'], exp: 'Çok hızlısın! "T" harfi patladı! 🎈💥' },
-      { id: 'b_t_low', instruction: '🎈 Sadece küçük "t" harfi olan balonları patlat!', spokenText: 'Sadece küçük te! sesi olan balonları patlat.', target: 't', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['t'], distractors: ['l', 'f', 'k', 'i', 'j'], exp: 'Bravo! Küçük "t" balonunu tam zamanında patlattın! 🎈👍' },
-      { id: 'b_u2_up', instruction: '🎈 Sadece noktalı "Ü" harfi olan balonları patlat!', spokenText: 'Sadece noktalı ü! sesi olan balonları patlat.', target: 'Ü', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Ü'], distractors: ['U', 'O', 'Ö', 'Y', 'T'], exp: 'Süper dikkat! Noktalı "Ü" harfini patlattın! 🎈🌟' },
-      { id: 'b_y_up', instruction: '🎈 Sadece "Y" harfi olan balonları patlat!', spokenText: 'Sadece ye! sesi olan balonları patlat.', target: 'Y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['Y'], distractors: ['T', 'K', 'V', 'X', 'U'], exp: 'Muhteşem! "Y" harfi balonunu yakaladın! 🎈🎉' },
-      { id: 'b_y_low', instruction: '🎈 Sadece küçük "y" harfi olan balonları patlat!', spokenText: 'Sadece küçük ye! sesi olan balonları patlat.', target: 'y', category: '2. Grup Harfler', targetsNeeded: 2, targets: ['y'], distractors: ['u', 'v', 'g', 'j', 'p'], exp: 'Harika! Küçük "y" balonlarını havada vurdun! 🎈💖' },
-      { id: 'b_vowels', instruction: '🎈 Sadece SESLİ (Ünlü) harfleri patlat! (A, E, İ, O, U)', spokenText: 'Sadece sesli harfleri patlat.', target: 'Sesli Harfler', category: 'Harf Bilgisi', targetsNeeded: 3, targets: ['A', 'E', 'İ', 'O', 'U'], distractors: ['K', 'L', 'T', 'M', 'N'], exp: 'Şampiyon! Sesli harfleri eksiksiz topladın! 🎈🏆' },
-
-      // 1. Sınıf Heceler - 10 Bölüm
-      { id: 'b_syl_el', instruction: '🎈 Sadece "EL" hecesi olan balonları patlat!', spokenText: 'Sadece el hecesi olan balonları patlat.', target: 'EL', category: 'Heceler', targetsNeeded: 2, targets: ['EL'], distractors: ['LE', 'AL', 'LA', 'EK'], exp: 'Süpersin! "EL" hecesini hemen okudun ve patlattın! 🎈✋' },
-      { id: 'b_syl_al', instruction: '🎈 Sadece "AL" hecesi olan balonları patlat!', spokenText: 'Sadece al hecesi olan balonları patlat.', target: 'AL', category: 'Heceler', targetsNeeded: 2, targets: ['AL'], distractors: ['LA', 'EL', 'OL', 'AT'], exp: 'Harika! "AL" hecesi balonlarını patlattın! 🎈🔴' },
-      { id: 'b_syl_ak', instruction: '🎈 Sadece "AK" hecesi olan balonları patlat!', spokenText: 'Sadece ak hecesi olan balonları patlat.', target: 'AK', category: 'Heceler', targetsNeeded: 2, targets: ['AK'], distractors: ['KA', 'EK', 'OK', 'KE'], exp: 'Nefis! "AK" hecesini tam hedeften vurdun! 🎈⚪' },
-      { id: 'b_syl_ek', instruction: '🎈 Sadece "EK" hecesi olan balonları patlat!', spokenText: 'Sadece ek hecesi olan balonları patlat.', target: 'EK', category: 'Heceler', targetsNeeded: 2, targets: ['EK'], distractors: ['KE', 'AK', 'ET', 'EL'], exp: 'Tebrikler! "EK" hecesi balonları patladı! 🎈🌾' },
-      { id: 'b_syl_et', instruction: '🎈 Sadece "ET" hecesi olan balonları patlat!', spokenText: 'Sadece et hecesi olan balonları patlat.', target: 'ET', category: 'Heceler', targetsNeeded: 2, targets: ['ET'], distractors: ['TE', 'AT', 'OT', 'İT'], exp: 'Çok hızlısın! "ET" hecesini yakaladın! 🎈🥩' },
-      { id: 'b_syl_an', instruction: '🎈 Sadece "AN" hecesi olan balonları patlat!', spokenText: 'Sadece an hecesi olan balonları patlat.', target: 'AN', category: 'Heceler', targetsNeeded: 2, targets: ['AN'], distractors: ['NA', 'EN', 'ON', 'AL'], exp: 'Harika okuma! "AN" hecesi patladı! 🎈✨' },
-      { id: 'b_syl_la', instruction: '🎈 Sadece "LA" hecesi olan balonları patlat!', spokenText: 'Sadece la hecesi olan balonları patlat.', target: 'LA', category: 'Heceler', targetsNeeded: 2, targets: ['LA'], distractors: ['AL', 'LE', 'LI', 'LO'], exp: 'Bravo! "LA" hecesini ustalıkla patlattın! 🎈🎶' },
-      { id: 'b_syl_ma', instruction: '🎈 Sadece "MA" hecesi olan balonları patlat!', spokenText: 'Sadece ma hecesi olan balonları patlat.', target: 'MA', category: 'Heceler', targetsNeeded: 2, targets: ['MA'], distractors: ['AM', 'ME', 'MO', 'MU'], exp: 'Süper! "MA" hecesi balonları patladı! 🎈⭐' },
-      { id: 'b_syl_to', instruction: '🎈 Sadece "TO" hecesi olan balonları patlat!', spokenText: 'Sadece to hecesi olan balonları patlat.', target: 'TO', category: 'Heceler', targetsNeeded: 2, targets: ['TO'], distractors: ['OT', 'TA', 'TE', 'TU'], exp: 'Harika refleks! "TO" hecesini patlattın! 🎈⚽' },
-      { id: 'b_syl_ku', instruction: '🎈 Sadece "KU" hecesi olan balonları patlat!', spokenText: 'Sadece ku hecesi olan balonları patlat.', target: 'KU', category: 'Heceler', targetsNeeded: 2, targets: ['KU'], distractors: ['UK', 'KO', 'KA', 'KE'], exp: 'Tebrikler! "KU" hecesini yakaladın! 🎈🐦' },
+      // 1. Grup Kümülatif Heceler (A-N-E-T-İ-L)
+      { id: 'b_syl_an', instruction: '🎈 Sadece "AN" hecesi olan balonları patlat!', spokenText: 'Sadece an hecesi olan balonları patlat.', target: 'AN', category: 'Heceler', targetsNeeded: 2, targets: ['AN'], distractors: ['NA', 'EN', 'AT', 'AL'], exp: 'Harika okuma! "AN" hecesi patladı! 🎈✨' },
+      { id: 'b_syl_na', instruction: '🎈 Sadece "NA" hecesi olan balonları patlat!', spokenText: 'Sadece na hecesi olan balonları patlat.', target: 'NA', category: 'Heceler', targetsNeeded: 2, targets: ['NA'], distractors: ['AN', 'NE', 'TA', 'LA'], exp: 'Harika! "NA" hecesini hemen buldun! 🎈✨' },
+      { id: 'b_syl_en', instruction: '🎈 Sadece "EN" hecesi olan balonları patlat!', spokenText: 'Sadece en hecesi olan balonları patlat.', target: 'EN', category: 'Heceler', targetsNeeded: 2, targets: ['EN'], distractors: ['NE', 'AN', 'ET', 'EL'], exp: 'Süpersin! "EN" hecesi patladı! 🎈📏' },
+      { id: 'b_syl_ne', instruction: '🎈 Sadece "NE" hecesi olan balonları patlat!', spokenText: 'Sadece ne hecesi olan balonları patlat.', target: 'NE', category: 'Heceler', targetsNeeded: 2, targets: ['NE'], distractors: ['EN', 'NA', 'TE', 'LE'], exp: 'Tebrikler! "NE" hecesini yakaladın! 🎈❓' },
+      { id: 'b_syl_at', instruction: '🎈 Sadece "AT" hecesi olan balonları patlat!', spokenText: 'Sadece at hecesi olan balonları patlat.', target: 'AT', category: 'Heceler', targetsNeeded: 2, targets: ['AT'], distractors: ['TA', 'ET', 'AN', 'AL'], exp: 'Çok hızlısın! "AT" hecesi patladı! 🎈🐴' },
+      { id: 'b_syl_et', instruction: '🎈 Sadece "ET" hecesi olan balonları patlat!', spokenText: 'Sadece et hecesi olan balonları patlat.', target: 'ET', category: 'Heceler', targetsNeeded: 2, targets: ['ET'], distractors: ['TE', 'AT', 'EN', 'EL'], exp: 'Çok hızlısın! "ET" hecesini yakaladın! 🎈🥩' },
+      { id: 'b_syl_in', instruction: '🎈 Sadece "İN" hecesi olan balonları patlat!', spokenText: 'Sadece in hecesi olan balonları patlat.', target: 'İN', category: 'Heceler', targetsNeeded: 2, targets: ['İN'], distractors: ['Nİ', 'AN', 'EN', 'İL'], exp: 'Harika! "İN" hecesini patlattın! 🎈⬇️' },
+      { id: 'b_syl_it', instruction: '🎈 Sadece "İT" hecesi olan balonları patlat!', spokenText: 'Sadece it hecesi olan balonları patlat.', target: 'İT', category: 'Heceler', targetsNeeded: 2, targets: ['İT'], distractors: ['Tİ', 'AT', 'ET', 'İL'], exp: 'Bravo! "İT" hecesi patladı! 🎈👉' },
+      { id: 'b_syl_el', instruction: '🎈 Sadece "EL" hecesi olan balonları patlat!', spokenText: 'Sadece el hecesi olan balonları patlat.', target: 'EL', category: 'Heceler', targetsNeeded: 2, targets: ['EL'], distractors: ['LE', 'AL', 'LA', 'ET'], exp: 'Süpersin! "EL" hecesini hemen okudun ve patlattın! 🎈✋' },
+      { id: 'b_syl_al', instruction: '🎈 Sadece "AL" hecesi olan balonları patlat!', spokenText: 'Sadece al hecesi olan balonları patlat.', target: 'AL', category: 'Heceler', targetsNeeded: 2, targets: ['AL'], distractors: ['LA', 'EL', 'AT', 'AN'], exp: 'Harika! "AL" hecesi balonlarını patlattın! 🎈🔴' },
+      { id: 'b_syl_la', instruction: '🎈 Sadece "LA" hecesi olan balonları patlat!', spokenText: 'Sadece la hecesi olan balonları patlat.', target: 'LA', category: 'Heceler', targetsNeeded: 2, targets: ['LA'], distractors: ['AL', 'LE', 'NA', 'TA'], exp: 'Bravo! "LA" hecesini ustalıkla patlattın! 🎈🎶' },
+      { id: 'b_syl_le', instruction: '🎈 Sadece "LE" hecesi olan balonları patlat!', spokenText: 'Sadece le hecesi olan balonları patlat.', target: 'LE', category: 'Heceler', targetsNeeded: 2, targets: ['LE'], distractors: ['EL', 'LA', 'NE', 'TE'], exp: 'Tebrikler! "LE" hecesi patladı! 🎈✨' },
 
       // Sayılar ve Ritmik Sayma - 10 Bölüm
       { id: 'b_num_5', instruction: '🎈 Sadece "5" yazan balonları patlat!', spokenText: 'Sadece beş yazan balonları patlat.', target: '5', category: 'Sayılar', targetsNeeded: 2, targets: ['5'], distractors: ['2', '3', '6', '8', '9'], exp: 'Harika! 5 yazan balonları patlattın! 🎈🖐️' },
@@ -3553,19 +3532,13 @@
         { word: 'AT', parts: ['A', 'T'], distractors: ['İ'], icon: '🐴' },
         { word: 'ET', parts: ['E', 'T'], distractors: ['L'], icon: '🥩' },
         { word: 'ANA', parts: ['A', 'NA'], distractors: ['LA'], icon: '👩' },
-        { word: 'ALA', parts: ['A', 'LA'], distractors: ['NA'], icon: '🎨' },
         { word: 'ALİ', parts: ['A', 'Lİ'], distractors: ['Tİ'], icon: '👦' },
         { word: 'ANNE', parts: ['AN', 'NE'], distractors: ['TE'], icon: '❤️' },
-        { word: 'ELMA', parts: ['EL', 'MA'], distractors: ['LE'], icon: '🍎' },
         { word: 'NANE', parts: ['NA', 'NE'], distractors: ['LA'], icon: '🌿' },
-        { word: 'KALE', parts: ['KA', 'LE'], distractors: ['EL'], icon: '🏰' },
-        { word: 'KEDİ', parts: ['KE', 'Dİ'], distractors: ['Lİ'], icon: '🐱' },
-        { word: 'OKUL', parts: ['O', 'KUL'], distractors: ['KOL'], icon: '🏫' },
-        { word: 'KİTAP', parts: ['Kİ', 'TAP'], distractors: ['KAP'], icon: '📚' },
-        { word: 'SÜT', parts: ['S', 'Ü', 'T'], distractors: ['M'], icon: '🥛' },
-        { word: 'LİMON', parts: ['Lİ', 'MON'], distractors: ['MAN'], icon: '🍋' },
-        { word: 'BALIK', parts: ['BA', 'LIK'], distractors: ['LAK'], icon: '🐟' },
-        { word: 'KALEM', parts: ['KA', 'LEM'], distractors: ['LİM'], icon: '✏️' }
+        { word: 'LALE', parts: ['LA', 'LE'], distractors: ['NA'], icon: '🌷' },
+        { word: 'ELA', parts: ['E', 'LA'], distractors: ['LE'], icon: '👧' },
+        { word: 'TEL', parts: ['T', 'EL'], distractors: ['AL'], icon: '🧶' },
+        { word: 'ATLET', parts: ['AT', 'LET'], distractors: ['AL'], icon: '🏃' }
       ];
 
       const chosen = items[Math.floor(Math.random() * items.length)];
@@ -3626,14 +3599,12 @@
     // 5) ⭐ HIZLI KELİME YAKALA (WORD CATCH)
     generateWordCatchQuestion() {
       const pool = [
-        { visual: '🍎', name: 'Elma', q: 'Bu lezzetli meyvenin İLK HARFİ hangisidir? 🍎', spokenText: 'Bu lezzetli meyvenin ilk harfi hangisidir?', a: 'E', d: ['A', 'M'], exp: 'Elma "E" harfi ile başlar! 🍎' },
-        { visual: '🐴', name: 'At', q: 'Bu rüzgar gibi koşan dostumuzun adı nedir? 🐴', spokenText: 'Bu rüzgar gibi koşan dostumuzun adı nedir?', a: 'AT', d: ['OT', 'ET'], exp: 'Rüzgar gibi koşan dostumuz AT! 🐴' },
-        { visual: '🥛', name: 'Süt', q: 'Bembeyaz sağlıklı içeceğin İLK SESİ nedir? 🥛', spokenText: 'Bembeyaz sağlıklı içeceğin ilk sesi nedir?', a: 'S', d: ['K', 'B'], exp: 'Süt "S" sesiyle başlar: S-ü-t! 🥛' },
-        { visual: '🍋', name: 'Limon', q: 'Sarı ekşi meyvenin İLK SESİ nedir? 🍋', spokenText: 'Sarı ekşi meyvenin ilk sesi nedir?', a: 'L', d: ['N', 'T'], exp: 'Limon "L" sesiyle başlar: L-i-m-o-n! 🍋' },
-        { visual: '🐱', name: 'Kedi', q: 'Miyav diyen sevimli dostumuzun adı nedir? 🐱', spokenText: 'Miyav diyen sevimli dostumuzun adı nedir?', a: 'KEDİ', d: ['KÖPEK', 'KUŞ'], exp: 'Miyav diyen dostumuz KEDİ! 🐱' },
-        { visual: '🚗', name: 'Araba', q: 'Düt düt diye korna çalan taşıtın İLK SESİ nedir? 🚗', spokenText: 'Düt düt diye korna çalan taşıtın ilk sesi nedir?', a: 'A', d: ['O', 'E'], exp: 'Araba "A" harfiyle başlar: A-r-a-b-a! 🚗' },
-        { visual: '🐟', name: 'Balık', q: 'Mavi sularda yüzen sevimli canlının İLK HARFİ nedir? 🐟', spokenText: 'Mavi sularda yüzen sevimli canlının ilk harfi nedir?', a: 'B', d: ['D', 'P'], exp: 'Balık "B" harfiyle başlar: B-a-l-ı-k! 🐟' },
-        { visual: '☀️', name: 'Güneş', q: 'Dünyamızı ısıtan sıcacık dostumuzun İLK SESİ nedir? ☀️', spokenText: 'Dünyamızı ısıtan sıcacık dostumuzun ilk sesi nedir?', a: 'G', d: ['S', 'M'], exp: 'Güneş "G" harfiyle başlar! ☀️' }
+        { visual: '🍎', name: 'Elma', q: 'Bu lezzetli meyvenin İLK HARFİ hangisidir? 🍎', spokenText: 'Bu lezzetli meyvenin ilk harfi hangisidir?', a: 'E', d: ['A', 'T'], exp: 'Elma "E" harfi ile başlar! 🍎' },
+        { visual: '🐴', name: 'At', q: 'Bu rüzgar gibi koşan dostumuzun adı nedir? 🐴', spokenText: 'Bu rüzgar gibi koşan dostumuzun adı nedir?', a: 'AT', d: ['ET', 'AN'], exp: 'Rüzgar gibi koşan dostumuz AT! 🐴' },
+        { visual: '🌿', name: 'Nane', q: 'Mis kokulu yeşil yaprağın İLK SESİ nedir? 🌿', spokenText: 'Mis kokulu yaprağın ilk sesi nedir?', a: 'N', d: ['T', 'L'], exp: 'Nane "N" sesiyle başlar: N-a-n-e! 🌿' },
+        { visual: '🌷', name: 'Lale', q: 'Rengarenk bahar çiçeğinin İLK SESİ nedir? 🌷', spokenText: 'Bahar çiçeğinin ilk sesi nedir?', a: 'L', d: ['N', 'T'], exp: 'Lale "L" sesiyle başlar: L-a-l-e! 🌷' },
+        { visual: '🐮', name: 'İnek', q: 'Bize süt veren sevimli dostumuzun İLK SESİ nedir? 🐮', spokenText: 'Bize süt veren sevimli dostumuzun ilk sesi nedir?', a: 'İ', d: ['A', 'E'], exp: 'İnek "İ" sesiyle başlar: İ-n-e-k! 🐮' },
+        { visual: '🧶', name: 'Tel', q: 'Bu ince parlak nesnenin İLK SESİ nedir? 🧶', spokenText: 'Bu nesnenin ilk sesi nedir?', a: 'T', d: ['L', 'N'], exp: 'Tel "T" sesiyle başlar: T-e-l! 🧶' }
       ];
 
       const item = pool[Math.floor(Math.random() * pool.length)];
@@ -20278,7 +20249,7 @@
     }
 
     audio.playClick();
-    if (subject.id === 'firstreading' && g === 1) {
+    if ((subject.id === 'firstreading' || subject.id === 'turkish') && g === 1) {
       if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
       if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.remove('hide');
       renderMaarifReadingPanel();
@@ -20465,12 +20436,13 @@
     const groups = MAARIF_2026_CONFIG.groups;
     const isGen = !!state.isMaarifGeneral;
 
-    // 1. Üst 5 Ses Grubu + Genel / Karma Pratik Sekmeleri
+    // 1. Üst Hazırlık + 5 Ses Grubu + Genel / Karma Pratik Sekmeleri
     let navHtml = groups.map(grp => {
       const isActive = (!isGen && state.maarifGroup === grp.id);
+      const label = grp.isPrep ? '✏️ Okuma Yazmaya Hazırlık' : `${grp.name} (${grp.code})`;
       return `
-        <button class="maarif-group-tab ${isActive ? 'active' : ''}" data-group-id="${grp.id}" type="button">
-          <span>${grp.name} (${grp.code})</span>
+        <button class="maarif-group-tab ${grp.isPrep ? 'tab-prep' : ''} ${isActive ? 'active' : ''}" data-group-id="${grp.id}" type="button">
+          <span>${label}</span>
         </button>
       `;
     }).join('');
@@ -20508,18 +20480,30 @@
       return;
     }
 
+    const activeGrp = MAARIF_2026_CONFIG.groups.find(g => g.id === state.maarifGroup) || MAARIF_2026_CONFIG.groups[0];
+
+    // 2.5) ✏️ OKUMA YAZMAYA HAZIRLIK (ÇİZGİ VE GÖRSEL ALGI) BÖLÜMÜ
+    if (activeGrp && activeGrp.isPrep) {
+      if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
+      if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.add('hide');
+      if (DOM.maarifCumulativeBadge) DOM.maarifCumulativeBadge.classList.add('hide');
+      renderMaarifPrepCards();
+      return;
+    }
+
     // 3. Maarif Ses Grubu Modu: Harf rayını ve kümülatif rozeti göster, subcategory'yi gizle
     if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
     if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.remove('hide');
     if (DOM.maarifCumulativeBadge) DOM.maarifCumulativeBadge.classList.remove('hide');
 
-    const activeGrp = MAARIF_2026_CONFIG.groups.find(g => g.id === state.maarifGroup) || MAARIF_2026_CONFIG.groups[0];
-    if (!activeGrp.letters.includes(state.activeMaarifLetter)) {
-      state.activeMaarifLetter = activeGrp.letters[0];
+    if (activeGrp.letters && activeGrp.letters.length) {
+      if (!activeGrp.letters.includes(state.activeMaarifLetter)) {
+        state.activeMaarifLetter = activeGrp.letters[0];
+      }
     }
 
     // 4. 3D Harf Kartları Rayı
-    if (DOM.maarifLettersRail) {
+    if (DOM.maarifLettersRail && activeGrp.letters) {
       DOM.maarifLettersRail.innerHTML = activeGrp.letters.map(letter => {
         const upper = letter.toUpperCase('tr-TR');
         const lower = letter;
@@ -20550,11 +20534,103 @@
     renderMaarifGameCards();
   }
 
+  function renderMaarifPrepCards() {
+    if (!DOM.gamesGrid) return;
+    const prepGames = [
+      {
+        id: 'prep_lines',
+        title: 'Parmakla Çizgi Çalışmaları',
+        icon: '✏️',
+        badge: '✏️ Çizgi & Motor Beceri',
+        featureTag: '👆 Nokta Birleştir',
+        description: 'Noktaları parmağınla veya farenle sırayla birleştirerek çizgileri ve eğlenceli şekilleri tamamla! 🎯',
+        tags: ['✏️ Çizgi Takibi', '🎯 El-Göz Koordinasyonu', '🌟 Yazısız Etkinlik'],
+        active: true
+      },
+      {
+        id: 'prep_oddone',
+        title: 'Farklı Olan Görseli Bul',
+        icon: '🔍',
+        badge: '👁️ Görsel Algı',
+        featureTag: '🔍 Dikkat & Odak',
+        description: 'Görsellere dikkatlice bak, grubun içindeki farklı olan tek görseli hemen yakala! ✨',
+        tags: ['👁️ Görsel Ayırt Etme', '🧠 Dikkat Gelişimi', '🌟 Yazısız Etkinlik'],
+        active: true
+      },
+      {
+        id: 'prep_pattern',
+        title: 'Görsel Örüntü Tamamlama',
+        icon: '🧩',
+        badge: '🧩 Mantık & Örüntü',
+        featureTag: '🔄 Sıralama',
+        description: 'Görsel dizilim kuralını keşfet, sıradaki eksik resmi yerine koyarak örüntüyü tamamla! 💡',
+        tags: ['🧩 Ritmik Sıralama', '💡 Mantıksal Akıl Yürütme', '🌟 Yazısız Etkinlik'],
+        active: true
+      },
+      {
+        id: 'prep_sounds',
+        title: 'Hayvan ve Doğa Sesleri',
+        icon: '🔊',
+        badge: '👂 İşitsel Algı',
+        featureTag: '🎵 Ses Eşleştirme',
+        description: 'Duyduğun sesi dikkatle dinle; bu ses hangi hayvana veya doğa olayına ait, doğru resmi seç! 🐾🌧️',
+        tags: ['🔊 İşitsel Farkındalık', '🐶 Hayvan & Doğa Sesleri', '🌟 Yazısız Etkinlik'],
+        active: true
+      }
+    ];
+
+    if (DOM.gamesCountBadge) {
+      DOM.gamesCountBadge.textContent = '4 Hazırlık Etkinliği (Okuma Yazmaya Hazırlık)';
+    }
+
+    DOM.gamesGrid.innerHTML = prepGames.map(game => `
+      <div class="game-card theme-firstreading" data-game-id="${game.id}">
+        <div class="game-top-meta">
+          <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
+          <div class="card-top-right-actions">
+            <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+            <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
+          </div>
+        </div>
+        <div class="game-card-body">
+          <div class="game-card-visual-wrapper">
+            <div class="game-card-icon-halo"></div>
+            <div class="game-card-icon">${replaceEmojisWith3D(game.icon, 'game-3d-icon')}</div>
+          </div>
+          <h3 class="game-title">${replaceEmojisWith3D(game.title, 'game-3d-icon-sm')}</h3>
+          <p class="game-desc">${replaceEmojisWith3D(game.description, 'game-3d-icon-sm')}</p>
+        </div>
+        <div class="game-meta-tags">
+          ${game.tags.map(t => `<span class="game-tag-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
+        </div>
+        <div class="game-action-btn">
+          <button class="btn-play-game" type="button" aria-label="${escapeHtml(game.title)} Etkinliğini Başlat">
+            <span class="play-btn-text">Etkinliği Başlat</span>
+            <span class="play-btn-icon" aria-hidden="true">▶</span>
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    DOM.gamesGrid.querySelectorAll('.game-card').forEach(card => {
+      addTapListener(card, (e) => {
+        if (e && e.target && e.target.closest('.card-share-btn')) return;
+        const gid = card.getAttribute('data-game-id');
+        if (gid) {
+          audio.playClick();
+          startDuel(gid);
+        }
+      });
+    });
+  }
+
   function selectMaarifGroup(groupId) {
     state.maarifGroup = groupId;
     const grp = MAARIF_2026_CONFIG.groups.find(g => g.id === groupId) || MAARIF_2026_CONFIG.groups[0];
-    if (!grp.letters.includes(state.activeMaarifLetter)) {
-      state.activeMaarifLetter = grp.letters[0];
+    if (grp.letters && grp.letters.length) {
+      if (!grp.letters.includes(state.activeMaarifLetter)) {
+        state.activeMaarifLetter = grp.letters[0];
+      }
     }
     renderMaarifReadingPanel();
   }
@@ -20599,10 +20675,12 @@
     const learnedStr = learned.map(l => l.toUpperCase('tr-TR')).join(', ');
     const letterIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
 
-    const isSyllableUnlocked = true; // 1. Sınıf 1. Grup "A" sesi ve tüm harflerde açık
-    const isSentenceUnlocked = true; // 1. Sınıf 1. Grup "A" sesi ve tüm harflerde açık
+    // KURAL: 1. Ses [A] için hece ve cümle kilitlidir (sadece ses hissetme ve harf ayırt etme).
+    // 'N' sesinden itibaren (letterIdx >= 1) kümülatif hece/kelime açılır!
+    const isSyllableUnlocked = letterIdx >= 1;
+    const isSentenceUnlocked = letterIdx >= 1;
 
-    const games = [
+    let games = [
       {
         id: 'maarif_phoneme_pop',
         title: `Sesi Hisset ve Patlat (${letterUpper})`,
@@ -20614,43 +20692,13 @@
         active: true
       },
       {
-        id: 'maarif_word_train',
-        title: 'Hece ve Kelime Treni',
-        icon: '🚂',
-        badge: '🚂 Sürükle & Birleştir',
-        featureTag: '🧩 Harf Vagonları',
-        description: 'Harf vagonlarını Moli\'nin lokomotifine sürükle, kelimeyi oluştur ve resmin ortaya çıkışını izle! 🚂✨',
-        tags: ['🚂 Vagon Birleştir', '🔊 Kelime Seslendirme', '🖼️ Görsel Ödül'],
-        active: true
-      },
-      {
-        id: 'maarif_letter_basket',
-        title: 'Akıllı Harf Sepeti',
-        icon: '🧺',
-        badge: '🧺 Baş Harf Eşleştirme',
-        featureTag: '✋ Sürükle & Bırak',
-        description: 'Gelen nesneyi tut ve baş harfinin sepetine bırak! 🧺🔤',
-        tags: ['🧺 Harf Sepetleri', '🔤 Baş Harf', '🔊 Sesli Yönerge'],
-        active: true
-      },
-      {
         id: 'maarif_sound_find',
-        title: 'Sesi Hisset / Balon Patlatma',
+        title: `Sesi Hisset / Görsel Yakalama (${letterUpper})`,
         icon: '🎈',
         badge: '👂 İşitsel & Görsel Algı',
         featureTag: '⚡ Hızlı Yakala',
         description: `Görseller arasından içinde "${letterUpper}" sesi geçen nesneleri ve sözcükleri yakala! 🎯`,
         tags: [`🔤 "${letterUpper}" Sesi`, '👂 Kulaktan Tanıma', '⭐ Görsel Algı'],
-        active: true
-      },
-      {
-        id: 'maarif_position',
-        title: 'Başta mı, Ortada mı, Sonda mı?',
-        icon: '🔍',
-        badge: '📍 Ses Konumu',
-        featureTag: '🎯 3 Seçenek',
-        description: `Sözcüğün adını dinle; "${letterUpper}" sesi nerede (Başta, Ortada, Sonda) hemen bul! 🟢🟡🔴`,
-        tags: ['🟢 Başta', '🟡 Ortada', '🔴 Sonda'],
         active: true
       },
       {
@@ -20664,111 +20712,120 @@
         active: true
       },
       {
-        id: 'maarif_syllable_build',
-        title: 'Hece Birleştirme Atölyesi',
-        icon: '🧱',
-        badge: '🧱 Kümülatif Birleştirme',
-        featureTag: '🧩 Renkli Küpler',
+        id: 'maarif_letter_basket',
+        title: 'Akıllı Harf Sepeti',
+        icon: '🧺',
+        badge: '🧺 Baş Harf Eşleştirme',
+        featureTag: '✋ Sürükle & Bırak',
         description: letterIdx === 0
-          ? `Küp parçalarına dokunarak büyük ve küçük "A - a" seslerini oluştur ve birleştir! 🧱`
-          : `Sadece öğrenilen (${learnedStr}) ses küplerine dokunarak anlamlı kelimeler inşa et! 🏗️`,
-        tags: letterIdx === 0
-          ? ['🧱 Küp Birleştir', '🔤 "A - a" Ses İnşası', '🔊 Sesli Okuma']
-          : ['🧱 Küp Birleştir', '📖 Kümülatif Hece', '🔊 Sesli Okuma'],
+          ? `"${letterUpper}" ile başlayanları doğru sepete bırak! 🧺🔤`
+          : 'Gelen nesneyi tut ve baş harfinin sepetine bırak! 🧺🔤',
+        tags: ['🧺 Harf Sepetleri', '🔤 Baş Harf', '🔊 Sesli Yönerge'],
         active: true
       },
       {
-        id: 'maarif_speed_read',
-        title: 'Kelime Oluşturma ve Yakalama',
-        icon: '⚡',
-        badge: '🚀 Ritimli Okuma',
-        featureTag: '⚡ Sesli Refleks',
-        description: letterIdx === 0
-          ? `Duyduğun "A" sesini dinle ve doğru kartı hızla yakala! 📖⭐`
-          : `Öğrenilen (${learnedStr}) sesleriyle kurulan kelimeyi dinle ve doğru kartı hızla yakala! 📖⭐`,
-        tags: ['🔊 Edge-TTS Sesli Okuma', '📖 Hızlı Okuma', '⭐ Ritimli Pratik'],
-        active: true
-      },
-      {
-        id: 'maarif_sentence_complete',
-        title: 'Cümle Kurma ve Tamamlama',
-        icon: '📚',
-        badge: '📖 Anlamlı Cümle',
-        featureTag: '🧩 Boşluk Doldur',
-        description: letterIdx === 0
-          ? `Eğlenceli tekerlemedeki eksik "A" sesini yerine koy ve tamamla! 📝`
-          : `Öğrenilen kelimelerle oluşturulan kısa cümlelerdeki eksik kelimeyi yerine koy ve cümleyi tamamla! 📝`,
-        tags: ['📖 Kısa Cümle', '💡 Anlam Bütünlüğü', '🎯 Boşluk Tamamla'],
+        id: 'maarif_position',
+        title: 'Başta mı, Ortada mı, Sonda mı?',
+        icon: '🔍',
+        badge: '📍 Ses Konumu',
+        featureTag: '🎯 3 Seçenek',
+        description: `Sözcüğün adını dinle; "${letterUpper}" sesi nerede (Başta, Ortada, Sonda) hemen bul! 🟢🟡🔴`,
+        tags: ['🟢 Başta', '🟡 Ortada', '🔴 Sonda'],
         active: true
       }
     ];
+
+    if (isSyllableUnlocked) {
+      games.push(
+        {
+          id: 'maarif_word_train',
+          title: 'Hece ve Kelime Treni',
+          icon: '🚂',
+          badge: '🚂 Sürükle & Birleştir',
+          featureTag: '🧩 Harf Vagonları',
+          description: `Sadece öğrenilen (${learnedStr}) harf vagonlarını trene bağla, kelimeleri oluştur! 🚂✨`,
+          tags: ['🚂 Vagon Birleştir', '🔊 Kelime Seslendirme', '🖼️ Görsel Ödül'],
+          active: true
+        },
+        {
+          id: 'maarif_syllable_build',
+          title: 'Hece Birleştirme Atölyesi',
+          icon: '🧱',
+          badge: '🧱 Kümülatif Birleştirme',
+          featureTag: '🧩 Renkli Küpler',
+          description: `Sadece öğrenilen (${learnedStr}) ses küplerine dokunarak anlamlı kelimeler inşa et! 🏗️`,
+          tags: ['🧱 Küp Birleştir', '📖 Kümülatif Hece', '🔊 Sesli Okuma'],
+          active: true
+        },
+        {
+          id: 'maarif_speed_read',
+          title: 'Kelime Oluşturma ve Yakalama',
+          icon: '⚡',
+          badge: '🚀 Ritimli Okuma',
+          featureTag: '⚡ Sesli Refleks',
+          description: `Öğrenilen (${learnedStr}) sesleriyle kurulan kelimeyi dinle ve doğru kartı hızla yakala! 📖⭐`,
+          tags: ['🔊 Edge-TTS Sesli Okuma', '📖 Hızlı Okuma', '⭐ Ritimli Pratik'],
+          active: true
+        }
+      );
+    }
+
+    if (isSentenceUnlocked) {
+      games.push(
+        {
+          id: 'maarif_sentence_complete',
+          title: 'Cümle Kurma ve Tamamlama',
+          icon: '📚',
+          badge: '📖 Anlamlı Cümle',
+          featureTag: '🧩 Boşluk Doldur',
+          description: `Öğrenilen kelimelerle oluşturulan kısa cümlelerdeki eksik kelimeyi yerine koy ve cümleyi tamamla! 📝`,
+          tags: ['📖 Kısa Cümle', '💡 Anlam Bütünlüğü', '🎯 Boşluk Tamamla'],
+          active: true
+        }
+      );
+    }
 
     const activeCount = games.filter(g => g.active).length;
     if (DOM.gamesCountBadge) {
       DOM.gamesCountBadge.textContent = `${activeCount} Aktif Oyun ([${letterUpper} ${letterLower}] Harfi)`;
     }
 
-    DOM.gamesGrid.innerHTML = games.map(game => {
-      if (game.active) {
-        return `
-          <div class="game-card theme-firstreading" data-game-id="${game.id}">
-            <div class="game-top-meta">
-              <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
-              <div class="card-top-right-actions">
-                <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
-                <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
-              </div>
-            </div>
-            <div class="game-visual-icon">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
-            <h3 class="game-title">${game.title}</h3>
-            <p class="game-subtitle">${game.description}</p>
-            <div class="game-features-list">
-              ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
-            </div>
-            <button class="btn-play-game" data-game-id="${game.id}">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14z"/></svg> <span>${state.gameMode === 'solo' ? 'Pratiğe Başla' : 'Düelloyu Başlat'}</span>
-            </button>
+    DOM.gamesGrid.innerHTML = games.map(game => `
+      <div class="game-card theme-firstreading" data-game-id="${game.id}">
+        <div class="game-top-meta">
+          <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
+          <div class="card-top-right-actions">
+            <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+            <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" title="Ödev / Pratik Gönder (WhatsApp)" aria-label="WhatsApp'ta Paylaş"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
           </div>
-        `;
-      } else {
-        return `
-          <div class="game-card game-card-upcoming" data-game-id="${game.id}">
-            <div class="game-top-meta">
-              <span class="game-category-tag tag-upcoming">${game.lockedNotice || '🔒 Hazırlanıyor'}</span>
-              <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
-            </div>
-            <div class="game-visual-icon" style="filter: grayscale(0.5); opacity:0.85;">${replaceEmojisWith3D(game.icon, 'game-3d-big-icon')}</div>
-            <h3 class="game-title">${game.title}</h3>
-            <p class="game-subtitle">${game.description}</p>
-            <div class="game-features-list">
-              ${game.tags.map(t => `<span class="feature-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
-            </div>
-            <button class="btn-play-game btn-upcoming" disabled>
-              ${game.lockedNotice || '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> <span>Yakında Aktif</span>'}
-            </button>
+        </div>
+        <div class="game-card-body">
+          <div class="game-card-visual-wrapper">
+            <div class="game-card-icon-halo"></div>
+            <div class="game-card-icon">${replaceEmojisWith3D(game.icon, 'game-3d-icon')}</div>
           </div>
-        `;
-      }
-    }).join('');
+          <h3 class="game-title">${replaceEmojisWith3D(game.title, 'game-3d-icon-sm')}</h3>
+          <p class="game-desc">${replaceEmojisWith3D(game.description, 'game-3d-icon-sm')}</p>
+        </div>
+        <div class="game-meta-tags">
+          ${game.tags.map(t => `<span class="game-tag-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
+        </div>
+        <div class="game-action-btn">
+          <button class="btn-play-game" type="button" aria-label="${escapeHtml(game.title)} Oyununu Başlat">
+            <span class="play-btn-text">Oyunu Başlat</span>
+            <span class="play-btn-icon" aria-hidden="true">▶</span>
+          </button>
+        </div>
+      </div>
+    `).join('');
 
-    // Paylaşım butonu dinleyicileri
-    DOM.gamesGrid.querySelectorAll('.card-share-btn').forEach(btn => {
-      addTapListener(btn, (e) => {
-        if (e && e.cancelable) e.preventDefault();
-        if (e && e.stopPropagation) e.stopPropagation();
-        const title = btn.getAttribute('data-share-title') || 'Oyun';
-        shareActivity(title);
-      });
-    });
-
-    // Aktif kartlara tıklama dinleyicisi
-    DOM.gamesGrid.querySelectorAll('.game-card:not(.game-card-upcoming)').forEach(card => {
+    DOM.gamesGrid.querySelectorAll('.game-card').forEach(card => {
       addTapListener(card, (e) => {
         if (e && e.target && e.target.closest('.card-share-btn')) return;
-        const gameId = card.getAttribute('data-game-id');
-        if (gameId) {
+        const gid = card.getAttribute('data-game-id');
+        if (gid) {
           audio.playClick();
-          startDuel(gameId);
+          startDuel(gid);
         }
       });
     });
@@ -23434,6 +23491,14 @@
   // ---------------- Soru Üreticileri ----------------
   function generateKidsGrade1Question(gameType) {
     switch (gameType) {
+      case 'prep_lines':
+      case 'k1_prep_lines': return generateK1PrepLines();
+      case 'prep_oddone':
+      case 'k1_prep_oddone': return generateK1PrepOddOne();
+      case 'prep_pattern':
+      case 'k1_prep_pattern': return generateK1PrepPattern();
+      case 'prep_sounds':
+      case 'k1_prep_sounds': return generateK1PrepSounds();
       case 'maarif_phoneme_pop': return generateK1PhonemePop();
       case 'maarif_word_train': return generateK1WordTrain();
       case 'maarif_letter_basket': return generateK1LetterBasket();
@@ -23458,6 +23523,88 @@
       explanation: explanation,
       interactiveData: data
     };
+  }
+
+  // --- OKUMA YAZMAYA HAZIRLIK (YAZISIZ ETKİNLİKLER) ---
+  function generateK1PrepLines() {
+    const themes = [
+      { start: '🐝', target: '🌸', name: 'Arı çiçeğe uçuyor', prompt: 'Arıyı çiçeğe ulaştır! Noktaları sırayla birleştir!' },
+      { start: '🚗', target: '🏁', name: 'Araba bitişe gidiyor', prompt: 'Arabayı bitişe ulaştır! Noktaları sırayla birleştir!' },
+      { start: '🐱', target: '🥛', name: 'Kedi süte ulaşıyor', prompt: 'Kediyi süte ulaştır! Noktaları sırayla birleştir!' },
+      { start: '🚀', target: '🪐', name: 'Roket gezegene uçuyor', prompt: 'Roketi gezegene ulaştır! Noktaları sırayla birleştir!' },
+      { start: '🐰', target: '🥕', name: 'Tavşan havuca zıplıyor', prompt: 'Tavşanı havuca ulaştır! Noktaları sırayla birleştir!' }
+    ];
+    const th = k1Pick(themes);
+    return k1Base('k1_prep_lines', '✏️ Çizgi Çalışması',
+      th.prompt,
+      th.prompt,
+      `Harika çizgi takibi! ${th.start} başarıyla ${th.target} hedefine ulaştı! 🎉👏`,
+      { start: th.start, target: th.target, name: th.name, totalDots: 3 });
+  }
+
+  function generateK1PrepOddOne() {
+    const pools = [
+      { item: '🍎', odd: '🍌', prompt: 'Farklı olan meyveyi bul ve dokun!' },
+      { item: '🐱', odd: '🐶', prompt: 'Farklı olan hayvanı bul ve dokun!' },
+      { item: '🚗', odd: '✈️', prompt: 'Farklı olan taşıtı bul ve dokun!' },
+      { item: '⭐', odd: '🌙', prompt: 'Farklı olan şekli bul ve dokun!' },
+      { item: '🌸', odd: '🍄', prompt: 'Farklı olan doğa resmini bul ve dokun!' },
+      { item: '⚽', odd: '🏀', prompt: 'Farklı olan topu bul ve dokun!' },
+      { item: '🐟', odd: '🦀', prompt: 'Farklı olan deniz canlısını bul ve dokun!' },
+      { item: '🍓', odd: '🍇', prompt: 'Farklı olan meyveyi bul ve dokun!' }
+    ];
+    const th = k1Pick(pools);
+    const cards = [
+      { emoji: th.item, isOdd: false },
+      { emoji: th.item, isOdd: false },
+      { emoji: th.item, isOdd: false },
+      { emoji: th.odd, isOdd: true }
+    ];
+    return k1Base('k1_prep_oddone', '🔍 Farklıyı Bul',
+      th.prompt,
+      th.prompt,
+      `Harika dikkat! Farklı olan görseli (${th.odd}) hemen buldun! ✨👏`,
+      { cards: k1Shuffle(cards), oddEmoji: th.odd });
+  }
+
+  function generateK1PrepPattern() {
+    const patterns = [
+      { seq: ['🍎', '🍌', '🍎', '🍌'], answer: '🍎', distractors: ['🍌', '🍇'] },
+      { seq: ['🐶', '🐱', '🐶', '🐱'], answer: '🐶', distractors: ['🐱', '🐰'] },
+      { seq: ['🚗', '✈️', '🚗', '✈️'], answer: '🚗', distractors: ['✈️', '🚂'] },
+      { seq: ['⭐', '🌙', '⭐', '🌙'], answer: '⭐', distractors: ['🌙', '☀️'] },
+      { seq: ['🌸', '🌼', '🌸', '🌼'], answer: '🌸', distractors: ['🌼', '🍀'] },
+      { seq: ['🔴', '🔵', '🔴', '🔵'], answer: '🔴', distractors: ['🔵', '🟡'] }
+    ];
+    const pt = k1Pick(patterns);
+    const choices = k1Shuffle([pt.answer, ...pt.distractors]);
+    return k1Base('k1_prep_pattern', '🧩 Örüntü Tamamla',
+      'Soru işareti yerine hangi görsel gelmelidir?',
+      'Örüntüyü tamamlayan görseli bul ve dokun!',
+      `Tebrikler! Örüntü kuralını buldun ve ${pt.answer} ile tamamladın! 🧩🎉`,
+      { seq: pt.seq, answer: pt.answer, choices: choices });
+  }
+
+  function generateK1PrepSounds() {
+    const sounds = [
+      { sound: 'Miyav miyav! 🐱', prompt: 'Miyav miyav sesini hangi sevimli dostumuz çıkarır?', answer: '🐱', label: 'Kedi', distractors: [{ emoji: '🐶', label: 'Köpek' }, { emoji: '🐮', label: 'İnek' }] },
+      { sound: 'Hav hav! 🐶', prompt: 'Hav hav sesini hangi sadık dostumuz çıkarır?', answer: '🐶', label: 'Köpek', distractors: [{ emoji: '🐱', label: 'Kedi' }, { emoji: '🐑', label: 'Koyun' }] },
+      { sound: 'Mööö mööö! 🐮', prompt: 'Mööö sesini hangi hayvan çıkarır?', answer: '🐮', label: 'İnek', distractors: [{ emoji: '🐴', label: 'At' }, { emoji: '🐶', label: 'Köpek' }] },
+      { sound: 'Vak vak! 🦆', prompt: 'Vak vak sesini gölde yüzen hangi hayvan çıkarır?', answer: '🦆', label: 'Ördek', distractors: [{ emoji: '🐔', label: 'Tavuk' }, { emoji: '🐱', label: 'Kedi' }] },
+      { sound: 'Gıdak gıdak! 🐔', prompt: 'Gıdak gıdak diyerek yumurtlayan hayvan hangisidir?', answer: '🐔', label: 'Tavuk', distractors: [{ emoji: '🦆', label: 'Ördek' }, { emoji: '🐮', label: 'İnek' }] },
+      { sound: 'Çuf çuf, düüt düüt! 🚂', prompt: 'Çuf çuf diye raylarda giden taşıt hangisidir?', answer: '🚂', label: 'Tren', distractors: [{ emoji: '🚗', label: 'Araba' }, { emoji: '✈️', label: 'Uçak' }] },
+      { sound: 'Şırıl şırıl, gürül gürül! 🌧️', prompt: 'Gökyüzünden şırıl şırıl yağan nedir?', answer: '🌧️', label: 'Yağmur', distractors: [{ emoji: '☀️', label: 'Güneş' }, { emoji: '🌪️', label: 'Rüzgar' }] }
+    ];
+    const item = k1Pick(sounds);
+    const options = k1Shuffle([
+      { emoji: item.answer, label: item.label, isCorrect: true },
+      ...item.distractors.map(d => ({ emoji: d.emoji, label: d.label, isCorrect: false }))
+    ]);
+    return k1Base('k1_prep_sounds', '🔊 Ses Eşleştirme',
+      `${item.sound} Bu ses kime aittir?`,
+      item.prompt,
+      `Harika kulak! ${item.sound} sesini dinledin ve doğru görseli (${item.label}) buldun! 👏🎉`,
+      { soundText: item.sound, prompt: item.prompt, options: options, answer: item.answer });
   }
 
   function generateK1PhonemePop() {
@@ -23494,45 +23641,66 @@
       });
   }
 
+  // --- KÜMÜLATİF HECE VE KELİME TRENİ ---
   function generateK1WordTrain() {
     const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
-    const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
-    const groupId = data.group || 'g1';
-    const pool = K1_TRAIN_WORDS[groupId] || K1_TRAIN_WORDS.g1;
-    const item = k1Pick(pool);
+    const learnedWords = getAllCumulativeWordsUpTo(activeL);
+    if (!learnedWords || !learnedWords.length) {
+      return generateK1PhonemePop();
+    }
+    const item = k1Pick(learnedWords);
     const parts = Array.from(item.word);
-    const learned = k1CumulativeLetters(groupId);
-    const groupLetters = (MAARIF_2026_CONFIG.groups.find(g => g.id === groupId) || MAARIF_2026_CONFIG.groups[0]).letters.map(k1Upper);
-    const extraSrc = groupLetters.filter(l => !parts.includes(l));
-    const extras = k1Shuffle(extraSrc.length ? extraSrc : learned.filter(l => !parts.includes(l))).slice(0, parts.length <= 3 ? 1 : 2);
+    const learned = getLearnedLettersUpTo(activeL);
+    const extraSrc = learned.filter(l => !parts.includes(l));
+    const extras = k1Shuffle(extraSrc).slice(0, parts.length <= 3 ? 1 : 2);
     return k1Base('k1_train', '🚂 Hece ve Kelime Treni',
       'Harf vagonlarını sırayla trene bağla!',
       'Harf vagonlarını sırayla trene bağla!',
-      `${item.word} ${item.emoji} kelimesini oluşturdun! Tren yola çıktı! 🚂🎉`,
-      { word: item.word, emoji: item.emoji, parts: parts, wagons: k1Shuffle([...parts, ...extras]) });
+      `${item.word} ${item.icon || '🚂'} kelimesini oluşturdun! Tren yola çıktı! 🚂🎉`,
+      { word: item.word, emoji: item.icon || '🚂', parts: parts, wagons: k1Shuffle([...parts, ...extras]) });
   }
 
+  // --- AKILLI HARF SEPETİ ---
   function generateK1LetterBasket() {
     const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
     const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
-    const groupId = data.group || 'g1';
-    const grp = MAARIF_2026_CONFIG.groups.find(g => g.id === groupId) || MAARIF_2026_CONFIG.groups[0];
-    const startWords = (l) => ((MAARIF_2026_CONFIG.letters[l] || {}).soundWords || []).filter(w => w.position === 'başta' && k1Lower(w.word)[0] === l);
-    let eligible = grp.letters.filter(l => startWords(l).length > 0);
-    if (eligible.length < 2) {
-      eligible = eligible.concat(MAARIF_2026_CONFIG.letterOrder.filter(l => !eligible.includes(l) && startWords(l).length > 0).slice(0, 2));
+    const activeUpper = (data.upper || 'A');
+
+    // 1. Ses 'A' için özel hissetme sepeti: A ile Başlayanlar vs Başlamayanlar
+    if (activeL === 'a') {
+      const isA = Math.random() < 0.55;
+      const targetWord = isA
+        ? k1Pick(data.soundWords.filter(w => w.position === 'başta'))
+        : k1Pick(data.noSoundWords);
+      const basketLabel = isA ? 'A' : '❌';
+      return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
+        `${targetWord.word} "A" harfiyle mi başlar? Doğru sepete bırak!`,
+        `${targetWord.word} "A" harfiyle mi başlar? Doğru sepete bırak!`,
+        isA ? `${targetWord.word} ${targetWord.emoji} "A" harfiyle başlar! 🧺👏` : `${targetWord.word} ${targetWord.emoji} "A" harfiyle başlamaz! 🧺👏`,
+        {
+          baskets: [{ letter: 'A' }, { letter: '❌' }],
+          item: { emoji: targetWord.emoji, word: targetWord.word, letter: basketLabel }
+        });
     }
-    const n = (eligible.length >= 3 && Math.random() < 0.5) ? 3 : 2;
+
+    // İleri sesler (N, E, T, İ, L...) için kümülatif harflerden sepetler
+    const learned = getLearnedLettersUpTo(activeL).map(l => l.toLowerCase('tr-TR'));
+    const startWords = (l) => ((MAARIF_2026_CONFIG.letters[l] || {}).soundWords || []).filter(w => w.position === 'başta' && k1Lower(w.word)[0] === l);
+    let eligible = learned.filter(l => startWords(l).length > 0);
+    if (eligible.length < 2) eligible = ['a', 'n'];
+
+    const n = Math.min(eligible.length, 3);
     let chosen = k1Shuffle(eligible).slice(0, n);
     if (eligible.includes(activeL) && !chosen.includes(activeL)) chosen[0] = activeL;
     chosen = k1Shuffle(chosen);
-    const letter = k1Pick(chosen);
-    const w = k1Pick(startWords(letter));
+    const chosenLetter = k1Pick(chosen);
+    const w = k1Pick(startWords(chosenLetter) || [{ word: 'Elma', emoji: '🍎' }]);
+
     return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
       `${w.word} hangi harfle başlar? Sepete bırak!`,
       `${w.word} hangi harfle başlar? Doğru sepete bırak!`,
-      `${w.word} ${w.emoji} "${k1Upper(letter)}" harfiyle başlar! 🧺👏`,
-      { baskets: chosen.map(l => ({ letter: k1Upper(l) })), item: { emoji: w.emoji, word: w.word, letter: k1Upper(letter) } });
+      `${w.word} ${w.emoji} "${k1Upper(chosenLetter)}" harfiyle başlar! 🧺👏`,
+      { baskets: chosen.map(l => ({ letter: k1Upper(l) })), item: { emoji: w.emoji, word: w.word, letter: k1Upper(chosenLetter) } });
   }
 
   function generateK1AppleCount() {
@@ -23560,89 +23728,61 @@
       b = 1 + Math.floor(Math.random() * (a - 1));
       result = a - b;
     }
-    const icon = k1Pick(['🍓', '🧱', '⭐', '🍎']);
-    const wrongs = [];
-    k1Shuffle([result - 2, result - 1, result + 1, result + 2, result + 3]).forEach(v => {
-      if (v >= 0 && v <= 20 && v !== result && wrongs.length < 2) wrongs.push(v);
-    });
-    const spoken = isAdd ? `${K1_NUM_WORDS[a]} artı ${K1_NUM_WORDS[b]} kaç eder? Doğru rakamı kutuya sürükle!` : `${K1_NUM_WORDS[a]} eksi ${K1_NUM_WORDS[b]} kaç eder? Doğru rakamı kutuya sürükle!`;
-    return k1Base('k1_addsub', '➕ Görsel Toplama & Çıkarma',
-      isAdd ? `${a} + ${b} = ?` : `${a} − ${b} = ?`, spoken,
-      isAdd ? `${a} + ${b} = ${result}. Nesneleri sayarak buldun! ${icon}👏` : `${a} − ${b} = ${result}. Nesneleri sayarak buldun! ${icon}👏`,
-      { a: a, b: b, isAdd: isAdd, result: result, icon: icon, options: k1Shuffle([result, ...wrongs]) });
+    const icon = k1Pick(['🍓', '⭐', '🎈', '🍪', '🐥']);
+    const sign = isAdd ? '+' : '−';
+    const text = `İşlemi tamamla: ${a} ${sign} ${b} = ?`;
+    const spoken = isAdd ? `${a} artı ${b} kaç eder? Sonucu sepete koy!` : `${a} eksi ${b} kaç eder? Sonucu sepete koy!`;
+    return k1Base('k1_addsub', '➕ Toplama & Çıkarma', text, spoken,
+      `Doğru! ${a} ${sign} ${b} = ${result}! Süper matematikçi! 👏`,
+      { a: a, b: b, op: sign, result: result, icon: icon });
   }
 
   function generateK1Spatial() {
-    const objs = [
-      { e: '⚽', gen: 'Topun' }, { e: '🐱', gen: 'Kedinin' }, { e: '🏠', gen: 'Evin' }, { e: '🌳', gen: 'Ağacın' },
-      { e: '🚗', gen: 'Arabanın' }, { e: '🍎', gen: 'Elmanın' }, { e: '🎈', gen: 'Balonun' }, { e: '🐶', gen: 'Köpeğin' }
+    const questions = [
+      { text: 'Ağacın ÜSTÜNDEKİ kuşa dokun!', target: 'üst', prompt: 'Ağacın üstündeki kuşa dokun!' },
+      { text: 'Kutunun İÇİNDEKİ topa dokun!', target: 'iç', prompt: 'Kutunun içindeki topa dokun!' },
+      { text: 'Masanın ALTINDAKİ kediye dokun!', target: 'alt', prompt: 'Masanın altındaki kediye dokun!' },
+      { text: 'Çitin ÖNÜNDEKİ tavşana dokun!', target: 'ön', prompt: 'Çitin önündeki tavşana dokun!' }
     ];
-    const three = k1Shuffle(objs).slice(0, 3);
-    const kind = k1Pick(['vertical', 'horizontal', 'box', 'length']);
-    let prompt, items, layout = kind;
-    if (kind === 'vertical') {
-      const ask = k1Pick(['üst', 'alt']);
-      prompt = `${three[1].gen} ${ask === 'üst' ? 'ÜSTÜNDEKİ' : 'ALTINDAKİ'} nesneye dokun!`;
-      items = three.map((o, i) => ({ e: o.e, correct: ask === 'üst' ? i === 0 : i === 2 }));
-    } else if (kind === 'horizontal') {
-      const ask = k1Pick(['sağ', 'sol']);
-      prompt = `${three[1].gen} ${ask === 'sağ' ? 'SAĞINDAKİ' : 'SOLUNDAKİ'} nesneye dokun!`;
-      items = three.map((o, i) => ({ e: o.e, correct: ask === 'sol' ? i === 0 : i === 2 }));
-    } else if (kind === 'box') {
-      const ask = k1Pick(['in', 'out']);
-      const minorityIdx = Math.floor(Math.random() * 3);
-      prompt = ask === 'in' ? 'Kutunun İÇİNDEKİ nesneye dokun!' : 'Kutunun DIŞINDAKİ nesneye dokun!';
-      items = three.map((o, i) => {
-        const isMinor = (i === minorityIdx);
-        const inside = (ask === 'in') ? isMinor : !isMinor;
-        return { e: o.e, inside: inside, correct: isMinor };
-      });
-    } else {
-      const ask = k1Pick(['uzun', 'kısa']);
-      const lens = k1Shuffle([40, 70, 100]);
-      prompt = ask === 'uzun' ? 'En UZUN olana dokun!' : 'En KISA olana dokun!';
-      items = lens.map(len => ({ len: len, correct: ask === 'uzun' ? len === 100 : len === 40 }));
-    }
-    return k1Base('k1_spatial', '📍 Uzamsal İlişkiler', prompt, prompt.replace('İÇİNDEKİ', 'içindeki').replace('DIŞINDAKİ', 'dışındaki'),
-      'Harika gözlem! Konum kavramını doğru buldun! 📍👏', { layout: layout, items: items });
+    const q = k1Pick(questions);
+    return k1Base('k1_spatial', '📐 Uzamsal İlişkiler', q.text, q.prompt,
+      'Harika gözlem! Doğru konumu buldun! 🎯👏',
+      { target: q.target, prompt: q.prompt });
   }
 
   function generateK1Pattern() {
-    const sets = [['🔴', '🔵', '🟡', '🟢'], ['🟥', '🟦', '🟨', '🟩'], ['🍎', '🍌', '🍇', '🍓'], ['⭐', '❤️', '🔷', '🟣']];
-    const set = k1Shuffle(k1Pick(sets));
-    const A = set[0], B = set[1], C = set[2];
-    const unit = k1Pick([[A, B], [A, A, B], [A, B, C], [A, B, B]]);
-    const full = [];
-    for (let i = 0; i < 6; i++) full.push(unit[i % unit.length]);
-    const answer = full[5];
-    const wrongs = k1Shuffle(set.filter(x => x !== answer)).slice(0, 2);
-    return k1Base('k1_pattern', '🚃 Örüntü Vagonu', 'Örüntüyü tamamla! Sırada hangisi var?', 'Örüntüyü tamamla! Sırada hangisi var?',
-      'Süper! Örüntünün kuralını buldun! 🚃🎉',
-      { shown: full.slice(0, 5), answer: answer, options: k1Shuffle([answer, ...wrongs]) });
+    const patterns = [
+      { seq: ['🔴', '🔵', '🔴', '🔵'], answer: '🔴', distractors: ['🔵', '🟡'] },
+      { seq: ['🔺', '🟦', '🔺', '🟦'], answer: '🔺', distractors: ['🟦', '⭐'] },
+      { seq: ['⭐', '🌙', '⭐', '🌙'], answer: '⭐', distractors: ['🌙', '☀️'] }
+    ];
+    const pt = k1Pick(patterns);
+    return k1Base('k1_pattern', '🧩 Örüntü & Sıralama',
+      'Örüntüyü tamamla: Soru işaretine dokun!',
+      'Örüntüyü tamamlayan şekli bul ve dokun!',
+      'Mükemmel örüntü algısı! Sıradaki şekli buldun! 🧩✨',
+      { seq: pt.seq, answer: pt.answer, choices: k1Shuffle([pt.answer, ...pt.distractors]) });
   }
 
-  function generateK1Sort(kind) {
-    let baskets, good, bad, text;
-    if (kind === 'healthy') {
-      baskets = [{ id: 'a', emoji: '🥗', label: 'Sağlıklı' }, { id: 'b', emoji: '🍟', label: 'Zararlı' }];
-      good = [{ e: '🍎', w: 'Elma' }, { e: '🥕', w: 'Havuç' }, { e: '🥛', w: 'Süt' }, { e: '🍌', w: 'Muz' }, { e: '🥦', w: 'Brokoli' }, { e: '🐟', w: 'Balık' }];
-      bad = [{ e: '🍭', w: 'Şeker' }, { e: '🍟', w: 'Patates kızartması' }, { e: '🍫', w: 'Çikolata' }, { e: '🥤', w: 'Gazlı içecek' }, { e: '🍩', w: 'Çörek' }];
-      text = 'Sağlıklı yiyecekleri yeşil sepete, zararlıları diğer sepete at!';
-    } else {
-      baskets = [{ id: 'a', emoji: '🎒', label: 'Okul Eşyaları' }, { id: 'b', emoji: '🧸', label: 'Oyuncaklar' }];
-      good = [{ e: '✏️', w: 'Kalem' }, { e: '📚', w: 'Kitap' }, { e: '📏', w: 'Cetvel' }, { e: '📓', w: 'Defter' }, { e: '🖍️', w: 'Boya kalemi' }, { e: '✂️', w: 'Makas' }];
-      bad = [{ e: '🧸', w: 'Ayıcık' }, { e: '⚽', w: 'Top' }, { e: '🪀', w: 'Yoyo' }, { e: '🚗', w: 'Oyuncak araba' }, { e: '🪁', w: 'Uçurtma' }];
-      text = 'Okul eşyalarını çantaya, oyuncakları oyuncak sepetine koy!';
+  function generateK1Sort(theme) {
+    if (theme === 'healthy') {
+      const goods = [{ emoji: '🍎', name: 'Elma' }, { emoji: '🥕', name: 'Havuç' }, { emoji: '🥛', name: 'Süt' }];
+      const bads = [{ emoji: '🍭', name: 'Lolipop' }, { emoji: '🍟', name: 'Cips' }];
+      return k1Base('k1_sort', '🥗 Sağlıklı Besinler',
+        'Sağlıklı yiyecekleri beslenme çantasına koy!',
+        'Sağlıklı yiyecekleri beslenme çantasına koy!',
+        'Harika beslenme! Sağlıklı yiyecekleri çantana koydun! 🍎🥛',
+        { good: goods, bad: bads, container: '🎒' });
     }
-    const items = k1Shuffle([
-      ...k1Shuffle(good).slice(0, 3).map(i => ({ e: i.e, w: i.w, basket: 'a' })),
-      ...k1Shuffle(bad).slice(0, 2).map(i => ({ e: i.e, w: i.w, basket: 'b' }))
-    ]);
-    return k1Base('k1_sort', kind === 'healthy' ? '🥗 Sağlıklı Beslenme Sepeti' : '🎒 Çantamı Hazırlıyorum', text, text,
-      'Harika! Hepsini doğru sepete yerleştirdin! 🧺🎉', { baskets: baskets, items: items });
+    const goods = [{ emoji: '✏️', name: 'Kalem' }, { emoji: '📖', name: 'Defter' }, { emoji: '📐', name: 'Cetvel' }];
+    const bads = [{ emoji: '🧸', name: 'Ayıcık' }, { emoji: '🎮', name: 'Oyun Kolu' }];
+    return k1Base('k1_sort', '🎒 Okul Çantam',
+      'Okul araç gereçlerini çantaya yerleştir!',
+      'Okul araç gereçlerini çantaya yerleştir!',
+      'Okul çantan hazır! Harika hazırlandın! ✏️🎒',
+      { good: goods, bad: bads, container: '🎒' });
   }
 
-  // ---------------- Ortak Yardımcılar ----------------
   function k1Mount(q, build) {
     [1, 2].forEach(pn => {
       const zone = (pn === 1) ? DOM.p1InteractiveZone : DOM.p2InteractiveZone;
@@ -23736,6 +23876,10 @@
 
   function renderK1Engine(q) {
     switch (q.type) {
+      case 'k1_prep_lines': return k1Mount(q, k1BuildPrepLines);
+      case 'k1_prep_oddone': return k1Mount(q, k1BuildPrepOddOne);
+      case 'k1_prep_pattern': return k1Mount(q, k1BuildPrepPattern);
+      case 'k1_prep_sounds': return k1Mount(q, k1BuildPrepSounds);
       case 'k1_phoneme_pop': return k1Mount(q, k1BuildPhonemePop);
       case 'k1_train': return k1Mount(q, k1BuildTrain);
       case 'k1_basket': return k1Mount(q, k1BuildLetterBasket);
@@ -23745,6 +23889,146 @@
       case 'k1_pattern': return k1Mount(q, k1BuildPattern);
       case 'k1_sort': return k1Mount(q, k1BuildSort);
     }
+  }
+
+  // --- OKUMA YAZMAYA HAZIRLIK BUILDER'LARI ---
+  function k1BuildPrepLines(root, pn, d) {
+    const wrap = k1El('k1-prep-lines-wrap', '');
+    const header = k1El('k1-prep-lines-path', `
+      <div class="k1-prep-avatar start-icon">${replaceEmojisWith3D(d.start, 'prep-3d-big')}</div>
+      <div class="k1-prep-track-line">
+        <div class="k1-prep-track-fill" style="width:0%;"></div>
+      </div>
+      <div class="k1-prep-avatar target-icon">${replaceEmojisWith3D(d.target, 'prep-3d-big')}</div>
+    `);
+    wrap.appendChild(header);
+
+    const dotsRow = k1El('k1-prep-dots-row', '');
+    let currentStep = 1;
+    const total = d.totalDots || 3;
+    const fillEl = header.querySelector('.k1-prep-track-fill');
+
+    for (let i = 1; i <= total; i++) {
+      const dot = k1El(`k1-prep-dot kids-color-${(i - 1) % 4}`, `<span class="k1-dot-num">${i}</span>`);
+      dot.setAttribute('role', 'button');
+      dot.tabIndex = 0;
+      dot.setAttribute('data-step', String(i));
+
+      attachInstantTouch(dot, () => {
+        if (!k1Active(pn)) return;
+        const s = parseInt(dot.getAttribute('data-step'), 10);
+        if (s === currentStep) {
+          audio.playPop();
+          dot.classList.add('k1-dot-connected');
+          dot.innerHTML = '⭐';
+          fillEl.style.width = `${(s / (total + 1)) * 100}%`;
+          currentStep++;
+        } else if (s > currentStep) {
+          kidsGentleWrong(dot);
+        }
+      });
+      dotsRow.appendChild(dot);
+    }
+
+    const targetEl = header.querySelector('.target-icon');
+    attachInstantTouch(targetEl, () => {
+      if (!k1Active(pn)) return;
+      if (currentStep > total) {
+        fillEl.style.width = '100%';
+        audio.playPop();
+        targetEl.classList.add('kids-happy');
+        kidsPointAnswer(pn, targetEl, true);
+      } else {
+        kidsGentleWrong(targetEl);
+      }
+    });
+
+    wrap.appendChild(dotsRow);
+    root.appendChild(wrap);
+  }
+
+  function k1BuildPrepOddOne(root, pn, d) {
+    const grid = k1El('kids-cards-grid k1-oddone-grid', '');
+    d.cards.forEach((c, idx) => {
+      const card = k1El(`kids-card kids-color-${idx % 4}`, `<span class="kids-face">${replaceEmojisWith3D(c.emoji, 'kids-card-icon')}</span>`);
+      card.setAttribute('role', 'button');
+      card.tabIndex = 0;
+      attachInstantTouch(card, () => {
+        if (!k1Active(pn)) return;
+        if (c.isOdd) {
+          audio.playPop();
+          kidsPointAnswer(pn, card, true);
+        } else {
+          kidsGentleWrong(card);
+        }
+      });
+      grid.appendChild(card);
+    });
+    root.appendChild(grid);
+  }
+
+  function k1BuildPrepPattern(root, pn, d) {
+    const wrap = k1El('k1-prep-pattern-wrap', '');
+    const seqRow = k1El('k1-pattern-seq-row', '');
+    d.seq.forEach((item, idx) => {
+      const chip = k1El(`k1-pattern-chip kids-color-${idx % 4}`, `<span class="kids-face">${replaceEmojisWith3D(item, 'q-3d-item')}</span>`);
+      seqRow.appendChild(chip);
+    });
+    const slot = k1El('k1-pattern-slot', '<span class="k1-slot-q">❓</span>');
+    seqRow.appendChild(slot);
+    wrap.appendChild(seqRow);
+
+    const choicesRow = k1El('kids-cards-grid k1-pattern-choices-row', '');
+    d.choices.forEach((c, idx) => {
+      const card = k1El(`kids-card kids-color-${idx % 4}`, `<span class="kids-face">${replaceEmojisWith3D(c, 'kids-card-icon')}</span>`);
+      card.setAttribute('role', 'button');
+      card.tabIndex = 0;
+      attachInstantTouch(card, () => {
+        if (!k1Active(pn)) return;
+        if (c === d.answer) {
+          audio.playPop();
+          slot.innerHTML = `<span class="kids-face">${replaceEmojisWith3D(c, 'q-3d-item')}</span>`;
+          slot.classList.add('filled');
+          kidsPointAnswer(pn, card, true);
+        } else {
+          kidsGentleWrong(card);
+        }
+      });
+      choicesRow.appendChild(card);
+    });
+    wrap.appendChild(choicesRow);
+    root.appendChild(wrap);
+  }
+
+  function k1BuildPrepSounds(root, pn, d) {
+    const wrap = k1El('k1-prep-sounds-wrap', '');
+    const soundCard = k1El('k1-sound-banner', `
+      <div class="k1-sound-speaker-halo">🔊</div>
+      <div class="k1-sound-onomatopoeia">${d.soundText}</div>
+    `);
+    wrap.appendChild(soundCard);
+
+    const cardsGrid = k1El('kids-cards-grid k1-sounds-grid', '');
+    d.options.forEach((opt, idx) => {
+      const card = k1El(`kids-card kids-color-${idx % 4}`, `
+        <span class="kids-face">${replaceEmojisWith3D(opt.emoji, 'kids-card-icon')}</span>
+        <span class="k1-opt-label">${opt.label}</span>
+      `);
+      card.setAttribute('role', 'button');
+      card.tabIndex = 0;
+      attachInstantTouch(card, () => {
+        if (!k1Active(pn)) return;
+        if (opt.isCorrect) {
+          audio.playPop();
+          kidsPointAnswer(pn, card, true);
+        } else {
+          kidsGentleWrong(card);
+        }
+      });
+      cardsGrid.appendChild(card);
+    });
+    wrap.appendChild(cardsGrid);
+    root.appendChild(wrap);
   }
 
   // ---------------- a) Sesi Hisset ve Patlat ----------------
