@@ -21039,3 +21039,27 @@ body.is-game-active .universal-game-bgm-fab {
 .k1-opt-label {
   font-size: clamp(1rem, 3vw, 1.4rem); font-weight: 800; color: #334155; margin-top: 4px;
 }
+
+/* ============================================================== */
+/* OKUMA YAZMAYA HAZIRLIK (CANVAS ÇİZGİ & GÖRSEL ALGI)            */
+/* ============================================================== */
+.k1-canvas-container {
+  width: 100%; max-width: 460px; display: flex; justify-content: center;
+  background: #F8FAFC; border: 4px solid #CBD5E1; border-radius: 24px; padding: 6px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,.08);
+}
+.k1-trace-canvas {
+  width: 100%; height: auto; max-width: 440px; touch-action: none; cursor: crosshair;
+  border-radius: 18px; background: #fff;
+}
+.k1-prep-info-text {
+  font-size: clamp(1rem, 3.5vw, 1.4rem); font-weight: 800; color: #1E293B; text-align: center;
+}
+.k1-sound-letter-badge {
+  padding: 8px 24px; background: linear-gradient(135deg, #0284C7, #0369A1);
+  color: #fff; font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 900;
+  border-radius: 999px; box-shadow: 0 6px 16px rgba(2, 132, 199, .3); margin-bottom: 8px;
+}
+.k1-feel-grid {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; width: 100%;
+}
