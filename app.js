@@ -1671,6 +1671,112 @@
   /* ==========================================================================
      TÜRKİYE YÜZYILI MAARİF MODELİ (2026) İLK OKUMA YAZMA KÜMÜLATİF VERİ HAVUZU
      ========================================================================== */
+  // =============================================================
+  // 📚 2026 MAARİF MODELİ 1. GRUP (A - N - E - T - İ - L)
+  // SABİT VE KİLİTLİ KÜMÜLATİF VERİ SETİ (HARD RESET)
+  // =============================================================
+  const ANETIL_DATA = {
+    "A": {
+      allowedLetters: ["A", "a"],
+      mode: "SOUND_FEEL", // Sadece görselden ses hissetme! Hece/kelime birleştirme YOK!
+      hasSoundItems: [
+        { word: "Arı", icon: "🐝", hasA: true },
+        { word: "Ayı", icon: "🐻", hasA: true },
+        { word: "Araba", icon: "🚗", hasA: true },
+        { word: "Elma", icon: "🍎", hasA: true },
+        { word: "Aslan", icon: "🦁", hasA: true }
+      ],
+      noSoundItems: [
+        { word: "Top", icon: "⚽", hasA: false },
+        { word: "Göz", icon: "👁️", hasA: false },
+        { word: "Süt", icon: "🥛", hasA: false },
+        { word: "Ev", icon: "🏠", hasA: false }
+      ],
+      syllables: [],
+      words: [],
+      sentences: []
+    },
+    "N": {
+      allowedLetters: ["A", "N", "a", "n"],
+      mode: "CUMULATIVE",
+      syllables: ["an", "na"],
+      words: ["ana", "an"],
+      sentences: [
+        "Ana.",
+        "Na na."
+      ]
+    },
+    "E": {
+      allowedLetters: ["A", "N", "E", "a", "n", "e"],
+      mode: "CUMULATIVE",
+      syllables: ["an", "na", "en", "ne"],
+      words: ["ana", "anne", "nane", "en", "ne"],
+      sentences: [
+        "Anne nane.",
+        "Ene nane."
+      ]
+    },
+    "T": {
+      allowedLetters: ["A", "N", "E", "T", "a", "n", "e", "t"],
+      mode: "CUMULATIVE",
+      syllables: ["at", "et", "ta", "te", "tan", "ten", "nat", "net", "tat"],
+      words: ["at", "et", "ata", "tane", "nane", "anten", "ten", "tene", "tat", "net"],
+      sentences: [
+        "Ata et at.",
+        "Anne nane tat.",
+        "Ata, tane tane et at."
+      ]
+    },
+    "İ": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "a", "n", "e", "t", "i"],
+      mode: "CUMULATIVE",
+      syllables: ["in", "it", "ti", "ni", "nin", "tin", "ani", "ant"],
+      words: ["in", "it", "nini", "tine", "ani", "ant", "anten", "tane", "nane", "eti", "ati"],
+      sentences: [
+        "Nini, nane.",
+        "Ati, ata in.",
+        "Anne, eti tat."
+      ]
+    },
+    "L": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "L", "a", "n", "e", "t", "i", "l"],
+      mode: "CUMULATIVE",
+      syllables: ["el", "al", "il", "la", "le", "li", "tel", "nal", "lal", "lan", "len", "lin"],
+      words: ["el", "al", "il", "ela", "lale", "aile", "tel", "nal", "naneli", "atlet", "etli", "tatil", "ali", "nil"],
+      sentences: [
+        "Ela lale al.",
+        "Ali, ata nal al.",
+        "Aile tatil et.",
+        "Nil, naneli et al."
+      ]
+    }
+  };
+  ANETIL_DATA["I"] = ANETIL_DATA["İ"];
+  window.ANETIL_DATA = ANETIL_DATA;
+
+  /**
+   * KOD SEVİYESİNDE GÜVENLİK FİLTRESİ (VALIDATOR)
+   * Harfin allowedLetters listesi dışındaki herhangi bir harf geçiyorsa derhal bloke eder (false döner).
+   */
+  function isValidForCurrentLetter(text, currentLetter) {
+    if (!text) return true;
+    const upper = (currentLetter || '').toLocaleUpperCase('tr-TR');
+    const config = ANETIL_DATA[upper];
+    if (!config || !config.allowedLetters) return true;
+
+    const allowed = new Set(config.allowedLetters);
+    const ignoreChars = new Set([' ', '.', ',', '!', '?', "'", '-', '"', ';', ':', '’', '“', '”', '(', ')']);
+
+    for (const ch of text) {
+      if (ignoreChars.has(ch)) continue;
+      if (!allowed.has(ch)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  window.isValidForCurrentLetter = isValidForCurrentLetter;
+
   const MAARIF_2026_CONFIG = {
     groups: [
       { id: 'g0_prep', name: '✏️ Hazırlık', code: 'Çizgi & Algı', isPrep: true, label: '✏️ Okuma Yazmaya Hazırlık (Yazısız Etkinlikler)', letters: [] },
@@ -1682,199 +1788,109 @@
     ],
     letterOrder: ['a', 'n', 'e', 't', 'i', 'l', 'o', 'k', 'u', 'r', 'ı', 'm', 'ü', 's', 'ö', 'y', 'd', 'z', 'ç', 'b', 'g', 'c', 'ş', 'p', 'h', 'v', 'ğ', 'f', 'j'],
     letters: {
-      // 1. GRUP (ANETİL)
+            // 1. GRUP (ANETİL) - SIFIRDAN KİLİTLİ VE KÜMÜLATİF VERİ
       'a': {
         letter: 'a', upper: 'A', group: 'g1', groupName: '1. Grup (ANETİL)',
-        soundWords: [
-          { word: 'Arı', emoji: '🐝', position: 'başta', hasSound: true },
-          { word: 'Ayı', emoji: '🐻', position: 'başta', hasSound: true },
-          { word: 'Araba', emoji: '🚗', position: 'başta', hasSound: true },
-          { word: 'Elma', emoji: '🍎', position: 'sonda', hasSound: true },
-          { word: 'Balık', emoji: '🐟', position: 'ortada', hasSound: true },
-          { word: 'Tavşan', emoji: '🐰', position: 'ortada', hasSound: true }
-        ],
-        noSoundWords: [
-          { word: 'Kedi', emoji: '🐱', hasSound: false },
-          { word: 'Köpek', emoji: '🐶', hasSound: false },
-          { word: 'Süt', emoji: '🥛', hasSound: false },
-          { word: 'Fil', emoji: '🐘', hasSound: false },
-          { word: 'Kuş', emoji: '🐦', hasSound: false },
-          { word: 'Muz', emoji: '🍌', hasSound: false }
-        ],
+        soundWords: ANETIL_DATA["A"].hasSoundItems.map(item => ({ word: item.word, emoji: item.icon, position: 'başta', hasSound: true })),
+        noSoundWords: ANETIL_DATA["A"].noSoundItems.map(item => ({ word: item.word, emoji: item.icon, hasSound: false })),
         cumulativeWords: [],
-        cumulativeSentences: []
+        cumulativeSentences: [],
+        syllables: [],
+        words: [],
+        sentences: []
       },
       'n': {
         letter: 'n', upper: 'N', group: 'g1', groupName: '1. Grup (ANETİL)',
         soundWords: [
           { word: 'Nar', emoji: '🍎', position: 'başta', hasSound: true },
-          { word: 'Nal', emoji: '🐎', position: 'başta', hasSound: true },
           { word: 'Nane', emoji: '🌿', position: 'başta', hasSound: true },
-          { word: 'Aslan', emoji: '🦁', position: 'sonda', hasSound: true },
-          { word: 'Balon', emoji: '🎈', position: 'sonda', hasSound: true },
-          { word: 'Limon', emoji: '🍋', position: 'sonda', hasSound: true }
+          { word: 'Nal', emoji: '🐎', position: 'başta', hasSound: true }
         ],
         noSoundWords: [
-          { word: 'Arı', emoji: '🐝', hasSound: false },
-          { word: 'Kedi', emoji: '🐱', hasSound: false },
-          { word: 'Kuş', emoji: '🐦', hasSound: false },
           { word: 'Ayı', emoji: '🐻', hasSound: false },
-          { word: 'Elma', emoji: '🍎', hasSound: false }
+          { word: 'Arı', emoji: '🐝', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'AN', parts: ['A', 'N'], icon: '⏳' },
-          { word: 'NA', parts: ['N', 'A'], icon: '🔤' },
-          { word: 'ANA', parts: ['A', 'NA'], icon: '👩' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ana an.', blankSentence: 'Ana _____.', missing: 'an', options: ['an', 'na', 'ana'], fullText: 'Ana an.' },
-          { sentence: 'An ana.', blankSentence: 'An _____.', missing: 'ana', options: ['ana', 'an', 'na'], fullText: 'An ana.' }
-        ]
+        cumulativeWords: ANETIL_DATA["N"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["N"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["N"].syllables,
+        words: ANETIL_DATA["N"].words,
+        sentences: ANETIL_DATA["N"].sentences
       },
       'e': {
         letter: 'e', upper: 'E', group: 'g1', groupName: '1. Grup (ANETİL)',
         soundWords: [
           { word: 'Elma', emoji: '🍎', position: 'başta', hasSound: true },
-          { word: 'Eşek', emoji: '🫏', position: 'başta', hasSound: true },
-          { word: 'Ekmek', emoji: '🍞', position: 'başta', hasSound: true },
           { word: 'Ev', emoji: '🏠', position: 'başta', hasSound: true },
-          { word: 'Nane', emoji: '🌿', position: 'sonda', hasSound: true }
+          { word: 'Ekmek', emoji: '🍞', position: 'başta', hasSound: true }
         ],
         noSoundWords: [
           { word: 'Ayı', emoji: '🐻', hasSound: false },
           { word: 'Kuş', emoji: '🐦', hasSound: false },
-          { word: 'Balık', emoji: '🐟', hasSound: false },
-          { word: 'Muz', emoji: '🍌', hasSound: false },
-          { word: 'Nar', emoji: '🍎', hasSound: false }
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'EN', parts: ['E', 'N'], icon: '📏' },
-          { word: 'NE', parts: ['N', 'E'], icon: '❓' },
-          { word: 'AN', parts: ['A', 'N'], icon: '⏳' },
-          { word: 'NA', parts: ['N', 'A'], icon: '🔤' },
-          { word: 'ANA', parts: ['A', 'NA'], icon: '👩' },
-          { word: 'ANE', parts: ['A', 'NE'], icon: '👵' },
-          { word: 'NANE', parts: ['NA', 'NE'], icon: '🌿' },
-          { word: 'ANNE', parts: ['AN', 'NE'], icon: '❤️' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Anne nane.', blankSentence: 'Anne _____.', missing: 'nane', options: ['nane', 'anne', 'en'], fullText: 'Anne nane.' },
-          { sentence: 'Ana ne?', blankSentence: 'Ana _____?', missing: 'ne', options: ['ne', 'en', 'nane'], fullText: 'Ana ne?' }
-        ]
+        cumulativeWords: ANETIL_DATA["E"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '🌿' })),
+        cumulativeSentences: ANETIL_DATA["E"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["E"].syllables,
+        words: ANETIL_DATA["E"].words,
+        sentences: ANETIL_DATA["E"].sentences
       },
       't': {
         letter: 't', upper: 'T', group: 'g1', groupName: '1. Grup (ANETİL)',
         soundWords: [
-          { word: 'Tavşan', emoji: '🐰', position: 'başta', hasSound: true },
-          { word: 'Timsah', emoji: '🐊', position: 'başta', hasSound: true },
           { word: 'Top', emoji: '⚽', position: 'başta', hasSound: true },
-          { word: 'Tren', emoji: '🚂', position: 'başta', hasSound: true },
-          { word: 'At', emoji: '🐴', position: 'sonda', hasSound: true },
-          { word: 'Et', emoji: '🥩', position: 'sonda', hasSound: true },
-          { word: 'Anten', emoji: '📡', position: 'ortada', hasSound: true }
+          { word: 'Tavşan', emoji: '🐰', position: 'başta', hasSound: true },
+          { word: 'Tren', emoji: '🚂', position: 'başta', hasSound: true }
         ],
         noSoundWords: [
-          { word: 'Elma', emoji: '🍎', hasSound: false },
-          { word: 'Arı', emoji: '🐝', hasSound: false },
           { word: 'Ayı', emoji: '🐻', hasSound: false },
-          { word: 'Kedi', emoji: '🐱', hasSound: false },
-          { word: 'Nar', emoji: '🍎', hasSound: false }
+          { word: 'Arı', emoji: '🐝', hasSound: false },
+          { word: 'Elma', emoji: '🍎', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'AT', parts: ['A', 'T'], icon: '🐴' },
-          { word: 'ET', parts: ['E', 'T'], icon: '🥩' },
-          { word: 'TA', parts: ['T', 'A'], icon: '🔤' },
-          { word: 'TE', parts: ['T', 'E'], icon: '🔤' },
-          { word: 'TEN', parts: ['T', 'EN'], icon: '🧴' },
-          { word: 'TAN', parts: ['T', 'AN'], icon: '🌅' },
-          { word: 'ATA', parts: ['A', 'TA'], icon: '🇹🇷' },
-          { word: 'TENE', parts: ['TE', 'NE'], icon: '🪨' },
-          { word: 'TANE', parts: ['TA', 'NE'], icon: '🌾' },
-          { word: 'ANTEN', parts: ['AN', 'TEN'], icon: '📡' },
-          { word: 'NANE', parts: ['NA', 'NE'], icon: '🌿' },
-          { word: 'ANAT', parts: ['A', 'NAT'], icon: '📜' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ata at.', blankSentence: 'Ata _____.', missing: 'at', options: ['at', 'et', 'tane'], fullText: 'Ata at.' },
-          { sentence: 'Ata tane tane tat.', blankSentence: 'Ata tane _____ tat.', missing: 'tane', options: ['tane', 'anten', 'ata'], fullText: 'Ata tane tane tat.' }
-        ]
+        cumulativeWords: ANETIL_DATA["T"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '🌾' })),
+        cumulativeSentences: ANETIL_DATA["T"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["T"].syllables,
+        words: ANETIL_DATA["T"].words,
+        sentences: ANETIL_DATA["T"].sentences
       },
       'i': {
         letter: 'i', upper: 'İ', group: 'g1', groupName: '1. Grup (ANETİL)',
         soundWords: [
           { word: 'İnek', emoji: '🐮', position: 'başta', hasSound: true },
           { word: 'İncir', emoji: '🫐', position: 'başta', hasSound: true },
-          { word: 'İp', emoji: '🪢', position: 'başta', hasSound: true },
-          { word: 'İki', emoji: '2️⃣', position: 'başta', hasSound: true },
-          { word: 'Timsah', emoji: '🐊', position: 'ortada', hasSound: true }
+          { word: 'İp', emoji: '🪢', position: 'başta', hasSound: true }
         ],
         noSoundWords: [
           { word: 'Ayı', emoji: '🐻', hasSound: false },
           { word: 'At', emoji: '🐴', hasSound: false },
-          { word: 'Top', emoji: '⚽', hasSound: false },
-          { word: 'Nar', emoji: '🍎', hasSound: false }
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'İN', parts: ['İ', 'N'], icon: '⬇️' },
-          { word: 'İT', parts: ['İ', 'T'], icon: '👉' },
-          { word: 'Tİ', parts: ['T', 'İ'], icon: '🔤' },
-          { word: 'Nİ', parts: ['N', 'İ'], icon: '🔤' },
-          { word: 'NİN', parts: ['N', 'İN'], icon: '🔤' },
-          { word: 'TİN', parts: ['T', 'İN'], icon: '🔤' },
-          { word: 'ANİ', parts: ['A', 'Nİ'], icon: '⚡' },
-          { word: 'ANT', parts: ['A', 'NT'], icon: '🤝' },
-          { word: 'NİNİ', parts: ['Nİ', 'Nİ'], icon: '👶' },
-          { word: 'TİNE', parts: ['Tİ', 'NE'], icon: '🌾' },
-          { word: 'NANE', parts: ['NA', 'NE'], icon: '🌿' },
-          { word: 'TANE', parts: ['TA', 'NE'], icon: '🌾' },
-          { word: 'ANTEN', parts: ['AN', 'TEN'], icon: '📡' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ata in.', blankSentence: 'Ata _____.', missing: 'in', options: ['in', 'it', 'et'], fullText: 'Ata in.' },
-          { sentence: 'Nine nane tat.', blankSentence: 'Nine _____ tat.', missing: 'nane', options: ['nane', 'tane', 'anten'], fullText: 'Nine nane tat.' }
-        ]
+        cumulativeWords: ANETIL_DATA["İ"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '🌾' })),
+        cumulativeSentences: ANETIL_DATA["İ"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["İ"].syllables,
+        words: ANETIL_DATA["İ"].words,
+        sentences: ANETIL_DATA["İ"].sentences
       },
       'l': {
         letter: 'l', upper: 'L', group: 'g1', groupName: '1. Grup (ANETİL)',
         soundWords: [
           { word: 'Limon', emoji: '🍋', position: 'başta', hasSound: true },
-          { word: 'Leylek', emoji: '🪶', position: 'başta', hasSound: true },
           { word: 'Lale', emoji: '🌷', position: 'başta', hasSound: true },
-          { word: 'Aslan', emoji: '🦁', position: 'ortada', hasSound: true },
-          { word: 'Balık', emoji: '🐟', position: 'ortada', hasSound: true },
-          { word: 'Fil', emoji: '🐘', position: 'sonda', hasSound: true }
+          { word: 'Leylek', emoji: '🪶', position: 'başta', hasSound: true }
         ],
         noSoundWords: [
           { word: 'Ayı', emoji: '🐻', hasSound: false },
           { word: 'Arı', emoji: '🐝', hasSound: false },
-          { word: 'Kuş', emoji: '🐦', hasSound: false },
           { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'EL', parts: ['E', 'L'], icon: '✋' },
-          { word: 'AL', parts: ['A', 'L'], icon: '🔴' },
-          { word: 'İL', parts: ['İ', 'L'], icon: '🏙️' },
-          { word: 'LA', parts: ['L', 'A'], icon: '🔤' },
-          { word: 'LE', parts: ['L', 'E'], icon: '🔤' },
-          { word: 'Lİ', parts: ['L', 'İ'], icon: '🔤' },
-          { word: 'TEL', parts: ['T', 'EL'], icon: '🧶' },
-          { word: 'NAL', parts: ['N', 'AL'], icon: '🐎' },
-          { word: 'LALE', parts: ['LA', 'LE'], icon: '🌷' },
-          { word: 'ELA', parts: ['E', 'LA'], icon: '👧' },
-          { word: 'AİLE', parts: ['A', 'İ', 'LE'], icon: '👨‍👩‍👦' },
-          { word: 'NANELİ', parts: ['NA', 'NE', 'Lİ'], icon: '🌿' },
-          { word: 'ATLET', parts: ['AT', 'LET'], icon: '🏃' },
-          { word: 'ETLİ', parts: ['ET', 'Lİ'], icon: '🍲' },
-          { word: 'TATİL', parts: ['TA', 'TİL'], icon: '🏖️' },
-          { word: 'NALİN', parts: ['NA', 'LİN'], icon: '👡' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ali lale al.', blankSentence: 'Ali _____ al.', missing: 'lale', options: ['lale', 'ela', 'nal'], fullText: 'Ali lale al.' },
-          { sentence: 'Ela nane al.', blankSentence: 'Ela _____ al.', missing: 'nane', options: ['nane', 'atlet', 'lale'], fullText: 'Ela nane al.' }
-        ]
+        cumulativeWords: ANETIL_DATA["L"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '🌷' })),
+        cumulativeSentences: ANETIL_DATA["L"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["L"].syllables,
+        words: ANETIL_DATA["L"].words,
+        sentences: ANETIL_DATA["L"].sentences
       },
 
-      // 2. GRUP (OKURIM)
+// 2. GRUP (OKURIM)
       'o': {
         letter: 'o', upper: 'O', group: 'g2', groupName: '2. Grup (OKURIM)',
         soundWords: [
@@ -2463,6 +2479,17 @@
    * henüz öğrenilmemiş sesleri içeren hece/kelimeleri KESİNLİKLE filtreler ve eler.
    */
   function isWordAllowedUpTo(wordOrObj, selectedLetter) {
+    const normSelectedEarly = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
+    const upperLetterEarly = normSelectedEarly.toLocaleUpperCase('tr-TR');
+    if (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[upperLetterEarly]) {
+      const textToCheck = typeof wordOrObj === 'string'
+        ? wordOrObj
+        : (wordOrObj.word || (Array.isArray(wordOrObj.parts) ? wordOrObj.parts.join('') : ''));
+      if (typeof isValidForCurrentLetter === 'function' && !isValidForCurrentLetter(textToCheck, upperLetterEarly)) {
+        return false;
+      }
+    }
+  
     if (!wordOrObj) return false;
     const normSelected = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
     const targetIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(normSelected);
@@ -2556,6 +2583,9 @@
   }
 
   function filterAllowedSentences(selectedLetter, pool) {
+    const normSelectedEarly = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
+    const upperLetterEarly = normSelectedEarly.toLocaleUpperCase('tr-TR');
+  
     const normSelected = (selectedLetter || 'a').toLocaleLowerCase('tr-TR');
     const targetIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(normSelected);
     if (targetIdx === -1) return [];
@@ -2580,6 +2610,14 @@
     }
 
     return rawPool.filter(item => {
+      if (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[upperLetterEarly]) {
+        if (typeof isValidForCurrentLetter === 'function') {
+          if (item && item.sentence && !isValidForCurrentLetter(item.sentence, upperLetterEarly)) return false;
+          if (item && item.missing && !isValidForCurrentLetter(item.missing, upperLetterEarly)) return false;
+          if (item && item.fullText && !isValidForCurrentLetter(item.fullText, upperLetterEarly)) return false;
+        }
+      }
+    
       if (!item) return false;
       if (item.sentence && !isWordAllowedUpTo(item.sentence, normSelected)) return false;
       if (item.missing && !isWordAllowedUpTo(item.missing, normSelected)) return false;
@@ -20622,7 +20660,9 @@
     renderMaarifReadingPanel();
   }
 
-  function selectMaarifLetter(letter) {
+  
+  window.selectMaarifLetter = selectMaarifLetter;
+function selectMaarifLetter(letter) {
     state.activeMaarifLetter = letter.toLowerCase();
     if (DOM.maarifLettersRail) {
       DOM.maarifLettersRail.querySelectorAll('.maarif-letter-chip').forEach(chip => {
@@ -23421,9 +23461,27 @@
       case 'prep_sounds':
       case 'k1_prep_sounds': return generateK1PrepSounds();
       case 'maarif_sound_find':
-      case 'maarif_phoneme_pop': return generateK1SoundFeel();
-      case 'maarif_word_train': return generateK1WordTrain();
-      case 'maarif_letter_basket': return generateK1LetterBasket();
+      case 'maarif_phoneme_pop':
+      case 'firstreading_balloon':
+      case 'turkish_listen_comprehend_1': return generateK1SoundFeel();
+      case 'maarif_word_train':
+      case 'syllable_builder':
+      case 'turkish_sentence_punctuation_1': return generateK1WordTrain();
+      case 'maarif_letter_basket':
+      case 'word_catch':
+      case 'turkish_antonyms_1': return generateK1LetterBasket();
+      case 'firstreading':
+      case 'turkish_1_karma': {
+        const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
+        if (activeL === 'a') {
+          return Math.random() < 0.5 ? generateK1SoundFeel() : generateK1LetterBasket();
+        } else {
+          const r = Math.random();
+          if (r < 0.4) return generateK1WordTrain();
+          if (r < 0.7) return generateK1SoundFeel();
+          return generateK1LetterBasket();
+        }
+      }
       case 'math_apple_count_1': return generateK1AppleCount();
       case 'math_add_sub_drag_1': return generateK1AddSub();
       case 'math_spatial_pattern_1': return Math.random() < 0.6 ? generateK1Spatial() : generateK1Pattern();
@@ -23432,6 +23490,12 @@
       default: return null;
     }
   }
+
+
+  window.generateK1SoundFeel = generateK1SoundFeel;
+  window.generateK1WordTrain = generateK1WordTrain;
+  window.generateK1LetterBasket = generateK1LetterBasket;
+  window.generateKidsGrade1Question = generateKidsGrade1Question;
 
   function k1Base(type, category, text, spoken, explanation, data) {
     return {
@@ -23507,90 +23571,142 @@
   // --- SESİ HİSSET (GÖRSEL SEÇ): Sadece görsel seçme, kesinlikle çoktan seçmeli testsiz ---
   function generateK1SoundFeel() {
     const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
-    const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
-    const upper = data.upper || 'A';
+    const upper = activeL.toLocaleUpperCase('tr-TR');
     const phonetic = getMaarifLetterSoundName(activeL);
 
-    const target = k1Pick(data.soundWords || [{ word: 'Arı', emoji: '🐝' }]);
-    const wrongs = k1Shuffle(data.noSoundWords || [{ word: 'Kedi', emoji: '🐱' }, { word: 'Fil', emoji: '🐘' }]).slice(0, 2);
+    if (upper === 'A' || !ANETIL_DATA[upper]) {
+      const aData = ANETIL_DATA['A'];
+      const target = k1Pick(aData.hasSoundItems);
+      const wrongs = k1Shuffle(aData.noSoundItems).slice(0, 2);
+      const cards = k1Shuffle([
+        { word: target.word, emoji: target.icon, isTarget: true },
+        ...wrongs.map(w => ({ word: w.word, emoji: w.icon, isTarget: false }))
+      ]);
+      return k1Base('k1_sound_feel', `👂 Sesi Hisset (A)`,
+        `Hangisinin adında "A" sesi var? Dokun!`,
+        `Hangisinin adında A sesi var? Doğru resme dokun!`,
+        `Tebrikler! "${target.word}" görselinde "A" sesi vardır! ${target.icon}👏`,
+        { letter: 'A', target: target.word, cards: cards });
+    }
 
+    // N, E, T, İ, L sesleri için hissetme havuzları
+    const soundFeelPools = {
+      'N': {
+        has: [{ word: 'Nar', icon: '🍎' }, { word: 'Nane', icon: '🌿' }, { word: 'Nal', icon: '🐎' }],
+        no: [{ word: 'Ayı', icon: '🐻' }, { word: 'Arı', icon: '🐝' }, { word: 'Top', icon: '⚽' }]
+      },
+      'E': {
+        has: [{ word: 'Elma', icon: '🍎' }, { word: 'Ev', icon: '🏠' }, { word: 'Ekmek', icon: '🍞' }],
+        no: [{ word: 'Ayı', icon: '🐻' }, { word: 'Kuş', icon: '🐦' }, { word: 'Top', icon: '⚽' }]
+      },
+      'T': {
+        has: [{ word: 'Top', icon: '⚽' }, { word: 'Tavşan', icon: '🐰' }, { word: 'Tren', icon: '🚂' }],
+        no: [{ word: 'Ayı', icon: '🐻' }, { word: 'Arı', icon: '🐝' }, { word: 'Elma', icon: '🍎' }]
+      },
+      'İ': {
+        has: [{ word: 'İnek', icon: '🐮' }, { word: 'İncir', icon: '🫐' }, { word: 'İp', icon: '🪢' }],
+        no: [{ word: 'Ayı', icon: '🐻' }, { word: 'At', icon: '🐴' }, { word: 'Top', icon: '⚽' }]
+      },
+      'I': {
+        has: [{ word: 'İnek', icon: '🐮' }, { word: 'İncir', icon: '🫐' }, { word: 'İp', icon: '🪢' }],
+        no: [{ word: 'Ayı', icon: '🐻' }, { word: 'At', icon: '🐴' }, { word: 'Top', icon: '⚽' }]
+      },
+      'L': {
+        has: [{ word: 'Limon', icon: '🍋' }, { word: 'Lale', icon: '🌷' }, { word: 'Leylek', icon: '🪶' }],
+        no: [{ word: 'Ayı', icon: '🐻' }, { word: 'Arı', icon: '🐝' }, { word: 'Top', icon: '⚽' }]
+      }
+    };
+
+    const sPool = soundFeelPools[upper] || soundFeelPools['N'];
+    const target = k1Pick(sPool.has);
+    const wrongs = k1Shuffle(sPool.no).slice(0, 2);
     const cards = k1Shuffle([
-      { word: target.word, emoji: target.emoji, isTarget: true },
-      ...wrongs.map(w => ({ word: w.word, emoji: w.emoji, isTarget: false }))
+      { word: target.word, emoji: target.icon, isTarget: true },
+      ...wrongs.map(w => ({ word: w.word, emoji: w.icon, isTarget: false }))
     ]);
 
-    const promptText = `Hangisinin adında "${upper}" sesi var? Dokun!`;
-    const spokenText = `Hangisinin adında ${phonetic} sesi var? Doğru resme dokun!`;
-
     return k1Base('k1_sound_feel', `👂 Sesi Hisset (${upper})`,
-      promptText,
-      spokenText,
-      `Tebrikler! "${target.word}" görselinde "${upper}" sesi vardır! ${target.emoji}👏`,
+      `Hangisinin adında "${upper}" sesi var? Dokun!`,
+      `Hangisinin adında ${phonetic} sesi var? Doğru resme dokun!`,
+      `Tebrikler! "${target.word}" görselinde "${upper}" sesi vardır! ${target.icon}👏`,
       { letter: upper, target: target.word, cards: cards });
   }
 
-  // --- HECE VE KELİME TRENİ (SÜRÜKLE BİRLEŞTİR): Sadece izin verilen kümülatif kelimeler ---
+  // --- HECE VE KELİME TRENİ (SÜRÜKLE BİRLEŞTİR): SADECE KİLİTLİ ANETIL_DATA ve isValidForCurrentLetter ---
   function generateK1WordTrain() {
-    const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
-    const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['n'];
-    const words = (data.cumulativeWords && data.cumulativeWords.length > 0)
-      ? data.cumulativeWords
-      : (MAARIF_2026_CONFIG.letters['n'].cumulativeWords || [{ word: 'AN', parts: ['A', 'N'], icon: '⏳' }]);
+    let activeL = (state.activeMaarifLetter || 'n').toLowerCase();
+    if (activeL === 'a') activeL = 'n'; // A harfinde hece/kelime olmadığı için güvenli fallback
+    const upper = activeL.toLocaleUpperCase('tr-TR');
+    const anetil = ANETIL_DATA[upper] || ANETIL_DATA['N'];
 
-    const item = k1Pick(words);
-    const parts = Array.from(item.word);
-    const learned = getLearnedLettersUpTo(activeL);
-    const extraSrc = learned.filter(l => !parts.includes(l));
-    const extras = k1Shuffle(extraSrc).slice(0, parts.length <= 3 ? 1 : 2);
+    // Yalnızca kilitli ANETIL_DATA kelimeleri ve validator kontrolü
+    const rawWords = (anetil.words && anetil.words.length > 0) ? anetil.words : ['ana', 'an'];
+    const validWords = rawWords.filter(w => isValidForCurrentLetter(w, upper));
+    const chosenRaw = k1Pick(validWords.length ? validWords : ['ana', 'an']);
+    const wordUpper = chosenRaw.toLocaleUpperCase('tr-TR');
+    const parts = Array.from(wordUpper);
+
+    // Ek vagonlar: SADECE bu harfe kadar izin verilen harflerden (allowedLetters)!
+    const allowedLettersUpper = (anetil.allowedLetters || ['A', 'N'])
+      .map(ch => ch.toLocaleUpperCase('tr-TR'))
+      .filter((ch, idx, arr) => arr.indexOf(ch) === idx);
+    const extraCandidates = allowedLettersUpper.filter(l => !parts.includes(l));
+    const extras = k1Shuffle(extraCandidates).slice(0, 1);
+
+    const wagons = k1Shuffle([...parts, ...extras]);
 
     return k1Base('k1_train', '🚂 Hece ve Kelime Treni',
       'Harf vagonlarını sırayla trene bağla!',
       'Harf vagonlarını sırayla trene bağla!',
-      `${item.word} ${item.icon || '🚂'} kelimesini oluşturdun! Tren yola çıktı! 🚂🎉`,
-      { word: item.word, emoji: item.icon || '🚂', parts: parts, wagons: k1Shuffle([...parts, ...extras]) });
+      `"${wordUpper}" kelimesini oluşturdun! Tren yola çıktı! 🚂🎉`,
+      { word: wordUpper, emoji: '🚂', parts: parts, wagons: wagons });
   }
 
-  // --- AKILLI HARF SEPETİ ---
+  // --- AKILLI HARF SEPETİ: SADECE ANETIL_DATA ve Öğrenilmiş Harfler ---
   function generateK1LetterBasket() {
     const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
-    const data = MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'];
-    const activeUpper = (data.upper || 'A');
+    const upper = activeL.toLocaleUpperCase('tr-TR');
 
-    // 1. Ses 'A' için özel hissetme sepeti: A ile Başlayanlar vs Başlamayanlar
-    if (activeL === 'a') {
-      const isA = Math.random() < 0.55;
-      const targetWord = isA
-        ? k1Pick(data.soundWords.filter(w => w.position === 'başta'))
-        : k1Pick(data.noSoundWords);
+    // 1. Ses 'A' için özel hissetme sepeti: A Olanlar vs A Olmayanlar
+    if (upper === 'A') {
+      const aData = ANETIL_DATA['A'];
+      const isA = Math.random() < 0.5;
+      const target = isA ? k1Pick(aData.hasSoundItems) : k1Pick(aData.noSoundItems);
       const basketLabel = isA ? 'A' : '❌';
+
       return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
-        `${targetWord.word} "A" harfiyle mi başlar? Doğru sepete bırak!`,
-        `${targetWord.word} "A" harfiyle mi başlar? Doğru sepete bırak!`,
-        isA ? `${targetWord.word} ${targetWord.emoji} "A" harfiyle başlar! 🧺👏` : `${targetWord.word} ${targetWord.emoji} "A" harfiyle başlamaz! 🧺👏`,
+        `${target.word} görselinde "A" sesi var mı? Doğru sepete bırak!`,
+        `${target.word} görselinde A sesi var mı? Doğru sepete bırak!`,
+        isA ? `${target.word} ${target.icon} görselinde "A" sesi vardır! 🧺👏` : `${target.word} ${target.icon} görselinde "A" sesi yoktur! 🧺👏`,
         {
           baskets: [{ letter: 'A' }, { letter: '❌' }],
-          item: { emoji: targetWord.emoji, word: targetWord.word, letter: basketLabel }
+          item: { emoji: target.icon, word: target.word, letter: basketLabel }
         });
     }
 
-    // İleri sesler (N, E, T, İ, L...) için kümülatif harflerden sepetler
-    const learned = getLearnedLettersUpTo(activeL).map(l => l.toLowerCase('tr-TR'));
-    const startWords = (l) => ((MAARIF_2026_CONFIG.letters[l] || {}).soundWords || []).filter(w => w.position === 'başta' && k1Lower(w.word)[0] === l);
-    let eligible = learned.filter(l => startWords(l).length > 0);
-    if (eligible.length < 2) eligible = ['a', 'n'];
+    // İleri sesler (N, E, T, İ, L): SADECE o ana kadarki izinli harfler
+    const anetil = ANETIL_DATA[upper] || ANETIL_DATA['N'];
+    const learnedUpper = (anetil.allowedLetters || ['A', 'N'])
+      .map(ch => ch.toLocaleUpperCase('tr-TR'))
+      .filter((ch, idx, arr) => arr.indexOf(ch) === idx);
 
-    const n = Math.min(eligible.length, 3);
-    let chosen = k1Shuffle(eligible).slice(0, n);
-    if (eligible.includes(activeL) && !chosen.includes(activeL)) chosen[0] = activeL;
-    chosen = k1Shuffle(chosen);
-    const chosenLetter = k1Pick(chosen);
-    const w = k1Pick(startWords(chosenLetter) || [{ word: 'Elma', emoji: '🍎' }]);
+    const targetBasket = upper;
+    const otherBaskets = learnedUpper.filter(ch => ch !== upper);
+    const altBasket = otherBaskets.length ? k1Pick(otherBaskets) : 'A';
+    const baskets = k1Shuffle([{ letter: targetBasket }, { letter: altBasket }]);
+
+    // Hedef harfle başlayan ANETIL_DATA kelimesi
+    const validWords = (anetil.words || []).filter(w => isValidForCurrentLetter(w, upper) && w.toLocaleUpperCase('tr-TR').startsWith(targetBasket));
+    const targetText = validWords.length ? k1Pick(validWords).toLocaleUpperCase('tr-TR') : targetBasket;
 
     return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
-      `${w.word} hangi harfle başlar? Sepete bırak!`,
-      `${w.word} hangi harfle başlar? Doğru sepete bırak!`,
-      `${w.word} ${w.emoji} "${k1Upper(chosenLetter)}" harfiyle başlar! 🧺👏`,
-      { baskets: chosen.map(l => ({ letter: k1Upper(l) })), item: { emoji: w.emoji, word: w.word, letter: k1Upper(chosenLetter) } });
+      `"${targetText}" hangi ses ile başlar? Doğru sepete bırak!`,
+      `${targetText} hangi ses ile başlar? Doğru sepete bırak!`,
+      `Tebrikler! "${targetText}" "${targetBasket}" sesi ile başlar! 🧺👏`,
+      {
+        baskets: baskets,
+        item: { emoji: '🔤', word: targetText, letter: targetBasket }
+      });
   }
 
   function generateK1AppleCount() {
