@@ -10009,25 +10009,25 @@
         const raw = this.drawFromPool(p, "grade3MathKarmaPool");
         return this.buildQuestionItem(raw, '🧮 3. Sınıf Matematik Süper Karma');
       // --- 3. SINIF: 2026 MAARİF MODELİ FEN BİLİMLERİ 7 ÖĞRENME ALANI ---
-      } else if (gameType === 'science_planet_layers_3') {
+      } else if (gameType === 'science_planet_layers_3' || gameType === 'science_unit1_3') {
         const raw = this.drawFromPool(this.grade3SciencePlanetLayersPool, "grade3SciencePlanetLayersPool");
         return this.buildQuestionItem(raw, '🌍 Dünya\'nın Katmanları & Gezegen Keşfi');
-      } else if (gameType === 'science_senses_3') {
+      } else if (gameType === 'science_senses_3' || gameType === 'science_unit2_3') {
         const raw = this.drawFromPool(this.grade3ScienceSensesPool, "grade3ScienceSensesPool");
         return this.buildQuestionItem(raw, '👂 Beş Duyu Dedektifi');
-      } else if (gameType === 'science_force_motion_3') {
+      } else if (gameType === 'science_force_motion_3' || gameType === 'science_unit3_3') {
         const raw = this.drawFromPool(this.grade3ScienceForceMotionPool, "grade3ScienceForceMotionPool");
         return this.buildQuestionItem(raw, '🧲 İtme mi Çekme mi? & Hareket Türleri');
-      } else if (gameType === 'science_matter_states_3') {
+      } else if (gameType === 'science_matter_states_3' || gameType === 'science_unit4_3') {
         const raw = this.drawFromPool(this.grade3ScienceMatterStatesPool, "grade3ScienceMatterStatesPool");
         return this.buildQuestionItem(raw, '🧊 Katı-Sıvı-Gaz Avcısı & Madde Özellikleri');
-      } else if (gameType === 'science_light_sound_3') {
+      } else if (gameType === 'science_light_sound_3' || gameType === 'science_unit5_3') {
         const raw = this.drawFromPool(this.grade3ScienceLightSoundPool, "grade3ScienceLightSoundPool");
         return this.buildQuestionItem(raw, '💡 Doğal mı Yapay mı? (Işık ve Ses)');
-      } else if (gameType === 'science_living_environment_3') {
+      } else if (gameType === 'science_living_environment_3' || gameType === 'science_unit6_3') {
         const raw = this.drawFromPool(this.grade3ScienceLivingEnvironmentPool, "grade3ScienceLivingEnvironmentPool");
         return this.buildQuestionItem(raw, '🌱 Canlı-Cansız Sınıflandır & Çevre');
-      } else if (gameType === 'science_electricity_safety_3') {
+      } else if (gameType === 'science_electricity_safety_3' || gameType === 'science_unit7_3') {
         const raw = this.drawFromPool(this.grade3ScienceElectricitySafetyPool, "grade3ScienceElectricitySafetyPool");
         return this.buildQuestionItem(raw, '⚡ Elektrik Kaynakları & Güvenli Kullanım');
       } else if (gameType === 'science_3_karma') {
@@ -10041,22 +10041,22 @@
         const raw = Math.random() < 0.5 ? this.drawFromPool(this.grade3ScienceForceMotionPool, "grade3ScienceForceMotionPool") : this.drawFromPool(this.grade3ScienceMatterStatesPool, "grade3ScienceMatterStatesPool");
         return this.buildQuestionItem(raw, '🧲 Kuvveti Tanıyalım ve Madde');
       // --- 3. SINIF: 2026 MAARİF MODELİ HAYAT BİLGİSİ 6 ÖĞRENME ALANI ---
-      } else if (gameType === 'lifescience_school_professions_3') {
+      } else if (gameType === 'lifescience_school_professions_3' || gameType === 'lifescience_unit1_3') {
         const raw = this.drawFromPool(this.grade3LifeScienceSchoolProfessionsPool, "grade3LifeScienceSchoolProfessionsPool");
         return this.buildQuestionItem(raw, '🏫 Kroki Okuma & Meslekler Düellosu');
-      } else if (gameType === 'lifescience_home_budget_3') {
+      } else if (gameType === 'lifescience_home_budget_3' || gameType === 'lifescience_unit2_3') {
         const raw = this.drawFromPool(this.grade3LifeScienceHomeBudgetPool, "grade3LifeScienceHomeBudgetPool");
         return this.buildQuestionItem(raw, '🏡 Planlı Yaşam & Bütçe/Tasarruf');
-      } else if (gameType === 'lifescience_health_consumer_3') {
+      } else if (gameType === 'lifescience_health_consumer_3' || gameType === 'lifescience_unit3_3') {
         const raw = this.drawFromPool(this.grade3LifeScienceHealthConsumerPool, "grade3LifeScienceHealthConsumerPool");
         return this.buildQuestionItem(raw, '🍎 Bilinçli Tüketici & Sağlıklı Beslenme');
-      } else if (gameType === 'lifescience_safety_traffic_3') {
+      } else if (gameType === 'lifescience_safety_traffic_3' || gameType === 'lifescience_unit4_3') {
         const raw = this.drawFromPool(this.grade3LifeScienceSafetyTrafficPool, "grade3LifeScienceSafetyTrafficPool");
         return this.buildQuestionItem(raw, '🚦 Trafik Levhaları & Acil Durum Rehberi');
-      } else if (gameType === 'lifescience_country_leaders_3') {
+      } else if (gameType === 'lifescience_country_leaders_3' || gameType === 'lifescience_unit5_3') {
         const raw = this.drawFromPool(this.grade3LifeScienceCountryLeadersPool, "grade3LifeScienceCountryLeadersPool");
         return this.buildQuestionItem(raw, '🇹🇷 Vali mi Kaymakam mı? & Öncülerimiz');
-      } else if (gameType === 'lifescience_nature_directions_3') {
+      } else if (gameType === 'lifescience_nature_directions_3' || gameType === 'lifescience_unit6_3') {
         const raw = this.drawFromPool(this.grade3LifeScienceNatureDirectionsPool, "grade3LifeScienceNatureDirectionsPool");
         return this.buildQuestionItem(raw, '🧭 Doğada Yön Bulma & Çevre Koruyucusu');
       } else if (gameType === 'lifescience_3_karma') {
@@ -11682,6 +11682,19 @@
       math_fractions_shapes_3: 'Kesirler ve Geometrik Cisimler',
       turkish_homonyms_figurative_3: 'Eş Sesli Kelimeler ve Mecaz Anlam',
       turkish_punctuation_5n1k_3: 'Noktalama, Yazım Kuralları ve 5N1K',
+            science_unit1_3: "Ünite 1: Gezegenimizi Tanıyalım (Dünya'nın Şekli & Katmanları)",
+      science_unit2_3: "Ünite 2: Beş Duyumuz (Duyu Organları ve Görevleri)",
+      science_unit3_3: "Ünite 3: Kuvveti Tanıyalım (Hareket Özellikleri, İtme & Çekme)",
+      science_unit4_3: "Ünite 4: Maddeyi Tanıyalım (Niteleyen Özellikler & Maddenin Halleri)",
+      science_unit5_3: "Ünite 5: Çevremizdeki Işık ve Sesler (Işık & Ses Kaynakları)",
+      science_unit6_3: "Ünite 6: Canlılar Dünyasına Yolculuk (Canlı/Cansız & Çevre)",
+      science_unit7_3: "Ünite 7: Elektrikli Araçlar (Kaynaklar & Güvenli Kullanım)",
+      lifescience_unit1_3: "Ünite 1: Okulumuzda Hayat (Güçlü Yönlerim, Kroki, Kurallar)",
+      lifescience_unit2_3: "Ünite 2: Evimizde Hayat (Komşuluk, Tasarruf, Aile Bütçesi)",
+      lifescience_unit3_3: "Ünite 3: Sağlıklı Hayat (Kişisel Bakım, Dengeli Beslenme, Tüketici)",
+      lifescience_unit4_3: "Ünite 4: Güvenli Hayat (Trafik İşaretleri, 112 & Teknoloji)",
+      lifescience_unit5_3: "Ünite 5: Ülkemizde Hayat (Yönetim Birimleri & Ortak Değerler)",
+      lifescience_unit6_3: "Ünite 6: Doğada Hayat (Bitki ve Hayvanlar, Yön Bulma, Geri Dönüşüm)",
       science_planet_layers_3: 'Dünya\'nın Katmanları & Gezegen Keşfi',
       science_senses_3: 'Beş Duyu Dedektifi',
       science_force_motion_3: 'İtme mi Çekme mi? & Hareket Türleri Düellosu',
@@ -17749,104 +17762,104 @@
           }
         ]
       },
-      {
+       {
         id: 'lifescience',
         name: 'Hayat Bilgisi',
         icon: '🌱',
         colorTheme: 'theme-lifescience',
-        tagline: '2026 Maarif Modeli',
+        tagline: '6 Ana Ünite & 2026 Maarif Modeli',
         description: 'Okulda empati ve meslekler, evde planlı yaşam ve tasarruf, bilinçli tüketici, trafik güvenliği, yönetim ve yön bulma! 🏫🏡🍎🚦🏛️🧭',
-        badge: 'Maarif Modeli 2026',
+        badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tüm Temalar / Karma Düello' },
-          { id: 'school', label: '🏫 Tema 1: Okulumuzda Hayat' },
-          { id: 'home', label: '🏡 Tema 2: Evimizde Hayat' },
-          { id: 'health', label: '🍎 Tema 3: Sağlıklı Hayat' },
-          { id: 'safety', label: '🚦 Tema 4: Güvenli Hayat' },
-          { id: 'country', label: '🇹🇷 Tema 5: Ülkemizde Hayat' },
-          { id: 'nature', label: '🧭 Tema 6: Doğada Hayat' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'life_unit1', label: '1️⃣ Okulumuzda Hayat' },
+          { id: 'life_unit2', label: '2️⃣ Evimizde Hayat' },
+          { id: 'life_unit3', label: '3️⃣ Sağlıklı Hayat' },
+          { id: 'life_unit4', label: '4️⃣ Güvenli Hayat' },
+          { id: 'life_unit5', label: '5️⃣ Ülkemizde Hayat' },
+          { id: 'life_unit6', label: '6️⃣ Doğada Hayat' }
         ],
         games: [
           {
             id: 'lifescience_school_professions_3',
             active: true,
-            title: 'Kroki Okuma & Meslekler Düellosu',
+            title: 'Ünite 1: Okulumuzda Hayat (Güçlü Yönlerim, Kroki, Okul Kuralları)',
             icon: '🏫',
-            badge: '🏫 Okulumuzda Hayat',
-            featureTag: '📐 Kroki & Meslekler',
-            description: 'Sınıf ve okul krokisi okuma, güçlü yönlerimiz, arkadaşlık ilişkileri, sosyal kulüpler ve meslekleri tanıma!',
-            tags: ['📐 Kroki Okuma', '💼 Meslekler', '🤝 Arkadaşlık & Empati', '🗳️ Dilek Kutusu'],
+            badge: '1. Ünite',
+            featureTag: '📐 Kroki & Güçlü Yönler',
+            description: 'Sınıf ve okul krokisi okuma, güçlü yönlerimiz, ilgi ve yetenekler, okul kuralları, sosyal kulüpler ve meslekleri tanıma!',
+            tags: ['📐 Kroki Okuma', '💼 Meslekler & Yetenek', '🤝 Arkadaşlık & Empati', '📜 Okul Kuralları'],
             btnText: 'Düelloyu Başlat',
-            topic: 'school'
+            topic: 'life_unit1'
           },
           {
             id: 'lifescience_home_budget_3',
             active: true,
-            title: 'Planlı Yaşam & Bütçe/Tasarruf Ustası',
+            title: 'Ünite 2: Evimizde Hayat (Komşuluk, Evimizin Yeri, İstek/İhtiyaç, Tasarruf)',
             icon: '🏡',
-            badge: '🏡 Evimizde Hayat',
-            featureTag: '🪙 Bütçe & Planlı Yaşam',
-            description: 'Geleneksel çocukluk oyunları, komşuluk ilişkileri, evdeki sorumluluklar, elektrik/su tasarrufu ve aile bütçesi!',
-            tags: ['🪙 Aile Bütçesi', '💡 Kaynak Tasarrufu', '⏰ Planlı Yaşam', '🤝 Komşuluk'],
+            badge: '2. Ünite',
+            featureTag: '🪙 Bütçe, Tasarruf & Komşuluk',
+            description: 'Komşuluk ilişkileri, evimizin yeri ve adresi, istek ve ihtiyaçlar, kaynak tasarrufu (elektrik/su) ve aile bütçesi!',
+            tags: ['🪙 Aile Bütçesi', '💡 Kaynak Tasarrufu', '📍 Evimizin Yeri', '🤝 Komşuluk Hakları'],
             btnText: 'Düelloyu Başlat',
-            topic: 'home'
+            topic: 'life_unit2'
           },
           {
             id: 'lifescience_health_consumer_3',
             active: true,
-            title: 'Bilinçli Tüketici (SKT/TSE) & Sağlıklı Beslenme',
+            title: 'Ünite 3: Sağlıklı Hayat (Kişisel Bakım, Dengeli Beslenme, Bilinçli Tüketici)',
             icon: '🍎',
-            badge: '🍎 Sağlıklı Hayat',
-            featureTag: '🛡️ SKT, TSE & Hijyen',
-            description: 'Kişisel bakım, gıdalarda SKT ve TSE damgası kontrolü, fiş/fatura, mevsimine göre dengeli beslenme ve ortak hijyen!',
-            tags: ['📅 Son Kullanma Tarihi', '🛡️ TSE & Fiş/Fatura', '🥦 Mevsiminde Beslenme', '🧼 Ortak Alan Hijyeni'],
+            badge: '3. Ünite',
+            featureTag: '🛡️ SKT, TSE, Fiş & Hijyen',
+            description: 'Kişisel bakım (el, diş, temizlik), mevsiminde dengeli beslenme, bilinçli tüketici hakları (SKT, TSE damgası, fiş/fatura)!',
+            tags: ['📅 Son Kullanma Tarihi', '🛡️ TSE & Fiş/Fatura', '🥦 Dengeli Beslenme', '🧼 Kişisel Bakım'],
             btnText: 'Düelloyu Başlat',
-            topic: 'health'
+            topic: 'life_unit3'
           },
           {
             id: 'lifescience_safety_traffic_3',
             active: true,
-            title: 'Trafik Levhaları & Acil Durum Rehberi',
+            title: 'Ünite 4: Güvenli Hayat (Trafik İşaretleri, Acil Durumlar, Teknolojik Araçlar)',
             icon: '🚦',
-            badge: '🚦 Güvenli Hayat',
-            featureTag: '🚨 Trafik & 112 Acil',
-            description: 'Trafik işaret ve levhaları, yaya güvenliği, ev/okul kazalarından korunma, deprem/yangın anında 112 ve güvenli adımlar!',
-            tags: ['🚦 Trafik Levhaları', '🚨 112 Acil Çağrı', '🛡️ Çök-Kapan-Tutun', '🛑 Güvenlik ve "Hayır!"'],
+            badge: '4. Ünite',
+            featureTag: '🚨 Trafik, 112 & Güvenli Teknoloji',
+            description: 'Trafik işaret ve levhaları, yaya güvenliği, acil durumlar (112, depremde çök-kapan-tutun) ve teknolojinin güvenli kullanımı!',
+            tags: ['🚦 Trafik İşaretleri', '🚨 112 Acil Durum', '📱 Güvenli Teknoloji', '🛡️ Çök-Kapan-Tutun'],
             btnText: 'Düelloyu Başlat',
-            topic: 'safety'
+            topic: 'life_unit4'
           },
           {
             id: 'lifescience_country_leaders_3',
             active: true,
-            title: 'Vali mi Kaymakam mı? & Değerlerimiz/Öncülerimiz',
+            title: 'Ünite 5: Ülkemizde Hayat (Yönetim Birimleri, Tarihi Güzellikler, Ortak Değerler)',
             icon: '🇹🇷',
-            badge: '🇹🇷 Ülkemizde Hayat',
-            featureTag: '🏛️ Vali, Kaymakam & Öncüler',
-            description: 'Yönetim birimleri (vali, kaymakam, muhtar), cumhuriyet, tarihi/doğal güzelliklerimiz, Atatürk ve Türk öncüleri!',
-            tags: ['🏛️ Vali & Kaymakam', '🗳️ Cumhuriyet', '✈️ Vecihi Hürkuş', '🧪 Aziz Sancar & Naim'],
+            badge: '5. Ünite',
+            featureTag: '🏛️ Vali, Kaymakam & Doğal Güzellikler',
+            description: 'Yönetim birimleri (Vali, Kaymakam, Muhtar), cumhuriyet, tarihi ve doğal güzelliklerimiz, milli marşımız ve ortak değerlerimiz!',
+            tags: ['🏛️ Vali & Kaymakam', '🗳️ Muhtar & Meclis', '🏰 Tarihi Güzellikler', '🇹🇷 Ortak Değerlerimiz'],
             btnText: 'Düelloyu Başlat',
-            topic: 'country'
+            topic: 'life_unit5'
           },
           {
             id: 'lifescience_nature_directions_3',
             active: true,
-            title: 'Doğada Yön Bulma (Pusula/Yosun) & Çevre Koruyucusu',
+            title: 'Ünite 6: Doğada Hayat (Bitki ve Hayvanların Önemi, Yön Bulma, Geri Dönüşüm)',
             icon: '🧭',
-            badge: '🧭 Doğada Hayat',
-            featureTag: '🧭 Pusula, Yosun & Çevre',
-            description: 'Pusula, Kutup Yıldızı, karınca yuvası ve yosunla yön bulma; nesli tükenen canlılar (kelaynak, caretta) ve geri dönüşüm!',
-            tags: ['🧭 Pusula & Yön Bulma', '⭐ Kutup Yıldızı', '🐢 Caretta & Kelaynak', '♻️ Geri Dönüşüm'],
+            badge: '6. Ünite',
+            featureTag: '🧭 Pusula, Yosun & Geri Dönüşüm',
+            description: 'Bitki ve hayvanların önemi, doğada yön bulma (pusula, Kutup Yıldızı, karınca yuvası, yosun) ve geri dönüşüm bilinci!',
+            tags: ['🧭 Pusula & Yön Bulma', '⭐ Kutup Yıldızı', '🐝 Bitki & Hayvanlar', '♻️ Geri Dönüşüm'],
             btnText: 'Düelloyu Başlat',
-            topic: 'nature'
+            topic: 'life_unit6'
           },
           {
             id: 'lifescience_3_karma',
             active: true,
-            title: '3. Sınıf Hayat Bilgisi Karma Düello',
+            title: '3. Sınıf Hayat Bilgisi Süper Karma',
             icon: '🌱',
-            badge: '🏆 3. Sınıf Hayat Bilgisi Karma',
-            featureTag: '🌟 6 Tema Büyük Tekrar',
-            description: 'Tüm 3. sınıf Hayat Bilgisi temalarından rastgele ve dengeli sorularla sınıf içi genel tekrar düellosu!',
+            badge: '⚡ 6 Ünite Karma',
+            featureTag: '🌟 6 Ünite Büyük Tekrar',
+            description: 'Tüm 3. sınıf Hayat Bilgisi ünitelerinden rastgele ve dengeli sorularla sınıf içi genel tekrar düellosu!',
             tags: ['🏫 Okul', '🏡 Evimiz', '🍎 Sağlık', '🚦 Güvenlik', '🇹🇷 Ülkemiz', '🧭 Doğa'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
@@ -17858,110 +17871,110 @@
         name: 'Fen Bilimleri',
         icon: '🔬',
         colorTheme: 'theme-science',
-        tagline: '2026 Maarif Modeli',
+        tagline: '7 Ana Ünite & 2026 Maarif Modeli',
         description: 'Dünya\'nın katmanları, 5 duyumuz, kuvvet ve hareket, katı-sıvı-gaz, ışık ve ses, canlılar dünyası ve elektrik! 🌍👂🧲🧊💡🌱⚡',
-        badge: 'Maarif Modeli 2026',
+        badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tüm Üniteler / Karma Düello' },
-          { id: 'planet_layers', label: '🌍 Ünite 1: Gezegenimizi Tanıyalım' },
-          { id: 'senses', label: '👂 Ünite 2: Beş Duyumuz' },
-          { id: 'force_motion', label: '🧲 Ünite 3: Kuvveti Tanıyalım' },
-          { id: 'matter_states', label: '🧊 Ünite 4: Maddeyi Tanıyalım' },
-          { id: 'light_sound', label: '💡 Ünite 5: Çevremizdeki Işık ve Sesler' },
-          { id: 'living_environment', label: '🌱 Ünite 6: Canlılar Dünyasına Yolculuk' },
-          { id: 'electricity_safety', label: '⚡ Ünite 7: Elektrikli Araçlar' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'sci_unit1', label: '1️⃣ Gezegenimizi Tanıyalım' },
+          { id: 'sci_unit2', label: '2️⃣ Beş Duyumuz' },
+          { id: 'sci_unit3', label: '3️⃣ Kuvveti Tanıyalım' },
+          { id: 'sci_unit4', label: '4️⃣ Maddeyi Tanıyalım' },
+          { id: 'sci_unit5', label: '5️⃣ Işık ve Sesler' },
+          { id: 'sci_unit6', label: '6️⃣ Canlılar Dünyası' },
+          { id: 'sci_unit7', label: '7️⃣ Elektrikli Araçlar' }
         ],
         games: [
           {
             id: 'science_planet_layers_3',
             active: true,
-            title: 'Dünya\'nın Katmanları & Gezegen Keşfi',
+            title: 'Ünite 1: Gezegenimizi Tanıyalım (Dünya\'nın Şekli ve Katmanları: Kara, Su, Hava)',
             icon: '🌍',
-            badge: '🌍 Gezegenimiz',
-            featureTag: '🪐 Çekirdek, Manto, Taş Küre',
-            description: 'Dünya\'nın küre şekli, kanıtları, içten dışa katmanları (çekirdek, manto, yer kabuğu) ve kara-su oranları!',
-            tags: ['🌍 Dünya\'nın Şekli', '🌋 Manto & Magma', '🟡 Çekirdek', '🌊 Karalar & Sular'],
+            badge: '1. Ünite',
+            featureTag: '🌍 Kara, Su, Hava Katmanları',
+            description: 'Dünya\'nın küre şekli, Macellan, uzay fotoğrafları ve katmanlar: Kara, Su, Hava, Manto ve Çekirdek!',
+            tags: ['🌍 Dünya\'nın Şekli', '🌊 Kara ve Su Katmanı', '💨 Hava Katmanı (Atmosfer)', '🌋 Manto ve Çekirdek'],
             btnText: 'Düelloyu Başlat',
-            topic: 'planet_layers'
+            topic: 'sci_unit1'
           },
           {
             id: 'science_senses_3',
             active: true,
-            title: 'Beş Duyu Dedektifi',
+            title: 'Ünite 2: Beş Duyumuz (Duyu Organları ve Görevleri)',
             icon: '👂',
-            badge: '👂 5 Duyumuz',
+            badge: '2. Ünite',
             featureTag: '👁️ Göz, Kulak, Burun, Dil, Deri',
-            description: 'Göz, kulak, burun, dil ve deri görevleri, duyu ilişkileri ve organ sağlığını koruma kuralları!',
-            tags: ['👁️ Görme & İşitme', '👃 Koku & Tat', '🖐️ Dokunma & Deri', '🛡️ Duyu Sağlığı'],
+            description: 'Göz, kulak, burun, dil ve deri; duyu organlarının görevleri, birbirleriyle ilişkisi ve organ sağlığı!',
+            tags: ['👁️ Göz & Görme', '👂 Kulak & İşitme', '👃 Burun & Koku', '👅 Dil & Deri Sağlığı'],
             btnText: 'Düelloyu Başlat',
-            topic: 'senses'
+            topic: 'sci_unit2'
           },
           {
             id: 'science_force_motion_3',
             active: true,
-            title: 'İtme mi Çekme mi? & Hareket Türleri Düellosu',
+            title: 'Ünite 3: Kuvveti Tanıyalım (Varlıkların Hareket Özellikleri: Hızlanma, Yavaşlama, Dönme; İtme ve Çekme)',
             icon: '🧲',
-            badge: '🧲 Kuvvet & Hareket',
-            featureTag: '⚡ Hızlanma, Yavaşlama, Yön',
-            description: 'İtme-çekme kuvveti, hızlanma, yavaşlama, sallanma, dönme ve hareketli cisimlerin oluşturabileceği tehlikeler!',
-            tags: ['🛒 İtme & Çekme', '🛑 Hızlanma & Yavaşlama', '🔄 Dönme & Sallanma', '⚠️ Hareket Tehlikeleri'],
+            badge: '3. Ünite',
+            featureTag: '⚡ Hızlanma, Yavaşlama & İtme/Çekme',
+            description: 'Varlıkların hareket özellikleri (hızlanma, yavaşlama, sallanma, dönme), itme ve çekme kuvveti ve hareket güvenliği!',
+            tags: ['🛒 İtme ve Çekme', '⚡ Hızlanma & Yavaşlama', '🔄 Dönme ve Sallanma', '🛑 Hareket Güvenliği'],
             btnText: 'Düelloyu Başlat',
-            topic: 'force_motion'
+            topic: 'sci_unit3'
           },
           {
             id: 'science_matter_states_3',
             active: true,
-            title: 'Katı-Sıvı-Gaz Avcısı & Madde Özellikleri',
+            title: 'Ünite 4: Maddeyi Tanıyalım (Maddeyi Niteleyen Özellikler: Sert/Yumuşak, Kırılgan; Maddenin Halleri)',
             icon: '🧊',
-            badge: '🧊 Maddeyi Tanıyalım',
-            featureTag: '💧 Katı, Sıvı, Gaz & Nitelikler',
-            description: 'Sert-yumuşak, esnek-kırılgan, pürüzlü-pürüzsüz maddeler, maddenin 3 temel hali ve kimyasal güvenlik!',
-            tags: ['🧊 Katı, Sıvı, Gaz', '🧽 Esnek & Berk', '🥛 Kırılgan Madde', '⚠️ Kimyasal Güvenlik'],
+            badge: '4. Ünite',
+            featureTag: '🧊 Sert, Kırılgan & Katı, Sıvı, Gaz',
+            description: 'Maddeyi niteleyen özellikler (sert/yumuşak, esnek/kırılgan, pürüzlü), maddenin 3 temel hali (katı, sıvı, gaz)!',
+            tags: ['🧽 Sert ve Esnek', '🥛 Kırılgan Madde', '🧊 Katı, Sıvı ve Gaz', '⚠️ Bilinmeyen Maddeler'],
             btnText: 'Düelloyu Başlat',
-            topic: 'matter_states'
+            topic: 'sci_unit4'
           },
           {
             id: 'science_light_sound_3',
             active: true,
-            title: 'Doğal mı Yapay mı? (Işık ve Ses Düellosu)',
+            title: 'Ünite 5: Çevremizdeki Işık ve Sesler (Işık Kaynakları, Sesin İşitmedeki Rolü, Doğal ve Yapay Ses)',
             icon: '💡',
-            badge: '💡 Işık ve Ses',
-            featureTag: '☀️ Doğal & Yapay Kaynaklar',
-            description: 'Işığın görmedeki rolü, doğal/yapay ışık ve ses kaynakları, sesin yayılması, şiddeti ve işitme sağlığı!',
-            tags: ['☀️ Doğal Işık', '💡 Yapay Işık', '📢 Sesin Yayılması', '🎧 İşitme Sağlığı'],
+            badge: '5. Ünite',
+            featureTag: '💡 Işık & Sesin İşitmedeki Rolü',
+            description: 'Işık kaynakları, ışığın görmedeki rolü, sesin işitmedeki rolü, doğal ve yapay ses kaynakları ve ses kirliliği!',
+            tags: ['☀️ Doğal Işık Kaynağı', '💡 Yapay Işık Kaynağı', '📢 Doğal ve Yapay Ses', '🎧 İşitme Sağlığı'],
             btnText: 'Düelloyu Başlat',
-            topic: 'light_sound'
+            topic: 'sci_unit5'
           },
           {
             id: 'science_living_environment_3',
             active: true,
-            title: 'Canlı-Cansız Sınıflandır & Doğal/Yapay Çevre',
+            title: 'Ünite 6: Canlılar Dünyasına Yolculuk (Canlı ve Cansız Varlıklar, Çevremizi Temiz Tutalım)',
             icon: '🌱',
-            badge: '🌱 Canlılar Dünyası',
-            featureTag: '🌻 7 Ortak Özellik & Döngü',
-            description: 'Canlı-cansız varlıklar, canlıların 7 ortak özelliği, bitkinin yaşam döngüsü, doğal/yapay çevre ve doğa koruma!',
-            tags: ['🐾 Canlı ve Cansız', '🌿 Canlıların Özellikleri', '🫘 Bitki Yaşam Döngüsü', '🏞️ Doğal/Yapay Çevre'],
+            badge: '6. Ünite',
+            featureTag: '🌱 Canlıların Özellikleri & Çevre',
+            description: 'Canlı ve cansız varlıkların farkı, canlıların 7 ortak özelliği, bitkinin yaşam döngüsü, doğal/yapay çevre ve temizlik!',
+            tags: ['🐾 Canlı ve Cansız', '🌿 Canlıların Özellikleri', '🫘 Yaşam Döngüsü', '🏞️ Çevremizi Temiz Tutalım'],
             btnText: 'Düelloyu Başlat',
-            topic: 'living_environment'
+            topic: 'sci_unit6'
           },
           {
             id: 'science_electricity_safety_3',
             active: true,
-            title: 'Elektrik Kaynakları & Güvenli Kullanım',
+            title: 'Ünite 7: Elektrikli Araçlar (Elektrik Kaynakları: Pil, Akü, Şebeke; Elektriğin Güvenli Kullanımı)',
             icon: '⚡',
-            badge: '⚡ Elektrikli Araçlar',
-            featureTag: '🔌 Priz, Pil, Akü, Batarya',
-            description: 'Elektrikli aletlerin kullanım amaçları, şehir elektriği, pil, akü, batarya, atık pil tehlikesi ve elektrik güvenliği!',
-            tags: ['🔌 Şehir Elektriği', '🔋 Pil, Akü, Batarya', '🪫 Atık Pil Bilinci', '⚡ Elektrik Çarpması'],
+            badge: '7. Ünite',
+            featureTag: '⚡ Elektrik Kaynakları & Güvenlik',
+            description: 'Elektrik kaynakları (pil, batarya, akü, şehir şebekesi), atık pillerin çevreye zararı ve elektriğin güvenli kullanımı!',
+            tags: ['🔌 Şebeke Elektriği', '🔋 Pil, Batarya & Akü', '🪫 Atık Pil Kutusu', '⚡ Elektrik Güvenliği'],
             btnText: 'Düelloyu Başlat',
-            topic: 'electricity_safety'
+            topic: 'sci_unit7'
           },
           {
             id: 'science_3_karma',
             active: true,
-            title: '3. Sınıf Fen Bilimleri Karma Düello',
+            title: '3. Sınıf Fen Bilimleri Süper Karma',
             icon: '🔬',
-            badge: '🏆 3. Sınıf Fen Karma',
+            badge: '⚡ 7 Ünite Karma',
             featureTag: '🌟 7 Ünite Büyük Tekrar',
             description: 'Tüm 3. sınıf Fen Bilimleri ünitelerinden rastgele ve dengeli sorularla büyük sınıf içi düello!',
             tags: ['🌍 Dünya', '👂 Duyular', '🧲 Kuvvet', '🧊 Madde', '💡 Işık/Ses', '🌱 Canlılar', '⚡ Elektrik'],
@@ -17970,7 +17983,7 @@
           }
         ]
       },
-      {
+     {
         id: 'english',
         name: 'İngilizce',
         icon: '🌍',
@@ -26794,6 +26807,30 @@
   window.loadSpeechIndex = loadSpeechIndex;
   window.GRADE_SUBJECTS_CONFIG = GRADE_SUBJECTS_CONFIG;
   window.QuestionEngine = QuestionEngine;
+
+  // 3. SINIF FEN BİLİMLERİ & HAYAT BİLGİSİ 2026 MAARİF MODELİ EKSTRA KAZANIM SORULARI
+  try {
+    const extraSci = {"science_planet_layers_3":[{"q":"Dünya'mızın dışını saran, içinde nefes aldığımız gazların bulunduğu hava tabakasına ne ad verilir? 💨","a":"Atmosfer (Hava Küre) 💨","d":["Magma Tabakası","Çekirdek"],"exp":"Dünya'yı çepeçevre saran gaz tabakasına hava küre veya atmosfer denir."},{"q":"Dünya yüzeyinde insanların, hayvanların ve bitkilerin üzerinde yaşadığı dağlar ve ovalardan oluşan katman hangisidir? ⛰️","a":"Kara Katmanı (Taş Küre) ⛰️","d":["Ateş Küre","Ağır Küre"],"exp":"Üzerinde yaşadığımız, bastığımız sert tabaka yer kabuğu yani taş küredir."},{"q":"Dünya'nın iç kısmında bulunan ve çok sıcak erimiş kayalardan (magma) oluşan katman hangisidir? 🌋","a":"Manto (Ateş Küre) 🌋","d":["Hava Küre","Su Küre"],"exp":"Manto katmanı yüksek sıcaklıktaki erimiş kayalardan oluşur ve volkanlardan çıkan lavların kaynağıdır."},{"q":"Kıyıdan denize açılan bir gemiyi izlediğimizde önce gövdesinin, en son bacasının kaybolması Dünya'nın hangi özelliğini kanıtlar? ⛵","a":"Küre şeklinde olduğunu 🌍","d":["Düz bir tepsi olduğunu","Küp şeklinde olduğunu"],"exp":"Küre şekli nedeniyle ufuk çizgisinde uzaklaşan cisimler parça parça gözden kaybolur."},{"q":"Dünya'nın merkezinde yer alan, sıcaklığı ve yoğunluğu en yüksek olan katman hangisidir? 🟡","a":"Çekirdek (Ağır Küre) 🟡","d":["Yer Kabuğu","Atmosfer"],"exp":"Dünya'nın en iç merkezinde çekirdek bulunur."}],"science_senses_3":[{"q":"Burnumuz tıkandığında yiyeceklerin tadını tam olarak alamamamız hangi iki duyu organının birlikte çalıştığını gösterir? 👃👅","a":"Koku alma (Burun) ve Tat alma (Dil) 👃👅","d":["Göz ve Kulak","Deri ve Göz"],"exp":"Koku ve tat alma duyuları beyinde birlikte değerlendirilir, burnumuz tıkalıyken lezzet tam algılanamaz."},{"q":"Göz sağlığımızı korumak için yazı yazarken veya kitap okurken ışık nereden gelmelidir? 💡","a":"Sol arkadan veya üstten gelmelidir 💡","d":["Doğrudan gözümüzün içine","Tam önümüzden yüzümüze"],"exp":"Işık gözü yormayacak şekilde sol arkadan veya tepeden gelmelidir."},{"q":"Aşırı sıcak, aşırı soğuk veya çok acı yiyecekler tüketmek en çok hangi duyu organımızın sağlığına zarar verir? 👅","a":"Dil 👅","d":["Kulak","Burun"],"exp":"Çok sıcak ve yakıcı besinler dildeki tat alma tomurcuklarını tahriş eder."}],"science_force_motion_3":[{"q":"Ağacın dalından kopan bir elmanın yere doğru düşerken yaptığı hareket hangisidir? 🍎","a":"Hızlanma hareketi 🍎","d":["Yavaşlama hareketi","Sallanma hareketi"],"exp":"Yerçekimi etkisiyle düşen cisimler yere yaklaştıkça hızlanır."},{"q":"Rüzgâr gülünün pervanelerinin veya dönme dolabın yaptığı ortak hareket türü nedir? 🎡","a":"Dönme hareketi 🔄","d":["Çekme kuvveti","Yavaşlama"],"exp":"Sabit bir nokta etrafında çembersel hareket dönme hareketidir."},{"q":"Markette alışveriş arabasını ileriye doğru sürerken arabaya hangi kuvveti uygularız? 🛒","a":"İtme kuvveti 🛒","d":["Çekme kuvveti","Durdurma kuvveti"],"exp":"Cisimleri kendimizden uzaklaştıracak yönde uygulanan kuvvet itme kuvvetidir."}],"science_matter_states_3":[{"q":"Kolayca kırılan, darbe aldığında çatlayıp dağılan cam bardak ve porselen tabak nasıl maddelerdir? 🥛","a":"Kırılgan madde 🥛","d":["Esnek madde","Yumuşak madde"],"exp":"Darbe aldığında esnemeyip kırılan maddelere kırılgan madde denir."},{"q":"Belirli bir şekli olmayan, konulduğu kabın şeklini alan ve akışkan olan su, süt ve meyve suyu hangi haldedir? 💧","a":"Sıvı maddeler 💧","d":["Katı maddeler","Gaz maddeler"],"exp":"Sıvıların belirli bir hacmi vardır fakat belirli bir şekli yoktur."},{"q":"Bulunduğu odanın veya kabın tamamına hızla yayılan hava, su buharı ve doğalgaz hangi haldedir? 💨","a":"Gaz maddeler 💨","d":["Katı maddeler","Sıvı maddeler"],"exp":"Gazlar bulundukları kabın veya ortamın tamamına yayılırlar."}],"science_light_sound_3":[{"q":"Aşağıdakilerden hangisi DOĞAL bir ışık kaynağıdır? ☀️","a":"Güneş ve Yıldızlar ☀️","d":["El feneri ve ampul","Mum ve gaz lambası"],"exp":"Doğada kendiliğinden ışık yayan Güneş ve yıldızlar doğal ışık kaynağıdır."},{"q":"Gök gürültüsü, dalga sesi ve kuş cıvıltısı hangi ses kaynağına örnektir? 🌊","a":"Doğal ses kaynağı 🌊","d":["Yapay ses kaynağı","Mekanik ses kaynağı"],"exp":"Doğadaki canlılar ve doğa olaylarının çıkardığı sesler doğal seslerdir."},{"q":"Şehirlerde araç kornaları, iş makineleri ve yüksek sesli müzik hangi çevre kirliliğine yol açar? 🎧","a":"Ses kirliliği (Gürültü) 🎧","d":["Hava kirliliği","Toprak kirliliği"],"exp":"Rahatsız edici ve sağlığı bozan aşırı sesler ses kirliliği oluşturur."}],"science_living_environment_3":[{"q":"Toprağa ekilen bir fasulye tohumunun uygun ısı, su ve hava ile yeşerip büyümesi canlıların hangi özelliğidir? 🌱","a":"Büyüme ve gelişme 🌱","d":["Yapay çevre","Dönme hareketi"],"exp":"Tüm canlılar beslenerek büyür ve gelişir."},{"q":"İnsanlar tarafından inşa edilen parklar, bahçeler, akvaryumlar ve hayvanat bahçeleri nasıl bir çevredir? 🏙️","a":"Yapay çevre 🏙️","d":["Doğal çevre","Orman ekosistemi"],"exp":"İnsan eliyle oluşturulan alanlara yapay çevre denir."},{"q":"Çevremizi temiz tutmak ve doğal kaynakları korumak için çöplerimizi ne yapmalıyız? ♻️","a":"Geri dönüşüm kutularına türlerine göre atmalıyız ♻️","d":["Denizlere ve ormanlara dökmeliyiz","Hepsini aynı poşete doldurup yakmalıyız"],"exp":"Geri dönüşüm sayesinde çevre kirliliği önlenir ve hammadde tasarrufu sağlanır."}],"science_electricity_safety_3":[{"q":"Dizüstü bilgisayar, cep telefonu ve tablet gibi şarj edilebilen taşınabilir cihazlarda hangi elektrik kaynağı bulunur? 📱","a":"Batarya 📱","d":["Şehir elektriği kablosu","Dinamolu santral"],"exp":"Taşınabilir şarjlı cihazlarda batarya kullanılır."},{"q":"Kullanılmış bitik pilleri toprağa veya normal çöpe atmak yerine nereye atmalıyız? 🪫","a":"Atık Pil Toplama Kutusuna 🪫","d":["Su kanallarına","Plastik poşete sarıp bahçeye"],"exp":"Pillerdeki zararlı kimyasalların toprağa ve suya karışmaması için atık pil kutuları kullanılır."},{"q":"Elektrik prizlerine ıslak elle dokunmak veya metal cisimler sokmak ne gibi bir tehlike yaratır? ⚡","a":"Elektrik çarpmasına ve ölümcül kazalara yol açabilir ⚡","d":["Cihazın daha hızlı şarj olmasını sağlar","Hiçbir tehlikesi yoktur"],"exp":"Islak zemin ve metal cisimler elektriği çok iyi iletir, hayati tehlike oluşturur."}]};
+    const extraLife = {"lifescience_school_professions_3":[{"q":"Sınıf veya okul krokisi çizerken sıraları, öğretmen masasını ve kapıyı göstermek için ne kullanırız? 📐","a":"Basit geometrik şekiller ve semboller 📐","d":["Gerçek fotoğraflar","Ressam tabloları"],"exp":"Krokilerde varlıklar basit geometrik şekillerle (kare, dikdörtgen) gösterilir."},{"q":"Müzik aleti çalmak, güzel resim yapmak veya sporda başarılı olmak bizim hangi yönümüzü ifade eder? 🎨","a":"Güçlü yönlerimizi ve yeteneklerimizi 🎨","d":["Zayıf yönlerimizi","Okul krokisini"],"exp":"Her bireyin ilgi duyduğu ve yetenekli olduğu güçlü yönleri vardır."},{"q":"Okul koridorlarında koşmamak, çöpleri çöp kutusuna atmak ve derse zamanında girmek neye örnektir? 📜","a":"Okul kurallarına uymaya 📜","d":["Yapay çevreye","Bilinçli tüketiciye"],"exp":"Okulda düzeni ve güvenliği sağlamak için kurallara uyulur."}],"lifescience_home_budget_3":[{"q":"Evde dişlerimizi fırçalarken musluğu kapatmak ve gündüz vakti gereksiz lambaları söndürmek ne sağlar? 💡💧","a":"Aile ve ülke bütçesinde tasarruf 💡💧","d":["Fatura tutarının artmasını","Suların boşa akmasını"],"exp":"Kaynakların bilinçli kullanımı hem aile hem de ülke ekonomisine katkı sağlar."},{"q":"Yaşamımızı sürdürebilmek için mutlaka karşılanması gereken yemek, su, giyinme ve barınma nelerdir? 🍞","a":"Temel İhtiyaçlarımız 🍞","d":["Keyfi İsteklerimiz","Oyun araçlarımız"],"exp":"Hayatımızı devam ettirmek için zorunlu olan gereksinimler ihtiyaçtır."},{"q":"Komşularımız hastalandığında veya bir sevinç yaşadıklarında onları ziyaret edip tebrik/destek olmak neyin göstergesidir? 🤝","a":"İyi komşuluk ilişkilerinin ve dayanışmanın 🤝","d":["Kaynak israfının","Trafik kurallarının"],"exp":"Komşuluk hakları ve dayanışma kültürümüzün önemli bir parçasıdır."}],"lifescience_health_consumer_3":[{"q":"Sağlığımızı korumak için yemeklerden önce ve sonra, tuvaletten çıktıktan sonra ellerimizi en az kaç saniye yıkamalıyız? 🧼","a":"En az 20 saniye sabunla 🧼","d":["2 saniye sadece suyla","Hiç yıkamamalıyız"],"exp":"Mikroplardan arınmak için eller en az 20 saniye sabunla ovalanmalıdır."},{"q":"Vücudumuzun sağlıklı büyümesi için her besin grubundan (et, süt, sebze, meyve) yeterli miktarda almaya ne denir? 🥗","a":"Dengeli ve düzenli beslenme 🥗","d":["Tek tip beslenme","Fast food tüketimi"],"exp":"Farklı besin gruplarından yeterli ve dengeli beslenmek bağışıklığı güçlendirir."},{"q":"Satın aldığımız ambalajlı bir ürün bozuk veya hatalı çıkarsa ne yapmalıyız? 🧾","a":"Fiş veya faturamızla satıcıya gidip değişim veya iade istemeliyiz 🧾","d":["Hemen çöpe atıp unutmalıyız","Bozuk da olsa yemeliyiz"],"exp":"Bilinçli tüketici fişini saklar ve kusurlu ürünü iade etme hakkını kullanır."}],"lifescience_safety_traffic_3":[{"q":"Trafikte karşıdan karşıya geçerken trafik lambası yoksa en güvenli yollar hangileridir? 🦓","a":"Yaya geçidi, okul geçidi, alt ve üst geçitler 🦓","d":["Arabaların arasından koşarak geçmek","Virajlı yollardan geçmek"],"exp":"Yaya geçitleri ve alt/üst geçitler güvenli geçiş noktalarıdır."},{"q":"Deprem sarsıntısı başladığında sağlam bir masa veya sıranın yanında yapmamız gereken hayat kurtaran hareket nedir? 🛡️","a":"Çök - Kapan - Tutun 🛡️","d":["Balkondan aşağı atlamak","Merdivenlere doğru koşmak"],"exp":"Deprem anında çök-kapan-tutun pozisyonu baş ve boyun bölgemizi korur."},{"q":"Bilgisayar, tablet ve internet kullanırken güvenliğimiz için hangisini ASLA yapmamalıyız? 📱","a":"Tanımadığımız kişilere adresimizi ve şifrelerimizi vermek ❌","d":["Ders videoları izlemek","Eğitici oyunlar oynamak"],"exp":"İnternette kişisel bilgilerimizi ve şifrelerimizi kimseyle paylaşmamalıyız."}],"lifescience_country_leaders_3":[{"q":"İlimizde cumhurbaşkanını ve devleti temsil eden, ildeki en yetkili yönetici amir kimdir? 🏛️","a":"Vali 🏛️","d":["Muhtar","Okul Müdürü"],"exp":"İlin en yetkili mülki idare amiri validir."},{"q":"Nevşehir ilimizde bulunan, rüzgar ve sel sularının volkanik tüfleri aşındırmasıyla oluşan tarihi ve doğal yapılar nelerdir? 🏜️","a":"Peri Bacaları 🏜️","d":["Pamukkale Travertenleri","Manavgat Şelalesi"],"exp":"Kapadokya bölgesindeki Peri Bacaları ülkemizin dünyaca ünlü doğal güzelliğidir."},{"q":"Milli marşımız İstiklal Marşı'mızın şairi kimdir? ✍️","a":"Mehmet Akif Ersoy ✍️","d":["Nazım Hikmet","Evliya Çelebi"],"exp":"İstiklal Marşı'mızın şairi Mehmet Akif Ersoy'dur."}],"lifescience_nature_directions_3":[{"q":"Güneş'in doğduğu yöne SAĞ KOLUMUZU uzatırsak, ÖNÜMÜZ daima hangi ana yönü gösterir? 🧭","a":"Kuzey yönünü 🧭","d":["Güney yönünü","Batı yönünü"],"exp":"Sağ kol doğuya, sol kol batıya baktığında önümüz kuzeyi, arkamız güneyi gösterir."},{"q":"Geceleri bulutsuz ve açık bir gökyüzünde daima KUZEY yönünü gösteren parlak yıldız hangisidir? ⭐","a":"Kutup Yıldızı (Demirkazık) ⭐","d":["Çoban Yıldızı","Kuyruklu Yıldız"],"exp":"Kutup Yıldızı gökyüzünde daima kuzey yönünü gösterir."},{"q":"Bitkilerin tohum oluşturabilmesi ve meyve verebilmesi için çiçekler arasında polen taşıyan en önemli canlı hangisidir? 🐝","a":"Arılar ve böcekler 🐝","d":["Salyangozlar","Balıklar"],"exp":"Arılar tozlaşmayı sağlayarak bitkilerin ve tarımın devamlılığını sağlar."}]};
+    
+    if (QuestionEngine.grade3SciencePlanetLayersPool && extraSci.science_planet_layers_3) QuestionEngine.grade3SciencePlanetLayersPool.push(...extraSci.science_planet_layers_3);
+    if (QuestionEngine.grade3ScienceSensesPool && extraSci.science_senses_3) QuestionEngine.grade3ScienceSensesPool.push(...extraSci.science_senses_3);
+    if (QuestionEngine.grade3ScienceForceMotionPool && extraSci.science_force_motion_3) QuestionEngine.grade3ScienceForceMotionPool.push(...extraSci.science_force_motion_3);
+    if (QuestionEngine.grade3ScienceMatterStatesPool && extraSci.science_matter_states_3) QuestionEngine.grade3ScienceMatterStatesPool.push(...extraSci.science_matter_states_3);
+    if (QuestionEngine.grade3ScienceLightSoundPool && extraSci.science_light_sound_3) QuestionEngine.grade3ScienceLightSoundPool.push(...extraSci.science_light_sound_3);
+    if (QuestionEngine.grade3ScienceLivingEnvironmentPool && extraSci.science_living_environment_3) QuestionEngine.grade3ScienceLivingEnvironmentPool.push(...extraSci.science_living_environment_3);
+    if (QuestionEngine.grade3ScienceElectricitySafetyPool && extraSci.science_electricity_safety_3) QuestionEngine.grade3ScienceElectricitySafetyPool.push(...extraSci.science_electricity_safety_3);
+
+    if (QuestionEngine.grade3LifeScienceSchoolProfessionsPool && extraLife.lifescience_school_professions_3) QuestionEngine.grade3LifeScienceSchoolProfessionsPool.push(...extraLife.lifescience_school_professions_3);
+    if (QuestionEngine.grade3LifeScienceHomeBudgetPool && extraLife.lifescience_home_budget_3) QuestionEngine.grade3LifeScienceHomeBudgetPool.push(...extraLife.lifescience_home_budget_3);
+    if (QuestionEngine.grade3LifeScienceHealthConsumerPool && extraLife.lifescience_health_consumer_3) QuestionEngine.grade3LifeScienceHealthConsumerPool.push(...extraLife.lifescience_health_consumer_3);
+    if (QuestionEngine.grade3LifeScienceSafetyTrafficPool && extraLife.lifescience_safety_traffic_3) QuestionEngine.grade3LifeScienceSafetyTrafficPool.push(...extraLife.lifescience_safety_traffic_3);
+    if (QuestionEngine.grade3LifeScienceCountryLeadersPool && extraLife.lifescience_country_leaders_3) QuestionEngine.grade3LifeScienceCountryLeadersPool.push(...extraLife.lifescience_country_leaders_3);
+    if (QuestionEngine.grade3LifeScienceNatureDirectionsPool && extraLife.lifescience_nature_directions_3) QuestionEngine.grade3LifeScienceNatureDirectionsPool.push(...extraLife.lifescience_nature_directions_3);
+  } catch (e) {
+    console.warn("Could not append extra G3 sci/life questions:", e);
+  }
+
 
   // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {
