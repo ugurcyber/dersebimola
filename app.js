@@ -10077,22 +10077,25 @@
           lang: 'en'
         }, '👨‍👩‍👧 Family, Feelings & Abilities');
       // --- 4. SINIF: MEB / MAARİF MODELİ MATEMATİK 6 ÖĞRENME ALANI ---
-      } else if (gameType === 'math_numbers_place_value_4') {
+      } else if (gameType === 'math_numbers_place_value_4' || gameType === 'math_unit1_4') {
         const raw = this.drawFromPool(this.grade4MathNumbersPlaceValuePool, "grade4MathNumbersPlaceValuePool");
         return this.buildQuestionItem(raw, '👑 Binler Bölüğü & 6 Basamaklı Sayı Ustası');
-      } else if (gameType === 'math_four_operations_4') {
+      } else if (gameType === 'math_unit2_4') {
+        const raw = this.drawFromPool(this.grade4MathUnit2Pool || this.grade4MathFourOperationsPool, "grade4MathUnit2Pool");
+        return this.buildQuestionItem(raw, '➕ 4 Basamaklı Toplama ve Çıkarma İşlemi');
+      } else if (gameType === 'math_four_operations_4' || gameType === 'math_unit3_4') {
         const raw = this.drawFromPool(this.grade4MathFourOperationsPool, "grade4MathFourOperationsPool");
         return this.buildQuestionItem(raw, '⚡ 4 İşlem Şampiyonu & Eşitlik Dengesi Düellosu');
-      } else if (gameType === 'math_fractions_operations_4') {
+      } else if (gameType === 'math_fractions_operations_4' || gameType === 'math_unit4_4') {
         const raw = this.drawFromPool(this.grade4MathFractionsPool, "grade4MathFractionsPool");
         return this.buildQuestionItem(raw, '🍕 Basit-Bileşik-Tam Sayılı Kesir Avcısı & Kesir Problemleri');
       } else if (gameType === 'math_time_data_4') {
         const raw = this.drawFromPool(this.grade4MathTimeDataPool, "grade4MathTimeDataPool");
         return this.buildQuestionItem(raw, '⏰ Zaman Dönüşümleri & Sütun Grafiği Dedektifi');
-      } else if (gameType === 'math_geometry_angles_4') {
+      } else if (gameType === 'math_geometry_angles_4' || gameType === 'math_unit5_4') {
         const raw = this.drawFromPool(this.grade4MathGeometryAnglesPool, "grade4MathGeometryAnglesPool");
         return this.buildQuestionItem(raw, '📐 Dar-Dik-Geniş Açı & Eşkenar/İkizkenar Üçgen Ustası');
-      } else if (gameType === 'math_measurement_perimeter_area_4') {
+      } else if (gameType === 'math_measurement_perimeter_area_4' || gameType === 'math_unit6_4') {
         const raw = this.drawFromPool(this.grade4MathMeasurementPool, "grade4MathMeasurementPool");
         return this.buildQuestionItem(raw, '📏 Çevre-Alan Hesaplama & Ölçü Dönüşümleri');
       } else if (gameType === 'math_4_karma') {
@@ -10108,22 +10111,22 @@
         const raw = this.generateGrade4PerimeterArea();
         return this.buildQuestionItem(raw, '📐 Çevre ve Alan Hesaplama');
       // --- 4. SINIF: MEB / MAARİF MODELİ TÜRKÇE 6 ÖĞRENME ALANI & BÜYÜK KARMA ---
-      } else if (gameType === 'turkish_word_meaning_4') {
+      } else if (gameType === 'turkish_word_meaning_4' || gameType === 'turkish_module1_4') {
         const raw = this.drawFromPool(this.grade4TurkishWordMeaningPool, "grade4TurkishWordMeaningPool");
         return this.buildQuestionItem(raw, '🎭 Gerçek-Mecaz-Terim Anlam & Türkçe Karşılıklar Düellosu');
       } else if (gameType === 'turkish_idioms_proverbs_4') {
         const raw = this.drawFromPool(this.grade4TurkishIdiomsProverbsPool, "grade4TurkishIdiomsProverbsPool");
         return this.buildQuestionItem(raw, '🏆 Deyim, Atasözü ve Özdeyiş Ustası');
-      } else if (gameType === 'turkish_sentence_meaning_4' || gameType === 'turkish_sentences_logic_4') {
+      } else if (gameType === 'turkish_sentence_meaning_4' || gameType === 'turkish_sentences_logic_4' || gameType === 'turkish_module2_4') {
         const raw = this.drawFromPool(this.grade4TurkishSentenceMeaningPool, "grade4TurkishSentenceMeaningPool");
         return this.buildQuestionItem(raw, '💡 Öznel mi Nesnel mi? & Cümlede Anlam Dedektifi');
-      } else if (gameType === 'turkish_paragraph_text_types_4') {
+      } else if (gameType === 'turkish_paragraph_text_types_4' || gameType === 'turkish_module3_4') {
         const raw = this.drawFromPool(this.grade4TurkishParagraphTextTypesPool, "grade4TurkishParagraphTextTypesPool");
         return this.buildQuestionItem(raw, '📖 Paragraf & Metin Türleri (Fabl-Masal-Anı) Şampiyonu');
-      } else if (gameType === 'turkish_grammar_word_structure_4') {
+      } else if (gameType === 'turkish_grammar_word_structure_4' || gameType === 'turkish_module5_4') {
         const raw = this.drawFromPool(this.grade4TurkishGrammarWordStructurePool, "grade4TurkishGrammarWordStructurePool");
         return this.buildQuestionItem(raw, '🧱 Basit-Türemiş-Birleşik Sözcük & Zamir/Sıfat Avcısı');
-      } else if (gameType === 'turkish_spelling_punctuation_4') {
+      } else if (gameType === 'turkish_spelling_punctuation_4' || gameType === 'turkish_module4_4') {
         const raw = this.drawFromPool(this.grade4TurkishSpellingPunctuationPool, "grade4TurkishSpellingPunctuationPool");
         return this.buildQuestionItem(raw, '✍️ De/Da - Mi Yazımı & Noktalama İşaretleri Düellosu');
       } else if (gameType === 'turkish_4_karma') {
@@ -11714,6 +11717,17 @@
       lifescience_3_karma: '3. Sınıf Hayat Bilgisi Karma Düello',
       lifescience_compass_consumer_3: 'Yönlerimiz, Kroki ve Tüketici Hakları',
       english_family_feelings_3: 'Family Members, Feelings & Abilities',
+            math_unit1_4: "Ünite 1: Doğal Sayılar (4, 5, 6 Basamaklı Sayılar, Bölükler, Örüntüler)",
+      math_unit2_4: "Ünite 2: Doğal Sayılarla Toplama ve Çıkarma İşlemi",
+      math_unit3_4: "Ünite 3: Doğal Sayılarla Çarpma ve Bölme İşlemi",
+      math_unit4_4: "Ünite 4: Kesirler, Zaman Ölçme ve Veri İşleme",
+      math_unit5_4: "Ünite 5: Geometrik Cisimler, Açılar ve Simetri",
+      math_unit6_4: "Ünite 6: Uzunluk, Çevre, Alan, Tartma ve Sıvı Ölçme",
+      turkish_module1_4: "Modül 1: Sözcükte Anlam (Gerçek, Mecaz, Terim & Atasözleri)",
+      turkish_module2_4: "Modül 2: Cümlede Anlam (Neden-Sonuç, Amaç-Sonuç, Öznel-Nesnel)",
+      turkish_module3_4: "Modül 3: Paragrafta Anlam ve Metin Türleri",
+      turkish_module4_4: "Modül 4: Yazım Kuralları ve Noktalama İşaretleri",
+      turkish_module5_4: "Modül 5: Dil Bilgisi ve Görsel Okuma",
       math_numbers_place_value_4: 'Binler Bölüğü & 6 Basamaklı Sayı Ustası',
       math_four_operations_4: '4 İşlem Şampiyonu & Eşitlik Dengesi Düellosu',
       math_fractions_operations_4: 'Basit-Bileşik-Tam Sayılı Kesir Avcısı & Kesir Problemleri',
@@ -18210,105 +18224,105 @@
           }
         ]
       },
-      {
+       {
         id: 'math',
         name: 'Matematik',
         icon: '🧮',
         colorTheme: 'theme-math',
-        tagline: '2026 Maarif Modeli',
-        description: '4, 5 ve 6 basamaklı doğal sayılar (binler bölüğü), 4 işlem ve eşitlik dengesi, basit-bileşik-tam sayılı kesirler, zaman ve sütun grafiği, dar-dik-geniş açılar, çevre-alan ve ölçü dönüşümleri! 👑⚡🍕⏰📐📏',
-        badge: 'Maarif Modeli 2026',
+        tagline: '6 Ana Ünite & 2026 Maarif Modeli',
+        description: '4, 5 ve 6 basamaklı doğal sayılar, 4 işlem stratejileri, kesirler, zaman ve grafikler, açılar ve geometri, çevre-alan ve ölçü birimleri! 👑⚡🍕⏰📐📏',
+        badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tüm Öğrenme Alanları / Karma' },
-          { id: 'numbers_place_value', label: '👑 1. 4, 5 ve 6 Basamaklı Doğal Sayılar' },
-          { id: 'four_operations_4', label: '⚡ 2. Dört İşlem (Toplama, Çıkarma, Çarpma, Bölme)' },
-          { id: 'fractions_4', label: '🍕 3. Kesirler ve Kesirlerle İşlemler' },
-          { id: 'time_data_4', label: '⏰ 4. Zaman Ölçme ve Veri İşleme (Grafikler)' },
-          { id: 'geometry_angles_4', label: '📐 5. Geometri (Üçgenler, Açılar ve Simetri)' },
-          { id: 'measurement_perimeter_area_4', label: '📏 6. Uzunluk, Çevre, Alan, Tartma ve Sıvı Ölçme' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'math_unit1', label: '1️⃣ Doğal Sayılar & Örüntüler' },
+          { id: 'math_unit2', label: '2️⃣ Toplama ve Çıkarma' },
+          { id: 'math_unit3', label: '3️⃣ Çarpma ve Bölme' },
+          { id: 'math_unit4', label: '4️⃣ Kesirler, Zaman & Veri' },
+          { id: 'math_unit5', label: '5️⃣ Geometri, Açılar & Simetri' },
+          { id: 'math_unit6', label: '6️⃣ Ölçme (Uzunluk/Çevre/Alan/Tartma/Sıvı)' }
         ],
         games: [
           {
-            id: 'math_numbers_place_value_4',
+            id: 'math_unit1_4',
             active: true,
-            title: 'Binler Bölüğü & 6 Basamaklı Sayı Ustası',
+            title: 'Ünite 1: Doğal Sayılar (4, 5, 6 Basamaklı Sayılar, Bölükler, Yuvarlama, Örüntüler)',
             icon: '👑',
-            badge: '👑 1. Doğal Sayılar (999.999\'a Kadar)',
+            badge: '1. Ünite',
             featureTag: '🔢 Bölükler, Çözümleme & Yuvarlama',
-            description: '4, 5 ve 6 basamaklı doğal sayıları okuma-yazma, Birler ve Binler Bölüğü, basamak değerleri, çözümleme, en yakın onluğa/yüzlüğe yuvarlama, yüzer-biner ritmik sayma ve sayı örüntüleri!',
-            tags: ['👑 Birler ve Binler Bölüğü', '📦 Basamak Değeri & Çözümleme', '🎯 Onluğa & Yüzlüğe Yuvarlama', '🧩 Sayı Örüntüleri & Sıralama'],
+            description: '4, 5 ve 6 basamaklı sayılar, birler ve binler bölüğü, basamak/sayı değeri, en yakın onluğa/yüzlüğe yuvarlama, sıralama ve sayı örüntüleri!',
+            tags: ['👑 Binler Bölüğü', '🎯 Sayı Yuvarlama', '🔢 6 Basamaklı Sayılar', '🔄 Sayı Örüntüleri'],
             btnText: 'Düelloyu Başlat',
-            topic: 'numbers_place_value'
+            topic: 'math_unit1'
           },
           {
-            id: 'math_four_operations_4',
+            id: 'math_unit2_4',
             active: true,
-            title: '4 İşlem Şampiyonu & Eşitlik Dengesi Düellosu',
-            icon: '⚡',
-            badge: '⚡ 2. Dört İşlem ve Eşitlik',
-            featureTag: '✖️➗ Çarpma, Bölme & Eşitlik Dengesi',
-            description: '4 basamaklı sayılarla toplama-çıkarma, 3 basamaklı ile 2 basamaklı sayıları çarpma, parantezli çarpma, 10-100-1000 ile kısa yoldan çarpma/bölme, Bölünen=(Bölen×Bölüm)+Kalan ve eşitlik dengesi!',
-            tags: ['➕➖ 4 Basamaklı Toplama & Çıkarma', '✖️ 3 Basamaklı × 2 Basamaklı', '➗ Bölünen = (Bölen×Bölüm)+Kalan', '⚖️ Eşitlik Dengesi (8×5 = 32+?)'],
+            title: 'Ünite 2: Doğal Sayılarla Toplama ve Çıkarma (4 Basamaklı İşlemler, Tahmin, Zihinden)',
+            icon: '➕',
+            badge: '2. Ünite',
+            featureTag: '⚡ Eldeli Toplama, Onluk Bozma & Tahmin',
+            description: 'En çok 4 basamaklı sayılarla eldeli toplama, onluk ve yüzlük bozarak çıkarma, işlem sonucunu tahmin etme, zihinden işlemler ve sözel problemler!',
+            tags: ['➕ 4 Basamaklı Toplama', '➖ Onluk Bozarak Çıkarma', '🎯 Sonuç Tahmini', '📖 Sözel Problemler'],
             btnText: 'Düelloyu Başlat',
-            topic: 'four_operations_4'
+            topic: 'math_unit2'
           },
           {
-            id: 'math_fractions_operations_4',
+            id: 'math_unit3_4',
             active: true,
-            title: 'Basit-Bileşik-Tam Sayılı Kesir Avcısı & Kesir Problemleri',
+            title: 'Ünite 3: Doğal Sayılarla Çarpma ve Bölme (3 Basamaklı Çarpma, Kısa Yoldan 10-100-1000, Eşitlik)',
+            icon: '✖️',
+            badge: '3. Ünite',
+            featureTag: '🌪️ Çarpma, Bölme & Eşitlik Dengesi',
+            description: 'En çok 3 basamaklı sayılarla çarpma, kalansız ve kalanlı bölme, 10-100-1000 ile kısa yoldan çarpma/bölme ve matematiksel eşitlik dengesi!',
+            tags: ['✖️ 3 Basamaklı Çarpma', '➗ Kalanlı Bölme', '⚡ 10-100-1000 ile Çarpma', '⚖️ Eşitlik Dengesi'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'math_unit3'
+          },
+          {
+            id: 'math_unit4_4',
+            active: true,
+            title: 'Ünite 4: Kesirler, Zaman Ölçme ve Veri İşleme (Basit/Bileşik/Tam Kesirler, Saat-Yıl, Sütun Grafiği)',
             icon: '🍕',
-            badge: '🍕 3. Kesirler ve İşlemler',
-            featureTag: '🎂 Basit, Bileşik, Tam Sayılı & İşlem',
-            description: 'Basit (Pay < Payda), Bileşik (Pay ≥ Payda) ve Tam Sayılı kesirler, birim kesirleri sıralama, bir çokluğun basit kesir kadarını bulma (60\'ın 3/5\'i) ve paydaları eşit kesirlerle toplama-çıkarma!',
-            tags: ['🍕 Basit, Bileşik & Tam Sayılı', '🌰 Çokluğun Kesir Kadarını Bulma', '📊 Kesirlerde Sıralama', '➕➖ Paydası Eşit Kesir İşlemleri'],
+            badge: '4. Ünite',
+            featureTag: '🍕 Kesirler, Saatler & Sütun Grafiği',
+            description: 'Basit, bileşik ve tam sayılı kesirler, kesirlerle toplama/çıkarma, saat-dakika-saniye-yıl dönüşümleri ve sütun grafiği yorumlama!',
+            tags: ['🍕 Basit & Bileşik Kesir', '⏰ Zaman Dönüşümleri', '📊 Sütun Grafiği', '➕ Kesirlerde Toplama'],
             btnText: 'Düelloyu Başlat',
-            topic: 'fractions_4'
+            topic: 'math_unit4'
           },
           {
-            id: 'math_time_data_4',
+            id: 'math_unit5_4',
             active: true,
-            title: 'Zaman Dönüşümleri & Sütun Grafiği Dedektifi',
-            icon: '⏰',
-            badge: '⏰ 4. Zaman Ölçme ve Grafikler',
-            featureTag: '📊 Saat-Dakika, Artık Yıl & Sütun Grafiği',
-            description: 'Saat-dakika ve dakika-saniye dönüşümleri, yıl-ay-hafta-gün ve Artık Yıl (Şubat\'ın 4 yılda bir 29 gün çekmesi), süre hesaplama, Sütun Grafiği, şekil grafiği ve çetele/sıklık tablosu problemleri!',
-            tags: ['⏰ Saat-Dakika-Saniye Dönüşümü', '📅 Artık Yıl (29 Şubat)', '📊 Sütun ve Şekil Grafiği', '📋 Çetele & Sıklık Tablosu'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'time_data_4'
-          },
-          {
-            id: 'math_geometry_angles_4',
-            active: true,
-            title: 'Dar-Dik-Geniş Açı & Eşkenar/İkizkenar Üçgen Ustası',
+            title: 'Ünite 5: Geometrik Cisimler ve Şekiller, Uzamsal İlişkiler (Açılar, Üçgen/Kare/Dikdörtgen, Küp, Simetri)',
             icon: '📐',
-            badge: '📐 5. Geometri, Açılar ve Simetri',
-            featureTag: '🔺 Üçgen Türleri, İletki & Açılar',
-            description: 'Kenarlarına göre üçgenler (Eşkenar, İkizkenar, Çeşitkenar), küpün açınımı (6 eş kare), düzlem, iletki ile açı ölçme, Dar (<90°), Dik (90°), Geniş (90°-180°) ve Doğru Açı (180°) ve ayna simetrisi!',
-            tags: ['🔺 Eşkenar, İkizkenar & Çeşitkenar', '📐 Dar, Dik, Geniş & Doğru Açı', '🎲 Küpün Açınımı (6 Eş Kare)', '🦋 Ayna Simetrisi'],
+            badge: '5. Ünite',
+            featureTag: '📐 Dar, Dik, Geniş Açı & Küp Açınımı',
+            description: 'Açı çeşitleri (dar, dik, geniş, doğru), açı ölçümü, üçgen/kare/dikdörtgen kenar özellikleri, küpün açınımı, düzlem ve simetri doğrusu!',
+            tags: ['📐 Açı Çeşitleri & Ölçüm', '🔺 Üçgen Kenar Özellikleri', '🧊 Küp Açınımı & Düzlem', '🦋 Doğruya Göre Simetri'],
             btnText: 'Düelloyu Başlat',
-            topic: 'geometry_angles_4'
+            topic: 'math_unit5'
           },
           {
-            id: 'math_measurement_perimeter_area_4',
+            id: 'math_unit6_4',
             active: true,
-            title: 'Çevre-Alan Hesaplama & Ölçü Dönüşümleri (km-m-cm / Ton-kg / L-mL)',
+            title: 'Ünite 6: Uzunluk, Çevre, Alan, Tartma ve Sıvı Ölçme (mm-km, Çevre/Alan, Ton-mg, L-mL)',
             icon: '📏',
-            badge: '📏 6. Çevre, Alan, Tartma & Sıvı Ölçme',
-            featureTag: '🟦 Çevre, Birim Kare Alan, Ton & Litre',
-            description: 'Uzunluk dönüşümleri (km-m-cm-mm), kare ve dikdörtgenin çevre uzunluğu, birim karelerle alan hesaplama, tartma (Ton-kg-g-mg) ve sıvı ölçme (Litre-Mililitre) dönüşüm problemleri!',
-            tags: ['🟦 Kare & Dikdörtgen Çevre-Alan', '🛣️ km - m - cm - mm Dönüşümü', '🚛 Ton - kg - g - mg Tartma', '🥛 Litre (L) & Mililitre (mL)'],
+            badge: '6. Ünite',
+            featureTag: '📏 Çevre, Alan & Ölçü Dönüşümleri',
+            description: 'Milimetre ve kilometre dönüşümleri, kare ve dikdörtgenin çevresi ile alanı, ton ve miligram ile tartma, litre ve mililitre sıvı ölçümü!',
+            tags: ['📏 mm - cm - m - km', '🔲 Kare & Dikdörtgen Çevresi', '📐 Alan Hesaplama (cm²)', '⚖️ Ton, kg, mg & L, mL'],
             btnText: 'Düelloyu Başlat',
-            topic: 'measurement_perimeter_area_4'
+            topic: 'math_unit6'
           },
           {
             id: 'math_4_karma',
             active: true,
-            title: '4. Sınıf Matematik Karma Düello',
-            icon: '🌟',
-            badge: '🏆 96 Soru Büyük Karma',
-            featureTag: '🌟 6 Öğrenme Alanı Büyük Yarışma',
-            description: '4. Sınıf Matematik dersinin 6 öğrenme alanının tamamından dengeli ve rastgele sorular çeken büyük 4. sınıf matematik yarışması! Hem Tek Kişilik Pratik hem İki Kişilik Düello!',
-            tags: ['👑 6 Basamaklı Sayılar & 4 İşlem', '🍕 Kesirler & Zaman/Grafik', '📐 Açılar & Üçgenler', '📏 Çevre, Alan, Ton & Litre'],
+            title: '4. Sınıf Matematik Süper Karma Düello',
+            icon: '🧮',
+            badge: '⚡ 6 Ünite Karma',
+            featureTag: '🌟 6 Ünite Büyük Matematik Düellosu',
+            description: 'Tüm 4. sınıf matematik ünitelerinden dengeli, düşündürücü ve eğlenceli sorularla büyük sınıf şampiyonası!',
+            tags: ['👑 Doğal Sayılar', '➕ Dört İşlem', '🍕 Kesirler', '⏰ Zaman', '📐 Geometri', '📏 Ölçme'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
@@ -18317,108 +18331,95 @@
       {
         id: 'turkish',
         name: 'Türkçe',
-        icon: '📚',
+        icon: '📕',
         colorTheme: 'theme-turkish',
-        tagline: '2026 Maarif Modeli',
-        description: 'Gerçek-mecaz-terim anlam ve Türkçe karşılıklar, deyim-atasözü-özdeyişler, öznel-nesnel ve cümlede anlam, paragraf ve metin türleri, basit-türemiş-birleşik sözcükler, zamir/sıfat ve yazım-noktalama! 🎭🏆💡📖🧱✍️',
-        badge: 'Maarif Modeli 2026',
+        tagline: '5 Dil Bilgisi & Anlam Modülü',
+        description: 'Sözcükte anlam, deyim ve atasözleri, cümlede anlam, paragraf ve metin türleri, yazım-noktalama, ekler ve görsel okuma! 🎭💡📖✍️🧱📊',
+        badge: 'MEB Müfredatı',
         topics: [
-          { id: 'all', label: '🌟 Tüm Öğrenme Alanları / Karma' },
-          { id: 'word_meaning_4', label: '🎭 1. Sözcükte Anlam (Gerçek, Mecaz, Terim)' },
-          { id: 'idioms_proverbs_4', label: '🏆 2. Deyimler, Atasözleri ve Özdeyişler' },
-          { id: 'sentence_meaning_4', label: '💡 3. Cümlede Anlam (Öznel-Nesnel, Neden/Amaç)' },
-          { id: 'paragraph_text_types_4', label: '📖 4. Paragrafta Anlam ve Metin Türleri' },
-          { id: 'grammar_word_structure_4', label: '🧱 5. Sözcük Yapısı ve Sözcük Türleri' },
-          { id: 'spelling_punctuation_4', label: '✍️ 6. Yazım Kuralları ve Noktalama İşaretleri' }
+          { id: 'all', label: '🌟 Tümü' },
+          { id: 'turk_mod1', label: '1️⃣ Sözcükte Anlam & Deyim/Atasözü' },
+          { id: 'turk_mod2', label: '2️⃣ Cümlede Anlam & Yargılar' },
+          { id: 'turk_mod3', label: '3️⃣ Paragraf & Metin Türleri' },
+          { id: 'turk_mod4', label: '4️⃣ Yazım & Noktalama' },
+          { id: 'turk_mod5', label: '5️⃣ Dil Bilgisi & Görsel Okuma' }
         ],
         games: [
           {
-            id: 'turkish_word_meaning_4',
+            id: 'turkish_module1_4',
             active: true,
-            title: 'Gerçek-Mecaz-Terim Anlam & Türkçe Karşılıklar Düellosu',
+            title: 'Modül 1: Sözcükte Anlam (Gerçek, Mecaz, Terim; Eş/Zıt/Eş Sesli; Deyimler ve Atasözleri)',
             icon: '🎭',
-            badge: '🎭 1. Sözcükte Anlam & Söz Varlığı',
-            featureTag: '🔬 Gerçek, Mecaz, Terim & Özçekim',
-            description: 'Gerçek, Mecaz ve Terim anlam (futbol, müzik, matematik, tiyatro terimleri), ileri seviye eş/zıt/sesteş kelimeler ve yabancı kelimelerin Türkçe karşılıkları (selfie ➡️ özçekim, link ➡️ bağlantı)!',
-            tags: ['🎭 Gerçek, Mecaz & Terim Anlam', '✨ Eş, Zıt ve Sesteş Sözcükler', '📸 Selfie ➡️ Özçekim', '🖨️ Printer ➡️ Yazıcı'],
+            badge: '1. Modül',
+            featureTag: '🎭 Gerçek, Mecaz, Terim & Atasözleri',
+            description: 'Gerçek, mecaz ve terim anlam; eş, zıt ve eş sesli kelimeler; öğüt veren atasözleri ve zengin Türk deyimleri!',
+            tags: ['🎭 Gerçek & Mecaz Anlam', '🩺 Terim Anlamlı Sözcükler', '📜 Deyimler & Atasözleri', '✨ Eş, Zıt ve Sesteşler'],
             btnText: 'Düelloyu Başlat',
-            topic: 'word_meaning_4'
+            topic: 'turk_mod1'
           },
           {
-            id: 'turkish_idioms_proverbs_4',
+            id: 'turkish_module2_4',
             active: true,
-            title: 'Deyim, Atasözü ve Özdeyiş Ustası',
-            icon: '🏆',
-            badge: '🏆 2. Deyim, Atasözü & Özdeyiş',
-            featureTag: '📜 Atasözleri & Atatürk Özdeyişleri',
-            description: 'Zengin deyimler (göz boyamak, burun kıvırmak, kulağına küpe olmak, ipe un sermek), öğüt veren atasözlerimiz ve söyleyeni belli özdeyişler/vecizeler (Atatürk ve Mevlana\'nın özdeyişleri)!',
-            tags: ['👀 Göz Boyamak & Küpe Olmak', '🌳 Ağaç Yaş İken Eğilir', '📜 Atatürk\'ün Özdeyişleri', '🤝 Birlik ve Tasarruf Atasözleri'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'idioms_proverbs_4'
-          },
-          {
-            id: 'turkish_sentence_meaning_4',
-            active: true,
-            title: 'Öznel mi Nesnel mi? & Cümlede Anlam Dedektifi',
+            title: 'Modül 2: Cümlede Anlam (Neden-Sonuç, Amaç-Sonuç, Karşılaştırma, Öznel ve Nesnel Yargılar)',
             icon: '💡',
-            badge: '💡 3. Cümlede Anlam ve Yargılar',
-            featureTag: '⚖️ Öznel-Nesnel, Neden/Amaç & Duygular',
-            description: 'Öznel (kişisel görüş) ve Nesnel (kanıtlanabilir) yargıları ayırt etme, Neden-Sonuç, Amaç-Sonuç, Koşul-Sonuç, Karşılaştırma, Benzetme, Örneklendirme ve duygu ifadeleri (sitem, pişmanlık, özlem)!',
-            tags: ['⚖️ Öznel ve Nesnel Yargı', '🎯 Neden-Sonuç & Amaç-Sonuç', '🦁 Karşılaştırma ve Benzetme', '💬 Sitem, Pişmanlık & Özlem'],
+            badge: '2. Modül',
+            featureTag: '💡 Neden/Amaç-Sonuç & Öznel/Nesnel',
+            description: 'Neden-sonuç ve amaç-sonuç cümleleri, varlıkları karşılaştırma (kıyaslama), öznel ve nesnel yargıların ayrımı!',
+            tags: ['🎯 Amaç-Sonuç Cümleleri', '🌧️ Neden-Sonuç Bağıntısı', '⚖️ Karşılaştırma Cümleleri', '🏛️ Öznel ve Nesnel Yargı'],
             btnText: 'Düelloyu Başlat',
-            topic: 'sentence_meaning_4'
+            topic: 'turk_mod2'
           },
           {
-            id: 'turkish_paragraph_text_types_4',
+            id: 'turkish_module3_4',
             active: true,
-            title: 'Paragraf & Metin Türleri (Fabl-Masal-Anı) Şampiyonu',
+            title: 'Modül 3: Paragrafta Anlam ve Metin Türleri (Ana Fikir, Hikaye Unsurları, Şiir/Bilgilendirici Metin)',
             icon: '📖',
-            badge: '📖 4. Paragraf, Metin Türleri & Görsel',
-            featureTag: '🐜 Fabl, Masal, Anı, Günlük & Ana Fikir',
-            description: 'Paragrafın konusu, ana fikri ve başlığı, hikaye unsurları (1. ve 3. kişi anlatıcı), metin türleri (Hikaye, Masal, Fabl, Şiir, Anı, Günlük, Mektup, Bilgilendirici Metin) ve Akıllı İşaretler!',
-            tags: ['💡 Konu, Ana Fikir & Başlık', '🐜 Fabl, Masal, Anı & Günlük', '🗣️ 1. ve 3. Kişi Ağzı Anlatım', '📺 Akıllı İşaretler & Görsel Okuma'],
+            badge: '3. Modül',
+            featureTag: '📖 Ana Fikir, Başlık & Metin Türleri',
+            description: 'Paragrafta ana fikir ve yardımcı fikirler, uygun başlık belirleme, hikaye unsurları (olay, yer, zaman, kişi), fabl, masal, anı ve şiir türleri!',
+            tags: ['💡 Ana Düşünce & Başlık', '📖 Hikaye Unsurları', '🦊 Fabl, Masal & Anı', '📜 Bilgilendirici Metin & Şiir'],
             btnText: 'Düelloyu Başlat',
-            topic: 'paragraph_text_types_4'
+            topic: 'turk_mod3'
           },
           {
-            id: 'turkish_grammar_word_structure_4',
+            id: 'turkish_module4_4',
             active: true,
-            title: 'Basit-Türemiş-Birleşik Sözcük & Zamir/Sıfat Avcısı',
-            icon: '🧱',
-            badge: '🧱 5. Sözcük Yapısı ve Türleri',
-            featureTag: '🌱 Basit-Türemiş-Birleşik, Sıfat & Zamir',
-            description: 'Yapısına göre Basit, Türemiş (gözlükçü, simitçi) ve Birleşik (ilkokul, bilgisayar, kahvaltı) kelimeler, Ön Adlar (Sıfatlar), Adıllar (Kişi, İşaret, Belgisiz, Soru Zamirleri), Topluluk adları ve Pekiştirme!',
-            tags: ['🧱 Basit, Türemiş & Birleşik', '🎨 Ön Adlar (Sıfatlar)', '🔄 Adıllar (Zamirler)', '🌲 Topluluk Adı & Pekiştirme'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'grammar_word_structure_4'
-          },
-          {
-            id: 'turkish_spelling_punctuation_4',
-            active: true,
-            title: 'De/Da - Mi Yazımı & Noktalama İşaretleri Düellosu',
+            title: 'Modül 4: Yazım Kuralları ve Noktalama İşaretleri ("de/da" ve "ki" Yazımı, Büyük Harfler, Noktalama)',
             icon: '✍️',
-            badge: '✍️ 6. Yazım Kuralları ve Noktalama',
-            featureTag: '❓ De/Da, Mi, Kısaltmalar & Noktalama',
-            description: 'Bulunma eki (-de/-da) ile bağlaç (de/da) ayrımı, soru eki "mı/mi"nin yazımı, büyük harfler, kısaltmalar (TBMM\'de, TDK\'nin), sayıların yazımı ve tüm noktalama işaretleri (. , ? ! : ... " " \' ( ) - /)!',
-            tags: ['✍️ Bulunma -de ve Bağlaç de/da', '❓ Soru Eki mı/mi ve Kısaltmalar', '💬 İki Nokta, Üç Nokta & Tırnak', '📏 Yay Ayraç, Kesme & Eğik Çizgi'],
+            badge: '4. Modül',
+            featureTag: '✍️ "de/da", "ki", "mi" & Noktalama',
+            description: 'Bağlaç olan "de/da" ve "ki"nin yazımı, soru eki "mi", büyük harflerin kullanım yerleri, iki nokta, noktalı virgül, tırnak ve kesme işareti!',
+            tags: ['✍️ "de / da" ve "ki" Yazımı', '🔤 Büyük Harf Kuralları', '❓ Soru Eki "mi" Yazımı', '📝 Noktalama İşaretleri'],
             btnText: 'Düelloyu Başlat',
-            topic: 'spelling_punctuation_4'
+            topic: 'turk_mod4'
+          },
+          {
+            id: 'turkish_module5_4',
+            active: true,
+            title: 'Modül 5: Dil Bilgisi ve Görsel Okuma (Yapım ve Çekim Ekleri, Grafik ve Tablo Yorumlama)',
+            icon: '🧱',
+            badge: '5. Modül',
+            featureTag: '🧱 Yapım/Çekim Ekleri & Grafik Okuma',
+            description: 'Kök ve ek kavramı, yeni kelime türeten yapım ekleri, çekim ekleri (çoğul, hal), basit-türemiş sözcükler, grafik ve tablo yorumlama!',
+            tags: ['🧱 Yapım ve Çekim Ekleri', '🌱 Basit ve Türemiş Kelimeler', '📊 Grafik ve Tablo Yorumlama', '👁️ Görsel Okuma'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'turk_mod5'
           },
           {
             id: 'turkish_4_karma',
             active: true,
-            title: '4. Sınıf Türkçe Karma Düello',
-            icon: '🌟',
-            badge: '🏆 96 Soru Büyük Karma',
-            featureTag: '🌟 6 Öğrenme Alanı Türkçe Yarışması',
-            description: 'Tüm 4. sınıf Türkçe konularını (Sözcükte Anlam, Deyim/Atasözü/Özdeyiş, Cümlede Anlam, Paragraf/Metin Türleri, Dil Bilgisi ve Yazım/Noktalama) harmanlayan genel tekrar ve sınıf içi yarışma modu!',
-            tags: ['🎭 Sözcükte & Cümlede Anlam', '🏆 Deyim, Atasözü & Özdeyiş', '📖 Paragraf & Metin Türleri', '🧱 Dil Bilgisi, Yazım & Noktalama'],
+            title: '4. Sınıf Türkçe Süper Karma Düello',
+            icon: '🦉',
+            badge: '⚡ 5 Modül Karma',
+            featureTag: '🌟 5 Modül Büyük Türkçe Şampiyonası',
+            description: 'Sözcükte anlam, cümlede anlam, paragraf, yazım kuralları, noktalama ve dil bilgisinden karma şampiyonlar ligi düellosu!',
+            tags: ['🎭 Sözcükte Anlam', '💡 Cümlede Anlam', '📖 Paragraf', '✍️ Yazım & Noktalama', '🧱 Dil Bilgisi'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
         ]
       },
-      {
+     {
         id: 'science',
         name: 'Fen Bilimleri',
         icon: '🔬',
@@ -26807,6 +26808,43 @@
   window.loadSpeechIndex = loadSpeechIndex;
   window.GRADE_SUBJECTS_CONFIG = GRADE_SUBJECTS_CONFIG;
   window.QuestionEngine = QuestionEngine;
+
+  // 4. SINIF MATEMATİK & TÜRKÇE 2026 MAARİF MODELİ EKSTRA KAZANIM SORULARI
+  try {
+    const extraM4 = {"math_unit1_4":[{"q":"745.812 sayısının BİNLER BÖLÜĞÜNDEKİ sayı kaçtır? 👑","a":"745 👑","d":["812","748"],"exp":"Sağdaki 3 basamak birler bölüğü (812), soldaki 3 basamak binler bölüğüdür (745)."},{"q":"83.647 sayısı en yakın YÜZLÜĞE yuvarlandığında hangi sayı elde edilir? 🎯","a":"83.600 🎯","d":["83.700","84.000"],"exp":"Onlar basamağında 4 olduğu için (5'ten küçük) kendi yüzlüğüne (83.600) yuvarlanır."},{"q":"14 - 21 - 28 - 35 - ? sayı örüntüsünde soru işareti yerine hangi sayı gelmelidir? 🔢","a":"42 🔢","d":["40","45"],"exp":"Örüntü yedişer yedişer artmaktadır: 35 + 7 = 42."}],"math_unit2_4":[{"q":"3.450 + 2.380 işleminin sonucu kaçtır? ➕","a":"5.830 ➕","d":["5.730","5.930"],"exp":"3450 + 2380 = 5830."},{"q":"8.500 - 3.250 işleminin sonucu kaçtır? ➖","a":"5.250 ➖","d":["5.350","4.250"],"exp":"8500 - 3250 = 5250."},{"q":"4.870 + 2.120 işleminin sonucunu en yakın binliğe yuvarlayarak TAHMİN ettiğimizde sonuç kaç olur? 🎯","a":"7.000 🎯","d":["6.000","8.000"],"exp":"4870 en yakın 5000'e, 2120 ise 2000'e yuvarlanır. 5000 + 2000 = 7000."},{"q":"Bir çiftlikte 2.450 koyun, koyunlardan 1.200 fazla kuzu vardır. Çiftlikte toplam kaç hayvan vardır? 🐑","a":"6.100 (2.450 + 3.650) 🐑","d":["3.650","5.100"],"exp":"Kuzu sayısı: 2450 + 1200 = 3650. Toplam: 2450 + 3650 = 6100."}],"math_unit3_4":[{"q":"248 sayısını 100 ile KISA YOLDAN çarptığımızda sonuç kaç olur? ⚡","a":"24.800 ⚡","d":["2.480","248.000"],"exp":"Bir doğal sayıyı 100 ile çarparken sağına iki adet sıfır eklenir: 24.800."},{"q":"45.000 sayısını 1.000'e KISA YOLDAN böldüğümüzde sonuç kaç olur? ➗","a":"45 ➗","d":["450","4.500"],"exp":"Bir sayıyı 1000'e bölerken sonundaki üç adet sıfır silinir: 45."},{"q":"25 × 4 = 50 + ? eşitliğinin sağlanması için soru işareti yerine hangi sayı gelmelidir? ⚖️","a":"50 ⚖️","d":["25","100"],"exp":"Sol taraf: 25 × 4 = 100. Sağ taraf: 50 + ? = 100 olmalıdır. ? = 50."}],"math_unit4_4":[{"q":"Payı paydasına eşit veya payından büyük olan (örneğin 7/5 veya 4/4) kesirlere ne ad verilir? 🍕","a":"Bileşik Kesir 🍕","d":["Basit Kesir","Birim Kesir"],"exp":"Payı paydasına eşit veya büyük olan kesirler bileşik kesirdir."},{"q":"2/7 + 3/7 işleminin sonucu kaçtır? 🍕","a":"5/7 🍕","d":["5/14","6/7"],"exp":"Paydaları eşit kesirlerde paylar toplanır, payda aynen yazılır: 2+3 = 5, yani 5/7."},{"q":"3 saat 25 dakika toplam kaç dakikadır? ⏰","a":"205 dakika ⏰","d":["155 dakika","325 dakika"],"exp":"1 saat = 60 dakika. 3 saat = 180 dakika. 180 + 25 = 205 dakika."},{"q":"Bir sütun grafiğinde sütunların dikey boyları bize hangi bilgiyi verir? 📊","a":"Verilerin sayısal miktarını 📊","d":["Grafiğin çizildiği günü","Sütunun rengini"],"exp":"Sütun grafiğinde sütun uzunlukları o kategorideki veri miktarını gösterir."}],"math_unit5_4":[{"q":"Ölçüsü 90 dereceden KÜÇÜK olan açılara ne ad verilir? 📐","a":"Dar Açı 📐","d":["Geniş Açı","Dik Açı"],"exp":"0 ile 90 derece arasındaki açılar dar açıdır."},{"q":"Tüm kenar uzunlukları birbirine eşit olan üçgen türü hangisidir? 🔺","a":"Eşkenar Üçgen 🔺","d":["İkizkenar Üçgen","Çeşitkenar Üçgen"],"exp":"Üç kenarı ve üç iç açısı (60°) eşit olan üçgen eşkenar üçgendir."},{"q":"Bir küpün kaç tane karesel yüzü vardır ve açınımında kaç kare bulunur? 🧊","a":"6 karesel yüz 🧊","d":["4","8"],"exp":"Küp 6 eş kareden oluşur."},{"q":"İki boyutu olan, sonsuza kadar uzayan düz ve pürüzsüz yüzey modeline ne denir (Örn: Durgun su, ayna yüzeyi)? 🪞","a":"Düzlem 🪞","d":["Doğru","Açı"],"exp":"Sonsuza uzanan düz yüzeylere geometride düzlem denir."}],"math_unit6_4":[{"q":"Bir kenarı 8 cm olan bir KARENİN ÇEVRESİ kaç santimetredir? 🔲","a":"32 cm 🔲","d":["64 cm","16 cm"],"exp":"Karenin 4 eşit kenarı vardır: 8 × 4 = 32 cm."},{"q":"Kısa kenarı 5 cm, uzun kenarı 9 cm olan bir DİKDÖRTGENİN ALANI kaç santimetrekaredir? 📐","a":"45 cm² 📐","d":["28 cm²","90 cm²"],"exp":"Dikdörtgenin alanı = Kısa kenar × Uzun kenar = 5 × 9 = 45 cm²."},{"q":"1 ton kaç kilograma (kg) eşittir? ⚖️","a":"1.000 kg ⚖️","d":["100 kg","10.000 kg"],"exp":"1 ton (t) = 1.000 kilogram (kg)."},{"q":"2 litre su kaç mililitreye (mL) eşittir? 🥛","a":"2.000 mL 🥛","d":["200 mL","20.000 mL"],"exp":"1 litre = 1.000 mL. 2 litre = 2.000 mL."}]};
+    const extraT4 = {"turkish_module1_4":[{"q":"Aşağıdaki cümlelerin hangisinde 'açık' sözcüğü MECAZ anlamda kullanılmıştır? 🎭","a":"Bize karşı her zaman açık ve samimi davrandı 🎭","d":["Pencere açık kalmış","Açık renkli bir tişört giymişti"],"exp":"Buradaki açık sözcüğü 'dürüst, gizlisi saklısı olmayan' anlamında mecazdır."},{"q":"'Stetoskop, ameliyat, narkoz' kelimeleri hangi alana ait TERİM anlamlı sözcüklerdir? 🩺","a":"Tıp ve Sağlık 🩺","d":["Müzik ve Sanat","Coğrafya"],"exp":"Belli bir bilim, meslek veya sanat dalına ait özel anlamlı kelimelere terim denir."},{"q":"'Çok sevinmek, aşırı derecede mutlu olmak' anlamına gelen deyim hangisidir? 🔔","a":"Etekleri zil çalmak 🔔","d":["Etekleri tutuşmak","Göz boyamak"],"exp":"Etekleri zil çalmak çok sevinmek, etekleri tutuşmak ise çok telaşlanmak demektir."}],"turkish_module2_4":[{"q":"Aşağıdaki cümlelerin hangisinde bir AMAÇ-SONUÇ ilişkisi vardır? 🎯","a":"Sınavı kazanmak amacıyla gece gündüz çalıştı 🎯","d":["Yağmur yağdığı için ıslandı","Uykusu geldiğinden erken yattı"],"exp":"İşin hangi amaç ve hedef doğrultusunda yapıldığını bildiren cümle amaç-sonuç cümlesidir."},{"q":"Aşağıdaki cümlelerin hangisi kişisel görüş içermeyen NESNEL bir yargıdır? 🏛️","a":"Türkiye'nin başkenti Ankara'dır 🏛️","d":["En güzel renk mavidir","Bu kitap çok sıkıcı"],"exp":"Herkesçe kabul edilen ve kanıtlanabilir yargılar nesneldir."},{"q":"'Bu yılki kış mevsimi, geçen yıla göre daha sert geçiyor.' cümlesinde hangi anlam ilişkisi vardır? ⚖️","a":"Karşılaştırma (Kıyaslama) ⚖️","d":["Amaç-Sonuç","Duygusal Anlatım"],"exp":"İki farklı yılın kış mevsimi kıyaslanmıştır."}],"turkish_module3_4":[{"q":"Bir metinde yazarın okuyucuya iletmek istediği asıl düşünceye ve temel mesaja ne denir? 💡","a":"Ana Fikir (Ana Düşünce) 💡","d":["Metnin Konusu","Yardımcı Fikir"],"exp":"Metinden çıkarılan en kapsamlı hayat dersi ve mesaj ana fikirdir."},{"q":"Bir hikaye metninde olay, yer, zaman ve kişiler hangi unsuru oluşturur? 📖","a":"Hikaye Unsurlarını (Haritasını) 📖","d":["Şiir kafiyesini","Metnin başlığını"],"exp":"Hikaye unsurları: Olay, yer (mekan), zaman ve kişilerdir (şahıs kadrosu)."},{"q":"Kahramanları genellikle hayvanlar veya cansız varlıklar olan, ders verici kısa metin türü hangisidir? 🦊","a":"Fabl 🦊","d":["Biyografi","Anı (Hatıra)"],"exp":"Hayvanların konuşturulduğu eğitici metinlere fabl denir."}],"turkish_module4_4":[{"q":"Aşağıdaki cümlelerin hangisinde 'de / da' bağlacının yazımı DOĞRUDUR? 📚","a":"Ahmet de bizimle birlikte kütüphaneye gelecek 📚","d":["Ahmette bizimle gelecek","Kitabım okul da kalmış"],"exp":"Bağlaç olan 'de/da' ayrı yazılır ve asla 'te/ta' şeklinde sertleşmez."},{"q":"Aşağıdaki cümlelerin hangisinde 'ki' bağlacı doğru yazılmıştır? ⭐","a":"Öyle çalışkan bir çocuk ki herkes takdir ediyor ⭐","d":["Evdeki eşyalar","Akşam ki maçı izledin mi?"],"exp":"Cümleleri birbirine bağlayan 'ki' ayrı yazılır."},{"q":"Kendisinden sonra açıklama yapılacak veya örnek verilecek cümlenin sonuna hangi işaret konur? ✍️","a":"İki nokta (:) ✍️","d":["Noktalı virgül (;)","Ünlem (!)"],"exp":"Açıklama ve örneklerden önce iki nokta (:) kullanılır."}],"turkish_module5_4":[{"q":"Eklendiği sözcüğün anlamını değiştirerek yeni bir sözcük türeten eklere ne ad verilir? 👓","a":"Yapım Eki (Örn: Göz -> Gözlük) 👓","d":["Çekim Eki","Noktalama Eki"],"exp":"Sözcükten yeni anlam türeten ekler yapım ekidir."},{"q":"Aşağıdaki sözcüklerden hangisi YAPIM EKİ alarak türemiş bir sözcüktür? 📚","a":"Kitapçı 📚","d":["Kitaplar","Kitapta"],"exp":"Kitap köküne '-çı' yapım eki gelerek meslek adı türemiştir."},{"q":"Bir grafik veya tabloda verileri incelerken en yüksek sütun bize neyi gösterir? 📊","a":"En büyük sayısal değere veya miktara sahip olanı 📊","d":["En değersiz veriyi","Tablonun rengini"],"exp":"Grafik okumada sütun boyu sayısal büyüklük ile doğru orantılıdır."}]};
+
+    // 4. Sınıf Matematik 2. Ünite (Toplama ve Çıkarma) Havuzu
+    if (!QuestionEngine.grade4MathUnit2Pool) {
+      QuestionEngine.grade4MathUnit2Pool = [
+        ...(extraM4.math_unit2_4 || []),
+        { q: "4.560 + 3.280 işleminin sonucu kaçtır? ➕", a: "7.840 ➕", d: ["7.740", "8.840"], exp: "4560 + 3280 = 7840." },
+        { q: "9.400 - 4.650 işleminin sonucu kaçtır? ➖", a: "4.750 ➖", d: ["4.850", "5.250"], exp: "9400 - 4650 = 4750." },
+        { q: "Bir kütüphanede 3.840 hikaye kitabı, hikaye kitaplarından 1.450 eksik şiir kitabı vardır. Kütüphanede toplam kaç kitap vardır? 📚", a: "6.230 📚", d: ["2.390", "5.290"], exp: "Şiir kitabı: 3840 - 1450 = 2390. Toplam: 3840 + 2390 = 6230." },
+        { q: "6.120 + 2.890 işleminin sonucunu en yakın yüzlüğe yuvarlayarak TAHMİN ettiğimizde sonuç kaç olur? 🎯", a: "9.000 🎯", d: ["8.900", "9.100"], exp: "6120 -> 6100, 2890 -> 2900. 6100 + 2900 = 9000." },
+        { q: "Eksilenin 5.000, farkın 2.350 olduğu bir çıkarma işleminde ÇIKAN sayı kaçtır? ➖", a: "2.650 ➖", d: ["2.750", "7.350"], exp: "Çıkan = Eksilen - Fark = 5000 - 2350 = 2650." },
+        { q: "Hangi sayının 1.750 fazlası 6.000 eder? ➕", a: "4.250 ➕", d: ["4.350", "7.750"], exp: "6000 - 1750 = 4250." },
+        { q: "Zihinden toplama yaparken 58 + 34 işleminde önce onlukları (50+30=80) sonra birlikleri (8+4=12) toplayan Ceren sonucu kaç bulur? 🧠", a: "92 🧠", d: ["82", "94"], exp: "80 + 12 = 92." }
+      ];
+    } else {
+      if (extraM4.math_unit2_4) QuestionEngine.grade4MathUnit2Pool.push(...extraM4.math_unit2_4);
+    }
+
+    if (QuestionEngine.grade4MathNumbersPlaceValuePool && extraM4.math_unit1_4) QuestionEngine.grade4MathNumbersPlaceValuePool.push(...extraM4.math_unit1_4);
+    if (QuestionEngine.grade4MathFourOperationsPool && extraM4.math_unit3_4) QuestionEngine.grade4MathFourOperationsPool.push(...extraM4.math_unit3_4);
+    if (QuestionEngine.grade4MathFractionsPool && extraM4.math_unit4_4) QuestionEngine.grade4MathFractionsPool.push(...extraM4.math_unit4_4);
+    if (QuestionEngine.grade4MathGeometryAnglesPool && extraM4.math_unit5_4) QuestionEngine.grade4MathGeometryAnglesPool.push(...extraM4.math_unit5_4);
+    if (QuestionEngine.grade4MathMeasurementPool && extraM4.math_unit6_4) QuestionEngine.grade4MathMeasurementPool.push(...extraM4.math_unit6_4);
+
+    if (QuestionEngine.grade4TurkishWordMeaningPool && extraT4.turkish_module1_4) QuestionEngine.grade4TurkishWordMeaningPool.push(...extraT4.turkish_module1_4);
+    if (QuestionEngine.grade4TurkishSentenceMeaningPool && extraT4.turkish_module2_4) QuestionEngine.grade4TurkishSentenceMeaningPool.push(...extraT4.turkish_module2_4);
+    if (QuestionEngine.grade4TurkishParagraphTextTypesPool && extraT4.turkish_module3_4) QuestionEngine.grade4TurkishParagraphTextTypesPool.push(...extraT4.turkish_module3_4);
+    if (QuestionEngine.grade4TurkishSpellingPunctuationPool && extraT4.turkish_module4_4) QuestionEngine.grade4TurkishSpellingPunctuationPool.push(...extraT4.turkish_module4_4);
+    if (QuestionEngine.grade4TurkishGrammarWordStructurePool && extraT4.turkish_module5_4) QuestionEngine.grade4TurkishGrammarWordStructurePool.push(...extraT4.turkish_module5_4);
+  } catch (e) {
+    console.warn("Could not append extra G4 math/turk questions:", e);
+  }
+
 
   // 3. SINIF FEN BİLİMLERİ & HAYAT BİLGİSİ 2026 MAARİF MODELİ EKSTRA KAZANIM SORULARI
   try {
