@@ -20853,6 +20853,8 @@ function selectMaarifLetter(letter) {
    */
   function openHomePage() {
     lockInteractions(400);
+    if (typeof stopAllAudio === 'function') stopAllAudio();
+    setTimeout(() => { if (typeof window.playHomeMusic === 'function') window.playHomeMusic(); }, 50);
     state.currentSection = 'home';
     state.currentSubject = null;
     state.currentCategory = 'all';
@@ -25795,6 +25797,7 @@ function selectMaarifLetter(letter) {
     window.closeMenu = closeMobileSidebar;
 
     function navigateTo(route) {
+      if (typeof stopAllAudio === 'function') stopAllAudio();
       if (typeof audio !== 'undefined' && audio.playClick) {
         audio.playClick();
       }
@@ -26706,6 +26709,7 @@ function selectMaarifLetter(letter) {
      ROUTING & URL NAVİGASYON MOTORU (/oyunlar, #oyunlar, /ingilizce, #ingilizce)
      ========================================================================== */
   function handleUrlRoute() {
+    if (typeof stopAllAudio === 'function') stopAllAudio();
     const hash = (window.location.hash || '').toLowerCase();
     const path = (window.location.pathname || '').toLowerCase();
 
@@ -26945,9 +26949,9 @@ function selectMaarifLetter(letter) {
   const GameMusicEngine = (function() {
     const gameAudio = document.getElementById('gameBgMusic');
     const tracks = {
-      puzzle: 'sounds/bgm_puzzle.mp3', // Marimba / ksilofon ezgisi (Hafıza & Bulmaca)
-      action: 'sounds/bgm_action.mp3', // 8-bit retro pixel (Düello & Hız)
-      arcade: 'sounds/bgm_arcade.mp3'  // Dinamik synth tempo (Enerji & Mini Oyunlar)
+      puzzle: 'moli-muzigi.mp3',
+      action: 'moli-muzigi.mp3',
+      arcade: 'moli-muzigi.mp3'  // Dinamik synth tempo (Enerji & Mini Oyunlar)
     };
 
     // ÇOK KRİTİK: Oyun içi ses efektlerini (alkış, balon, Moli, spiker vb.) asla bastırmasın
