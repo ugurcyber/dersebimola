@@ -2025,6 +2025,48 @@
         "Aslı, sarı mısır al.",
         "Sinan, resimli kasket tak."
       ]
+    },
+    "Ö": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Ördek", icon: "🦆", hasÖ: true },
+        { word: "Örümcek", icon: "🕷️", hasÖ: true },
+        { word: "Önlük", icon: "🎽", hasÖ: true }
+      ],
+      noSoundItems: [
+        { word: "Elma", icon: "🍎", hasÖ: false },
+        { word: "Araba", icon: "🚗", hasÖ: false }
+      ],
+      syllables: ["ön", "öt", "öl", "ök", "ör", "öm", "ös", "nö", "tö", "lö", "kö", "rö", "mö", "sö", "kök", "kör", "sök", "tör", "örs"],
+      words: ["ön", "öt", "ör", "kök", "kör", "sök", "örtü", "örnek", "kömür", "tören", "aktör", "traktör", "asansör", "önlük", "öksürük", "antika"],
+      sentences: [
+        "Ömer, önlük tak.",
+        "Ökkeş, traktör sür.",
+        "Anne, masaya örtü ser.",
+        "Suna, örnek metin oku."
+      ]
+    },
+    "Y": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Yıldız", icon: "⭐", hasY: true },
+        { word: "Yılan", icon: "🐍", hasY: true },
+        { word: "Yumurta", icon: "🥚", hasY: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasY: false },
+        { word: "Top", icon: "⚽", hasY: false }
+      ],
+      syllables: ["ay", "ey", "iy", "oy", "uy", "ıy", "üy", "öy", "ya", "ye", "yi", "yo", "yu", "yı", "yü", "yö", "yay", "koy", "soy", "say", "tay", "kay", "ray", "may", "köy", "tüy"],
+      words: ["ay", "yay", "tay", "koy", "soy", "say", "ray", "köy", "tüy", "ayı", "kıyı", "sayı", "kaya", "maya", "yaya", "uyku", "öykü", "eylül", "leylek", "kamyon", "tiyatro", "oyun", "koyun", "yastık", "kolye", "söyle", "yatak"],
+      sentences: [
+        "Yasemin, öykü oku.",
+        "Yılmaz, koyun otlat.",
+        "Ayla, sarı kamyon al.",
+        "Emel, yataktan uyan."
+      ]
     }
   };
   window.ANETIL_DATA = ANETIL_DATA;
@@ -2058,7 +2100,7 @@
       { id: 'g0_prep', name: '✏️ Hazırlık', code: 'Çizgi & Algı', isPrep: true, label: '✏️ Okuma Yazmaya Hazırlık (Yazısız Etkinlikler)', letters: [] },
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
       { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
-      { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's'] },
+      { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y'] },
       { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c', 'ş', 'p'] },
       { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
     ],
@@ -2303,52 +2345,41 @@
         words: ANETIL_DATA["S"].words,
         sentences: ANETIL_DATA["S"].sentences
       },
-'ö': {
+      'ö': {
         letter: 'ö', upper: 'Ö', group: 'g3', groupName: '3. Grup (ÜSÖYDZ)',
         soundWords: [
           { word: 'Ördek', emoji: '🦆', position: 'başta', hasSound: true },
-          { word: 'Önlük', emoji: '🥼', position: 'başta', hasSound: true },
           { word: 'Örümcek', emoji: '🕷️', position: 'başta', hasSound: true },
-          { word: 'Göz', emoji: '👁️', position: 'ortada', hasSound: true },
-          { word: 'Köy', emoji: '🏡', position: 'ortada', hasSound: true }
+          { word: 'Önlük', emoji: '🎽', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Elma', emoji: '🍎', hasSound: false }, { word: 'Ayı', emoji: '🐻', hasSound: false }],
-        cumulativeWords: [
-          { word: 'ÖN', parts: ['Ö', 'N'], distractors: ['AN'], icon: '⬆️' },
-          { word: 'ÖRTÜ', parts: ['ÖR', 'TÜ'], distractors: ['TA'], icon: '🛏️' },
-          { word: 'ÖMÜR', parts: ['Ö', 'MÜR'], distractors: ['MAR'], icon: '⏳' },
-          { word: 'KÖMÜR', parts: ['KÖ', 'MÜR'], distractors: ['KUM'], icon: '🪵' }
+        noSoundWords: [
+          { word: 'Elma', emoji: '🍎', hasSound: false },
+          { word: 'Araba', emoji: '🚗', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Ela örtü ser.', blankSentence: 'Ela _____ ser.', missing: 'örtü', options: ['örtü', 'ömür', 'ön'], fullText: 'Ela örtü ser.' },
-          { sentence: 'Ömer kömür al.', blankSentence: 'Ömer _____ al.', missing: 'kömür', options: ['kömür', 'örtü', 'ön'], fullText: 'Ömer kömür al.' }
-        ]
+        cumulativeWords: ANETIL_DATA["Ö"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["Ö"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["Ö"].syllables,
+        words: ANETIL_DATA["Ö"].words,
+        sentences: ANETIL_DATA["Ö"].sentences
       },
       'y': {
         letter: 'y', upper: 'Y', group: 'g3', groupName: '3. Grup (ÜSÖYDZ)',
         soundWords: [
           { word: 'Yıldız', emoji: '⭐', position: 'başta', hasSound: true },
           { word: 'Yılan', emoji: '🐍', position: 'başta', hasSound: true },
-          { word: 'Yumurta', emoji: '🥚', position: 'başta', hasSound: true },
-          { word: 'Ayı', emoji: '🐻', position: 'ortada', hasSound: true },
-          { word: 'Ayna', emoji: '🪞', position: 'ortada', hasSound: true },
-          { word: 'Ay', emoji: '🌙', position: 'sonda', hasSound: true }
+          { word: 'Yumurta', emoji: '🥚', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Balık', emoji: '🐟', hasSound: false }],
-        cumulativeWords: [
-          { word: 'AY', parts: ['A', 'Y'], distractors: ['OY'], icon: '🌙' },
-          { word: 'YOL', parts: ['Y', 'OL'], distractors: ['AL'], icon: '🛣️' },
-          { word: 'AYNA', parts: ['AY', 'NA'], distractors: ['NE'], icon: '🪞' },
-          { word: 'YEMEK', parts: ['YE', 'MEK'], distractors: ['MAK'], icon: '🍲' },
-          { word: 'KUYU', parts: ['KU', 'YU'], distractors: ['YA'], icon: '🪣' },
-          { word: 'YATAK', parts: ['YA', 'TAK'], distractors: ['TOK'], icon: '🛏️' }
+        noSoundWords: [
+          { word: 'Kedi', emoji: '🐱', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Ali yemek ye.', blankSentence: 'Ali _____ ye.', missing: 'yemek', options: ['yemek', 'ayna', 'yatak'], fullText: 'Ali yemek ye.' },
-          { sentence: 'Ela ayna al.', blankSentence: 'Ela _____ al.', missing: 'ayna', options: ['ayna', 'yol', 'kuyu'], fullText: 'Ela ayna al.' }
-        ]
+        cumulativeWords: ANETIL_DATA["Y"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["Y"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["Y"].syllables,
+        words: ANETIL_DATA["Y"].words,
+        sentences: ANETIL_DATA["Y"].sentences
       },
-      'd': {
+'d': {
         letter: 'd', upper: 'D', group: 'g3', groupName: '3. Grup (ÜSÖYDZ)',
         soundWords: [
           { word: 'Deve', emoji: '🐪', position: 'başta', hasSound: true },
@@ -23839,6 +23870,14 @@
       'S': {
         has: [{ word: 'Saat', icon: '⌚' }, { word: 'Su', icon: '💧' }, { word: 'Süt', icon: '🥛' }],
         no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Araba', icon: '🚗' }]
+      },
+      'Ö': {
+        has: [{ word: 'Ördek', icon: '🦆' }, { word: 'Örümcek', icon: '🕷️' }, { word: 'Önlük', icon: '🎽' }],
+        no: [{ word: 'Elma', icon: '🍎' }, { word: 'Araba', icon: '🚗' }]
+      },
+      'Y': {
+        has: [{ word: 'Yıldız', icon: '⭐' }, { word: 'Yılan', icon: '🐍' }, { word: 'Yumurta', icon: '🥚' }],
+        no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Top', icon: '⚽' }]
       }
     };
 
