@@ -2151,6 +2151,48 @@
         "Burak, bisiklete bin.",
         "Ebru, tabakta börek bırakma."
       ]
+    },
+    "G": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "G", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b", "g"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Gözlük", icon: "👓", hasG: true },
+        { word: "Gitar", icon: "🎸", hasG: true },
+        { word: "Gemi", icon: "🚢", hasG: true }
+      ],
+      noSoundItems: [
+        { word: "Elma", icon: "🍎", hasG: false },
+        { word: "Top", icon: "⚽", hasG: false }
+      ],
+      syllables: ["ga", "ge", "gi", "go", "gu", "gı", "gü", "gö", "gaz", "gez", "giz", "göz", "güz", "gül", "göl", "gür", "gün", "güm", "gar", "ger", "gir", "gor", "gol"],
+      words: ["gaz", "göz", "güz", "gül", "göl", "gün", "gol", "gemi", "gezi", "gaga", "karga", "dalga", "damga", "sergi", "dergi", "silgi", "bilgi", "çizgi", "saygı", "duygu", "örgü", "süpürge", "gözlük", "gömlek", "gitar", "üçgen", "gezegen"],
+      sentences: [
+        "Gamze, gitar çal.",
+        "Gizem, gözlüğünü tak.",
+        "Gökmen, dergi ve gazete oku.",
+        "Bilge, silgi ve kalem al."
+      ]
+    },
+    "C": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "G", "C", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b", "g", "c"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Civciv", icon: "🐤", hasC: true },
+        { word: "Ceket", icon: "🧥", hasC: true },
+        { word: "Ceviz", icon: "🌰", hasC: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasC: false },
+        { word: "Arı", icon: "🐝", hasC: false }
+      ],
+      syllables: ["ac", "ec", "ic", "oc", "uc", "üc", "ca", "ce", "ci", "co", "cu", "cı", "cü", "cö", "cam", "can", "cem", "cin", "cüz", "caz", "cac", "sac"],
+      words: ["cam", "can", "caz", "sac", "acı", "eca", "gece", "cüce", "baca", "koca", "amca", "yonca", "boncuk", "oyuncak", "salıncak", "karınca", "örümcek", "ceket", "sucuk", "cacık", "sıcak", "ocak", "kucak", "böcek", "tencere", "pencere", "eczane"],
+      sentences: [
+        "Cemil, sıcak çorba iç.",
+        "Cansu, oyuncak bebek al.",
+        "Canan, gece pencereden yıldızlara bak.",
+        "Amcam, bahçede salıncak kurdu."
+      ]
     }
   };
   window.ANETIL_DATA = ANETIL_DATA;
@@ -2185,7 +2227,7 @@
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
       { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
       { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
-      { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b'] },
+      { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c'] },
       { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
     ],
     letterOrder: ['a', 'n', 'e', 't', 'i', 'l', 'o', 'k', 'u', 'r', 'ı', 'm', 'ü', 's', 'ö', 'y', 'd', 'z', 'ç', 'b', 'g', 'c', 'ş', 'p', 'h', 'v', 'ğ', 'f', 'j'],
@@ -2531,51 +2573,41 @@
         words: ANETIL_DATA["B"].words,
         sentences: ANETIL_DATA["B"].sentences
       },
-'g': {
+      'g': {
         letter: 'g', upper: 'G', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
-          { word: 'Gemi', emoji: '🚢', position: 'başta', hasSound: true },
-          { word: 'Gül', emoji: '🌹', position: 'başta', hasSound: true },
           { word: 'Gözlük', emoji: '👓', position: 'başta', hasSound: true },
-          { word: 'Geyik', emoji: '🦌', position: 'başta', hasSound: true },
-          { word: 'Gaga', emoji: '🦜', position: 'başta', hasSound: true }
+          { word: 'Gitar', emoji: '🎸', position: 'başta', hasSound: true },
+          { word: 'Gemi', emoji: '🚢', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Elma', emoji: '🍎', hasSound: false }, { word: 'Ayı', emoji: '🐻', hasSound: false }],
-        cumulativeWords: [
-          { word: 'GÜL', parts: ['G', 'ÜL'], distractors: ['AL'], icon: '🌹' },
-          { word: 'GEMİ', parts: ['GE', 'Mİ'], distractors: ['MA'], icon: '🚢' },
-          { word: 'GEYİK', parts: ['GE', 'YİK'], distractors: ['YAK'], icon: '🦌' },
-          { word: 'GÖZLÜK', parts: ['GÖZ', 'LÜK'], distractors: ['LAK'], icon: '👓' },
-          { word: 'GAGA', parts: ['GA', 'GA'], distractors: ['GO'], icon: '🦜' }
+        noSoundWords: [
+          { word: 'Elma', emoji: '🍎', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Ali gül al.', blankSentence: 'Ali _____ al.', missing: 'gül', options: ['gül', 'gemi', 'gözlük'], fullText: 'Ali gül al.' },
-          { sentence: 'Gemi denizde yüz.', blankSentence: '_____ denizde yüz.', missing: 'gemi', options: ['gemi', 'geyik', 'gül'], fullText: 'Gemi denizde yüz.' }
-        ]
+        cumulativeWords: ANETIL_DATA["G"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["G"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["G"].syllables,
+        words: ANETIL_DATA["G"].words,
+        sentences: ANETIL_DATA["G"].sentences
       },
       'c': {
         letter: 'c', upper: 'C', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Civciv', emoji: '🐥', position: 'başta', hasSound: true },
-          { word: 'Ceviz', emoji: '🌰', position: 'başta', hasSound: true },
-          { word: 'Cam', emoji: '🪟', position: 'başta', hasSound: true },
           { word: 'Ceket', emoji: '🧥', position: 'başta', hasSound: true },
-          { word: 'Cüce', emoji: '🧙', position: 'başta', hasSound: true },
-          { word: 'Amca', emoji: '👨', position: 'ortada', hasSound: true }
+          { word: 'Ceviz', emoji: '🌰', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Balık', emoji: '🐟', hasSound: false }],
-        cumulativeWords: [
-          { word: 'CAM', parts: ['C', 'AM'], distractors: ['EM'], icon: '🪟' },
-          { word: 'CÜCE', parts: ['CÜ', 'CE'], distractors: ['CA'], icon: '🧙' },
-          { word: 'CEKET', parts: ['CE', 'KET'], distractors: ['KAT'], icon: '🧥' },
-          { word: 'AMCA', parts: ['AM', 'CA'], distractors: ['CO'], icon: '👨' }
+        noSoundWords: [
+          { word: 'Kedi', emoji: '🐱', hasSound: false },
+          { word: 'Arı', emoji: '🐝', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Amca cam sil.', blankSentence: 'Amca _____ sil.', missing: 'cam', options: ['cam', 'ceket', 'cüce'], fullText: 'Amca cam sil.' },
-          { sentence: 'Ali ceket giy.', blankSentence: 'Ali _____ giy.', missing: 'ceket', options: ['ceket', 'cüce', 'amca'], fullText: 'Ali ceket giy.' }
-        ]
+        cumulativeWords: ANETIL_DATA["C"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["C"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["C"].syllables,
+        words: ANETIL_DATA["C"].words,
+        sentences: ANETIL_DATA["C"].sentences
       },
-      'ş': {
+'ş': {
         letter: 'ş', upper: 'Ş', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Şapka', emoji: '🧢', position: 'başta', hasSound: true },
@@ -23951,6 +23983,14 @@
       },
       'B': {
         has: [{ word: 'Balık', icon: '🐟' }, { word: 'Balon', icon: '🎈' }, { word: 'Bisiklet', icon: '🚲' }],
+        no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Arı', icon: '🐝' }]
+      },
+      'G': {
+        has: [{ word: 'Gözlük', icon: '👓' }, { word: 'Gitar', icon: '🎸' }, { word: 'Gemi', icon: '🚢' }],
+        no: [{ word: 'Elma', icon: '🍎' }, { word: 'Top', icon: '⚽' }]
+      },
+      'C': {
+        has: [{ word: 'Civciv', icon: '🐤' }, { word: 'Ceket', icon: '🧥' }, { word: 'Ceviz', icon: '🌰' }],
         no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Arı', icon: '🐝' }]
       }
     };
