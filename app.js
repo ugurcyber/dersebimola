@@ -1941,9 +1941,50 @@
         "Eren, kara trenle tur at.",
         "Onur, tekeri tut."
       ]
+    },
+    "I": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "a", "n", "e", "t", "i", "l", "o", "k", "u", "r", "ı"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Ispanak", icon: "🥬", hasI: true },
+        { word: "Arı", icon: "🐝", hasI: true },
+        { word: "Işık", icon: "💡", hasI: true }
+      ],
+      noSoundItems: [
+        { word: "Elma", icon: "🍎", hasI: false },
+        { word: "Kedi", icon: "🐱", hasI: false }
+      ],
+      syllables: ["ın", "ıt", "ıl", "ık", "ır", "nı", "tı", "lı", "kı", "rı", "kır", "tır", "kıl", "kın", "tın"],
+      words: ["arı", "atkı", "altı", "artı", "kır", "tır", "tartı", "tatlı", "kırık", "tırnak", "kırlent", "akıllı", "tarık", "altın", "anıt", "kanıt", "tıkır"],
+      sentences: [
+        "Tarık, altı tatlı al.",
+        "Akıllı Ali, atkı tak.",
+        "Tartı altı kilo tarttı.",
+        "Anıl, altın al."
+      ]
+    },
+    "M": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "a", "n", "e", "t", "i", "l", "o", "k", "u", "r", "ı", "m"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Masa", icon: "🪑", hasM: true },
+        { word: "Maymun", icon: "🐒", hasM: true },
+        { word: "Muz", icon: "🍌", hasM: true }
+      ],
+      noSoundItems: [
+        { word: "Top", icon: "⚽", hasM: false },
+        { word: "Araba", icon: "🚗", hasM: false }
+      ],
+      syllables: ["am", "em", "im", "om", "um", "ım", "ma", "me", "mi", "mo", "mu", "mı", "mal", "mel", "mil", "kam", "kem", "kim", "kum", "ram", "rem", "tam", "tem"],
+      words: ["ama", "elma", "armut", "marul", "limon", "ekmek", "makarna", "lokum", "kum", "mum", "orman", "ırmak", "kemer", "mermer", "market", "minik", "mimar", "kalem", "rakam"],
+      sentences: [
+        "Melek, tatlı elma al.",
+        "Murat, marketten ekmek ve limon al.",
+        "Minik, lokum ve armut tat.",
+        "Mert, ırmaktan kum al."
+      ]
     }
   };
-  ANETIL_DATA["I"] = ANETIL_DATA["İ"];
   window.ANETIL_DATA = ANETIL_DATA;
 
   /**
@@ -1973,7 +2014,7 @@
     groups: [
       { id: 'g0_prep', name: '✏️ Hazırlık', code: 'Çizgi & Algı', isPrep: true, label: '✏️ Okuma Yazmaya Hazırlık (Yazısız Etkinlikler)', letters: [] },
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
-      { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r'] },
+      { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
       { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
       { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c', 'ş', 'p'] },
       { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
@@ -2155,62 +2196,36 @@
         letter: 'ı', upper: 'I', group: 'g2', groupName: '2. Grup (OKURIM)',
         soundWords: [
           { word: 'Ispanak', emoji: '🥬', position: 'başta', hasSound: true },
-          { word: 'Işık', emoji: '💡', position: 'başta', hasSound: true },
-          { word: 'Irmak', emoji: '🏞️', position: 'başta', hasSound: true },
-          { word: 'Balık', emoji: '🐟', position: 'ortada', hasSound: true },
           { word: 'Arı', emoji: '🐝', position: 'sonda', hasSound: true },
-          { word: 'Atkı', emoji: '🧣', position: 'sonda', hasSound: true }
+          { word: 'Işık', emoji: '💡', position: 'başta', hasSound: true }
         ],
         noSoundWords: [
-          { word: 'Kedi', emoji: '🐱', hasSound: false },
-          { word: 'Köpek', emoji: '🐶', hasSound: false },
-          { word: 'Kuş', emoji: '🐦', hasSound: false }
+          { word: 'Elma', emoji: '🍎', hasSound: false },
+          { word: 'Kedi', emoji: '🐱', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'ARI', parts: ['A', 'RI'], distractors: ['RA'], icon: '🐝' },
-          { word: 'TIR', parts: ['T', 'IR'], distractors: ['AR'], icon: '🚛' },
-          { word: 'ATKI', parts: ['AT', 'KI'], distractors: ['KA'], icon: '🧣' },
-          { word: 'ILIK', parts: ['I', 'LIK'], distractors: ['LAK'], icon: '🥛' },
-          { word: 'KALIN', parts: ['KA', 'LIN'], distractors: ['LAN'], icon: '📖' },
-          { word: 'AKIL', parts: ['A', 'KIL'], distractors: ['KAL'], icon: '🧠' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ela kalın atkı tak.', blankSentence: 'Ela kalın _____ tak.', missing: 'atkı', options: ['atkı', 'arı', 'tır'], fullText: 'Ela kalın atkı tak.' },
-          { sentence: 'Ali ılık un al.', blankSentence: 'Ali _____ un al.', missing: 'ılık', options: ['ılık', 'akıl', 'atkı'], fullText: 'Ali ılık un al.' }
-        ]
+        cumulativeWords: ANETIL_DATA["I"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["I"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["I"].syllables,
+        words: ANETIL_DATA["I"].words,
+        sentences: ANETIL_DATA["I"].sentences
       },
       'm': {
         letter: 'm', upper: 'M', group: 'g2', groupName: '2. Grup (OKURIM)',
         soundWords: [
-          { word: 'Mantar', emoji: '🍄', position: 'başta', hasSound: true },
-          { word: 'Maymun', emoji: '🐵', position: 'başta', hasSound: true },
-          { word: 'Muz', emoji: '🍌', position: 'başta', hasSound: true },
-          { word: 'Elma', emoji: '🍎', position: 'ortada', hasSound: true },
-          { word: 'Kalem', emoji: '✏️', position: 'sonda', hasSound: true },
-          { word: 'Limon', emoji: '🍋', position: 'ortada', hasSound: true },
-          { word: 'Lokum', emoji: '🍬', position: 'sonda', hasSound: true }
+          { word: 'Masa', emoji: '🪑', position: 'başta', hasSound: true },
+          { word: 'Maymun', emoji: '🐒', position: 'başta', hasSound: true },
+          { word: 'Muz', emoji: '🍌', position: 'başta', hasSound: true }
         ],
         noSoundWords: [
-          { word: 'Kedi', emoji: '🐱', hasSound: false },
-          { word: 'Köpek', emoji: '🐶', hasSound: false },
-          { word: 'Kuş', emoji: '🐦', hasSound: false }
+          { word: 'Top', emoji: '⚽', hasSound: false },
+          { word: 'Araba', emoji: '🚗', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'ELMA', parts: ['EL', 'MA'], distractors: ['LE'], icon: '🍎' },
-          { word: 'KALEM', parts: ['KA', 'LEM'], distractors: ['LİM'], icon: '✏️' },
-          { word: 'LİMON', parts: ['Lİ', 'MON'], distractors: ['MAN'], icon: '🍋' },
-          { word: 'LOKUM', parts: ['LO', 'KUM'], distractors: ['KAM'], icon: '🍬' },
-          { word: 'MUM', parts: ['M', 'UM'], distractors: ['AM'], icon: '🕯️' },
-          { word: 'ARMUT', parts: ['AR', 'MUT'], distractors: ['MAT'], icon: '🍐' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ali elma al.', blankSentence: 'Ali _____ al.', missing: 'elma', options: ['elma', 'kalem', 'lokum'], fullText: 'Ali elma al.' },
-          { sentence: 'Anne kalem al.', blankSentence: 'Anne _____ al.', missing: 'kalem', options: ['kalem', 'limon', 'mum'], fullText: 'Anne kalem al.' },
-          { sentence: 'Ela lokum tat.', blankSentence: 'Ela _____ tat.', missing: 'lokum', options: ['lokum', 'armut', 'elma'], fullText: 'Ela lokum tat.' }
-        ]
+        cumulativeWords: ANETIL_DATA["M"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["M"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["M"].syllables,
+        words: ANETIL_DATA["M"].words,
+        sentences: ANETIL_DATA["M"].sentences
       },
-
-      // 3. GRUP (ÜSÖYDZ)
       'ü': {
         letter: 'ü', upper: 'Ü', group: 'g3', groupName: '3. Grup (ÜSÖYDZ)',
         soundWords: [
@@ -23758,10 +23773,6 @@
         has: [{ word: 'İnek', icon: '🐮' }, { word: 'İncir', icon: '🫐' }, { word: 'İp', icon: '🪢' }],
         no: [{ word: 'Ayı', icon: '🐻' }, { word: 'At', icon: '🐴' }, { word: 'Top', icon: '⚽' }]
       },
-      'I': {
-        has: [{ word: 'İnek', icon: '🐮' }, { word: 'İncir', icon: '🫐' }, { word: 'İp', icon: '🪢' }],
-        no: [{ word: 'Ayı', icon: '🐻' }, { word: 'At', icon: '🐴' }, { word: 'Top', icon: '⚽' }]
-      },
       'L': {
         has: [{ word: 'Limon', icon: '🍋' }, { word: 'Lale', icon: '🌷' }, { word: 'Leylek', icon: '🪶' }],
         no: [{ word: 'Ayı', icon: '🐻' }, { word: 'Arı', icon: '🐝' }, { word: 'Top', icon: '⚽' }]
@@ -23781,6 +23792,14 @@
       'R': {
         has: [{ word: 'Roket', icon: '🚀' }, { word: 'Radyo', icon: '📻' }, { word: 'Araba', icon: '🚗' }],
         no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Ev', icon: '🏠' }]
+      },
+      'I': {
+        has: [{ word: 'Ispanak', icon: '🥬' }, { word: 'Arı', icon: '🐝' }, { word: 'Işık', icon: '💡' }],
+        no: [{ word: 'Elma', icon: '🍎' }, { word: 'Kedi', icon: '🐱' }]
+      },
+      'M': {
+        has: [{ word: 'Masa', icon: '🪑' }, { word: 'Maymun', icon: '🐒' }, { word: 'Muz', icon: '🍌' }],
+        no: [{ word: 'Top', icon: '⚽' }, { word: 'Araba', icon: '🚗' }]
       }
     };
 
