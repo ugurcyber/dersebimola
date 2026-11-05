@@ -2109,6 +2109,48 @@
         "Yıldız, kırmızı etek ütüle.",
         "Deniz, müzik dinle ve yazı yaz."
       ]
+    },
+    "Ç": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Çilek", icon: "🍓", hasÇ: true },
+        { word: "Çanta", icon: "🎒", hasÇ: true },
+        { word: "Çiçek", icon: "🌸", hasÇ: true }
+      ],
+      noSoundItems: [
+        { word: "Elma", icon: "🍎", hasÇ: false },
+        { word: "Top", icon: "⚽", hasÇ: false }
+      ],
+      syllables: ["aç", "eç", "iç", "uç", "üç", "öç", "ça", "çe", "çi", "ço", "çu", "çı", "çü", "çö", "çay", "çam", "çan", "çal", "çat", "çit", "çil", "çiz", "çöl", "saç", "seç", "suç", "taç", "koç", "kaç", "maç"],
+      words: ["aç", "iç", "üç", "uç", "saç", "seç", "taç", "koç", "maç", "kaç", "çay", "çam", "çan", "çit", "çöl", "keçi", "ölçü", "elçi", "uçak", "uçurtma", "çilek", "çatal", "çekirdek", "çizme", "çekiç", "reçel", "tarçın", "kılıç", "ilaç", "kireç", "yamaç", "çanta", "çörek"],
+      sentences: [
+        "Çetin, üç dilim reçelli ekmek al.",
+        "Ayça, sıcak çay ve çörek tat.",
+        "Seçil, saksıdan sarı çiçek seç.",
+        "Mert, renkli uçurtma uçur."
+      ]
+    },
+    "B": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Balık", icon: "🐟", hasB: true },
+        { word: "Balon", icon: "🎈", hasB: true },
+        { word: "Bisiklet", icon: "🚲", hasB: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasB: false },
+        { word: "Arı", icon: "🐝", hasB: false }
+      ],
+      syllables: ["ba", "be", "bi", "bo", "bu", "bı", "bü", "bö", "bal", "bel", "bil", "bol", "bul", "böl", "bak", "bük", "bas", "bay", "bey", "boy", "buz", "biz", "bez", "bot", "bit"],
+      words: ["bal", "bel", "bol", "buz", "biz", "bez", "bot", "boy", "bey", "baba", "bebek", "abla", "ebe", "soba", "bornoz", "balon", "balık", "tabak", "kabak", "bardak", "bayrak", "börek", "biber", "badem", "sabun", "otobüs", "bisiklet", "kelebek", "leblebi"],
+      sentences: [
+        "Babam, tatlı badem ve leblebi aldı.",
+        "Berna, beyaz kelebek çiz.",
+        "Burak, bisiklete bin.",
+        "Ebru, tabakta börek bırakma."
+      ]
     }
   };
   window.ANETIL_DATA = ANETIL_DATA;
@@ -2143,7 +2185,7 @@
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
       { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
       { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
-      { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c', 'ş', 'p'] },
+      { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b'] },
       { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
     ],
     letterOrder: ['a', 'n', 'e', 't', 'i', 'l', 'o', 'k', 'u', 'r', 'ı', 'm', 'ü', 's', 'ö', 'y', 'd', 'z', 'ç', 'b', 'g', 'c', 'ş', 'p', 'h', 'v', 'ğ', 'f', 'j'],
@@ -2455,53 +2497,41 @@
         words: ANETIL_DATA["Z"].words,
         sentences: ANETIL_DATA["Z"].sentences
       },
-'ç': {
+      'ç': {
         letter: 'ç', upper: 'Ç', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Çilek', emoji: '🍓', position: 'başta', hasSound: true },
-          { word: 'Çiçek', emoji: '🌸', position: 'başta', hasSound: true },
-          { word: 'Çekiç', emoji: '🔨', position: 'başta', hasSound: true },
-          { word: 'Ağaç', emoji: '🌳', position: 'sonda', hasSound: true },
-          { word: 'Taç', emoji: '👑', position: 'sonda', hasSound: true }
+          { word: 'Çanta', emoji: '🎒', position: 'başta', hasSound: true },
+          { word: 'Çiçek', emoji: '🌸', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Elma', emoji: '🍎', hasSound: false }, { word: 'Kedi', emoji: '🐱', hasSound: false }],
-        cumulativeWords: [
-          { word: 'ÇAY', parts: ['Ç', 'AY'], distractors: ['OY'], icon: '🍵' },
-          { word: 'ÇAM', parts: ['Ç', 'AM'], distractors: ['OM'], icon: '🌲' },
-          { word: 'ÇİÇEK', parts: ['Çİ', 'ÇEK'], distractors: ['ÇAK'], icon: '🌸' },
-          { word: 'ÇİLEK', parts: ['Çİ', 'LEK'], distractors: ['LAK'], icon: '🍓' },
-          { word: 'ÇANTA', parts: ['ÇAN', 'TA'], distractors: ['TE'], icon: '🎒' }
+        noSoundWords: [
+          { word: 'Elma', emoji: '🍎', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Ela çilek ye.', blankSentence: 'Ela _____ ye.', missing: 'çilek', options: ['çilek', 'çay', 'çam'], fullText: 'Ela çilek ye.' },
-          { sentence: 'Ali çay iç.', blankSentence: 'Ali _____ iç.', missing: 'çay', options: ['çay', 'çanta', 'çiçek'], fullText: 'Ali çay iç.' }
-        ]
+        cumulativeWords: ANETIL_DATA["Ç"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["Ç"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["Ç"].syllables,
+        words: ANETIL_DATA["Ç"].words,
+        sentences: ANETIL_DATA["Ç"].sentences
       },
       'b': {
         letter: 'b', upper: 'B', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Balık', emoji: '🐟', position: 'başta', hasSound: true },
-          { word: 'Bebek', emoji: '👶', position: 'başta', hasSound: true },
-          { word: 'Biber', emoji: '🫑', position: 'başta', hasSound: true },
-          { word: 'Bulut', emoji: '☁️', position: 'başta', hasSound: true },
-          { word: 'Sabun', emoji: '🧼', position: 'ortada', hasSound: true },
-          { word: 'Araba', emoji: '🚗', position: 'ortada', hasSound: true }
+          { word: 'Balon', emoji: '🎈', position: 'başta', hasSound: true },
+          { word: 'Bisiklet', emoji: '🚲', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Fil', emoji: '🐘', hasSound: false }],
-        cumulativeWords: [
-          { word: 'BAL', parts: ['B', 'AL'], distractors: ['EL'], icon: '🍯' },
-          { word: 'BEBEK', parts: ['BE', 'BEK'], distractors: ['BAK'], icon: '👶' },
-          { word: 'BALIK', parts: ['BA', 'LIK'], distractors: ['LAK'], icon: '🐟' },
-          { word: 'BULUT', parts: ['BU', 'LUT'], distractors: ['LAT'], icon: '☁️' },
-          { word: 'BİBER', parts: ['Bİ', 'BER'], distractors: ['BAR'], icon: '🫑' },
-          { word: 'SABUN', parts: ['SA', 'BUN'], distractors: ['BAN'], icon: '🧼' }
+        noSoundWords: [
+          { word: 'Kedi', emoji: '🐱', hasSound: false },
+          { word: 'Arı', emoji: '🐝', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Ali balık tut.', blankSentence: 'Ali _____ tut.', missing: 'balık', options: ['balık', 'bebek', 'bal'], fullText: 'Ali balık tut.' },
-          { sentence: 'Bebek süt iç.', blankSentence: '_____ süt iç.', missing: 'bebek', options: ['bebek', 'sabun', 'bulut'], fullText: 'Bebek süt iç.' }
-        ]
+        cumulativeWords: ANETIL_DATA["B"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["B"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["B"].syllables,
+        words: ANETIL_DATA["B"].words,
+        sentences: ANETIL_DATA["B"].sentences
       },
-      'g': {
+'g': {
         letter: 'g', upper: 'G', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Gemi', emoji: '🚢', position: 'başta', hasSound: true },
@@ -20704,7 +20734,7 @@
     // 1. Şimdilik SADECE "Okuma Yazmaya Hazırlık" ve "1. Grup (ANETİL)" aktif!
     // 2. Grup (OKURIM), 3. Grup, 4. Grup ve 5. Grup sekmelerinde "🔒 Çok Yakında!" yazar.
     let navHtml = groups.map(grp => {
-      const isLocked = (!grp.isPrep && grp.id !== 'g1' && grp.id !== 'g2' && grp.id !== 'g3');
+      const isLocked = (!grp.isPrep && grp.id !== 'g1' && grp.id !== 'g2' && grp.id !== 'g3' && grp.id !== 'g4');
       const isActive = (state.maarifGroup === grp.id);
       let label = grp.isPrep ? '✏️ Okuma Yazmaya Hazırlık' : `${grp.name} (${grp.code})`;
       if (isLocked) {
@@ -20742,7 +20772,7 @@
     }
 
     // 2) 🔒 KİLİTLİ GRUPLAR (2. Grup, 3. Grup, 4. Grup, 5. Grup)
-    const isLockedGrp = (!activeGrp.isPrep && activeGrp.id !== 'g1' && activeGrp.id !== 'g2' && activeGrp.id !== 'g3');
+    const isLockedGrp = (!activeGrp.isPrep && activeGrp.id !== 'g1' && activeGrp.id !== 'g2' && activeGrp.id !== 'g3' && activeGrp.id !== 'g4');
     if (isLockedGrp) {
       if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
       if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.add('hide');
@@ -23914,6 +23944,14 @@
       'Z': {
         has: [{ word: 'Zebra', icon: '🦓' }, { word: 'Zil', icon: '🔔' }, { word: 'Zeytin', icon: '🫒' }],
         no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Top', icon: '⚽' }]
+      },
+      'Ç': {
+        has: [{ word: 'Çilek', icon: '🍓' }, { word: 'Çanta', icon: '🎒' }, { word: 'Çiçek', icon: '🌸' }],
+        no: [{ word: 'Elma', icon: '🍎' }, { word: 'Top', icon: '⚽' }]
+      },
+      'B': {
+        has: [{ word: 'Balık', icon: '🐟' }, { word: 'Balon', icon: '🎈' }, { word: 'Bisiklet', icon: '🚲' }],
+        no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Arı', icon: '🐝' }]
       }
     };
 
