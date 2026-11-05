@@ -2067,6 +2067,48 @@
         "Ayla, sarı kamyon al.",
         "Emel, yataktan uyan."
       ]
+    },
+    "D": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Domates", icon: "🍅", hasD: true },
+        { word: "Dondurma", icon: "🍦", hasD: true },
+        { word: "Davul", icon: "🥁", hasD: true }
+      ],
+      noSoundItems: [
+        { word: "Elma", icon: "🍎", hasD: false },
+        { word: "Arı", icon: "🐝", hasD: false }
+      ],
+      syllables: ["ad", "od", "da", "de", "di", "do", "du", "dı", "dü", "dö", "dal", "dil", "dol", "dar", "der", "dur", "dam", "dik", "dök", "dört", "dost"],
+      words: ["ad", "ada", "oda", "dede", "kedi", "yedi", "dal", "dil", "dört", "dost", "duyu", "uydu", "dere", "deri", "ordu", "ördek", "demir", "duman", "müdür", "düdük", "dondurma", "domates", "sandalye", "madalya", "stadyum", "radyo"],
+      sentences: [
+        "Dede, dört ördek al.",
+        "Derya, kediye süt dök.",
+        "Arda, tatlı dondurma tat.",
+        "Didem, radyodan türkü dinle."
+      ]
+    },
+    "Z": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Zebra", icon: "🦓", hasZ: true },
+        { word: "Zil", icon: "🔔", hasZ: true },
+        { word: "Zeytin", icon: "🫒", hasZ: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasZ: false },
+        { word: "Top", icon: "⚽", hasZ: false }
+      ],
+      syllables: ["az", "ez", "iz", "oz", "uz", "ız", "üz", "öz", "za", "ze", "zi", "zo", "zu", "zı", "zü", "kaz", "kız", "köz", "tuz", "toz", "saz", "söz", "yaz", "yüz", "zil", "zar", "zor"],
+      words: ["az", "iz", "öz", "kaz", "kız", "tuz", "toz", "saz", "söz", "yaz", "yüz", "zil", "zar", "zor", "muz", "diz", "düz", "taze", "müze", "kuzu", "yazı", "kaza", "uzun", "üzüm", "zeytin", "yıldız", "deniz", "sekiz", "dokuz", "otuz", "kırmızı", "temiz", "zümrüt", "sözlük", "terazi"],
+      sentences: [
+        "Zeynep, taze üzüm ve muz al.",
+        "Aziz, sekiz zeytin tat.",
+        "Yıldız, kırmızı etek ütüle.",
+        "Deniz, müzik dinle ve yazı yaz."
+      ]
     }
   };
   window.ANETIL_DATA = ANETIL_DATA;
@@ -2100,7 +2142,7 @@
       { id: 'g0_prep', name: '✏️ Hazırlık', code: 'Çizgi & Algı', isPrep: true, label: '✏️ Okuma Yazmaya Hazırlık (Yazısız Etkinlikler)', letters: [] },
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
       { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
-      { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y'] },
+      { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
       { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c', 'ş', 'p'] },
       { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
     ],
@@ -2379,55 +2421,41 @@
         words: ANETIL_DATA["Y"].words,
         sentences: ANETIL_DATA["Y"].sentences
       },
-'d': {
+      'd': {
         letter: 'd', upper: 'D', group: 'g3', groupName: '3. Grup (ÜSÖYDZ)',
         soundWords: [
-          { word: 'Deve', emoji: '🐪', position: 'başta', hasSound: true },
+          { word: 'Domates', emoji: '🍅', position: 'başta', hasSound: true },
           { word: 'Dondurma', emoji: '🍦', position: 'başta', hasSound: true },
-          { word: 'Düdük', emoji: '🎺', position: 'başta', hasSound: true },
-          { word: 'Ördek', emoji: '🦆', position: 'ortada', hasSound: true },
-          { word: 'Kedi', emoji: '🐱', position: 'ortada', hasSound: true }
+          { word: 'Davul', emoji: '🥁', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Arı', emoji: '🐝', hasSound: false }, { word: 'Ayı', emoji: '🐻', hasSound: false }],
-        cumulativeWords: [
-          { word: 'DEDE', parts: ['DE', 'DE'], distractors: ['DA'], icon: '👴' },
-          { word: 'KEDİ', parts: ['KE', 'Dİ'], distractors: ['DA'], icon: '🐱' },
-          { word: 'ODA', parts: ['O', 'DA'], distractors: ['DE'], icon: '🚪' },
-          { word: 'DÜDÜK', parts: ['DÜ', 'DÜK'], distractors: ['DAK'], icon: '🎺' },
-          { word: 'ÖRDEK', parts: ['ÖR', 'DEK'], distractors: ['DAK'], icon: '🦆' }
+        noSoundWords: [
+          { word: 'Elma', emoji: '🍎', hasSound: false },
+          { word: 'Arı', emoji: '🐝', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Dede kediye süt dök.', blankSentence: 'Dede _____ süt dök.', missing: 'kediye', options: ['kediye', 'ördek', 'düdük'], fullText: 'Dede kediye süt dök.' },
-          { sentence: 'Ali odada kal.', blankSentence: 'Ali _____ kal.', missing: 'odada', options: ['odada', 'dede', 'kedi'], fullText: 'Ali odada kal.' }
-        ]
+        cumulativeWords: ANETIL_DATA["D"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["D"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["D"].syllables,
+        words: ANETIL_DATA["D"].words,
+        sentences: ANETIL_DATA["D"].sentences
       },
       'z': {
         letter: 'z', upper: 'Z', group: 'g3', groupName: '3. Grup (ÜSÖYDZ)',
         soundWords: [
           { word: 'Zebra', emoji: '🦓', position: 'başta', hasSound: true },
-          { word: 'Zürafa', emoji: '🦒', position: 'başta', hasSound: true },
           { word: 'Zil', emoji: '🔔', position: 'başta', hasSound: true },
-          { word: 'Kiraz', emoji: '🍒', position: 'sonda', hasSound: true },
-          { word: 'Yıldız', emoji: '⭐', position: 'sonda', hasSound: true },
-          { word: 'Deniz', emoji: '🌊', position: 'sonda', hasSound: true }
+          { word: 'Zeytin', emoji: '🫒', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Ayı', emoji: '🐻', hasSound: false }],
-        cumulativeWords: [
-          { word: 'MUZ', parts: ['M', 'UZ'], distractors: ['AZ'], icon: '🍌' },
-          { word: 'TUZ', parts: ['T', 'UZ'], distractors: ['OZ'], icon: '🧂' },
-          { word: 'ZİL', parts: ['Z', 'İL'], distractors: ['AL'], icon: '🔔' },
-          { word: 'KİRAZ', parts: ['Kİ', 'RAZ'], distractors: ['REZ'], icon: '🍒' },
-          { word: 'DENİZ', parts: ['DE', 'NİZ'], distractors: ['NAZ'], icon: '🌊' },
-          { word: 'YILDIZ', parts: ['YIL', 'DIZ'], distractors: ['DAZ'], icon: '⭐' }
+        noSoundWords: [
+          { word: 'Kedi', emoji: '🐱', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Ali kiraz ye.', blankSentence: 'Ali _____ ye.', missing: 'kiraz', options: ['kiraz', 'tuz', 'zil'], fullText: 'Ali kiraz ye.' },
-          { sentence: 'Ela denize yüz.', blankSentence: 'Ela _____ yüz.', missing: 'denize', options: ['denize', 'yıldız', 'muz'], fullText: 'Ela denize yüz.' }
-        ]
+        cumulativeWords: ANETIL_DATA["Z"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["Z"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["Z"].syllables,
+        words: ANETIL_DATA["Z"].words,
+        sentences: ANETIL_DATA["Z"].sentences
       },
-
-      // 4. GRUP (ÇBGCŞP)
-      'ç': {
+'ç': {
         letter: 'ç', upper: 'Ç', group: 'g4', groupName: '4. Grup (ÇBGCŞP)',
         soundWords: [
           { word: 'Çilek', emoji: '🍓', position: 'başta', hasSound: true },
@@ -23877,6 +23905,14 @@
       },
       'Y': {
         has: [{ word: 'Yıldız', icon: '⭐' }, { word: 'Yılan', icon: '🐍' }, { word: 'Yumurta', icon: '🥚' }],
+        no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Top', icon: '⚽' }]
+      },
+      'D': {
+        has: [{ word: 'Domates', icon: '🍅' }, { word: 'Dondurma', icon: '🍦' }, { word: 'Davul', icon: '🥁' }],
+        no: [{ word: 'Elma', icon: '🍎' }, { word: 'Arı', icon: '🐝' }]
+      },
+      'Z': {
+        has: [{ word: 'Zebra', icon: '🦓' }, { word: 'Zil', icon: '🔔' }, { word: 'Zeytin', icon: '🫒' }],
         no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Top', icon: '⚽' }]
       }
     };
