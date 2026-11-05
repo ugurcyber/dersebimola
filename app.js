@@ -1811,7 +1811,7 @@
       allowedLetters: ["A", "N", "a", "n"],
       mode: "CUMULATIVE",
       syllables: ["an", "na"],
-      words: ["ana", "an"],
+      words: ["an", "na", "ana"],
       sentences: [
         "Ana.",
         "Na na."
@@ -1820,8 +1820,8 @@
     "E": {
       allowedLetters: ["A", "N", "E", "a", "n", "e"],
       mode: "CUMULATIVE",
-      syllables: ["an", "na", "en", "ne"],
-      words: ["ana", "anne", "nane", "en", "ne"],
+      syllables: ["en", "ne", "an", "na"],
+      words: ["en", "ne", "an", "na", "ana", "anne", "nane"],
       sentences: [
         "Anne nane.",
         "Ene nane."
@@ -1830,8 +1830,8 @@
     "T": {
       allowedLetters: ["A", "N", "E", "T", "a", "n", "e", "t"],
       mode: "CUMULATIVE",
-      syllables: ["at", "et", "ta", "te", "tan", "ten", "nat", "net", "tat"],
-      words: ["at", "et", "ata", "tane", "nane", "anten", "ten", "tene", "tat", "net"],
+      syllables: ["at", "et", "ta", "te", "tat", "ten"],
+      words: ["at", "et", "ta", "te", "ata", "tane", "nane", "anten", "ten", "tat"],
       sentences: [
         "Ata et at.",
         "Anne nane tat.",
@@ -1841,8 +1841,8 @@
     "İ": {
       allowedLetters: ["A", "N", "E", "T", "İ", "I", "a", "n", "e", "t", "i"],
       mode: "CUMULATIVE",
-      syllables: ["in", "it", "ti", "ni", "nin", "tin", "ani", "ant"],
-      words: ["in", "it", "nini", "tine", "ani", "ant", "anten", "tane", "nane", "eti", "ati"],
+      syllables: ["in", "it", "ti", "ni", "ant"],
+      words: ["in", "it", "ti", "ni", "nini", "ani", "ant", "eti"],
       sentences: [
         "Nini, nane.",
         "Ati, ata in.",
@@ -1852,13 +1852,12 @@
     "L": {
       allowedLetters: ["A", "N", "E", "T", "İ", "L", "a", "n", "e", "t", "i", "l"],
       mode: "CUMULATIVE",
-      syllables: ["el", "al", "il", "la", "le", "li", "tel", "nal", "lal", "lan", "len", "lin"],
-      words: ["el", "al", "il", "ela", "lale", "aile", "tel", "nal", "naneli", "atlet", "etli", "tatil", "ali", "nil"],
+      syllables: ["el", "al", "il", "la", "le", "li", "tel", "nal"],
+      words: ["el", "al", "il", "la", "le", "li", "ela", "lale", "aile", "tel", "nal", "ali", "tatil", "atlet"],
       sentences: [
         "Ela lale al.",
         "Ali, ata nal al.",
-        "Aile tatil et.",
-        "Nil, naneli et al."
+        "Aile tatil et."
       ]
     }
   };
@@ -16717,65 +16716,13 @@
         name: 'İlk Okuma Yazma',
         icon: '🔤',
         colorTheme: 'theme-firstreading',
-        tagline: 'Harfler & Sesler',
-        description: 'Harfleri tanı, heceleri birleştir ve okuma şampiyonu ol! 📖✨',
-        badge: '1. Sınıf Temeli',
+        tagline: 'Türkiye Yüzyılı Maarif Modeli',
+        description: 'Sesleri hisset, heceleri birleştir ve akıcı okumaya başla! 📖✨',
+        badge: '2026 Maarif Modeli',
         topics: [
-          { id: 'all', label: '🌟 Tümü' },
-          { id: 'letters', label: '🎈 Ses & Harf Balonları' },
-          { id: 'syllables', label: '🔤 Hece Birleştirme' },
-          { id: 'sentences', label: '⭐ Hızlı Kelime Yakala' }
+          { id: 'all', label: '🌟 1. Grup (ANETİL)' }
         ],
-        games: [
-          {
-            id: 'firstreading_balloon',
-            active: true,
-            title: 'Ses ve Harf Avcısı (Balon Patlatma)',
-            icon: '🎈',
-            badge: '🎈 Balon Patlatma',
-            featureTag: '⚡ MEB Ses Grupları',
-            description: 'Söylenen harfi veya içinde o ses geçen görseli uçan balonların içinden patlat! 🎈💥',
-            tags: ['🔤 Maarif Modeli ANETİL', '🎈 Uçan Balonlar', '💥 Hızlı Patlat'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'letters'
-          },
-          {
-            id: 'syllable_builder',
-            active: true,
-            title: 'Hece Birleştirme Atölyesi',
-            icon: '🔤',
-            badge: '🧩 Dokun & Birleştir',
-            featureTag: '🧱 Renkli Küpler',
-            description: 'Renkli küplere sırayla dokunarak ("E + L = EL", "A + N + A = ANA") anlamlı kelimeleri oluştur! 🧱',
-            tags: ['📖 Açık & Kapalı Hece', '🧱 Küp Birleştir', '🔊 Sesli Okuma'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'syllables'
-          },
-          {
-            id: 'word_catch',
-            active: true,
-            title: 'Hızlı Kelime Yakala',
-            icon: '⭐',
-            badge: '⭐ Parlayan Yıldızlar',
-            featureTag: '🎯 Görsel Algı',
-            description: 'Ekranda beliren görselin (🍎 Elma, 🐴 At, 🥛 Süt) baş harfini parlayan yıldızlardan yakala! ⭐',
-            tags: ['🍎 Görsel Tanıma', '⭐ Yıldız Avı', '⚡ Hızlı Tepki'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'sentences'
-          },
-          {
-            id: 'firstreading',
-            active: true,
-            title: 'İlk Okuma & Ses Avcısı (Karma Düello)',
-            icon: '🔤',
-            badge: '🌱 Karma Pratik',
-            featureTag: '🏆 Süper Düello',
-            description: 'Balon patlatma, hece birleştirme ve kelime avından oluşan süper karma düello! 🎯',
-            tags: ['🔤 Harf Sesleri', '📖 Hece Kurma', '🌟 Sözcük Oluşturma'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'all'
-          }
-        ]
+        games: []
       },
       {
         id: 'math',
@@ -20509,6 +20456,10 @@
   // Dinamik Oyun & Konu Kartlarını (Grid) Üret
   function renderGameCards() {
     if (!DOM.gamesGrid) return;
+    if (state.currentSubject === 'firstreading' && state.currentGrade === 1) {
+      renderMaarifReadingPanel();
+      return;
+    }
     const g = state.currentGrade;
     const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
     const subject = subjects.find(s => s.id === state.currentSubject) || subjects[0];
@@ -20605,24 +20556,23 @@
   function renderMaarifReadingPanel() {
     if (!DOM.maarifGroupsNav) return;
     const groups = MAARIF_2026_CONFIG.groups;
-    const isGen = !!state.isMaarifGeneral;
 
-    // 1. Üst Hazırlık + 5 Ses Grubu + Genel / Karma Pratik Sekmeleri
+    // 1. Şimdilik SADECE "Okuma Yazmaya Hazırlık" ve "1. Grup (ANETİL)" aktif!
+    // 2. Grup (OKURIM), 3. Grup, 4. Grup ve 5. Grup sekmelerinde "🔒 Çok Yakında!" yazar.
     let navHtml = groups.map(grp => {
-      const isActive = (!isGen && state.maarifGroup === grp.id);
-      const label = grp.isPrep ? '✏️ Okuma Yazmaya Hazırlık' : `${grp.name} (${grp.code})`;
+      const isLocked = (!grp.isPrep && grp.id !== 'g1');
+      const isActive = (state.maarifGroup === grp.id);
+      let label = grp.isPrep ? '✏️ Okuma Yazmaya Hazırlık' : `${grp.name} (${grp.code})`;
+      if (isLocked) {
+        label = `🔒 ${grp.name} (${grp.code})`;
+      }
       return `
-        <button class="maarif-group-tab ${grp.isPrep ? 'tab-prep' : ''} ${isActive ? 'active' : ''}" data-group-id="${grp.id}" type="button">
+        <button class="maarif-group-tab ${grp.isPrep ? 'tab-prep' : ''} ${isLocked ? 'is-locked' : ''} ${isActive ? 'active' : ''}" data-group-id="${grp.id}" type="button">
           <span>${label}</span>
+          ${isLocked ? '<span class="locked-chip-badge" style="background:#fee2e2; color:#b91c1c; border-radius:999px; padding:1px 7px; font-size:10px; font-weight:800; margin-left:5px;">Çok Yakında!</span>' : ''}
         </button>
       `;
     }).join('');
-
-    navHtml += `
-      <button class="maarif-group-tab tab-general ${isGen ? 'active' : ''}" data-group-id="general" type="button">
-        <span>🎈 Genel / Karma Pratik</span>
-      </button>
-    `;
 
     DOM.maarifGroupsNav.innerHTML = navHtml;
 
@@ -20631,29 +20581,14 @@
       addTapListener(btn, (e) => {
         const gid = btn.getAttribute('data-group-id');
         audio.playClick();
-        if (gid === 'general') {
-          state.isMaarifGeneral = true;
-          renderMaarifReadingPanel();
-        } else {
-          state.isMaarifGeneral = false;
-          selectMaarifGroup(gid);
-        }
+        state.isMaarifGeneral = false;
+        selectMaarifGroup(gid);
       });
     });
 
-    // 2. Karma Pratik Modu ise: Harf rayı ve rozeti gizle, alt kategori sekmesini ve standart ilk okuma oyunlarını göster
-    if (state.isMaarifGeneral) {
-      if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.add('hide');
-      if (DOM.maarifCumulativeBadge) DOM.maarifCumulativeBadge.classList.add('hide');
-      if (DOM.subcategorySection) DOM.subcategorySection.classList.remove('hide');
-      renderSubcategories();
-      renderGameCards();
-      return;
-    }
+    const activeGrp = MAARIF_2026_CONFIG.groups.find(g => g.id === state.maarifGroup) || MAARIF_2026_CONFIG.groups[1] || MAARIF_2026_CONFIG.groups[0];
 
-    const activeGrp = MAARIF_2026_CONFIG.groups.find(g => g.id === state.maarifGroup) || MAARIF_2026_CONFIG.groups[0];
-
-    // 2.5) ✏️ OKUMA YAZMAYA HAZIRLIK (ÇİZGİ VE GÖRSEL ALGI) BÖLÜMÜ
+    // 1) ✏️ OKUMA YAZMAYA HAZIRLIK (ÇİZGİ VE GÖRSEL ALGI) BÖLÜMÜ
     if (activeGrp && activeGrp.isPrep) {
       if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
       if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.add('hide');
@@ -20662,7 +20597,33 @@
       return;
     }
 
-    // 3. Maarif Ses Grubu Modu: Harf rayını ve kümülatif rozeti göster, subcategory'yi gizle
+    // 2) 🔒 KİLİTLİ GRUPLAR (2. Grup, 3. Grup, 4. Grup, 5. Grup)
+    const isLockedGrp = (!activeGrp.isPrep && activeGrp.id !== 'g1');
+    if (isLockedGrp) {
+      if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
+      if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.add('hide');
+      if (DOM.maarifCumulativeBadge) DOM.maarifCumulativeBadge.classList.add('hide');
+      if (DOM.gamesCountBadge) {
+        DOM.gamesCountBadge.textContent = `🔒 Çok Yakında (${activeGrp.name})`;
+      }
+      if (DOM.gamesGrid) {
+        DOM.gamesGrid.innerHTML = `
+          <div class="maarif-locked-card" style="grid-column: 1 / -1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 48px 24px; background: white; border-radius: 24px; border: 2px dashed #cbd5e1; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); text-align: center; margin: 16px auto; max-width: 600px; width: 100%;">
+            <div style="font-size: 52px; margin-bottom: 14px;">🔒</div>
+            <h3 style="font-size: 24px; font-weight: 900; color: #1e293b; margin-bottom: 8px;">Çok Yakında!</h3>
+            <p style="font-size: 15px; color: #64748b; line-height: 1.6; max-width: 460px; margin-bottom: 20px;">
+              <strong>${escapeHtml(activeGrp.name)} (${escapeHtml(activeGrp.code)})</strong> sesleri Türkiye Yüzyılı Maarif Modeli pedagojik takvimine uygun olarak hazırlanmaktadır.
+            </p>
+            <div style="display:inline-flex; align-items:center; gap:8px; padding: 8px 18px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 999px; color: #166534; font-size: 14px; font-weight: 700;">
+              <span>✨ 1. Grup (ANETİL) harflerini seçerek pratik yapabilirsiniz!</span>
+            </div>
+          </div>
+        `;
+      }
+      return;
+    }
+
+    // 3) 1. GRUP (ANETİL) MODU: Harf rayını ve kümülatif rozeti göster, subcategory'yi gizle
     if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
     if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.remove('hide');
     if (DOM.maarifCumulativeBadge) DOM.maarifCumulativeBadge.classList.remove('hide');
@@ -20673,7 +20634,7 @@
       }
     }
 
-    // 4. 3D Harf Kartları Rayı
+    // 4. 3D Harf Kartları Rayı ([Aa], [Nn], [Ee], [Tt], [İi], [Ll])
     if (DOM.maarifLettersRail && activeGrp.letters) {
       DOM.maarifLettersRail.innerHTML = activeGrp.letters.map(letter => {
         const upper = letter.toUpperCase('tr-TR');
@@ -20701,13 +20662,12 @@
     // 5. Kümülatif Rozeti Güncelle
     updateMaarifCumulativeBadge();
 
-    // 6. Bu harfe ve o ana kadarki kümülatif seslere özel oyun kartlarını üret
+    // 6. Bu harfe özel pedagojik etkinlik kartlarını üret
     renderMaarifGameCards();
   }
 
   function renderMaarifPrepCards() {
     if (!DOM.gamesGrid) return;
-    // 1) OKUMA YAZMAYA HAZIRLIK: Kesinlikle harfsiz, 3 temel etkileşimli modül
     const prepGames = [
       {
         id: 'prep_lines',
@@ -20725,7 +20685,7 @@
         icon: '🔍',
         badge: '👁️ Görsel Algı',
         featureTag: '🔍 Farkı Yakala',
-        description: 'Ekranda beliren 4 görselden farklı olanına dokun! (Örn: 3 elma, 1 armut / 3 sağa, 1 sola bakan balık) 🍎🍐',
+        description: 'Ekranda beliren 4 görselden farklı olanına dokun! (Örn: 3 elma, 1 armut) 🍎🍐',
         tags: ['👁️ Görsel Ayırt Etme', '🧠 Dikkat & Odak', '🌟 100% Yazısız'],
         active: true
       },
@@ -20735,7 +20695,7 @@
         icon: '🔊',
         badge: '👂 İşitsel Farkındalık',
         featureTag: '🎵 Ses Tanıma',
-        description: 'Hayvan veya doğa sesini (kedi miyavlaması, yağmur sesi, ambulans sireni) dinleyip doğru görsele dokun! 🐱🌧️🚑',
+        description: 'Hayvan veya doğa sesini dinleyip doğru görsele dokun! 🐱🌧️🚑',
         tags: ['🔊 Dinle & Bul', '🐾 Hayvan & Doğa Sesleri', '🌟 100% Yazısız'],
         active: true
       }
@@ -20744,6 +20704,9 @@
     if (DOM.gamesCountBadge) {
       DOM.gamesCountBadge.textContent = '3 Hazırlık Modülü (Okuma Yazmaya Hazırlık)';
     }
+
+    const isSolo = (state.gameMode === 'solo');
+    const playText = isSolo ? 'Etkinliğe Başla' : 'Düelloyu Başlat';
 
     DOM.gamesGrid.innerHTML = prepGames.map(game => `
       <div class="game-card theme-firstreading" data-game-id="${game.id}">
@@ -20766,7 +20729,7 @@
         </div>
         <div class="game-action-btn">
           <button class="btn-play-game" type="button" aria-label="${escapeHtml(game.title)} Etkinliğini Başlat">
-            <span class="play-btn-text">Etkinliği Başlat</span>
+            <span class="play-btn-text">${playText}</span>
             <span class="play-btn-icon" aria-hidden="true">▶</span>
           </button>
         </div>
@@ -20787,7 +20750,7 @@
 
   function selectMaarifGroup(groupId) {
     state.maarifGroup = groupId;
-    const grp = MAARIF_2026_CONFIG.groups.find(g => g.id === groupId) || MAARIF_2026_CONFIG.groups[0];
+    const grp = MAARIF_2026_CONFIG.groups.find(g => g.id === groupId) || MAARIF_2026_CONFIG.groups[1] || MAARIF_2026_CONFIG.groups[0];
     if (grp.letters && grp.letters.length) {
       if (!grp.letters.includes(state.activeMaarifLetter)) {
         state.activeMaarifLetter = grp.letters[0];
@@ -20796,9 +20759,8 @@
     renderMaarifReadingPanel();
   }
 
-  
   window.selectMaarifLetter = selectMaarifLetter;
-function selectMaarifLetter(letter) {
+  function selectMaarifLetter(letter) {
     state.activeMaarifLetter = letter.toLowerCase();
     if (DOM.maarifLettersRail) {
       DOM.maarifLettersRail.querySelectorAll('.maarif-letter-chip').forEach(chip => {
@@ -20829,6 +20791,12 @@ function selectMaarifLetter(letter) {
     `;
   }
 
+  // -------------------------------------------------------------
+  // SEÇİLEN HARFE GÖRE PEDAGOJİK ETKİNLİK KARTLARI
+  // [A a] (1. Ses): SADECE 2 KART (Sesi Hisset + Akıllı Harf Sepeti / Balon)
+  // [N n], [E e], [T t], [İ i], [L l]: + Hece ve Kelime Atölyesi (3 KART)
+  // Hem Tek Kişilik hem Düello modunda AYNI pedagojik kartlar listelenir!
+  // -------------------------------------------------------------
   function renderMaarifGameCards() {
     if (!DOM.gamesGrid) return;
     const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
@@ -20838,17 +20806,12 @@ function selectMaarifLetter(letter) {
     const learnedStr = learned.map(l => l.toUpperCase('tr-TR')).join(', ');
     const letterIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
 
-    // KURAL: 3) ALAKASIZ SORULARI TEMİZLE
-    // Harf sekmesinde SADECE:
-    // 1) Sesi Hisset (Görsel Seç)
-    // 2) Hece/Kelime Treni (Sürükle Birleştir) [A harfinde hece olmadığı için A'da yok!]
-    // 3) Harf Sepeti
     let games = [];
 
-    // 1) Sesi Hisset (Görsel Seç)
+    // 1. KART: Sesi Hisset (Görsel Seç)
     games.push({
       id: 'maarif_sound_find',
-      title: `Sesi Hisset (Görsel Seç)`,
+      title: 'Sesi Hisset (Görsel Seç)',
       icon: '👂',
       badge: '👂 Sesi Hisset',
       featureTag: `🔤 "${letterUpper}" Sesi`,
@@ -20857,38 +20820,43 @@ function selectMaarifLetter(letter) {
       active: true
     });
 
-    // 2) Hece/Kelime Treni (Sürükle Birleştir) - A harfinde hece olmadığı için sadece letterIdx >= 1'de açık!
+    // 2. KART: Akıllı Harf Sepeti / Balon Patlatma
+    games.push({
+      id: 'maarif_letter_basket',
+      title: 'Akıllı Harf Sepeti / Balon Patlatma',
+      icon: '🧺',
+      badge: '🧺 Harf & Balon',
+      featureTag: letterIdx === 0 ? `🔤 Sadece "${letterUpper}" Sesi` : '🎯 Kümülatif Sepet',
+      description: letterIdx === 0
+        ? `Sadece "${letterUpper}" sesini veya "${letterUpper}" ile başlayan görselleri yakala ve sepete topla! 🧺🎈`
+        : `Gelen sözcükleri ve görselleri baş harfine göre doğru harf sepetine bırak! 🧺🔤`,
+      tags: ['🧺 Harf Sepetleri', '🎈 Balon & Sepet', '🔊 Sesli Yönerge'],
+      active: true
+    });
+
+    // 3. KART: Hece ve Kelime Atölyesi
+    // SADECE [N n] ve sonraki seslerde (letterIdx >= 1) açılır!
+    // [A a] (1. Ses) sekmesinde KESİNLİKLE GÖSTERİLMEZ!
     if (letterIdx >= 1) {
       games.push({
         id: 'maarif_word_train',
-        title: 'Hece ve Kelime Treni (Sürükle Birleştir)',
+        title: 'Hece ve Kelime Atölyesi',
         icon: '🚂',
-        badge: '🚂 Sürükle & Birleştir',
-        featureTag: '🧩 Harf Vagonları',
-        description: `Sadece öğrenilen (${learnedStr}) ses vagonlarını lokomotife sırayla bağla, kelimeleri tamamla! 🚂✨`,
-        tags: ['🚂 Vagon Birleştir', '📖 Kümülatif Kelime', '🔊 Sesli Okuma'],
+        badge: '🧱 Dokun & Birleştir',
+        featureTag: '🧩 Harf Küpleri',
+        description: `Öğrenilen (${learnedStr}) harflerini sırayla birleştirerek anlamlı hece ve kelimeleri tamamla! 🧱✨`,
+        tags: ['📖 Hece & Kelime', '🚂 Vagon Birleştir', '🔊 Sesli Okuma'],
         active: true
       });
     }
 
-    // 3) Harf Sepeti
-    games.push({
-      id: 'maarif_letter_basket',
-      title: 'Akıllı Harf Sepeti',
-      icon: '🧺',
-      badge: '🧺 Harf Eşleştirme',
-      featureTag: '✋ Sürükle & Bırak',
-      description: letterIdx === 0
-        ? `Gelen görsel "${letterUpper}" sesiyle mi başlıyor? "A" sepetine veya "❌" sepetine bırak! 🧺🔤`
-        : `Gelen görseli baş harfine göre doğru harf sepetine bırak! 🧺🔤`,
-      tags: ['🧺 Harf Sepetleri', '🔤 Baş Harf', '🔊 Sesli Yönerge'],
-      active: true
-    });
-
     const activeCount = games.length;
     if (DOM.gamesCountBadge) {
-      DOM.gamesCountBadge.textContent = `${activeCount} Oyun ([${letterUpper} ${letterLower}] Harfi)`;
+      DOM.gamesCountBadge.textContent = `${activeCount} Pedagojik Etkinlik ([${letterUpper} ${letterLower}] Harfi)`;
     }
+
+    const isSolo = (state.gameMode === 'solo');
+    const playText = isSolo ? 'Pratiğe Başla' : 'Düelloyu Başlat';
 
     DOM.gamesGrid.innerHTML = games.map(game => `
       <div class="game-card theme-firstreading" data-game-id="${game.id}">
@@ -20910,8 +20878,8 @@ function selectMaarifLetter(letter) {
           ${game.tags.map(t => `<span class="game-tag-pill">${replaceEmojisWith3D(t, 'chip-3d-icon')}</span>`).join('')}
         </div>
         <div class="game-action-btn">
-          <button class="btn-play-game" type="button" aria-label="${escapeHtml(game.title)} Oyununu Başlat">
-            <span class="play-btn-text">Oyunu Başlat</span>
+          <button class="btn-play-game" type="button" aria-label="${escapeHtml(game.title)} Etkinliğini Başlat">
+            <span class="play-btn-text">${playText}</span>
             <span class="play-btn-icon" aria-hidden="true">▶</span>
           </button>
         </div>
@@ -20930,7 +20898,6 @@ function selectMaarifLetter(letter) {
     });
   }
 
-  // Oyun Modu Değiştirme (İki Kişilik Düello & Tek Kişilik Pratik)
   function setGameMode(mode) {
     if (window.innerWidth <= 768 && mode === 'duel') mode = 'solo';
     if (state.gameMode === mode) return;
@@ -20938,8 +20905,15 @@ function selectMaarifLetter(letter) {
     StorageManager.saveSettings();
     audio.playClick();
     updateGameModeUI();
-    if (state.currentSubject === 'firstreading' && state.currentGrade === 1 && !state.isMaarifGeneral) {
-      renderMaarifGameCards();
+    if (state.currentSubject === 'firstreading' && state.currentGrade === 1) {
+      const activeGrp = MAARIF_2026_CONFIG.groups.find(g => g.id === state.maarifGroup);
+      if (activeGrp && activeGrp.isPrep) {
+        renderMaarifPrepCards();
+      } else if (activeGrp && activeGrp.id === 'g1') {
+        renderMaarifGameCards();
+      } else {
+        renderMaarifReadingPanel();
+      }
     } else {
       renderGameCards();
     }
@@ -23777,10 +23751,8 @@ function selectMaarifLetter(letter) {
     const upper = activeL.toLocaleUpperCase('tr-TR');
     const anetil = ANETIL_DATA[upper] || ANETIL_DATA['N'];
 
-    // Yalnızca kilitli ANETIL_DATA kelimeleri ve validator kontrolü
-    const rawWords = (anetil.words && anetil.words.length > 0) ? anetil.words : ['ana', 'an'];
-    const validWords = rawWords.filter(w => isValidForCurrentLetter(w, upper));
-    const chosenRaw = k1Pick(validWords.length ? validWords : ['ana', 'an']);
+    const wordList = (anetil.words && anetil.words.length > 0) ? anetil.words : ['an', 'na', 'ana'];
+    const chosenRaw = k1Pick(wordList);
     const wordUpper = chosenRaw.toLocaleUpperCase('tr-TR');
     const parts = Array.from(wordUpper);
 
@@ -23793,7 +23765,7 @@ function selectMaarifLetter(letter) {
 
     const wagons = k1Shuffle([...parts, ...extras]);
 
-    return k1Base('k1_train', '🚂 Hece ve Kelime Treni',
+    return k1Base('k1_train', '🚂 Hece ve Kelime Atölyesi',
       'Harf vagonlarını sırayla trene bağla!',
       'Harf vagonlarını sırayla trene bağla!',
       `"${wordUpper}" kelimesini oluşturdun! Tren yola çıktı! 🚂🎉`,
