@@ -520,6 +520,45 @@
     }
   }
 
+  // MEB Pardus / Linux akıllı tahta ve ortam tespiti
+  const isLinuxOrPardus = typeof navigator !== 'undefined' && (
+    /linux|pardus/i.test(navigator.userAgent || '') ||
+    /linux/i.test(navigator.platform || '')
+  );
+
+  // Sistemde GERÇEK bir Türkçe ses motoru var mı kontrol et
+  // (Pardus / Linux akıllı tahtalarda espeak'in İngilizce robot sesiyle Türkçe okumasını KESİNLİKLE engeller)
+  function getSystemTurkishVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    try {
+      const voices = window.speechSynthesis.getVoices() || [];
+      if (!voices.length) return null;
+      return voices.find(v => {
+        const l = (v.lang || '').toLowerCase();
+        const n = (v.name || '').toLowerCase();
+        return l.includes('tr') || n.includes('turkish') || n.includes('türkçe') || n.includes('yelda') || n.includes('tolga');
+      }) || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Sistemde İngilizce ses motoru var mı kontrol et
+  function getSystemEnglishVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    try {
+      const voices = window.speechSynthesis.getVoices() || [];
+      if (!voices.length) return null;
+      return voices.find(v => {
+        const l = (v.lang || '').toLowerCase();
+        const n = (v.name || '').toLowerCase();
+        return l.startsWith('en') || n.includes('english') || n.includes('google us') || n.includes('david') || n.includes('zira');
+      }) || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   class SoundEngine {
     constructor() {
       this.ctx = null;
@@ -1181,7 +1220,15 @@
             clearTimeout(this.ttsTimeout);
             this.ttsTimeout = null;
           }
-          this.currentAudio = null;
+          if (this.currentAudio) {
+            try {
+              this.currentAudio.onended = null;
+              this.currentAudio.onerror = null;
+              this.currentAudio.onplaying = null;
+              this.currentAudio.pause();
+            } catch (e) {}
+            this.currentAudio = null;
+          }
           if (onEnded) onEnded();
         }
       };
@@ -1190,7 +1237,30 @@
       const synthLang = isEn ? 'en-US' : 'tr-TR';
 
       // -------------------------------------------------------------
+      // METİN PARÇALAMA (Google TTS 160-180 Karakter Sınırı Koruması)
+      // -------------------------------------------------------------
+      const speechChunks = [];
+      if (cleanText.length <= 160) {
+        speechChunks.push(cleanText);
+      } else {
+        const words = cleanText.split(' ');
+        let curChunk = '';
+        for (const w of words) {
+          if ((curChunk + ' ' + w).trim().length <= 160) {
+            curChunk = (curChunk + ' ' + w).trim();
+          } else {
+            if (curChunk) speechChunks.push(curChunk);
+            curChunk = w;
+          }
+        }
+        if (curChunk) speechChunks.push(curChunk);
+        if (!speechChunks.length) speechChunks.push(cleanText.slice(0, 160));
+      }
+
+      // -------------------------------------------------------------
       // YEDEK SES MOTORU: Web Speech API (speechSynthesis)
+      // KRİTİK PARDUS / LINUX KORUMASI: SADECE gerçek 'tr' / 'TR' sesi varsa çalışır!
+      // Cihazda Türkçe ses paketi yoksa ASLA yabancı robot sesle okutulmaz!
       // -------------------------------------------------------------
       const playWithSpeechSynthesis = () => {
         if (currentSeq !== this.speechSeq || done) return;
@@ -1198,6 +1268,16 @@
           finish();
           return;
         }
+
+        const matchedVoice = isEn ? getSystemEnglishVoice() : getSystemTurkishVoice();
+
+        // Pardus / MEB Linux akıllı tahtalarda ses paketi yoksa ASLA yabancı robot sesle okuma!
+        if (!isEn && !matchedVoice) {
+          console.warn('[TTS] Pardus / Linux tahtada gerçek Türkçe ses paketi bulunamadı, yabancı robot ses engellendi.');
+          finish();
+          return;
+        }
+
         try {
           window.speechSynthesis.cancel();
           if (window.speechSynthesis.paused) {
@@ -1209,25 +1289,8 @@
           u.rate = isEn ? 0.90 : 0.95;
           u.pitch = isEn ? 1.0 : 1.05;
 
-          const voices = window.speechSynthesis.getVoices() || [];
-          let matchedVoice = null;
-
-          if (isEn) {
-            matchedVoice = voices.find(v => 
-              (v.lang && (v.lang === 'en-US' || v.lang === 'en-GB' || v.lang.toLowerCase().startsWith('en'))) ||
-              (v.name && (v.name.toLowerCase().includes('english') || v.name.toLowerCase().includes('google us') || v.name.toLowerCase().includes('david') || v.name.toLowerCase().includes('zira')))
-            );
-          } else {
-            matchedVoice = voices.find(v => 
-              (v.lang && (v.lang === 'tr-TR' || v.lang.toLowerCase().startsWith('tr') || v.lang === 'tr')) ||
-              (v.name && (v.name.toLowerCase().includes('turkish') || v.name.toLowerCase().includes('türkçe') || v.name.toLowerCase().includes('yelda') || v.name.toLowerCase().includes('tolga')))
-            );
-          }
-
           if (matchedVoice) {
             u.voice = matchedVoice;
-          } else {
-            u.lang = synthLang;
           }
 
           u.onend = () => {
@@ -1243,13 +1306,14 @@
       };
 
       // -------------------------------------------------------------
-      // İKİNCİL YEDEK MOTOR: Online Doğal TTS (Google TTS Ses Akışı)
+      // DOĞAL TÜRKÇE BULUT SES MOTORU: Online Google TTS MP3 Akışı
+      // Pardus / Linux akıllı tahtalarda sıfır aksan, %100 doğal Türkçe telaffuz
       // -------------------------------------------------------------
-      let fallbackTriggered = false;
+      let onlineFallbackTriggered = false;
       const triggerFallback = () => {
         if (currentSeq !== this.speechSeq) return;
-        if (fallbackTriggered || done) return;
-        fallbackTriggered = true;
+        if (onlineFallbackTriggered || done) return;
+        onlineFallbackTriggered = true;
         if (this.ttsTimeout) {
           clearTimeout(this.ttsTimeout);
           this.ttsTimeout = null;
@@ -1258,6 +1322,7 @@
           try {
             this.currentAudio.onended = null;
             this.currentAudio.onerror = null;
+            this.currentAudio.onplaying = null;
             this.currentAudio.pause();
           } catch (e) {}
           this.currentAudio = null;
@@ -1265,54 +1330,101 @@
         playWithSpeechSynthesis();
       };
 
-      const playWithGoogleTts = () => {
+      const playOnlineStream = (chunkIndex = 0) => {
         if (currentSeq !== this.speechSeq || done) return;
-        try {
-          const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
-          const audioEl = new Audio(googleUrl);
-          this.currentAudio = audioEl;
-          audioEl.volume = 1.0;
+        if (chunkIndex >= speechChunks.length) {
+          finish();
+          return;
+        }
 
-          this.ttsTimeout = setTimeout(() => {
-            if (currentSeq === this.speechSeq) triggerFallback();
-          }, 3500);
+        const currentChunk = speechChunks[chunkIndex];
+        const primaryUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(currentChunk)}`;
+        const fallbackUrl = `https://translate.google.com.tr/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(currentChunk)}`;
 
-          audioEl.onplaying = () => {
-            if (currentSeq === this.speechSeq && this.ttsTimeout) {
-              clearTimeout(this.ttsTimeout);
-              this.ttsTimeout = null;
-            }
-          };
+        let triedFallbackUrl = false;
+        const playUrl = (urlToPlay) => {
+          if (currentSeq !== this.speechSeq || done) return;
+          try {
+            const audioEl = document.createElement('audio');
+            // Tarayıcı referrer ve CORS engellerini aşmak için no-referrer
+            audioEl.setAttribute('referrerpolicy', 'no-referrer');
+            try { audioEl.referrerPolicy = 'no-referrer'; } catch (e) {}
+            audioEl.crossOrigin = 'anonymous';
+            audioEl.preload = 'auto';
+            audioEl.volume = 1.0;
+            audioEl.src = urlToPlay;
+            this.currentAudio = audioEl;
 
-          audioEl.onended = () => {
-            if (currentSeq === this.speechSeq) {
-              if (this.ttsTimeout) {
+            if (this.ttsTimeout) clearTimeout(this.ttsTimeout);
+            this.ttsTimeout = setTimeout(() => {
+              if (currentSeq === this.speechSeq) {
+                if (!triedFallbackUrl) {
+                  triedFallbackUrl = true;
+                  playUrl(fallbackUrl);
+                } else {
+                  triggerFallback();
+                }
+              }
+            }, 3500);
+
+            audioEl.onplaying = () => {
+              if (currentSeq === this.speechSeq && this.ttsTimeout) {
                 clearTimeout(this.ttsTimeout);
                 this.ttsTimeout = null;
               }
-              finish();
+            };
+
+            audioEl.onended = () => {
+              if (currentSeq === this.speechSeq) {
+                if (this.ttsTimeout) {
+                  clearTimeout(this.ttsTimeout);
+                  this.ttsTimeout = null;
+                }
+                playOnlineStream(chunkIndex + 1);
+              }
+            };
+
+            audioEl.onerror = () => {
+              if (currentSeq === this.speechSeq) {
+                if (!triedFallbackUrl) {
+                  triedFallbackUrl = true;
+                  playUrl(fallbackUrl);
+                } else {
+                  triggerFallback();
+                }
+              }
+            };
+
+            const p = audioEl.play();
+            if (p !== undefined) {
+              p.catch(() => {
+                if (currentSeq === this.speechSeq) {
+                  if (!triedFallbackUrl) {
+                    triedFallbackUrl = true;
+                    playUrl(fallbackUrl);
+                  } else {
+                    triggerFallback();
+                  }
+                }
+              });
             }
-          };
-
-          audioEl.onerror = () => {
-            if (currentSeq === this.speechSeq) triggerFallback();
-          };
-
-          const p = audioEl.play();
-          if (p !== undefined) {
-            p.catch(() => {
-              if (currentSeq === this.speechSeq) triggerFallback();
-            });
+          } catch (err) {
+            if (!triedFallbackUrl) {
+              triedFallbackUrl = true;
+              playUrl(fallbackUrl);
+            } else {
+              triggerFallback();
+            }
           }
-        } catch (err) {
-          triggerFallback();
-        }
+        };
+
+        playUrl(primaryUrl);
       };
 
       // -------------------------------------------------------------
       // BİRİNCİL SES MOTORU: EMA Lightning Yerel Doğal MP3 Kaydı
       // Eğer cümlenin anahtarı index.json'da varsa sesler/<anahtar>.mp3 çalınır
-      // Yoksa veya açılamazsa aynı cümle Google TTS / cihaz sesi ile söylenir
+      // Yoksa veya açılamazsa doğrudan doğal online Türkçe bulut akışı devreye girer
       // -------------------------------------------------------------
       if (!isEn) {
         let key = speechKey(text);
@@ -1329,7 +1441,7 @@
             recordedAudio.volume = 1.0;
 
             this.ttsTimeout = setTimeout(() => {
-              if (currentSeq === this.speechSeq) playWithGoogleTts();
+              if (currentSeq === this.speechSeq) playOnlineStream(0);
             }, 4000);
 
             recordedAudio.onplaying = () => {
@@ -1350,28 +1462,27 @@
             };
 
             recordedAudio.onerror = () => {
-              if (currentSeq === this.speechSeq) playWithGoogleTts();
+              if (currentSeq === this.speechSeq) playOnlineStream(0);
             };
 
             const p = recordedAudio.play();
             if (p !== undefined) {
               p.catch(() => {
-                if (currentSeq === this.speechSeq) playWithGoogleTts();
+                if (currentSeq === this.speechSeq) playOnlineStream(0);
               });
             }
             return;
           } catch (e) {
-            playWithGoogleTts();
+            playOnlineStream(0);
             return;
           }
         } else {
-          // Geliştirici yardımı: kaydı olmayan her cümleyi konsola yaz
-          console.log(`[ses] kaydı yok: "${text}" (anahtar: ${key})`);
+          console.log(`[ses] yerel kayıt yok, doğal online Türkçe akışı kullanılıyor: "${text}"`);
         }
       }
 
-      // Kayıt yoksa eski yöntemle söyle
-      playWithGoogleTts();
+      // Kayıt yoksa veya İngilizce ise doğal online MP3 akışını başlat
+      playOnlineStream(0);
     }
 
     speakTurkishText(text, onEnded) {
@@ -2655,12 +2766,32 @@
   window.derseBiMolaSpeakText = function(text, onEnded) {
     if (window.__DERSE_BI_MOLA_AUDIO__ && typeof window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText === 'function') {
       window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText(text, onEnded);
-    } else if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'tr-TR';
-      if (onEnded) u.onend = onEnded;
-      window.speechSynthesis.speak(u);
+    } else {
+      const clean = (text || '').trim();
+      if (!clean) { if (onEnded) onEnded(); return; }
+      const trVoice = getSystemTurkishVoice();
+      if (trVoice && 'speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+          const u = new SpeechSynthesisUtterance(clean);
+          u.voice = trVoice;
+          u.lang = 'tr-TR';
+          if (onEnded) u.onend = onEnded;
+          window.speechSynthesis.speak(u);
+          return;
+        } catch (e) {}
+      }
+      try {
+        const a = document.createElement('audio');
+        a.setAttribute('referrerpolicy', 'no-referrer');
+        try { a.referrerPolicy = 'no-referrer'; } catch (e) {}
+        a.crossOrigin = 'anonymous';
+        a.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(clean)}`;
+        if (onEnded) a.onended = onEnded;
+        a.play().catch(() => { if (onEnded) onEnded(); });
+      } catch (e) {
+        if (onEnded) onEnded();
+      }
     }
   };
 
@@ -18924,19 +19055,24 @@
      ========================================================================== */
 
   function speakEnglish(text, onEnd) {
-    if (!('speechSynthesis' in window)) return;
+    if (window.__DERSE_BI_MOLA_AUDIO__ && typeof window.__DERSE_BI_MOLA_AUDIO__.speakEnglishText === 'function') {
+      window.__DERSE_BI_MOLA_AUDIO__.speakEnglishText(text, onEnd);
+      return;
+    }
+    if (!('speechSynthesis' in window)) { if (onEnd) onEnd(); return; }
     try {
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'en-US';
       u.rate = 0.85;
       u.pitch = 1.05;
-      const voices = window.speechSynthesis.getVoices();
-      const enVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en')) || null;
+      const enVoice = getSystemEnglishVoice();
       if (enVoice) u.voice = enVoice;
       if (onEnd) u.onend = onEnd;
       window.speechSynthesis.speak(u);
-    } catch (e) {}
+    } catch (e) {
+      if (onEnd) onEnd();
+    }
   }
   window.speakEnglish = speakEnglish;
 
@@ -24676,12 +24812,8 @@ function selectMaarifLetter(letter) {
       if (progress.length === data.parts.length) {
         zone.querySelectorAll('.word-slot').forEach(s => s.classList.add('word-complete'));
 
-        if (!state.isMuted && state.soundEnabled && state.announcerEnabled && 'speechSynthesis' in window) {
-          try {
-            const u = new SpeechSynthesisUtterance(data.word);
-            u.lang = 'tr-TR';
-            window.speechSynthesis.speak(u);
-          } catch (e) {}
+        if (!state.isMuted && state.soundEnabled && state.announcerEnabled) {
+          audio.speakTurkishText(data.word);
         }
 
         awardPointAndProgress(playerNum);
