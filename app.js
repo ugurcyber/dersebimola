@@ -2235,6 +2235,48 @@
         "Pınar, sarı papatya topladı.",
         "Kaptan, gemiyi limana yanaştır."
       ]
+    },
+    "H": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "G", "C", "Ş", "P", "H", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b", "g", "c", "ş", "p", "h"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Halı", icon: "🧶", hasH: true },
+        { word: "Havuç", icon: "🥕", hasH: true },
+        { word: "Helikopter", icon: "🚁", hasH: true }
+      ],
+      noSoundItems: [
+        { word: "Elma", icon: "🍎", hasH: false },
+        { word: "Top", icon: "⚽", hasH: false }
+      ],
+      syllables: ["ah", "eh", "ih", "oh", "uh", "ıh", "üh", "öh", "ha", "he", "hi", "ho", "hu", "hı", "hü", "hö", "hal", "hel", "hil", "hol", "huk", "hır", "hür", "hak", "hek", "hik", "hok", "huk"],
+      words: ["hal", "hak", "hel", "hır", "hür", "hâl", "hala", "hoca", "hata", "hızlı", "hakkı", "hasta", "havuç", "halı", "hamsi", "hurma", "hamur", "helva", "hazine", "hastane", "helikopter", "kelebek", "kahve", "bahçe", "silah", "sabah", "akşam", "çiçek"],
+      sentences: [
+        "Hakan, havuç ve hurma al.",
+        "Hale, hastaya helva götür.",
+        "Halil, sabah kahvesi iç.",
+        "Hasan, bahçedeki çiçekleri sula."
+      ]
+    },
+    "V": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "G", "C", "Ş", "P", "H", "V", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b", "g", "c", "ş", "p", "h", "v"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Vazo", icon: "🏺", hasV: true },
+        { word: "Vagon", icon: "🚃", hasV: true },
+        { word: "Vişne", icon: "🍒", hasV: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasV: false },
+        { word: "Top", icon: "⚽", hasV: false }
+      ],
+      syllables: ["av", "ev", "iv", "ov", "uv", "ıv", "üv", "öv", "va", "ve", "vi", "vo", "vu", "vı", "vü", "vö", "var", "ver", "viş", "vur", "van", "ven", "vin"],
+      words: ["av", "ev", "var", "ver", "vazo", "vagon", "vida", "veri", "vadi", "vilayet", "vapur", "viraj", "vişne", "volkan", "vatandaş", "kavanoz", "havuç", "tavuk", "tavşan", "davul", "görev", "kuvvet", "kahvaltı", "televizyon"],
+      sentences: [
+        "Vedat, vazo içine vişne koy.",
+        "Vildan, tavşana havuç ver.",
+        "Volkan, vapur ile gez.",
+        "Vahit, kahvaltıda zeytin ye."
+      ]
     }
   };
   window.ANETIL_DATA = ANETIL_DATA;
@@ -2270,7 +2312,7 @@
       { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r', 'ı', 'm'] },
       { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
       { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c', 'ş', 'p'] },
-      { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
+      { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v'] }
     ],
     letterOrder: ['a', 'n', 'e', 't', 'i', 'l', 'o', 'k', 'u', 'r', 'ı', 'm', 'ü', 's', 'ö', 'y', 'd', 'z', 'ç', 'b', 'g', 'c', 'ş', 'p', 'h', 'v', 'ğ', 'f', 'j'],
     letters: {
@@ -2683,55 +2725,41 @@
         words: ANETIL_DATA["P"].words,
         sentences: ANETIL_DATA["P"].sentences
       },
-'h': {
+      'h': {
         letter: 'h', upper: 'H', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
-          { word: 'Havuç', emoji: '🥕', position: 'başta', hasSound: true },
-          { word: 'Horoz', emoji: '🐓', position: 'başta', hasSound: true },
           { word: 'Halı', emoji: '🧶', position: 'başta', hasSound: true },
-          { word: 'Hediye', emoji: '🎁', position: 'başta', hasSound: true },
-          { word: 'Timsah', emoji: '🐊', position: 'sonda', hasSound: true },
-          { word: 'Sabah', emoji: '🌅', position: 'sonda', hasSound: true },
-          { word: 'Bahçe', emoji: '🏡', position: 'ortada', hasSound: true }
+          { word: 'Havuç', emoji: '🥕', position: 'başta', hasSound: true },
+          { word: 'Helikopter', emoji: '🚁', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Elma', emoji: '🍎', hasSound: false }, { word: 'Ayı', emoji: '🐻', hasSound: false }],
-        cumulativeWords: [
-          { word: 'HALI', parts: ['HA', 'LI'], distractors: ['LA'], icon: '🧶' },
-          { word: 'HOROZ', parts: ['HO', 'ROZ'], distractors: ['RAZ'], icon: '🐓' },
-          { word: 'HEDİYE', parts: ['HE', 'Dİ', 'YE'], distractors: ['YA'], icon: '🎁' },
-          { word: 'HAMSİ', parts: ['HAM', 'Sİ'], distractors: ['SO'], icon: '🐟' },
-          { word: 'SABAH', parts: ['SA', 'BAH'], distractors: ['BEH'], icon: '🌅' }
+        noSoundWords: [
+          { word: 'Elma', emoji: '🍎', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Horoz sabah öttü.', blankSentence: '_____ sabah öttü.', missing: 'horoz', options: ['horoz', 'halı', 'hediye'], fullText: 'Horoz sabah öttü.' },
-          { sentence: 'Ela hediye al.', blankSentence: 'Ela _____ al.', missing: 'hediye', options: ['hediye', 'hamsi', 'sabah'], fullText: 'Ela hediye al.' }
-        ]
+        cumulativeWords: ANETIL_DATA["H"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["H"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["H"].syllables,
+        words: ANETIL_DATA["H"].words,
+        sentences: ANETIL_DATA["H"].sentences
       },
       'v': {
         letter: 'v', upper: 'V', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
-          { word: 'Vapur', emoji: '⛴️', position: 'başta', hasSound: true },
           { word: 'Vazo', emoji: '🏺', position: 'başta', hasSound: true },
-          { word: 'Vida', emoji: '🔩', position: 'başta', hasSound: true },
-          { word: 'Deve', emoji: '🐪', position: 'ortada', hasSound: true },
-          { word: 'Civciv', emoji: '🐥', position: 'sonda', hasSound: true },
-          { word: 'Ev', emoji: '🏠', position: 'sonda', hasSound: true }
+          { word: 'Vagon', emoji: '🚃', position: 'başta', hasSound: true },
+          { word: 'Vişne', emoji: '🍒', position: 'başta', hasSound: true }
         ],
-        noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Balık', emoji: '🐟', hasSound: false }],
-        cumulativeWords: [
-          { word: 'EV', parts: ['E', 'V'], distractors: ['AV'], icon: '🏠' },
-          { word: 'DEVE', parts: ['DE', 'VE'], distractors: ['VA'], icon: '🐪' },
-          { word: 'VAZO', parts: ['VA', 'ZO'], distractors: ['ZE'], icon: '🏺' },
-          { word: 'VAPUR', parts: ['VA', 'PUR'], distractors: ['PAR'], icon: '⛴️' },
-          { word: 'KAVUN', parts: ['KA', 'VUN'], distractors: ['VAN'], icon: '🍈' },
-          { word: 'CİVCİV', parts: ['CİV', 'CİV'], distractors: ['CAV'], icon: '🐥' }
+        noSoundWords: [
+          { word: 'Kedi', emoji: '🐱', hasSound: false },
+          { word: 'Top', emoji: '⚽', hasSound: false }
         ],
-        cumulativeSentences: [
-          { sentence: 'Vapur denizde yüz.', blankSentence: '_____ denizde yüz.', missing: 'vapur', options: ['vapur', 'vazo', 'deve'], fullText: 'Vapur denizde yüz.' },
-          { sentence: 'Eve vazo koy.', blankSentence: 'Eve _____ koy.', missing: 'vazo', options: ['vazo', 'kavun', 'civciv'], fullText: 'Eve vazo koy.' }
-        ]
+        cumulativeWords: ANETIL_DATA["V"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["V"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["V"].syllables,
+        words: ANETIL_DATA["V"].words,
+        sentences: ANETIL_DATA["V"].sentences
       },
-      'ğ': {
+'ğ': {
         letter: 'ğ', upper: 'Ğ', group: 'g5', groupName: '5. Grup (HVĞFJ)',
         soundWords: [
           { word: 'Ağaç', emoji: '🌳', position: 'ortada', hasSound: true },
@@ -20790,7 +20818,7 @@
     // 1. Şimdilik SADECE "Okuma Yazmaya Hazırlık" ve "1. Grup (ANETİL)" aktif!
     // 2. Grup (OKURIM), 3. Grup, 4. Grup ve 5. Grup sekmelerinde "🔒 Çok Yakında!" yazar.
     let navHtml = groups.map(grp => {
-      const isLocked = (!grp.isPrep && grp.id !== 'g1' && grp.id !== 'g2' && grp.id !== 'g3' && grp.id !== 'g4');
+      const isLocked = (!grp.isPrep && grp.id !== 'g1' && grp.id !== 'g2' && grp.id !== 'g3' && grp.id !== 'g4' && grp.id !== 'g5');
       const isActive = (state.maarifGroup === grp.id);
       let label = grp.isPrep ? '✏️ Okuma Yazmaya Hazırlık' : `${grp.name} (${grp.code})`;
       if (isLocked) {
@@ -20828,7 +20856,7 @@
     }
 
     // 2) 🔒 KİLİTLİ GRUPLAR (2. Grup, 3. Grup, 4. Grup, 5. Grup)
-    const isLockedGrp = (!activeGrp.isPrep && activeGrp.id !== 'g1' && activeGrp.id !== 'g2' && activeGrp.id !== 'g3' && activeGrp.id !== 'g4');
+    const isLockedGrp = (!activeGrp.isPrep && activeGrp.id !== 'g1' && activeGrp.id !== 'g2' && activeGrp.id !== 'g3' && activeGrp.id !== 'g4' && activeGrp.id !== 'g5');
     if (isLockedGrp) {
       if (DOM.subcategorySection) DOM.subcategorySection.classList.add('hide');
       if (DOM.maarifLettersRail) DOM.maarifLettersRail.classList.add('hide');
@@ -24024,6 +24052,14 @@
       'P': {
         has: [{ word: 'Papağan', icon: '🦜' }, { word: 'Peynir', icon: '🧀' }, { word: 'Top', icon: '⚽' }],
         no: [{ word: 'Arı', icon: '🐝' }, { word: 'Balık', icon: '🐟' }]
+      },
+      'H': {
+        has: [{ word: 'Halı', icon: '🧶' }, { word: 'Havuç', icon: '🥕' }, { word: 'Helikopter', icon: '🚁' }],
+        no: [{ word: 'Elma', icon: '🍎' }, { word: 'Top', icon: '⚽' }]
+      },
+      'V': {
+        has: [{ word: 'Vazo', icon: '🏺' }, { word: 'Vagon', icon: '🚃' }, { word: 'Vişne', icon: '🍒' }],
+        no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Top', icon: '⚽' }]
       }
     };
 
