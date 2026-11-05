@@ -1899,6 +1899,48 @@
         "Ali, tokalı etek al.",
         "Okan, inek otlat."
       ]
+    },
+    "U": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "a", "n", "e", "t", "i", "l", "o", "k", "u"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Uçak", icon: "✈️", hasU: true },
+        { word: "Uğur Böceği", icon: "🐞", hasU: true },
+        { word: "Kutu", icon: "📦", hasU: true }
+      ],
+      noSoundItems: [
+        { word: "Top", icon: "⚽", hasU: false },
+        { word: "Elma", icon: "🍎", hasU: false }
+      ],
+      syllables: ["un", "ut", "ul", "uk", "nu", "tu", "lu", "ku", "kul", "kut", "kun", "tul", "tuk", "luk"],
+      words: ["un", "kutu", "oku", "okul", "kuku", "koku", "tutku", "konuk", "ukala", "kulak", "tutkal", "koltuk", "ulak"],
+      sentences: [
+        "Ali, okulda oku.",
+        "Utku, kutu tut.",
+        "Lale, kokulu ot al.",
+        "Okan, unlu kek al."
+      ]
+    },
+    "R": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "a", "n", "e", "t", "i", "l", "o", "k", "u", "r"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Roket", icon: "🚀", hasR: true },
+        { word: "Radyo", icon: "📻", hasR: true },
+        { word: "Araba", icon: "🚗", hasR: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasR: false },
+        { word: "Ev", icon: "🏠", hasR: false }
+      ],
+      syllables: ["ar", "er", "ir", "or", "ur", "ra", "re", "ri", "ro", "ru", "kar", "ker", "kir", "kor", "kur", "tar", "ter", "tir", "tor", "tur", "nar", "nur"],
+      words: ["nar", "nur", "kar", "kor", "kur", "ter", "tur", "ara", "eri", "iri", "kuru", "tarak", "orak", "erik", "teker", "roket", "karton", "tren"],
+      sentences: [
+        "Rana, iri erik al.",
+        "Turan, kuru ot al.",
+        "Eren, kara trenle tur at.",
+        "Onur, tekeri tut."
+      ]
     }
   };
   ANETIL_DATA["I"] = ANETIL_DATA["İ"];
@@ -1931,7 +1973,7 @@
     groups: [
       { id: 'g0_prep', name: '✏️ Hazırlık', code: 'Çizgi & Algı', isPrep: true, label: '✏️ Okuma Yazmaya Hazırlık (Yazısız Etkinlikler)', letters: [] },
       { id: 'g1', name: '1. Grup', code: 'ANETİL', letters: ['a', 'n', 'e', 't', 'i', 'l'] },
-      { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k'] },
+      { id: 'g2', name: '2. Grup', code: 'OKURIM', letters: ['o', 'k', 'u', 'r'] },
       { id: 'g3', name: '3. Grup', code: 'ÜSÖYDZ', letters: ['ü', 's', 'ö', 'y', 'd', 'z'] },
       { id: 'g4', name: '4. Grup', code: 'ÇBGCŞP', letters: ['ç', 'b', 'g', 'c', 'ş', 'p'] },
       { id: 'g5', name: '5. Grup', code: 'HVĞFJ', letters: ['h', 'v', 'ğ', 'f', 'j'] }
@@ -2080,56 +2122,34 @@
         soundWords: [
           { word: 'Uçak', emoji: '✈️', position: 'başta', hasSound: true },
           { word: 'Uğur Böceği', emoji: '🐞', position: 'başta', hasSound: true },
-          { word: 'Kutu', emoji: '📦', position: 'ortada', hasSound: true },
-          { word: 'Koyun', emoji: '🐑', position: 'ortada', hasSound: true },
-          { word: 'Bulut', emoji: '☁️', position: 'sonda', hasSound: true },
-          { word: 'Kuku', emoji: '🦉', position: 'sonda', hasSound: true }
+          { word: 'Kutu', emoji: '📦', position: 'ortada', hasSound: true }
         ],
         noSoundWords: [
-          { word: 'Kedi', emoji: '🐱', hasSound: false },
-          { word: 'Elma', emoji: '🍎', hasSound: false },
-          { word: 'Balık', emoji: '🐟', hasSound: false }
+          { word: 'Top', emoji: '⚽', hasSound: false },
+          { word: 'Elma', emoji: '🍎', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'UN', parts: ['U', 'N'], distractors: ['AN'], icon: '🌾' },
-          { word: 'OKUL', parts: ['O', 'KUL'], distractors: ['KOL'], icon: '🏫' },
-          { word: 'KULE', parts: ['KU', 'LE'], distractors: ['KA'], icon: '🗼' },
-          { word: 'KUKLA', parts: ['KUK', 'LA'], distractors: ['KA'], icon: '🧸' },
-          { word: 'KUTU', parts: ['KU', 'TU'], distractors: ['TE'], icon: '📦' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ela un al.', blankSentence: 'Ela _____ al.', missing: 'un', options: ['un', 'okul', 'kule'], fullText: 'Ela un al.' },
-          { sentence: 'Ali okula kutu al.', blankSentence: 'Ali okula _____ al.', missing: 'kutu', options: ['kutu', 'un', 'kule'], fullText: 'Ali okula kutu al.' }
-        ]
+        cumulativeWords: ANETIL_DATA["U"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["U"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["U"].syllables,
+        words: ANETIL_DATA["U"].words,
+        sentences: ANETIL_DATA["U"].sentences
       },
       'r': {
         letter: 'r', upper: 'R', group: 'g2', groupName: '2. Grup (OKURIM)',
         soundWords: [
-          { word: 'Radyo', emoji: '📻', position: 'başta', hasSound: true },
-          { word: 'Robot', emoji: '🤖', position: 'başta', hasSound: true },
           { word: 'Roket', emoji: '🚀', position: 'başta', hasSound: true },
-          { word: 'Araba', emoji: '🚗', position: 'ortada', hasSound: true },
-          { word: 'Karpuz', emoji: '🍉', position: 'ortada', hasSound: true },
-          { word: 'Nar', emoji: '🍎', position: 'sonda', hasSound: true },
-          { word: 'Demir', emoji: '⛓️', position: 'sonda', hasSound: true }
+          { word: 'Radyo', emoji: '📻', position: 'başta', hasSound: true },
+          { word: 'Araba', emoji: '🚗', position: 'ortada', hasSound: true }
         ],
         noSoundWords: [
           { word: 'Kedi', emoji: '🐱', hasSound: false },
-          { word: 'Ayı', emoji: '🐻', hasSound: false },
-          { word: 'Kuş', emoji: '🐦', hasSound: false }
+          { word: 'Ev', emoji: '🏠', hasSound: false }
         ],
-        cumulativeWords: [
-          { word: 'NAR', parts: ['N', 'AR'], distractors: ['ER'], icon: '🍎' },
-          { word: 'KAR', parts: ['K', 'AR'], distractors: ['UR'], icon: '❄️' },
-          { word: 'KART', parts: ['K', 'ART'], distractors: ['OR'], icon: '🃏' },
-          { word: 'ROKET', parts: ['RO', 'KET'], distractors: ['TE'], icon: '🚀' },
-          { word: 'TORUN', parts: ['TO', 'RUN'], distractors: ['RA'], icon: '👦' },
-          { word: 'KİRA', parts: ['Kİ', 'RA'], distractors: ['RO'], icon: '🏠' }
-        ],
-        cumulativeSentences: [
-          { sentence: 'Ali nar al.', blankSentence: 'Ali _____ al.', missing: 'nar', options: ['nar', 'kar', 'kart'], fullText: 'Ali nar al.' },
-          { sentence: 'Torun roket al.', blankSentence: 'Torun _____ al.', missing: 'roket', options: ['roket', 'nar', 'kira'], fullText: 'Torun roket al.' }
-        ]
+        cumulativeWords: ANETIL_DATA["R"].words.map(w => ({ word: w.toUpperCase('tr-TR'), parts: Array.from(w.toUpperCase('tr-TR')), icon: '📖' })),
+        cumulativeSentences: ANETIL_DATA["R"].sentences.map(s => ({ sentence: s, blankSentence: s, missing: '', options: [], fullText: s })),
+        syllables: ANETIL_DATA["R"].syllables,
+        words: ANETIL_DATA["R"].words,
+        sentences: ANETIL_DATA["R"].sentences
       },
       'ı': {
         letter: 'ı', upper: 'I', group: 'g2', groupName: '2. Grup (OKURIM)',
@@ -23742,7 +23762,7 @@
         has: [{ word: 'İnek', icon: '🐮' }, { word: 'İncir', icon: '🫐' }, { word: 'İp', icon: '🪢' }],
         no: [{ word: 'Ayı', icon: '🐻' }, { word: 'At', icon: '🐴' }, { word: 'Top', icon: '⚽' }]
       },
-            'L': {
+      'L': {
         has: [{ word: 'Limon', icon: '🍋' }, { word: 'Lale', icon: '🌷' }, { word: 'Leylek', icon: '🪶' }],
         no: [{ word: 'Ayı', icon: '🐻' }, { word: 'Arı', icon: '🐝' }, { word: 'Top', icon: '⚽' }]
       },
@@ -23753,6 +23773,14 @@
       'K': {
         has: [{ word: 'Kalem', icon: '✏️' }, { word: 'Kedi', icon: '🐱' }, { word: 'Köpek', icon: '🐶' }],
         no: [{ word: 'Ayı', icon: '🐻' }, { word: 'Top', icon: '⚽' }]
+      },
+      'U': {
+        has: [{ word: 'Uçak', icon: '✈️' }, { word: 'Uğur Böceği', icon: '🐞' }, { word: 'Kutu', icon: '📦' }],
+        no: [{ word: 'Top', icon: '⚽' }, { word: 'Elma', icon: '🍎' }]
+      },
+      'R': {
+        has: [{ word: 'Roket', icon: '🚀' }, { word: 'Radyo', icon: '📻' }, { word: 'Araba', icon: '🚗' }],
+        no: [{ word: 'Kedi', icon: '🐱' }, { word: 'Ev', icon: '🏠' }]
       }
     };
 
