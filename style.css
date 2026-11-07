@@ -20684,11 +20684,174 @@ body.is-game-active .universal-game-bgm-fab {
 /* ============================================================== */
 /* 1. SINIF MAARİF MODELİ MOTORLARI (k1-*)                         */
 /* ============================================================== */
-.k1-progress { display: flex; gap: 8px; font-size: 1.6rem; min-height: 36px; }
+.k1-progress { display: flex; gap: 8px; font-size: 1.6rem; min-height: 36px; align-items: center; }
 .k1-dot { transition: transform .2s; }
 .k1-dot.on { transform: scale(1.25); }
 .k1-visual-balloon { flex-direction: column; }
-.k1-balloon-word { font-size: clamp(.8rem, 2.4vw, 1.1rem); font-weight: 800; text-shadow: 0 1px 3px rgba(0,0,0,.35); }
+.k1-balloon-word { font-size: 0.72rem; font-weight: 900; line-height: 1.05; color: #FFFFFF; text-shadow: 0 1px 3px rgba(0,0,0,.55); pointer-events: none; max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 🎈 1. Sınıf Gerçek Uçan Balon Avcısı (Balon Patlatma) Motoru */
+.k1-balloon-hud-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 4px;
+}
+.k1-balloon-score-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  border: 2px solid #F59E0B;
+  color: #92400E;
+  font-size: 0.95rem;
+  font-weight: 900;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+}
+.k1-balloon-sky-arena {
+  position: relative;
+  width: 100%;
+  height: clamp(235px, 38vh, 310px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #BAE6FD 0%, #E0F2FE 55%, #F0FDF4 100%);
+  border: 3px solid #7DD3FC;
+  box-shadow: inset 0 6px 18px rgba(14, 165, 233, 0.14), 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+.k1-balloon-riser {
+  position: absolute;
+  bottom: -115px;
+  will-change: bottom, transform;
+  animation: floatUp 7s linear infinite;
+  z-index: 3;
+}
+@keyframes floatUp {
+  0% {
+    bottom: -115px;
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+  75% {
+    transform: translateX(-4px);
+  }
+  100% {
+    bottom: calc(100% + 35px);
+    transform: translateX(3px);
+  }
+}
+.k1-flying-balloon {
+  position: relative;
+  width: 65px;
+  height: 80px;
+  border-radius: 50% 50% 48% 48% / 55% 55% 45% 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  color: #FFFFFF;
+  box-shadow: inset -6px -8px 14px rgba(0, 0, 0, 0.26),
+              inset 5px 6px 10px rgba(255, 255, 255, 0.55),
+              0 8px 16px rgba(15, 23, 42, 0.22);
+  transition: transform 0.26s ease-out, opacity 0.26s ease-out, filter 0.2s ease;
+}
+.k1-flying-balloon::before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 11px;
+  width: 12px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0) 100%);
+  transform: rotate(-28deg);
+  pointer-events: none;
+}
+.k1-bcolor-0 { background: radial-gradient(circle at 32% 28%, #FCA5A5 0%, #EF4444 55%, #B91C1C 100%); }
+.k1-bcolor-1 { background: radial-gradient(circle at 32% 28%, #93C5FD 0%, #3B82F6 55%, #1D4ED8 100%); }
+.k1-bcolor-2 { background: radial-gradient(circle at 32% 28%, #6EE7B7 0%, #10B981 55%, #047857 100%); }
+.k1-bcolor-3 { background: radial-gradient(circle at 32% 28%, #FDE68A 0%, #F59E0B 55%, #B45309 100%); }
+.k1-bcolor-4 { background: radial-gradient(circle at 32% 28%, #DDD6FE 0%, #8B5CF6 55%, #5B21B6 100%); }
+.k1-bcolor-5 { background: radial-gradient(circle at 32% 28%, #FBCFE8 0%, #EC4899 55%, #9D174D 100%); }
+
+.k1-balloon-letter {
+  font-size: 1.95rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+.k1-balloon-emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.k1-balloon-emoji img,
+.k1-balloon-3d-icon {
+  width: 34px !important;
+  height: 34px !important;
+  object-fit: contain;
+  pointer-events: none;
+}
+.k1-balloon-knot {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 6px;
+  background: inherit;
+  border-radius: 2px 2px 5px 5px;
+  filter: brightness(0.82);
+  pointer-events: none;
+}
+.k1-balloon-string {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 26px;
+  background: linear-gradient(180deg, #64748B 0%, rgba(100, 116, 139, 0.3) 100%);
+  pointer-events: none;
+}
+.k1-flying-balloon.k1-balloon-popped {
+  transform: scale(1.4) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.k1-flying-balloon.k1-balloon-wrong {
+  animation: shake 0.48s ease-in-out !important;
+  background: radial-gradient(circle at 30% 25%, #FCA5A5 0%, #DC2626 55%, #7F1D1D 100%) !important;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.92), inset 0 0 12px rgba(254, 202, 202, 0.7) !important;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-9px) rotate(-6deg); }
+  40% { transform: translateX(9px) rotate(6deg); }
+  60% { transform: translateX(-7px) rotate(-4deg); }
+  80% { transform: translateX(7px) rotate(4deg); }
+}
 
 /* Tren */
 .k1-reveal { font-size: clamp(3.5rem, 12vw, 6rem); transition: opacity .4s ease, filter .4s ease; min-height: 100px; display: flex; align-items: center; justify-content: center; }

@@ -3785,7 +3785,9 @@
       const learnedWords = getAllCumulativeWordsUpTo(activeL);
       const learnedSentences = getAllCumulativeSentencesUpTo(activeL);
 
-      if (gameType === 'maarif_sound_find') {
+      if (gameType === 'maarif_balloon_pop' || gameType === 'maarif_phoneme_pop') {
+        return generateK1BalloonPop();
+      } else if (gameType === 'maarif_sound_find') {
         // 1) Sesi Hisset ve Bul (Görsel & İşitsel Algı)
         const subMode = Math.random() < 0.5 ? 'which_has' : 'has_or_not';
         if (subMode === 'which_has' && data.soundWords && data.soundWords.length > 0) {
@@ -11868,9 +11870,11 @@
     true_false: '✅ Doğru / Yanlış',
     matching: '🎯 Dokun & Eşleştir',
     firstreading: '🔤 İlk Okuma Yazma',
-    maarif_phoneme_pop: '🎈 Sesi Hisset ve Patlat',
+    maarif_sound_find: '👂 Sesi Hisset (Görsel Seç)',
+    maarif_balloon_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
+    maarif_phoneme_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
     maarif_word_train: '🚂 Hece ve Kelime Treni',
-    maarif_letter_basket: '🧺 Akıllı Harf Sepeti',
+    maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
     math_apple_count_1: '🍎 Elma Ağacı & Sayma',
     math_add_sub_drag_1: '➕ Görsel Toplama & Çıkarma',
     math_spatial_pattern_1: '🧩 Konum & Örüntü',
@@ -11986,10 +11990,11 @@
       }
     }
     const fallbackTitles = {
-      maarif_sound_find: 'Sesi Hisset / Balon Patlatma',
-      maarif_phoneme_pop: 'Sesi Hisset ve Patlat',
+      maarif_sound_find: 'Sesi Hisset (Görsel Seç)',
+      maarif_balloon_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
+      maarif_phoneme_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
       maarif_word_train: 'Hece ve Kelime Treni',
-      maarif_letter_basket: 'Akıllı Harf Sepeti',
+      maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
       maarif_position: 'Başta mı, Ortada mı, Sonda mı?',
       maarif_case_match: 'Büyük-Küçük Harf Eşleştirme',
       maarif_syllable_build: 'Hece Birleştirme Atölyesi',
@@ -21079,21 +21084,33 @@
       active: true
     });
 
-    // 2. KART: Akıllı Harf Sepeti / Balon Patlatma
+    // 2. KART: 🧺 Akıllı Harf Sepeti (Sürükle & Bırak)
     games.push({
       id: 'maarif_letter_basket',
-      title: 'Akıllı Harf Sepeti / Balon Patlatma',
+      title: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
       icon: '🧺',
-      badge: '🧺 Harf & Balon',
+      badge: '🧺 Sürükle & Bırak',
       featureTag: letterIdx === 0 ? `🔤 Sadece "${letterUpper}" Sesi` : '🎯 Kümülatif Sepet',
       description: letterIdx === 0
-        ? `Sadece "${letterUpper}" sesini veya "${letterUpper}" ile başlayan görselleri yakala ve sepete topla! 🧺🎈`
+        ? `Sadece "${letterUpper}" sesini veya "${letterUpper}" ile başlayan görselleri yakala ve sepete topla! 🧺✨`
         : `Gelen sözcükleri ve görselleri baş harfine göre doğru harf sepetine bırak! 🧺🔤`,
-      tags: ['🧺 Harf Sepetleri', '🎈 Balon & Sepet', '🔊 Sesli Yönerge'],
+      tags: ['🧺 Harf Sepetleri', '👆 Sürükle & Bırak', '🔊 Sesli Yönerge'],
       active: true
     });
 
-    // 3. KART: Hece ve Kelime Atölyesi
+    // 3. KART: 🎈 Uçan Balon Avcısı (Balon Patlatma)
+    games.push({
+      id: 'maarif_balloon_pop',
+      title: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
+      icon: '🎈',
+      badge: '🎈 Balon Patlatma',
+      featureTag: `🔤 "${letterUpper} ${letterLower}" Balonları`,
+      description: `Üzerinde [${letterUpper}] sesi olan uçan balonlara dokun ve patlat! 🎈💥`,
+      tags: [`🔤 "${letterUpper} ${letterLower}" Sesi`, '🎈 Uçan Balonlar', '🔊 Sesli Yönerge'],
+      active: true
+    });
+
+    // 4. KART: Hece ve Kelime Atölyesi
     // SADECE [N n] ve sonraki seslerde (letterIdx >= 1) açılır!
     // [A a] (1. Ses) sekmesinde KESİNLİKLE GÖSTERİLMEZ!
     if (letterIdx >= 1) {
@@ -23845,9 +23862,10 @@
       case 'prep_sounds':
       case 'k1_prep_sounds': return generateK1PrepSounds();
       case 'maarif_sound_find':
-      case 'maarif_phoneme_pop':
-      case 'firstreading_balloon':
       case 'turkish_listen_comprehend_1': return generateK1SoundFeel();
+      case 'maarif_balloon_pop':
+      case 'maarif_phoneme_pop':
+      case 'firstreading_balloon': return generateK1BalloonPop();
       case 'maarif_word_train':
       case 'syllable_builder':
       case 'turkish_sentence_punctuation_1': return generateK1WordTrain();
@@ -23858,11 +23876,15 @@
       case 'turkish_1_karma': {
         const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
         if (activeL === 'a') {
-          return Math.random() < 0.5 ? generateK1SoundFeel() : generateK1LetterBasket();
+          const r = Math.random();
+          if (r < 0.34) return generateK1SoundFeel();
+          if (r < 0.67) return generateK1LetterBasket();
+          return generateK1BalloonPop();
         } else {
           const r = Math.random();
-          if (r < 0.4) return generateK1WordTrain();
-          if (r < 0.7) return generateK1SoundFeel();
+          if (r < 0.30) return generateK1WordTrain();
+          if (r < 0.55) return generateK1SoundFeel();
+          if (r < 0.80) return generateK1BalloonPop();
           return generateK1LetterBasket();
         }
       }
@@ -23877,9 +23899,84 @@
 
 
   window.generateK1SoundFeel = generateK1SoundFeel;
+  window.generateK1BalloonPop = generateK1BalloonPop;
   window.generateK1WordTrain = generateK1WordTrain;
   window.generateK1LetterBasket = generateK1LetterBasket;
   window.generateKidsGrade1Question = generateKidsGrade1Question;
+
+  // --- 🎈 UÇAN BALON AVCISI (BALON PATLATMA): Mevcut Harf ve Görsel Veri Havuzu ---
+  function generateK1BalloonPop() {
+    const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
+    const upper = activeL.toLocaleUpperCase('tr-TR');
+    const lower = activeL.toLocaleLowerCase('tr-TR');
+    const mData = (typeof MAARIF_2026_CONFIG !== 'undefined' && MAARIF_2026_CONFIG.letters)
+      ? (MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'])
+      : null;
+    const aData = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[upper]) ? ANETIL_DATA[upper] : null;
+
+    const hasVisuals = (aData && Array.isArray(aData.hasSoundItems) && aData.hasSoundItems.length > 0)
+      ? aData.hasSoundItems.map(it => ({ word: it.word, icon: it.icon || it.emoji }))
+      : ((mData && Array.isArray(mData.soundWords) && mData.soundWords.length > 0)
+        ? mData.soundWords.map(it => ({ word: it.word, icon: it.emoji || it.icon }))
+        : [{ word: 'Arı', icon: '🐝' }, { word: 'Elma', icon: '🍎' }, { word: 'Ayı', icon: '🐻' }]);
+
+    const noVisuals = (aData && Array.isArray(aData.noSoundItems) && aData.noSoundItems.length > 0)
+      ? aData.noSoundItems.map(it => ({ word: it.word, icon: it.icon || it.emoji }))
+      : ((mData && Array.isArray(mData.noSoundWords) && mData.noSoundWords.length > 0)
+        ? mData.noSoundWords.map(it => ({ word: it.word, icon: it.emoji || it.icon }))
+        : [{ word: 'Top', icon: '⚽' }, { word: 'Ev', icon: '🏠' }, { word: 'Süt', icon: '🥛' }]);
+
+    const learnedPool = (typeof getLearnedLettersUpTo === 'function')
+      ? getLearnedLettersUpTo(activeL).filter(ch => ch !== upper)
+      : [];
+    const fallbackDistractorLetters = ['E', 'T', 'L', 'N', 'O', 'K', 'M', 'S', 'B', 'U'].filter(ch => ch !== upper);
+    const distractorUpperPool = k1Shuffle([...new Set([...learnedPool, ...fallbackDistractorLetters])]);
+
+    const targets = [
+      { kind: 'letter', text: upper, isTarget: true },
+      { kind: 'letter', text: lower, isTarget: true },
+      { kind: 'letter', text: upper, isTarget: true },
+      { kind: 'letter', text: lower, isTarget: true }
+    ];
+    k1Shuffle(hasVisuals).slice(0, 4).forEach(v => {
+      targets.push({ kind: 'visual', icon: v.icon, word: v.word, isTarget: true });
+    });
+
+    const distractors = [];
+    distractorUpperPool.slice(0, 3).forEach((dUp, idx) => {
+      const charText = (idx % 2 === 1) ? dUp.toLocaleLowerCase('tr-TR') : dUp;
+      distractors.push({ kind: 'letter', text: charText, isTarget: false });
+    });
+    k1Shuffle(noVisuals).slice(0, 3).forEach(v => {
+      distractors.push({ kind: 'visual', icon: v.icon, word: v.word, isTarget: false });
+    });
+
+    const combined = k1Shuffle([...targets.slice(0, 7), ...distractors.slice(0, 5)]);
+    const lanes = [4, 13, 22, 31, 40, 49, 58, 66, 74, 81, 18, 62];
+    const balloons = combined.map((b, i) => Object.assign({}, b, {
+      colorIdx: i % 6,
+      left: lanes[i % lanes.length],
+      duration: +(6.2 + (i % 4) * 0.65).toFixed(2),
+      delay: +(i * 0.52).toFixed(2)
+    }));
+
+    const promptText = `Üzerinde [${upper}] sesi olan balonlara dokun ve patlat!`;
+    const spokenText = `Üzerinde ${upper} sesi olan balonlara dokun ve patlat!`;
+
+    return k1Base(
+      'k1_phoneme_pop',
+      `🎈 Uçan Balon Avcısı (${upper})`,
+      promptText,
+      spokenText,
+      `Harika avcı! Üzerinde [${upper}] sesi olan 5 balonu başarıyla patlattın! 🎈🌟`,
+      {
+        letter: upper,
+        lower: lower,
+        targetCount: 5,
+        balloons: balloons
+      }
+    );
+  }
 
   function k1Base(type, category, text, spoken, explanation, data) {
     return {
@@ -24344,6 +24441,7 @@
       case 'k1_prep_oddone': return k1Mount(q, k1BuildPrepOddOne);
       case 'k1_prep_sounds': return k1Mount(q, k1BuildPrepSounds);
       case 'k1_sound_feel': return k1Mount(q, k1BuildSoundFeel);
+      case 'k1_balloon_pop':
       case 'k1_phoneme_pop': return k1Mount(q, k1BuildPhonemePop);
       case 'k1_train': return k1Mount(q, k1BuildTrain);
       case 'k1_basket': return k1Mount(q, k1BuildLetterBasket);
@@ -24578,35 +24676,100 @@
     root.appendChild(wrap);
   }
 
-  // ---------------- a) Sesi Hisset ve Patlat ----------------
+  // ---------------- a) 🎈 Uçan Balon Avcısı (Balon Patlatma) ----------------
   function k1BuildPhonemePop(root, pn, d) {
-    const targetCount = d.balloons.filter(b => b.isTarget).length;
+    const targetCount = d.targetCount || 5;
     let popped = 0;
-    const progress = k1El('k1-progress', '');
+
+    const hudBar = k1El('k1-balloon-hud-bar', '');
+    const progress = k1El('k1-progress k1-balloon-progress', '');
+    const scorePill = k1El('k1-balloon-score-pill', `⭐ 0 / ${targetCount} Puan`);
     const renderProgress = () => {
-      progress.innerHTML = Array.from({ length: targetCount }, (_, i) => `<span class="k1-dot${i < popped ? ' on' : ''}">${i < popped ? '⭐' : '○'}</span>`).join('');
+      progress.innerHTML = Array.from({ length: targetCount }, (_, i) =>
+        `<span class="k1-dot${i < popped ? ' on' : ''}">${i < popped ? '⭐' : '○'}</span>`
+      ).join('');
+      scorePill.innerHTML = `⭐ ${popped} / ${targetCount} Puan`;
     };
     renderProgress();
-    root.appendChild(progress);
+    hudBar.appendChild(progress);
+    hudBar.appendChild(scorePill);
+    root.appendChild(hudBar);
 
-    const sky = k1El('kids-balloon-sky kids-count-4', '');
-    d.balloons.forEach((b, i) => {
-      const el = k1El(`kids-item kids-balloon k1-visual-balloon kids-color-${i % 4}`, `<span class="kids-face">${replaceEmojisWith3D(b.emoji, 'kids-card-icon')}</span><span class="k1-balloon-word">${b.word}</span><span class="kids-balloon-string"></span>`);
-      el.setAttribute('role', 'button');
-      el.tabIndex = 0;
-      el.style.animationDelay = `${-i * 0.7}s`;
-      let done = false;
-      attachInstantTouch(el, () => {
-        if (!k1Active(pn) || done) return;
-        if (!b.isTarget) { kidsGentleWrong(el); return; }
-        done = true;
-        audio.playPop();
-        el.classList.add('kids-correct');
+    const sky = k1El('k1-balloon-sky-arena', '');
+    (d.balloons || []).forEach((b, i) => {
+      const riser = k1El('k1-balloon-riser', '');
+      const leftPos = (b.left !== undefined) ? b.left : ((i * 15 + 6) % 82);
+      const dur = b.duration || (6.4 + (i % 4) * 0.6);
+      const del = (b.delay !== undefined) ? b.delay : (i * 0.5);
+      riser.style.left = `${leftPos}%`;
+      riser.style.animationDuration = `${dur}s`;
+      riser.style.animationDelay = `${del}s`;
+
+      const innerHtml = (b.kind === 'letter')
+        ? `<span class="k1-balloon-letter">${b.text}</span>`
+        : `<span class="k1-balloon-emoji">${replaceEmojisWith3D(b.icon || b.emoji || '🎈', 'k1-balloon-3d-icon')}</span><span class="k1-balloon-word">${b.word || ''}</span>`;
+
+      const balloon = k1El(
+        `kids-item k1-flying-balloon k1-bcolor-${(b.colorIdx !== undefined ? b.colorIdx : i) % 6}`,
+        `${innerHtml}<span class="k1-balloon-knot"></span><span class="k1-balloon-string"></span>`
+      );
+      balloon.setAttribute('role', 'button');
+      balloon.tabIndex = 0;
+
+      let isPopping = false;
+      attachInstantTouch(balloon, () => {
+        if (!k1Active(pn) || isPopping) return;
+        const rect = balloon.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+
+        if (!b.isTarget) {
+          audio.playWrong();
+          balloon.classList.remove('k1-balloon-wrong');
+          void balloon.offsetWidth;
+          balloon.classList.add('k1-balloon-wrong');
+          setTimeout(() => balloon.classList.remove('k1-balloon-wrong'), 600);
+          return;
+        }
+
+        isPopping = true;
+        if (typeof audio.playBalloonPop === 'function') {
+          audio.playBalloonPop();
+        } else {
+          audio.playPop();
+        }
+        riser.style.animationPlayState = 'paused';
+        balloon.classList.remove('k1-balloon-wrong');
+        balloon.classList.add('k1-balloon-popped');
+
         popped++;
         renderProgress();
-        if (popped >= targetCount) kidsPointAnswer(pn, el, true);
+        if (typeof particles !== 'undefined' && particles && typeof particles.burst === 'function') {
+          particles.burst(cx, cy, 'stars');
+        }
+        if (typeof spawnFloatingScore === 'function') {
+          spawnFloatingScore(cx, cy, '+1 ⭐ Puan', false);
+        }
+
+        if (popped >= targetCount) {
+          setTimeout(() => kidsPointAnswer(pn, balloon, true), 260);
+        } else {
+          setTimeout(() => {
+            if (!riser.isConnected) return;
+            balloon.classList.remove('k1-balloon-popped');
+            riser.style.animation = 'none';
+            void riser.offsetWidth;
+            riser.style.animation = '';
+            riser.style.animationDuration = `${dur}s`;
+            riser.style.animationDelay = '0.2s';
+            riser.style.animationPlayState = 'running';
+            isPopping = false;
+          }, 1400);
+        }
       });
-      sky.appendChild(el);
+
+      riser.appendChild(balloon);
+      sky.appendChild(riser);
     });
     root.appendChild(sky);
   }
