@@ -22086,7 +22086,7 @@
   function updatePlayerNamesUI() {
     if (DOM.lobbyP1Name) DOM.lobbyP1Name.textContent = state.player1.name;
     if (DOM.lobbyP2Name) DOM.lobbyP2Name.textContent = state.player2.name;
-    if (DOM.duelP1Name) DOM.duelP1Name.textContent = state.player1.name;
+    if (DOM.duelP1Name) { DOM.duelP1Name.textContent = state.player1.name; DOM.duelP1Name.classList.toggle('hide', state.gameMode === 'solo' && (state.player1.name === '1. Öğrenci (Mavi)' || state.player1.name === 'Mavi Oyuncu')); }
     if (DOM.duelP2Name) DOM.duelP2Name.textContent = state.player2.name;
   }
 
@@ -22831,6 +22831,11 @@
       if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.classList.remove('hide');
 
       renderInteractiveQuestion(state.currentQuestion);
+      if (DOM.btnReadAloudP1 && DOM.p1QuestionCard && DOM.btnReadAloudP1.parentElement !== DOM.p1QuestionCard) DOM.p1QuestionCard.appendChild(DOM.btnReadAloudP1);
+      if (DOM.btnReadAloudP2 && DOM.p2QuestionCard && DOM.btnReadAloudP2.parentElement !== DOM.p2QuestionCard) DOM.p2QuestionCard.appendChild(DOM.btnReadAloudP2);
+      const hasKidsListen = !!(DOM.p1InteractiveZone && DOM.p1InteractiveZone.querySelector('.kids-listen-btn'));
+      if (DOM.btnReadAloudP1) DOM.btnReadAloudP1.classList.toggle('hide', hasKidsListen);
+      if (DOM.btnReadAloudP2) DOM.btnReadAloudP2.classList.toggle('hide', hasKidsListen);
     } else {
       if (DOM.p1InteractiveZone) {
         DOM.p1InteractiveZone.innerHTML = '';
@@ -22841,6 +22846,11 @@
         DOM.p2InteractiveZone.classList.add('hide');
       }
       if (DOM.p1OptionsGrid) DOM.p1OptionsGrid.classList.remove('hide');
+      if (DOM.p2OptionsGrid) DOM.p2OptionsGrid.classList.remove('hide');
+      if (DOM.btnReadAloudP1 && DOM.p1QuestionCard && DOM.btnReadAloudP1.parentElement !== DOM.p1QuestionCard) DOM.p1QuestionCard.appendChild(DOM.btnReadAloudP1);
+      if (DOM.btnReadAloudP2 && DOM.p2QuestionCard && DOM.btnReadAloudP2.parentElement !== DOM.p2QuestionCard) DOM.p2QuestionCard.appendChild(DOM.btnReadAloudP2);
+      if (DOM.btnReadAloudP1) DOM.btnReadAloudP1.classList.remove('hide');
+      if (DOM.btnReadAloudP2) DOM.btnReadAloudP2.classList.remove('hide');
       if (DOM.p2OptionsGrid) DOM.p2OptionsGrid.classList.remove('hide');
 
       const opts = state.currentQuestion.options || [];
