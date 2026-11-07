@@ -3793,6 +3793,8 @@
         return generateK1MissingLetter();
       } else if (gameType === 'maarif_flash_word') {
         return generateK1FlashWord();
+      } else if (gameType === 'maarif_word_train') {
+        return generateK1WordTrain();
       } else if (gameType === 'maarif_sound_find') {
         // 1) Sesi Hisset ve Bul (Görsel & İşitsel Algı)
         const subMode = Math.random() < 0.5 ? 'which_has' : 'has_or_not';
@@ -24707,32 +24709,76 @@
       { letter: upper, target: target.word, cards: cards });
   }
 
-  // --- HECE VE KELİME TRENİ (SÜRÜKLE BİRLEŞTİR): SADECE KİLİTLİ ANETIL_DATA ve isValidForCurrentLetter ---
+  // --- HECE VE KELİME TRENİ (SÜRÜKLE BİRLEŞTİR): WORD_IMAGE_MAP Uyumlu ve Sadece allowedLetters ---
   function generateK1WordTrain() {
-    let activeL = (state.activeMaarifLetter || 'n').toLowerCase();
+    let activeL = String(state.activeMaarifLetter || 'n').toLocaleLowerCase('tr-TR');
     if (activeL === 'a') activeL = 'n'; // A harfinde hece/kelime olmadığı için güvenli fallback
     const upper = activeL.toLocaleUpperCase('tr-TR');
-    const anetil = ANETIL_DATA[upper] || ANETIL_DATA['N'];
+    const anetil = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[upper]) ? ANETIL_DATA[upper] : null;
+    const mData = (typeof MAARIF_2026_CONFIG !== 'undefined' && MAARIF_2026_CONFIG.letters) ? MAARIF_2026_CONFIG.letters[activeL] : null;
 
-    const wordList = (anetil.words && anetil.words.length > 0) ? anetil.words : ['an', 'na', 'ana'];
-    const chosenRaw = k1Pick(wordList);
-    const wordUpper = chosenRaw.toLocaleUpperCase('tr-TR');
+    const mapDict = (typeof window !== 'undefined' && window.WORD_IMAGE_MAP) ? window.WORD_IMAGE_MAP : WORD_IMAGE_MAP;
+    const lookupWordEmoji = (w) => {
+      const lw = String(w || '').toLocaleLowerCase('tr-TR').trim();
+      if (!lw) return null;
+      return mapDict[lw] || mapDict[lw.toLocaleUpperCase('tr-TR')] || null;
+    };
+
+    let rawWords = [];
+    if (anetil && Array.isArray(anetil.words) && anetil.words.length > 0) {
+      rawWords = anetil.words.slice();
+    } else if (mData && Array.isArray(mData.words) && mData.words.length > 0) {
+      rawWords = mData.words.slice();
+    } else if (mData && Array.isArray(mData.cumulativeWords) && mData.cumulativeWords.length > 0) {
+      rawWords = mData.cumulativeWords.map(cw => String(cw.word || '').toLocaleLowerCase('tr-TR')).filter(Boolean);
+    }
+    if (rawWords.length === 0) rawWords = ['an', 'na', 'ana'];
+
+    // Sadece o ana kadar izin verilen harflerden (allowedLetters) oluşan kelimeleri süz
+    const validWords = rawWords.filter(w => isValidForCurrentLetter(w, upper));
+    const candidateWords = validWords.length > 0 ? validWords : rawWords;
+
+    // WORD_IMAGE_MAP'te net karşılığı (somut resmi) bulunan kelimelere öncelik ver
+    const mappedWords = candidateWords.filter(w => Boolean(lookupWordEmoji(w)));
+    const mappedWithTarget = mappedWords.filter(w => String(w).toLocaleLowerCase('tr-TR').includes(activeL));
+    const finalPool = mappedWithTarget.length > 0
+      ? mappedWithTarget
+      : (mappedWords.length > 0 ? mappedWords : candidateWords);
+
+    const chosenRaw = k1Pick(finalPool);
+    const wordLower = String(chosenRaw).toLocaleLowerCase('tr-TR').trim();
+    const wordUpper = wordLower.toLocaleUpperCase('tr-TR');
     const parts = Array.from(wordUpper);
+    const matchedEmoji = lookupWordEmoji(wordLower);
 
-    // Ek vagonlar: SADECE bu harfe kadar izin verilen harflerden (allowedLetters)!
-    const allowedLettersUpper = (anetil.allowedLetters || ['A', 'N'])
-      .map(ch => ch.toLocaleUpperCase('tr-TR'))
-      .filter((ch, idx, arr) => arr.indexOf(ch) === idx);
+    // Ek vagonlar (çeldirici): SADECE bu harfe kadar öğrenilen harflerden (allowedLetters)!
+    const allowedPairs = getStrictAllowedPairsForLetter(activeL);
+    const allowedLettersUpper = allowedPairs.map(p => p.upper);
     const extraCandidates = allowedLettersUpper.filter(l => !parts.includes(l));
     const extras = k1Shuffle(extraCandidates).slice(0, 1);
 
     const wagons = k1Shuffle([...parts, ...extras]);
 
-    return k1Base('k1_train', '🚂 Hece ve Kelime Atölyesi',
-      'Harf vagonlarını sırayla trene bağla!',
-      'Harf vagonlarını sırayla trene bağla!',
+    const promptText = matchedEmoji
+      ? `Görsele bak, dinle ve harf vagonlarını sırayla trene bağla!`
+      : `Sesi dinle ve harf vagonlarını sırayla trene bağla!`;
+    const spokenText = `${wordLower}! Harf vagonlarını sırayla trene bağla!`;
+
+    return k1Base(
+      'k1_train',
+      `🚂 Hece ve Kelime Treni (${upper})`,
+      promptText,
+      spokenText,
       `"${wordUpper}" kelimesini oluşturdun! Tren yola çıktı! 🚂🎉`,
-      { word: wordUpper, emoji: '🚂', parts: parts, wagons: wagons });
+      {
+        word: wordUpper,
+        wordLower: wordLower,
+        emoji: matchedEmoji || null,
+        hasVisual: Boolean(matchedEmoji),
+        parts: parts,
+        wagons: wagons
+      }
+    );
   }
 
   // --- AKILLI HARF SEPETİ: SADECE ANETIL_DATA ve Öğrenilmiş Harfler ---
@@ -25302,9 +25348,40 @@
 
   // ---------------- b) Hece ve Kelime Treni ----------------
   function k1BuildTrain(root, pn, d) {
-    const reveal = k1El('k1-reveal', replaceEmojisWith3D(d.emoji, 'kids-card-icon'));
-    reveal.style.opacity = '0.08';
-    reveal.style.filter = 'blur(10px) grayscale(1)';
+    const targetWordLower = d.wordLower || k1Lower(d.word);
+
+    // Üstteki Dinle butonuna tıklandığında hedef kelimeyi seslendir
+    const listenBtn = root.querySelector('.kids-listen-btn');
+    if (listenBtn) {
+      listenBtn.onclick = (e) => {
+        e.stopPropagation();
+        audio.speakTurkishText(`${targetWordLower}!`);
+      };
+    }
+
+    // 1) Trenin üzerindeki görsel en baştan BÜYÜK, NET ve AÇIK görünsün (blur/grayscale olmadan!)
+    // Eğer WORD_IMAGE_MAP'te somut görseli yoksa yanlış/alakasız emoji yerine şık bir "🔊 Sesli Dinle" ikonu göster
+    let reveal;
+    if (d.hasVisual && d.emoji) {
+      reveal = k1El('k1-reveal k1-train-visual-open', replaceEmojisWith3D(d.emoji, 'kids-card-icon'));
+      reveal.setAttribute('role', 'button');
+      reveal.tabIndex = 0;
+      attachInstantTouch(reveal, () => {
+        audio.playClick();
+        audio.speakTurkishText(targetWordLower);
+      });
+    } else {
+      reveal = k1El('k1-reveal k1-train-audio-badge', `
+        <button type="button" class="k1-train-listen-pill" aria-label="Sesli Dinle">
+          <span class="k1-train-listen-icon">🔊</span>
+          <span class="k1-train-listen-text">Sesli Dinle</span>
+        </button>
+      `);
+      attachInstantTouch(reveal, () => {
+        audio.playClick();
+        audio.speakTurkishText(targetWordLower);
+      });
+    }
     root.appendChild(reveal);
 
     const row = k1El('k1-train-row', '<div class="k1-loco" aria-hidden="true">🚂</div>');
@@ -25323,15 +25400,12 @@
       slot.classList.add('filled');
       wagon.remove();
       filled++;
-      const ratio = filled / d.parts.length;
-      reveal.style.opacity = String(0.08 + ratio * 0.92);
-      reveal.style.filter = `blur(${Math.round((1 - ratio) * 10)}px) grayscale(${1 - ratio})`;
       audio.playClick();
       if (filled === d.parts.length) {
         reveal.classList.add('k1-reveal-done');
         row.classList.add('k1-train-go');
-        audio.speakTurkishText(k1Lower(d.word));
-        setTimeout(() => kidsPointAnswer(pn, row, true), 150);
+        audio.speakTurkishText(targetWordLower);
+        setTimeout(() => kidsPointAnswer(pn, row, true), 250);
       }
     };
 

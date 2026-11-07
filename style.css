@@ -21276,8 +21276,44 @@ body.is-game-active .universal-game-bgm-fab {
 }
 
 /* Tren */
-.k1-reveal { font-size: clamp(3.5rem, 12vw, 6rem); transition: opacity .4s ease, filter .4s ease; min-height: 100px; display: flex; align-items: center; justify-content: center; }
-.k1-reveal img { width: clamp(70px, 14vw, 120px); height: clamp(70px, 14vw, 120px); object-fit: contain; }
+.k1-reveal { font-size: clamp(3.5rem, 12vw, 6rem); transition: transform .3s ease, opacity .4s ease, filter .4s ease; min-height: 105px; display: flex; align-items: center; justify-content: center; }
+.k1-reveal img { width: clamp(78px, 15vw, 124px); height: clamp(78px, 15vw, 124px); object-fit: contain; }
+.k1-train-visual-open {
+  opacity: 1 !important;
+  filter: none !important;
+  padding: 10px 24px;
+  border-radius: 26px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
+  border: 3px solid #7DD3FC;
+  box-shadow: 0 6px 0 #0284C7, 0 10px 20px rgba(2, 132, 199, 0.14);
+  cursor: pointer;
+}
+.k1-train-visual-open:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+.k1-train-audio-badge {
+  opacity: 1 !important;
+  filter: none !important;
+}
+.k1-train-listen-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 22px;
+  border: 3px solid #0284C7;
+  background: linear-gradient(180deg, #38BDF8 0%, #0284C7 100%);
+  color: #FFFFFF;
+  font-size: clamp(1.2rem, 3.8vw, 1.5rem);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #075985, 0 10px 20px rgba(2, 132, 199, 0.25);
+  transition: transform 0.2s ease;
+}
+.k1-train-listen-pill:hover {
+  transform: translateY(-2px) scale(1.03);
+}
 .k1-reveal-done { animation: kidsHappy .6s ease; }
 .k1-train-row { display: flex; align-items: center; gap: 6px; padding: 10px 12px; background: #E0F2FE; border-bottom: 8px solid #64748B; border-radius: 22px; overflow-x: auto; max-width: 100%; }
 .k1-train-go { animation: k1TrainGo 1.2s ease-in forwards; }
