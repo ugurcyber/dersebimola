@@ -22888,3 +22888,69 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 1rem;
   }
 }
+
+
+/* ==========================================================================
+   DEEP LINKING & ÜST BAR WHATSAPP PAYLAŞ BUTONU STİLLERİ
+   ========================================================================== */
+.header-right-share-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-header-share-wa,
+.hud-btn.hud-share-whatsapp-btn,
+.mqs-share-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #25D366 0%, #16A34A 100%);
+  color: #FFFFFF !important;
+  border: 2px solid #86EFAC;
+  border-bottom: 3px solid #15803D;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.28);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.btn-header-share-wa:hover,
+.hud-btn.hud-share-whatsapp-btn:hover,
+.mqs-share-wa-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.38);
+}
+
+.btn-header-share-wa:active,
+.hud-btn.hud-share-whatsapp-btn:active,
+.mqs-share-wa-btn:active {
+  transform: translateY(1px);
+}
+
+.btn-header-share-wa .wa-share-icon,
+.hud-btn.hud-share-whatsapp-btn .wa-share-icon,
+.mqs-share-wa-btn .wa-share-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .btn-header-share-wa,
+  .hud-btn.hud-share-whatsapp-btn,
+  .mqs-share-wa-btn {
+    padding: 6px 10px !important;
+    font-size: 12.5px !important;
+    border-radius: 10px !important;
+    gap: 4px !important;
+  }
+}

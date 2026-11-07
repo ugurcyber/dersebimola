@@ -20712,6 +20712,7 @@
       renderSubcategories();
       renderGameCards();
     }
+    if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
   }
 
   // "← Tüm Dersler" Butonuna Basıldığında 1. Kademeye Dönüş
@@ -20745,6 +20746,7 @@
 
     renderSubjects();
     audio.playClick();
+    if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
   }
 
   // Alt Kategori Sekmelerini (Pills/Tabs) Üret
@@ -20784,6 +20786,7 @@
         });
 
         renderGameCards();
+        if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
       });
     });
   }
@@ -20861,13 +20864,19 @@
       }
     }).join('');
 
-    // Paylaşım Butonu Dinleyicileri (Kart Tıklamasını Engeller)
+    // Paylaşım Butonu Dinleyicileri (Kart Tıklamasını Engeller ve Doğrudan O Etkinliğin Deep Linkini Paylaşır)
     DOM.gamesGrid.querySelectorAll('.card-share-btn').forEach(btn => {
       addTapListener(btn, (e) => {
         if (e && e.cancelable) e.preventDefault();
         if (e && e.stopPropagation) e.stopPropagation();
-        const title = btn.getAttribute('data-share-title') || 'Oyun';
-        shareActivity(title);
+        const cardEl = btn.closest('.game-card');
+        const gId = cardEl ? cardEl.getAttribute('data-game-id') : null;
+        const title = btn.getAttribute('data-share-title') || 'Etkinlik';
+        if (typeof shareDeepLinkWhatsApp === 'function') {
+          shareDeepLinkWhatsApp({ gameId: gId, gameTitle: title });
+        } else {
+          shareActivity(title);
+        }
       });
     });
 
@@ -21049,6 +21058,7 @@
           <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
           <div class="card-top-right-actions">
             <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+            <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" data-share-game-id="${game.id}" title="Bu Etkinliği WhatsApp'ta Paylaş" aria-label="WhatsApp'ta Paylaş" type="button">📲</button>
           </div>
         </div>
         <div class="game-card-body">
@@ -21071,6 +21081,17 @@
       </div>
     `).join('');
 
+    DOM.gamesGrid.querySelectorAll('.card-share-btn').forEach(btn => {
+      addTapListener(btn, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
+        const gid = btn.getAttribute('data-share-game-id') || (btn.closest('.game-card') && btn.closest('.game-card').getAttribute('data-game-id'));
+        const gtitle = btn.getAttribute('data-share-title') || 'Etkinlik';
+        if (typeof shareDeepLinkWhatsApp === 'function') {
+          shareDeepLinkWhatsApp({ gameId: gid, gameTitle: gtitle });
+        }
+      });
+    });
     DOM.gamesGrid.querySelectorAll('.game-card').forEach(card => {
       addTapListener(card, (e) => {
         if (e && e.target && e.target.closest('.card-share-btn')) return;
@@ -21092,6 +21113,7 @@
       }
     }
     renderMaarifReadingPanel();
+    if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
   }
 
   window.selectMaarifLetter = selectMaarifLetter;
@@ -21104,6 +21126,7 @@
     }
     updateMaarifCumulativeBadge();
     renderMaarifGameCards();
+    if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
   }
 
   function updateMaarifCumulativeBadge() {
@@ -21249,6 +21272,7 @@
           <span class="game-category-tag">${replaceEmojisWith3D(game.badge, 'chip-3d-icon')}</span>
           <div class="card-top-right-actions">
             <span class="game-speed-badge">${replaceEmojisWith3D(game.featureTag, 'chip-3d-icon')}</span>
+            <button class="card-share-btn" data-share-title="${escapeHtml(game.title)}" data-share-game-id="${game.id}" title="Bu Etkinliği WhatsApp'ta Paylaş" aria-label="WhatsApp'ta Paylaş" type="button">📲</button>
           </div>
         </div>
         <div class="game-card-body">
@@ -21271,6 +21295,17 @@
       </div>
     `).join('');
 
+    DOM.gamesGrid.querySelectorAll('.card-share-btn').forEach(btn => {
+      addTapListener(btn, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        if (e && e.stopPropagation) e.stopPropagation();
+        const gid = btn.getAttribute('data-share-game-id') || (btn.closest('.game-card') && btn.closest('.game-card').getAttribute('data-game-id'));
+        const gtitle = btn.getAttribute('data-share-title') || 'Etkinlik';
+        if (typeof shareDeepLinkWhatsApp === 'function') {
+          shareDeepLinkWhatsApp({ gameId: gid, gameTitle: gtitle });
+        }
+      });
+    });
     DOM.gamesGrid.querySelectorAll('.game-card').forEach(card => {
       addTapListener(card, (e) => {
         if (e && e.target && e.target.closest('.card-share-btn')) return;
@@ -21372,6 +21407,7 @@
 
     // Moli lobi ifadesi
     changeMoliExpression('lobby');
+    if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
   }
 
   function setGrade(gradeNumber) {
@@ -21421,6 +21457,7 @@
     if (DOM.subjectsSection) DOM.subjectsSection.classList.remove('hide');
 
     renderSubjects();
+    if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
   }
 
   /* ==========================================================================
@@ -22698,6 +22735,7 @@
     updateAnnouncerUI();
     changeMoliExpression('start');
     if (typeof mqsInitIfApplicable === 'function') mqsInitIfApplicable();
+    if (typeof syncDeepLinkUrl === 'function') syncDeepLinkUrl();
     loadNextQuestion();
   }
 
@@ -28345,6 +28383,11 @@
      ========================================================================== */
   function handleUrlRoute() {
     if (typeof stopAllAudio === 'function') stopAllAudio();
+    const dlParams = typeof parseDeepLinkParameters === 'function' ? parseDeepLinkParameters() : null;
+    if (dlParams && (dlParams.has('sinif') || dlParams.has('ders') || dlParams.has('harf') || dlParams.has('oyun') || dlParams.has('grup'))) {
+      resolveDeepLinkRouteOnLoad();
+      return;
+    }
     const hash = (window.location.hash || '').toLowerCase();
     const path = (window.location.pathname || '').toLowerCase();
 
@@ -28824,6 +28867,7 @@
   }
 
   function init() {
+    isApplyingDeepLink = true;
     StorageManager.loadAll();
     loadTeacherToolsState();
     initAllMascotComponents();
@@ -28868,7 +28912,27 @@
     window.addEventListener('orientationchange', enforceMobileGameMode);
 
     setupEventListeners();
+
+    // Üst Bar "📲 Paylaş (WhatsApp)" Butonlarını Bağla
+    ['btnHudShareWhatsApp', 'btnSubjectHeaderShareWA', 'btnGradeHeaderShareWA'].forEach(btnId => {
+      const btnEl = document.getElementById(btnId);
+      if (btnEl) {
+        btnEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          shareDeepLinkWhatsApp();
+        });
+      }
+    });
+
+    // URL'de Deep Link parametreleri (?sinif=...&oyun=... veya #sinif=...) varsa ana sayfada bekletmeden doğrudan ilgili ekranı/etkinliği aç
+    isApplyingDeepLink = false;
+    const openedViaDeepLink = resolveDeepLinkRouteOnLoad();
+    if (!openedViaDeepLink && typeof handleUrlRoute === 'function') {
+      handleUrlRoute();
+    }
+
     initHomeBackgroundMusic();
+
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
   }
 
@@ -29040,6 +29104,10 @@
           <button type="button" class="mqs-untimed-btn" id="btnMqsUntimed" title="Süreyi Kapat / Aç">
             ⏱️ Süresiz Mod
           </button>
+          <button type="button" class="mqs-share-wa-btn" id="btnMqsShareWA" title="Bu Yarışmayı WhatsApp'ta Paylaş">
+            <span class="wa-share-icon">📲</span>
+            <span>Paylaş</span>
+          </button>
         </div>
       </header>
 
@@ -29141,6 +29209,12 @@
       audio.playClick();
       mqsToggleUntimedMode();
     });
+    const mqsShareBtn = stage.querySelector('#btnMqsShareWA');
+    if (mqsShareBtn) {
+      addTapListener(mqsShareBtn, () => {
+        if (typeof shareDeepLinkWhatsApp === 'function') shareDeepLinkWhatsApp();
+      });
+    }
 
     addTapListener(stage.querySelector('#btnMqsJokerFifty'), () => {
       mqsUseJokerFifty();
@@ -29658,7 +29732,510 @@
   }
 
 
-  // DOM hazır olduğunda başlat
+
+  /* ==========================================================================
+     DEEP LINKING (DOĞRUDAN ETKİNLİK BAĞLANTISI), DİNAMİK URL & WHATSAPP PAYLAŞIM MOTORU
+     ========================================================================== */
+  let isApplyingDeepLink = false;
+
+  const SUBJECT_ID_TO_SLUG = {
+    firstreading: 'okuma',
+    math: 'matematik',
+    turkish: 'turkce',
+    lifescience: 'hayat-bilgisi',
+    science: 'fen',
+    social: 'sosyal',
+    english: 'ingilizce',
+    brain: 'zeka',
+    grade1_grand_duel: 'karma',
+    grade2_grand_duel: 'karma',
+    kinder_shapes_size: 'sekiller',
+    kinder_math: 'sayma',
+    kinder_nature: 'doga',
+    kinder_brain: 'dikkat'
+  };
+
+  const SLUG_TO_SUBJECT_ID = {
+    'okuma': 'firstreading',
+    'ilkokuma': 'firstreading',
+    'ilk-okuma': 'firstreading',
+    'firstreading': 'firstreading',
+    'matematik': 'math',
+    'math': 'math',
+    'turkce': 'turkish',
+    'türkçe': 'turkish',
+    'turkish': 'turkish',
+    'hayat-bilgisi': 'lifescience',
+    'hayatbilgisi': 'lifescience',
+    'hayat': 'lifescience',
+    'lifescience': 'lifescience',
+    'fen': 'science',
+    'fen-bilimleri': 'science',
+    'science': 'science',
+    'sosyal': 'social',
+    'sosyal-bilgiler': 'social',
+    'social': 'social',
+    'ingilizce': 'english',
+    'english': 'english',
+    'zeka': 'brain',
+    'brain': 'brain',
+    'sekiller': 'kinder_shapes_size',
+    'sayma': 'kinder_math',
+    'doga': 'kinder_nature',
+    'dikkat': 'kinder_brain'
+  };
+
+  const MAARIF_GAME_TO_SLUG = {
+    maarif_sound_find: 'sesi-hisset',
+    maarif_letter_basket: 'sepet',
+    maarif_balloon_pop: 'balon',
+    maarif_phoneme_pop: 'balon',
+    maarif_case_match: 'eslestir',
+    maarif_missing_letter: 'eksik-harf',
+    maarif_flash_word: 'simsek-kelime',
+    maarif_word_train: 'tren',
+    prep_lines: 'cizgi',
+    prep_oddone: 'gorsel-algi',
+    prep_sounds: 'ses-eslestir'
+  };
+
+  const SLUG_TO_MAARIF_GAME = {
+    'sesi-hisset': 'maarif_sound_find',
+    'ses': 'maarif_sound_find',
+    'gorsel': 'maarif_sound_find',
+    'sepet': 'maarif_letter_basket',
+    'harf-sepeti': 'maarif_letter_basket',
+    'balon': 'maarif_balloon_pop',
+    'eslestir': 'maarif_case_match',
+    'harf-eslestir': 'maarif_case_match',
+    'eksik-harf': 'maarif_missing_letter',
+    'eksik': 'maarif_missing_letter',
+    'simsek-kelime': 'maarif_flash_word',
+    'simsek': 'maarif_flash_word',
+    'hizli-okuma': 'maarif_flash_word',
+    'tren': 'maarif_word_train',
+    'hece-treni': 'maarif_word_train',
+    'kelime-treni': 'maarif_word_train',
+    'cizgi': 'prep_lines',
+    'gorsel-algi': 'prep_oddone',
+    'ses-eslestir': 'prep_sounds'
+  };
+
+  const GRADE34_UNIT_GAME_MAP = {
+    3: {
+      math: {
+        '1': 'math_unit1_3', '2': 'math_unit2_3', '3': 'math_unit3_3',
+        '4': 'math_unit4_3', '5': 'math_unit5_3', '6': 'math_unit6_3',
+        'karma': 'math_3_karma'
+      },
+      turkish: {
+        '1': 'turkish_theme1_3', '2': 'turkish_theme2_3', '3': 'turkish_theme3_3',
+        '4': 'turkish_theme4_3', '5': 'turkish_theme5_3', '6': 'turkish_theme6_3',
+        'karma': 'turkish_3_karma'
+      },
+      lifescience: {
+        '1': 'lifescience_school_professions_3', '2': 'lifescience_home_budget_3',
+        '3': 'lifescience_health_consumer_3', '4': 'lifescience_safety_traffic_3',
+        '5': 'lifescience_country_leaders_3', '6': 'lifescience_nature_directions_3',
+        'karma': 'lifescience_3_karma'
+      },
+      science: {
+        '1': 'science_planet_layers_3', '2': 'science_senses_3',
+        '3': 'science_force_motion_3', '4': 'science_matter_states_3',
+        '5': 'science_light_sound_3', '6': 'science_living_environment_3',
+        '7': 'science_electricity_safety_3', 'karma': 'science_3_karma'
+      }
+    },
+    4: {
+      math: {
+        '1': 'math_unit1_4', '2': 'math_unit2_4', '3': 'math_unit3_4',
+        '4': 'math_unit4_4', '5': 'math_unit5_4', '6': 'math_unit6_4',
+        'karma': 'math_4_karma'
+      },
+      turkish: {
+        '1': 'turkish_module1_4', '2': 'turkish_module2_4', '3': 'turkish_module3_4',
+        '4': 'turkish_module4_4', '5': 'turkish_module5_4',
+        'karma': 'turkish_4_karma'
+      },
+      science: {
+        '1': 'science_unit1_4', '2': 'science_unit2_4', '3': 'science_unit3_4',
+        '4': 'science_unit4_4', '5': 'science_unit5_4', '6': 'science_unit6_4',
+        '7': 'science_unit7_4', 'karma': 'science_4_karma'
+      },
+      social: {
+        '1': 'social_unit1_4', '2': 'social_unit2_4', '3': 'social_unit3_4',
+        '4': 'social_unit4_4', '5': 'social_unit5_4', '6': 'social_unit6_4',
+        '7': 'social_unit7_4', 'karma': 'social_4_karma'
+      }
+    }
+  };
+
+  function getUnitAndSubjectForGameId(grade, gameId) {
+    const g = parseInt(grade, 10);
+    const mapForGrade = GRADE34_UNIT_GAME_MAP[g];
+    if (mapForGrade && gameId) {
+      for (const [subjId, unitsObj] of Object.entries(mapForGrade)) {
+        for (const [unitKey, mappedGameId] of Object.entries(unitsObj)) {
+          if (mappedGameId === gameId) {
+            return { subjectId: subjId, unitKey: unitKey, isQuiz: true };
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  function buildDeepLinkQueryParams(overrides = {}) {
+    const params = new URLSearchParams();
+    const view = overrides.view || state.currentView;
+    const section = overrides.section || state.currentSection;
+    const grade = overrides.grade !== undefined ? overrides.grade : state.currentGrade;
+    const subjectId = overrides.subjectId !== undefined ? overrides.subjectId : state.currentSubject;
+    const gameId = overrides.gameId !== undefined ? overrides.gameId : (view === 'duel' ? state.currentGameType : null);
+
+    // Ana sayfadaysa ve özel bir oyun zorlanmadıysa boş parametre döndür
+    if (view === 'lobby' && section === 'home' && !overrides.gameId && !overrides.forceGrade) {
+      return '';
+    }
+
+    params.set('sinif', String(grade));
+
+    // 1. Sınıf İlk Okuma Yazma (Maarif) durumu
+    const isMaarifGame = gameId && (MAARIF_GAME_TO_SLUG[gameId] || String(gameId).startsWith('maarif_') || String(gameId).startsWith('prep_'));
+    if (parseInt(grade, 10) === 1 && (subjectId === 'firstreading' || isMaarifGame)) {
+      params.set('ders', 'okuma');
+      const grpId = state.maarifGroup || 'g1';
+      if (grpId === 'g0_prep' || (gameId && String(gameId).startsWith('prep_'))) {
+        params.set('grup', 'hazirlik');
+      } else {
+        const grpNum = grpId.replace(/^g/i, '') || '1';
+        params.set('grup', grpNum);
+        const activeLetter = (state.activeMaarifLetter || 'a').toLocaleUpperCase('tr-TR');
+        params.set('harf', activeLetter);
+      }
+      if (gameId) {
+        params.set('oyun', MAARIF_GAME_TO_SLUG[gameId] || gameId);
+      }
+      return params.toString();
+    }
+
+    // 3. ve 4. Sınıf Ünite Quiz durumu
+    const g34Info = gameId ? getUnitAndSubjectForGameId(grade, gameId) : null;
+    if (g34Info) {
+      params.set('ders', SUBJECT_ID_TO_SLUG[g34Info.subjectId] || g34Info.subjectId);
+      params.set('unite', g34Info.unitKey);
+      params.set('oyun', 'quiz');
+      return params.toString();
+    }
+
+    // Diğer dersler / üniteler / oyunlar
+    if (subjectId) {
+      params.set('ders', SUBJECT_ID_TO_SLUG[subjectId] || subjectId);
+    }
+
+    if (state.currentCategory && state.currentCategory !== 'all' && !gameId) {
+      const catNumMatch = state.currentCategory.match(/(\d+)$/);
+      params.set('unite', catNumMatch ? catNumMatch[1] : state.currentCategory);
+    }
+
+    if (gameId) {
+      params.set('oyun', MAARIF_GAME_TO_SLUG[gameId] || gameId);
+    }
+
+    return params.toString();
+  }
+
+  function syncDeepLinkUrl(overrides = {}) {
+    if (isApplyingDeepLink) return;
+    try {
+      const currentHash = window.location.hash || '';
+      if (currentHash === '#admin-panel' || currentHash === '#admin-raporlar') return;
+
+      const queryString = buildDeepLinkQueryParams(overrides);
+      const newUrl = queryString
+        ? `${window.location.pathname}?${queryString}`
+        : window.location.pathname;
+
+      const currentFull = window.location.pathname + window.location.search;
+      if (currentFull !== newUrl) {
+        window.history.replaceState({ deepLink: queryString }, '', newUrl);
+      }
+    } catch (e) {}
+  }
+  window.syncDeepLinkUrl = syncDeepLinkUrl;
+
+  function buildHumanReadableActivitySummary(overrides = {}) {
+    const grade = overrides.grade !== undefined ? parseInt(overrides.grade, 10) : parseInt(state.currentGrade, 10);
+    const gradeLabel = grade === 0 ? 'Anasınıfı' : `${grade}. Sınıf`;
+    const view = overrides.view || state.currentView;
+    const gameId = overrides.gameId || (view === 'duel' ? state.currentGameType : null);
+    const gameTitle = overrides.gameTitle || (gameId ? getCurrentGameTitle() : '');
+    const subjectId = overrides.subjectId || state.currentSubject;
+
+    const isMaarifGame = gameId && (MAARIF_GAME_TO_SLUG[gameId] || String(gameId).startsWith('maarif_') || String(gameId).startsWith('prep_'));
+    if (grade === 1 && (subjectId === 'firstreading' || isMaarifGame)) {
+      const grpId = state.maarifGroup || 'g1';
+      if (grpId === 'g0_prep' || (gameId && String(gameId).startsWith('prep_'))) {
+        if (gameId && gameTitle) {
+          const cleanTitle = gameTitle.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim();
+          return `${gradeLabel} - Okuma Yazmaya Hazırlık - ${cleanTitle}`;
+        }
+        return `${gradeLabel} - Okuma Yazmaya Hazırlık Etkinlikleri`;
+      }
+      const letterUpper = (state.activeMaarifLetter || 'a').toLocaleUpperCase('tr-TR');
+      if (gameId) {
+        let titleForMsg = gameTitle;
+        if (!overrides.gameTitle) {
+          const maarifTitles = {
+            maarif_sound_find: 'Sesi Hisset (Görsel Seç)',
+            maarif_letter_basket: 'Akıllı Harf Sepeti',
+            maarif_balloon_pop: 'Uçan Balon Avcısı',
+            maarif_phoneme_pop: 'Uçan Balon Avcısı',
+            maarif_case_match: 'Büyük - Küçük Harf Eşleştir',
+            maarif_missing_letter: 'Eksik Harfi Tamamla',
+            maarif_flash_word: 'Şimşek Kelime (Hızlı Okuma)',
+            maarif_word_train: 'Hece ve Kelime Treni'
+          };
+          titleForMsg = maarifTitles[gameId] || gameTitle;
+        }
+        const cleanTitle = String(titleForMsg || 'Etkinlik').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim();
+        return `${gradeLabel} - ${letterUpper} Sesi - ${cleanTitle}`;
+      }
+      return `${gradeLabel} - ${letterUpper} Sesi Okuma Yazma Etkinlikleri`;
+    }
+
+    const subjects = GRADE_SUBJECTS_CONFIG[grade] || GRADE_SUBJECTS_CONFIG[1] || [];
+    const subjObj = subjects.find(s => s.id === subjectId);
+    const subjName = subjObj ? subjObj.name.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim() : '';
+
+    if (gameId) {
+      let resolvedTitle = overrides.gameTitle || '';
+      if (!resolvedTitle && subjObj && Array.isArray(subjObj.games)) {
+        const gm = subjObj.games.find(x => x.id === gameId);
+        if (gm) resolvedTitle = gm.title;
+      }
+      if (!resolvedTitle) resolvedTitle = getCurrentGameTitle();
+      const cleanTitle = String(resolvedTitle || 'Etkinlik').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim();
+      return subjName ? `${gradeLabel} - ${subjName} - ${cleanTitle}` : `${gradeLabel} - ${cleanTitle}`;
+    }
+
+    if (subjName) {
+      return `${gradeLabel} - ${subjName} Etkinlikleri`;
+    }
+
+    return `${gradeLabel} Eğitici Ders & Oyun Etkinlikleri`;
+  }
+
+  function getProductionOrCurrentBaseUrl() {
+    try {
+      const host = (window.location.hostname || '').toLowerCase();
+      if (host && host !== 'localhost' && host !== '127.0.0.1' && !host.startsWith('192.168.')) {
+        return window.location.origin + window.location.pathname;
+      }
+    } catch (e) {}
+    return 'https://dersebimola.com/';
+  }
+
+  function shareDeepLinkWhatsApp(overrides = {}) {
+    if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+
+    const queryString = buildDeepLinkQueryParams(Object.assign({ forceGrade: true }, overrides));
+    const baseUrl = getProductionOrCurrentBaseUrl();
+    const fullDeepLink = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+    const summaryLabel = buildHumanReadableActivitySummary(overrides);
+    const shareMessage = `🎯 Derse Bi' Mola'da bugünkü etkinliğimiz: [${summaryLabel}]. Hemen tıklayıp oyna: ${fullDeepLink}`;
+
+    // Linki ve mesajı panoya kopyala + Toast bildirimi göster
+    copyTextToClipboard(fullDeepLink).then(() => {
+      showShareToast('✅ Etkinlik bağlantısı kopyalandı! WhatsApp grubuna yapıştırabilirsiniz.');
+    }).catch(() => {
+      showShareToast('✅ Etkinlik bağlantısı hazır! WhatsApp grubunda paylaşabilirsiniz.');
+    });
+
+    // Telefonda navigator.share destekleniyorsa yerel paylaşım menüsünü aç, değilse doğrudan WhatsApp'ı tetikle
+    const isMobileDevice = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '') && window.innerWidth <= 900;
+    if (isMobileDevice && typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      navigator.share({
+        title: `Derse Bi' Mola - ${summaryLabel}`,
+        text: shareMessage
+      }).catch((err) => {
+        // Kullanıcı iptal etmediyse ve hata oluştuysa WhatsApp linkine düş
+        if (err && err.name !== 'AbortError') {
+          const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
+          window.open(waUrl, '_blank', 'noopener,noreferrer');
+        }
+      });
+    } else {
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    }
+  }
+  window.shareDeepLinkWhatsApp = shareDeepLinkWhatsApp;
+
+  function parseDeepLinkParameters() {
+    const merged = new URLSearchParams();
+    try {
+      if (window.location.search && window.location.search.length > 1) {
+        const sp = new URLSearchParams(window.location.search);
+        sp.forEach((v, k) => merged.set(k.toLowerCase(), v));
+      }
+      const rawHash = (window.location.hash || '').replace(/^#\??/, '');
+      if (rawHash && rawHash.includes('=')) {
+        const hp = new URLSearchParams(rawHash);
+        hp.forEach((v, k) => {
+          if (!merged.has(k.toLowerCase())) merged.set(k.toLowerCase(), v);
+        });
+      }
+    } catch (e) {}
+    return merged;
+  }
+
+  function resolveDeepLinkRouteOnLoad() {
+    const params = parseDeepLinkParameters();
+    const rawSinif = params.get('sinif') || params.get('grade');
+    const rawDers = params.get('ders') || params.get('subject');
+    const rawGrup = params.get('grup') || params.get('group');
+    const rawHarf = params.get('harf') || params.get('letter');
+    const rawUnite = params.get('unite') || params.get('unit') || params.get('tema') || params.get('modul') || params.get('konu');
+    const rawOyun = params.get('oyun') || params.get('game') || params.get('etkinlik');
+
+    if (!rawSinif && !rawDers && !rawGrup && !rawHarf && !rawUnite && !rawOyun) {
+      return false;
+    }
+
+    isApplyingDeepLink = true;
+    try {
+      // Giriş ekranında/ana sayfada bekletme yapma! Açık modal varsa kapat.
+      if (DOM.modalAuth) DOM.modalAuth.classList.add('hide');
+
+      // Öğrenci henüz giriş yapmamışsa bile "Misafir / Bireysel Pratik" modunda anında aç
+      const isTeacherLoggedIn = !!(state.teacherSession && state.teacherSession.isLoggedIn);
+      if (!isTeacherLoggedIn || window.innerWidth <= 768) {
+        state.gameMode = 'solo';
+        updateGameModeUI();
+      }
+
+      // 1. Sınıf seviyesini belirle
+      let targetGrade = 1;
+      if (rawSinif !== null && rawSinif !== undefined && rawSinif !== '') {
+        const parsedG = parseInt(rawSinif, 10);
+        if (!isNaN(parsedG) && parsedG >= 0 && parsedG <= 4) {
+          targetGrade = parsedG;
+        }
+      } else if (rawGrup || rawHarf) {
+        targetGrade = 1;
+      }
+
+      interactionLockUntil = 0;
+      setGrade(targetGrade);
+
+      // 2. Dersi belirle
+      let targetSubjectId = null;
+      if (rawDers) {
+        const normDers = rawDers.toLocaleLowerCase('tr-TR').trim();
+        targetSubjectId = SLUG_TO_SUBJECT_ID[normDers] || normDers;
+      } else if (targetGrade === 1 && (rawGrup || rawHarf || (rawOyun && (SLUG_TO_MAARIF_GAME[rawOyun.toLocaleLowerCase('tr-TR')] || rawOyun.startsWith('maarif_') || rawOyun.startsWith('prep_'))))) {
+        targetSubjectId = 'firstreading';
+      }
+
+      // Eğer oyun doğrudan verilmiş ve ders belirtilmemişse, oyunun hangi derste olduğunu bul
+      if (!targetSubjectId && rawOyun) {
+        const subjectsForGrade = GRADE_SUBJECTS_CONFIG[targetGrade] || [];
+        for (const s of subjectsForGrade) {
+          if (s.games && s.games.some(gm => gm.id === rawOyun)) {
+            targetSubjectId = s.id;
+            break;
+          }
+        }
+      }
+
+      if (targetSubjectId) {
+        interactionLockUntil = 0;
+        selectSubject(targetSubjectId);
+      }
+
+      // 3. 1. Sınıf Harf Grubu ve Harf seçimi
+      if (targetGrade === 1 && (targetSubjectId === 'firstreading' || rawGrup || rawHarf)) {
+        if (rawGrup) {
+          const gNorm = rawGrup.toLocaleLowerCase('tr-TR').trim();
+          let grpId = 'g1';
+          if (gNorm === '0' || gNorm === 'hazirlik' || gNorm === 'hazırlık' || gNorm === 'g0_prep' || gNorm === 'prep') {
+            grpId = 'g0_prep';
+          } else if (/^[1-5]$/.test(gNorm)) {
+            grpId = 'g' + gNorm;
+          } else if (/^g[1-5]$/.test(gNorm)) {
+            grpId = gNorm;
+          }
+          selectMaarifGroup(grpId);
+        }
+
+        if (rawHarf) {
+          const letterLower = rawHarf.toLocaleLowerCase('tr-TR').trim();
+          // Harfin hangi grupta olduğunu bul ve o grubu da aktif et
+          if (MAARIF_2026_CONFIG && Array.isArray(MAARIF_2026_CONFIG.groups)) {
+            const matchingGrp = MAARIF_2026_CONFIG.groups.find(grp => Array.isArray(grp.letters) && grp.letters.includes(letterLower));
+            if (matchingGrp && state.maarifGroup !== matchingGrp.id) {
+              selectMaarifGroup(matchingGrp.id);
+            }
+          }
+          selectMaarifLetter(letterLower);
+        }
+      }
+
+      // 4. Ünite / Alt Kategori seçimi
+      if (rawUnite && targetSubjectId && targetSubjectId !== 'firstreading') {
+        const uNorm = rawUnite.toLocaleLowerCase('tr-TR').trim();
+        const subjects = GRADE_SUBJECTS_CONFIG[targetGrade] || [];
+        const subjObj = subjects.find(s => s.id === targetSubjectId);
+        if (subjObj && Array.isArray(subjObj.topics)) {
+          const matchedTopic = subjObj.topics.find(t =>
+            t.id === uNorm ||
+            t.id.endsWith('unit' + uNorm) ||
+            t.id.endsWith('theme' + uNorm) ||
+            t.id.endsWith('mod' + uNorm)
+          );
+          if (matchedTopic) {
+            state.currentCategory = matchedTopic.id;
+            renderSubcategories();
+            renderGameCards();
+          }
+        }
+      }
+
+      // 5. Oyun / Etkinlik parametresi varsa doğrudan oyun sahnesini aç!
+      if (rawOyun) {
+        const oyunNorm = rawOyun.toLocaleLowerCase('tr-TR').trim();
+        let resolvedGameId = null;
+
+        if (SLUG_TO_MAARIF_GAME[oyunNorm]) {
+          resolvedGameId = SLUG_TO_MAARIF_GAME[oyunNorm];
+        } else if ((oyunNorm === 'quiz' || oyunNorm === 'test' || oyunNorm === 'yarisma') && (targetGrade === 3 || targetGrade === 4)) {
+          const gMap = GRADE34_UNIT_GAME_MAP[targetGrade] && GRADE34_UNIT_GAME_MAP[targetGrade][targetSubjectId || 'math'];
+          const uKey = rawUnite ? rawUnite.toLocaleLowerCase('tr-TR').trim() : '1';
+          if (gMap) {
+            resolvedGameId = gMap[uKey] || gMap['1'];
+          }
+        } else if (GRADE34_UNIT_GAME_MAP[targetGrade] && GRADE34_UNIT_GAME_MAP[targetGrade][targetSubjectId] && GRADE34_UNIT_GAME_MAP[targetGrade][targetSubjectId][oyunNorm]) {
+          resolvedGameId = GRADE34_UNIT_GAME_MAP[targetGrade][targetSubjectId][oyunNorm];
+        } else {
+          resolvedGameId = rawOyun.trim();
+        }
+
+        if (resolvedGameId) {
+          interactionLockUntil = 0;
+          if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+          startDuel(resolvedGameId);
+        }
+      }
+    } finally {
+      isApplyingDeepLink = false;
+      syncDeepLinkUrl();
+    }
+    return true;
+  }
+
+
+    // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

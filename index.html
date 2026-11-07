@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.25">
+  <link rel="stylesheet" href="style.css?v=8.9.27">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -891,7 +891,13 @@
                 <h2 class="section-title" id="subjectsGradeTitle">Anasınıfı Dersleri</h2>
                 <p class="section-desc">Sınıf içi düello veya bireysel pratik başlatmak için bir ders seçin:</p>
               </div>
-              <span class="subjects-count-badge" id="subjectsCountBadge">4 Ders Mevcut</span>
+              <div class="header-right-share-group">
+                <button class="btn-header-share-wa" id="btnGradeHeaderShareWA" type="button" title="Bu Sınıfı WhatsApp'ta Paylaş" aria-label="Sınıfı WhatsApp'ta Paylaş">
+                  <span class="wa-share-icon" aria-hidden="true">📲</span>
+                  <span>Paylaş</span>
+                </button>
+                <span class="subjects-count-badge" id="subjectsCountBadge">4 Ders Mevcut</span>
+              </div>
             </div>
             <div class="subjects-grid" id="subjectsGrid">
               <!-- Sınıfa göre dinamik üretilen ders kartları (İlk Okuma, Matematik, Türkçe vb.) -->
@@ -943,7 +949,13 @@
             </button>
           </div>
 
-          <span class="games-count-badge" id="gamesCountBadge">1 Pratik Aktif</span>
+          <div class="header-right-share-group">
+            <button class="btn-header-share-wa" id="btnSubjectHeaderShareWA" type="button" title="Bu Ekranı / Harfi / Üniteyi WhatsApp'ta Paylaş" aria-label="WhatsApp'ta Paylaş">
+              <span class="wa-share-icon" aria-hidden="true">📲</span>
+              <span>Paylaş</span>
+            </button>
+            <span class="games-count-badge" id="gamesCountBadge">1 Pratik Aktif</span>
+          </div>
         </div>
 
         <!-- TÜRKİYE YÜZYILI MAARİF MODELİ (2026) SES GRUPLARI & HARF SEÇİM PANELİ -->
@@ -1500,6 +1512,10 @@
       </div>
 
       <div class="hud-actions">
+        <button class="hud-btn hud-share-whatsapp-btn" id="btnHudShareWhatsApp" type="button" title="Bu Etkinliği WhatsApp'ta Paylaş" aria-label="Etkinliği WhatsApp'ta Paylaş">
+          <span class="wa-share-icon" aria-hidden="true">📲</span>
+          <span>Paylaş</span>
+        </button>
         <button class="hud-btn hud-read-btn" id="btnHudReadQuestion" title="Soruyu Sesli Oku">
           <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -2937,6 +2953,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=8.9.26" defer></script>
+  <script src="app.js?v=8.9.27" defer></script>
 </body>
 </html>
