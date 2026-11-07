@@ -9724,6 +9724,7 @@
         options: options,
         correct: correct,
         explanation: explanation,
+        hint: qData.hint || null,
         category: qData.category || category,
         audioKey: qData.audioKey || null,
         englishWord: qData.englishWord || null,
@@ -10083,7 +10084,7 @@
 
       // Standart derslerde her 4. soruda bir derse uygun Doğru/Yanlış veya Dokun-Eşleştir interaktif molası
       const isStandardSubject = ['math', 'turkish', 'english', 'lifescience', 'science', 'social'].includes(gameType);
-      if (parseInt(grade, 10) > 1 && isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
+      if (parseInt(grade, 10) === 2 && isStandardSubject && state.questionNumber > 1 && (state.questionNumber % 4 === 0)) {
         let catFilter = gameType;
         if (gameType === 'social') catFilter = 'lifescience';
         if (parseInt(grade, 10) > 2 && Math.random() < 0.5) {
@@ -22570,6 +22571,7 @@
     }
     updateAnnouncerUI();
     changeMoliExpression('start');
+    if (typeof mqsInitIfApplicable === 'function') mqsInitIfApplicable();
     loadNextQuestion();
   }
 
@@ -22593,6 +22595,7 @@
 
     // 2) Bütün aktif zamanlayıcıları (clearTimeout, clearInterval) ve kilitleri temizle
     clearAllDuelTimers();
+    if (typeof mqsCleanup === 'function') mqsCleanup();
     clearAllLockouts();
     if (moliResetTimer) {
       clearTimeout(moliResetTimer);
@@ -22797,6 +22800,7 @@
 
     // Yeni soruyu üret
     state.currentQuestion = QuestionEngine.getNextQuestion(state.currentGrade, state.currentGameType);
+    if (typeof mqsIsActive === 'function' && mqsIsActive()) { mqsRenderCurrentQuestion(); return; }
     // Anasınıfı / 1. / 2. sınıf: klasik A-B-C-D testini şıksız etkileşimli motora dönüştür (Adapter)
     state.currentQuestion = adaptQuestionForKids(state.currentQuestion);
     [DOM.p1OptionsGrid, DOM.p2OptionsGrid].forEach(gr => { if (gr) gr.classList.toggle('kids-no-letters', isKidsGrade(state.currentGrade)); });
@@ -27789,6 +27793,685 @@
     if (QuestionEngine.grade3LifeScienceNatureDirectionsPool && extraLife.lifescience_nature_directions_3) QuestionEngine.grade3LifeScienceNatureDirectionsPool.push(...extraLife.lifescience_nature_directions_3);
   } catch (e) {
     console.warn("Could not append extra G3 sci/life questions:", e);
+  }
+
+  /* ==========================================================================
+     3. VE 4. SINIF "MOLİ QUIZ SHOW (JOKERLİ BİLGİ YARIŞMASI)" MOTORU
+     ========================================================================== */
+  var mqsState = {
+    active: false,
+    totalQuestions: 10,
+    score: 0,
+    durationSec: 30,
+    remainingMs: 30000,
+    untimed: false,
+    paused: false,
+    timerId: null,
+    lastTick: 0,
+    jokers: {
+      fifty: false,
+      askClass: false,
+      moliHint: false
+    }
+  };
+
+  function mqsIsActive() {
+    const g = parseInt(state.currentGrade, 10);
+    if (g !== 3 && g !== 4) return false;
+    if (state.currentSubject === 'brain') return false;
+    const nonQuizTypes = ['reflex', 'memory', 'matching', 'shadow_match', 'oddone', 'stroop', 'true_false', 'color_balloon'];
+    if (nonQuizTypes.includes(state.currentGameType)) return false;
+    return true;
+  }
+
+  function mqsEnsureStageDOM() {
+    let stage = document.getElementById('moliQuizShowStage');
+    if (stage) return stage;
+    if (!DOM.viewDuel) return null;
+
+    stage = document.createElement('div');
+    stage.id = 'moliQuizShowStage';
+    stage.className = 'mqs-stage hide';
+    stage.innerHTML = `
+      <!-- 1) ÜST BAR: Çıkış, Soru Sayacı (1/10), Puan, 30sn Geri Sayım Çubuğu ve Süresiz Mod -->
+      <header class="mqs-topbar">
+        <div class="mqs-topbar-left">
+          <button type="button" class="mqs-exit-btn" id="btnMqsExit" title="Ünitelere Dön">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+            <span>Lobiye Dön</span>
+          </button>
+          <div class="mqs-badge mqs-counter-badge" id="mqsQuestionCounter">Soru: 1 / 10</div>
+          <div class="mqs-badge mqs-score-badge" id="mqsScoreBadge">🏆 Puan: 0</div>
+        </div>
+
+        <div class="mqs-timer-section" id="mqsTimerSection">
+          <div class="mqs-timer-bar-wrap">
+            <div class="mqs-timer-meta">
+              <span class="mqs-timer-icon">⏳</span>
+              <span class="mqs-timer-label" id="mqsTimerLabel">30 sn</span>
+            </div>
+            <div class="mqs-timer-track" id="mqsTimerTrack">
+              <div class="mqs-timer-fill" id="mqsTimerFill"></div>
+            </div>
+          </div>
+          <button type="button" class="mqs-untimed-btn" id="btnMqsUntimed" title="Süreyi Kapat / Aç">
+            ⏱️ Süresiz Mod
+          </button>
+        </div>
+      </header>
+
+      <!-- ANA YARIŞMA GÖVDESİ -->
+      <div class="mqs-body">
+        <!-- 2) 3 ÖZEL JOKER HAKKI (Soru kutusunun hemen üstünde yan yana) -->
+        <div class="mqs-jokers-bar" role="region" aria-label="Joker Hakları">
+          <button type="button" class="mqs-joker-btn joker-fifty" id="btnMqsJokerFifty">
+            <span class="joker-emoji">✂️</span>
+            <span class="joker-text">%50 Yarı Yarıya</span>
+          </button>
+          <button type="button" class="mqs-joker-btn joker-ask-class" id="btnMqsJokerAskClass">
+            <span class="joker-emoji">🙋‍♂️</span>
+            <span class="joker-text">Sınıfa Sor</span>
+          </button>
+          <button type="button" class="mqs-joker-btn joker-moli-hint" id="btnMqsJokerMoliHint">
+            <span class="joker-emoji">🤖</span>
+            <span class="joker-text">Moli'nin İpucu</span>
+          </button>
+        </div>
+
+        <!-- JOKER BİLDİRİM ALANLARI (Sınıfa Sor & Moli'nin İpucu) -->
+        <div class="mqs-ask-class-banner hide" id="mqsAskClassBanner">
+          <span class="ask-class-icon">🙋‍♂️</span>
+          <div class="ask-class-text">
+            <strong>Sınıf Oylaması!</strong> Arkadaşların ne düşünüyor, parmakları görelim!
+          </div>
+        </div>
+
+        <div class="mqs-moli-hint-card hide" id="mqsMoliHintCard">
+          <img src="assets/mascot/moli.webp" class="mqs-moli-avatar" alt="Moli" width="52" height="52">
+          <div class="mqs-moli-hint-bubble">
+            <div class="mqs-moli-hint-title">🤖 Moli'nin İpucu:</div>
+            <div class="mqs-moli-hint-body" id="mqsMoliHintText">İpucu yükleniyor...</div>
+          </div>
+        </div>
+
+        <!-- SORU KUTUSU (Ortada Büyük ve Okunaklı) -->
+        <div class="mqs-question-card" id="mqsQuestionCard">
+          <div class="mqs-question-top">
+            <span class="mqs-category-tag" id="mqsCategoryTag">🌟 Moli Quiz Show</span>
+            <button type="button" class="mqs-listen-btn" id="btnMqsListen" title="Soruyu Sesli Dinle">
+              <span>🔊</span>
+              <span>Dinle</span>
+            </button>
+          </div>
+          <div class="mqs-question-text" id="mqsQuestionText">Soru hazırlanıyor...</div>
+        </div>
+
+        <!-- A, B, C, D ŞIKLARI (2x2 Grid, Mobilde Alt Alta, 3D Basılabilir Butonlar) -->
+        <div class="mqs-options-grid" id="mqsOptionsGrid">
+          <button type="button" class="mqs-option-btn" data-mqs-index="0">
+            <span class="mqs-opt-letter">A</span>
+            <span class="mqs-opt-text"></span>
+          </button>
+          <button type="button" class="mqs-option-btn" data-mqs-index="1">
+            <span class="mqs-opt-letter">B</span>
+            <span class="mqs-opt-text"></span>
+          </button>
+          <button type="button" class="mqs-option-btn" data-mqs-index="2">
+            <span class="mqs-opt-letter">C</span>
+            <span class="mqs-opt-text"></span>
+          </button>
+          <button type="button" class="mqs-option-btn" data-mqs-index="3">
+            <span class="mqs-opt-letter">D</span>
+            <span class="mqs-opt-text"></span>
+          </button>
+        </div>
+
+        <!-- 3) YANLIŞ CEVAPTA "💡 MOLİ'NİN ÇÖZÜM NOTU" KUTUSU -->
+        <div class="mqs-solution-box hide" id="mqsSolutionBox">
+          <div class="mqs-solution-header">
+            <img src="assets/mascot/moli.webp" class="mqs-solution-moli" alt="Moli" width="54" height="54">
+            <div class="mqs-solution-titles">
+              <div class="mqs-solution-badge">💡 Moli'nin Çözüm Notu</div>
+              <div class="mqs-solution-correct-line" id="mqsSolutionCorrectLine">Doğru Cevap: ...</div>
+            </div>
+          </div>
+          <div class="mqs-solution-explanation" id="mqsSolutionExplanation"></div>
+          <button type="button" class="mqs-next-question-btn" id="btnMqsNextAfterWrong">
+            Anladım, Sıradaki Soru ➡️
+          </button>
+        </div>
+      </div>
+    `;
+
+    DOM.viewDuel.appendChild(stage);
+
+    addTapListener(stage.querySelector('#btnMqsExit'), () => {
+      returnToLobby();
+    });
+
+    addTapListener(stage.querySelector('#btnMqsListen'), () => {
+      audio.playClick();
+      readCurrentQuestion();
+    });
+
+    addTapListener(stage.querySelector('#btnMqsUntimed'), () => {
+      audio.playClick();
+      mqsToggleUntimedMode();
+    });
+
+    addTapListener(stage.querySelector('#btnMqsJokerFifty'), () => {
+      mqsUseJokerFifty();
+    });
+
+    addTapListener(stage.querySelector('#btnMqsJokerAskClass'), () => {
+      mqsUseJokerAskClass();
+    });
+
+    addTapListener(stage.querySelector('#btnMqsJokerMoliHint'), () => {
+      mqsUseJokerMoliHint();
+    });
+
+    stage.querySelectorAll('.mqs-option-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const idx = parseInt(btn.getAttribute('data-mqs-index'), 10);
+        mqsHandleOptionClick(idx, btn);
+      });
+    });
+
+    addTapListener(stage.querySelector('#btnMqsNextAfterWrong'), () => {
+      audio.playClick();
+      mqsAdvanceToNextQuestion();
+    });
+
+    return stage;
+  }
+
+  function mqsInitIfApplicable() {
+    const stage = mqsEnsureStageDOM();
+    if (!mqsIsActive()) {
+      mqsCleanup();
+      return;
+    }
+    mqsState.active = true;
+    mqsState.totalQuestions = 10;
+    mqsState.score = 0;
+    mqsState.untimed = false;
+    mqsState.paused = false;
+    mqsState.jokers = {
+      fifty: false,
+      askClass: false,
+      moliHint: false
+    };
+    state.targetScore = 10;
+
+    if (DOM.viewDuel) DOM.viewDuel.classList.add('mqs-mode-active');
+    if (stage) {
+      stage.classList.remove('hide');
+      const untimedBtn = stage.querySelector('#btnMqsUntimed');
+      if (untimedBtn) {
+        untimedBtn.classList.remove('is-active');
+        untimedBtn.innerHTML = '⏱️ Süresiz Mod';
+      }
+      mqsUpdateJokerButtonsUI();
+    }
+  }
+
+  function mqsCleanup() {
+    mqsStopTimer();
+    mqsState.active = false;
+    if (DOM.viewDuel) DOM.viewDuel.classList.remove('mqs-mode-active');
+    const stage = document.getElementById('moliQuizShowStage');
+    if (stage) stage.classList.add('hide');
+  }
+
+  function mqsUpdateJokerButtonsUI() {
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+    const b50 = stage.querySelector('#btnMqsJokerFifty');
+    const bAsk = stage.querySelector('#btnMqsJokerAskClass');
+    const bHint = stage.querySelector('#btnMqsJokerMoliHint');
+
+    if (b50) {
+      b50.disabled = !!mqsState.jokers.fifty;
+      b50.classList.toggle('is-used', !!mqsState.jokers.fifty);
+    }
+    if (bAsk) {
+      bAsk.disabled = !!mqsState.jokers.askClass;
+      bAsk.classList.toggle('is-used', !!mqsState.jokers.askClass);
+    }
+    if (bHint) {
+      bHint.disabled = !!mqsState.jokers.moliHint;
+      bHint.classList.toggle('is-used', !!mqsState.jokers.moliHint);
+    }
+  }
+
+  function mqsEnsureFourOptions(q) {
+    if (!q) return q;
+    let opts = Array.isArray(q.options) ? [...q.options] : [];
+    const correct = q.correct;
+    if (opts.length >= 4) {
+      q.options = opts.slice(0, 4);
+      if (!q.options.includes(correct)) {
+        q.options[0] = correct;
+        q.options = QuestionEngine.fisherYatesShuffle(q.options);
+      }
+      return q;
+    }
+
+    const existingSet = new Set(opts.map(x => String(x).trim()));
+    let extraDistractor = null;
+
+    const numMatch = String(correct).match(/^([+-]?\d+(?:[.,]\d+)?)(\s*.*)$/);
+    if (numMatch) {
+      const baseVal = parseFloat(numMatch[1].replace(',', '.'));
+      const suffix = numMatch[2] || '';
+      if (!isNaN(baseVal)) {
+        const deltas = [2, -2, 5, -5, 10, -10, 1, 3, 4, 12];
+        for (const d of deltas) {
+          const candidateVal = baseVal + d;
+          if (candidateVal >= 0) {
+            const formatted = (numMatch[1].includes(',') ? String(candidateVal).replace('.', ',') : String(candidateVal)) + suffix;
+            if (!existingSet.has(formatted.trim())) {
+              extraDistractor = formatted;
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    if (!extraDistractor) {
+      const candidatePools = [
+        QuestionEngine.grade3TurkishTheme1Pool,
+        QuestionEngine.grade3TurkishTheme2Pool,
+        QuestionEngine.grade3SciencePlanetLayersPool,
+        QuestionEngine.grade3LifeScienceSchoolProfessionsPool,
+        QuestionEngine.grade4TurkishWordMeaningPool,
+        QuestionEngine.grade4ScienceCrustMovementsPool,
+        QuestionEngine.grade4SocialIndividualSocietyPool
+      ].filter(Array.isArray);
+
+      const flatDistractors = [];
+      candidatePools.forEach(pool => {
+        pool.forEach(item => {
+          if (item && Array.isArray(item.d)) {
+            item.d.forEach(dist => {
+              if (dist && !existingSet.has(String(dist).trim())) {
+                flatDistractors.push(dist);
+              }
+            });
+          }
+        });
+      });
+
+      if (flatDistractors.length > 0) {
+        extraDistractor = flatDistractors[Math.floor(Math.random() * flatDistractors.length)];
+      } else {
+        extraDistractor = 'Yukarıdakilerin hiçbiri';
+      }
+    }
+
+    opts.push(extraDistractor);
+    q.options = QuestionEngine.fisherYatesShuffle(opts);
+    return q;
+  }
+
+  function mqsBuildPedagogicalHint(q) {
+    if (!q) return 'Sorudaki anahtar kelimelere dikkat ederek şıkları tek tek eleyebilirsin!';
+    if (q.hint && String(q.hint).trim()) return String(q.hint).trim();
+
+    const rawExp = String(q.explanation || '').trim();
+    const rawCorrect = String(q.correct || '').replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim();
+
+    if (rawExp && rawExp.length > 12) {
+      let masked = rawExp;
+      if (rawCorrect && rawCorrect.length >= 2) {
+        const escaped = rawCorrect.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        masked = masked.replace(new RegExp(escaped, 'gi'), '...');
+      }
+      if (masked && masked !== '...') {
+        return `İpucu: ${masked}`;
+      }
+    }
+
+    const cat = String(q.category || '').toLowerCase();
+    if (cat.includes('matematik') || cat.includes('ünite') || cat.includes('işlem') || cat.includes('kesir') || cat.includes('sayı')) {
+      return 'Verilen sayıları ve işlem sırasını dikkatlice kontrol et; birimlere ve basamak değerlerine odaklan!';
+    }
+    if (cat.includes('fen') || cat.includes('dünya') || cat.includes('madde') || cat.includes('kuvvet')) {
+      return 'Günlük hayattaki gözlemlerini ve doğadaki temel fen kurallarını düşünerek mantıksız şıkları ele!';
+    }
+    if (cat.includes('türkçe') || cat.includes('tema') || cat.includes('anlam') || cat.includes('yazım')) {
+      return 'Cümlenin tamamını okuyup kelimenin cümleye kattığı anlama ve yazım kurallarına dikkat et!';
+    }
+    return 'Sorunun kökündeki anahtar ifadeye odaklan ve çeldirici şıkları eleyerek doğru cevaba ulaş!';
+  }
+
+  function mqsStartTimer() {
+    mqsStopTimer();
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+    const fill = stage.querySelector('#mqsTimerFill');
+    const label = stage.querySelector('#mqsTimerLabel');
+    const track = stage.querySelector('#mqsTimerTrack');
+
+    if (mqsState.untimed) {
+      if (fill) {
+        fill.style.width = '100%';
+        fill.classList.remove('is-warning', 'is-danger');
+      }
+      if (label) label.textContent = '∞ Süresiz';
+      if (track) track.classList.add('is-untimed');
+      return;
+    }
+
+    if (track) track.classList.remove('is-untimed');
+    mqsState.lastTick = performance.now();
+
+    mqsState.timerId = setInterval(() => {
+      if (!mqsState.active || mqsState.paused || mqsState.untimed || state.isQuestionAnswered || state.currentView !== 'duel') {
+        mqsState.lastTick = performance.now();
+        return;
+      }
+      const now = performance.now();
+      const delta = now - mqsState.lastTick;
+      mqsState.lastTick = now;
+      mqsState.remainingMs = Math.max(0, mqsState.remainingMs - delta);
+
+      const pct = (mqsState.remainingMs / (mqsState.durationSec * 1000)) * 100;
+      const secLeft = Math.ceil(mqsState.remainingMs / 1000);
+
+      if (fill) {
+        fill.style.width = `${pct}%`;
+        fill.classList.toggle('is-warning', secLeft <= 15 && secLeft > 8);
+        fill.classList.toggle('is-danger', secLeft <= 8);
+      }
+      if (label) {
+        label.textContent = `${secLeft} sn`;
+      }
+
+      if (mqsState.remainingMs <= 0) {
+        mqsHandleTimeout();
+      }
+    }, 100);
+  }
+
+  function mqsStopTimer() {
+    if (mqsState.timerId) {
+      clearInterval(mqsState.timerId);
+      mqsState.timerId = null;
+    }
+  }
+
+  function mqsPauseTimer() {
+    mqsState.paused = true;
+    const stage = document.getElementById('moliQuizShowStage');
+    if (stage) {
+      const label = stage.querySelector('#mqsTimerLabel');
+      if (label && !mqsState.untimed) {
+        const secLeft = Math.ceil(mqsState.remainingMs / 1000);
+        label.textContent = `⏸️ ${secLeft} sn (Durdu)`;
+      }
+    }
+  }
+
+  function mqsToggleUntimedMode() {
+    mqsState.untimed = !mqsState.untimed;
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+    const btn = stage.querySelector('#btnMqsUntimed');
+    if (btn) {
+      btn.classList.toggle('is-active', mqsState.untimed);
+      btn.innerHTML = mqsState.untimed ? '⏱️ Süresiz Mod: Açık' : '⏱️ Süresiz Mod';
+    }
+    if (mqsState.untimed) {
+      mqsStartTimer();
+    } else {
+      mqsState.paused = false;
+      mqsStartTimer();
+    }
+  }
+
+  function mqsRenderCurrentQuestion() {
+    const stage = mqsEnsureStageDOM();
+    if (!stage || !state.currentQuestion) return;
+
+    if (DOM.viewDuel && !DOM.viewDuel.classList.contains('mqs-mode-active')) {
+      mqsInitIfApplicable();
+    }
+
+    state.currentQuestion = mqsEnsureFourOptions(state.currentQuestion);
+    state.isQuestionAnswered = false;
+    mqsState.paused = false;
+    mqsState.remainingMs = mqsState.durationSec * 1000;
+
+    const counterEl = stage.querySelector('#mqsQuestionCounter');
+    const scoreEl = stage.querySelector('#mqsScoreBadge');
+    if (counterEl) counterEl.textContent = `Soru: ${state.questionNumber} / ${mqsState.totalQuestions}`;
+    if (scoreEl) scoreEl.textContent = `🏆 Puan: ${mqsState.score}`;
+
+    const askBanner = stage.querySelector('#mqsAskClassBanner');
+    const hintCard = stage.querySelector('#mqsMoliHintCard');
+    const solBox = stage.querySelector('#mqsSolutionBox');
+    if (askBanner) askBanner.classList.add('hide');
+    if (hintCard) hintCard.classList.add('hide');
+    if (solBox) solBox.classList.add('hide');
+
+    mqsUpdateJokerButtonsUI();
+
+    const catEl = stage.querySelector('#mqsCategoryTag');
+    const qTextEl = stage.querySelector('#mqsQuestionText');
+    if (catEl) catEl.innerHTML = replaceEmojisWith3D(state.currentQuestion.category || '🌟 Moli Quiz Show', 'chip-3d-icon');
+    if (qTextEl) qTextEl.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
+
+    const letters = ['A', 'B', 'C', 'D'];
+    const opts = state.currentQuestion.options || [];
+    const optBtns = stage.querySelectorAll('.mqs-option-btn');
+    optBtns.forEach((btn, idx) => {
+      btn.className = 'mqs-option-btn';
+      btn.disabled = false;
+      const letterSpan = btn.querySelector('.mqs-opt-letter');
+      const textSpan = btn.querySelector('.mqs-opt-text');
+      if (letterSpan) letterSpan.textContent = letters[idx] || '';
+      if (textSpan) textSpan.innerHTML = replaceEmojisWith3D(opts[idx] !== undefined ? String(opts[idx]) : '', 'opt-3d-icon');
+    });
+
+    mqsStartTimer();
+
+    if (state.autoReadQuestion && state.soundEnabled) {
+      setDuelTimeout(() => {
+        if (state.currentView === 'duel' && !state.isQuestionAnswered) {
+          readCurrentQuestion();
+        }
+      }, 450);
+    }
+  }
+
+  function mqsUseJokerFifty() {
+    if (state.isQuestionAnswered || mqsState.jokers.fifty || !state.currentQuestion) return;
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+
+    audio.playClick();
+    mqsState.jokers.fifty = true;
+    mqsUpdateJokerButtonsUI();
+
+    const opts = state.currentQuestion.options || [];
+    const correct = state.currentQuestion.correct;
+    const wrongIndices = [];
+    opts.forEach((opt, i) => {
+      if (opt !== correct) wrongIndices.push(i);
+    });
+
+    const shuffledWrong = QuestionEngine.fisherYatesShuffle(wrongIndices);
+    const toEliminate = shuffledWrong.slice(0, 2);
+    const optBtns = stage.querySelectorAll('.mqs-option-btn');
+    toEliminate.forEach(idx => {
+      if (optBtns[idx]) {
+        optBtns[idx].classList.add('is-eliminated');
+        optBtns[idx].disabled = true;
+      }
+    });
+  }
+
+  function mqsUseJokerAskClass() {
+    if (state.isQuestionAnswered || mqsState.jokers.askClass || !state.currentQuestion) return;
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+
+    audio.playClick();
+    mqsState.jokers.askClass = true;
+    mqsUpdateJokerButtonsUI();
+
+    mqsPauseTimer();
+    const askBanner = stage.querySelector('#mqsAskClassBanner');
+    if (askBanner) {
+      askBanner.classList.remove('hide');
+    }
+  }
+
+  function mqsUseJokerMoliHint() {
+    if (state.isQuestionAnswered || mqsState.jokers.moliHint || !state.currentQuestion) return;
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+
+    audio.playClick();
+    mqsState.jokers.moliHint = true;
+    mqsUpdateJokerButtonsUI();
+
+    const hintCard = stage.querySelector('#mqsMoliHintCard');
+    const hintText = stage.querySelector('#mqsMoliHintText');
+    if (hintText) {
+      hintText.innerHTML = replaceEmojisWith3D(mqsBuildPedagogicalHint(state.currentQuestion), 'inline-3d-icon');
+    }
+    if (hintCard) {
+      hintCard.classList.remove('hide');
+    }
+  }
+
+  function mqsHandleOptionClick(optionIndex, clickedBtn) {
+    if (state.isQuestionAnswered || !state.currentQuestion) return;
+    if (clickedBtn && clickedBtn.disabled) return;
+
+    state.isQuestionAnswered = true;
+    mqsStopTimer();
+    audio.stopQuestionAudio();
+
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+
+    const opts = state.currentQuestion.options || [];
+    const chosenText = opts[optionIndex];
+    const correctText = state.currentQuestion.correct;
+    const isCorrect = (chosenText === correctText);
+    const optBtns = stage.querySelectorAll('.mqs-option-btn');
+
+    optBtns.forEach(b => { b.disabled = true; });
+
+    if (isCorrect) {
+      if (clickedBtn) clickedBtn.classList.add('is-correct');
+      mqsState.score += 10;
+      state.player1.score += 1;
+      const scoreEl = stage.querySelector('#mqsScoreBadge');
+      if (scoreEl) scoreEl.textContent = `🏆 Puan: ${mqsState.score}`;
+
+      audio.playCorrect();
+      audio.playScorePoints();
+      changeMoliExpression('correct');
+
+      if (clickedBtn) {
+        const rect = clickedBtn.getBoundingClientRect();
+        particles.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'stars');
+        spawnFloatingScore(rect.left + rect.width / 2, rect.top + rect.height / 2, '+10 Puan', false);
+      }
+
+      setDuelTimeout(() => {
+        if (state.currentView === 'duel') {
+          mqsAdvanceToNextQuestion();
+        }
+      }, 1500);
+    } else {
+      if (clickedBtn) clickedBtn.classList.add('is-wrong');
+      opts.forEach((opt, idx) => {
+        if (opt === correctText && optBtns[idx]) {
+          optBtns[idx].classList.add('is-correct');
+        }
+      });
+
+      triggerScreenShake();
+      audio.playWrong();
+      changeMoliExpression('wrong');
+
+      mqsShowSolutionBox(false);
+    }
+  }
+
+  function mqsHandleTimeout() {
+    if (state.isQuestionAnswered || !state.currentQuestion) return;
+    state.isQuestionAnswered = true;
+    mqsStopTimer();
+    audio.stopQuestionAudio();
+
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+
+    const opts = state.currentQuestion.options || [];
+    const correctText = state.currentQuestion.correct;
+    const optBtns = stage.querySelectorAll('.mqs-option-btn');
+
+    optBtns.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (opts[idx] === correctText) {
+        btn.classList.add('is-correct');
+      }
+    });
+
+    audio.playWrong();
+    changeMoliExpression('wrong');
+    mqsShowSolutionBox(true);
+  }
+
+  function mqsShowSolutionBox(isTimeout) {
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage || !state.currentQuestion) return;
+
+    const solBox = stage.querySelector('#mqsSolutionBox');
+    const correctLine = stage.querySelector('#mqsSolutionCorrectLine');
+    const expEl = stage.querySelector('#mqsSolutionExplanation');
+
+    const letters = ['A', 'B', 'C', 'D'];
+    const opts = state.currentQuestion.options || [];
+    const correctIdx = opts.findIndex(o => o === state.currentQuestion.correct);
+    const letterPrefix = correctIdx >= 0 ? `${letters[correctIdx]}) ` : '';
+
+    if (correctLine) {
+      const prefixLabel = isTimeout ? '⏰ Süre Doldu! Doğru Cevap: ' : '✅ Doğru Cevap: ';
+      correctLine.innerHTML = `${prefixLabel}<strong>${letterPrefix}${replaceEmojisWith3D(String(state.currentQuestion.correct || ''), 'inline-3d-icon')}</strong>`;
+    }
+
+    if (expEl) {
+      const expText = state.currentQuestion.explanation || `Bu sorunun doğru yanıtı "${state.currentQuestion.correct}" seçeneğidir.`;
+      expEl.innerHTML = replaceEmojisWith3D(expText, 'inline-3d-icon');
+    }
+
+    if (solBox) {
+      solBox.classList.remove('hide');
+      setTimeout(() => {
+        try { solBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {}
+      }, 60);
+    }
+  }
+
+  function mqsAdvanceToNextQuestion() {
+    if (state.questionNumber >= mqsState.totalQuestions) {
+      triggerVictory({
+        name: `${state.player1.name || 'Şampiyon Öğrenci'} (${mqsState.score} Puan)`,
+        score: state.player1.score
+      });
+      return;
+    }
+    state.questionNumber += 1;
+    loadNextQuestion();
   }
 
 
