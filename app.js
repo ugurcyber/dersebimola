@@ -533,14 +533,84 @@
     try {
       const voices = window.speechSynthesis.getVoices() || [];
       if (!voices.length) return null;
-      return voices.find(v => {
+      const trVoices = voices.filter(v => {
         const l = (v.lang || '').toLowerCase();
         const n = (v.name || '').toLowerCase();
-        return l.includes('tr') || n.includes('turkish') || n.includes('türkçe') || n.includes('yelda') || n.includes('tolga');
-      }) || null;
+        return l.includes('tr') || n.includes('turkish') || n.includes('türkçe') || n.includes('yelda') || n.includes('emel') || n.includes('filiz') || n.includes('tolga');
+      });
+      if (!trVoices.length) return null;
+      // Yedek sistemde rastgele ses seçme; en sıcak ve doğal Türkçe sesleri önceliklendir
+      const warmKeywords = ['natural', 'online', 'yelda', 'emel', 'filiz', 'google türkçe', 'google turkce', 'google'];
+      for (const kw of warmKeywords) {
+        const found = trVoices.find(v => (v.name || '').toLowerCase().includes(kw));
+        if (found) return found;
+      }
+      return trVoices[0];
     } catch (e) {
       return null;
     }
+  }
+
+  // 3) 1. SINIF FONETİK VE SAMİMİ OKUMA SÖZLÜĞÜ (Doğal ve Sıcak Vurgular)
+  const GRADE1_PHONETIC_LETTER_MAP = {
+    'a': 'Aaa!', 'e': 'Eee!', 'ı': 'Iıı!', 'i': 'İii!', 'o': 'Ooo!', 'ö': 'Ööö!', 'u': 'Uuu!', 'ü': 'Üüü!',
+    'b': 'be!', 'c': 'ce!', 'ç': 'çe!', 'd': 'de!', 'f': 'fe!', 'g': 'ge!', 'ğ': 'yumuşak ge!',
+    'h': 'he!', 'j': 'je!', 'k': 'ke!', 'l': 'le!', 'm': 'me!', 'n': 'ne!', 'p': 'pe!',
+    'r': 're!', 's': 'se!', 'ş': 'şe!', 't': 'te!', 'v': 've!', 'y': 'ye!', 'z': 'ze!'
+  };
+
+  function applyGrade1WarmPhoneticFilter(rawText) {
+    let t = (rawText || '').toString().trim();
+    if (!t) return '';
+
+    // Köşeli parantez veya tek harf kalıplarını temizle: "[ A ]" -> "A"
+    const bracketSingle = t.match(/^\[\s*([a-zA-ZçğıöşüÇĞİÖŞÜ])\s*\](\s*sesi)?[!?.]*$/i);
+    if (bracketSingle) {
+      const ch = bracketSingle[1].toLocaleLowerCase('tr-TR');
+      const sound = GRADE1_PHONETIC_LETTER_MAP[ch] || (ch + '!');
+      return bracketSingle[2] ? (sound.replace('!', '') + ' sesi!') : sound;
+    }
+
+    // Tek başına bir harf okutuluyorsa (Örn: "A", "E", "K", "M", "a!", "k!")
+    const strippedPunct = t.replace(/[!?.…"'"'«»()\[\]\s]/g, '');
+    if (Array.from(strippedPunct).length === 1) {
+      const ch = strippedPunct.toLocaleLowerCase('tr-TR');
+      if (GRADE1_PHONETIC_LETTER_MAP[ch]) {
+        return GRADE1_PHONETIC_LETTER_MAP[ch];
+      }
+    }
+
+    // "A sesi", "K sesi" gibi iki kelimelik kısa harf etiketleri
+    const letterSessionMatch = t.match(/^["'«\[]?([a-zA-ZçğıöşüÇĞİÖŞÜ])["'»\]]?\s+sesi[!?.]*$/i);
+    if (letterSessionMatch) {
+      const ch = letterSessionMatch[1].toLocaleLowerCase('tr-TR');
+      const ph = (GRADE1_PHONETIC_LETTER_MAP[ch] || ch).replace(/[!?.]/g, '');
+      return ph + ' sesi!';
+    }
+
+    // Cümle içinde tırnak içinde geçen tek harfleri doğal fonetik okunuşa çevir:
+    // Örn: Hangisinin adında "A" sesi var? Dokun! -> Haydi dinleyelim! Hangisinin adında, A, sesi var? Dokun bakalım!
+    t = t.replace(/["'«\[]([a-zA-ZçğıöşüÇĞİÖŞÜ])["'»\]]\s*sesi/gi, (m, ch) => {
+      const lower = ch.toLocaleLowerCase('tr-TR');
+      const ph = (GRADE1_PHONETIC_LETTER_MAP[lower] || lower).replace(/[!?.]/g, '');
+      return ', ' + ph + ', sesi';
+    });
+
+    // 1. Sınıf yönergelerini sıcak, samimi ve noktalama vurgulu hale getir
+    if (/^Hangisinin adında/i.test(t)) {
+      t = t.replace(/^Hangisinin adında/i, 'Haydi dinleyelim! Hangisinin adında');
+      t = t.replace(/Dokun!?$/i, 'Dokun bakalım!');
+    } else if (/^Hangi resimde/i.test(t) && !/^Haydi/i.test(t)) {
+      t = 'Haydi dinleyelim, ' + t.charAt(0).toLocaleLowerCase('tr-TR') + t.slice(1);
+    } else if (/^Duyduğun kelimeyi yakala/i.test(t)) {
+      t = t.replace(/^Duyduğun kelimeyi yakala[:!.]*/i, 'Haydi dikkatle dinle! Duyduğun kelimeyi yakala: ');
+    } else if (/^Harikasın[.!]*$/i.test(t)) {
+      t = 'Harikasın! Çok güzel başardın!';
+    } else if (/^Tebrikler[.!]*$/i.test(t)) {
+      t = 'Tebrikler! Harika gidiyorsun!';
+    }
+
+    return t;
   }
 
   // Sistemde İngilizce ses motoru var mı kontrol et
@@ -567,8 +637,12 @@
       this.ttsTimeout = null;
       this.ttsReady = false;
       this.speechSeq = 0;
+      this.cloudAudioEl = null;
+      this.audioUnlocked = false;
       this.initOnFirstTouch = this.initOnFirstTouch.bind(this);
-      window.addEventListener('pointerdown', this.initOnFirstTouch, { once: true });
+      window.addEventListener('pointerdown', this.initOnFirstTouch, { passive: true });
+      window.addEventListener('touchstart', this.initOnFirstTouch, { passive: true });
+      window.addEventListener('click', this.initOnFirstTouch, { passive: true });
       window.addEventListener('keydown', this.initOnFirstTouch, { once: true });
     }
 
@@ -606,6 +680,27 @@
         }
         if (this.ctx && this.ctx.state === 'suspended') {
           this.ctx.resume();
+        }
+        if (!this.audioUnlocked) {
+          this.audioUnlocked = true;
+          if (!this.cloudAudioEl) {
+            this.cloudAudioEl = new Audio();
+            this.cloudAudioEl.setAttribute('referrerpolicy', 'no-referrer');
+            try { this.cloudAudioEl.referrerPolicy = 'no-referrer'; } catch (e) {}
+            this.cloudAudioEl.preload = 'auto';
+          }
+          // Mobil (Android/iOS/Instagram) ve akıllı tahtada ilk dokunuşta ses motoru kilidini aç
+          if (!this.currentAudio) {
+            const silentUnlock = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA');
+            silentUnlock.volume = 0.01;
+            const p = silentUnlock.play();
+            if (p !== undefined) {
+              p.then(() => { silentUnlock.pause(); }).catch(() => {});
+            }
+          }
+          window.removeEventListener('pointerdown', this.initOnFirstTouch);
+          window.removeEventListener('touchstart', this.initOnFirstTouch);
+          window.removeEventListener('click', this.initOnFirstTouch);
         }
       } catch (e) {
         console.warn('Web Audio API başlatılamadı:', e);
@@ -1163,12 +1258,13 @@
     }
 
     speakText(text, lang = 'tr', onEnded) {
-      if (!state.soundEnabled) {
+      if (!state.soundEnabled || state.isMuted) {
         if (onEnded) onEnded();
         return;
       }
-      // Devam eden önceki ses veya konuşmayı mutlaka durdur
+      // 4) MOBİL VE AKILLI TAHTA SES KİLİDİ: Devam eden eski sesi anında durdur (currentAudio.pause())
       this.stopQuestionAudio();
+      this.ensureContext();
       this.speechSeq = (this.speechSeq || 0) + 1;
       const currentSeq = this.speechSeq;
 
@@ -1204,6 +1300,11 @@
         } else {
           cleanText = cleanText.replace(/\s+/g, ' ').trim();
         }
+
+        // 3) 1. Sınıf ve Okul Öncesi etkinliklerinde fonetik ve samimi okuma filtresinden geçir
+        if (parseInt(state.currentGrade, 10) <= 1) {
+          cleanText = applyGrade1WarmPhoneticFilter(cleanText);
+        }
       }
 
       if (!cleanText) {
@@ -1236,17 +1337,15 @@
       const ttsLang = isEn ? 'en' : 'tr';
       const synthLang = isEn ? 'en-US' : 'tr-TR';
 
-      // -------------------------------------------------------------
-      // METİN PARÇALAMA (Google TTS 160-180 Karakter Sınırı Koruması)
-      // -------------------------------------------------------------
+      // Metin Parçalama (Google Cloud TTS 160-180 karakter sınırı koruması)
       const speechChunks = [];
-      if (cleanText.length <= 160) {
+      if (cleanText.length <= 165) {
         speechChunks.push(cleanText);
       } else {
         const words = cleanText.split(' ');
         let curChunk = '';
         for (const w of words) {
-          if ((curChunk + ' ' + w).trim().length <= 160) {
+          if ((curChunk + ' ' + w).trim().length <= 165) {
             curChunk = (curChunk + ' ' + w).trim();
           } else {
             if (curChunk) speechChunks.push(curChunk);
@@ -1254,13 +1353,14 @@
           }
         }
         if (curChunk) speechChunks.push(curChunk);
-        if (!speechChunks.length) speechChunks.push(cleanText.slice(0, 160));
+        if (!speechChunks.length) speechChunks.push(cleanText.slice(0, 165));
       }
 
       // -------------------------------------------------------------
-      // YEDEK SES MOTORU: Web Speech API (speechSynthesis)
-      // KRİTİK PARDUS / LINUX KORUMASI: SADECE gerçek 'tr' / 'TR' sesi varsa çalışır!
-      // Cihazda Türkçe ses paketi yoksa ASLA yabancı robot sesle okutulmaz!
+      // 2) YEDEK (FALLBACK) SİSTEM: window.speechSynthesis
+      // Sadece internet kesikse veya bulut ses yüklenemezse (onerror) devreye girer.
+      // Natural, Online, Yelda, Emel, Filiz veya Google Türkçe seslerini seçer;
+      // rate = 0.88 ve pitch = 1.1 ile sıcak ve samimi okur.
       // -------------------------------------------------------------
       const playWithSpeechSynthesis = () => {
         if (currentSeq !== this.speechSeq || done) return;
@@ -1271,8 +1371,8 @@
 
         const matchedVoice = isEn ? getSystemEnglishVoice() : getSystemTurkishVoice();
 
-        // Pardus / MEB Linux akıllı tahtalarda ses paketi yoksa ASLA yabancı robot sesle okuma!
-        if (!isEn && !matchedVoice) {
+        // Pardus / Linux akıllı tahtalarda Türkçe ses paketi yoksa yabancı robot sesle okuma
+        if (!isEn && !matchedVoice && isLinuxOrPardus) {
           console.warn('[TTS] Pardus / Linux tahtada gerçek Türkçe ses paketi bulunamadı, yabancı robot ses engellendi.');
           finish();
           return;
@@ -1286,8 +1386,8 @@
 
           const u = new SpeechSynthesisUtterance(cleanText);
           u.lang = synthLang;
-          u.rate = isEn ? 0.90 : 0.95;
-          u.pitch = isEn ? 1.0 : 1.05;
+          u.rate = isEn ? 0.88 : 0.88;
+          u.pitch = isEn ? 1.05 : 1.1;
 
           if (matchedVoice) {
             u.voice = matchedVoice;
@@ -1306,8 +1406,8 @@
       };
 
       // -------------------------------------------------------------
-      // DOĞAL TÜRKÇE BULUT SES MOTORU: Online Google TTS MP3 Akışı
-      // Pardus / Linux akıllı tahtalarda sıfır aksan, %100 doğal Türkçe telaffuz
+      // 1) BİRİNCİL MOTOR: DOĞAL BULUT SESİ (CLOUD AUDIO TTS)
+      // Google Translate Doğal Türkçe kadın sesi (ttsspeed=0.85 & playbackRate=0.92)
       // -------------------------------------------------------------
       let onlineFallbackTriggered = false;
       const triggerFallback = () => {
@@ -1338,36 +1438,49 @@
         }
 
         const currentChunk = speechChunks[chunkIndex];
-        const primaryUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(currentChunk)}`;
-        const fallbackUrl = `https://translate.google.com.tr/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&q=${encodeURIComponent(currentChunk)}`;
+        const encodedQ = encodeURIComponent(currentChunk);
+        const cloudUrls = [
+          `https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&ttsspeed=0.85&q=${encodedQ}`,
+          `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&ttsspeed=0.85&q=${encodedQ}`,
+          `https://translate.google.com.tr/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&ttsspeed=0.85&q=${encodedQ}`
+        ];
 
-        let triedFallbackUrl = false;
+        let urlAttempt = 0;
         const playUrl = (urlToPlay) => {
           if (currentSeq !== this.speechSeq || done) return;
           try {
-            const audioEl = document.createElement('audio');
-            // Tarayıcı referrer ve CORS engellerini aşmak için no-referrer
+            const audioEl = new Audio(urlToPlay);
             audioEl.setAttribute('referrerpolicy', 'no-referrer');
             try { audioEl.referrerPolicy = 'no-referrer'; } catch (e) {}
-            audioEl.crossOrigin = 'anonymous';
             audioEl.preload = 'auto';
             audioEl.volume = 1.0;
-            audioEl.src = urlToPlay;
+            // Tane tane, sıcak ve yumuşak okuma (0.92 hız)
+            audioEl.defaultPlaybackRate = 0.92;
+            audioEl.playbackRate = 0.92;
             this.currentAudio = audioEl;
+
+            const applyWarmRate = () => {
+              try {
+                audioEl.defaultPlaybackRate = 0.92;
+                audioEl.playbackRate = 0.92;
+              } catch (e) {}
+            };
+            audioEl.onloadedmetadata = applyWarmRate;
 
             if (this.ttsTimeout) clearTimeout(this.ttsTimeout);
             this.ttsTimeout = setTimeout(() => {
               if (currentSeq === this.speechSeq) {
-                if (!triedFallbackUrl) {
-                  triedFallbackUrl = true;
-                  playUrl(fallbackUrl);
+                urlAttempt++;
+                if (urlAttempt < cloudUrls.length) {
+                  playUrl(cloudUrls[urlAttempt]);
                 } else {
                   triggerFallback();
                 }
               }
-            }, 3500);
+            }, 3200);
 
             audioEl.onplaying = () => {
+              applyWarmRate();
               if (currentSeq === this.speechSeq && this.ttsTimeout) {
                 clearTimeout(this.ttsTimeout);
                 this.ttsTimeout = null;
@@ -1386,9 +1499,9 @@
 
             audioEl.onerror = () => {
               if (currentSeq === this.speechSeq) {
-                if (!triedFallbackUrl) {
-                  triedFallbackUrl = true;
-                  playUrl(fallbackUrl);
+                urlAttempt++;
+                if (urlAttempt < cloudUrls.length) {
+                  playUrl(cloudUrls[urlAttempt]);
                 } else {
                   triggerFallback();
                 }
@@ -1399,9 +1512,9 @@
             if (p !== undefined) {
               p.catch(() => {
                 if (currentSeq === this.speechSeq) {
-                  if (!triedFallbackUrl) {
-                    triedFallbackUrl = true;
-                    playUrl(fallbackUrl);
+                  urlAttempt++;
+                  if (urlAttempt < cloudUrls.length) {
+                    playUrl(cloudUrls[urlAttempt]);
                   } else {
                     triggerFallback();
                   }
@@ -1409,80 +1522,24 @@
               });
             }
           } catch (err) {
-            if (!triedFallbackUrl) {
-              triedFallbackUrl = true;
-              playUrl(fallbackUrl);
+            urlAttempt++;
+            if (urlAttempt < cloudUrls.length) {
+              playUrl(cloudUrls[urlAttempt]);
             } else {
               triggerFallback();
             }
           }
         };
 
-        playUrl(primaryUrl);
+        playUrl(cloudUrls[0]);
       };
 
-      // -------------------------------------------------------------
-      // BİRİNCİL SES MOTORU: EMA Lightning Yerel Doğal MP3 Kaydı
-      // Eğer cümlenin anahtarı index.json'da varsa sesler/<anahtar>.mp3 çalınır
-      // Yoksa veya açılamazsa doğrudan doğal online Türkçe bulut akışı devreye girer
-      // -------------------------------------------------------------
-      if (!isEn) {
-        let key = speechKey(text);
-        if (!recordedSpeechKeys.has(key)) {
-          const altKey = speechKey(cleanText);
-          if (recordedSpeechKeys.has(altKey)) {
-            key = altKey;
-          }
-        }
-        if (recordedSpeechKeys.has(key)) {
-          try {
-            const recordedAudio = new Audio(`sesler/${key}.mp3`);
-            this.currentAudio = recordedAudio;
-            recordedAudio.volume = 1.0;
-
-            this.ttsTimeout = setTimeout(() => {
-              if (currentSeq === this.speechSeq) playOnlineStream(0);
-            }, 4000);
-
-            recordedAudio.onplaying = () => {
-              if (currentSeq === this.speechSeq && this.ttsTimeout) {
-                clearTimeout(this.ttsTimeout);
-                this.ttsTimeout = null;
-              }
-            };
-
-            recordedAudio.onended = () => {
-              if (currentSeq === this.speechSeq) {
-                if (this.ttsTimeout) {
-                  clearTimeout(this.ttsTimeout);
-                  this.ttsTimeout = null;
-                }
-                finish();
-              }
-            };
-
-            recordedAudio.onerror = () => {
-              if (currentSeq === this.speechSeq) playOnlineStream(0);
-            };
-
-            const p = recordedAudio.play();
-            if (p !== undefined) {
-              p.catch(() => {
-                if (currentSeq === this.speechSeq) playOnlineStream(0);
-              });
-            }
-            return;
-          } catch (e) {
-            playOnlineStream(0);
-            return;
-          }
-        } else {
-          console.log(`[ses] yerel kayıt yok, doğal online Türkçe akışı kullanılıyor: "${text}"`);
-        }
-      }
-
-      // Kayıt yoksa veya İngilizce ise doğal online MP3 akışını başlat
+      // 1) BİRİNCİL MOTOR: Doğrudan HTML5 new Audio() üzerinden Doğal Türkçe Bulut TTS (Google Translate Doğal Kadın Sesi, playbackRate = 0.92)
       playOnlineStream(0);
+    }
+
+    playTTS(text, lang = 'tr', onEnded) {
+      this.speakText(text, lang, onEnded);
     }
 
     speakTurkishText(text, onEnded) {
@@ -3010,47 +3067,48 @@
   window.filterAllowedSentences = filterAllowedSentences;
 
   function getMaarifLetterSoundName(letter) {
-    const l = (letter || '').toLowerCase('tr-TR');
-    const map = {
-      'a': 'a!', 'e': 'e!', 'ı': 'ı!', 'i': 'i!', 'o': 'o!', 'ö': 'ö!', 'u': 'u!', 'ü': 'ü!',
-      'b': 'be!', 'c': 'ce!', 'ç': 'çe!', 'd': 'de!', 'f': 'fe!', 'g': 'ge!', 'ğ': 'yumuşak ge!',
-      'h': 'he!', 'j': 'je!', 'k': 'ke!', 'l': 'le!', 'm': 'me!', 'n': 'ne!', 'p': 'pe!',
-      'r': 're!', 's': 'se!', 'ş': 'şe!', 't': 'te!', 'v': 've!', 'y': 'ye!', 'z': 'ze!'
-    };
-    return map[l] || `${l}!`;
+    const l = (letter || '').toLocaleLowerCase('tr-TR').trim();
+    return GRADE1_PHONETIC_LETTER_MAP[l] || `${l}!`;
   }
 
   window.derseBiMolaSpeakText = function(text, onEnded) {
     if (window.__DERSE_BI_MOLA_AUDIO__ && typeof window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText === 'function') {
       window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText(text, onEnded);
     } else {
-      const clean = (text || '').trim();
+      const clean = applyGrade1WarmPhoneticFilter((text || '').trim());
       if (!clean) { if (onEnded) onEnded(); return; }
-      const trVoice = getSystemTurkishVoice();
-      if (trVoice && 'speechSynthesis' in window) {
-        try {
-          window.speechSynthesis.cancel();
-          const u = new SpeechSynthesisUtterance(clean);
-          u.voice = trVoice;
-          u.lang = 'tr-TR';
-          if (onEnded) u.onend = onEnded;
-          window.speechSynthesis.speak(u);
-          return;
-        } catch (e) {}
-      }
       try {
-        const a = document.createElement('audio');
+        const a = new Audio(`https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&ttsspeed=0.85&q=${encodeURIComponent(clean)}`);
         a.setAttribute('referrerpolicy', 'no-referrer');
         try { a.referrerPolicy = 'no-referrer'; } catch (e) {}
-        a.crossOrigin = 'anonymous';
-        a.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=tr&client=tw-ob&q=${encodeURIComponent(clean)}`;
+        a.defaultPlaybackRate = 0.92;
+        a.playbackRate = 0.92;
         if (onEnded) a.onended = onEnded;
-        a.play().catch(() => { if (onEnded) onEnded(); });
+        a.onerror = () => {
+          const trVoice = getSystemTurkishVoice();
+          if (trVoice && 'speechSynthesis' in window) {
+            try {
+              window.speechSynthesis.cancel();
+              const u = new SpeechSynthesisUtterance(clean);
+              u.voice = trVoice;
+              u.lang = 'tr-TR';
+              u.rate = 0.88;
+              u.pitch = 1.1;
+              if (onEnded) u.onend = onEnded;
+              window.speechSynthesis.speak(u);
+              return;
+            } catch (e) {}
+          }
+          if (onEnded) onEnded();
+        };
+        a.play().catch(() => { if (a.onerror) a.onerror(); });
       } catch (e) {
         if (onEnded) onEnded();
       }
     }
   };
+  window.speakText = window.derseBiMolaSpeakText;
+  window.playTTS = window.derseBiMolaSpeakText;
 
   /* ==========================================================================
      3. DİNAMİK SORU MOTORU (GRADE-BASED QUESTION ENGINE)
@@ -23748,8 +23806,12 @@
       listen.type = 'button';
       listen.className = 'kids-listen-btn';
       listen.setAttribute('aria-label', 'Soruyu Dinle');
-      listen.innerHTML = '<span class="kids-listen-icon">🔊</span><span>Dinle</span>';
-      attachInstantTouch(listen, () => readCurrentQuestion(true));
+      listen.innerHTML = '<span class="kids-listen-icon">📢</span><span>Dinle</span>';
+      listen.addEventListener('click', (e) => {
+        e.stopPropagation();
+        audio.stopQuestionAudio();
+        readCurrentQuestion(true);
+      });
       root.appendChild(listen);
 
       if (k.mode === 'drag') buildKidsDrag(root, pn, k);
@@ -24918,8 +24980,17 @@
       listen.type = 'button';
       listen.className = 'kids-listen-btn';
       listen.setAttribute('aria-label', 'Moli\'yi Dinle');
-      listen.innerHTML = '<span class="kids-listen-icon">🔊</span><span>Dinle</span>';
-      attachInstantTouch(listen, () => readCurrentQuestion(true));
+      listen.innerHTML = '<span class="kids-listen-icon">📢</span><span>Dinle</span>';
+      listen._customListenAction = null;
+      listen.addEventListener('click', (e) => {
+        e.stopPropagation();
+        audio.stopQuestionAudio();
+        if (typeof listen._customListenAction === 'function') {
+          listen._customListenAction();
+        } else {
+          readCurrentQuestion(true);
+        }
+      });
       root.appendChild(listen);
 
       build(root, pn, q.interactiveData);
@@ -25352,8 +25423,7 @@
     // Üstteki Dinle butonuna tıklandığında hedef kelimeyi seslendir
     const listenBtn = root.querySelector('.kids-listen-btn');
     if (listenBtn) {
-      listenBtn.onclick = (e) => {
-        e.stopPropagation();
+      listenBtn._customListenAction = () => {
         audio.speakTurkishText(`${targetWordLower}!`);
       };
     }
@@ -25576,8 +25646,7 @@
     const listenBtn = root.querySelector('.kids-listen-btn');
     if (listenBtn) {
       listenBtn.innerHTML = '<span class="kids-listen-icon">📢</span><span>Kelimeyi Dinle</span>';
-      listenBtn.onclick = (e) => {
-        e.stopPropagation();
+      listenBtn._customListenAction = () => {
         audio.speakTurkishText(`${d.wordLower}!`);
       };
     }
@@ -27016,25 +27085,15 @@
       });
     }
 
-    // Düello İçi Soru Sesli Okuma Butonları (HUD & Her İki Oyuncu Kartı)
-    if (DOM.btnHudReadQuestion) {
-      addTapListener(DOM.btnHudReadQuestion, e => {
-        if (e && e.cancelable) e.preventDefault();
+    // Düello İçi Soru Sesli Okuma Butonları (HUD & Her İki Oyuncu Kartı) - Anında Eski Sesi Durdurup Yeni Sesi Başlatır
+    [DOM.btnHudReadQuestion, DOM.btnReadAloudP1, DOM.btnReadAloudP2].forEach(btn => {
+      if (!btn) return;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        audio.stopQuestionAudio();
         readCurrentQuestion(true);
       });
-    }
-    if (DOM.btnReadAloudP1) {
-      addTapListener(DOM.btnReadAloudP1, e => {
-        if (e && e.cancelable) e.preventDefault();
-        readCurrentQuestion(true);
-      });
-    }
-    if (DOM.btnReadAloudP2) {
-      addTapListener(DOM.btnReadAloudP2, e => {
-        if (e && e.cancelable) e.preventDefault();
-        readCurrentQuestion(true);
-      });
-    }
+    });
 
     // Düello Kontrolleri: Çıkış butonuna basıldığı an beklemeden ve onay sormadan anında lobiye dön
     const handleExitAction = (e) => {
