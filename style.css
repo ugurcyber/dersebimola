@@ -21347,3 +21347,210 @@ body.is-game-active .universal-game-bgm-fab {
     line-height: 1.15 !important;
   }
 }
+
+
+/* ============================================================== */
+/* GİRİŞ YAP / KAYIT OL (AUTH MODAL) MOBİL & KAPATMA DÜZELTMELERİ */
+/* ============================================================== */
+
+/* 1) Kapatma (✕) butonu her zaman en üstte, net görünür ve tıklanabilir */
+#modalAuth .modal-close-btn,
+.auth-modal-window .modal-close-btn {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  width: 36px !important;
+  height: 36px !important;
+  z-index: 50 !important;
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12) !important;
+  padding: 0 !important;
+}
+
+#modalAuth .modal-close-btn:hover,
+.auth-modal-window .modal-close-btn:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Başlık kutusuna sağdan boşluk vererek sağ üst köşeyi kapatma (✕) butonuna bırak */
+#modalAuth .auth-header-card,
+.auth-modal-window .auth-header-card {
+  padding-right: 48px !important;
+}
+
+#modalAuth .auth-brand-wrap,
+.auth-modal-window .auth-brand-wrap {
+  justify-content: flex-start !important;
+  gap: 10px !important;
+}
+
+#modalAuth .auth-moli-mascot,
+.auth-modal-window .auth-moli-mascot {
+  order: -1 !important;
+}
+
+/* 2) Modalın alt kısmından kesilmesini önle (Kaydırılabilir yapı) */
+#modalAuth .auth-modal-window,
+.auth-modal-window {
+  max-height: 90vh !important;
+  max-height: 90dvh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-bottom: 24px !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  #modalAuth {
+    padding: 10px !important;
+    align-items: center !important;
+  }
+
+  #modalAuth .auth-modal-window,
+  .auth-modal-window {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+    max-height: 90dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 14px 14px 24px 14px !important;
+    border-radius: 22px !important;
+  }
+
+  #modalAuth .auth-header-card {
+    padding: 8px 48px 8px 10px !important;
+    margin-bottom: 8px !important;
+    border-radius: 16px !important;
+  }
+
+  #modalAuth .auth-moli-avatar-ring {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  #modalAuth .auth-moli-wave-img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  #modalAuth .auth-moli-bubble-chip {
+    display: none !important;
+  }
+
+  #modalAuth .auth-logo-badge {
+    gap: 8px !important;
+  }
+
+  #modalAuth .auth-brand-heading {
+    font-size: 1.02rem !important;
+  }
+
+  #modalAuth .auth-brand-subtitle {
+    font-size: 0.68rem !important;
+  }
+
+  #modalAuth .auth-role-tabs {
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+    padding: 4px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
+  }
+
+  #modalAuth .auth-role-tab {
+    padding: 8px 10px !important;
+    font-size: 0.86rem !important;
+    border-radius: 10px !important;
+    gap: 6px !important;
+  }
+
+  #modalAuth .auth-submode-switch {
+    margin-bottom: 8px !important;
+    gap: 6px !important;
+  }
+
+  #modalAuth .auth-submode-btn {
+    padding: 6px 10px !important;
+    font-size: 0.82rem !important;
+  }
+
+  #modalAuth .auth-role-pane,
+  #modalAuth .teacher-auth-form-box {
+    gap: 8px !important;
+  }
+
+  #modalAuth .auth-form-group {
+    gap: 3px !important;
+    margin-bottom: 0 !important;
+  }
+
+  #modalAuth .auth-field-label {
+    font-size: 0.78rem !important;
+  }
+
+  #modalAuth .auth-input-field {
+    min-height: 42px !important;
+    padding: 8px 12px !important;
+    font-size: 0.9rem !important;
+    border-radius: 12px !important;
+  }
+
+  #modalAuth .auth-input-field.has-left-icon {
+    padding-left: 42px !important;
+  }
+
+  #modalAuth .auth-input-field.has-right-btn {
+    padding-right: 44px !important;
+  }
+
+  #modalAuth .student-grade-selector {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 4px !important;
+  }
+
+  #modalAuth .student-grade-pill {
+    padding: 6px 2px !important;
+    font-size: 0.72rem !important;
+    border-radius: 9px !important;
+  }
+
+  #modalAuth .student-avatar-selector {
+    gap: 6px !important;
+  }
+
+  #modalAuth .student-avatar-pill {
+    height: 38px !important;
+    font-size: 1.25rem !important;
+    border-radius: 10px !important;
+  }
+
+  #modalAuth .btn-auth-primary-submit {
+    min-height: 46px !important;
+    padding: 10px 14px !important;
+    font-size: 0.98rem !important;
+    margin-top: 4px !important;
+    border-radius: 14px !important;
+  }
+
+  #modalAuth .auth-trust-badges {
+    margin-top: 6px !important;
+    padding: 6px 8px !important;
+    gap: 6px !important;
+  }
+
+  #modalAuth .auth-trust-item {
+    font-size: 0.72rem !important;
+  }
+}
