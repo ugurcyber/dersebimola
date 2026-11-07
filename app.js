@@ -3787,6 +3787,10 @@
 
       if (gameType === 'maarif_balloon_pop' || gameType === 'maarif_phoneme_pop') {
         return generateK1BalloonPop();
+      } else if (gameType === 'maarif_case_match') {
+        return generateK1CaseMatch();
+      } else if (gameType === 'maarif_missing_letter') {
+        return generateK1MissingLetter();
       } else if (gameType === 'maarif_sound_find') {
         // 1) Sesi Hisset ve Bul (Görsel & İşitsel Algı)
         const subMode = Math.random() < 0.5 ? 'which_has' : 'has_or_not';
@@ -11873,6 +11877,8 @@
     maarif_sound_find: '👂 Sesi Hisset (Görsel Seç)',
     maarif_balloon_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
     maarif_phoneme_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
+    maarif_case_match: '🔤 Büyük - Küçük Harf Eşleştir',
+    maarif_missing_letter: '🧩 Eksik Harfi Tamamla',
     maarif_word_train: '🚂 Hece ve Kelime Treni',
     maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
     math_apple_count_1: '🍎 Elma Ağacı & Sayma',
@@ -11993,10 +11999,11 @@
       maarif_sound_find: 'Sesi Hisset (Görsel Seç)',
       maarif_balloon_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
       maarif_phoneme_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
+      maarif_case_match: '🔤 Büyük - Küçük Harf Eşleştir',
+      maarif_missing_letter: '🧩 Eksik Harfi Tamamla',
       maarif_word_train: 'Hece ve Kelime Treni',
       maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
       maarif_position: 'Başta mı, Ortada mı, Sonda mı?',
-      maarif_case_match: 'Büyük-Küçük Harf Eşleştirme',
       maarif_syllable_build: 'Hece Birleştirme Atölyesi',
       maarif_speed_read: 'Kelime Oluşturma ve Yakalama',
       maarif_sentence_complete: 'Cümle Kurma ve Tamamlama',
@@ -21110,7 +21117,31 @@
       active: true
     });
 
-    // 4. KART: Hece ve Kelime Atölyesi
+    // 4. KART: 🔤 Büyük - Küçük Harf Eşleştir
+    games.push({
+      id: 'maarif_case_match',
+      title: '🔤 Büyük - Küçük Harf Eşleştir',
+      icon: '🔤',
+      badge: '🔤 Büyük - Küçük',
+      featureTag: `🎯 "${letterUpper} - ${letterLower}" Eşleştir`,
+      description: `Büyük harf yuvaları ile küçük harf taşlarını (${learnedStr}) sürükleyerek veya dokunarak eşleştir! 🔤✨`,
+      tags: [`🔤 "${letterUpper} - ${letterLower}"`, '👆 Sürükle veya Dokun', '🔊 Sesli Okuma'],
+      active: true
+    });
+
+    // 5. KART: 🧩 Eksik Harfi Tamamla
+    games.push({
+      id: 'maarif_missing_letter',
+      title: '🧩 Eksik Harfi Tamamla',
+      icon: '🧩',
+      badge: '🧩 Eksik Harf',
+      featureTag: `🔤 "[ _ ]" Tamamla`,
+      description: `Kelimeyi dinle, eksik bırakılan "${letterUpper} / ${letterLower}" harfini bulup boş kutuya yerleştir! 🧩🔊`,
+      tags: ['🧩 Eksik Harf', '👆 Sürükle veya Dokun', '🔊 Kelime Dinle'],
+      active: true
+    });
+
+    // 6. KART: Hece ve Kelime Atölyesi
     // SADECE [N n] ve sonraki seslerde (letterIdx >= 1) açılır!
     // [A a] (1. Ses) sekmesinde KESİNLİKLE GÖSTERİLMEZ!
     if (letterIdx >= 1) {
@@ -23866,6 +23897,8 @@
       case 'maarif_balloon_pop':
       case 'maarif_phoneme_pop':
       case 'firstreading_balloon': return generateK1BalloonPop();
+      case 'maarif_case_match': return generateK1CaseMatch();
+      case 'maarif_missing_letter': return generateK1MissingLetter();
       case 'maarif_word_train':
       case 'syllable_builder':
       case 'turkish_sentence_punctuation_1': return generateK1WordTrain();
@@ -23877,15 +23910,17 @@
         const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
         if (activeL === 'a') {
           const r = Math.random();
-          if (r < 0.34) return generateK1SoundFeel();
-          if (r < 0.67) return generateK1LetterBasket();
-          return generateK1BalloonPop();
+          if (r < 0.25) return generateK1SoundFeel();
+          if (r < 0.50) return generateK1LetterBasket();
+          if (r < 0.75) return generateK1BalloonPop();
+          return generateK1CaseMatch();
         } else {
           const r = Math.random();
-          if (r < 0.30) return generateK1WordTrain();
-          if (r < 0.55) return generateK1SoundFeel();
-          if (r < 0.80) return generateK1BalloonPop();
-          return generateK1LetterBasket();
+          if (r < 0.20) return generateK1WordTrain();
+          if (r < 0.40) return generateK1SoundFeel();
+          if (r < 0.60) return generateK1BalloonPop();
+          if (r < 0.80) return generateK1CaseMatch();
+          return generateK1MissingLetter();
         }
       }
       case 'math_apple_count_1': return generateK1AppleCount();
@@ -23900,9 +23935,188 @@
 
   window.generateK1SoundFeel = generateK1SoundFeel;
   window.generateK1BalloonPop = generateK1BalloonPop;
+  window.generateK1CaseMatch = generateK1CaseMatch;
+  window.generateK1MissingLetter = generateK1MissingLetter;
   window.generateK1WordTrain = generateK1WordTrain;
   window.generateK1LetterBasket = generateK1LetterBasket;
   window.generateKidsGrade1Question = generateKidsGrade1Question;
+
+  // Seçili harfin allowedLetters listesinden (yabancı harf sızdırmadan) Türkçe uyumlu Büyük-Küçük harf çiftlerini çıkarır
+  function getStrictAllowedPairsForLetter(activeL) {
+    const normLower = String(activeL || 'a').toLocaleLowerCase('tr-TR');
+    const normUpper = normLower.toLocaleUpperCase('tr-TR');
+    const aData = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[normUpper]) ? ANETIL_DATA[normUpper] : null;
+
+    const pairs = [];
+    const seenUpper = new Set();
+
+    if (aData && Array.isArray(aData.allowedLetters) && aData.allowedLetters.length > 0) {
+      const rawSet = new Set(aData.allowedLetters);
+      aData.allowedLetters.forEach(ch => {
+        const up = String(ch).toLocaleUpperCase('tr-TR');
+        const lo = up.toLocaleLowerCase('tr-TR');
+        if (!seenUpper.has(up) && (rawSet.has(lo) || up === normUpper)) {
+          seenUpper.add(up);
+          pairs.push({ upper: up, lower: lo });
+        }
+      });
+    }
+
+    if (pairs.length === 0 && typeof MAARIF_2026_CONFIG !== 'undefined' && Array.isArray(MAARIF_2026_CONFIG.letterOrder)) {
+      const idx = MAARIF_2026_CONFIG.letterOrder.indexOf(normLower);
+      const slice = idx >= 0 ? MAARIF_2026_CONFIG.letterOrder.slice(0, idx + 1) : [normLower];
+      slice.forEach(ch => {
+        const lo = String(ch).toLocaleLowerCase('tr-TR');
+        const up = lo.toLocaleUpperCase('tr-TR');
+        if (!seenUpper.has(up)) {
+          seenUpper.add(up);
+          pairs.push({ upper: up, lower: lo });
+        }
+      });
+    }
+
+    if (!seenUpper.has(normUpper)) {
+      pairs.push({ upper: normUpper, lower: normLower });
+    }
+    return pairs;
+  }
+
+  // --- 🔤 YENİ OYUN 1: BÜYÜK - KÜÇÜK HARF EŞLEŞTİR (Sadece allowedLetters) ---
+  function generateK1CaseMatch() {
+    const activeL = String(state.activeMaarifLetter || 'a').toLocaleLowerCase('tr-TR');
+    const targetUpper = activeL.toLocaleUpperCase('tr-TR');
+    const targetLower = targetUpper.toLocaleLowerCase('tr-TR');
+
+    const allowedPairs = getStrictAllowedPairsForLetter(activeL);
+    const targetPair = { upper: targetUpper, lower: targetLower };
+    const otherPairs = k1Shuffle(allowedPairs.filter(p => p.upper !== targetUpper));
+
+    const chosenPairs = [targetPair, ...otherPairs.slice(0, 3)];
+    while (chosenPairs.length < 4) {
+      const fallbackPair = allowedPairs[chosenPairs.length % allowedPairs.length] || targetPair;
+      chosenPairs.push({ upper: fallbackPair.upper, lower: fallbackPair.lower });
+    }
+
+    const slots = k1Shuffle(chosenPairs.map((p, idx) => ({
+      id: idx,
+      upper: p.upper,
+      lower: p.lower
+    })));
+    const tiles = k1Shuffle(chosenPairs.map((p, idx) => ({
+      id: idx,
+      upper: p.upper,
+      lower: p.lower
+    })));
+
+    const promptText = `Büyük harflerle küçük harfleri eşleştir!`;
+    const spokenText = `Büyük harflerle küçük harfleri sürükleyerek veya dokunarak eşleştir!`;
+
+    return k1Base(
+      'k1_case_match',
+      `🔤 Büyük - Küçük Harf Eşleştir (${targetUpper} - ${targetLower})`,
+      promptText,
+      spokenText,
+      `Harika! Büyük ve küçük harfleri (${slots.map(s => `${s.upper}-${s.lower}`).join(', ')}) doğru eşleştirdin! 🔤👏`,
+      {
+        letter: targetUpper,
+        lower: targetLower,
+        slots: slots,
+        tiles: tiles
+      }
+    );
+  }
+
+  // --- 🧩 YENİ OYUN 2: EKSİK HARFİ TAMAMLA (Sadece words ve allowedLetters) ---
+  function generateK1MissingLetter() {
+    const activeL = String(state.activeMaarifLetter || 'a').toLocaleLowerCase('tr-TR');
+    const targetUpper = activeL.toLocaleUpperCase('tr-TR');
+    const targetLower = targetUpper.toLocaleLowerCase('tr-TR');
+
+    const aData = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[targetUpper]) ? ANETIL_DATA[targetUpper] : null;
+    const mData = (typeof MAARIF_2026_CONFIG !== 'undefined' && MAARIF_2026_CONFIG.letters) ? MAARIF_2026_CONFIG.letters[activeL] : null;
+
+    let rawWords = [];
+    if (aData && Array.isArray(aData.words) && aData.words.length > 0) {
+      rawWords = aData.words.slice();
+    } else if (mData && Array.isArray(mData.words) && mData.words.length > 0) {
+      rawWords = mData.words.slice();
+    } else if (mData && Array.isArray(mData.cumulativeWords) && mData.cumulativeWords.length > 0) {
+      rawWords = mData.cumulativeWords.map(cw => cw.word || '').filter(Boolean);
+    }
+
+    if (rawWords.length === 0 && aData && Array.isArray(aData.hasSoundItems) && aData.hasSoundItems.length > 0) {
+      rawWords = aData.hasSoundItems.map(it => it.word);
+    }
+
+    const matchingWords = rawWords.filter(w => {
+      const lw = String(w).toLocaleLowerCase('tr-TR');
+      return lw.length >= 2 && lw.includes(targetLower);
+    });
+    const pool = matchingWords.length > 0 ? matchingWords : (rawWords.length > 0 ? rawWords : ['ana', 'ata', 'elma']);
+    const chosenRaw = k1Pick(pool);
+    const wordLower = String(chosenRaw).toLocaleLowerCase('tr-TR');
+    const chars = Array.from(wordLower);
+
+    const candidateIndices = [];
+    chars.forEach((ch, idx) => {
+      if (ch === targetLower) candidateIndices.push(idx);
+    });
+    const missingIdx = candidateIndices.length > 0 ? k1Pick(candidateIndices) : 0;
+    const missingChar = chars[missingIdx];
+
+    const allowedPairs = getStrictAllowedPairsForLetter(activeL);
+    const otherLowers = k1Shuffle(
+      allowedPairs
+        .map(p => p.lower)
+        .filter(lo => lo !== missingChar)
+    );
+
+    const distractorChoices = [];
+    otherLowers.forEach(lo => {
+      if (distractorChoices.length < 2) distractorChoices.push(lo);
+    });
+    // Eğer henüz sadece 1 veya 2 harf öğrenilmişse (A veya N), yalnızca allowedLetters içinden tamamla
+    if (distractorChoices.length < 2) {
+      const allowedRaw = (aData && Array.isArray(aData.allowedLetters)) ? aData.allowedLetters : [targetUpper, targetLower];
+      allowedRaw.forEach(ch => {
+        if (distractorChoices.length < 2 && ch !== missingChar && !distractorChoices.includes(ch)) {
+          distractorChoices.push(ch);
+        }
+      });
+    }
+    while (distractorChoices.length < 2) {
+      const fallback = otherLowers[0] || (missingChar === 'a' ? 'A' : 'a');
+      distractorChoices.push(fallback);
+    }
+
+    const tiles = k1Shuffle([
+      { text: missingChar, isCorrect: true },
+      { text: distractorChoices[0], isCorrect: false },
+      { text: distractorChoices[1], isCorrect: false }
+    ]);
+
+    const displayPattern = chars.map((ch, i) => (i === missingIdx ? '[ _ ]' : ch)).join(' ');
+    const promptText = `Kelimeyi dinle ve eksik harfi kutuya yerleştir!`;
+    const spokenText = `${wordLower}! Kelimeyi dinle ve eksik harfi kutuya yerleştir!`;
+
+    return k1Base(
+      'k1_missing_letter',
+      `🧩 Eksik Harfi Tamamla (${targetUpper})`,
+      promptText,
+      spokenText,
+      `Tebrikler! Eksik "${missingChar}" harfini yerleştirerek "${wordLower}" kelimesini tamamladın! 🧩👏`,
+      {
+        letter: targetUpper,
+        lower: targetLower,
+        wordLower: wordLower,
+        chars: chars,
+        missingIdx: missingIdx,
+        missingChar: missingChar,
+        displayPattern: displayPattern,
+        tiles: tiles
+      }
+    );
+  }
 
   // --- 🎈 UÇAN BALON AVCISI (BALON PATLATMA): Mevcut Harf ve Görsel Veri Havuzu ---
   function generateK1BalloonPop() {
@@ -24443,6 +24657,8 @@
       case 'k1_sound_feel': return k1Mount(q, k1BuildSoundFeel);
       case 'k1_balloon_pop':
       case 'k1_phoneme_pop': return k1Mount(q, k1BuildPhonemePop);
+      case 'k1_case_match': return k1Mount(q, k1BuildCaseMatch);
+      case 'k1_missing_letter': return k1Mount(q, k1BuildMissingLetter);
       case 'k1_train': return k1Mount(q, k1BuildTrain);
       case 'k1_basket': return k1Mount(q, k1BuildLetterBasket);
       case 'k1_count': return k1Mount(q, k1BuildCount);
@@ -24855,6 +25071,217 @@
         }
       }
     });
+  }
+
+  // ---------------- d) 🔤 Büyük - Küçük Harf Eşleştir ----------------
+  function k1BuildCaseMatch(root, pn, d) {
+    const stage = k1El('k1-case-match-stage', '');
+    const slotsRow = k1El('k1-case-slots-row', '');
+    const tilesRow = k1El('k1-case-tiles-row', '');
+
+    let matchedCount = 0;
+    const totalCount = (d.slots || []).length;
+    let activeSlotEl = null;
+    let selectedTileEl = null;
+    const tileEls = [];
+
+    const clearSelectedTile = () => {
+      selectedTileEl = null;
+      tileEls.forEach(t => t.classList.remove('is-selected-tile'));
+    };
+
+    const updateActiveSlot = (preferredSlot) => {
+      if (preferredSlot && !preferredSlot.classList.contains('is-matched')) {
+        activeSlotEl = preferredSlot;
+      } else {
+        activeSlotEl = slotEls.find(s => !s.classList.contains('is-matched')) || null;
+      }
+      slotEls.forEach(s => s.classList.toggle('is-active-slot', s === activeSlotEl));
+    };
+
+    const tryMatch = (tileEl, targetSlot) => {
+      if (!k1Active(pn) || !tileEl || tileEl.classList.contains('is-used')) return;
+      const slot = (targetSlot && !targetSlot.classList.contains('is-matched')) ? targetSlot : activeSlotEl;
+      if (!slot || slot.classList.contains('is-matched')) {
+        k1Reset(tileEl);
+        return;
+      }
+
+      const tileLower = String(tileEl.dataset.lower || '').toLocaleLowerCase('tr-TR');
+      const slotLower = String(slot.dataset.lower || '').toLocaleLowerCase('tr-TR');
+
+      if (tileLower === slotLower) {
+        clearSelectedTile();
+        tileEl.classList.add('is-used');
+        tileEl.style.pointerEvents = 'none';
+        slot.classList.remove('is-active-slot');
+        slot.classList.add('is-matched');
+        const dropZone = slot.querySelector('[data-slot-drop]');
+        if (dropZone) {
+          dropZone.textContent = tileLower;
+          dropZone.classList.add('filled');
+        }
+        audio.playSnap();
+        const spokenSound = (typeof getMaarifLetterSoundName === 'function')
+          ? getMaarifLetterSoundName(tileLower)
+          : tileLower;
+        audio.speakTurkishText(spokenSound);
+
+        matchedCount++;
+        updateActiveSlot(null);
+
+        if (matchedCount >= totalCount) {
+          setTimeout(() => kidsPointAnswer(pn, slotsRow, true), 450);
+        }
+      } else {
+        clearSelectedTile();
+        k1Reset(tileEl);
+        slot.classList.remove('kids-shake');
+        void slot.offsetWidth;
+        slot.classList.add('kids-shake');
+        setTimeout(() => slot.classList.remove('kids-shake'), 600);
+        kidsGentleWrong(tileEl);
+      }
+    };
+
+    const slotEls = (d.slots || []).map((s, idx) => {
+      const slot = k1El(`k1-case-slot kids-color-${idx % 4}`, `
+        <div class="k1-case-upper-badge">${s.upper}</div>
+        <div class="k1-case-drop-zone" data-slot-drop>?</div>
+      `);
+      slot.dataset.upper = s.upper;
+      slot.dataset.lower = String(s.upper).toLocaleLowerCase('tr-TR');
+      slot.setAttribute('role', 'button');
+      slot.tabIndex = 0;
+      attachInstantTouch(slot, () => {
+        if (!k1Active(pn) || slot.classList.contains('is-matched')) return;
+        if (selectedTileEl && !selectedTileEl.classList.contains('is-used')) {
+          tryMatch(selectedTileEl, slot);
+        } else {
+          audio.playClick();
+          updateActiveSlot(slot);
+        }
+      });
+      slotsRow.appendChild(slot);
+      return slot;
+    });
+
+    updateActiveSlot(slotEls[0]);
+
+    (d.tiles || []).forEach((t, idx) => {
+      const lowerChar = String(t.lower || String(t.upper).toLocaleLowerCase('tr-TR')).toLocaleLowerCase('tr-TR');
+      const tile = k1El(`kids-item k1-case-tile kids-color-${(idx + 1) % 4}`, `<span class="k1-case-tile-char">${lowerChar}</span>`);
+      tile.dataset.lower = lowerChar;
+      tile.setAttribute('role', 'button');
+      tile.tabIndex = 0;
+      tileEls.push(tile);
+
+      k1Drag(tile, {
+        canStart: () => k1Active(pn) && !tile.classList.contains('is-used'),
+        targets: () => slotEls.filter(s => !s.classList.contains('is-matched')),
+        onDrop: (hitSlot) => tryMatch(tile, hitSlot),
+        onTap: () => {
+          if (activeSlotEl && !activeSlotEl.classList.contains('is-matched') && activeSlotEl.dataset.lower === lowerChar) {
+            tryMatch(tile, activeSlotEl);
+          } else if (selectedTileEl === tile) {
+            tryMatch(tile, activeSlotEl);
+          } else {
+            clearSelectedTile();
+            selectedTileEl = tile;
+            tile.classList.add('is-selected-tile');
+            audio.playClick();
+          }
+        }
+      });
+
+      tilesRow.appendChild(tile);
+    });
+
+    stage.appendChild(slotsRow);
+    stage.appendChild(tilesRow);
+    root.appendChild(stage);
+  }
+
+  // ---------------- e) 🧩 Eksik Harfi Tamamla ----------------
+  function k1BuildMissingLetter(root, pn, d) {
+    // Üstteki Dinle butonunu "📢 Dinle" olarak güncelle ve kelimenin tamamını seslendir
+    const listenBtn = root.querySelector('.kids-listen-btn');
+    if (listenBtn) {
+      listenBtn.innerHTML = '<span class="kids-listen-icon">📢</span><span>Kelimeyi Dinle</span>';
+      listenBtn.onclick = (e) => {
+        e.stopPropagation();
+        audio.speakTurkishText(`${d.wordLower}!`);
+      };
+    }
+
+    const stage = k1El('k1-missing-letter-stage', '');
+    const wordRow = k1El('k1-missing-word-row', '');
+    let missingBoxEl = null;
+
+    (d.chars || []).forEach((ch, idx) => {
+      if (idx === d.missingIdx) {
+        const slot = k1El('k1-missing-char-box k1-missing-slot', '[ _ ]');
+        slot.setAttribute('role', 'button');
+        slot.tabIndex = 0;
+        missingBoxEl = slot;
+        wordRow.appendChild(slot);
+      } else {
+        const box = k1El('k1-missing-char-box', ch);
+        wordRow.appendChild(box);
+      }
+    });
+
+    const tilesRow = k1El('k1-missing-tiles-row', '');
+    let completed = false;
+
+    const tryComplete = (tileEl, chText, isRight) => {
+      if (!k1Active(pn) || completed) return;
+      const normTile = String(chText).toLocaleLowerCase('tr-TR');
+      const normExpected = String(d.missingChar).toLocaleLowerCase('tr-TR');
+
+      if (isRight || normTile === normExpected) {
+        completed = true;
+        tileEl.classList.add('is-used');
+        tileEl.style.pointerEvents = 'none';
+        if (missingBoxEl) {
+          missingBoxEl.textContent = d.missingChar;
+          missingBoxEl.classList.add('filled');
+        }
+        wordRow.classList.add('is-completed');
+        audio.playSnap();
+        audio.playCorrect();
+        audio.speakTurkishText(d.wordLower);
+        setTimeout(() => kidsPointAnswer(pn, wordRow, true), 550);
+      } else {
+        k1Reset(tileEl);
+        if (missingBoxEl) {
+          missingBoxEl.classList.remove('kids-shake');
+          void missingBoxEl.offsetWidth;
+          missingBoxEl.classList.add('kids-shake');
+          setTimeout(() => missingBoxEl.classList.remove('kids-shake'), 600);
+        }
+        kidsGentleWrong(tileEl);
+      }
+    };
+
+    (d.tiles || []).forEach((t, idx) => {
+      const tile = k1El(`kids-item k1-missing-tile kids-color-${idx % 4}`, `<span class="k1-missing-tile-char">${t.text}</span>`);
+      tile.setAttribute('role', 'button');
+      tile.tabIndex = 0;
+
+      k1Drag(tile, {
+        canStart: () => k1Active(pn) && !completed,
+        targets: () => missingBoxEl ? [missingBoxEl, wordRow] : [wordRow],
+        onDrop: () => tryComplete(tile, t.text, t.isCorrect),
+        onTap: () => tryComplete(tile, t.text, t.isCorrect)
+      });
+
+      tilesRow.appendChild(tile);
+    });
+
+    stage.appendChild(wordRow);
+    stage.appendChild(tilesRow);
+    root.appendChild(stage);
   }
 
   // ---------------- Matematik: Nesne Sayma ----------------
