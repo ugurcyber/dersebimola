@@ -20751,15 +20751,16 @@ body.is-game-active .universal-game-bgm-fab {
 }
 .k1-flying-balloon {
   position: relative;
-  width: 65px;
-  height: 80px;
+  min-width: 75px;
+  width: auto;
+  height: 85px;
+  padding: 0 12px;
   border-radius: 50% 50% 48% 48% / 55% 55% 45% 45%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  padding: 4px;
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
@@ -20791,10 +20792,12 @@ body.is-game-active .universal-game-bgm-fab {
 .k1-bcolor-5 { background: radial-gradient(circle at 32% 28%, #FBCFE8 0%, #EC4899 55%, #9D174D 100%); }
 
 .k1-balloon-letter {
-  font-size: 1.95rem;
-  font-weight: 900;
+  font-size: 24px;
+  font-weight: 800;
   color: #FFFFFF;
-  line-height: 1;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }

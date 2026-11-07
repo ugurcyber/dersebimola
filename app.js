@@ -21115,9 +21115,11 @@
       title: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
       icon: '🎈',
       badge: '🎈 Balon Patlatma',
-      featureTag: `🔤 "${letterUpper} ${letterLower}" Balonları`,
-      description: `Üzerinde [${letterUpper}] sesi olan uçan balonlara dokun ve patlat! 🎈💥`,
-      tags: [`🔤 "${letterUpper} ${letterLower}" Sesi`, '🎈 Uçan Balonlar', '🔊 Sesli Yönerge'],
+      featureTag: letterIdx === 0 ? `🔤 "${letterUpper} / ${letterLower}" Balonları` : `🔤 Harf, Hece & Kelime`,
+      description: letterIdx === 0
+        ? `Üzerinde "${letterUpper} / ${letterLower}" sesi olan balonları patlat! 🎈💥`
+        : `İçinde "[${letterUpper}]" sesi geçen harf, hece ve kelime balonlarını okuyup patlat! 🎈💥`,
+      tags: [`🔤 "${letterUpper} ${letterLower}" Sesi`, '🎈 Okuma Odaklı', '🔊 Sesli Okuma'],
       active: true
     });
 
@@ -24328,71 +24330,163 @@
     );
   }
 
-  // --- 🎈 UÇAN BALON AVCISI (BALON PATLATMA): Mevcut Harf ve Görsel Veri Havuzu ---
+  // --- 🎈 UÇAN BALON AVCISI (BALON PATLATMA): Kümülatif Harf, Hece ve Kelime Odaklı ---
   function generateK1BalloonPop() {
-    const activeL = (state.activeMaarifLetter || 'a').toLowerCase();
+    const activeL = String(state.activeMaarifLetter || 'a').toLocaleLowerCase('tr-TR');
     const upper = activeL.toLocaleUpperCase('tr-TR');
-    const lower = activeL.toLocaleLowerCase('tr-TR');
+    const lower = upper.toLocaleLowerCase('tr-TR');
     const mData = (typeof MAARIF_2026_CONFIG !== 'undefined' && MAARIF_2026_CONFIG.letters)
       ? (MAARIF_2026_CONFIG.letters[activeL] || MAARIF_2026_CONFIG.letters['a'])
       : null;
     const aData = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[upper]) ? ANETIL_DATA[upper] : null;
 
-    const hasVisuals = (aData && Array.isArray(aData.hasSoundItems) && aData.hasSoundItems.length > 0)
-      ? aData.hasSoundItems.map(it => ({ word: it.word, icon: it.icon || it.emoji }))
-      : ((mData && Array.isArray(mData.soundWords) && mData.soundWords.length > 0)
-        ? mData.soundWords.map(it => ({ word: it.word, icon: it.emoji || it.icon }))
-        : [{ word: 'Arı', icon: '🐝' }, { word: 'Elma', icon: '🍎' }, { word: 'Ayı', icon: '🐻' }]);
+    const containsTargetSound = (txt) => {
+      const s = String(txt || '');
+      return s.toLocaleLowerCase('tr-TR').includes(lower) || s.toLocaleUpperCase('tr-TR').includes(upper);
+    };
 
-    const noVisuals = (aData && Array.isArray(aData.noSoundItems) && aData.noSoundItems.length > 0)
-      ? aData.noSoundItems.map(it => ({ word: it.word, icon: it.icon || it.emoji }))
-      : ((mData && Array.isArray(mData.noSoundWords) && mData.noSoundWords.length > 0)
-        ? mData.noSoundWords.map(it => ({ word: it.word, icon: it.emoji || it.icon }))
-        : [{ word: 'Top', icon: '⚽' }, { word: 'Ev', icon: '🏠' }, { word: 'Süt', icon: '🥛' }]);
-
-    const learnedPool = (typeof getLearnedLettersUpTo === 'function')
-      ? getLearnedLettersUpTo(activeL).filter(ch => ch !== upper)
-      : [];
-    const fallbackDistractorLetters = ['E', 'T', 'L', 'N', 'O', 'K', 'M', 'S', 'B', 'U'].filter(ch => ch !== upper);
-    const distractorUpperPool = k1Shuffle([...new Set([...learnedPool, ...fallbackDistractorLetters])]);
-
-    const targets = [
-      { kind: 'letter', text: upper, isTarget: true },
-      { kind: 'letter', text: lower, isTarget: true },
-      { kind: 'letter', text: upper, isTarget: true },
-      { kind: 'letter', text: lower, isTarget: true }
-    ];
-    k1Shuffle(hasVisuals).slice(0, 4).forEach(v => {
-      targets.push({ kind: 'visual', icon: v.icon, word: v.word, isTarget: true });
-    });
-
+    const targets = [];
     const distractors = [];
-    distractorUpperPool.slice(0, 3).forEach((dUp, idx) => {
-      const charText = (idx % 2 === 1) ? dUp.toLocaleLowerCase('tr-TR') : dUp;
-      distractors.push({ kind: 'letter', text: charText, isTarget: false });
-    });
-    k1Shuffle(noVisuals).slice(0, 3).forEach(v => {
-      distractors.push({ kind: 'visual', icon: v.icon, word: v.word, isTarget: false });
-    });
+
+    if (upper === 'A') {
+      // İlk harf "A" sesindeyken balonların üzerinde SADECE tek harfler ("A", "a" ve çeldirici tek harfler) yer alır
+      targets.push(
+        { kind: 'text', text: 'A', isTarget: true },
+        { kind: 'text', text: 'a', isTarget: true },
+        { kind: 'text', text: 'A', isTarget: true },
+        { kind: 'text', text: 'a', isTarget: true },
+        { kind: 'text', text: 'A', isTarget: true },
+        { kind: 'text', text: 'a', isTarget: true },
+        { kind: 'text', text: 'A', isTarget: true }
+      );
+      const singleDistractorChars = k1Shuffle(['E', 'e', 'N', 'n', 'T', 't', 'L', 'l', 'O', 'o', 'K', 'k']);
+      singleDistractorChars.slice(0, 5).forEach(ch => {
+        distractors.push({ kind: 'text', text: ch, isTarget: false });
+      });
+    } else {
+      // "N" sesinden itibaren 1., 2., 3., 4. ve 5. grup harflerinde kümülatif (allowedLetters, syllables, words) havuzu
+      let rawSyllables = [];
+      let rawWords = [];
+      if (aData && Array.isArray(aData.syllables)) rawSyllables = aData.syllables.slice();
+      else if (mData && Array.isArray(mData.syllables)) rawSyllables = mData.syllables.slice();
+
+      if (aData && Array.isArray(aData.words)) rawWords = aData.words.slice();
+      else if (mData && Array.isArray(mData.words)) rawWords = mData.words.slice();
+      else if (mData && Array.isArray(mData.cumulativeWords)) {
+        rawWords = mData.cumulativeWords.map(cw => String(cw.word || '').toLocaleLowerCase('tr-TR')).filter(Boolean);
+      }
+
+      const targetSyllables = rawSyllables.filter(s => containsTargetSound(s));
+      const targetShortWords = rawWords.filter(w => {
+        const len = Array.from(String(w || '')).length;
+        return len >= 2 && len <= 5 && containsTargetSound(w);
+      });
+
+      const pickTargetText = () => {
+        const r = Math.random();
+        if (r < 0.30) {
+          return Math.random() < 0.5 ? upper : lower;
+        } else if (r < 0.65 && targetSyllables.length > 0) {
+          return k1Pick(targetSyllables);
+        } else if (targetShortWords.length > 0) {
+          return k1Pick(targetShortWords);
+        } else if (targetSyllables.length > 0) {
+          return k1Pick(targetSyllables);
+        }
+        return Math.random() < 0.5 ? upper : lower;
+      };
+
+      // En az 1 büyük/küçük tek ses, hece ve kısa kelime dengeli şekilde 7 doğru balona dağıtılır
+      const usedTargetTexts = [];
+      for (let i = 0; i < 7; i++) {
+        let candidate = pickTargetText();
+        if (i === 0) candidate = upper;
+        else if (i === 1) candidate = lower;
+        else if (i === 2 && targetSyllables.length > 0) candidate = k1Pick(targetSyllables);
+        else if (i === 3 && targetShortWords.length > 0) candidate = k1Pick(targetShortWords);
+        usedTargetTexts.push(candidate);
+        targets.push({ kind: 'text', text: candidate, isTarget: true });
+      }
+
+      // YANLIŞ (ÇELDİRİCİ) BALONLAR: Sadece önceki öğrenilen harfleri (allowedLetters) kullanan ve içinde hedef harf GEÇMEYEN tek ses, hece veya kelimeler
+      const allowedPairs = getStrictAllowedPairsForLetter(activeL).filter(p => p.upper !== upper && p.lower !== lower);
+      const distractorLetters = [];
+      allowedPairs.forEach(p => {
+        distractorLetters.push(p.upper, p.lower);
+      });
+
+      const distractorSyllables = [];
+      const distractorWords = [];
+
+      // Mevcut harf ve önceki öğrenilen harflerin hece/kelime havuzlarından sadece allowedLetters'a uygun ve hedef sesi İÇERMEYENLERİ topla
+      const collectFromLetterObj = (obj) => {
+        if (!obj) return;
+        if (Array.isArray(obj.syllables)) {
+          obj.syllables.forEach(s => {
+            if (s && !containsTargetSound(s) && isValidForCurrentLetter(s, upper) && !distractorSyllables.includes(s)) {
+              distractorSyllables.push(s);
+            }
+          });
+        }
+        if (Array.isArray(obj.words)) {
+          obj.words.forEach(w => {
+            const len = Array.from(String(w || '')).length;
+            if (w && len >= 2 && len <= 5 && !containsTargetSound(w) && isValidForCurrentLetter(w, upper) && !distractorWords.includes(w)) {
+              distractorWords.push(w);
+            }
+          });
+        }
+      };
+
+      collectFromLetterObj(aData);
+      if (typeof MAARIF_2026_CONFIG !== 'undefined' && Array.isArray(MAARIF_2026_CONFIG.letterOrder)) {
+        const curIdx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
+        for (let idx = 0; idx < curIdx; idx++) {
+          const prevLower = MAARIF_2026_CONFIG.letterOrder[idx];
+          const prevUpper = String(prevLower).toLocaleUpperCase('tr-TR');
+          if (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[prevUpper]) {
+            collectFromLetterObj(ANETIL_DATA[prevUpper]);
+          }
+        }
+      }
+
+      const allDistractorCandidates = k1Shuffle([
+        ...distractorLetters,
+        ...distractorSyllables,
+        ...distractorWords
+      ]);
+
+      for (let i = 0; i < 5; i++) {
+        let dText = allDistractorCandidates[i % Math.max(1, allDistractorCandidates.length)];
+        if (!dText) {
+          dText = distractorLetters[i % Math.max(1, distractorLetters.length)] || 'A';
+        }
+        distractors.push({ kind: 'text', text: dText, isTarget: false });
+      }
+    }
 
     const combined = k1Shuffle([...targets.slice(0, 7), ...distractors.slice(0, 5)]);
-    const lanes = [4, 13, 22, 31, 40, 49, 58, 66, 74, 81, 18, 62];
+    const lanes = [3, 12, 21, 30, 39, 48, 57, 65, 73, 79, 16, 60];
     const balloons = combined.map((b, i) => Object.assign({}, b, {
       colorIdx: i % 6,
       left: lanes[i % lanes.length],
-      duration: +(6.2 + (i % 4) * 0.65).toFixed(2),
+      duration: +(6.4 + (i % 4) * 0.65).toFixed(2),
       delay: +(i * 0.52).toFixed(2)
     }));
 
-    const promptText = `Üzerinde [${upper}] sesi olan balonlara dokun ve patlat!`;
-    const spokenText = `Üzerinde ${upper} sesi olan balonlara dokun ve patlat!`;
+    const promptText = (upper === 'A')
+      ? `Üzerinde "A / a" sesi olan balonları patlat!`
+      : `İçinde "${upper}" sesi geçen harf, hece ve kelime balonlarını okuyup patlat!`;
+    const spokenText = (upper === 'A')
+      ? `Üzerinde A sesi olan balonları patlat!`
+      : `İçinde ${upper} sesi geçen harf, hece ve kelime balonlarını okuyup patlat!`;
 
     return k1Base(
       'k1_phoneme_pop',
       `🎈 Uçan Balon Avcısı (${upper})`,
       promptText,
       spokenText,
-      `Harika avcı! Üzerinde [${upper}] sesi olan 5 balonu başarıyla patlattın! 🎈🌟`,
+      `Harika avcı! İçinde [${upper}] sesi olan 5 balonu başarıyla okuyup patlattın! 🎈🌟`,
       {
         letter: upper,
         lower: lower,
@@ -25132,9 +25226,8 @@
       riser.style.animationDuration = `${dur}s`;
       riser.style.animationDelay = `${del}s`;
 
-      const innerHtml = (b.kind === 'letter')
-        ? `<span class="k1-balloon-letter">${b.text}</span>`
-        : `<span class="k1-balloon-emoji">${replaceEmojisWith3D(b.icon || b.emoji || '🎈', 'k1-balloon-3d-icon')}</span><span class="k1-balloon-word">${b.word || ''}</span>`;
+      const balloonText = String(b.text || b.word || '').trim();
+      const innerHtml = `<span class="k1-balloon-letter">${escapeHtml(balloonText)}</span>`;
 
       const balloon = k1El(
         `kids-item k1-flying-balloon k1-bcolor-${(b.colorIdx !== undefined ? b.colorIdx : i) % 6}`,
@@ -25164,6 +25257,12 @@
           audio.playBalloonPop();
         } else {
           audio.playPop();
+        }
+        if (balloonText) {
+          const normTts = (Array.from(balloonText).length === 1 && typeof getMaarifLetterSoundName === 'function')
+            ? getMaarifLetterSoundName(balloonText.toLocaleLowerCase('tr-TR'))
+            : balloonText.toLocaleLowerCase('tr-TR');
+          audio.speakTurkishText(normTts);
         }
         riser.style.animationPlayState = 'paused';
         balloon.classList.remove('k1-balloon-wrong');
