@@ -21161,17 +21161,17 @@
       active: true
     });
 
-    // 7. KART: Hece ve Kelime Atölyesi
+    // 7. KART: 🚂 Hece ve Kelime Treni
     // SADECE [N n] ve sonraki seslerde (letterIdx >= 1) açılır!
     // [A a] (1. Ses) sekmesinde KESİNLİKLE GÖSTERİLMEZ!
     if (letterIdx >= 1) {
       games.push({
         id: 'maarif_word_train',
-        title: 'Hece ve Kelime Atölyesi',
+        title: '🚂 Hece ve Kelime Treni',
         icon: '🚂',
-        badge: '🧱 Dokun & Birleştir',
-        featureTag: '🧩 Harf Küpleri',
-        description: `Öğrenilen (${learnedStr}) harflerini sırayla birleştirerek anlamlı hece ve kelimeleri tamamla! 🧱✨`,
+        badge: '🚂 Sürükle & Birleştir',
+        featureTag: '🧩 Harf Vagonları',
+        description: `Görsele bak, öğrenilen (${learnedStr}) harflerinden oluşan vagonları sırayla trene bağla ve kelimeyi tamamla! 🚂✨`,
         tags: ['📖 Hece & Kelime', '🚂 Vagon Birleştir', '🔊 Sesli Okuma'],
         active: true
       });
@@ -24738,18 +24738,18 @@
     const validWords = rawWords.filter(w => isValidForCurrentLetter(w, upper));
     const candidateWords = validWords.length > 0 ? validWords : rawWords;
 
-    // WORD_IMAGE_MAP'te net karşılığı (somut resmi) bulunan kelimelere öncelik ver
+    // WORD_IMAGE_MAP içinde görsel karşılığı bulunan somut kelimeleri filtreleyip sor
     const mappedWords = candidateWords.filter(w => Boolean(lookupWordEmoji(w)));
     const mappedWithTarget = mappedWords.filter(w => String(w).toLocaleLowerCase('tr-TR').includes(activeL));
     const finalPool = mappedWithTarget.length > 0
       ? mappedWithTarget
-      : (mappedWords.length > 0 ? mappedWords : candidateWords);
+      : (mappedWords.length > 0 ? mappedWords : ['ana']);
 
     const chosenRaw = k1Pick(finalPool);
     const wordLower = String(chosenRaw).toLocaleLowerCase('tr-TR').trim();
     const wordUpper = wordLower.toLocaleUpperCase('tr-TR');
     const parts = Array.from(wordUpper);
-    const matchedEmoji = lookupWordEmoji(wordLower);
+    const matchedEmoji = lookupWordEmoji(wordLower) || WORD_IMAGE_MAP[wordLower] || '👩';
 
     // Ek vagonlar (çeldirici): SADECE bu harfe kadar öğrenilen harflerden (allowedLetters)!
     const allowedPairs = getStrictAllowedPairsForLetter(activeL);
@@ -24759,9 +24759,7 @@
 
     const wagons = k1Shuffle([...parts, ...extras]);
 
-    const promptText = matchedEmoji
-      ? `Görsele bak, dinle ve harf vagonlarını sırayla trene bağla!`
-      : `Sesi dinle ve harf vagonlarını sırayla trene bağla!`;
+    const promptText = `Görsele bak, dinle ve harf vagonlarını sırayla trene bağla!`;
     const spokenText = `${wordLower}! Harf vagonlarını sırayla trene bağla!`;
 
     return k1Base(
@@ -24773,8 +24771,7 @@
       {
         word: wordUpper,
         wordLower: wordLower,
-        emoji: matchedEmoji || null,
-        hasVisual: Boolean(matchedEmoji),
+        emoji: matchedEmoji,
         parts: parts,
         wagons: wagons
       }
@@ -25349,6 +25346,8 @@
   // ---------------- b) Hece ve Kelime Treni ----------------
   function k1BuildTrain(root, pn, d) {
     const targetWordLower = d.wordLower || k1Lower(d.word);
+    const mapDict = (typeof window !== 'undefined' && window.WORD_IMAGE_MAP) ? window.WORD_IMAGE_MAP : WORD_IMAGE_MAP;
+    const visualEmoji = mapDict[targetWordLower] || d.emoji || '👩';
 
     // Üstteki Dinle butonuna tıklandığında hedef kelimeyi seslendir
     const listenBtn = root.querySelector('.kids-listen-btn');
@@ -25359,29 +25358,14 @@
       };
     }
 
-    // 1) Trenin üzerindeki görsel en baştan BÜYÜK, NET ve AÇIK görünsün (blur/grayscale olmadan!)
-    // Eğer WORD_IMAGE_MAP'te somut görseli yoksa yanlış/alakasız emoji yerine şık bir "🔊 Sesli Dinle" ikonu göster
-    let reveal;
-    if (d.hasVisual && d.emoji) {
-      reveal = k1El('k1-reveal k1-train-visual-open', replaceEmojisWith3D(d.emoji, 'kids-card-icon'));
-      reveal.setAttribute('role', 'button');
-      reveal.tabIndex = 0;
-      attachInstantTouch(reveal, () => {
-        audio.playClick();
-        audio.speakTurkishText(targetWordLower);
-      });
-    } else {
-      reveal = k1El('k1-reveal k1-train-audio-badge', `
-        <button type="button" class="k1-train-listen-pill" aria-label="Sesli Dinle">
-          <span class="k1-train-listen-icon">🔊</span>
-          <span class="k1-train-listen-text">Sesli Dinle</span>
-        </button>
-      `);
-      attachInstantTouch(reveal, () => {
-        audio.playClick();
-        audio.speakTurkishText(targetWordLower);
-      });
-    }
+    // Soru ekrana geldiği ilk saniyeden itibaren hedef kelimenin görseli trenin üstünde BÜYÜK ve AÇIK olarak görünsün
+    const reveal = k1El('k1-reveal k1-train-visual-open', replaceEmojisWith3D(visualEmoji, 'kids-card-icon'));
+    reveal.setAttribute('role', 'button');
+    reveal.tabIndex = 0;
+    attachInstantTouch(reveal, () => {
+      audio.playClick();
+      audio.speakTurkishText(targetWordLower);
+    });
     root.appendChild(reveal);
 
     const row = k1El('k1-train-row', '<div class="k1-loco" aria-hidden="true">🚂</div>');
