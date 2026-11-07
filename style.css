@@ -21115,6 +21115,163 @@ body.is-game-active .universal-game-bgm-fab {
   }
 }
 
+/* Şimşek Kelime (Hızlı Okuma - k1_flash_word) */
+.k1-flash-word-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 10px 8px;
+  box-sizing: border-box;
+}
+.k1-flash-speed-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+.k1-flash-speed-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  color: #334155;
+  font-size: 0.98rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #CBD5E1;
+  transition: all 0.18s ease;
+}
+.k1-flash-speed-btn:hover {
+  transform: translateY(-2px);
+}
+.k1-flash-speed-btn.active {
+  background: linear-gradient(180deg, #FEF08A 0%, #FACC15 100%);
+  border-color: #CA8A04;
+  color: #1E293B;
+  box-shadow: 0 4px 0 #CA8A04, 0 6px 14px rgba(234, 179, 8, 0.28);
+}
+.k1-flash-display-box {
+  width: 100%;
+  min-height: 128px;
+  padding: 18px 22px;
+  border-radius: 26px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  border: 4px solid #38BDF8;
+  box-shadow: 0 8px 0 #0284C7, 0 12px 26px rgba(2, 132, 199, 0.14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+.k1-flash-display-box.is-solved {
+  border-color: #22C55E;
+  background: linear-gradient(180deg, #F0FDF4 0%, #DCFCE7 100%);
+  box-shadow: 0 8px 0 #16A34A, 0 12px 26px rgba(34, 197, 94, 0.24);
+}
+.k1-flash-ready-msg {
+  font-size: clamp(1.2rem, 3.8vw, 1.55rem);
+  font-weight: 900;
+  color: #0369A1;
+  animation: pulse 0.9s infinite alternate;
+}
+.k1-flash-word-text {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1.2;
+  font-family: 'Nunito', 'Comic Sans MS', sans-serif;
+  user-select: none;
+}
+.k1-flash-word-text.is-flashing {
+  animation: k1FlashWordGlow 0.55s ease-out;
+}
+@keyframes k1FlashWordGlow {
+  0% { transform: scale(0.75); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.k1-syl-red {
+  color: #DC2626;
+}
+.k1-syl-black {
+  color: #0F172A;
+}
+.k1-flash-again-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 20px;
+  border: 3px solid #2563EB;
+  background: linear-gradient(180deg, #60A5FA 0%, #2563EB 100%);
+  color: #FFFFFF;
+  font-size: clamp(1.1rem, 3.5vw, 1.35rem);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #1E40AF, 0 8px 18px rgba(37, 99, 235, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.k1-flash-again-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+.k1-flash-again-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #1E40AF;
+}
+.k1-flash-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(88px, 165px));
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.k1-flash-cards-row.is-waiting {
+  opacity: 0.22;
+  pointer-events: none;
+  filter: blur(4px);
+  transform: scale(0.96);
+}
+.k1-flash-visual-card {
+  min-height: clamp(104px, 22vw, 148px);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.k1-flash-visual-card .k1-flash-card-face {
+  font-size: clamp(3.2rem, 9vw, 4.6rem);
+  line-height: 1;
+}
+.k1-flash-visual-card .k1-flash-card-face img {
+  width: clamp(64px, 15vw, 96px);
+  height: clamp(64px, 15vw, 96px);
+  object-fit: contain;
+}
+.k1-flash-visual-card.is-correct-card {
+  background: linear-gradient(180deg, #DCFCE7 0%, #4ADE80 100%) !important;
+  border-color: #16A34A !important;
+  box-shadow: 0 8px 0 #15803D, 0 0 22px rgba(34, 197, 94, 0.5) !important;
+  transform: scale(1.06);
+}
+
 /* Tren */
 .k1-reveal { font-size: clamp(3.5rem, 12vw, 6rem); transition: opacity .4s ease, filter .4s ease; min-height: 100px; display: flex; align-items: center; justify-content: center; }
 .k1-reveal img { width: clamp(70px, 14vw, 120px); height: clamp(70px, 14vw, 120px); object-fit: contain; }

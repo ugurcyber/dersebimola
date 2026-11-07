@@ -3791,6 +3791,8 @@
         return generateK1CaseMatch();
       } else if (gameType === 'maarif_missing_letter') {
         return generateK1MissingLetter();
+      } else if (gameType === 'maarif_flash_word') {
+        return generateK1FlashWord();
       } else if (gameType === 'maarif_sound_find') {
         // 1) Sesi Hisset ve Bul (Görsel & İşitsel Algı)
         const subMode = Math.random() < 0.5 ? 'which_has' : 'has_or_not';
@@ -11879,6 +11881,7 @@
     maarif_phoneme_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
     maarif_case_match: '🔤 Büyük - Küçük Harf Eşleştir',
     maarif_missing_letter: '🧩 Eksik Harfi Tamamla',
+    maarif_flash_word: '⚡ Şimşek Kelime (Hızlı Okuma)',
     maarif_word_train: '🚂 Hece ve Kelime Treni',
     maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
     math_apple_count_1: '🍎 Elma Ağacı & Sayma',
@@ -12001,6 +12004,7 @@
       maarif_phoneme_pop: '🎈 Uçan Balon Avcısı (Balon Patlatma)',
       maarif_case_match: '🔤 Büyük - Küçük Harf Eşleştir',
       maarif_missing_letter: '🧩 Eksik Harfi Tamamla',
+      maarif_flash_word: '⚡ Şimşek Kelime (Hızlı Okuma)',
       maarif_word_train: 'Hece ve Kelime Treni',
       maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
       maarif_position: 'Başta mı, Ortada mı, Sonda mı?',
@@ -21141,7 +21145,19 @@
       active: true
     });
 
-    // 6. KART: Hece ve Kelime Atölyesi
+    // 6. KART: ⚡ Şimşek Kelime (Hızlı Okuma)
+    games.push({
+      id: 'maarif_flash_word',
+      title: '⚡ Şimşek Kelime (Hızlı Okuma)',
+      icon: '⚡',
+      badge: '⚡ Hızlı Okuma',
+      featureTag: '👁️ Bir Bakışta Oku',
+      description: `Ekranda parlayan renkli heceli kelimeyi bir bakışta oku, gizlenince doğru resmine dokun! ⚡🖼️`,
+      tags: ['⚡ Hızlı Okuma', '🎨 Renkli Heceler', '🖼️ Görsel Eşleştir'],
+      active: true
+    });
+
+    // 7. KART: Hece ve Kelime Atölyesi
     // SADECE [N n] ve sonraki seslerde (letterIdx >= 1) açılır!
     // [A a] (1. Ses) sekmesinde KESİNLİKLE GÖSTERİLMEZ!
     if (letterIdx >= 1) {
@@ -23899,6 +23915,7 @@
       case 'firstreading_balloon': return generateK1BalloonPop();
       case 'maarif_case_match': return generateK1CaseMatch();
       case 'maarif_missing_letter': return generateK1MissingLetter();
+      case 'maarif_flash_word': return generateK1FlashWord();
       case 'maarif_word_train':
       case 'syllable_builder':
       case 'turkish_sentence_punctuation_1': return generateK1WordTrain();
@@ -23937,6 +23954,7 @@
   window.generateK1BalloonPop = generateK1BalloonPop;
   window.generateK1CaseMatch = generateK1CaseMatch;
   window.generateK1MissingLetter = generateK1MissingLetter;
+  window.generateK1FlashWord = generateK1FlashWord;
   window.generateK1WordTrain = generateK1WordTrain;
   window.generateK1LetterBasket = generateK1LetterBasket;
   window.generateKidsGrade1Question = generateKidsGrade1Question;
@@ -24114,6 +24132,198 @@
         missingChar: missingChar,
         displayPattern: displayPattern,
         tiles: tiles
+      }
+    );
+  }
+
+  // --- ⚡ YENİ OYUN 3: ŞİMŞEK KELİME (HIZLI OKUMA) ---
+  const WORD_IMAGE_MAP = (typeof window !== 'undefined' && window.WORD_IMAGE_MAP) ? window.WORD_IMAGE_MAP : {
+    // 1. Grup (ANETİL)
+    'arı': '🐝', 'ayı': '🐻', 'araba': '🚗', 'elma': '🍎', 'aslan': '🦁',
+    'ana': '👩', 'anne': '👩‍👧', 'nane': '🌿',
+    'at': '🐴', 'et': '🥩', 'ata': '👴', 'tane': '🌾', 'anten': '📡', 'tat': '🍬',
+    'in': '🕳️', 'it': '🐶', 'nini': '👵', 'eti': '🍪',
+    'el': '✋', 'ela': '👧', 'lale': '🌷', 'aile': '👨‍👩‍👧', 'tel': '🧵', 'nal': '🧲', 'ali': '👦', 'tatil': '🏖️', 'atlet': '🏃',
+    // 2. Grup (OKURIM)
+    'on': '🔟', 'ot': '🌱', 'ok': '🏹', 'olta': '🎣', 'nota': '🎵', 'otel': '🏨', 'odun': '🪵', 'otobüs': '🚌',
+    'kek': '🧁', 'kale': '🏰', 'leke': '🫟', 'elek': '🥣', 'etek': '👗', 'inek': '🐮', 'toka': '🎀', 'koli': '📦', 'kilo': '⚖️', 'konak': '🏠', 'teneke': '🥫', 'kalem': '✏️', 'kedi': '🐱', 'köpek': '🐶',
+    'un': '🌾', 'kutu': '📦', 'oku': '📖', 'okul': '🏫', 'koku': '🌸', 'kulak': '👂', 'koltuk': '🛋️', 'uçak': '✈️',
+    'nar': '🍎', 'kar': '❄️', 'ter': '💧', 'tarak': '🪮', 'erik': '🍑', 'teker': '🛞', 'roket': '🚀', 'karton': '📦', 'tren': '🚂', 'radyo': '📻',
+    'atkı': '🧣', 'altı': '6️⃣', 'artı': '➕', 'tır': '🚛', 'tartı': '⚖️', 'tatlı': '🍰', 'tırnak': '💅', 'altın': '🪙', 'anıt': '🏛️', 'ıspanak': '🥬', 'ışık': '💡',
+    'armut': '🍐', 'marul': '🥬', 'limon': '🍋', 'ekmek': '🍞', 'makarna': '🍝', 'lokum': '🍬', 'kum': '🏖️', 'mum': '🕯️', 'orman': '🌲', 'ırmak': '🏞️', 'kemer': '🎗️', 'market': '🛒', 'masa': '🪑', 'maymun': '🐒', 'muz': '🍌',
+    // 3. Grup (ÜSÖYDZ)
+    'ütü': '💨', 'ülke': '🗺️', 'tül': '🪟', 'kül': '🪨', 'kütük': '🪵', 'tünel': '🚇', 'üzüm': '🍇', 'üç': '3️⃣',
+    'su': '💧', 'süt': '🥛', 'ses': '🔊', 'sis': '🌫️', 'süs': '🎀', 'saat': '⌚', 'kasa': '🧰', 'askı': '🧥', 'mısır': '🌽', 'sarı': '🟡', 'simit': '🥯', 'taksi': '🚕', 'resim': '🖼️', 'makas': '✂️', 'kasket': '🧢',
+    'kök': '🌱', 'örtü': '🧣', 'kömür': '🪨', 'traktör': '🚜', 'asansör': '🛗', 'önlük': '🎽', 'ördek': '🦆', 'örümcek': '🕷️',
+    'ay': '🌙', 'yay': '🏹', 'tay': '🐴', 'köy': '🏡', 'tüy': '🪶', 'kaya': '🪨', 'uyku': '😴', 'öykü': '📚', 'leylek': '🦩', 'kamyon': '🚚', 'tiyatro': '🎭', 'oyun': '🎮', 'koyun': '🐑', 'yastık': '🛌', 'kolye': '📿', 'yatak': '🛏️', 'yıldız': '⭐', 'yılan': '🐍', 'yumurta': '🥚',
+    'ada': '🏝️', 'oda': '🚪', 'dede': '👴', 'yedi': '7️⃣', 'dal': '🌿', 'dil': '👅', 'dört': '4️⃣', 'dere': '🏞️', 'duman': '💨', 'düdük': '🪈', 'dondurma': '🍦', 'domates': '🍅', 'sandalye': '🪑', 'madalya': '🏅', 'stadyum': '🏟️', 'davul': '🥁',
+    'kaz': '🪿', 'kız': '👧', 'tuz': '🧂', 'saz': '🪕', 'yaz': '☀️', 'yüz': '🏊', 'zil': '🔔', 'zar': '🎲', 'diz': '🦵', 'müze': '🏛️', 'kuzu': '🐑', 'yazı': '📝', 'zeytin': '🫒', 'deniz': '🌊', 'sekiz': '8️⃣', 'dokuz': '9️⃣', 'kırmızı': '🔴', 'zümrüt': '💎', 'sözlük': '📕', 'terazi': '⚖️', 'zebra': '🦓',
+    // 4. Grup (ÇBGCŞP)
+    'saç': '💇', 'taç': '👑', 'koç': '🐏', 'maç': '⚽', 'çay': '🍵', 'çam': '🌲', 'çan': '🔔', 'çit': '🚧', 'çöl': '🏜️', 'keçi': '🐐', 'uçurtma': '🪁', 'çilek': '🍓', 'çatal': '🍴', 'çekirdek': '🌻', 'çizme': '🥾', 'çekiç': '🔨', 'reçel': '🍯', 'kılıç': '⚔️', 'ilaç': '💊', 'çanta': '🎒', 'çörek': '🥐', 'çiçek': '🌸',
+    'bal': '🍯', 'buz': '🧊', 'bot': '🥾', 'baba': '👨', 'bebek': '👶', 'abla': '👩', 'soba': '🔥', 'balon': '🎈', 'balık': '🐟', 'tabak': '🍽️', 'kabak': '🎃', 'bardak': '🥛', 'bayrak': '🇹🇷', 'börek': '🥧', 'biber': '🌶️', 'badem': '🥜', 'sabun': '🧼', 'bisiklet': '🚲', 'kelebek': '🦋',
+    'göz': '👁️', 'gül': '🌹', 'göl': '🏞️', 'gol': '🥅', 'gemi': '🚢', 'karga': '🐦‍⬛', 'dalga': '🌊', 'dergi': '📖', 'silgi': '🧼', 'örgü': '🧶', 'süpürge': '🧹', 'gözlük': '👓', 'gömlek': '👔', 'gitar': '🎸', 'üçgen': '🔺', 'gezegen': '🪐',
+    'cam': '🪟', 'gece': '🌙', 'cüce': '🧙', 'baca': '🏠', 'yonca': '🍀', 'boncuk': '📿', 'oyuncak': '🧸', 'salıncak': '🎠', 'karınca': '🐜', 'ceket': '🧥', 'sucuk': '🌭', 'ocak': '🔥', 'böcek': '🐞', 'tencere': '🍲', 'pencere': '🪟', 'eczane': '🏥', 'civciv': '🐤', 'ceviz': '🌰',
+    'taş': '🪨', 'kaş': '🤨', 'kuş': '🐦', 'kış': '⛄', 'diş': '🦷', 'beş': '5️⃣', 'şal': '🧣', 'şişe': '🍾', 'meşe': '🌳', 'maşa': '🥢', 'kaşık': '🥄', 'beşik': '🛏️', 'şeker': '🍬', 'şemsiye': '☂️', 'güneş': '☀️', 'alkış': '👏',
+    'ip': '🪢', 'top': '⚽', 'tüp': '🧯', 'küp': '🧊', 'çöp': '🗑️', 'pil': '🔋', 'kapı': '🚪', 'küpe': '💍', 'tepe': '⛰️', 'para': '💵', 'pide': '🥖', 'köpük': '🫧', 'yaprak': '🍃', 'şapka': '🧢', 'çorap': '🧦', 'dolap': '🚪', 'kitap': '📚', 'karpuz': '🍉', 'papatya': '🌼', 'pijama': '👚', 'portakal': '🍊', 'peynir': '🧀', 'patates': '🥔', 'polis': '👮', 'kaptan': '👨‍✈️', 'şampiyon': '🏆', 'papağan': '🦜',
+    // 5. Grup (HVĞFJ)
+    'halı': '🧶', 'havuç': '🥕', 'hamsi': '🐟', 'hurma': '🌴', 'hamur': '🥐', 'helva': '🍮', 'hazine': '🪙', 'hastane': '🏥', 'helikopter': '🚁', 'kahve': '☕', 'bahçe': '🏡', 'sabah': '🌅', 'akşam': '🌆',
+    'ev': '🏠', 'vazo': '🏺', 'vagon': '🚃', 'vida': '🔩', 'vapur': '⛴️', 'vişne': '🍒', 'volkan': '🌋', 'kavanoz': '🫙', 'tavuk': '🐔', 'tavşan': '🐰', 'kahvaltı': '🍳', 'televizyon': '📺',
+    'dağ': '⛰️', 'yağ': '🧈', 'ağaç': '🌳', 'düğme': '🔘', 'iğne': '🪡', 'yağmur': '🌧️', 'bağ': '🍇',
+    'fil': '🐘', 'fare': '🐭', 'fındık': '🌰', 'fırça': '🪥', 'fener': '🔦', 'telefon': '📱', 'zürafa': '🦒',
+    'jet': '✈️', 'ruj': '💄', 'jant': '🛞', 'garaj': '🏠', 'mesaj': '💬', 'viraj': '🔄', 'jelibon': '🍬'
+  };
+  if (typeof window !== 'undefined' && !window.WORD_IMAGE_MAP) {
+    window.WORD_IMAGE_MAP = WORD_IMAGE_MAP;
+  }
+
+  function splitTurkishWordIntoSyllables(word) {
+    const w = String(word || '').toLocaleLowerCase('tr-TR').trim();
+    if (!w) return [];
+    const vowels = new Set(['a', 'e', 'ı', 'i', 'o', 'ö', 'u', 'ü']);
+    const chars = Array.from(w);
+    const vowelIndices = [];
+    chars.forEach((ch, idx) => {
+      if (vowels.has(ch)) vowelIndices.push(idx);
+    });
+    if (vowelIndices.length <= 1) return [w];
+
+    const syllables = [];
+    let start = 0;
+    for (let i = 0; i < vowelIndices.length - 1; i++) {
+      const v1 = vowelIndices[i];
+      const v2 = vowelIndices[i + 1];
+      const consonantsBetween = v2 - v1 - 1;
+      let splitAt;
+      if (consonantsBetween <= 0) {
+        splitAt = v1 + 1;
+      } else if (consonantsBetween === 1) {
+        splitAt = v1 + 1;
+      } else if (consonantsBetween === 2) {
+        splitAt = v1 + 2;
+      } else {
+        splitAt = v1 + 3;
+      }
+      syllables.push(chars.slice(start, splitAt).join(''));
+      start = splitAt;
+    }
+    syllables.push(chars.slice(start).join(''));
+    return syllables;
+  }
+
+  function renderColoredSyllableWordHtml(word) {
+    const syllables = splitTurkishWordIntoSyllables(word);
+    return syllables.map((syl, idx) => {
+      const cls = (idx % 2 === 0) ? 'k1-syl-red' : 'k1-syl-black';
+      return `<span class="${cls}">${escapeHtml(syl)}</span>`;
+    }).join('');
+  }
+
+  function generateK1FlashWord() {
+    const activeL = String(state.activeMaarifLetter || 'a').toLocaleLowerCase('tr-TR');
+    const targetUpper = activeL.toLocaleUpperCase('tr-TR');
+    const aData = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[targetUpper]) ? ANETIL_DATA[targetUpper] : null;
+    const mData = (typeof MAARIF_2026_CONFIG !== 'undefined' && MAARIF_2026_CONFIG.letters) ? MAARIF_2026_CONFIG.letters[activeL] : null;
+
+    const mapDict = (typeof window !== 'undefined' && window.WORD_IMAGE_MAP) ? window.WORD_IMAGE_MAP : WORD_IMAGE_MAP;
+    const getWordEmoji = (w) => {
+      const lw = String(w || '').toLocaleLowerCase('tr-TR').trim();
+      const uw = lw.toLocaleUpperCase('tr-TR');
+      return mapDict[lw] || mapDict[uw] || mapDict[w] || null;
+    };
+
+    let rawWords = [];
+    if (aData && Array.isArray(aData.words) && aData.words.length > 0) {
+      rawWords = aData.words.slice();
+    } else if (mData && Array.isArray(mData.words) && mData.words.length > 0) {
+      rawWords = mData.words.slice();
+    } else if (mData && Array.isArray(mData.cumulativeWords) && mData.cumulativeWords.length > 0) {
+      rawWords = mData.cumulativeWords.map(cw => cw.word || '').filter(Boolean);
+    }
+
+    // 1. Ses 'A' gibi words dizisi boş olan veya görseli az olan seslerde o harfe kadar öğrenilen kelimeleri ve hasSoundItems verisini kontrol et
+    let visualWordPool = [];
+    const seenWords = new Set();
+    const addCandidate = (w, fallbackIcon) => {
+      const lw = String(w || '').toLocaleLowerCase('tr-TR').trim();
+      if (!lw || seenWords.has(lw)) return;
+      const icon = getWordEmoji(lw) || fallbackIcon;
+      if (icon && Array.from(icon)[0] && icon.length <= 8) {
+        seenWords.add(lw);
+        visualWordPool.push({ word: lw, emoji: icon });
+      }
+    };
+
+    rawWords.forEach(w => addCandidate(w, null));
+
+    if (visualWordPool.length === 0 && typeof MAARIF_2026_CONFIG !== 'undefined' && Array.isArray(MAARIF_2026_CONFIG.letterOrder)) {
+      const idx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
+      for (let i = idx; i >= 0; i--) {
+        const lKey = MAARIF_2026_CONFIG.letterOrder[i];
+        const uKey = lKey.toLocaleUpperCase('tr-TR');
+        const ad = (typeof ANETIL_DATA !== 'undefined') ? ANETIL_DATA[uKey] : null;
+        if (ad && Array.isArray(ad.words)) {
+          ad.words.forEach(w => addCandidate(w, null));
+        }
+      }
+    }
+
+    if (visualWordPool.length === 0 && aData && Array.isArray(aData.hasSoundItems)) {
+      aData.hasSoundItems.forEach(it => addCandidate(it.word, it.icon || it.emoji));
+    }
+    if (visualWordPool.length === 0) {
+      addCandidate('lale', '🌷');
+      addCandidate('araba', '🚗');
+      addCandidate('kedi', '🐱');
+    }
+
+    // Hedef harfi içeren görselli kelimelere öncelik ver
+    const withTargetLetter = visualWordPool.filter(item => item.word.includes(activeL));
+    const targetPool = withTargetLetter.length > 0 ? withTargetLetter : visualWordPool;
+    const targetItem = k1Pick(targetPool);
+
+    // Çeldirici resimler (farklı emojiye sahip diğer görselli kelimeler)
+    const allVisualCandidates = [];
+    Object.keys(mapDict).forEach(k => {
+      const em = mapDict[k];
+      if (em && em !== targetItem.emoji && !allVisualCandidates.some(c => c.emoji === em)) {
+        allVisualCandidates.push({ word: k, emoji: em });
+      }
+    });
+
+    const samePoolDistractors = k1Shuffle(visualWordPool.filter(it => it.emoji !== targetItem.emoji));
+    const chosenDistractors = [];
+    samePoolDistractors.forEach(d => {
+      if (chosenDistractors.length < 2 && !chosenDistractors.some(x => x.emoji === d.emoji)) {
+        chosenDistractors.push(d);
+      }
+    });
+    k1Shuffle(allVisualCandidates).forEach(d => {
+      if (chosenDistractors.length < 2 && !chosenDistractors.some(x => x.emoji === d.emoji)) {
+        chosenDistractors.push(d);
+      }
+    });
+
+    const cards = k1Shuffle([
+      { word: targetItem.word, emoji: targetItem.emoji, isTarget: true },
+      ...chosenDistractors.slice(0, 2).map(d => ({ word: d.word, emoji: d.emoji, isTarget: false }))
+    ]);
+
+    const coloredWordHtml = renderColoredSyllableWordHtml(targetItem.word);
+    const promptText = `Ekranda parlayan kelimeyi hızlıca oku ve doğru resmine dokun!`;
+    const spokenText = `Hazır mısın? Kelimeye dikkatli bak, hızlıca oku ve doğru resmine dokun!`;
+
+    return k1Base(
+      'k1_flash_word',
+      `⚡ Şimşek Kelime (${targetUpper})`,
+      promptText,
+      spokenText,
+      `Süper hızlı okuma! "${targetItem.word}" kelimesini bir bakışta okudun ve resmini buldun! ⚡🌟`,
+      {
+        letter: targetUpper,
+        word: targetItem.word,
+        emoji: targetItem.emoji,
+        coloredWordHtml: coloredWordHtml,
+        cards: cards
       }
     );
   }
@@ -24659,6 +24869,7 @@
       case 'k1_phoneme_pop': return k1Mount(q, k1BuildPhonemePop);
       case 'k1_case_match': return k1Mount(q, k1BuildCaseMatch);
       case 'k1_missing_letter': return k1Mount(q, k1BuildMissingLetter);
+      case 'k1_flash_word': return k1Mount(q, k1BuildFlashWord);
       case 'k1_train': return k1Mount(q, k1BuildTrain);
       case 'k1_basket': return k1Mount(q, k1BuildLetterBasket);
       case 'k1_count': return k1Mount(q, k1BuildCount);
@@ -25282,6 +25493,172 @@
     stage.appendChild(wordRow);
     stage.appendChild(tilesRow);
     root.appendChild(stage);
+  }
+
+  // ---------------- f) ⚡ Şimşek Kelime (Hızlı Okuma) ----------------
+  function k1BuildFlashWord(root, pn, d) {
+    if (!state.k1FlashSpeedMode) {
+      state.k1FlashSpeedMode = 'normal';
+    }
+    const speedConfigs = {
+      slow: { id: 'slow', label: '🐢 Yavaş (3.5 sn)', ms: 3500 },
+      normal: { id: 'normal', label: '🐇 Normal (2 sn)', ms: 2500 },
+      fast: { id: 'fast', label: '🚀 Hızlı (1 sn)', ms: 1000 }
+    };
+
+    const stage = k1El('k1-flash-word-stage', '');
+
+    // 1) Üstte 3 kolay hız butonu
+    const speedBar = k1El('k1-flash-speed-bar', '');
+    const speedBtns = {};
+    ['slow', 'normal', 'fast'].forEach(key => {
+      const cfg = speedConfigs[key];
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `k1-flash-speed-btn${state.k1FlashSpeedMode === key ? ' active' : ''}`;
+      btn.innerHTML = replaceEmojisWith3D(cfg.label, 'chip-3d-icon');
+      attachInstantTouch(btn, () => {
+        if (!k1Active(pn) || completed) return;
+        state.k1FlashSpeedMode = key;
+        Object.keys(speedBtns).forEach(k => {
+          speedBtns[k].classList.toggle('active', k === key);
+        });
+        audio.playClick();
+        flashWordNow(cfg.ms, false);
+      });
+      speedBtns[key] = btn;
+      speedBar.appendChild(btn);
+    });
+    stage.appendChild(speedBar);
+
+    // 2) Ortadaki büyük sahne kutusu
+    const flashBox = k1El('k1-flash-display-box', '');
+    const readyEl = k1El('k1-flash-ready-msg', '⚡ Hazır mısın? Kelimeye dikkatli bak!');
+    const wordEl = k1El('k1-flash-word-text hide', d.coloredWordHtml || escapeHtml(d.word));
+    const againBtn = document.createElement('button');
+    againBtn.type = 'button';
+    againBtn.className = 'k1-flash-again-btn hide';
+    againBtn.innerHTML = `${replaceEmojisWith3D('👁️', 'chip-3d-icon')} <span>Tekrar Göster</span>`;
+
+    flashBox.appendChild(readyEl);
+    flashBox.appendChild(wordEl);
+    flashBox.appendChild(againBtn);
+    stage.appendChild(flashBox);
+
+    // 3) Altta 3 adet BÜYÜK GÖRSEL KART (Sadece resim/emoji, yazılı kopya olmadan)
+    const cardsGrid = k1El('k1-flash-cards-row is-waiting', '');
+    const cardEls = [];
+    let completed = false;
+    let canSelectCards = false;
+    let timerReady = null;
+    let timerHide = null;
+
+    const clearFlashTimers = () => {
+      if (timerReady) { clearTimeout(timerReady); timerReady = null; }
+      if (timerHide) { clearTimeout(timerHide); timerHide = null; }
+    };
+
+    const showHiddenState = () => {
+      if (!flashBox.isConnected || completed) return;
+      readyEl.classList.add('hide');
+      wordEl.classList.add('hide');
+      wordEl.classList.remove('is-flashing');
+      againBtn.classList.remove('hide');
+      cardsGrid.classList.remove('is-waiting');
+      canSelectCards = true;
+    };
+
+    const flashWordNow = (durationMs, withReadyIntro) => {
+      if (!flashBox.isConnected || completed) return;
+      clearFlashTimers();
+      againBtn.classList.add('hide');
+
+      if (withReadyIntro) {
+        canSelectCards = false;
+        cardsGrid.classList.add('is-waiting');
+        wordEl.classList.add('hide');
+        readyEl.classList.remove('hide');
+        timerReady = setTimeout(() => {
+          if (!flashBox.isConnected || completed) return;
+          readyEl.classList.add('hide');
+          wordEl.classList.remove('hide');
+          wordEl.classList.add('is-flashing');
+          audio.playPop();
+          timerHide = setTimeout(() => {
+            showHiddenState();
+          }, durationMs);
+        }, 1000);
+      } else {
+        readyEl.classList.add('hide');
+        wordEl.classList.remove('hide');
+        wordEl.classList.add('is-flashing');
+        audio.playPop();
+        timerHide = setTimeout(() => {
+          showHiddenState();
+        }, durationMs);
+      }
+    };
+
+    attachInstantTouch(againBtn, () => {
+      if (!k1Active(pn) || completed) return;
+      audio.playClick();
+      flashWordNow(2000, false);
+    });
+
+    (d.cards || []).forEach((c, idx) => {
+      const card = k1El(`kids-card k1-flash-visual-card kids-color-${idx % 4}`, `
+        <span class="kids-face k1-flash-card-face">${replaceEmojisWith3D(c.emoji, 'kids-card-icon')}</span>
+      `);
+      card.setAttribute('role', 'button');
+      card.tabIndex = 0;
+      cardEls.push(card);
+
+      attachInstantTouch(card, () => {
+        if (!k1Active(pn) || completed || !canSelectCards) return;
+
+        if (c.isTarget) {
+          completed = true;
+          clearFlashTimers();
+          card.classList.add('is-correct-card');
+          readyEl.classList.add('hide');
+          againBtn.classList.add('hide');
+          wordEl.classList.remove('hide');
+          wordEl.classList.add('is-flashing', 'is-solved');
+          flashBox.classList.add('is-solved');
+
+          audio.playCorrect();
+          audio.speakTurkishText(d.word);
+
+          const rect = card.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          if (typeof particles !== 'undefined' && particles && typeof particles.burst === 'function') {
+            particles.burst(cx, cy, 'stars');
+          }
+          if (typeof spawnFloatingScore === 'function') {
+            spawnFloatingScore(cx, cy, '+1 ⭐ Yıldız', false);
+          }
+
+          setTimeout(() => kidsPointAnswer(pn, card, true), 650);
+        } else {
+          audio.playWrong();
+          card.classList.remove('kids-shake');
+          void card.offsetWidth;
+          card.classList.add('kids-shake');
+          setTimeout(() => card.classList.remove('kids-shake'), 600);
+          // Yanlışsa kelime üstte 1.5 saniye tekrar gösterilip çocuğa yeniden deneme şansı verilsin
+          flashWordNow(1500, false);
+        }
+      });
+
+      cardsGrid.appendChild(card);
+    });
+
+    stage.appendChild(cardsGrid);
+    root.appendChild(stage);
+
+    const initialCfg = speedConfigs[state.k1FlashSpeedMode] || speedConfigs.normal;
+    flashWordNow(initialCfg.ms, true);
   }
 
   // ---------------- Matematik: Nesne Sayma ----------------
