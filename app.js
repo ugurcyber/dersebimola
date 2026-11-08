@@ -1846,19 +1846,28 @@
   // =============================================================
   // 🛡️ PEDAGOJİK GÜVENLİK VE KARA LİSTE FİLTRESİ (SAFE WORD FILTER)
   // =============================================================
-  const FORBIDDEN_SYLLABLES = [
-    "am", "sik", "sık", "göt", "bok", "piç", "mal", "salak", "aptal", "ul", "an", "ani"
+  const FORBIDDEN_WORDS = [
+    "am", "sik", "sık", "göt", "bok", "piç", "mal", "salak", "aptal",
+    "kıç", "meme", "çiş", "kaka", "apt", "ger", "döl", "em", "ul", "an", "ani"
   ];
+  const FORBIDDEN_SYLLABLES = FORBIDDEN_WORDS;
+  window.FORBIDDEN_WORDS = FORBIDDEN_WORDS;
   window.FORBIDDEN_SYLLABLES = FORBIDDEN_SYLLABLES;
+
+  const TURKISH_VOWELS = ["a", "e", "i", "o", "u", "ı", "ü", "ö"];
+  const TURKISH_CONSONANTS = ["n", "t", "l", "k", "r", "m", "s", "y", "d", "z", "ç", "b", "g", "c", "ş", "p", "h", "v", "ğ", "f", "j"];
+  window.TURKISH_VOWELS = TURKISH_VOWELS;
+  window.TURKISH_CONSONANTS = TURKISH_CONSONANTS;
 
   function isForbiddenSyllableOrWord(text) {
     if (!text) return false;
     const norm = String(text).toLocaleLowerCase('tr-TR').trim();
     if (!norm) return false;
-    if (FORBIDDEN_SYLLABLES.includes(norm)) return true;
+    if (norm.startsWith('ğ')) return true;
+    if (FORBIDDEN_WORDS.includes(norm)) return true;
     const tokens = norm.split(/[\s.,!?;:'"()\-–—]+/).filter(Boolean);
     for (const tk of tokens) {
-      if (FORBIDDEN_SYLLABLES.includes(tk)) return true;
+      if (tk.startsWith('ğ') || FORBIDDEN_WORDS.includes(tk)) return true;
     }
     return false;
   }
@@ -1876,6 +1885,118 @@
     });
   }
   window.filterSafePool = filterSafePool;
+
+  // =============================================================
+  // 🧠 1) AKILLI TÜRKÇE HECE ÜRETİCİ (KURALLI & GÜVENLİ: VC, CV, CVC)
+  // =============================================================
+  function generateSafeSyllables(currentLetter, allowedLetters) {
+    const target = String(currentLetter || '').toLocaleLowerCase('tr-TR').trim();
+    if (!target || target === 'a') return [];
+
+    let allowedRaw = Array.isArray(allowedLetters) ? allowedLetters : [];
+    if (allowedRaw.length === 0 && typeof ANETIL_DATA !== 'undefined') {
+      const up = target.toLocaleUpperCase('tr-TR');
+      if (ANETIL_DATA[up] && Array.isArray(ANETIL_DATA[up].allowedLetters)) {
+        allowedRaw = ANETIL_DATA[up].allowedLetters;
+      }
+    }
+
+    // İ/I çapraz sızıntısını önlemek için sadece hem büyük hem küçük hali izinli olan (veya hedef harf olan) sesleri al
+    const rawSet = new Set(allowedRaw.map(c => String(c)));
+    const allowedLowers = new Set();
+    allowedRaw.forEach(ch => {
+      const lo = String(ch).toLocaleLowerCase('tr-TR');
+      const up = lo.toLocaleUpperCase('tr-TR');
+      if ((rawSet.has(lo) && rawSet.has(up)) || lo === target) {
+        allowedLowers.add(lo);
+      }
+    });
+    allowedLowers.add(target);
+
+    const activeVowels = TURKISH_VOWELS.filter(v => allowedLowers.has(v));
+    const activeConsonants = TURKISH_CONSONANTS.filter(c => allowedLowers.has(c));
+    if (activeVowels.length === 0 || activeConsonants.length === 0) return [];
+
+    const results = [];
+    const seen = new Set();
+
+    const tryAdd = (syl) => {
+      if (!syl) return;
+      const s = syl.toLocaleLowerCase('tr-TR');
+      if (seen.has(s)) return;
+      // Hedef harf mutlaka hecede bulunmalı
+      if (!s.includes(target)) return;
+      // Türkçe'de kelime/hece başında "ğ" olamaz ve kara listedeki hiçbir ifade üretilemez
+      if (s.startsWith('ğ')) return;
+      if (FORBIDDEN_WORDS.includes(s) || isForbiddenSyllableOrWord(s)) return;
+      seen.add(s);
+      results.push(s);
+    };
+
+    // 1) Ünlü + Ünsüz [VC]
+    for (const v of activeVowels) {
+      for (const c of activeConsonants) {
+        tryAdd(v + c);
+      }
+    }
+
+    // 2) Ünsüz + Ünlü [CV] (Başta 'ğ' hariç)
+    for (const c of activeConsonants) {
+      if (c === 'ğ') continue;
+      for (const v of activeVowels) {
+        tryAdd(c + v);
+      }
+    }
+
+    // 3) Ünsüz + Ünlü + Ünsüz [CVC] (Başta 'ğ' hariç)
+    const sonorantOrCommonCodas = ["l", "n", "r", "t", "k", "m", "s", "y", "z", "ç", "p", "ş", "ğ"];
+    const activeCodas = activeConsonants.filter(c => sonorantOrCommonCodas.includes(c) || c === target);
+    for (const c1 of activeConsonants) {
+      if (c1 === 'ğ') continue;
+      for (const v of activeVowels) {
+        for (const c2 of activeCodas) {
+          // Sadece hedef sesi içeren anlamlı/okunabilir CVC kombinasyonları
+          if (c1 !== target && v !== target && c2 !== target) continue;
+          tryAdd(c1 + v + c2);
+        }
+      }
+    }
+
+    return results;
+  }
+  window.generateSafeSyllables = generateSafeSyllables;
+
+  // =============================================================
+  // 📖 2) DEV TÜRKÇE GERÇEK KELİME HAVUZU (MASTER_SAFE_TURKISH_WORDS)
+  // =============================================================
+  const MASTER_SAFE_TURKISH_WORDS = [
+    "at", "el", "tel", "al", "il", "et", "ten", "ant", "nil", "ela", "lale", "nane", "anne", "nine", "atlet", "alan", "aile", "nal", "tan", "tat", "tin", "it", "in",
+    "on", "ot", "ol", "ton", "not", "alo", "olta", "nota", "otel", "atlı", "ak", "ek", "ok", "kek", "kok", "kale", "leke", "elek", "etek", "inek", "toka", "koli", "kilo", "konak", "keten", "teneke", "nakit", "antika", "kan", "kol", "kat", "kot", "kel", "kil",
+    "un", "kutu", "oku", "okul", "koku", "tutku", "konuk", "kulak", "tutkal", "koltuk", "ulak", "kul", "kut",
+    "nar", "nur", "kar", "kor", "kur", "ter", "tur", "ara", "eri", "iri", "kuru", "tarak", "orak", "erik", "teker", "roket", "karton", "tren", "renk", "kral",
+    "arı", "atkı", "altı", "artı", "kır", "tır", "tartı", "tatlı", "kırık", "tırnak", "akıllı", "tarık", "altın", "anıt", "kanıt", "tıkır", "kıl", "kın",
+    "elma", "armut", "marul", "limon", "ekmek", "makarna", "lokum", "kum", "mum", "orman", "ırmak", "kemer", "mermer", "market", "minik", "mimar", "kalem", "rakam", "mama", "imla",
+    "ün", "ümit", "ütü", "ütülü", "ülke", "tül", "kül", "kürk", "türk", "türkü", "ülkü", "ünlü", "kütük", "kültür", "tünel", "mümkün", "üç",
+    "su", "süt", "ses", "sis", "süs", "saat", "masa", "kasa", "kısa", "askı", "eski", "mısır", "sarı", "sürü", "süslü", "sütlü", "simit", "taksi", "resim", "makas", "kasket", "sal", "sol", "son", "kas", "kes",
+    "ön", "öt", "ör", "kök", "kör", "sök", "örtü", "örnek", "kömür", "tören", "aktör", "traktör", "asansör", "önlük", "öksürük", "göl", "çöl",
+    "ay", "yay", "tay", "koy", "soy", "say", "ray", "köy", "tüy", "ayı", "kıyı", "sayı", "kaya", "maya", "yaya", "uyku", "öykü", "eylül", "leylek", "kamyon", "tiyatro", "oyun", "koyun", "yastık", "kolye", "söyle", "yatak",
+    "ada", "oda", "dede", "kedi", "yedi", "dal", "dil", "dört", "dost", "duyu", "uydu", "dere", "deri", "ordu", "ördek", "demir", "duman", "müdür", "düdük", "dondurma", "domates", "sandalye", "madalya", "radyo",
+    "kaz", "kız", "tuz", "toz", "saz", "söz", "yaz", "yüz", "zil", "zar", "zor", "muz", "diz", "düz", "taze", "müze", "kuzu", "yazı", "kaza", "uzun", "üzüm", "zeytin", "yıldız", "deniz", "sekiz", "dokuz", "otuz", "kırmızı", "temiz", "zümrüt", "sözlük", "terazi",
+    "saç", "seç", "taç", "koç", "maç", "kaç", "çay", "çam", "çan", "çit", "keçi", "ölçü", "elçi", "uçak", "uçurtma", "çilek", "çatal", "çekirdek", "çizme", "çekiç", "reçel", "tarçın", "kılıç", "ilaç", "kireç", "yamaç", "çanta", "çörek",
+    "bal", "bel", "bol", "buz", "biz", "bez", "bot", "boy", "bey", "baba", "bebek", "abla", "soba", "bornoz", "balon", "balık", "tabak", "kabak", "bardak", "bayrak", "börek", "biber", "badem", "sabun", "otobüs", "bisiklet", "kelebek", "leblebi",
+    "gaz", "göz", "güz", "gül", "gün", "gol", "gemi", "gezi", "gaga", "karga", "dalga", "damga", "sergi", "dergi", "silgi", "bilgi", "çizgi", "saygı", "duygu", "örgü", "süpürge", "gözlük", "gömlek", "gitar", "üçgen", "gezegen",
+    "cam", "can", "caz", "sac", "acı", "gece", "cüce", "baca", "koca", "amca", "yonca", "boncuk", "oyuncak", "salıncak", "karınca", "örümcek", "ceket", "sucuk", "cacık", "sıcak", "ocak", "kucak", "böcek", "tencere", "pencere", "eczane",
+    "taş", "kaş", "baş", "kuş", "kış", "koş", "boş", "diş", "düş", "beş", "şal", "şut", "şiş", "şişe", "meşe", "neşe", "köşe", "maşa", "çarşı", "karşı", "kaşık", "beşik", "eşik", "ışık", "şeker", "şemsiye", "güneş", "gümüş", "alkış", "yokuş", "kardeş", "arkadaş", "çamaşır", "bulaşık", "güreş",
+    "ip", "top", "tüp", "küp", "çöp", "cep", "sap", "kap", "kep", "pil", "pas", "pay", "kapı", "yapı", "tapu", "küpe", "tepe", "depo", "para", "pire", "püre", "pide", "köpek", "köpük", "toprak", "yaprak", "şapka", "çorap", "dolap", "kitap", "kasap", "karpuz", "ıspanak", "papatya", "pijama", "portakal", "peynir", "patates", "pazar", "polis", "kaptan", "şampiyon",
+    "hal", "hak", "hala", "hoca", "hata", "hızlı", "hasta", "havuç", "halı", "hamsi", "hurma", "hamur", "helva", "hazine", "hastane", "helikopter", "kahve", "bahçe", "sabah", "akşam", "çiçek",
+    "av", "ev", "var", "ver", "vazo", "vagon", "vida", "vadi", "vapur", "vişne", "volkan", "kavanoz", "tavuk", "tavşan", "davul", "görev", "kahvaltı", "televizyon",
+    "dağ", "sağ", "çiğ", "ağrı", "oğul", "yağmur", "dağcı", "ağaç", "düğme", "düğün", "çağrı", "öğüt", "öğrenci", "öğretmen", "fotoğraf",
+    "fil", "fok", "fide", "fener", "fare", "fabrika", "futbol", "fıstık", "fırın", "fırça", "çiftçi", "telefon", "forma",
+    "jilet", "jet", "jandarma", "jeton", "ajanda", "bagaj", "garaj", "müjde", "viraj", "baraj", "bavul",
+    // Erken grup destekleyici gerçek Türkçe kelimeler
+    "ana", "ata", "tane", "anten", "eti", "nini", "ali", "tatil", "ukala", "kırlent"
+  ];
+  window.MASTER_SAFE_TURKISH_WORDS = MASTER_SAFE_TURKISH_WORDS;
 
   const ANETIL_DATA = {
     "A": {
@@ -2368,12 +2489,157 @@
         "Volkan, vapur ile gez.",
         "Vahit, kahvaltıda zeytin ye."
       ]
+    },
+    "Ğ": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "G", "C", "Ş", "P", "H", "V", "Ğ", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b", "g", "c", "ş", "p", "h", "v", "ğ"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Ağaç", icon: "🌳", hasĞ: true },
+        { word: "Yağmur", icon: "🌧️", hasĞ: true },
+        { word: "Düğme", icon: "🔘", hasĞ: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasĞ: false },
+        { word: "Elma", icon: "🍎", hasĞ: false }
+      ],
+      syllables: ["ağ", "eğ", "iğ", "oğ", "uğ", "ığ", "üğ", "öğ", "dağ", "sağ", "bağ", "yağ", "çiğ", "düğ"],
+      words: ["dağ", "sağ", "çiğ", "ağrı", "oğul", "yağmur", "dağcı", "ağaç", "düğme", "düğün", "çağrı", "öğüt", "öğrenci", "öğretmen"],
+      sentences: [
+        "Dağda yağmur yağdı.",
+        "Ağaçta kuş öttü.",
+        "Öğretmen öğrenciye öğüt verdi."
+      ]
+    },
+    "F": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "G", "C", "Ş", "P", "H", "V", "Ğ", "F", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b", "g", "c", "ş", "p", "h", "v", "ğ", "f"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Fil", icon: "🐘", hasF: true },
+        { word: "Fare", icon: "🐭", hasF: true },
+        { word: "Fener", icon: "🔦", hasF: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasF: false },
+        { word: "Ayı", icon: "🐻", hasF: false }
+      ],
+      syllables: ["af", "ef", "of", "uf", "üf", "fa", "fe", "fi", "fo", "fu", "fı", "fü", "fö", "fil", "fok", "fen", "far", "fır"],
+      words: ["fil", "fok", "fide", "fener", "fare", "fabrika", "futbol", "fıstık", "fırın", "fırça", "çiftçi", "telefon", "forma", "fotoğraf"],
+      sentences: [
+        "Fil fıstık yedi.",
+        "Fatih, futbol forması al.",
+        "Ferhat, fırından taze pide al."
+      ]
+    },
+    "J": {
+      allowedLetters: ["A", "N", "E", "T", "İ", "I", "L", "O", "K", "U", "R", "M", "Ü", "S", "Ö", "Y", "D", "Z", "Ç", "B", "G", "C", "Ş", "P", "H", "V", "Ğ", "F", "J", "a", "n", "e", "t", "i", "ı", "l", "o", "k", "u", "r", "m", "ü", "s", "ö", "y", "d", "z", "ç", "b", "g", "c", "ş", "p", "h", "v", "ğ", "f", "j"],
+      mode: "CUMULATIVE",
+      hasSoundItems: [
+        { word: "Jet", icon: "✈️", hasJ: true },
+        { word: "Garaj", icon: "🏠", hasJ: true },
+        { word: "Jilet", icon: "🪒", hasJ: true }
+      ],
+      noSoundItems: [
+        { word: "Kedi", icon: "🐱", hasJ: false },
+        { word: "Elma", icon: "🍎", hasJ: false }
+      ],
+      syllables: ["aj", "ej", "oj", "uj", "ja", "je", "ji", "jo", "ju", "jü", "jet", "ruj", "gaj", "raj", "saj", "müj"],
+      words: ["jilet", "jet", "jandarma", "jeton", "ajanda", "bagaj", "garaj", "müjde", "viraj", "baraj"],
+      sentences: [
+        "Jet hızla uçtu.",
+        "Araba garaja girdi.",
+        "Jale, ajandaya not yaz."
+      ]
     }
   };
+
+  // =============================================================
+  // 🎯 AKILLI SEÇİCİ FONKSİYON: getDynamicWordsForLetter(letter)
+  // MASTER_SAFE_TURKISH_WORDS içinden SADECE o harfin allowedLetters kümesinden
+  // oluşan ve içinde seçili letter geçen TÜM gerçek kelimeleri otomatik döndürür.
+  // =============================================================
+  function getDynamicWordsForLetter(letter) {
+    const targetLower = String(letter || 'a').toLocaleLowerCase('tr-TR').trim();
+    if (!targetLower || targetLower === 'a') return [];
+    const targetUpper = targetLower.toLocaleUpperCase('tr-TR');
+    const config = ANETIL_DATA[targetUpper];
+
+    // Sadece o harfe kadar gerçek anlamda öğrenilmiş (hem büyük hem küçük hali allowedLetters'ta bulunan) sesler
+    const allowedLowers = new Set();
+    if (config && Array.isArray(config.allowedLetters)) {
+      const rawSet = new Set(config.allowedLetters.map(c => String(c)));
+      config.allowedLetters.forEach(ch => {
+        const lo = String(ch).toLocaleLowerCase('tr-TR');
+        const up = lo.toLocaleUpperCase('tr-TR');
+        if ((rawSet.has(lo) && rawSet.has(up)) || lo === targetLower) {
+          allowedLowers.add(lo);
+        }
+      });
+    }
+    allowedLowers.add(targetLower);
+
+    const matched = [];
+    const seen = new Set();
+
+    const checkAndAdd = (rawWord) => {
+      const w = String(rawWord || '').toLocaleLowerCase('tr-TR').trim();
+      if (!w || w.length < 2 || seen.has(w)) return;
+      if (w.startsWith('ğ')) return;
+      if (isForbiddenSyllableOrWord(w)) return;
+      if (!w.includes(targetLower)) return;
+
+      const chars = Array.from(w);
+      for (const ch of chars) {
+        if (!allowedLowers.has(ch)) return;
+      }
+      seen.add(w);
+      matched.push(w);
+    };
+
+    if (config && Array.isArray(config.words)) {
+      config.words.forEach(checkAndAdd);
+    }
+    MASTER_SAFE_TURKISH_WORDS.forEach(checkAndAdd);
+
+    return matched;
+  }
+  window.getDynamicWordsForLetter = getDynamicWordsForLetter;
+
+  // Tüm ANETIL_DATA harf havuzlarını Akıllı Hece Üretici (generateSafeSyllables) ve
+  // Akıllı Kelime Seçici (getDynamicWordsForLetter) ile zenginleştir ve kara listeden geçir
   Object.keys(ANETIL_DATA).forEach(k => {
     const d = ANETIL_DATA[k];
-    if (d && Array.isArray(d.syllables)) d.syllables = filterSafePool(d.syllables);
-    if (d && Array.isArray(d.words)) d.words = filterSafePool(d.words);
+    if (!d) return;
+    const lowerKey = k.toLocaleLowerCase('tr-TR');
+    if (k !== 'A') {
+      const dynSyls = generateSafeSyllables(lowerKey, d.allowedLetters);
+      const baseSyls = Array.isArray(d.syllables) ? d.syllables : [];
+      const mergedSyls = [];
+      const seenSyl = new Set();
+      [...baseSyls, ...dynSyls].forEach(s => {
+        const ls = String(s || '').toLocaleLowerCase('tr-TR').trim();
+        if (ls && !seenSyl.has(ls) && !isForbiddenSyllableOrWord(ls)) {
+          seenSyl.add(ls);
+          mergedSyls.push(ls);
+        }
+      });
+      d.syllables = mergedSyls;
+
+      const dynWords = getDynamicWordsForLetter(lowerKey);
+      const baseWords = Array.isArray(d.words) ? d.words : [];
+      const mergedWords = [];
+      const seenW = new Set();
+      [...baseWords, ...dynWords].forEach(w => {
+        const lw = String(w || '').toLocaleLowerCase('tr-TR').trim();
+        if (lw && !seenW.has(lw) && !isForbiddenSyllableOrWord(lw) && isValidForCurrentLetter(lw, k)) {
+          seenW.add(lw);
+          mergedWords.push(lw);
+        }
+      });
+      d.words = mergedWords;
+    } else {
+      if (Array.isArray(d.syllables)) d.syllables = filterSafePool(d.syllables);
+      if (Array.isArray(d.words)) d.words = filterSafePool(d.words);
+    }
   });
   window.ANETIL_DATA = ANETIL_DATA;
 
@@ -2869,18 +3135,14 @@
           { word: 'Bağ', emoji: '🍇', position: 'sonda', hasSound: true }
         ],
         noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Elma', emoji: '🍎', hasSound: false }],
-        cumulativeWords: [
-          { word: 'DAĞ', parts: ['D', 'AĞ'], distractors: ['EĞ'], icon: '⛰️' },
-          { word: 'YAĞ', parts: ['Y', 'AĞ'], distractors: ['OĞ'], icon: '🧈' },
-          { word: 'AĞAÇ', parts: ['A', 'ĞAÇ'], distractors: ['GEÇ'], icon: '🌳' },
-          { word: 'DÜĞME', parts: ['DÜĞ', 'ME'], distractors: ['MA'], icon: '🔘' },
-          { word: 'İĞNE', parts: ['İĞ', 'NE'], distractors: ['NA'], icon: '🪡' },
-          { word: 'YAĞMUR', parts: ['YAĞ', 'MUR'], distractors: ['MAR'], icon: '🌧️' }
-        ],
+        cumulativeWords: ANETIL_DATA["Ğ"].words.map(w => ({ word: w.toLocaleUpperCase('tr-TR'), parts: Array.from(w.toLocaleUpperCase('tr-TR')), icon: '🌳' })),
         cumulativeSentences: [
           { sentence: 'Dağda yağmur yağdı.', blankSentence: 'Dağda _____ yağdı.', missing: 'yağmur', options: ['yağmur', 'ağaç', 'düğme'], fullText: 'Dağda yağmur yağdı.' },
           { sentence: 'Ağaçta kuş öttü.', blankSentence: '_____ kuş öttü.', missing: 'ağaçta', options: ['ağaçta', 'dağ', 'iğne'], fullText: 'Ağaçta kuş öttü.' }
-        ]
+        ],
+        syllables: ANETIL_DATA["Ğ"].syllables,
+        words: ANETIL_DATA["Ğ"].words,
+        sentences: ANETIL_DATA["Ğ"].sentences
       },
       'f': {
         letter: 'f', upper: 'F', group: 'g5', groupName: '5. Grup (HVĞFJ)',
@@ -2893,18 +3155,14 @@
           { word: 'Zürafa', emoji: '🦒', position: 'ortada', hasSound: true }
         ],
         noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Ayı', emoji: '🐻', hasSound: false }],
-        cumulativeWords: [
-          { word: 'FİL', parts: ['F', 'İL'], distractors: ['AL'], icon: '🐘' },
-          { word: 'FARE', parts: ['FA', 'RE'], distractors: ['RO'], icon: '🐭' },
-          { word: 'FINDIK', parts: ['FIN', 'DIK'], distractors: ['DAK'], icon: '🌰' },
-          { word: 'FIRÇA', parts: ['FIR', 'ÇA'], distractors: ['ÇO'], icon: '🪥' },
-          { word: 'FENER', parts: ['FE', 'NER'], distractors: ['NAR'], icon: '🔦' },
-          { word: 'TELEFON', parts: ['TE', 'LE', 'FON'], distractors: ['FAN'], icon: '📱' }
-        ],
+        cumulativeWords: ANETIL_DATA["F"].words.map(w => ({ word: w.toLocaleUpperCase('tr-TR'), parts: Array.from(w.toLocaleUpperCase('tr-TR')), icon: '🐘' })),
         cumulativeSentences: [
           { sentence: 'Fil fındık yedi.', blankSentence: 'Fil _____ yedi.', missing: 'fındık', options: ['fındık', 'fare', 'fener'], fullText: 'Fil fındık yedi.' },
           { sentence: 'Telefon çaldı.', blankSentence: '_____ çaldı.', missing: 'telefon', options: ['telefon', 'fırça', 'fil'], fullText: 'Telefon çaldı.' }
-        ]
+        ],
+        syllables: ANETIL_DATA["F"].syllables,
+        words: ANETIL_DATA["F"].words,
+        sentences: ANETIL_DATA["F"].sentences
       },
       'j': {
         letter: 'j', upper: 'J', group: 'g5', groupName: '5. Grup (HVĞFJ)',
@@ -2918,18 +3176,14 @@
           { word: 'Viraj', emoji: '🔄', position: 'sonda', hasSound: true }
         ],
         noSoundWords: [{ word: 'Kedi', emoji: '🐱', hasSound: false }, { word: 'Elma', emoji: '🍎', hasSound: false }],
-        cumulativeWords: [
-          { word: 'JET', parts: ['J', 'ET'], distractors: ['AT'], icon: '✈️' },
-          { word: 'RUJ', parts: ['R', 'UJ'], distractors: ['AJ'], icon: '💄' },
-          { word: 'JANT', parts: ['J', 'ANT'], distractors: ['ONT'], icon: '🛞' },
-          { word: 'GARAJ', parts: ['GA', 'RAJ'], distractors: ['ROJ'], icon: '🏠' },
-          { word: 'MESAJ', parts: ['ME', 'SAJ'], distractors: ['SOJ'], icon: '💬' },
-          { word: 'VİRAJ', parts: ['Vİ', 'RAJ'], distractors: ['ROJ'], icon: '🔄' }
-        ],
+        cumulativeWords: ANETIL_DATA["J"].words.map(w => ({ word: w.toLocaleUpperCase('tr-TR'), parts: Array.from(w.toLocaleUpperCase('tr-TR')), icon: '✈️' })),
         cumulativeSentences: [
           { sentence: 'Jet hızla uçtu.', blankSentence: '_____ hızla uçtu.', missing: 'jet', options: ['jet', 'ruj', 'jant'], fullText: 'Jet hızla uçtu.' },
           { sentence: 'Araba garaja girdi.', blankSentence: 'Araba _____ girdi.', missing: 'garaja', options: ['garaja', 'mesaj', 'viraj'], fullText: 'Araba garaja girdi.' }
-        ]
+        ],
+        syllables: ANETIL_DATA["J"].syllables,
+        words: ANETIL_DATA["J"].words,
+        sentences: ANETIL_DATA["J"].sentences
       }
     }
   };
@@ -24279,8 +24533,14 @@
       lower: p.lower
     })));
 
-    const promptText = `Büyük harflerle küçük harfleri eşleştir!`;
-    const spokenText = `Büyük harflerle küçük harfleri sürükleyerek veya dokunarak eşleştir!`;
+    const casePrompts = [
+      { prompt: `Büyük harflerle küçük harfleri eşleştir!`, spoken: `Büyük harflerle küçük harfleri sürükleyerek veya dokunarak eşleştir!` },
+      { prompt: `Harf ikizlerini bul! Büyük ve küçük "${targetUpper}-${targetLower}" seslerini birleştir!`, spoken: `Harf ikizlerini bul! Büyük ve küçük harfleri birleştir!` },
+      { prompt: `Hangi büyük harf hangi küçük harfin eşi? Eşleştir!`, spoken: `Hangi büyük harf hangi küçük harfin eşi? Dokun ve eşleştir!` }
+    ];
+    const chosenCasePrompt = getUniqueNextItem(casePrompts, `k1_case_prompt_${activeL}`);
+    const promptText = chosenCasePrompt.prompt;
+    const spokenText = chosenCasePrompt.spoken;
 
     return k1Base(
       'k1_case_match',
@@ -24306,13 +24566,13 @@
     const aData = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[targetUpper]) ? ANETIL_DATA[targetUpper] : null;
     const mData = (typeof MAARIF_2026_CONFIG !== 'undefined' && MAARIF_2026_CONFIG.letters) ? MAARIF_2026_CONFIG.letters[activeL] : null;
 
-    let rawWords = [];
+    let rawWords = (typeof getDynamicWordsForLetter === 'function') ? getDynamicWordsForLetter(activeL) : [];
     if (aData && Array.isArray(aData.words) && aData.words.length > 0) {
-      rawWords = aData.words.slice();
+      rawWords = [...new Set([...rawWords, ...aData.words])];
     } else if (mData && Array.isArray(mData.words) && mData.words.length > 0) {
-      rawWords = mData.words.slice();
+      rawWords = [...new Set([...rawWords, ...mData.words])];
     } else if (mData && Array.isArray(mData.cumulativeWords) && mData.cumulativeWords.length > 0) {
-      rawWords = mData.cumulativeWords.map(cw => cw.word || '').filter(Boolean);
+      rawWords = [...new Set([...rawWords, ...mData.cumulativeWords.map(cw => cw.word || '').filter(Boolean)])];
     }
 
     if (rawWords.length === 0 && aData && Array.isArray(aData.hasSoundItems) && aData.hasSoundItems.length > 0) {
@@ -24368,8 +24628,15 @@
     ]);
 
     const displayPattern = chars.map((ch, i) => (i === missingIdx ? '[ _ ]' : ch)).join(' ');
-    const promptText = `Kelimeyi dinle ve eksik harfi kutuya yerleştir!`;
-    const spokenText = `${wordLower}! Kelimeyi dinle ve eksik harfi kutuya yerleştir!`;
+    const missingPrompts = [
+      { prompt: `Kelimedeki eksik "${targetUpper}" sesini bul ve kutuya yerleştir!`, spoken: `${wordLower}! Kelimedeki eksik harfi bul ve kutuya yerleştir!` },
+      { prompt: `Kelimeyi dinle ve eksik harfi kutuya yerleştir!`, spoken: `${wordLower}! Kelimeyi dinle ve eksik harfi kutuya yerleştir!` },
+      { prompt: `"${displayPattern}" kelimesinde hangi ses eksik? Tamamla!`, spoken: `${wordLower}! Bu kelimede hangi ses eksik? Tamamla!` },
+      { prompt: `Boşluğa doğru harfi taşıyarak kelimeyi tamamla!`, spoken: `${wordLower}! Boşluğa doğru harfi taşıyarak kelimeyi tamamla!` }
+    ];
+    const chosenMissingPrompt = getUniqueNextItem(missingPrompts, `k1_missing_prompt_${activeL}`);
+    const promptText = chosenMissingPrompt.prompt;
+    const spokenText = chosenMissingPrompt.spoken;
 
     return k1Base(
       'k1_missing_letter',
@@ -24485,13 +24752,13 @@
       return mapDict[lw] || mapDict[uw] || mapDict[w] || null;
     };
 
-    let rawWords = [];
+    let rawWords = (typeof getDynamicWordsForLetter === 'function') ? getDynamicWordsForLetter(activeL) : [];
     if (aData && Array.isArray(aData.words) && aData.words.length > 0) {
-      rawWords = aData.words.slice();
+      rawWords = [...new Set([...rawWords, ...aData.words])];
     } else if (mData && Array.isArray(mData.words) && mData.words.length > 0) {
-      rawWords = mData.words.slice();
+      rawWords = [...new Set([...rawWords, ...mData.words])];
     } else if (mData && Array.isArray(mData.cumulativeWords) && mData.cumulativeWords.length > 0) {
-      rawWords = mData.cumulativeWords.map(cw => cw.word || '').filter(Boolean);
+      rawWords = [...new Set([...rawWords, ...mData.cumulativeWords.map(cw => cw.word || '').filter(Boolean)])];
     }
 
     // 1. Ses 'A' gibi words dizisi boş olan veya görseli az olan seslerde o harfe kadar öğrenilen kelimeleri ve hasSoundItems verisini kontrol et
@@ -24563,8 +24830,14 @@
     ]);
 
     const coloredWordHtml = renderColoredSyllableWordHtml(targetItem.word);
-    const promptText = `Ekranda parlayan kelimeyi hızlıca oku ve doğru resmine dokun!`;
-    const spokenText = `Hazır mısın? Kelimeye dikkatli bak, hızlıca oku ve doğru resmine dokun!`;
+    const flashPrompts = [
+      { prompt: `Ekranda parlayan kelimeyi hızlıca oku ve doğru resmine dokun!`, spoken: `Hazır mısın? Kelimeye dikkatli bak, hızlıca oku ve doğru resmine dokun!` },
+      { prompt: `Şimşek hızında oku! Bu kelime hangi görsele ait?`, spoken: `Şimşek hızında oku! Bu kelime hangi resme ait? Dokun!` },
+      { prompt: `Renkli heceleri birleştirip oku, doğru resmi hemen bul!`, spoken: `Renkli heceleri birleştirip oku ve doğru resmi hemen bul!` }
+    ];
+    const chosenFlashPrompt = getUniqueNextItem(flashPrompts, `k1_flash_prompt_${activeL}`);
+    const promptText = chosenFlashPrompt.prompt;
+    const spokenText = chosenFlashPrompt.spoken;
 
     return k1Base(
       'k1_flash_word',
@@ -24728,12 +25001,20 @@
       delay: +(i * 1.4).toFixed(2)
     }));
 
-    const promptText = (upper === 'A')
-      ? `Üzerinde "A / a" sesi olan balonları patlat!`
-      : `İçinde "${upper}" sesi geçen harf, hece ve kelime balonlarını okuyup patlat!`;
-    const spokenText = (upper === 'A')
-      ? `Üzerinde A sesi olan balonları patlat!`
-      : `İçinde ${upper} sesi geçen harf, hece ve kelime balonlarını okuyup patlat!`;
+    const balloonPrompts = (upper === 'A')
+      ? [
+          { p: `Üzerinde "A / a" sesi olan balonları patlat!`, s: `Üzerinde A sesi olan balonları patlat!` },
+          { p: `Hangi balonda "A" var? Bul ve patlat!`, s: `Hangi balonda A var? Bul ve patlat!` }
+        ]
+      : [
+          { p: `İçinde "${upper}" sesi geçen harf, hece ve kelime balonlarını okuyup patlat!`, s: `İçinde ${upper} sesi geçen balonları okuyup patlat!` },
+          { p: `Hangi balonda "${upper}" var? Oku ve patlat!`, s: `Hangi balonda ${upper} sesi var? Oku ve patlat!` },
+          { p: `"${upper}" sesini duyduğun heceleri ve kelimeleri yakala!`, s: `${upper} sesini duyduğun heceleri ve kelimeleri yakala!` },
+          { p: `Gökyüzündeki "${upper}" balonlarını avla!`, s: `Gökyüzündeki ${upper} balonlarını avla!` }
+        ];
+    const bp = getUniqueNextItem(balloonPrompts, `k1_bpop_prompt_${activeL}`);
+    const promptText = bp.p;
+    const spokenText = bp.s;
 
     return k1Base(
       'k1_phoneme_pop',
@@ -24976,9 +25257,9 @@
       return mapDict[lw] || mapDict[lw.toLocaleUpperCase('tr-TR')] || null;
     };
 
-    let rawWords = [];
+    let rawWords = getDynamicWordsForLetter(activeL);
     if (anetil && Array.isArray(anetil.words) && anetil.words.length > 0) {
-      rawWords = anetil.words.slice();
+      rawWords = [...new Set([...rawWords, ...anetil.words])];
     } else if (mData && Array.isArray(mData.words) && mData.words.length > 0) {
       rawWords = mData.words.slice();
     } else if (mData && Array.isArray(mData.cumulativeWords) && mData.cumulativeWords.length > 0) {
@@ -25011,8 +25292,14 @@
 
     const wagons = k1Shuffle([...parts, ...extras]);
 
-    const promptText = `Görsele bak, dinle ve harf vagonlarını sırayla trene bağla!`;
-    const spokenText = `${wordLower}! Harf vagonlarını sırayla trene bağla!`;
+    const trainPrompts = [
+      { p: `Görsele bak, dinle ve harf vagonlarını sırayla trene bağla!`, s: `${wordLower}! Harf vagonlarını sırayla trene bağla!` },
+      { p: `Hece trenini tamamla! Vagonları doğru sıraya diz!`, s: `${wordLower}! Hece trenini tamamla!` },
+      { p: `Lokomotif bekliyor! "${upper}" sesli kelimeyi vagonlarla kur!`, s: `${wordLower}! Kelimeyi vagonlarla kur!` }
+    ];
+    const tp = getUniqueNextItem(trainPrompts, `k1_train_prompt_${activeL}`);
+    const promptText = tp.p;
+    const spokenText = tp.s;
 
     return k1Base(
       'k1_train',
@@ -25068,11 +25355,11 @@
     const baskets = k1Shuffle([{ letter: targetBasket }, { letter: altBasket }]);
 
     // Hedef harfle başlayan ANETIL_DATA kelimesi
-    const validWords = (anetil.words || []).filter(w => isValidForCurrentLetter(w, upper) && !isForbiddenSyllableOrWord(w) && w.toLocaleUpperCase('tr-TR').startsWith(targetBasket));
+    const validWords = [...new Set([...(anetil.words || []), ...getDynamicWordsForLetter(activeL)])].filter(w => isValidForCurrentLetter(w, upper) && !isForbiddenSyllableOrWord(w) && w.toLocaleUpperCase('tr-TR').startsWith(targetBasket));
     const targetText = validWords.length ? getUniqueNextItem(validWords, `k1_basket_word_${upper}`).toLocaleUpperCase('tr-TR') : targetBasket;
 
     return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
-      `"${targetText}" hangi ses ile başlar? Doğru sepete bırak!`,
+      getUniqueNextItem([`"${targetText}" hangi ses ile başlar? Doğru sepete bırak!`, `"${targetText}" kelimesinin ilk sesi hangi sepette?`, `"${targetText}" kelimesini ilk sesinin sepetine taşı!`], `k1_basket_prompt_${upper}`),
       `${targetText} hangi ses ile başlar? Doğru sepete bırak!`,
       `Tebrikler! "${targetText}" "${targetBasket}" sesi ile başlar! 🧺👏`,
       {
