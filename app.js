@@ -1534,8 +1534,53 @@
         playUrl(cloudUrls[0]);
       };
 
-      // 1) BİRİNCİL MOTOR: Doğrudan HTML5 new Audio() üzerinden Doğal Türkçe Bulut TTS (Google Translate Doğal Kadın Sesi, playbackRate = 0.92)
-      playOnlineStream(0);
+            // -------------------------------------------------------------
+      // 1. ÖNCELİK (KATMAN 1): EMA Lightning Yerel MP3 Sesi (sesler/<anahtar>.mp3)
+      // sesler/index.json içinde kaydı varsa doğrudan yerel yüksek kaliteli ses dosyasını çalar.
+      // -------------------------------------------------------------
+      const playLocalRecordedAudio = () => {
+        if (!isEn && recordedSpeechKeys && recordedSpeechKeys.size > 0) {
+          const key = speechKey(cleanText);
+          if (recordedSpeechKeys.has(key)) {
+            try {
+              const localAudio = new Audio('sesler/' + key + '.mp3');
+              localAudio.preload = 'auto';
+              localAudio.volume = 1.0;
+              this.currentAudio = localAudio;
+
+              localAudio.onended = () => {
+                if (currentSeq === this.speechSeq) finish();
+              };
+
+              localAudio.onerror = () => {
+                console.warn('[ses] Yerel ses açılamadı, bulut TTS devreye giriyor:', key);
+                if (currentSeq === this.speechSeq) playOnlineStream(0);
+              };
+
+              const p = localAudio.play();
+              if (p !== undefined) {
+                p.catch(() => {
+                  if (currentSeq === this.speechSeq) playOnlineStream(0);
+                });
+              }
+              return true;
+            } catch (err) {
+              console.warn('[ses] Yerel ses başlatma hatası, bulut TTS devreye giriyor:', err);
+              playOnlineStream(0);
+              return true;
+            }
+          } else {
+            console.log('[ses] kaydı yok:', cleanText, `(anahtar: ${key})`);
+          }
+        }
+        return false;
+      };
+
+      // 1. ÖNCELİK: Yerel EMA Lightning MP3 kaydı varsa çal
+      if (!playLocalRecordedAudio()) {
+        // 2. ÖNCELİK: Yerel kayıt yoksa Doğal Google Bulut TTS (translate_tts) akışını çal
+        playOnlineStream(0);
+      }
     }
 
     playTTS(text, lang = 'tr', onEnded) {
