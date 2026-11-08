@@ -4243,6 +4243,8 @@
         return generateK1MissingLetter();
       } else if (gameType === 'maarif_flash_word') {
         return generateK1FlashWord();
+      } else if (gameType === 'maarif_pyramid') {
+        return generateK1Pyramid();
       } else if (gameType === 'maarif_word_train') {
         return generateK1WordTrain();
       } else if (gameType === 'maarif_sound_find') {
@@ -12340,6 +12342,7 @@
     maarif_missing_letter: '🧩 Eksik Harfi Tamamla',
     maarif_flash_word: '⚡ Şimşek Kelime (Hızlı Okuma)',
     maarif_word_train: '🚂 Hece ve Kelime Treni',
+    maarif_pyramid: '🏔️ Piramit Okuma (Akıcı Cümle Okuma)',
     maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
     math_apple_count_1: '🍎 Elma Ağacı & Sayma',
     math_add_sub_drag_1: '➕ Görsel Toplama & Çıkarma',
@@ -12463,6 +12466,7 @@
       maarif_missing_letter: '🧩 Eksik Harfi Tamamla',
       maarif_flash_word: '⚡ Şimşek Kelime (Hızlı Okuma)',
       maarif_word_train: 'Hece ve Kelime Treni',
+      maarif_pyramid: '🏔️ Piramit Okuma (Akıcı Cümle Okuma)',
       maarif_letter_basket: '🧺 Akıllı Harf Sepeti (Sürükle & Bırak)',
       maarif_position: 'Başta mı, Ortada mı, Sonda mı?',
       maarif_syllable_build: 'Hece Birleştirme Atölyesi',
@@ -21655,6 +21659,22 @@
       });
     }
 
+    // 8. KART: 🏔️ Piramit Okuma (Akıcı Cümle Okuma)
+    // SADECE [N n] ve sonraki seslerde (letterIdx >= 1) açılır!
+    // [A a] (1. Ses) sekmesinde KESİNLİKLE GÖSTERİLMEZ!
+    if (letterIdx >= 1) {
+      games.push({
+        id: 'maarif_pyramid',
+        title: '🏔️ Piramit Okuma (Akıcı Cümle Okuma)',
+        icon: '🏔️',
+        badge: '🏔️ Akıcı Okuma',
+        featureTag: '📖 Piramit Cümle',
+        description: `Basamakları adım adım oku, piramidi tamamla ve cümlenin anlattığı doğru resme dokun! 🏔️✨`,
+        tags: ['🏔️ Akıcı Okuma', '🎯 Cümle Anlama', '🔊 Sesli Okuma'],
+        active: true
+      });
+    }
+
     const activeCount = games.length;
     if (DOM.gamesCountBadge) {
       DOM.gamesCountBadge.textContent = `${activeCount} Pedagojik Etkinlik ([${letterUpper} ${letterLower}] Harfi)`;
@@ -24426,6 +24446,10 @@
       case 'maarif_word_train':
       case 'syllable_builder':
       case 'turkish_sentence_punctuation_1': return generateK1WordTrain();
+      case 'maarif_pyramid':
+      case 'k1_pyramid':
+      case 'turkish_pyramid_read':
+      case 'pyramid_read': return generateK1Pyramid();
       case 'maarif_letter_basket':
       case 'word_catch':
       case 'turkish_antonyms_1': return generateK1LetterBasket();
@@ -24464,6 +24488,8 @@
   window.generateK1FlashWord = generateK1FlashWord;
   window.generateK1WordTrain = generateK1WordTrain;
   window.generateK1LetterBasket = generateK1LetterBasket;
+  window.generateK1Pyramid = generateK1Pyramid;
+  window.generateDynamicPyramid = generateDynamicPyramid;
   window.generateKidsGrade1Question = generateKidsGrade1Question;
 
   // Seçili harfin allowedLetters listesinden (yabancı harf sızdırmadan) Türkçe uyumlu Büyük-Küçük harf çiftlerini çıkarır
@@ -24855,7 +24881,321 @@
     );
   }
 
-  // --- 🎈 UÇAN BALON AVCISI (BALON PATLATMA): Kümülatif Harf, Hece ve Kelime Odaklı ---
+  
+  // =============================================================
+  // 🏔️ YENİ OYUN: PİRAMİT OKUMA (AKICI CÜMLE OKUMA)
+  // Akıllı Kümülatif Piramit Cümle Üreticisi & Anlama Değerlendirmesi
+  // =============================================================
+
+  const PYRAMID_NAMES_POOL = [
+    "Ela", "Ali", "Ata", "Nil", "Oya", "Kaya", "Mine", "Ömer", 
+    "Eda", "Can", "Bora", "Suna", "Dede", "Anne", "Baba", "Hakan", "Jale"
+  ];
+
+  const PYRAMID_ACTIONS_POOL = [
+    "al", "tut", "at", "bak", "oku", "kokla", "ek", "ver", "ye", "iç", "say", "sev", "boyadı", "getir", "izle", "tak", "tat"
+  ];
+
+  const PYRAMID_ADJECTIVES_POOL = [
+    "ak", "ala", "ılık", "kara", "sarı", "kırmızı", "tatlı", "temiz", "iri", "minik", "taze", "iki", "üç", "mavi", "yeşil", "mor"
+  ];
+
+  const PYRAMID_PERSON_WORDS = new Set(["ana", "anne", "baba", "dede", "abla", "abi", "kardeş", "bebek", "çocuk", "polis", "kaptan", "mimar", "öğretmen", "doktor"]);
+  const PYRAMID_NON_OBJECT_WORDS = new Set([
+    "on", "otuz", "sekiz", "dokuz", "üç", "yedi", "dört", "altı", "beş", "iki", "bir", 
+    "artı", "tane", "tatil", "alan", "aile", "konak", "otel", "ülke", "köy", "şehir", 
+    "oda", "ada", "gece", "sabah", "akşam", "yaz", "kış", "bahar", "ay", "gün", "saat",
+    "yer", "yol", "ses", "sis", "uyku", "öykü", "oyun", "yazı", "düello", "antrenman"
+  ]);
+
+  function isWordAllowedByStrictLetters(word, allowedSet) {
+    const w = String(word || '').toLocaleLowerCase('tr-TR').trim();
+    if (!w) return false;
+    if (w.startsWith('ğ')) return false;
+    if (typeof isForbiddenSyllableOrWord === 'function' && isForbiddenSyllableOrWord(w)) return false;
+    const chars = Array.from(w);
+    for (const ch of chars) {
+      if (!allowedSet.has(ch)) return false;
+    }
+    return true;
+  }
+
+  function renderColoredSyllablesForSentence(sentenceText) {
+    if (!sentenceText) return '';
+    const tokens = String(sentenceText).split(/\s+/);
+    return tokens.map(token => {
+      const match = token.match(/^([^.,!?;:'"()\-–—]+)([.,!?;:'"()\-–—]*)$/);
+      if (!match) return escapeHtml(token);
+      const word = match[1];
+      const punct = match[2] || '';
+      if (typeof renderColoredSyllableWordHtml === 'function') {
+        return renderColoredSyllableWordHtml(word) + escapeHtml(punct);
+      }
+      return escapeHtml(token);
+    }).join(' ');
+  }
+
+  function generateDynamicPyramid(letter, allowedLetters) {
+    const activeL = String(letter || (typeof state !== 'undefined' && state.activeMaarifLetter) || 'l').toLocaleLowerCase('tr-TR').trim();
+    const targetUpper = activeL.toLocaleUpperCase('tr-TR');
+
+    let allowedSet = new Set();
+    if (Array.isArray(allowedLetters) && allowedLetters.length > 0) {
+      allowedLetters.forEach(c => allowedSet.add(String(c).toLocaleLowerCase('tr-TR')));
+    } else if (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[targetUpper] && Array.isArray(ANETIL_DATA[targetUpper].allowedLetters)) {
+      ANETIL_DATA[targetUpper].allowedLetters.forEach(c => allowedSet.add(String(c).toLocaleLowerCase('tr-TR')));
+    } else if (typeof MAARIF_2026_CONFIG !== 'undefined' && Array.isArray(MAARIF_2026_CONFIG.letterOrder)) {
+      const idx = MAARIF_2026_CONFIG.letterOrder.indexOf(activeL);
+      if (idx >= 0) {
+        for (let i = 0; i <= idx; i++) {
+          allowedSet.add(MAARIF_2026_CONFIG.letterOrder[i]);
+        }
+      }
+    }
+    allowedSet.add(activeL);
+
+    const mapDict = (typeof window !== 'undefined' && window.WORD_IMAGE_MAP) ? window.WORD_IMAGE_MAP : WORD_IMAGE_MAP;
+
+    // 1) İsimler havuzu filtresi
+    let names = PYRAMID_NAMES_POOL.filter(n => isWordAllowedByStrictLetters(n, allowedSet));
+    if (names.length === 0) {
+      if (allowedSet.has('a') && allowedSet.has('t')) names.push("Ata");
+      else if (allowedSet.has('a') && allowedSet.has('n') && allowedSet.has('e')) names.push("Anne");
+      else if (allowedSet.has('e') && allowedSet.has('l') && allowedSet.has('a')) names.push("Ela");
+      else if (allowedSet.has('a') && allowedSet.has('l') && allowedSet.has('i')) names.push("Ali");
+      else names.push("Ela");
+    }
+
+    // 2) Somut Nesneler havuzu filtresi (WORD_IMAGE_MAP & MASTER_SAFE_TURKISH_WORDS)
+    const allowedObjects = [];
+    const seenObj = new Set();
+    Object.keys(mapDict).forEach(w => {
+      const lw = String(w).toLocaleLowerCase('tr-TR').trim();
+      if (!seenObj.has(lw) && !PYRAMID_PERSON_WORDS.has(lw) && !PYRAMID_NON_OBJECT_WORDS.has(lw) && isWordAllowedByStrictLetters(lw, allowedSet)) {
+        const emoji = mapDict[w];
+        if (emoji && lw.length >= 2) {
+          seenObj.add(lw);
+          allowedObjects.push({ word: lw, emoji: emoji });
+        }
+      }
+    });
+
+    // 3) Eylemler havuzu filtresi
+    let actions = PYRAMID_ACTIONS_POOL.filter(a => isWordAllowedByStrictLetters(a, allowedSet));
+    if (actions.length === 0) {
+      if (allowedSet.has('a') && allowedSet.has('l')) actions.push("al");
+      else if (allowedSet.has('a') && allowedSet.has('t')) actions.push("at");
+      else actions.push("al");
+    }
+
+    // 4) Sıfatlar (opsiyonel 4. basamak zenginleştirmesi için)
+    const adjectives = PYRAMID_ADJECTIVES_POOL.filter(adj => isWordAllowedByStrictLetters(adj, allowedSet));
+
+    // Pedagojik anlamsal eşleşme kategorileri
+    const foodWords = new Set(["kek", "elma", "erik", "et", "tatlı", "çilek", "ekmek", "armut", "börek", "makarna", "dondurma", "kiraz", "lokum", "sucuk", "badem", "fındık", "ceviz", "peynir", "patates", "pide", "helva", "hurma", "bal", "havuç", "hamsi"]);
+    const drinkWords = new Set(["süt", "su", "çay", "limonata", "ayran", "kahve"]);
+    const plantWords = new Set(["lale", "nane", "çiçek", "gül", "fidan", "yonca", "ağaç"]);
+    const bookWords = new Set(["kitap", "mektup", "dergi", "gazete"]);
+    const toyBallWords = new Set(["top", "balon", "uçurtma", "oyuncak", "taş"]);
+    const animalWords = new Set(["kedi", "köpek", "kuş", "ördek", "kuzu", "tavşan", "balık", "kelebek", "civciv", "at", "arı", "ayı", "aslan", "karga", "leylek", "koyun", "keçi"]);
+    const wearableWords = new Set(["toka", "kemer", "saat", "atkı", "kolye", "şapka", "çorap", "çizme", "önlük", "ceket", "gözlük", "gömlek", "taç", "etek", "terlik"]);
+
+    function isActionCompatible(act, obj) {
+      if (act === 'ye') return foodWords.has(obj);
+      if (act === 'tat') return foodWords.has(obj) || drinkWords.has(obj) || obj === 'nane';
+      if (act === 'iç') return drinkWords.has(obj);
+      if (act === 'kokla') return plantWords.has(obj);
+      if (act === 'ek') return plantWords.has(obj);
+      if (act === 'oku') return bookWords.has(obj);
+      if (act === 'sev') return animalWords.has(obj);
+      if (act === 'tak') return wearableWords.has(obj);
+      if (act === 'tut') return toyBallWords.has(obj) || obj === 'balık' || obj === 'olta' || obj === 'el';
+      if (act === 'at') return toyBallWords.has(obj) || obj === 'taş' || obj === 'et';
+      if (animalWords.has(obj)) return act === 'sev' || act === 'bak' || act === 'izle';
+      if (act === 'al' || act === 'bak' || act === 'ver' || act === 'getir') return true;
+      return true;
+    }
+
+    const pyramids = [];
+    const seenSentences = new Set();
+
+    // a) ANETIL_DATA içindeki mevcut müfredat cümlelerini de dahil et
+    const aData = (typeof ANETIL_DATA !== 'undefined' && ANETIL_DATA[targetUpper]) ? ANETIL_DATA[targetUpper] : null;
+    if (aData && Array.isArray(aData.sentences)) {
+      aData.sentences.forEach(s => {
+        const cleanS = String(s || '').trim();
+        if (!cleanS || seenSentences.has(cleanS)) return;
+        const parts = cleanS.replace(/[.,!?;:]+$/, '').split(/\s+/);
+        if (parts.length >= 2 && parts.length <= 4) {
+          let foundObj = null;
+          let foundEmoji = null;
+          for (let pIdx = 1; pIdx < parts.length; pIdx++) {
+            const pNorm = parts[pIdx].toLocaleLowerCase('tr-TR');
+            if (mapDict[pNorm] && !PYRAMID_PERSON_WORDS.has(pNorm)) {
+              foundObj = pNorm;
+              foundEmoji = mapDict[pNorm];
+              break;
+            }
+          }
+          if (foundObj && foundEmoji) {
+            seenSentences.add(cleanS);
+            const steps = [];
+            for (let st = 1; st <= parts.length; st++) {
+              const stepText = parts.slice(0, st).join(' ') + (st === parts.length ? '.' : '');
+              steps.push({ stepNum: st, text: stepText });
+            }
+            pyramids.push({
+              sentence: cleanS,
+              targetObject: foundObj,
+              targetEmoji: foundEmoji,
+              hasActiveLetter: cleanS.toLocaleLowerCase('tr-TR').includes(activeL),
+              steps: steps
+            });
+          }
+        }
+      });
+    }
+
+    // b) Dinamik kümülatif kombinasyonlar üret
+    names.forEach(name => {
+      allowedObjects.forEach(objItem => {
+        actions.forEach(action => {
+          if (!isActionCompatible(action, objItem.word)) return;
+
+          // 3 Basamaklı Piramit (İsim -> İsim Nesne -> İsim Nesne Eylem.)
+          const s3 = `${name} ${objItem.word} ${action}.`;
+          if (!seenSentences.has(s3)) {
+            seenSentences.add(s3);
+            pyramids.push({
+              sentence: s3,
+              targetObject: objItem.word,
+              targetEmoji: objItem.emoji,
+              hasActiveLetter: s3.toLocaleLowerCase('tr-TR').includes(activeL),
+              steps: [
+                { stepNum: 1, text: `${name}` },
+                { stepNum: 2, text: `${name} ${objItem.word}` },
+                { stepNum: 3, text: `${name} ${objItem.word} ${action}.` }
+              ]
+            });
+          }
+
+          // 4 Basamaklı Piramit (Opsiyonel sıfat ile)
+          if (adjectives.length > 0 && ((pyramids.length % 3 === 0))) {
+            const adj = adjectives[(name.length + objItem.word.length) % adjectives.length];
+            const s4 = `${name} ${adj} ${objItem.word} ${action}.`;
+            if (!seenSentences.has(s4)) {
+              seenSentences.add(s4);
+              pyramids.push({
+                sentence: s4,
+                targetObject: objItem.word,
+                targetEmoji: objItem.emoji,
+                hasActiveLetter: s4.toLocaleLowerCase('tr-TR').includes(activeL),
+                steps: [
+                  { stepNum: 1, text: `${name}` },
+                  { stepNum: 2, text: `${name} ${objItem.word}` },
+                  { stepNum: 3, text: `${name} ${adj} ${objItem.word}` },
+                  { stepNum: 4, text: `${name} ${adj} ${objItem.word} ${action}.` }
+                ]
+              });
+            }
+          }
+        });
+      });
+    });
+
+    if (pyramids.length === 0) {
+      pyramids.push({
+        sentence: 'Ela lale al.',
+        targetObject: 'lale',
+        targetEmoji: '🌷',
+        hasActiveLetter: true,
+        steps: [
+          { stepNum: 1, text: 'Ela' },
+          { stepNum: 2, text: 'Ela lale' },
+          { stepNum: 3, text: 'Ela lale al.' }
+        ]
+      });
+    }
+
+    return {
+      pyramids: pyramids,
+      allowedObjects: allowedObjects
+    };
+  }
+  window.generateDynamicPyramid = generateDynamicPyramid;
+
+  function generateK1Pyramid() {
+    const activeL = String((typeof state !== 'undefined' && state.activeMaarifLetter) || 'l').toLocaleLowerCase('tr-TR');
+    const targetUpper = activeL.toLocaleUpperCase('tr-TR');
+
+    const result = generateDynamicPyramid(activeL);
+    const pyramids = result.pyramids;
+    const allowedObjects = result.allowedObjects;
+
+    const withLetter = pyramids.filter(p => p.hasActiveLetter);
+    const pool = withLetter.length > 0 ? withLetter : pyramids;
+
+    const chosenPyramid = (typeof getUniqueNextItem === 'function')
+      ? getUniqueNextItem(pool, `k1_pyramid_${activeL}`)
+      : pool[0];
+
+    const mapDict = (typeof window !== 'undefined' && window.WORD_IMAGE_MAP) ? window.WORD_IMAGE_MAP : WORD_IMAGE_MAP;
+
+    const targetCard = {
+      word: chosenPyramid.targetObject,
+      emoji: chosenPyramid.targetEmoji,
+      isTarget: true
+    };
+
+    const distractors = [];
+    const candidateDistractors = allowedObjects.filter(it => it.emoji !== chosenPyramid.targetEmoji);
+    const shuffledAllowedDistractors = (typeof k1Shuffle === 'function') ? k1Shuffle(candidateDistractors) : candidateDistractors;
+    shuffledAllowedDistractors.forEach(d => {
+      if (distractors.length < 2 && !distractors.some(x => x.emoji === d.emoji)) {
+        distractors.push({ word: d.word, emoji: d.emoji, isTarget: false });
+      }
+    });
+
+    if (distractors.length < 2) {
+      const allDictKeys = Object.keys(mapDict);
+      const shuffledDict = (typeof k1Shuffle === 'function') ? k1Shuffle(allDictKeys) : allDictKeys;
+      shuffledDict.forEach(k => {
+        const em = mapDict[k];
+        if (distractors.length < 2 && em && em !== chosenPyramid.targetEmoji && !distractors.some(x => x.emoji === em) && !PYRAMID_PERSON_WORDS.has(k) && !PYRAMID_NON_OBJECT_WORDS.has(k)) {
+          distractors.push({ word: k, emoji: em, isTarget: false });
+        }
+      });
+    }
+
+    const cards = (typeof k1Shuffle === 'function')
+      ? k1Shuffle([targetCard, ...distractors])
+      : [targetCard, ...distractors];
+
+    const formattedSteps = chosenPyramid.steps.map(st => ({
+      stepNum: st.stepNum,
+      text: st.text,
+      coloredHtml: renderColoredSyllablesForSentence(st.text)
+    }));
+
+    return k1Base(
+      'k1_pyramid',
+      `🏔️ Piramit Okuma (${targetUpper})`,
+      'Basamakları sırayla oku, piramidi tamamla ve doğru resme dokun!',
+      'Hazır mısın? Basamakları sırayla oku ve piramidi tamamla!',
+      `Harika okudun! "${chosenPyramid.sentence}" cümlesini başarıyla tamamladın! 🏔️⭐`,
+      {
+        letter: targetUpper,
+        sentence: chosenPyramid.sentence,
+        targetObject: chosenPyramid.targetObject,
+        targetEmoji: chosenPyramid.targetEmoji,
+        steps: formattedSteps,
+        cards: cards
+      }
+    );
+  }
+
+
+// --- 🎈 UÇAN BALON AVCISI (BALON PATLATMA): Kümülatif Harf, Hece ve Kelime Odaklı ---
   function generateK1BalloonPop() {
     const activeL = String(state.activeMaarifLetter || 'a').toLocaleLowerCase('tr-TR');
     const upper = activeL.toLocaleUpperCase('tr-TR');
@@ -25560,6 +25900,7 @@
       case 'k1_case_match': return k1Mount(q, k1BuildCaseMatch);
       case 'k1_missing_letter': return k1Mount(q, k1BuildMissingLetter);
       case 'k1_flash_word': return k1Mount(q, k1BuildFlashWord);
+      case 'k1_pyramid': return k1Mount(q, k1BuildPyramid);
       case 'k1_train': return k1Mount(q, k1BuildTrain);
       case 'k1_basket': return k1Mount(q, k1BuildLetterBasket);
       case 'k1_count': return k1Mount(q, k1BuildCount);
@@ -26613,6 +26954,178 @@
       pool.appendChild(el);
     });
   }
+
+  // ---------------- 🏔️ Piramit Okuma (Akıcı Cümle Okuma) ----------------
+  function k1BuildPyramid(root, pn, d) {
+    const container = k1El('k1-pyramid-container', '');
+
+    // 1) Piramit Basamakları Sahnesi
+    const pyramidStage = k1El('k1-pyramid-stage', '');
+    let currentStepIdx = 0;
+    const totalSteps = (d.steps || []).length;
+    let isPyramidCompleted = false;
+    let isAnswerCompleted = false;
+    const stepElements = [];
+
+    // 2) Anlama & Görsel Kartlar Bölümü (Piramit bitene kadar gizli)
+    const compSection = k1El('k1-pyramid-comp-section hide', '');
+    const compInstruction = k1El('k1-pyramid-comp-instruction', `
+      <div class="comp-badge">🎯 Cümlede ne anlatılıyor? Resmine dokun!</div>
+    `);
+    compSection.appendChild(compInstruction);
+    const cardsRow = k1El('k1-pyramid-cards-row', '');
+    compSection.appendChild(cardsRow);
+
+    // Moli Dinle butonuna özel yönlendirme
+    const listenBtn = root.querySelector('.kids-listen-btn');
+    if (listenBtn) {
+      listenBtn._customListenAction = () => {
+        if (isAnswerCompleted) return;
+        if (!isPyramidCompleted) {
+          const curStep = (d.steps || [])[currentStepIdx];
+          if (curStep && audio && typeof audio.speakTurkishText === 'function') {
+            audio.speakTurkishText(curStep.text);
+          }
+        } else {
+          if (audio && typeof audio.speakTurkishText === 'function') {
+            audio.speakTurkishText("Cümlede ne anlatılıyor? Doğru resmine dokun!");
+          }
+        }
+      };
+    }
+
+    // Basamakları piramit şeklinde diz
+    (d.steps || []).forEach((step, idx) => {
+      const stepBox = document.createElement('button');
+      stepBox.type = 'button';
+      stepBox.className = `k1-pyramid-step-btn step-${idx + 1}${idx === 0 ? ' is-active is-glowing' : ' is-locked'}`;
+      stepBox.setAttribute('aria-label', `Basamak ${idx + 1}: ${step.text}`);
+
+      const badge = document.createElement('span');
+      badge.className = 'k1-pyramid-step-badge';
+      badge.textContent = `${idx + 1}`;
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'k1-pyramid-step-text';
+      textSpan.innerHTML = step.coloredHtml || escapeHtml(step.text);
+
+      const checkIcon = document.createElement('span');
+      checkIcon.className = 'k1-pyramid-step-check';
+      checkIcon.textContent = '✅';
+
+      stepBox.appendChild(badge);
+      stepBox.appendChild(textSpan);
+      stepBox.appendChild(checkIcon);
+
+      attachInstantTouch(stepBox, () => {
+        if (!k1Active(pn) || isPyramidCompleted || isAnswerCompleted) return;
+
+        if (idx === currentStepIdx) {
+          // Doğru sıradaki basamağa dokunuldu!
+          stepBox.classList.remove('is-active', 'is-glowing');
+          stepBox.classList.add('is-completed');
+          if (audio && typeof audio.playPop === 'function') audio.playPop();
+          if (audio && typeof audio.speakTurkishText === 'function') {
+            audio.speakTurkishText(step.text);
+          }
+
+          currentStepIdx++;
+
+          if (currentStepIdx < totalSteps) {
+            // Bir sonraki basamağı parlat
+            const nextStepEl = stepElements[currentStepIdx];
+            if (nextStepEl) {
+              nextStepEl.classList.remove('is-locked');
+              nextStepEl.classList.add('is-active', 'is-glowing');
+            }
+          } else {
+            // TÜM BASAMAKLAR OKUNDU! PİRAMİT TAMAMLANDI!
+            isPyramidCompleted = true;
+            if (audio && typeof audio.playCelebration === 'function') {
+              audio.playCelebration();
+            } else if (audio && typeof audio.playCorrect === 'function') {
+              audio.playCorrect();
+            }
+
+            const r = stepBox.getBoundingClientRect();
+            if (typeof particles !== 'undefined' && particles && typeof particles.burst === 'function') {
+              particles.burst(r.left + r.width / 2, r.top + r.height / 2, 'confetti');
+            }
+
+            // Anlama soru kartlarını aç
+            setTimeout(() => {
+              if (!container.isConnected || isAnswerCompleted) return;
+              compSection.classList.remove('hide');
+              if (audio && typeof audio.speakTurkishText === 'function') {
+                audio.speakTurkishText("Harika okudun! Cümlede ne anlatılıyor? Resmine dokun!");
+              }
+            }, 550);
+          }
+        } else if (idx > currentStepIdx) {
+          // Sırası gelmemiş basamağa dokunulursa aktif basamağı salla
+          if (audio && typeof audio.playWrong === 'function') audio.playWrong();
+          const activeEl = stepElements[currentStepIdx];
+          if (activeEl) {
+            activeEl.classList.remove('kids-shake');
+            void activeEl.offsetWidth;
+            activeEl.classList.add('kids-shake');
+            setTimeout(() => activeEl.classList.remove('kids-shake'), 500);
+          }
+        }
+      });
+
+      stepElements.push(stepBox);
+      pyramidStage.appendChild(stepBox);
+    });
+
+    container.appendChild(pyramidStage);
+
+    // Anlama kartları (3 Büyük Görsel Kart)
+    (d.cards || []).forEach((c, cIdx) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = `kids-card k1-pyramid-visual-card kids-color-${cIdx % 4}`;
+      card.setAttribute('role', 'button');
+      card.innerHTML = `<span class="kids-face k1-pyramid-card-face">${replaceEmojisWith3D(c.emoji, 'kids-card-icon')}</span>`;
+
+      attachInstantTouch(card, () => {
+        if (!k1Active(pn) || !isPyramidCompleted || isAnswerCompleted) return;
+
+        if (c.isTarget) {
+          isAnswerCompleted = true;
+          card.classList.add('is-correct-card');
+          if (audio && typeof audio.playCorrect === 'function') audio.playCorrect();
+          if (audio && typeof audio.speakTurkishText === 'function') {
+            audio.speakTurkishText(c.word || d.targetObject);
+          }
+
+          const rect = card.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          if (typeof particles !== 'undefined' && particles && typeof particles.burst === 'function') {
+            particles.burst(cx, cy, 'stars');
+          }
+          if (typeof spawnFloatingScore === 'function') {
+            spawnFloatingScore(cx, cy, '+1 ⭐ Yıldız', false);
+          }
+
+          setTimeout(() => kidsPointAnswer(pn, card, true), 650);
+        } else {
+          if (audio && typeof audio.playWrong === 'function') audio.playWrong();
+          card.classList.remove('kids-shake');
+          void card.offsetWidth;
+          card.classList.add('kids-shake');
+          setTimeout(() => card.classList.remove('kids-shake'), 600);
+        }
+      });
+
+      cardsRow.appendChild(card);
+    });
+
+    container.appendChild(compSection);
+    root.appendChild(container);
+  }
+
   function renderInteractiveQuestion(q) {
     if (!q) return;
 
@@ -30279,6 +30792,7 @@
     maarif_missing_letter: 'eksik-harf',
     maarif_flash_word: 'simsek-kelime',
     maarif_word_train: 'tren',
+    maarif_pyramid: 'piramit',
     prep_lines: 'cizgi',
     prep_oddone: 'gorsel-algi',
     prep_sounds: 'ses-eslestir'
@@ -30301,6 +30815,9 @@
     'tren': 'maarif_word_train',
     'hece-treni': 'maarif_word_train',
     'kelime-treni': 'maarif_word_train',
+    'piramit': 'maarif_pyramid',
+    'piramit-okuma': 'maarif_pyramid',
+    'cumle-piramidi': 'maarif_pyramid',
     'cizgi': 'prep_lines',
     'gorsel-algi': 'prep_oddone',
     'ses-eslestir': 'prep_sounds'
@@ -30479,7 +30996,8 @@
             maarif_case_match: 'Büyük - Küçük Harf Eşleştir',
             maarif_missing_letter: 'Eksik Harfi Tamamla',
             maarif_flash_word: 'Şimşek Kelime (Hızlı Okuma)',
-            maarif_word_train: 'Hece ve Kelime Treni'
+            maarif_word_train: 'Hece ve Kelime Treni',
+            maarif_pyramid: 'Piramit Okuma (Akıcı Cümle)'
           };
           titleForMsg = maarifTitles[gameId] || gameTitle;
         }

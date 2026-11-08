@@ -22954,3 +22954,208 @@ body.is-game-active .universal-game-bgm-fab {
     gap: 4px !important;
   }
 }
+
+
+/* 🏔️ Piramit Okuma (Akıcı Cümle Okuma - k1_pyramid) */
+.k1-pyramid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 6px;
+  box-sizing: border-box;
+}
+
+.k1-pyramid-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.k1-pyramid-step-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 24px;
+  font-size: clamp(1.2rem, 3.8vw, 1.55rem);
+  font-weight: 800;
+  border-radius: 18px;
+  margin-bottom: 4px;
+  background: #FFFFFF;
+  border: 3px solid #E2E8F0;
+  box-shadow: 0 4px 0 #CBD5E1, 0 6px 14px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  max-width: 95%;
+  min-width: 140px;
+  position: relative;
+  font-family: 'Nunito', 'Comic Sans MS', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.k1-pyramid-step-btn.step-1 { min-width: 160px; }
+.k1-pyramid-step-btn.step-2 { min-width: 240px; }
+.k1-pyramid-step-btn.step-3 { min-width: 320px; }
+.k1-pyramid-step-btn.step-4 { min-width: 400px; }
+
+.k1-pyramid-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #F1F5F9;
+  color: #475569;
+  font-size: 0.95rem;
+  font-weight: 900;
+  border: 2px solid #CBD5E1;
+  flex-shrink: 0;
+}
+
+.k1-pyramid-step-text {
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.k1-pyramid-step-check {
+  font-size: 1.25rem;
+  display: none;
+  flex-shrink: 0;
+}
+
+/* Parlayan Aktif Basamak */
+.k1-pyramid-step-btn.is-active.is-glowing {
+  border-color: #38BDF8;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F9FF 100%);
+  box-shadow: 0 4px 0 #0284C7, 0 0 20px rgba(56, 189, 248, 0.5);
+  animation: k1PyramidStepGlow 1.5s ease-in-out infinite;
+  transform: scale(1.03);
+}
+
+.k1-pyramid-step-btn.is-active.is-glowing .k1-pyramid-step-badge {
+  background: #38BDF8;
+  color: #FFFFFF;
+  border-color: #0284C7;
+}
+
+@keyframes k1PyramidStepGlow {
+  0% { box-shadow: 0 4px 0 #0284C7, 0 0 10px rgba(56, 189, 248, 0.3); }
+  50% { box-shadow: 0 4px 0 #0284C7, 0 0 24px rgba(56, 189, 248, 0.7); transform: scale(1.04); }
+  100% { box-shadow: 0 4px 0 #0284C7, 0 0 10px rgba(56, 189, 248, 0.3); }
+}
+
+/* Tamamlanan Basamak */
+.k1-pyramid-step-btn.is-completed {
+  background: linear-gradient(180deg, #F0FDF4 0%, #DCFCE7 100%);
+  border-color: #22C55E;
+  box-shadow: 0 3px 0 #16A34A;
+  color: #166534;
+  cursor: default;
+  transform: none;
+}
+
+.k1-pyramid-step-btn.is-completed .k1-pyramid-step-badge {
+  background: #22C55E;
+  color: #FFFFFF;
+  border-color: #16A34A;
+}
+
+.k1-pyramid-step-btn.is-completed .k1-pyramid-step-check {
+  display: inline-block;
+}
+
+/* Kilitli Basamak */
+.k1-pyramid-step-btn.is-locked {
+  opacity: 0.55;
+  background: #F8FAFC;
+  border-style: dashed;
+  border-color: #CBD5E1;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Anlama ve Görsel Kartlar Bölümü */
+.k1-pyramid-comp-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+  animation: k1PyramidSlideUp 0.4s ease-out;
+}
+
+.k1-pyramid-comp-section.hide {
+  display: none !important;
+}
+
+@keyframes k1PyramidSlideUp {
+  0% { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.k1-pyramid-comp-instruction {
+  width: 100%;
+  text-align: center;
+}
+
+.k1-pyramid-comp-instruction .comp-badge {
+  display: inline-block;
+  padding: 8px 18px;
+  background: linear-gradient(180deg, #FEF08A 0%, #FDE047 100%);
+  color: #854D0E;
+  font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+  font-weight: 900;
+  border-radius: 999px;
+  border: 2px solid #EAB308;
+  box-shadow: 0 3px 0 #CA8A04, 0 4px 12px rgba(234, 179, 8, 0.2);
+}
+
+.k1-pyramid-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(88px, 160px));
+  gap: 14px;
+  width: 100%;
+  justify-content: center;
+}
+
+.k1-pyramid-visual-card {
+  min-height: clamp(100px, 20vw, 140px);
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.k1-pyramid-visual-card .k1-pyramid-card-face {
+  font-size: clamp(3rem, 8.5vw, 4.4rem);
+  line-height: 1;
+}
+
+.k1-pyramid-visual-card .k1-pyramid-card-face img {
+  width: clamp(60px, 14vw, 92px);
+  height: clamp(60px, 14vw, 92px);
+  object-fit: contain;
+}
+
+.k1-pyramid-visual-card.is-correct-card {
+  background: linear-gradient(180deg, #DCFCE7 0%, #4ADE80 100%) !important;
+  border-color: #16A34A !important;
+  box-shadow: 0 8px 0 #15803D, 0 0 22px rgba(34, 197, 94, 0.5) !important;
+  transform: scale(1.06);
+}
