@@ -23415,12 +23415,30 @@
     }, 2200);
   }
 
+    function nextQuestion() {
+    clearAllDuelTimers();
+    if (typeof resetScoreGuard === 'function') resetScoreGuard();
+    state.isQuestionAnswered = false;
+    state.isProcessing = false;
+    if (state.player1) state.player1.isLocked = false;
+    if (state.player2) state.player2.isLocked = false;
+    clearAllLockouts();
+    state.questionNumber += 1;
+    loadNextQuestion();
+  }
+  window.nextQuestion = nextQuestion;
+
   function loadNextQuestion() {
     stopReflexTimer();
     clearAllLockouts();
+    clearAllDuelTimers();
     audio.stopQuestionAudio();
-    DOM.solutionPopup.classList.add('hide');
+    if (DOM.solutionPopup) DOM.solutionPopup.classList.add('hide');
     state.isQuestionAnswered = false;
+    state.isProcessing = false;
+    if (state.player1) state.player1.isLocked = false;
+    if (state.player2) state.player2.isLocked = false;
+    if (typeof resetScoreGuard === 'function') resetScoreGuard();
 
     DOM.duelRoundBadge.textContent = `Soru ${state.questionNumber}`;
 
@@ -23669,13 +23687,12 @@
         triggerVictory(playerNum === 1 ? state.player1 : state.player2);
       }, 1200);
     } else {
-      // Sonraki soruya geçiş (2.2 saniye sonra)
-      state.questionNumber += 1;
+            // 1. Sınıf ve Okul Öncesi için ses bitişini BEKLEMEDEN doğrudan zamanlayıcı ile otomatik geçiş!
+      const isKids = isKidsGrade(state.currentGrade) || parseInt(state.currentGrade, 10) <= 1;
+      const transitionDelay = isKids ? 1200 : 1800;
       setDuelTimeout(() => {
-        if (state.currentView === 'duel') {
-          loadNextQuestion();
-        }
-      }, 2200);
+        nextQuestion();
+      }, transitionDelay);
     }
   }
 
@@ -26287,7 +26304,7 @@
         }
 
         if (popped >= targetCount) {
-          setTimeout(() => kidsPointAnswer(pn, balloon, true), 260);
+          setTimeout(() => kidsPointAnswer(pn, balloon, true), 80);
         } else {
           // Patlayan şeritteki balonu 1.4s şerit ritmine uyumlu olarak en alttan yeni içerikle başlat
           setTimeout(() => {
@@ -26368,7 +26385,7 @@
         reveal.classList.add('k1-reveal-done');
         row.classList.add('k1-train-go');
         audio.speakTurkishText(targetWordLower);
-        setTimeout(() => kidsPointAnswer(pn, row, true), 250);
+        setTimeout(() => kidsPointAnswer(pn, row, true), 200);
       }
     };
 
@@ -26478,7 +26495,7 @@
         updateActiveSlot(null);
 
         if (matchedCount >= totalCount) {
-          setTimeout(() => kidsPointAnswer(pn, slotsRow, true), 450);
+          setTimeout(() => kidsPointAnswer(pn, slotsRow, true), 80);
         }
       } else {
         clearSelectedTile();
@@ -26597,7 +26614,7 @@
         audio.playSnap();
         audio.playCorrect();
         audio.speakTurkishText(d.wordLower);
-        setTimeout(() => kidsPointAnswer(pn, wordRow, true), 550);
+        setTimeout(() => kidsPointAnswer(pn, wordRow, true), 80);
       } else {
         k1Reset(tileEl);
         if (missingBoxEl) {
@@ -26774,7 +26791,7 @@
             spawnFloatingScore(cx, cy, '+1 ⭐ Yıldız', false);
           }
 
-          setTimeout(() => kidsPointAnswer(pn, card, true), 650);
+          setTimeout(() => kidsPointAnswer(pn, card, true), 80);
         } else {
           audio.playWrong();
           card.classList.remove('kids-shake');
@@ -27154,7 +27171,7 @@
             spawnFloatingScore(cx, cy, '+1 ⭐ Yıldız', false);
           }
 
-          setTimeout(() => kidsPointAnswer(pn, card, true), 650);
+          setTimeout(() => kidsPointAnswer(pn, card, true), 80);
         } else {
           if (audio && typeof audio.playWrong === 'function') audio.playWrong();
           card.classList.remove('kids-shake');
@@ -31389,30 +31406,26 @@
   }
 
   // 2b) Oyun içi puan spam koruması: aynı oyuncu aynı soruda saliseler içinde tekrar puan alamaz
-  (function installScoreGuard() {
-    const lastAward = { 1: { t: 0, q: null }, 2: { t: 0, q: null } };
-    const guard = (pn) => {
-      const p = (pn === 2) ? 2 : 1;
-      const now = Date.now();
-      const q = state.currentQuestion || null;
-      const rec = lastAward[p];
-      if (rec.q === q && now - rec.t < 900) return false;
-      rec.t = now;
-      rec.q = q;
-      return true;
+    (function installScoreGuard() {
+    let lastAwardedQ = null;
+    let lastAwardTime = 0;
+
+    window.resetScoreGuard = function () {
+      lastAwardedQ = null;
+      lastAwardTime = 0;
     };
+
     if (typeof awardPointAndProgress === 'function') {
       const origAward = awardPointAndProgress;
       awardPointAndProgress = function (playerNum, ...rest) {
-        if (!guard(playerNum)) return;
+        const now = Date.now();
+        const currentQ = (typeof state !== 'undefined' && state.currentQuestion) ? state.currentQuestion : null;
+        if (currentQ && lastAwardedQ === currentQ && (now - lastAwardTime < 1100)) {
+          return;
+        }
+        lastAwardedQ = currentQ;
+        lastAwardTime = now;
         return origAward.call(this, playerNum, ...rest);
-      };
-    }
-    if (typeof kidsPointAnswer === 'function') {
-      const origKids = kidsPointAnswer;
-      kidsPointAnswer = function (pn, ...rest) {
-        if (!guard(pn)) return;
-        return origKids.call(this, pn, ...rest);
       };
     }
   })();
