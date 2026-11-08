@@ -7581,14 +7581,7 @@ input:checked + .slider:before {
 }
 
 .balloon-task-header {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  pointer-events: none;
+  display: none !important;
 }
 
 .balloon-task-header .moli-task-avatar,
@@ -7627,8 +7620,9 @@ input:checked + .slider:before {
 .floating-balloon {
   position: absolute;
   bottom: -130px;
-  width: 90px;
-  height: 116px;
+  width: 82px;
+  height: 104px;
+  margin-left: -41px;
   border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
   cursor: pointer;
   display: flex;
@@ -7640,7 +7634,7 @@ input:checked + .slider:before {
               0 14px 28px rgba(0, 0, 0, 0.18);
   user-select: none;
   touch-action: manipulation;
-  animation: floatUpBalloon 6s linear infinite, swayBalloon 2.5s ease-in-out infinite alternate;
+  animation: floatUpBalloon 5.6s linear infinite, swayBalloon 2.5s ease-in-out infinite alternate;
   will-change: transform, bottom;
   transform-origin: bottom center;
 }
@@ -7664,13 +7658,13 @@ input:checked + .slider:before {
 
 @keyframes swayBalloon {
   0% {
-    transform: translateX(-14px) rotate(-4deg);
+    transform: translateX(-5px) rotate(-3deg);
   }
   50% {
     transform: translateX(0px) rotate(1deg);
   }
   100% {
-    transform: translateX(14px) rotate(4deg);
+    transform: translateX(5px) rotate(3deg);
   }
 }
 
@@ -7984,14 +7978,17 @@ input:checked + .slider:before {
     font-size: 0.95rem;
   }
   .balloon-stream-container {
-    height: 240px;
+    min-height: 320px !important;
+    height: 320px !important;
   }
   .floating-balloon {
-    width: 68px;
-    height: 86px;
+    width: 68px !important;
+    min-width: 68px !important;
+    height: 78px !important;
+    margin-left: -34px !important;
   }
   .floating-balloon .balloon-inner-text {
-    font-size: 1.35rem;
+    font-size: 20px !important;
   }
   .memory-flip-card {
     min-height: 72px;
@@ -20692,31 +20689,16 @@ body.is-game-active .universal-game-bgm-fab {
 
 /* 🎈 1. Sınıf Gerçek Uçan Balon Avcısı (Balon Patlatma) Motoru */
 .k1-balloon-hud-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 4px;
+  display: none !important;
 }
 .k1-balloon-score-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 14px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-  border: 2px solid #F59E0B;
-  color: #92400E;
-  font-size: 0.95rem;
-  font-weight: 900;
-  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+  display: none !important;
 }
 .k1-balloon-sky-arena {
   position: relative;
   width: 100%;
-  height: clamp(235px, 38vh, 310px);
+  min-height: 320px;
+  height: clamp(320px, 44vh, 360px);
   overflow: hidden;
   border-radius: 24px;
   background: linear-gradient(180deg, #BAE6FD 0%, #E0F2FE 55%, #F0FDF4 100%);
@@ -20727,26 +20709,26 @@ body.is-game-active .universal-game-bgm-fab {
   position: absolute;
   bottom: -115px;
   will-change: bottom, transform;
-  animation: floatUp 7s linear infinite;
+  animation: floatUp 5.6s linear infinite;
   z-index: 3;
 }
 @keyframes floatUp {
   0% {
     bottom: -115px;
-    transform: translateX(0px);
+    transform: translateX(-50%);
   }
   25% {
-    transform: translateX(-6px);
+    transform: translateX(calc(-50% - 4px));
   }
   50% {
-    transform: translateX(6px);
+    transform: translateX(calc(-50% + 4px));
   }
   75% {
-    transform: translateX(-4px);
+    transform: translateX(calc(-50% - 3px));
   }
   100% {
     bottom: calc(100% + 35px);
-    transform: translateX(3px);
+    transform: translateX(calc(-50% + 2px));
   }
 }
 .k1-flying-balloon {
@@ -20754,7 +20736,7 @@ body.is-game-active .universal-game-bgm-fab {
   min-width: 75px;
   width: auto;
   height: 85px;
-  padding: 0 12px;
+  padding: 0 10px;
   border-radius: 50% 50% 48% 48% / 55% 55% 45% 45%;
   display: flex;
   flex-direction: column;
@@ -20771,6 +20753,24 @@ body.is-game-active .universal-game-bgm-fab {
               inset 5px 6px 10px rgba(255, 255, 255, 0.55),
               0 8px 16px rgba(15, 23, 42, 0.22);
   transition: transform 0.26s ease-out, opacity 0.26s ease-out, filter 0.2s ease;
+}
+@media (max-width: 768px) {
+  .k1-balloon-sky-arena,
+  #viewDuel .k1-balloon-sky-arena {
+    min-height: 320px !important;
+    height: 320px !important;
+  }
+  .k1-flying-balloon,
+  #viewDuel .k1-flying-balloon {
+    width: 68px !important;
+    min-width: 68px !important;
+    height: 78px !important;
+    padding: 0 4px !important;
+  }
+  .k1-balloon-letter,
+  #viewDuel .k1-balloon-letter {
+    font-size: 20px !important;
+  }
 }
 .k1-flying-balloon::before {
   content: '';

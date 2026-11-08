@@ -1843,6 +1843,40 @@
   // 📚 2026 MAARİF MODELİ 1. GRUP (A - N - E - T - İ - L)
   // SABİT VE KİLİTLİ KÜMÜLATİF VERİ SETİ (HARD RESET)
   // =============================================================
+  // =============================================================
+  // 🛡️ PEDAGOJİK GÜVENLİK VE KARA LİSTE FİLTRESİ (SAFE WORD FILTER)
+  // =============================================================
+  const FORBIDDEN_SYLLABLES = [
+    "am", "sik", "sık", "göt", "bok", "piç", "mal", "salak", "aptal", "ul", "an", "ani"
+  ];
+  window.FORBIDDEN_SYLLABLES = FORBIDDEN_SYLLABLES;
+
+  function isForbiddenSyllableOrWord(text) {
+    if (!text) return false;
+    const norm = String(text).toLocaleLowerCase('tr-TR').trim();
+    if (!norm) return false;
+    if (FORBIDDEN_SYLLABLES.includes(norm)) return true;
+    const tokens = norm.split(/[\s.,!?;:'"()\-–—]+/).filter(Boolean);
+    for (const tk of tokens) {
+      if (FORBIDDEN_SYLLABLES.includes(tk)) return true;
+    }
+    return false;
+  }
+  window.isForbiddenSyllableOrWord = isForbiddenSyllableOrWord;
+
+  function filterSafePool(arr) {
+    if (!Array.isArray(arr)) return [];
+    return arr.filter(item => {
+      if (typeof item === 'string') return !isForbiddenSyllableOrWord(item);
+      if (item && typeof item === 'object') {
+        const checkStr = item.word || item.text || item.target || '';
+        return !isForbiddenSyllableOrWord(checkStr);
+      }
+      return true;
+    });
+  }
+  window.filterSafePool = filterSafePool;
+
   const ANETIL_DATA = {
     "A": {
       allowedLetters: ["A", "a"],
@@ -1867,8 +1901,8 @@
     "N": {
       allowedLetters: ["A", "N", "a", "n"],
       mode: "CUMULATIVE",
-      syllables: ["an", "na"],
-      words: ["an", "na", "ana"],
+      syllables: ["na"],
+      words: ["na", "ana"],
       sentences: [
         "Ana.",
         "Na na."
@@ -1877,8 +1911,8 @@
     "E": {
       allowedLetters: ["A", "N", "E", "a", "n", "e"],
       mode: "CUMULATIVE",
-      syllables: ["en", "ne", "an", "na"],
-      words: ["en", "ne", "an", "na", "ana", "anne", "nane"],
+      syllables: ["en", "ne", "na"],
+      words: ["en", "ne", "na", "ana", "anne", "nane"],
       sentences: [
         "Anne nane.",
         "Ene nane."
@@ -1899,7 +1933,7 @@
       allowedLetters: ["A", "N", "E", "T", "İ", "I", "a", "n", "e", "t", "i"],
       mode: "CUMULATIVE",
       syllables: ["in", "it", "ti", "ni", "ant"],
-      words: ["in", "it", "ti", "ni", "nini", "ani", "ant", "eti"],
+      words: ["in", "it", "ti", "ni", "nini", "ant", "eti"],
       sentences: [
         "Nini, nane.",
         "Ati, ata in.",
@@ -1969,7 +2003,7 @@
         { word: "Top", icon: "⚽", hasU: false },
         { word: "Elma", icon: "🍎", hasU: false }
       ],
-      syllables: ["un", "ut", "ul", "uk", "nu", "tu", "lu", "ku", "kul", "kut", "kun", "tul", "tuk", "luk"],
+      syllables: ["un", "ut", "uk", "nu", "tu", "lu", "ku", "kul", "kut", "kun", "tul", "tuk", "luk"],
       words: ["un", "kutu", "oku", "okul", "kuku", "koku", "tutku", "konuk", "ukala", "kulak", "tutkal", "koltuk", "ulak"],
       sentences: [
         "Ali, okulda oku.",
@@ -2032,7 +2066,7 @@
         { word: "Top", icon: "⚽", hasM: false },
         { word: "Araba", icon: "🚗", hasM: false }
       ],
-      syllables: ["am", "em", "im", "om", "um", "ım", "ma", "me", "mi", "mo", "mu", "mı", "mal", "mel", "mil", "kam", "kem", "kim", "kum", "ram", "rem", "tam", "tem"],
+      syllables: ["em", "im", "om", "um", "ım", "ma", "me", "mi", "mo", "mu", "mı", "mel", "mil", "kam", "kem", "kim", "kum", "ram", "rem", "tam", "tem"],
       words: ["ama", "elma", "armut", "marul", "limon", "ekmek", "makarna", "lokum", "kum", "mum", "orman", "ırmak", "kemer", "mermer", "market", "minik", "mimar", "kalem", "rakam"],
       sentences: [
         "Melek, tatlı elma al.",
@@ -2336,14 +2370,22 @@
       ]
     }
   };
+  Object.keys(ANETIL_DATA).forEach(k => {
+    const d = ANETIL_DATA[k];
+    if (d && Array.isArray(d.syllables)) d.syllables = filterSafePool(d.syllables);
+    if (d && Array.isArray(d.words)) d.words = filterSafePool(d.words);
+  });
   window.ANETIL_DATA = ANETIL_DATA;
 
   /**
    * KOD SEVİYESİNDE GÜVENLİK FİLTRESİ (VALIDATOR)
-   * Harfin allowedLetters listesi dışındaki herhangi bir harf geçiyorsa derhal bloke eder (false döner).
+   * Harfin allowedLetters listesi dışındaki herhangi bir harf veya FORBIDDEN_SYLLABLES geçiyorsa derhal bloke eder (false döner).
    */
   function isValidForCurrentLetter(text, currentLetter) {
     if (!text) return true;
+    if (typeof isForbiddenSyllableOrWord === 'function' && isForbiddenSyllableOrWord(text)) {
+      return false;
+    }
     const upper = (currentLetter || '').toLocaleUpperCase('tr-TR');
     const config = ANETIL_DATA[upper];
     if (!config || !config.allowedLetters) return true;
@@ -3129,19 +3171,115 @@
 
     sessionQueues: {},
     recentSignatures: [],
+    recentWordsMap: {},
+    lastPickedMap: {},
 
     initSession(grade, gameType) {
       this.sessionQueues = {};
       this.recentSignatures = [];
+      this.recentWordsMap = {};
+      this.lastPickedMap = {};
+    },
+
+    getItemIdentity(item) {
+      if (item === null || item === undefined) return '';
+      if (typeof item === 'string' || typeof item === 'number') {
+        return String(item).toLocaleLowerCase('tr-TR').trim();
+      }
+      if (typeof item === 'object') {
+        const sig = item.id || item.word || item.wordLower || item.text || item.target || item.name || item.prompt || item.q || item.question || item.sound || item.odd || item.answer || '';
+        if (sig) return String(sig).toLocaleLowerCase('tr-TR').trim();
+        try { return JSON.stringify(item); } catch (e) { return String(item); }
+      }
+      return String(item);
+    },
+
+    getUniqueNextItem(pool, gameKey = 'default') {
+      if (!pool || !Array.isArray(pool) || pool.length === 0) return null;
+      const safePool = (typeof filterSafePool === 'function') ? filterSafePool(pool) : pool.slice();
+      const workingPool = safePool.length > 0 ? safePool : pool.slice();
+      if (workingPool.length === 1) return workingPool[0];
+
+      const key = String(gameKey || (pool.__poolId || (pool.__poolId = 'bag_' + Math.random().toString(36).substring(2, 9))));
+      if (!this.recentWordsMap[key]) this.recentWordsMap[key] = [];
+      const recentWords = this.recentWordsMap[key];
+      const lastId = this.lastPickedMap[key] || (recentWords.length > 0 ? recentWords[recentWords.length - 1] : null);
+
+      // Kuyruk boşaldıysa veya havuz boyutu değiştiyse Fisher-Yates ile yeniden karıştır
+      if (!this.sessionQueues[key] || this.sessionQueues[key].length === 0) {
+        let shuffled = this.fisherYatesShuffle(workingPool);
+        // Son sorulan kelimenin yeni turun ilk çekilecek elemanı (pop edildiği için son indeks) olmasını kesin olarak engelle
+        if (lastId && shuffled.length > 1) {
+          const nextToPopIdx = shuffled.length - 1;
+          if (this.getItemIdentity(shuffled[nextToPopIdx]) === lastId) {
+            // Farklı kimliğe sahip bir elemanla yer değiştir
+            let swapIdx = -1;
+            for (let i = 0; i < nextToPopIdx; i++) {
+              const candId = this.getItemIdentity(shuffled[i]);
+              if (candId !== lastId && !recentWords.includes(candId)) {
+                swapIdx = i;
+                break;
+              }
+            }
+            if (swapIdx === -1) {
+              for (let i = 0; i < nextToPopIdx; i++) {
+                if (this.getItemIdentity(shuffled[i]) !== lastId) {
+                  swapIdx = i;
+                  break;
+                }
+              }
+            }
+            if (swapIdx !== -1) {
+              const tmp = shuffled[nextToPopIdx];
+              shuffled[nextToPopIdx] = shuffled[swapIdx];
+              shuffled[swapIdx] = tmp;
+            }
+          }
+        }
+        this.sessionQueues[key] = shuffled;
+      }
+
+      // Kuyruktan sıradaki elemanı çek; eğer bir şekilde lastId ile aynıysa ve kuyrukta başka eleman varsa değiştir
+      const queue = this.sessionQueues[key];
+      if (lastId && queue.length > 1 && this.getItemIdentity(queue[queue.length - 1]) === lastId) {
+        for (let i = queue.length - 2; i >= 0; i--) {
+          if (this.getItemIdentity(queue[i]) !== lastId) {
+            const tmp = queue[queue.length - 1];
+            queue[queue.length - 1] = queue[i];
+            queue[i] = tmp;
+            break;
+          }
+        }
+      } else if (queue.length > 1 && workingPool.length > 5) {
+        // Havuz yeterince büyükse son 5 kelimede (recentWords) olmayan bir elemanı öne al
+        const topId = this.getItemIdentity(queue[queue.length - 1]);
+        if (recentWords.includes(topId)) {
+          for (let i = queue.length - 2; i >= 0; i--) {
+            const altId = this.getItemIdentity(queue[i]);
+            if (!recentWords.includes(altId) && altId !== lastId) {
+              const tmp = queue[queue.length - 1];
+              queue[queue.length - 1] = queue[i];
+              queue[i] = tmp;
+              break;
+            }
+          }
+        }
+      }
+
+      const chosen = queue.pop();
+      const chosenId = this.getItemIdentity(chosen);
+      if (chosenId) {
+        this.lastPickedMap[key] = chosenId;
+        recentWords.push(chosenId);
+        while (recentWords.length > 5) {
+          recentWords.shift();
+        }
+      }
+      return chosen;
     },
 
     drawFromPool(pool, poolKey = null) {
-      if (!pool || !pool.length) return null;
-      const key = poolKey || (pool.__poolId || (pool.__poolId = 'pool_' + Math.random().toString(36).substring(2, 9)));
-      if (!this.sessionQueues[key] || this.sessionQueues[key].length === 0) {
-        this.sessionQueues[key] = this.fisherYatesShuffle(pool);
-      }
-      return this.sessionQueues[key].pop();
+      return this.getUniqueNextItem(pool, poolKey);
     },
 
     // -------------------------------------------------------------
@@ -3225,7 +3363,7 @@
             isTarget: true
           });
         }
-        const distCount = 4;
+        const distCount = Math.max(2, 5 - targetCount);
         const dColors = level.distractorColorClasses || colorClasses.filter(c => c !== level.targetColorClass);
         for (let i = 0; i < distCount; i++) {
           balloons.push({
@@ -3236,23 +3374,24 @@
         }
       } else {
         // Sayılar, Harfler, Şekiller ve Semboller
-        const targetList = level.targets || [level.target];
-        const distractorList = level.distractors || ['A', 'B', 'C', 'D'];
+        const targetList = (level.targets || [level.target]).filter(t => !isForbiddenSyllableOrWord(t));
+        const distractorList = (level.distractors || ['A', 'E', 'T', 'L']).filter(d => !isForbiddenSyllableOrWord(d));
         for (let i = 0; i < targetCount; i++) {
-          const tVal = targetList[i % targetList.length];
+          const tVal = targetList[i % Math.max(1, targetList.length)] || level.target;
           balloons.push({ text: tVal, isTarget: true });
         }
-        const distCount = 4;
+        const distCount = Math.max(2, 5 - targetCount);
         for (let i = 0; i < distCount; i++) {
-          const dVal = distractorList[i % distractorList.length];
+          const dVal = distractorList[i % Math.max(1, distractorList.length)] || 'E';
           balloons.push({ text: dVal, isTarget: false });
         }
       }
 
-      const shuffledBalloons = this.fisherYatesShuffle(balloons).map((b, idx) => {
-        const speed = parseFloat((4.8 + Math.random() * 2.2).toFixed(2));
-        const delay = parseFloat((idx * 0.35 + Math.random() * 0.25).toFixed(2));
-        const left = Math.floor(6 + (idx * 14 + Math.random() * 6) % 78);
+      const lanes = [12, 36, 60, 84];
+      const shuffledBalloons = this.fisherYatesShuffle(balloons).slice(0, 5).map((b, idx) => {
+        const speed = 5.6;
+        const delay = parseFloat((idx * 1.4).toFixed(2));
+        const left = lanes[idx % 4];
         return {
           ...b,
           colorClass: b.colorClass || colorClasses[idx % colorClasses.length],
@@ -3600,16 +3739,15 @@
       { id: 'b_l_low', instruction: '🎈 Sadece küçük "l" harfi olan balonları patlat!', spokenText: 'Sadece küçük le! sesi olan balonları patlat.', target: 'l', category: '1. Grup Harfler', targetsNeeded: 2, targets: ['l'], distractors: ['a', 'n', 'e', 't', 'i'], exp: 'Çok hızlısın! Küçük "l" harfini buldun! 🎈⭐' },
 
       // 1. Grup Kümülatif Heceler (A-N-E-T-İ-L)
-      { id: 'b_syl_an', instruction: '🎈 Sadece "AN" hecesi olan balonları patlat!', spokenText: 'Sadece an hecesi olan balonları patlat.', target: 'AN', category: 'Heceler', targetsNeeded: 2, targets: ['AN'], distractors: ['NA', 'EN', 'AT', 'AL'], exp: 'Harika okuma! "AN" hecesi patladı! 🎈✨' },
-      { id: 'b_syl_na', instruction: '🎈 Sadece "NA" hecesi olan balonları patlat!', spokenText: 'Sadece na hecesi olan balonları patlat.', target: 'NA', category: 'Heceler', targetsNeeded: 2, targets: ['NA'], distractors: ['AN', 'NE', 'TA', 'LA'], exp: 'Harika! "NA" hecesini hemen buldun! 🎈✨' },
-      { id: 'b_syl_en', instruction: '🎈 Sadece "EN" hecesi olan balonları patlat!', spokenText: 'Sadece en hecesi olan balonları patlat.', target: 'EN', category: 'Heceler', targetsNeeded: 2, targets: ['EN'], distractors: ['NE', 'AN', 'ET', 'EL'], exp: 'Süpersin! "EN" hecesi patladı! 🎈📏' },
+      { id: 'b_syl_na', instruction: '🎈 Sadece "NA" hecesi olan balonları patlat!', spokenText: 'Sadece na hecesi olan balonları patlat.', target: 'NA', category: 'Heceler', targetsNeeded: 2, targets: ['NA'], distractors: ['EN', 'NE', 'TA', 'LA'], exp: 'Harika! "NA" hecesini hemen buldun! 🎈✨' },
+      { id: 'b_syl_en', instruction: '🎈 Sadece "EN" hecesi olan balonları patlat!', spokenText: 'Sadece en hecesi olan balonları patlat.', target: 'EN', category: 'Heceler', targetsNeeded: 2, targets: ['EN'], distractors: ['NE', 'NA', 'ET', 'EL'], exp: 'Süpersin! "EN" hecesi patladı! 🎈📏' },
       { id: 'b_syl_ne', instruction: '🎈 Sadece "NE" hecesi olan balonları patlat!', spokenText: 'Sadece ne hecesi olan balonları patlat.', target: 'NE', category: 'Heceler', targetsNeeded: 2, targets: ['NE'], distractors: ['EN', 'NA', 'TE', 'LE'], exp: 'Tebrikler! "NE" hecesini yakaladın! 🎈❓' },
-      { id: 'b_syl_at', instruction: '🎈 Sadece "AT" hecesi olan balonları patlat!', spokenText: 'Sadece at hecesi olan balonları patlat.', target: 'AT', category: 'Heceler', targetsNeeded: 2, targets: ['AT'], distractors: ['TA', 'ET', 'AN', 'AL'], exp: 'Çok hızlısın! "AT" hecesi patladı! 🎈🐴' },
+      { id: 'b_syl_at', instruction: '🎈 Sadece "AT" hecesi olan balonları patlat!', spokenText: 'Sadece at hecesi olan balonları patlat.', target: 'AT', category: 'Heceler', targetsNeeded: 2, targets: ['AT'], distractors: ['TA', 'ET', 'EN', 'AL'], exp: 'Çok hızlısın! "AT" hecesi patladı! 🎈🐴' },
       { id: 'b_syl_et', instruction: '🎈 Sadece "ET" hecesi olan balonları patlat!', spokenText: 'Sadece et hecesi olan balonları patlat.', target: 'ET', category: 'Heceler', targetsNeeded: 2, targets: ['ET'], distractors: ['TE', 'AT', 'EN', 'EL'], exp: 'Çok hızlısın! "ET" hecesini yakaladın! 🎈🥩' },
-      { id: 'b_syl_in', instruction: '🎈 Sadece "İN" hecesi olan balonları patlat!', spokenText: 'Sadece in hecesi olan balonları patlat.', target: 'İN', category: 'Heceler', targetsNeeded: 2, targets: ['İN'], distractors: ['Nİ', 'AN', 'EN', 'İL'], exp: 'Harika! "İN" hecesini patlattın! 🎈⬇️' },
+      { id: 'b_syl_in', instruction: '🎈 Sadece "İN" hecesi olan balonları patlat!', spokenText: 'Sadece in hecesi olan balonları patlat.', target: 'İN', category: 'Heceler', targetsNeeded: 2, targets: ['İN'], distractors: ['Nİ', 'NA', 'EN', 'İL'], exp: 'Harika! "İN" hecesini patlattın! 🎈⬇️' },
       { id: 'b_syl_it', instruction: '🎈 Sadece "İT" hecesi olan balonları patlat!', spokenText: 'Sadece it hecesi olan balonları patlat.', target: 'İT', category: 'Heceler', targetsNeeded: 2, targets: ['İT'], distractors: ['Tİ', 'AT', 'ET', 'İL'], exp: 'Bravo! "İT" hecesi patladı! 🎈👉' },
       { id: 'b_syl_el', instruction: '🎈 Sadece "EL" hecesi olan balonları patlat!', spokenText: 'Sadece el hecesi olan balonları patlat.', target: 'EL', category: 'Heceler', targetsNeeded: 2, targets: ['EL'], distractors: ['LE', 'AL', 'LA', 'ET'], exp: 'Süpersin! "EL" hecesini hemen okudun ve patlattın! 🎈✋' },
-      { id: 'b_syl_al', instruction: '🎈 Sadece "AL" hecesi olan balonları patlat!', spokenText: 'Sadece al hecesi olan balonları patlat.', target: 'AL', category: 'Heceler', targetsNeeded: 2, targets: ['AL'], distractors: ['LA', 'EL', 'AT', 'AN'], exp: 'Harika! "AL" hecesi balonlarını patlattın! 🎈🔴' },
+      { id: 'b_syl_al', instruction: '🎈 Sadece "AL" hecesi olan balonları patlat!', spokenText: 'Sadece al hecesi olan balonları patlat.', target: 'AL', category: 'Heceler', targetsNeeded: 2, targets: ['AL'], distractors: ['LA', 'EL', 'AT', 'EN'], exp: 'Harika! "AL" hecesi balonlarını patlattın! 🎈🔴' },
       { id: 'b_syl_la', instruction: '🎈 Sadece "LA" hecesi olan balonları patlat!', spokenText: 'Sadece la hecesi olan balonları patlat.', target: 'LA', category: 'Heceler', targetsNeeded: 2, targets: ['LA'], distractors: ['AL', 'LE', 'NA', 'TA'], exp: 'Bravo! "LA" hecesini ustalıkla patlattın! 🎈🎶' },
       { id: 'b_syl_le', instruction: '🎈 Sadece "LE" hecesi olan balonları patlat!', spokenText: 'Sadece le hecesi olan balonları patlat.', target: 'LE', category: 'Heceler', targetsNeeded: 2, targets: ['LE'], distractors: ['EL', 'LA', 'NE', 'TE'], exp: 'Tebrikler! "LE" hecesi patladı! 🎈✨' },
 
@@ -3684,13 +3822,13 @@
           { name: 'Mor', colorClass: 'balloon-color-purple', prompt: '🎈 Sadece MOR balonu patlat!' },
           { name: 'Pembe', colorClass: 'balloon-color-pink', prompt: '🎈 Sadece PEMBE balonu patlat!' }
         ];
-        const target = colorPool[Math.floor(Math.random() * colorPool.length)];
+        const target = this.getUniqueNextItem(colorPool, 'balloon_color_pool');
         const otherColors = colorPool.filter(c => c.name !== target.name);
-        const shuffledOthers = [...otherColors].sort(() => 0.5 - Math.random()).slice(0, 3);
-        const balloons = [
+        const shuffledOthers = this.fisherYatesShuffle([...otherColors]).slice(0, 3);
+        const balloons = this.fisherYatesShuffle([
           { text: '', colorClass: target.colorClass, isTarget: true },
           ...shuffledOthers.map(o => ({ text: '', colorClass: o.colorClass, isTarget: false }))
-        ].sort(() => 0.5 - Math.random());
+        ]);
 
         return {
           type: 'balloon',
@@ -3720,14 +3858,14 @@
             { letter: 'M', spoken: 'M sesini patlat' }
           ];
           const allLetters = ['A', 'N', 'E', 'T', 'İ', 'L', 'O', 'K', 'U', 'R', 'I', 'M'];
-          const chosen = letterPool[Math.floor(Math.random() * letterPool.length)];
-          const distractors = allLetters.filter(l => l !== chosen.letter).sort(() => 0.5 - Math.random()).slice(0, 3);
+          const chosen = this.getUniqueNextItem(letterPool, 'balloon_letter_pool');
+          const distractors = this.fisherYatesShuffle(allLetters.filter(l => l !== chosen.letter)).slice(0, 3);
           const colorClasses = ['balloon-color-red', 'balloon-color-blue', 'balloon-color-green', 'balloon-color-yellow', 'balloon-color-purple'];
 
-          const balloons = [
+          const balloons = this.fisherYatesShuffle([
             { text: chosen.letter, isTarget: true },
             ...distractors.map(d => ({ text: d, isTarget: false }))
-          ].sort(() => 0.5 - Math.random()).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
+          ]).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
 
           return {
             type: 'balloon',
@@ -3746,12 +3884,12 @@
             { sound: 'S', prompt: 'İçinde "S" sesi olan balonu patlat! 🥛', spoken: 'İçinde S sesi olan balonu patlat', target: '🥛 Süt', d: ['🍎 Elma', '🍇 Üzüm', '🍊 Portakal'] },
             { sound: 'M', prompt: 'İçinde "M" sesi olan balonu patlat! 🍌', spoken: 'İçinde M sesi olan balonu patlat', target: '🍌 Muz', d: ['🥕 Havuç', '🐟 Balık', '🚗 Araba'] }
           ];
-          const chosen = soundQuestions[Math.floor(Math.random() * soundQuestions.length)];
+          const chosen = this.getUniqueNextItem(soundQuestions, 'balloon_sound_questions');
           const colorClasses = ['balloon-color-blue', 'balloon-color-orange', 'balloon-color-green', 'balloon-color-pink'];
-          const balloons = [
+          const balloons = this.fisherYatesShuffle([
             { text: chosen.target, isTarget: true },
             ...chosen.d.map(item => ({ text: item, isTarget: false }))
-          ].sort(() => 0.5 - Math.random()).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
+          ]).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
 
           return {
             type: 'balloon',
@@ -3767,16 +3905,16 @@
             { target: 'EL', d: ['LE', 'AL', 'LA'], spoken: 'EL hecesini patlat' },
             { target: 'AL', d: ['LA', 'EL', 'OL'], spoken: 'AL hecesini patlat' },
             { target: 'AT', d: ['TA', 'ET', 'OT'], spoken: 'AT hecesini patlat' },
-            { target: 'AN', d: ['NA', 'EN', 'ON'], spoken: 'AN hecesini patlat' },
+            { target: 'NA', d: ['NE', 'EN', 'LA'], spoken: 'NA hecesini patlat' },
             { target: 'ET', d: ['TE', 'AT', 'İT'], spoken: 'ET hecesini patlat' },
             { target: 'LA', d: ['AL', 'LE', 'LI'], spoken: 'LA hecesini patlat' }
           ];
-          const chosen = syllableItems[Math.floor(Math.random() * syllableItems.length)];
+          const chosen = this.getUniqueNextItem(syllableItems, 'balloon_syllable_items');
           const colorClasses = ['balloon-color-purple', 'balloon-color-yellow', 'balloon-color-red', 'balloon-color-green'];
-          const balloons = [
+          const balloons = this.fisherYatesShuffle([
             { text: chosen.target, isTarget: true },
             ...chosen.d.map(item => ({ text: item, isTarget: false }))
-          ].sort(() => 0.5 - Math.random()).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
+          ]).map((b, i) => ({ ...b, colorClass: colorClasses[i % colorClasses.length] }));
 
           return {
             type: 'balloon',
@@ -3804,13 +3942,13 @@
         { name: 'Rengarenk Kelebek', emoji: '🦋' },
         { name: 'Yüzen Balık', emoji: '🐟' }
       ];
-      const target = pool[Math.floor(Math.random() * pool.length)];
-      const distractors = pool.filter(p => p.name !== target.name).sort(() => 0.5 - Math.random()).slice(0, 2);
+      const target = this.getUniqueNextItem(pool, 'shadow_match_pool');
+      const distractors = this.fisherYatesShuffle(pool.filter(p => p.name !== target.name)).slice(0, 2);
 
-      const cards = [
+      const cards = this.fisherYatesShuffle([
         { name: target.name, emoji: target.emoji, isTarget: true },
         ...distractors.map(d => ({ name: d.name, emoji: d.emoji, isTarget: false }))
-      ].sort(() => 0.5 - Math.random());
+      ]);
 
       const targetImg = EMOJI_TO_3D[target.emoji]
         ? `<img src="${EMOJI_TO_3D[target.emoji]}" class="q-3d-fruit" alt="${target.name}">`
@@ -3857,13 +3995,13 @@
         // 1) Sesi Hisset ve Bul (Görsel & İşitsel Algı)
         const subMode = Math.random() < 0.5 ? 'which_has' : 'has_or_not';
         if (subMode === 'which_has' && data.soundWords && data.soundWords.length > 0) {
-          const target = data.soundWords[Math.floor(Math.random() * data.soundWords.length)];
-          const distractors = data.noSoundWords.slice().sort(() => 0.5 - Math.random()).slice(0, 2);
+          const target = this.getUniqueNextItem(data.soundWords, `maarif_sound_find_${activeL}`);
+          const distractors = this.fisherYatesShuffle(data.noSoundWords.slice()).slice(0, 2);
           const correctChoice = `${target.word} ${target.emoji}`;
-          const options = [
+          const options = this.fisherYatesShuffle([
             correctChoice,
             ...distractors.map(d => `${d.word} ${d.emoji}`)
-          ].sort(() => 0.5 - Math.random());
+          ]);
 
           return {
             question: `Hangisinin adında <strong>"${upper}"</strong> sesi vardır?`,
@@ -3876,7 +4014,7 @@
           // Evet / Hayır
           const isYes = Math.random() < 0.5;
           const pool = isYes ? data.soundWords : data.noSoundWords;
-          const item = (pool && pool.length) ? pool[Math.floor(Math.random() * pool.length)] : { word: 'Elma', emoji: '🍎', hasSound: false };
+          const item = (pool && pool.length) ? this.getUniqueNextItem(pool, `maarif_sound_yn_${activeL}_${isYes ? 'y' : 'n'}`) : { word: 'Elma', emoji: '🍎', hasSound: false };
           const correctChoice = isYes ? '✅ Evet, Var' : '❌ Hayır, Yok';
 
           return {
@@ -3892,7 +4030,7 @@
       } else if (gameType === 'maarif_position') {
         // 2) Başta mı, Ortada mı, Sonda mı?
         const pool = (data.soundWords && data.soundWords.length) ? data.soundWords : [{ word: 'Tavşan', emoji: '🐰', position: 'başta' }];
-        const item = pool[Math.floor(Math.random() * pool.length)];
+        const item = this.getUniqueNextItem(pool, `maarif_position_${activeL}`);
         const posMap = {
           'başta': '🟢 Başta',
           'ortada': '🟡 Ortada',
@@ -3911,10 +4049,10 @@
         // 3) Büyük-Küçük Harf Eşleştirme & Avı
         const mode = Math.random() < 0.5 ? 'find_lower' : 'find_upper';
         const otherLetters = MAARIF_2026_CONFIG.letterOrder.filter(l => l !== lower);
-        const dists = otherLetters.slice().sort(() => 0.5 - Math.random()).slice(0, 2);
+        const dists = this.fisherYatesShuffle(otherLetters.slice()).slice(0, 2);
 
         if (mode === 'find_lower') {
-          const options = [lower, ...dists].sort(() => 0.5 - Math.random());
+          const options = this.fisherYatesShuffle([lower, ...dists]);
           return {
             question: `Büyük <strong>"${upper}"</strong> harfinin küçük yazılışı hangisidir?`,
             spokenText: `Büyük ${soundPhonetic} harfinin küçük yazılışı hangisidir?`,
@@ -3924,7 +4062,7 @@
           };
         } else {
           const upperDists = dists.map(l => l.toUpperCase('tr-TR'));
-          const options = [upper, ...upperDists].sort(() => 0.5 - Math.random());
+          const options = this.fisherYatesShuffle([upper, ...upperDists]);
           return {
             question: `Küçük <strong>"${lower}"</strong> harfinin büyük yazılışı hangisidir?`,
             spokenText: `Küçük ${soundPhonetic} harfinin büyük yazılışı hangisidir?`,
@@ -3939,11 +4077,12 @@
           // 'a' harfinde hece birleştirme olamaz, harf eşleştirmeye güvenli yönlendir
           return this.generateMaarifQuestion('maarif_case_match', activeL);
         }
-        const chosen = learnedWords[Math.floor(Math.random() * learnedWords.length)];
-        const allCubes = [
+        const safeLearnedWords = learnedWords.filter(w => !isForbiddenSyllableOrWord(w && w.word));
+        const chosen = this.getUniqueNextItem(safeLearnedWords.length ? safeLearnedWords : learnedWords, `maarif_syllable_build_${activeL}`);
+        const allCubes = this.fisherYatesShuffle([
           ...chosen.parts.map(p => ({ text: p, isRequired: true })),
-          ...(chosen.distractors || []).map(d => ({ text: d, isRequired: false }))
-        ].sort(() => 0.5 - Math.random());
+          ...(chosen.distractors || []).filter(d => !isForbiddenSyllableOrWord(d)).map(d => ({ text: d, isRequired: false }))
+        ]);
 
         const iconImg = EMOJI_TO_3D[chosen.icon]
           ? `<img src="${EMOJI_TO_3D[chosen.icon]}" class="q-3d-fruit" alt="${chosen.word}">`
@@ -3973,16 +4112,17 @@
         if (!learnedWords || !learnedWords.length) {
           return this.generateMaarifQuestion('maarif_sound_find', activeL);
         }
-        const targetWordObj = learnedWords[Math.floor(Math.random() * learnedWords.length)];
+        const safeLearnedWords = learnedWords.filter(w => !isForbiddenSyllableOrWord(w && w.word));
+        const targetWordObj = this.getUniqueNextItem(safeLearnedWords.length ? safeLearnedWords : learnedWords, `maarif_speed_read_${activeL}`);
         const targetWord = targetWordObj.word;
         const targetWordLower = targetWord.toLowerCase('tr-TR');
-        const otherWords = learnedWords.filter(w => w.word !== targetWord).map(w => w.word);
-        let dists = otherWords.slice().sort(() => 0.5 - Math.random()).slice(0, 2);
+        const otherWords = (safeLearnedWords.length ? safeLearnedWords : learnedWords).filter(w => w.word !== targetWord).map(w => w.word);
+        let dists = this.fisherYatesShuffle(otherWords.slice()).slice(0, 2);
         if (dists.length < 2) {
-          const fallbackLetters = learned.filter(w => w !== targetWord);
+          const fallbackLetters = learned.filter(w => w !== targetWord && !isForbiddenSyllableOrWord(w));
           dists = fallbackLetters.slice(0, 2);
         }
-        const options = [targetWord, ...dists].sort(() => 0.5 - Math.random());
+        const options = this.fisherYatesShuffle([targetWord, ...dists]);
 
         return {
           question: `Duyduğun kelimeyi yakala!`,
@@ -4003,12 +4143,12 @@
         if (!learnedSentences || !learnedSentences.length) {
           return this.generateMaarifQuestion('maarif_sound_find', activeL);
         }
-        const item = learnedSentences[Math.floor(Math.random() * learnedSentences.length)];
+        const item = this.getUniqueNextItem(learnedSentences, `maarif_sentence_complete_${activeL}`);
 
         return {
           question: `Cümledeki boşluğu tamamla: <strong>"${item.blankSentence}"</strong>`,
           spokenText: `Cümledeki eksik kelimeyi bul.`,
-          options: item.options.slice().sort(() => 0.5 - Math.random()),
+          options: this.fisherYatesShuffle(item.options.slice()),
           correct: item.missing,
           explanation: `Tebrikler! Cümlemiz: "${item.fullText}" oldu! 📖👏`
         };
@@ -4032,11 +4172,11 @@
         { word: 'ATLET', parts: ['AT', 'LET'], distractors: ['AL'], icon: '🏃' }
       ];
 
-      const chosen = items[Math.floor(Math.random() * items.length)];
-      const allCubes = [
+      const chosen = this.getUniqueNextItem(items, 'syllable_builder_items');
+      const allCubes = this.fisherYatesShuffle([
         ...chosen.parts.map(p => ({ text: p, isRequired: true })),
         ...chosen.distractors.map(d => ({ text: d, isRequired: false }))
-      ].sort(() => 0.5 - Math.random());
+      ]);
 
       const iconImg = EMOJI_TO_3D[chosen.icon]
         ? `<img src="${EMOJI_TO_3D[chosen.icon]}" class="q-3d-fruit" alt="${chosen.word}">`
@@ -4074,8 +4214,8 @@
         { name: 'Hızlı Araba', emoji: '🚗' },
         { name: 'Tatlı Çilek', emoji: '🍓' }
       ];
-      const item = items[Math.floor(Math.random() * items.length)];
-      const count = Math.floor(Math.random() * 5) + 1; // 1..5
+      const item = this.getUniqueNextItem(items, 'count_tap_items');
+      const count = this.getUniqueNextItem([1, 2, 3, 4, 5], 'count_tap_numbers');
 
       return {
         type: 'count_tap',
@@ -4091,19 +4231,19 @@
     generateWordCatchQuestion() {
       const pool = [
         { visual: '🍎', name: 'Elma', q: 'Bu lezzetli meyvenin İLK HARFİ hangisidir? 🍎', spokenText: 'Bu lezzetli meyvenin ilk harfi hangisidir?', a: 'E', d: ['A', 'T'], exp: 'Elma "E" harfi ile başlar! 🍎' },
-        { visual: '🐴', name: 'At', q: 'Bu rüzgar gibi koşan dostumuzun adı nedir? 🐴', spokenText: 'Bu rüzgar gibi koşan dostumuzun adı nedir?', a: 'AT', d: ['ET', 'AN'], exp: 'Rüzgar gibi koşan dostumuz AT! 🐴' },
+        { visual: '🐴', name: 'At', q: 'Bu rüzgar gibi koşan dostumuzun adı nedir? 🐴', spokenText: 'Bu rüzgar gibi koşan dostumuzun adı nedir?', a: 'AT', d: ['ET', 'EL'], exp: 'Rüzgar gibi koşan dostumuz AT! 🐴' },
         { visual: '🌿', name: 'Nane', q: 'Mis kokulu yeşil yaprağın İLK SESİ nedir? 🌿', spokenText: 'Mis kokulu yaprağın ilk sesi nedir?', a: 'N', d: ['T', 'L'], exp: 'Nane "N" sesiyle başlar: N-a-n-e! 🌿' },
         { visual: '🌷', name: 'Lale', q: 'Rengarenk bahar çiçeğinin İLK SESİ nedir? 🌷', spokenText: 'Bahar çiçeğinin ilk sesi nedir?', a: 'L', d: ['N', 'T'], exp: 'Lale "L" sesiyle başlar: L-a-l-e! 🌷' },
         { visual: '🐮', name: 'İnek', q: 'Bize süt veren sevimli dostumuzun İLK SESİ nedir? 🐮', spokenText: 'Bize süt veren sevimli dostumuzun ilk sesi nedir?', a: 'İ', d: ['A', 'E'], exp: 'İnek "İ" sesiyle başlar: İ-n-e-k! 🐮' },
         { visual: '🧶', name: 'Tel', q: 'Bu ince parlak nesnenin İLK SESİ nedir? 🧶', spokenText: 'Bu nesnenin ilk sesi nedir?', a: 'T', d: ['L', 'N'], exp: 'Tel "T" sesiyle başlar: T-e-l! 🧶' }
       ];
 
-      const item = pool[Math.floor(Math.random() * pool.length)];
-      const options = [
+      const item = this.getUniqueNextItem(pool, 'word_catch_pool');
+      const options = this.fisherYatesShuffle([
         { text: item.a, isTarget: true },
         { text: item.d[0], isTarget: false },
         { text: item.d[1], isTarget: false }
-      ].sort(() => 0.5 - Math.random());
+      ]);
 
       const visualImg = EMOJI_TO_3D[item.visual]
         ? `<img src="${EMOJI_TO_3D[item.visual]}" class="q-3d-fruit" alt="${item.name}">`
@@ -10167,8 +10307,11 @@
       while (attempts < 10) {
         finalQ = this._getRawQuestion(grade, gameType);
         if (!finalQ) break;
-        const sig = String(finalQ.question || finalQ.spokenText || '') + '_' + JSON.stringify(finalQ.correct);
-        if (!this.recentSignatures.includes(sig) || attempts >= 9) {
+        const idData = finalQ.interactiveData || {};
+        const dynamicIdentity = idData.wordLower || idData.word || idData.target || idData.answer || idData.odd || idData.soundText || (idData.item && (idData.item.word || idData.item.name)) || '';
+        const sig = String(finalQ.question || finalQ.spokenText || '') + '_' + JSON.stringify(finalQ.correct) + '_' + String(dynamicIdentity);
+        const lastSig = this.recentSignatures.length > 0 ? this.recentSignatures[this.recentSignatures.length - 1] : null;
+        if ((sig !== lastSig && !this.recentSignatures.slice(-5).includes(sig)) || attempts >= 9) {
           this.recentSignatures.push(sig);
           if (this.recentSignatures.length > 25) this.recentSignatures.shift();
           break;
@@ -23508,17 +23651,15 @@
       2: { poppedTargets: 0, needed: targetsNeeded }
     };
 
+    const lanes = [12, 36, 60, 84];
     const createStreamHtml = (playerNum) => {
       return `
         <div class="balloon-stream-container" data-player="${playerNum}">
-          <div class="balloon-task-header">
-            <span class="task-remaining-badge" id="balloonCounterP${playerNum}">Kalan: ${targetsNeeded} 🎯</span>
-          </div>
           <div class="balloon-stream-sky">
-            ${balloons.map((b, idx) => {
-              const speed = b.speed || (5.5 + (idx % 3) * 0.7);
-              const delay = b.delay || (idx * 0.35);
-              const left = b.left !== undefined ? b.left : ((idx * 18 + 8) % 85);
+            ${balloons.slice(0, 5).map((b, idx) => {
+              const speed = b.speed || 5.6;
+              const delay = b.delay !== undefined ? b.delay : +(idx * 1.4).toFixed(2);
+              const left = b.left !== undefined ? b.left : lanes[idx % 4];
               return `
                 <div class="floating-balloon ${b.colorClass || 'balloon-color-red'}"
                      data-balloon-idx="${idx}"
@@ -23990,8 +24131,16 @@
     ]
   };
 
+  function getUniqueNextItem(pool, gameKey) {
+    return QuestionEngine.getUniqueNextItem(pool, gameKey);
+  }
+  window.getUniqueNextItem = getUniqueNextItem;
+
   function k1Shuffle(a) { return QuestionEngine.fisherYatesShuffle(a.slice()); }
-  function k1Pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function k1Pick(a, gameKey) {
+    if (!a || !Array.isArray(a) || a.length === 0) return null;
+    return getUniqueNextItem(a, gameKey || undefined);
+  }
   function k1Upper(s) { return String(s).toLocaleUpperCase('tr-TR'); }
   function k1Lower(s) { return String(s).toLocaleLowerCase('tr-TR'); }
 
@@ -24172,10 +24321,11 @@
 
     const matchingWords = rawWords.filter(w => {
       const lw = String(w).toLocaleLowerCase('tr-TR');
-      return lw.length >= 2 && lw.includes(targetLower);
+      return lw.length >= 2 && lw.includes(targetLower) && !isForbiddenSyllableOrWord(lw);
     });
-    const pool = matchingWords.length > 0 ? matchingWords : (rawWords.length > 0 ? rawWords : ['ana', 'ata', 'elma']);
-    const chosenRaw = k1Pick(pool);
+    const safeRawWords = rawWords.filter(w => !isForbiddenSyllableOrWord(w));
+    const pool = matchingWords.length > 0 ? matchingWords : (safeRawWords.length > 0 ? safeRawWords : ['ana', 'ata', 'elma']);
+    const chosenRaw = getUniqueNextItem(pool, `k1_missing_letter_${activeL}`);
     const wordLower = String(chosenRaw).toLocaleLowerCase('tr-TR');
     const chars = Array.from(wordLower);
 
@@ -24183,7 +24333,7 @@
     chars.forEach((ch, idx) => {
       if (ch === targetLower) candidateIndices.push(idx);
     });
-    const missingIdx = candidateIndices.length > 0 ? k1Pick(candidateIndices) : 0;
+    const missingIdx = candidateIndices.length > 0 ? k1Pick(candidateIndices, `k1_missing_idx_${wordLower}`) : 0;
     const missingChar = chars[missingIdx];
 
     const allowedPairs = getStrictAllowedPairsForLetter(activeL);
@@ -24381,9 +24531,9 @@
     }
 
     // Hedef harfi içeren görselli kelimelere öncelik ver
-    const withTargetLetter = visualWordPool.filter(item => item.word.includes(activeL));
-    const targetPool = withTargetLetter.length > 0 ? withTargetLetter : visualWordPool;
-    const targetItem = k1Pick(targetPool);
+    const withTargetLetter = visualWordPool.filter(item => item.word.includes(activeL) && !isForbiddenSyllableOrWord(item.word));
+    const targetPool = withTargetLetter.length > 0 ? withTargetLetter : visualWordPool.filter(item => !isForbiddenSyllableOrWord(item.word));
+    const targetItem = getUniqueNextItem(targetPool, `k1_flash_word_${activeL}`) || { word: 'lale', emoji: '🌷' };
 
     // Çeldirici resimler (farklı emojiye sahip diğer görselli kelimeler)
     const allVisualCandidates = [];
@@ -24478,10 +24628,10 @@
         rawWords = mData.cumulativeWords.map(cw => String(cw.word || '').toLocaleLowerCase('tr-TR')).filter(Boolean);
       }
 
-      const targetSyllables = rawSyllables.filter(s => containsTargetSound(s));
+      const targetSyllables = rawSyllables.filter(s => containsTargetSound(s) && !isForbiddenSyllableOrWord(s));
       const targetShortWords = rawWords.filter(w => {
         const len = Array.from(String(w || '')).length;
-        return len >= 2 && len <= 5 && containsTargetSound(w);
+        return len >= 2 && len <= 5 && containsTargetSound(w) && !isForbiddenSyllableOrWord(w);
       });
 
       const pickTargetText = () => {
@@ -24489,11 +24639,11 @@
         if (r < 0.30) {
           return Math.random() < 0.5 ? upper : lower;
         } else if (r < 0.65 && targetSyllables.length > 0) {
-          return k1Pick(targetSyllables);
+          return getUniqueNextItem(targetSyllables, `k1_bpop_syl_${activeL}`);
         } else if (targetShortWords.length > 0) {
-          return k1Pick(targetShortWords);
+          return getUniqueNextItem(targetShortWords, `k1_bpop_word_${activeL}`);
         } else if (targetSyllables.length > 0) {
-          return k1Pick(targetSyllables);
+          return getUniqueNextItem(targetSyllables, `k1_bpop_syl_${activeL}`);
         }
         return Math.random() < 0.5 ? upper : lower;
       };
@@ -24504,8 +24654,9 @@
         let candidate = pickTargetText();
         if (i === 0) candidate = upper;
         else if (i === 1) candidate = lower;
-        else if (i === 2 && targetSyllables.length > 0) candidate = k1Pick(targetSyllables);
-        else if (i === 3 && targetShortWords.length > 0) candidate = k1Pick(targetShortWords);
+        else if (i === 2 && targetSyllables.length > 0) candidate = getUniqueNextItem(targetSyllables, `k1_bpop_syl_${activeL}`);
+        else if (i === 3 && targetShortWords.length > 0) candidate = getUniqueNextItem(targetShortWords, `k1_bpop_word_${activeL}`);
+        if (isForbiddenSyllableOrWord(candidate)) candidate = upper;
         usedTargetTexts.push(candidate);
         targets.push({ kind: 'text', text: candidate, isTarget: true });
       }
@@ -24525,7 +24676,7 @@
         if (!obj) return;
         if (Array.isArray(obj.syllables)) {
           obj.syllables.forEach(s => {
-            if (s && !containsTargetSound(s) && isValidForCurrentLetter(s, upper) && !distractorSyllables.includes(s)) {
+            if (s && !containsTargetSound(s) && isValidForCurrentLetter(s, upper) && !isForbiddenSyllableOrWord(s) && !distractorSyllables.includes(s)) {
               distractorSyllables.push(s);
             }
           });
@@ -24533,7 +24684,7 @@
         if (Array.isArray(obj.words)) {
           obj.words.forEach(w => {
             const len = Array.from(String(w || '')).length;
-            if (w && len >= 2 && len <= 5 && !containsTargetSound(w) && isValidForCurrentLetter(w, upper) && !distractorWords.includes(w)) {
+            if (w && len >= 2 && len <= 5 && !containsTargetSound(w) && isValidForCurrentLetter(w, upper) && !isForbiddenSyllableOrWord(w) && !distractorWords.includes(w)) {
               distractorWords.push(w);
             }
           });
@@ -24556,11 +24707,11 @@
         ...distractorLetters,
         ...distractorSyllables,
         ...distractorWords
-      ]);
+      ]).filter(txt => !isForbiddenSyllableOrWord(txt));
 
       for (let i = 0; i < 5; i++) {
         let dText = allDistractorCandidates[i % Math.max(1, allDistractorCandidates.length)];
-        if (!dText) {
+        if (!dText || isForbiddenSyllableOrWord(dText)) {
           dText = distractorLetters[i % Math.max(1, distractorLetters.length)] || 'A';
         }
         distractors.push({ kind: 'text', text: dText, isTarget: false });
@@ -24568,12 +24719,13 @@
     }
 
     const combined = k1Shuffle([...targets.slice(0, 7), ...distractors.slice(0, 5)]);
-    const lanes = [3, 12, 21, 30, 39, 48, 57, 65, 73, 79, 16, 60];
+    const lanes = [12, 36, 60, 84];
     const balloons = combined.map((b, i) => Object.assign({}, b, {
       colorIdx: i % 6,
-      left: lanes[i % lanes.length],
-      duration: +(6.4 + (i % 4) * 0.65).toFixed(2),
-      delay: +(i * 0.52).toFixed(2)
+      laneIdx: i % 4,
+      left: lanes[i % 4],
+      duration: 5.6,
+      delay: +(i * 1.4).toFixed(2)
     }));
 
     const promptText = (upper === 'A')
@@ -24620,7 +24772,7 @@
       { start: '🚗', target: '🏁', name: 'Araba ve Bitiş', prompt: 'Parmağınla kesik çizgileri takip ederek arabayı bitişe ulaştır!', lineType: 'straight' },
       { start: '🐱', target: '🥛', name: 'Kedi ve Süt', prompt: 'Parmağınla kesik çizgileri takip ederek kediyi süte ulaştır!', lineType: 'wavy' }
     ];
-    const th = k1Pick(themes);
+    const th = getUniqueNextItem(themes, 'k1_prep_lines');
     return k1Base('k1_prep_lines', '✏️ Çizgi ve Labirent',
       th.prompt,
       th.prompt,
@@ -24638,7 +24790,7 @@
       { items: [{ e: '🐱', w: false }, { e: '🐱', w: false }, { e: '🐱', w: false }, { e: '🐶', w: true }], odd: '🐶', prompt: 'Farklı olan hayvana dokun!' },
       { items: [{ e: '⭐', w: false }, { e: '⭐', w: false }, { e: '⭐', w: false }, { e: '🌙', w: true }], odd: '🌙', prompt: 'Farklı olan gök cismine dokun!' }
     ];
-    const th = k1Pick(pools);
+    const th = getUniqueNextItem(pools, 'k1_prep_oddone');
     const cards = k1Shuffle(th.items);
     return k1Base('k1_prep_oddone', '🔍 Farklı Olanı Bul',
       th.prompt,
@@ -24657,7 +24809,7 @@
       { sound: 'Mööö mööö! 🐮', prompt: 'Mööö diye ses çıkaran hayvan hangisidir?', answer: '🐮', label: 'İnek', distractors: [{ emoji: '🐴', label: 'At' }, { emoji: '🐶', label: 'Köpek' }] },
       { sound: 'Çuf çuf, düüt düüt! 🚂', prompt: 'Çuf çuf diye raylarda giden taşıt hangisidir?', answer: '🚂', label: 'Tren', distractors: [{ emoji: '✈️', label: 'Uçak' }, { emoji: '🚗', label: 'Araba' }] }
     ];
-    const item = k1Pick(sounds);
+    const item = getUniqueNextItem(sounds, 'k1_prep_sounds');
     const options = k1Shuffle([
       { emoji: item.answer, label: item.label, isCorrect: true },
       ...item.distractors.map(d => ({ emoji: d.emoji, label: d.label, isCorrect: false }))
@@ -24677,7 +24829,7 @@
 
     if (upper === 'A' || !ANETIL_DATA[upper]) {
       const aData = ANETIL_DATA['A'];
-      const target = k1Pick(aData.hasSoundItems);
+      const target = getUniqueNextItem(aData.hasSoundItems, 'k1_sound_feel_A');
       const wrongs = k1Shuffle(aData.noSoundItems).slice(0, 2);
       const cards = k1Shuffle([
         { word: target.word, emoji: target.icon, isTarget: true },
@@ -24795,7 +24947,7 @@
     };
 
     const sPool = soundFeelPools[upper] || soundFeelPools['N'];
-    const target = k1Pick(sPool.has);
+    const target = getUniqueNextItem(sPool.has, `k1_sound_feel_${upper}`);
     const wrongs = k1Shuffle(sPool.no).slice(0, 2);
     const cards = k1Shuffle([
       { word: target.word, emoji: target.icon, isTarget: true },
@@ -24832,11 +24984,11 @@
     } else if (mData && Array.isArray(mData.cumulativeWords) && mData.cumulativeWords.length > 0) {
       rawWords = mData.cumulativeWords.map(cw => String(cw.word || '').toLocaleLowerCase('tr-TR')).filter(Boolean);
     }
-    if (rawWords.length === 0) rawWords = ['an', 'na', 'ana'];
+    if (rawWords.length === 0) rawWords = ['na', 'ana'];
 
-    // Sadece o ana kadar izin verilen harflerden (allowedLetters) oluşan kelimeleri süz
-    const validWords = rawWords.filter(w => isValidForCurrentLetter(w, upper));
-    const candidateWords = validWords.length > 0 ? validWords : rawWords;
+    // Sadece o ana kadar izin verilen harflerden (allowedLetters) oluşan ve kara listede OLMAYAN kelimeleri süz
+    const validWords = rawWords.filter(w => isValidForCurrentLetter(w, upper) && !isForbiddenSyllableOrWord(w));
+    const candidateWords = validWords.length > 0 ? validWords : rawWords.filter(w => !isForbiddenSyllableOrWord(w));
 
     // WORD_IMAGE_MAP içinde görsel karşılığı bulunan somut kelimeleri filtreleyip sor
     const mappedWords = candidateWords.filter(w => Boolean(lookupWordEmoji(w)));
@@ -24845,7 +24997,7 @@
       ? mappedWithTarget
       : (mappedWords.length > 0 ? mappedWords : ['ana']);
 
-    const chosenRaw = k1Pick(finalPool);
+    const chosenRaw = getUniqueNextItem(finalPool, `k1_word_train_${activeL}`) || 'ana';
     const wordLower = String(chosenRaw).toLocaleLowerCase('tr-TR').trim();
     const wordUpper = wordLower.toLocaleUpperCase('tr-TR');
     const parts = Array.from(wordUpper);
@@ -24886,8 +25038,12 @@
     // 1. Ses 'A' için özel hissetme sepeti: A Olanlar vs A Olmayanlar
     if (upper === 'A') {
       const aData = ANETIL_DATA['A'];
-      const isA = Math.random() < 0.5;
-      const target = isA ? k1Pick(aData.hasSoundItems) : k1Pick(aData.noSoundItems);
+      const allAItems = [
+        ...aData.hasSoundItems.map(it => ({ ...it, isA: true })),
+        ...aData.noSoundItems.map(it => ({ ...it, isA: false }))
+      ];
+      const target = getUniqueNextItem(allAItems, 'k1_basket_A');
+      const isA = Boolean(target.isA);
       const basketLabel = isA ? 'A' : '❌';
 
       return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
@@ -24908,12 +25064,12 @@
 
     const targetBasket = upper;
     const otherBaskets = learnedUpper.filter(ch => ch !== upper);
-    const altBasket = otherBaskets.length ? k1Pick(otherBaskets) : 'A';
+    const altBasket = otherBaskets.length ? k1Pick(otherBaskets, `k1_basket_alt_${upper}`) : 'A';
     const baskets = k1Shuffle([{ letter: targetBasket }, { letter: altBasket }]);
 
     // Hedef harfle başlayan ANETIL_DATA kelimesi
-    const validWords = (anetil.words || []).filter(w => isValidForCurrentLetter(w, upper) && w.toLocaleUpperCase('tr-TR').startsWith(targetBasket));
-    const targetText = validWords.length ? k1Pick(validWords).toLocaleUpperCase('tr-TR') : targetBasket;
+    const validWords = (anetil.words || []).filter(w => isValidForCurrentLetter(w, upper) && !isForbiddenSyllableOrWord(w) && w.toLocaleUpperCase('tr-TR').startsWith(targetBasket));
+    const targetText = validWords.length ? getUniqueNextItem(validWords, `k1_basket_word_${upper}`).toLocaleUpperCase('tr-TR') : targetBasket;
 
     return k1Base('k1_basket', '🧺 Akıllı Harf Sepeti',
       `"${targetText}" hangi ses ile başlar? Doğru sepete bırak!`,
@@ -24926,12 +25082,13 @@
   }
 
   function generateK1AppleCount() {
-    const n = Math.random() < 0.7 ? (1 + Math.floor(Math.random() * 10)) : (11 + Math.floor(Math.random() * 10));
+    const countPool = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    const n = getUniqueNextItem(countPool, 'k1_apple_count_n');
     const themes = [
       { item: '🍎', name: 'elma', source: '🌳', container: '🧺', verb: 'Sepete tam %n% tane elma topla!' },
       { item: '🐟', name: 'balık', source: '🌊', container: '🫧', verb: 'Akvaryuma tam %n% tane balık at!' }
     ];
-    const th = k1Pick(themes);
+    const th = getUniqueNextItem(themes, 'k1_apple_count_theme');
     const text = th.verb.replace('%n%', String(n));
     return k1Base('k1_count', '🍎 Elma Ağacı & Sayma', text, text,
       `Tam ${n} tane ${th.name} saydın! Harikasın! ${th.item}🎉`,
@@ -24950,7 +25107,7 @@
       b = 1 + Math.floor(Math.random() * (a - 1));
       result = a - b;
     }
-    const icon = k1Pick(['🍓', '⭐', '🎈', '🍪', '🐥']);
+    const icon = getUniqueNextItem(['🍓', '⭐', '🎈', '🍪', '🐥'], 'k1_addsub_icon');
     const sign = isAdd ? '+' : '−';
     const text = `İşlemi tamamla: ${a} ${sign} ${b} = ?`;
     const spoken = isAdd ? `${a} artı ${b} kaç eder? Sonucu sepete koy!` : `${a} eksi ${b} kaç eder? Sonucu sepete koy!`;
@@ -24966,7 +25123,7 @@
       { text: 'Masanın ALTINDAKİ kediye dokun!', target: 'alt', prompt: 'Masanın altındaki kediye dokun!' },
       { text: 'Çitin ÖNÜNDEKİ tavşana dokun!', target: 'ön', prompt: 'Çitin önündeki tavşana dokun!' }
     ];
-    const q = k1Pick(questions);
+    const q = getUniqueNextItem(questions, 'k1_spatial_questions');
     return k1Base('k1_spatial', '📐 Uzamsal İlişkiler', q.text, q.prompt,
       'Harika gözlem! Doğru konumu buldun! 🎯👏',
       { target: q.target, prompt: q.prompt });
@@ -24978,7 +25135,7 @@
       { seq: ['🔺', '🟦', '🔺', '🟦'], answer: '🔺', distractors: ['🟦', '⭐'] },
       { seq: ['⭐', '🌙', '⭐', '🌙'], answer: '⭐', distractors: ['🌙', '☀️'] }
     ];
-    const pt = k1Pick(patterns);
+    const pt = getUniqueNextItem(patterns, 'k1_pattern_pool');
     return k1Base('k1_pattern', '🧩 Örüntü & Sıralama',
       'Örüntüyü tamamla: Soru işaretine dokun!',
       'Örüntüyü tamamlayan şekli bul ve dokun!',
@@ -25349,53 +25506,81 @@
     root.appendChild(wrap);
   }
 
-  // ---------------- a) 🎈 Uçan Balon Avcısı (Balon Patlatma) ----------------
+  // ---------------- a) 🎈 Uçan Balon Avcısı (Balon Patlatma - 4 Şeritli Çakışmasız Sistem) ----------------
   function k1BuildPhonemePop(root, pn, d) {
     const targetCount = d.targetCount || 5;
     let popped = 0;
 
-    const hudBar = k1El('k1-balloon-hud-bar', '');
-    const progress = k1El('k1-progress k1-balloon-progress', '');
-    const scorePill = k1El('k1-balloon-score-pill', `⭐ 0 / ${targetCount} Puan`);
-    const renderProgress = () => {
-      progress.innerHTML = Array.from({ length: targetCount }, (_, i) =>
-        `<span class="k1-dot${i < popped ? ' on' : ''}">${i < popped ? '⭐' : '○'}</span>`
-      ).join('');
-      scorePill.innerHTML = `⭐ ${popped} / ${targetCount} Puan`;
-    };
-    renderProgress();
-    hudBar.appendChild(progress);
-    hudBar.appendChild(scorePill);
-    root.appendChild(hudBar);
-
+    // Sahnenin hemen üstündeki ikinci tekrar eden yıldız/puan çubuğu kaldırıldı (en üstteki 0/5 yıldız barı yeterli)
     const sky = k1El('k1-balloon-sky-arena', '');
-    (d.balloons || []).forEach((b, i) => {
+    root.appendChild(sky);
+
+    const lanes = [12, 36, 60, 84];
+    const flightDurationSec = 5.6; // 4 şerit × 1.4s = 5.6s (aynı anda ekranda en fazla 4 balon)
+    const spawnIntervalMs = 1400;  // 1.4 saniye arayla şeritlerden sırayla çıkış
+
+    const rawQueue = Array.isArray(d.balloons) && d.balloons.length > 0
+      ? d.balloons.filter(b => !isForbiddenSyllableOrWord(b && (b.text || b.word)))
+      : [{ text: d.letter || 'A', isTarget: true, colorIdx: 0 }];
+    let queueIdx = 0;
+    let nextLaneIdx = 0;
+
+    // Her şeritteki aktif balon bilgisini tut: bir şeritteki balon yükselmeden aynı şeritten asla yeni balon çıkarma
+    const laneState = [null, null, null, null];
+
+    const getNextBalloonData = () => {
+      const item = rawQueue[queueIdx % rawQueue.length];
+      queueIdx++;
+      return item;
+    };
+
+    const assignBalloonContent = (slot, bData) => {
+      slot.data = bData;
+      slot.isPopping = false;
+      const balloonText = String(bData.text || bData.word || '').trim();
+      slot.text = balloonText;
+      const colorIdx = (bData.colorIdx !== undefined ? bData.colorIdx : queueIdx) % 6;
+      slot.balloonEl.className = `kids-item k1-flying-balloon k1-bcolor-${colorIdx}`;
+      slot.balloonEl.innerHTML = `<span class="k1-balloon-letter">${escapeHtml(balloonText)}</span><span class="k1-balloon-knot"></span><span class="k1-balloon-string"></span>`;
+    };
+
+    const createLaneBalloon = (laneIdx, initialDelaySec) => {
       const riser = k1El('k1-balloon-riser', '');
-      const leftPos = (b.left !== undefined) ? b.left : ((i * 15 + 6) % 82);
-      const dur = b.duration || (6.4 + (i % 4) * 0.6);
-      const del = (b.delay !== undefined) ? b.delay : (i * 0.5);
+      const leftPos = lanes[laneIdx];
       riser.style.left = `${leftPos}%`;
-      riser.style.animationDuration = `${dur}s`;
-      riser.style.animationDelay = `${del}s`;
+      riser.style.animationDuration = `${flightDurationSec}s`;
+      riser.style.animationDelay = `${initialDelaySec}s`;
 
-      const balloonText = String(b.text || b.word || '').trim();
-      const innerHtml = `<span class="k1-balloon-letter">${escapeHtml(balloonText)}</span>`;
-
-      const balloon = k1El(
-        `kids-item k1-flying-balloon k1-bcolor-${(b.colorIdx !== undefined ? b.colorIdx : i) % 6}`,
-        `${innerHtml}<span class="k1-balloon-knot"></span><span class="k1-balloon-string"></span>`
-      );
+      const balloon = k1El('kids-item k1-flying-balloon k1-bcolor-0', '');
       balloon.setAttribute('role', 'button');
       balloon.tabIndex = 0;
 
-      let isPopping = false;
+      const slot = {
+        laneIdx,
+        riser,
+        balloonEl: balloon,
+        data: null,
+        text: '',
+        isPopping: false,
+        lastSpawnAt: Date.now() + initialDelaySec * 1000
+      };
+
+      assignBalloonContent(slot, getNextBalloonData());
+
+      // Balon en üste ulaşıp yeni tura başlarken sıradaki güvenli kelime/heceyi yükle
+      riser.addEventListener('animationiteration', () => {
+        if (!sky.isConnected || slot.isPopping) return;
+        slot.lastSpawnAt = Date.now();
+        assignBalloonContent(slot, getNextBalloonData());
+      });
+
       attachInstantTouch(balloon, () => {
-        if (!k1Active(pn) || isPopping) return;
+        if (!k1Active(pn) || slot.isPopping || !slot.data) return;
         const rect = balloon.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
 
-        if (!b.isTarget) {
+        if (!slot.data.isTarget) {
           audio.playWrong();
           balloon.classList.remove('k1-balloon-wrong');
           void balloon.offsetWidth;
@@ -25404,16 +25589,16 @@
           return;
         }
 
-        isPopping = true;
+        slot.isPopping = true;
         if (typeof audio.playBalloonPop === 'function') {
           audio.playBalloonPop();
         } else {
           audio.playPop();
         }
-        if (balloonText) {
-          const normTts = (Array.from(balloonText).length === 1 && typeof getMaarifLetterSoundName === 'function')
-            ? getMaarifLetterSoundName(balloonText.toLocaleLowerCase('tr-TR'))
-            : balloonText.toLocaleLowerCase('tr-TR');
+        if (slot.text) {
+          const normTts = (Array.from(slot.text).length === 1 && typeof getMaarifLetterSoundName === 'function')
+            ? getMaarifLetterSoundName(slot.text.toLocaleLowerCase('tr-TR'))
+            : slot.text.toLocaleLowerCase('tr-TR');
           audio.speakTurkishText(normTts);
         }
         riser.style.animationPlayState = 'paused';
@@ -25421,7 +25606,6 @@
         balloon.classList.add('k1-balloon-popped');
 
         popped++;
-        renderProgress();
         if (typeof particles !== 'undefined' && particles && typeof particles.burst === 'function') {
           particles.burst(cx, cy, 'stars');
         }
@@ -25432,24 +25616,38 @@
         if (popped >= targetCount) {
           setTimeout(() => kidsPointAnswer(pn, balloon, true), 260);
         } else {
+          // Patlayan şeritteki balonu 1.4s şerit ritmine uyumlu olarak en alttan yeni içerikle başlat
           setTimeout(() => {
             if (!riser.isConnected) return;
-            balloon.classList.remove('k1-balloon-popped');
+            let nextData = getNextBalloonData();
+            // Ekranda hiç hedef balon kalmamışsa yeni çıkan balonun hedef olmasını garanti et
+            const hasOtherTarget = laneState.some((st, idx) => idx !== laneIdx && st && !st.isPopping && st.data && st.data.isTarget);
+            if (!hasOtherTarget && !nextData.isTarget) {
+              const targetCandidate = rawQueue.find(b => b && b.isTarget);
+              if (targetCandidate) nextData = targetCandidate;
+            }
+            assignBalloonContent(slot, nextData);
+            slot.lastSpawnAt = Date.now();
             riser.style.animation = 'none';
             void riser.offsetWidth;
             riser.style.animation = '';
-            riser.style.animationDuration = `${dur}s`;
-            riser.style.animationDelay = '0.2s';
+            riser.style.animationDuration = `${flightDurationSec}s`;
+            riser.style.animationDelay = '0s';
             riser.style.animationPlayState = 'running';
-            isPopping = false;
-          }, 1400);
+          }, spawnIntervalMs);
         }
       });
 
       riser.appendChild(balloon);
       sky.appendChild(riser);
-    });
-    root.appendChild(sky);
+      laneState[laneIdx] = slot;
+    };
+
+    // 4 dikey şeritten (%12, %36, %60, %84) sırayla ve 1.4 saniye arayla toplam 4 aktif balon çıkar
+    for (let l = 0; l < 4; l++) {
+      const laneIdx = (nextLaneIdx++) % 4;
+      createLaneBalloon(laneIdx, +(l * 1.4).toFixed(2));
+    }
   }
 
   // ---------------- b) Hece ve Kelime Treni ----------------
