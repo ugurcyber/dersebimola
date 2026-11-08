@@ -30562,20 +30562,60 @@
     try {
       if (window.location.search && window.location.search.length > 1) {
         const sp = new URLSearchParams(window.location.search);
-        sp.forEach((v, k) => merged.set(k.toLowerCase(), v));
+        sp.forEach((v, k) => { const sk = sanitizeDeepLinkKey(k); const sv = sanitizeDeepLinkValue(v); if (sk && sv) merged.set(sk, sv); });
       }
       const rawHash = (window.location.hash || '').replace(/^#\??/, '');
       if (rawHash && rawHash.includes('=')) {
         const hp = new URLSearchParams(rawHash);
         hp.forEach((v, k) => {
-          if (!merged.has(k.toLowerCase())) merged.set(k.toLowerCase(), v);
+          const sk = sanitizeDeepLinkKey(k);
+          const sv = sanitizeDeepLinkValue(v);
+          if (sk && sv && !merged.has(sk)) merged.set(sk, sv);
         });
       }
     } catch (e) {}
     return merged;
   }
 
+  // 🛡️ DEEP LINK GÜVENLİĞİ: Sadece tanımlı anahtarlar ve güvenli karakterler kabul edilir
+  const DEEP_LINK_ALLOWED_KEYS = ['sinif', 'grade', 'ders', 'subject', 'grup', 'group', 'harf', 'letter', 'unite', 'unit', 'tema', 'modul', 'konu', 'oyun', 'game', 'etkinlik'];
+  function sanitizeDeepLinkKey(k) {
+    const key = String(k || '').toLocaleLowerCase('tr-TR').trim();
+    return DEEP_LINK_ALLOWED_KEYS.includes(key) ? key : null;
+  }
+  function sanitizeDeepLinkValue(v) {
+    const val = String(v || '').trim();
+    if (!val || val.length > 48) return null;
+    // Yalnızca harf, rakam, alt çizgi ve tire (Türkçe karakterler dahil)
+    if (!/^[A-Za-z0-9_\-çğıöşüÇĞİÖŞÜ]+$/.test(val)) return null;
+    return val;
+  }
+  function isKnownSubjectId(id) {
+    if (!id) return false;
+    try {
+      return Object.keys(GRADE_SUBJECTS_CONFIG || {}).some(g => (GRADE_SUBJECTS_CONFIG[g] || []).some(sb => sb.id === id));
+    } catch (e) { return false; }
+  }
+  function isKnownGameId(id) {
+    if (!id) return false;
+    try {
+      return Object.keys(GRADE_SUBJECTS_CONFIG || {}).some(g => (GRADE_SUBJECTS_CONFIG[g] || []).some(sb => Array.isArray(sb.games) && sb.games.some(gm => gm.id === id)));
+    } catch (e) { return false; }
+  }
+
   function resolveDeepLinkRouteOnLoad() {
+    try {
+      return resolveDeepLinkRouteOnLoadUnsafe();
+    } catch (err) {
+      // Geçersiz/zararlı parametre: hata vermeden güvenli şekilde ana lobiyi aç
+      console.warn('[Güvenlik] Geçersiz bağlantı parametresi yok sayıldı.', err);
+      try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
+      try { if (typeof showView === 'function') showView('lobby'); } catch (e) {}
+      return false;
+    }
+  }
+
+  function resolveDeepLinkRouteOnLoadUnsafe() {
     const params = parseDeepLinkParameters();
     const rawSinif = params.get('sinif') || params.get('grade');
     const rawDers = params.get('ders') || params.get('subject');
@@ -30618,7 +30658,7 @@
       let targetSubjectId = null;
       if (rawDers) {
         const normDers = rawDers.toLocaleLowerCase('tr-TR').trim();
-        targetSubjectId = SLUG_TO_SUBJECT_ID[normDers] || normDers;
+        targetSubjectId = SLUG_TO_SUBJECT_ID[normDers] || (isKnownSubjectId(normDers) ? normDers : null);
       } else if (targetGrade === 1 && (rawGrup || rawHarf || (rawOyun && (SLUG_TO_MAARIF_GAME[rawOyun.toLocaleLowerCase('tr-TR')] || rawOyun.startsWith('maarif_') || rawOyun.startsWith('prep_'))))) {
         targetSubjectId = 'firstreading';
       }
@@ -30654,7 +30694,7 @@
           selectMaarifGroup(grpId);
         }
 
-        if (rawHarf) {
+        if (rawHarf && MAARIF_2026_CONFIG.letterOrder.includes(rawHarf.toLocaleLowerCase('tr-TR').trim())) {
           const letterLower = rawHarf.toLocaleLowerCase('tr-TR').trim();
           // Harfin hangi grupta olduğunu bul ve o grubu da aktif et
           if (MAARIF_2026_CONFIG && Array.isArray(MAARIF_2026_CONFIG.groups)) {
@@ -30703,7 +30743,8 @@
         } else if (GRADE34_UNIT_GAME_MAP[targetGrade] && GRADE34_UNIT_GAME_MAP[targetGrade][targetSubjectId] && GRADE34_UNIT_GAME_MAP[targetGrade][targetSubjectId][oyunNorm]) {
           resolvedGameId = GRADE34_UNIT_GAME_MAP[targetGrade][targetSubjectId][oyunNorm];
         } else {
-          resolvedGameId = rawOyun.trim();
+          const candidateId = rawOyun.trim();
+          resolvedGameId = (isKnownGameId(candidateId) || /^(maarif|prep)_[a-z0-9_]+$/.test(candidateId)) ? candidateId : null;
         }
 
         if (resolvedGameId) {
@@ -30719,6 +30760,105 @@
     return true;
   }
 
+
+  /* ==========================================================================
+     🛡️ CLIENT-SIDE SECURITY PATCH (Girdi Temizliği, Spam Koruması)
+     ========================================================================== */
+  function sanitizeInput(str, maxLen) {
+    let v = String(str == null ? '' : str);
+    // HTML/JS etiketleri ve tehlikeli anahtar kelimeler
+    v = v.replace(/<[^>]*>?/g, '');
+    v = v.replace(/(script|iframe|onload|onerror|javascript\s*:|on\w+\s*=)/gi, '');
+    v = v.replace(/[<>{}`"'\\]/g, '');
+    v = v.replace(/[\u0000-\u001F\u007F]/g, '');
+    if (maxLen) v = v.slice(0, maxLen);
+    return v;
+  }
+  window.sanitizeInput = sanitizeInput;
+
+  const SECURE_INPUT_RULES = {
+    studentAuthNameInput: 25,
+    studentAuthPinInput: 8,
+    teacherRegName: 40,
+    teacherRegSchool: 50
+  };
+  function installSecurityShield() {
+    // 1) Girdi temizliği + karakter sınırı
+    Object.keys(SECURE_INPUT_RULES).forEach(id => {
+      const el = document.getElementById(id);
+      if (!el || el.dataset.secured === '1') return;
+      el.dataset.secured = '1';
+      const max = SECURE_INPUT_RULES[id];
+      el.setAttribute('maxlength', String(max));
+      const clean = () => {
+        const cleaned = sanitizeInput(el.value, max);
+        if (cleaned !== el.value) el.value = cleaned;
+      };
+      el.addEventListener('input', clean);
+      el.addEventListener('paste', () => setTimeout(clean, 0));
+      el.addEventListener('blur', clean);
+    });
+
+    // 2) Buton spam / çift tıklama koruması (yakalama fazında)
+    const COOLDOWN_SELECTORS = [
+      '#btnStudentAuthSubmit', '#btnTeacherLoginSubmit', '#btnTeacherRegisterSubmit',
+      '#btnSidebarShare', '#btnDesktopShare', '#btnGradeHeaderShareWA', '#btnSubjectHeaderShareWA',
+      '#btnHudShareWhatsApp', '#btnShareVictoryWhatsApp', '#btnShareVictoryInstagram'
+    ].join(',');
+    const lastClickMap = new WeakMap();
+    document.addEventListener('click', (e) => {
+      const btn = e.target && e.target.closest ? e.target.closest(COOLDOWN_SELECTORS) : null;
+      if (!btn) return;
+      // Giriş butonlarından önce alanları son kez temizle
+      Object.keys(SECURE_INPUT_RULES).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = sanitizeInput(el.value, SECURE_INPUT_RULES[id]);
+      });
+      const now = Date.now();
+      const last = lastClickMap.get(btn) || 0;
+      if (now - last < 1200) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      lastClickMap.set(btn, now);
+    }, true);
+  }
+
+  // 2b) Oyun içi puan spam koruması: aynı oyuncu aynı soruda saliseler içinde tekrar puan alamaz
+  (function installScoreGuard() {
+    const lastAward = { 1: { t: 0, q: null }, 2: { t: 0, q: null } };
+    const guard = (pn) => {
+      const p = (pn === 2) ? 2 : 1;
+      const now = Date.now();
+      const q = state.currentQuestion || null;
+      const rec = lastAward[p];
+      if (rec.q === q && now - rec.t < 900) return false;
+      rec.t = now;
+      rec.q = q;
+      return true;
+    };
+    if (typeof awardPointAndProgress === 'function') {
+      const origAward = awardPointAndProgress;
+      awardPointAndProgress = function (playerNum, ...rest) {
+        if (!guard(playerNum)) return;
+        return origAward.call(this, playerNum, ...rest);
+      };
+    }
+    if (typeof kidsPointAnswer === 'function') {
+      const origKids = kidsPointAnswer;
+      kidsPointAnswer = function (pn, ...rest) {
+        if (!guard(pn)) return;
+        return origKids.call(this, pn, ...rest);
+      };
+    }
+  })();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', installSecurityShield);
+  } else {
+    installSecurityShield();
+  }
 
     // DOM hazır olduğunda başlat
   if (document.readyState === 'loading') {
