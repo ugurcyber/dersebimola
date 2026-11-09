@@ -14060,6 +14060,23 @@
       bannerText: ''
     },
 
+    // 💣 Saatli Bomba (Sıcak Patates)
+    bomb: {
+      playerCount: 2,
+      activePlayer: 0,
+      topic: 'math',
+      totalDuration: 24,
+      timeLeft: 24,
+      isTicking: false,
+      timerId: null,
+      currentQ: null,
+      isExploded: false,
+      scores: [0, 0, 0, 0],
+      bannerText: '',
+      isPassing: false,
+      wrongCooldown: false
+    },
+
     // 4) 🧠 Hafıza Kartları Düellosu
     memory: {
       players: 2,        // 1 | 2
@@ -14158,6 +14175,7 @@
     if (cardsView) cardsView.classList.remove('hide');
     if (stageView) stageView.classList.add('hide');
     ArcadeHub.activeGame = null;
+    if (typeof stopBombTimer === 'function') stopBombTimer();
     if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.stop(true);
 
     try {
@@ -14262,6 +14280,7 @@
     else if (gameId === 'sudoku') initArcadeSudokuGame();
     else if (gameId === 'xox') initArcadeXoxGame();
     else if (gameId === 'connect4' || gameId === 'hedef4') initArcadeConnect4Game();
+    else if (gameId === 'bomb' || gameId === 'bomba') initArcadeBombGame();
     else if (gameId === 'memory') initArcadeMemoryGame();
     else if (gameId === 'flower') initArcadeFlowerGame();
     else if (gameId === 'buzzer') initArcadeBuzzerGame();
@@ -16062,6 +16081,535 @@
     if (validCols.includes(4) && Math.random() < 0.5) return 4;
 
     return validCols[Math.floor(Math.random() * validCols.length)];
+  }
+
+
+
+  // =========================================================================
+  // OYUN: 💣 SAATLİ BOMBA (SICAK PATATES - HIZ & REFLEKS KAPIŞMASI)
+  // =========================================================================
+
+  const BOMB_PLAYERS_META = [
+    { id: 0, name: '1. Oyuncu (Mavi)', label: 'MAVİ', colorClass: 'player-blue', icon: '🔵', bg: '#EFF6FF', border: '#3B82F6', textCol: '#1D4ED8' },
+    { id: 1, name: '2. Oyuncu (Kırmızı)', label: 'KIRMIZI', colorClass: 'player-red', icon: '🔴', bg: '#FEF2F2', border: '#EF4444', textCol: '#B91C1C' },
+    { id: 2, name: '3. Oyuncu (Yeşil)', label: 'YEŞİL', colorClass: 'player-green', icon: '🟢', bg: '#F0FDF4', border: '#22C55E', textCol: '#15803D' },
+    { id: 3, name: '4. Oyuncu (Sarı)', label: 'SARI', colorClass: 'player-yellow', icon: '🟡', bg: '#FEFCE8', border: '#EAB308', textCol: '#A16207' }
+  ];
+
+  const BOMB_READING_POOL = [
+    { q: "Hangi kelime 'K' sesi ile başlar? ✏️", s: "Hangi kelime K sesi ile başlar?", a: "Kalem ✏️", d: ["Masa", "Elma"] },
+    { q: "Hangi kelime 2 hecelidir? 🏫", s: "Hangi kelime iki hecelidir?", a: "Okul 🏫", d: ["Bilgisayar", "Televizyon"] },
+    { q: "Hangi kelime bir meyvedir? 🍎", s: "Hangi kelime bir meyvedir?", a: "Elma 🍎", d: ["Defter", "Güneş"] },
+    { q: "'Güneş' kelimesi hangi ses ile başlar? ☀️", s: "Güneş kelimesi hangi ses ile başlar?", a: "G sesi ☀️", d: ["N sesi", "Ş sesi"] },
+    { q: "'Kelebek' kelimesi kaç hecelidir? 🦋", s: "Kelebek kelimesi kaç hecelidir?", a: "3 hece 🦋", d: ["2 hece", "4 hece"] },
+    { q: "Hangisi bir hayvandır? 🐱", s: "Hangisi bir hayvandır?", a: "Kedi 🐱", d: ["Kitap", "Sandalye"] },
+    { q: "'A-R-A-B-A' heceleri birleşince ne olur? 🚗", s: "A ra ba heceleri birleşince ne olur?", a: "Araba 🚗", d: ["Armut", "Ayakkabı"] },
+    { q: "'Açık' kelimesinin zıt anlamlısı nedir? 🚪", s: "Açık kelimesinin zıt anlamlısı nedir?", a: "Kapalı 🚪", d: ["Geniş", "Uzun"] },
+    { q: "'Büyük' kelimesinin zıt anlamlısı nedir? 🐘🐁", s: "Büyük kelimesinin zıt anlamlısı nedir?", a: "Küçük 🐁", d: ["Ağır", "Hızlı"] },
+    { q: "'Sıcak' kelimesinin zıt anlamlısı nedir? ❄️🔥", s: "Sıcak kelimesinin zıt anlamlısı nedir?", a: "Soğuk ❄️", d: ["Ilık", "Ateş"] },
+    { q: "'Hızlı' kelimesinin zıt anlamlısı nedir? 🐇🐢", s: "Hızlı kelimesinin zıt anlamlısı nedir?", a: "Yavaş 🐢", d: ["Çabuk", "Seri"] },
+    { q: "'Gündüz' kelimesinin zıt anlamlısı nedir? ☀️🌙", s: "Gündüz kelimesinin zıt anlamlısı nedir?", a: "Gece 🌙", d: ["Aydınlık", "Sabah"] },
+    { q: "'Al' kelimesinin eş anlamlısı nedir? 🔴", s: "Al kelimesinin eş anlamlısı nedir?", a: "Kırmızı 🔴", d: ["Beyaz", "Sarı"] },
+    { q: "'Ak' kelimesinin eş anlamlısı nedir? ⚪", s: "Ak kelimesinin eş anlamlısı nedir?", a: "Beyaz ⚪", d: ["Siyah", "Kırmızı"] },
+    { q: "'Kara' kelimesinin eş anlamlısı nedir? ⚫", s: "Kara kelimesinin eş anlamlısı nedir?", a: "Siyah ⚫", d: ["Mavi", "Yeşil"] },
+    { q: "'Okul' kelimesinin eş anlamlısı nedir? 🏫", s: "Okul kelimesinin eş anlamlısı nedir?", a: "Mektep 🏫", d: ["Sınıf", "Sıra"] },
+    { q: "'Öğrenci' kelimesinin eş anlamlısı nedir? 🎒", s: "Öğrenci kelimesinin eş anlamlısı nedir?", a: "Talebe 🎒", d: ["Öğretmen", "Müdür"] },
+    { q: "'Hediye' kelimesinin eş anlamlısı nedir? 🎁", s: "Hediye kelimesinin eş anlamlısı nedir?", a: "Armağan 🎁", d: ["Sürpriz", "Kutu"] }
+  ];
+
+  const BOMB_GENERAL_POOL = [
+    { q: "Türkiye'nin başkenti neresidir? 🏛️", s: "Türkiye'nin başkenti neresidir?", a: "Ankara 🏛️", d: ["İstanbul", "İzmir"] },
+    { q: "Güneş sistemindeki en büyük gezegen hangisidir? 🪐", s: "Güneş sistemindeki en büyük gezegen hangisidir?", a: "Jüpiter 🪐", d: ["Dünya", "Mars"] },
+    { q: "Vücudumuzda kanı pompalayan organımız hangisidir? ❤️", s: "Vücudumuzda kanı pompalayan organ hangisidir?", a: "Kalp ❤️", d: ["Mide", "Beyin"] },
+    { q: "Nefes almamızı sağlayan temel organımız hangisidir? 🫁", s: "Nefes almamızı sağlayan temel organ hangisidir?", a: "Akciğer 🫁", d: ["Karaciğer", "Böbrek"] },
+    { q: "1 metre kaç santimetredir? 📏", s: "Bir metre kaç santimetredir?", a: "100 cm 📏", d: ["10 cm", "1000 cm"] },
+    { q: "1 kilogram kaç gramdır? ⚖️", s: "Bir kilogram kaç gramdır?", a: "1.000 g ⚖️", d: ["100 g", "10.000 g"] },
+    { q: "1 saat kaç dakikadır? ⏰", s: "Bir saat kaç dakikadır?", a: "60 dakika ⏰", d: ["100 dakika", "30 dakika"] },
+    { q: "Bir yılda kaç mevsim vardır? 🍂🌸", s: "Bir yılda kaç mevsim vardır?", a: "4 mevsim 🍂", d: ["12 mevsim", "6 mevsim"] },
+    { q: "Bir haftada kaç gün vardır? 📅", s: "Bir haftada kaç gün vardır?", a: "7 gün 📅", d: ["5 gün", "10 gün"] },
+    { q: "Maddenin kaç temel fiziksel hali vardır? 🧊💧💨", s: "Maddenin kaç temel hali vardır?", a: "3 (Katı, Sıvı, Gaz) 🧊", d: ["2", "5"] },
+    { q: "Mıknatıs hangisini ÇEKER? 🧲", s: "Mıknatıs hangisini çeker?", a: "Demir çivi 🧲", d: ["Plastik cetvel", "Tahta kaşık"] },
+    { q: "İstiklal Marşı'mızın şairi kimdir? 🇹🇷", s: "İstiklal Marşı'mızın şairi kimdir?", a: "Mehmet Âkif Ersoy 🇹🇷", d: ["Mustafa Kemal Atatürk", "Namık Kemal"] }
+  ];
+
+  function playBombTickSound(urgency = 'normal') {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audio._bombAudioCtx) {
+        audio._bombAudioCtx = new AudioCtx();
+      }
+      const ctx = audio._bombAudioCtx;
+      if (ctx.state === 'suspended') ctx.resume();
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+
+      const freq = (urgency === 'danger') ? 1150 : ((urgency === 'fast') ? 920 : 700);
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.045);
+
+      gain.gain.setValueAtTime(0.22, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.045);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.05);
+    } catch (e) {}
+  }
+
+  function playBombExplosionSound() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audio._bombAudioCtx) {
+        audio._bombAudioCtx = new AudioCtx();
+      }
+      const ctx = audio._bombAudioCtx;
+      if (ctx.state === 'suspended') ctx.resume();
+
+      const now = ctx.currentTime;
+      const bufferSize = Math.floor(ctx.sampleRate * 0.85);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.22));
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(360, now);
+      filter.frequency.linearRampToValueAtTime(45, now + 0.85);
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.5, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.85);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+      noise.start(now);
+    } catch (e) {}
+  }
+
+  function getBombUniqueItem(pool, key) {
+    if (typeof getUniqueNextItem === 'function') {
+      return getUniqueNextItem(pool, key);
+    } else if (typeof QuestionEngine !== 'undefined' && typeof QuestionEngine.getUniqueNextItem === 'function') {
+      return QuestionEngine.getUniqueNextItem(pool, key);
+    }
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function generateBombQuestion(topic) {
+    if (topic === 'reading') {
+      const item = getBombUniqueItem(BOMB_READING_POOL, 'bomb_reading_pool');
+      const allOpts = [item.a, ...item.d].sort(() => Math.random() - 0.5);
+      return {
+        text: item.q,
+        spokenText: item.s || item.q,
+        options: allOpts,
+        answer: item.a,
+        answered: false,
+        selectedIdx: null
+      };
+    } else if (topic === 'general') {
+      const isMath = Math.random() < 0.55;
+      if (isMath) {
+        // Çarpım Tablosu (3-4. Sınıf)
+        const a = Math.floor(Math.random() * 4) + 6; // 6..9
+        const b = Math.floor(Math.random() * 8) + 2; // 2..9
+        const ans = a * b;
+        const text = a + ' × ' + b + ' = ? ✖️';
+        const spoken = a + ' kere ' + b + ' kaç eder?';
+        const optsSet = new Set([String(ans)]);
+        while (optsSet.size < 3) {
+          const delta = (Math.floor(Math.random() * 4) + 1) * (Math.random() < 0.5 ? 1 : -1);
+          const cand = Math.max(1, ans + delta);
+          optsSet.add(String(cand));
+        }
+        return {
+          text,
+          spokenText: spoken,
+          options: Array.from(optsSet).sort(() => Math.random() - 0.5),
+          answer: String(ans),
+          answered: false,
+          selectedIdx: null
+        };
+      } else {
+        const item = getBombUniqueItem(BOMB_GENERAL_POOL, 'bomb_general_pool');
+        const allOpts = [item.a, ...item.d].sort(() => Math.random() - 0.5);
+        return {
+          text: item.q,
+          spokenText: item.s || item.q,
+          options: allOpts,
+          answer: item.a,
+          answered: false,
+          selectedIdx: null
+        };
+      }
+    } else {
+      // 1-2. Sınıf Hızlı Toplama - Çıkarma
+      const isAdd = Math.random() < 0.5;
+      let text = '', spoken = '', ans = 0;
+      if (isAdd) {
+        const a = Math.floor(Math.random() * 10) + 3;
+        const b = Math.floor(Math.random() * 9) + 2;
+        ans = a + b;
+        text = a + ' + ' + b + ' = ? ➕';
+        spoken = a + ' artı ' + b + ' kaç eder?';
+      } else {
+        const a = Math.floor(Math.random() * 10) + 10;
+        const b = Math.floor(Math.random() * 8) + 2;
+        ans = a - b;
+        text = a + ' - ' + b + ' = ? ➖';
+        spoken = a + ' eksi ' + b + ' kaç eder?';
+      }
+      const optsSet = new Set([String(ans)]);
+      while (optsSet.size < 3) {
+        const delta = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+        const cand = Math.max(1, ans + delta);
+        optsSet.add(String(cand));
+      }
+      return {
+        text,
+        spokenText: spoken,
+        options: Array.from(optsSet).sort(() => Math.random() - 0.5),
+        answer: String(ans),
+        answered: false,
+        selectedIdx: null
+      };
+    }
+  }
+
+  function initArcadeBombGame(keepScores = false) {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '💣';
+    if (titleEl) titleEl.textContent = 'Saatli Bomba: Sıcak Patates';
+
+    const b = ArcadeHub.bomb;
+    stopBombTimer();
+
+    b.activePlayer = 0;
+    b.isExploded = false;
+    b.isPassing = false;
+    b.wrongCooldown = false;
+    b.bannerText = '🔥 Bombayı rakibe paslamak için soruyu hemen çöz!';
+    if (!keepScores) {
+      b.scores = [0, 0, 0, 0];
+    }
+    b.currentQ = generateBombQuestion(b.topic || 'math');
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${b.playerCount === 2 ? 'active' : ''}" data-bomb-players="2" type="button">👥 2 Oyuncu</button>
+          <button class="arc-pill-btn ${b.playerCount === 3 ? 'active' : ''}" data-bomb-players="3" type="button">👥 3 Oyuncu</button>
+          <button class="arc-pill-btn ${b.playerCount === 4 ? 'active' : ''}" data-bomb-players="4" type="button">👥 4 Oyuncu</button>
+          <button class="arc-pill-btn ${b.topic === 'reading' ? 'active' : ''}" data-bomb-topic="reading" type="button">📖 1. Sınıf Hece-Kelime</button>
+          <button class="arc-pill-btn ${b.topic === 'math' ? 'active' : ''}" data-bomb-topic="math" type="button">🔢 1-2. Sınıf Toplama-Çıkarma</button>
+          <button class="arc-pill-btn ${b.topic === 'general' ? 'active' : ''}" data-bomb-topic="general" type="button">🌍 3-4. Sınıf Çarpım & Genel Kültür</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnBombReset" type="button">🔄 Sıfırla & Yeni Maç</button>
+        </div>
+      `;
+
+      toolbarEl.querySelectorAll('[data-bomb-players]').forEach(btn => {
+        addTapListener(btn, () => {
+          b.playerCount = parseInt(btn.getAttribute('data-bomb-players'), 10);
+          audio.playClick();
+          initArcadeBombGame(false);
+        });
+      });
+
+      toolbarEl.querySelectorAll('[data-bomb-topic]').forEach(btn => {
+        addTapListener(btn, () => {
+          b.topic = btn.getAttribute('data-bomb-topic');
+          audio.playClick();
+          initArcadeBombGame(false);
+        });
+      });
+
+      const btnReset = document.getElementById('btnBombReset');
+      if (btnReset) {
+        addTapListener(btnReset, () => {
+          audio.playClick();
+          initArcadeBombGame(false);
+        });
+      }
+    }
+
+    renderBombArena();
+    startBombTimer();
+  }
+
+  function stopBombTimer() {
+    const b = ArcadeHub.bomb;
+    b.isTicking = false;
+    if (b.timerId) {
+      clearTimeout(b.timerId);
+      b.timerId = null;
+    }
+  }
+
+  function startBombTimer() {
+    stopBombTimer();
+    const b = ArcadeHub.bomb;
+    // Yarı gizli süre: 18 - 30 saniye
+    b.totalDuration = Math.floor(Math.random() * 13) + 18;
+    b.timeLeft = b.totalDuration;
+    b.isTicking = true;
+    b.isExploded = false;
+
+    runBombTickStep();
+  }
+
+  function runBombTickStep() {
+    const b = ArcadeHub.bomb;
+    if (!b.isTicking || b.isExploded) return;
+
+    const ratio = b.timeLeft / b.totalDuration;
+    let urgency = 'normal';
+    let intervalMs = 1000;
+
+    if (ratio <= 0.28) {
+      urgency = 'danger';
+      intervalMs = 380; // Çok hızlı kalp atışı
+    } else if (ratio <= 0.58) {
+      urgency = 'fast';
+      intervalMs = 680;
+    }
+
+    playBombTickSound(urgency);
+    updateBombUrgencyVisuals(urgency);
+
+    b.timerId = setTimeout(() => {
+      b.timeLeft -= (intervalMs / 1000);
+      if (b.timeLeft <= 0) {
+        triggerBombExplosion();
+      } else {
+        runBombTickStep();
+      }
+    }, intervalMs);
+  }
+
+  function updateBombUrgencyVisuals(urgency) {
+    const bombEl = document.getElementById('bombVisualGraphic');
+    if (!bombEl) return;
+    bombEl.classList.remove('bomb-urgency-normal', 'bomb-urgency-fast', 'bomb-urgency-danger');
+    bombEl.classList.add('bomb-urgency-' + urgency);
+  }
+
+  function triggerBombExplosion() {
+    const b = ArcadeHub.bomb;
+    stopBombTimer();
+    b.isExploded = true;
+
+    playBombExplosionSound();
+    audio.playWrong();
+
+    // Ekran sarsıntısı efekti
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (canvas) {
+      canvas.classList.add('bomb-shake-canvas');
+      setTimeout(() => canvas.classList.remove('bomb-shake-canvas'), 700);
+    }
+
+    // Patlayan oyuncu dışındaki tüm diğer oyunculara +1 Yıldız ekle
+    for (let i = 0; i < b.playerCount; i++) {
+      if (i !== b.activePlayer) {
+        b.scores[i] += 1;
+      }
+    }
+
+    renderBombArena();
+
+    if (typeof launchConfetti === 'function') {
+      launchConfetti();
+    }
+
+    const explodedPlayer = BOMB_PLAYERS_META[b.activePlayer];
+    setTimeout(() => {
+      showArcadeVictoryModal({
+        title: "💥 BOOOOM! BOMBA PATLADI!",
+        subtitle: `Bomba ${explodedPlayer.name} elinde patladı! Diğer oyuncular +1 ⭐ kazandı!`,
+        badgeText: 'PATLAMA ANI',
+        icon: '💥',
+        onRestart: () => initArcadeBombGame(true)
+      });
+    }, 450);
+  }
+
+  function renderBombArena() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const b = ArcadeHub.bomb;
+    const q = b.currentQ;
+    const activeMeta = BOMB_PLAYERS_META[b.activePlayer];
+
+    canvas.innerHTML = `
+      <div class="arc-bomb-arena">
+        <!-- Oyuncular Yıldız Çubuğu (Skor Paneli) -->
+        <div class="bomb-scoreboard">
+          ${Array.from({ length: b.playerCount }).map((_, i) => {
+            const meta = BOMB_PLAYERS_META[i];
+            const isActive = (i === b.activePlayer && !b.isExploded);
+            return `
+              <div class="bomb-player-card ${meta.colorClass} ${isActive ? 'is-holding-bomb' : ''}">
+                <div class="bomb-player-top">
+                  <span class="bomb-p-icon">${meta.icon}</span>
+                  <span class="bomb-p-name">${meta.label}</span>
+                </div>
+                <div class="bomb-player-stars">
+                  <span class="bomb-star-icon">⭐</span>
+                  <span class="bomb-star-count">${b.scores[i]}</span>
+                </div>
+                ${isActive ? '<span class="bomb-holding-tag">💣 ELİNDE!</span>' : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <!-- Üst Aktif Oyuncu İkaz Bandı -->
+        <div class="bomb-turn-banner ${activeMeta.colorClass}">
+          ${b.isExploded 
+            ? `💥 <strong>BOMBA ${activeMeta.label} ELİNDE PATLADI!</strong>` 
+            : `🔥 <strong>BOMBA ŞU AN: [${activeMeta.name.toLocaleUpperCase('tr-TR')}]'DE!</strong> Çabuk Çöz ve Pasla!`
+          }
+        </div>
+
+        <!-- Ortadaki Sevimli & Titreyen Bomba Sahnesi -->
+        <div class="bomb-stage-center">
+          <div class="bomb-graphic-wrap ${b.isPassing ? 'is-passing-anim' : ''} ${b.isExploded ? 'is-exploded-anim' : ''}" id="bombVisualGraphic">
+            ${b.isExploded ? `
+              <div class="bomb-explosion-burst">
+                <span class="burst-icon">💥</span>
+                <span class="burst-text">BOOOOM!</span>
+              </div>
+            ` : `
+              <div class="cartoon-bomb">
+                <div class="bomb-fuse-spark">
+                  <span class="spark-core">✨</span>
+                  <span class="flame-trail">🔥</span>
+                </div>
+                <div class="bomb-cap"></div>
+                <div class="bomb-body">
+                  <span class="bomb-face">👀</span>
+                  <div class="bomb-shine"></div>
+                </div>
+              </div>
+            `}
+          </div>
+          <div class="bomb-status-hint">${b.bannerText}</div>
+        </div>
+
+        <!-- Soru ve 3 Büyük Cevap Kartı -->
+        ${!b.isExploded ? `
+          <div class="bomb-question-card ${activeMeta.colorClass}">
+            <div class="bomb-q-header">
+              <span class="bomb-q-tag">${activeMeta.icon} ${activeMeta.name} İçin Soru:</span>
+              <button class="bomb-btn-speak" id="btnBombSpeak" type="button" aria-label="Soruyu Sesli Oku">
+                <span>🔊</span>
+                <span>Dinle</span>
+              </button>
+            </div>
+            <div class="bomb-q-body">
+              <div class="bomb-q-text" id="bombQuestionText">${q ? q.text : ''}</div>
+              <div class="bomb-q-options ${b.wrongCooldown ? 'is-shaking' : ''}">
+                ${q ? q.options.map((opt, idx) => {
+                  let optCls = '';
+                  if (q.answered) {
+                    if (opt === q.answer) optCls = 'opt-correct';
+                    else if (idx === q.selectedIdx) optCls = 'opt-wrong';
+                  }
+                  return `
+                    <button class="bomb-opt-btn ${optCls}" data-bomb-opt="${idx}" type="button" ${q.answered || b.wrongCooldown ? 'disabled' : ''}>
+                      ${opt}
+                    </button>
+                  `;
+                }).join('') : ''}
+              </div>
+            </div>
+          </div>
+        ` : `
+          <div class="bomb-exploded-card">
+            <button class="tt-ctrl-btn tt-btn-start" id="btnBombPlayAgain" type="button">🔄 Yeni Bomba Başlat</button>
+          </div>
+        `}
+      </div>
+    `;
+
+    // 🔊 Dinle butonu
+    const btnSpeak = document.getElementById('btnBombSpeak');
+    if (btnSpeak && q) {
+      addTapListener(btnSpeak, () => {
+        if (typeof audio !== 'undefined' && typeof audio.speakTurkishText === 'function') {
+          audio.speakTurkishText(q.spokenText || q.text);
+        }
+      });
+    }
+
+    // Şık butonları
+    canvas.querySelectorAll('[data-bomb-opt]').forEach(btn => {
+      addTapListener(btn, () => {
+        const optIdx = parseInt(btn.getAttribute('data-bomb-opt'), 10);
+        handleBombAnswer(optIdx);
+      });
+    });
+
+    // Tekrar Oyna
+    const btnAgain = document.getElementById('btnBombPlayAgain');
+    if (btnAgain) {
+      addTapListener(btnAgain, () => {
+        audio.playClick();
+        initArcadeBombGame(true);
+      });
+    }
+  }
+
+  function handleBombAnswer(optIdx) {
+    const b = ArcadeHub.bomb;
+    const q = b.currentQ;
+    if (!q || q.answered || b.isExploded || b.wrongCooldown) return;
+
+    q.answered = true;
+    q.selectedIdx = optIdx;
+    const chosen = q.options[optIdx];
+
+    if (chosen === q.answer) {
+      // DOĞRU CEVAP: Bombayı hemen sıradaki oyuncuya fırlat!
+      audio.playCorrect();
+      b.isPassing = true;
+      b.bannerText = '⚡ Harika! Bombayı Rakibe Pasladın! 💨💣➡️';
+      renderBombArena();
+
+      setTimeout(() => {
+        if (b.isExploded) return;
+        b.isPassing = false;
+        b.activePlayer = (b.activePlayer + 1) % b.playerCount;
+        b.currentQ = generateBombQuestion(b.topic || 'math');
+        b.bannerText = '🔥 Bomba elinde! Çöz ve hemen pasla!';
+        renderBombArena();
+      }, 350);
+    } else {
+      // YANLIŞ CEVAP: Zaman kaybı cezası!
+      audio.playWrong();
+      b.wrongCooldown = true;
+      b.bannerText = '❌ Yanlış! Bomba hâlâ sende, dikkatli ol!';
+      renderBombArena();
+
+      setTimeout(() => {
+        if (b.isExploded) return;
+        b.wrongCooldown = false;
+        b.currentQ = generateBombQuestion(b.topic || 'math');
+        renderBombArena();
+      }, 950);
+    }
   }
 
 
@@ -30336,6 +30884,13 @@ function renderInteractiveQuestion(q) {
           if (typeof launchArcadeGame === 'function') launchArcadeGame('connect4');
         }
       }, 100);
+    } else if (hash === '#bomba' || hash === '#/bomba' || hash === '#bomb' || hash === '#/bomb') {
+      setTimeout(() => {
+        if (typeof openArcadeHub === 'function') {
+          openArcadeHub();
+          if (typeof launchArcadeGame === 'function') launchArcadeGame('bomb');
+        }
+      }, 100);
     } else if (/^#\/?ingilizce[-\/]/.test(hash) || path.includes('/ingilizce/')) {
       const gMatch = (hash + path).match(/([1-4])(?:-sinif)?/);
       const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
@@ -32318,6 +32873,9 @@ function renderInteractiveQuestion(q) {
       if (arcGame === 'connect4' || arcGame === 'hedef4') {
         params.set('oyun', 'hedef4');
         return params.toString();
+      } else if (arcGame === 'bomb' || arcGame === 'bomba') {
+        params.set('oyun', 'bomba');
+        return params.toString();
       } else if (arcGame) {
         params.set('oyun', arcGame);
         return params.toString();
@@ -32401,6 +32959,8 @@ function renderInteractiveQuestion(q) {
       const arcGame = overrides.arcadeGame || (typeof ArcadeHub !== 'undefined' ? ArcadeHub.activeGame : null);
       if (arcGame === 'connect4' || arcGame === 'hedef4') {
         return '🔥 En Popüler Oyunlar - 🔴🟡 Hedef 4 (Dörtlü Sıra Kapışması)';
+      } else if (arcGame === 'bomb' || arcGame === 'bomba') {
+        return '🔥 En Popüler Oyunlar - 💣 Saatli Bomba (Sıcak Patates)';
       }
     }
     const grade = overrides.grade !== undefined ? parseInt(overrides.grade, 10) : parseInt(state.currentGrade, 10);
@@ -32689,6 +33249,12 @@ function renderInteractiveQuestion(q) {
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
           openArcadeHub();
           launchArcadeGame('connect4');
+          return true;
+        } else if (oyunNorm === 'bomba' || oyunNorm === 'bomb') {
+          interactionLockUntil = 0;
+          if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+          openArcadeHub();
+          launchArcadeGame('bomb');
           return true;
         }
         let resolvedGameId = null;

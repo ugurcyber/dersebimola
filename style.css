@@ -24965,3 +24965,550 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 1.15rem;
   }
 }
+
+/* ==========================================================================
+   💣 SAATLİ BOMBA (SICAK PATATES - HIZ & REFLEKS KAPIŞMASI) STİLLERİ
+   ========================================================================== */
+
+/* Lobi Kartı */
+.theme-bomb {
+  --card-accent: #EF4444;
+}
+
+.banner-bomb {
+  background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 50%, #FECACA 100%);
+  border: 2px solid #FCA5A5;
+}
+
+.scene-bomb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  gap: 12px;
+}
+
+.mini-bomb-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #18181B;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid #EF4444;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+
+.mini-bomb-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  animation: miniBombPulse 1.2s infinite alternate ease-in-out;
+}
+
+.mini-bomb-spark {
+  position: absolute;
+  top: -8px;
+  right: -4px;
+  font-size: 1.2rem;
+  animation: sparkFlicker 0.6s infinite alternate;
+}
+
+/* Arena Kapsayıcı */
+.arc-bomb-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 840px;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Ekran Sarsıntı Efekti (Patlama Anında) */
+.bomb-shake-canvas {
+  animation: bombCanvasShake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Skor Tablosu (Oyuncuların Yıldız Sayaçları) */
+.bomb-scoreboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.bomb-player-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.bomb-player-card.player-blue { border-color: #BFDBFE; background: #EFF6FF; }
+.bomb-player-card.player-red { border-color: #FECACA; background: #FEF2F2; }
+.bomb-player-card.player-green { border-color: #BBF7D0; background: #F0FDF4; }
+.bomb-player-card.player-yellow { border-color: #FEF08A; background: #FEFCE8; }
+
+.bomb-player-card.is-holding-bomb {
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35), 0 8px 22px rgba(239, 68, 68, 0.25);
+  transform: scale(1.04);
+  animation: bombHolderPulse 1s infinite alternate;
+}
+
+.bomb-player-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.bomb-player-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: #B45309;
+}
+
+.bomb-star-icon {
+  font-size: 1.25rem;
+}
+
+.bomb-holding-tag {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  background: #DC2626;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+  animation: sparkFlicker 0.8s infinite alternate;
+}
+
+/* Üst Aktif Oyuncu İkaz Bandı */
+.bomb-turn-banner {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 16px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.08rem;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  border: 2px solid;
+  transition: all 0.25s ease;
+}
+
+.bomb-turn-banner.player-blue { background: #DBEAFE; border-color: #3B82F6; color: #1E40AF; }
+.bomb-turn-banner.player-red { background: #FEE2E2; border-color: #EF4444; color: #B91C1C; }
+.bomb-turn-banner.player-green { background: #DCFCE7; border-color: #22C55E; color: #15803D; }
+.bomb-turn-banner.player-yellow { background: #FEF9C3; border-color: #EAB308; color: #854D0E; }
+
+/* Bomba Sahnesi (Merkez Alan) */
+.bomb-stage-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px;
+  width: 100%;
+  position: relative;
+}
+
+.bomb-graphic-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.25s ease;
+}
+
+/* Sevimli Çizgi Film Bombası */
+.cartoon-bomb {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bomb-body {
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle at 35% 35%, #3F3F46 0%, #18181B 65%, #09090B 100%);
+  border-radius: 50%;
+  border: 4px solid #52525B;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), inset 0 -4px 8px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.bomb-cap {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 12px;
+  background: #71717A;
+  border-radius: 4px 4px 0 0;
+  border: 2px solid #3F3F46;
+  z-index: 2;
+}
+
+.bomb-fuse-spark {
+  position: absolute;
+  top: -22px;
+  left: 54%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  z-index: 3;
+}
+
+.spark-core {
+  font-size: 1.4rem;
+  animation: sparkFlicker 0.4s infinite alternate;
+}
+
+.flame-trail {
+  font-size: 1.5rem;
+  animation: flameBurn 0.5s infinite alternate;
+}
+
+.bomb-face {
+  font-size: 1.6rem;
+  z-index: 3;
+  user-select: none;
+}
+
+.bomb-shine {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  width: 22px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  transform: rotate(-35deg);
+}
+
+/* Aciliyet Durumları (Zaman Azaldıkça) */
+.bomb-urgency-normal .cartoon-bomb {
+  animation: bombPulseNormal 1.2s infinite ease-in-out;
+}
+
+.bomb-urgency-fast .cartoon-bomb {
+  animation: bombPulseFast 0.65s infinite ease-in-out;
+  filter: drop-shadow(0 0 16px #F59E0B);
+}
+
+.bomb-urgency-danger .cartoon-bomb {
+  animation: bombPulseDanger 0.35s infinite ease-in-out, bombShakeDanger 0.25s infinite alternate;
+  filter: drop-shadow(0 0 26px #EF4444);
+}
+
+.bomb-urgency-danger .bomb-body {
+  border-color: #EF4444;
+  background: radial-gradient(circle at 35% 35%, #7F1D1D 0%, #450A0A 65%, #18181B 100%);
+}
+
+/* Paslama Animasyonu (Fırlatma) */
+.is-passing-anim {
+  animation: bombPassToss 0.35s ease-in-out;
+}
+
+/* Patlama Görseli */
+.bomb-explosion-burst {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: burstPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.burst-icon {
+  font-size: 5rem;
+  line-height: 1;
+}
+
+.burst-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #DC2626;
+  text-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.bomb-status-hint {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #334155;
+  margin-top: 10px;
+  text-align: center;
+  min-height: 28px;
+}
+
+/* Soru Kartı */
+.bomb-question-card {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 16px 20px;
+  border: 3px solid #E2E8F0;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.25s ease;
+}
+
+.bomb-question-card.player-blue { border-color: #93C5FD; }
+.bomb-question-card.player-red { border-color: #FCA5A5; }
+.bomb-question-card.player-green { border-color: #86EFAC; }
+.bomb-question-card.player-yellow { border-color: #FDE047; }
+
+.bomb-q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.bomb-q-tag {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.bomb-btn-speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EEF2FF;
+  color: #4F46E5;
+  border: 1.5px solid #C7D2FE;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bomb-btn-speak:hover, .bomb-btn-speak:active {
+  background: #4F46E5;
+  color: #FFFFFF;
+  transform: scale(1.04);
+}
+
+.bomb-q-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.bomb-q-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0F172A;
+  text-align: center;
+}
+
+.bomb-q-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.bomb-q-options.is-shaking {
+  animation: bombOptionsShake 0.45s ease;
+}
+
+.bomb-opt-btn {
+  flex: 1;
+  min-width: 140px;
+  max-width: 250px;
+  padding: 12px 18px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1E293B;
+  background: #F8FAFC;
+  border: 2.5px solid #CBD5E1;
+  border-bottom: 5px solid #94A3B8;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.bomb-opt-btn:hover:not(:disabled) {
+  background: #EFF6FF;
+  border-color: #3B82F6;
+  border-bottom-color: #1D4ED8;
+  transform: translateY(-2px);
+}
+
+.bomb-opt-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  border-bottom-width: 2.5px;
+}
+
+.bomb-opt-btn.opt-correct {
+  background: #DCFCE7 !important;
+  border-color: #22C55E !important;
+  border-bottom-color: #15803D !important;
+  color: #15803D !important;
+  transform: scale(1.05);
+}
+
+.bomb-opt-btn.opt-wrong {
+  background: #FEE2E2 !important;
+  border-color: #EF4444 !important;
+  border-bottom-color: #B91C1C !important;
+  color: #B91C1C !important;
+}
+
+.bomb-opt-btn:disabled {
+  opacity: 0.85;
+  cursor: default;
+}
+
+.bomb-exploded-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+/* Animasyonlar */
+@keyframes sparkFlicker {
+  0% { transform: scale(0.9) rotate(-10deg); opacity: 0.8; }
+  100% { transform: scale(1.25) rotate(15deg); opacity: 1; }
+}
+
+@keyframes flameBurn {
+  0% { transform: translateY(0) scale(0.9); }
+  100% { transform: translateY(-4px) scale(1.15); }
+}
+
+@keyframes miniBombPulse {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1.1); }
+}
+
+@keyframes bombPulseNormal {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes bombPulseFast {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes bombPulseDanger {
+  0%, 100% { transform: scale(1.05); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes bombShakeDanger {
+  0% { transform: rotate(-4deg); }
+  100% { transform: rotate(4deg); }
+}
+
+@keyframes bombHolderPulse {
+  0% { transform: scale(1.02); }
+  100% { transform: scale(1.07); }
+}
+
+@keyframes bombPassToss {
+  0% { transform: translateX(0) scale(1); opacity: 1; }
+  40% { transform: translateX(60px) translateY(-30px) rotate(45deg) scale(0.7); opacity: 0.5; }
+  60% { transform: translateX(-60px) translateY(-30px) rotate(-45deg) scale(0.7); opacity: 0.5; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes burstPop {
+  0% { transform: scale(0.2); opacity: 0; }
+  70% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bombOptionsShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+@keyframes bombCanvasShake {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+/* Mobil ve Tablet Uyumluluğu */
+@media (max-width: 768px) {
+  .arc-bomb-arena {
+    gap: 10px;
+    padding: 6px;
+  }
+  .bomb-scoreboard {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .bomb-player-card {
+    padding: 6px 10px;
+  }
+  .cartoon-bomb {
+    width: 90px;
+    height: 90px;
+  }
+  .bomb-body {
+    width: 74px;
+    height: 74px;
+  }
+  .bomb-q-text {
+    font-size: 1.15rem;
+  }
+  .bomb-opt-btn {
+    min-width: 90px;
+    padding: 10px 12px;
+    font-size: 1rem;
+  }
+  .bomb-turn-banner {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+  }
+}
