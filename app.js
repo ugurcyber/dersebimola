@@ -21923,12 +21923,14 @@
   }
 
   /* ==========================================================================
-     10. ÇİFT SEKMELİ ÖĞRENCİ & ÖĞRETMEN GİRİŞ / KAYIT SİSTEMİ
+     10. SADE & MOBİL DOSTU GİRİŞ / ÜYELİK SİSTEMİ (AUTH MODAL)
+     1) EN ÜSTTE SADECE 2 ANA SEKME: [🔑 Giriş Yap] | [✨ Ücretsiz Üye Ol]
+     2) "🔑 Giriş Yap": Sadece Ad/Kullanıcı Adı + Şifre/PIN + "Giriş Yap ➡️"
+     3) "✨ Ücretsiz Üye Ol": [🎒 Öğrenciyim] | [🎓 Öğretmenim] Seçimli
      ========================================================================== */
   let authUiState = {
-    role: 'student',       // 'student' | 'teacher'
-    studentMode: 'login',  // 'login' | 'register'
-    teacherMode: 'login',  // 'login' | 'register'
+    mainTab: 'login',    // 'login' | 'register'
+    regType: 'student',  // 'student' | 'teacher'
     selectedGrade: 1,
     selectedAvatar: '🦁'
   };
@@ -21999,77 +22001,102 @@
     const activeSessionAvatar = document.getElementById('activeSessionAvatar');
     const activeSessionRole = document.getElementById('activeSessionRole');
     const activeSessionName = document.getElementById('activeSessionName');
+    const authIcon = document.getElementById('authIcon');
+    const authBtnText = document.getElementById('authBtnText');
+    const btnDesktopBugReport = document.getElementById('btnDesktopBugReport');
+    const btnFloatingBugReport = document.getElementById('btnFloatingBugReport');
 
-    const isTeacher = !!(state.teacherSession && state.teacherSession.isLoggedIn);
-    const isStudent = !isTeacher && !!(state.studentSession && state.studentSession.isLoggedIn);
+    const isTeacher = (state.teacherSession && state.teacherSession.isLoggedIn);
+    const isStudent = (state.studentSession && state.studentSession.isLoggedIn);
 
     if (isTeacher) {
-      const tName = state.teacherSession.name || 'Öğretmenim';
-      if (DOM.btnTeacherAuth) DOM.btnTeacherAuth.classList.add('logged-in');
-      if (DOM.authBtnText) DOM.authBtnText.textContent = tName;
-      if (DOM.authIcon) {
-        DOM.authIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>';
-      }
-      if (mobileLoginBtn) {
-        mobileLoginBtn.classList.add('logged-in');
-        mobileLoginBtn.innerHTML = '<span>🎓 ' + escapeHtml(tName) + '</span>';
-      }
-      if (mobileNoticeBanner) mobileNoticeBanner.style.display = 'none';
-      if (desktopLoginText) desktopLoginText.textContent = '🎓 ' + tName;
+      const name = state.teacherSession.name || 'Öğretmenim';
+      if (mobileLoginBtn) mobileLoginBtn.textContent = `🎓 ${name}`;
+      if (desktopLoginText) desktopLoginText.textContent = name;
       if (btnDesktopLogin) btnDesktopLogin.classList.add('logged-in');
-      if (desktopNoticeBanner) desktopNoticeBanner.style.display = 'none';
-
+      if (authBtnText) authBtnText.textContent = name;
+      if (authIcon) authIcon.innerHTML = '🎓';
       if (authActiveSessionBox) {
         authActiveSessionBox.classList.remove('hide');
         if (activeSessionAvatar) activeSessionAvatar.textContent = '🎓';
-        if (activeSessionRole) activeSessionRole.textContent = 'ÖĞRETMEN HESABI AKTİF';
-        if (activeSessionName) activeSessionName.textContent = tName + (state.teacherSession.school ? ' • ' + state.teacherSession.school : '');
+        if (activeSessionRole) activeSessionRole.textContent = 'ÖĞRETMEN HESABI';
+        if (activeSessionName) activeSessionName.textContent = `${name} ${state.teacherSession.school ? '• ' + state.teacherSession.school : ''}`;
+      }
+      if (desktopNoticeBanner) {
+        desktopNoticeBanner.classList.add('is-unlocked');
+        desktopNoticeBanner.innerHTML = `
+          <div class="alert-banner-title">
+            <span class="alert-lock-icon" aria-hidden="true">✓</span>
+            Öğretmen Paneli Aktif (${name})
+          </div>
+          <div class="alert-banner-subtitle">
+            Sınıf Ligi kura yetkileri ve özel soru bankası açık.
+          </div>
+        `;
+      }
+      if (mobileNoticeBanner) {
+        mobileNoticeBanner.textContent = `🎓 Öğretmen Oturumu: ${name}`;
       }
     } else if (isStudent) {
-      const sName = state.studentSession.name || 'Öğrenci';
-      const sAvatar = state.studentSession.avatar || '🦁';
-      const sGradeLabel = getGradeShortLabel(state.studentSession.grade);
-      const displayLabel = `${sAvatar} ${sName} (${sGradeLabel})`;
-
-      state.player1.name = sName;
-      updatePlayerNamesUI();
-
-      if (DOM.btnTeacherAuth) DOM.btnTeacherAuth.classList.add('logged-in');
-      if (DOM.authBtnText) DOM.authBtnText.textContent = displayLabel;
-      if (mobileLoginBtn) {
-        mobileLoginBtn.classList.add('logged-in');
-        mobileLoginBtn.innerHTML = '<span>' + escapeHtml(displayLabel) + '</span>';
-      }
-      if (mobileNoticeBanner) mobileNoticeBanner.style.display = 'none';
-      if (desktopLoginText) desktopLoginText.textContent = displayLabel;
+      const name = state.studentSession.name || 'Öğrenci';
+      const av = state.studentSession.avatar || '🦁';
+      const gr = getGradeShortLabel(state.studentSession.grade);
+      if (mobileLoginBtn) mobileLoginBtn.textContent = `${av} ${name}`;
+      if (desktopLoginText) desktopLoginText.textContent = name;
       if (btnDesktopLogin) btnDesktopLogin.classList.add('logged-in');
-
+      if (authBtnText) authBtnText.textContent = name;
+      if (authIcon) authIcon.innerHTML = av;
       if (authActiveSessionBox) {
         authActiveSessionBox.classList.remove('hide');
-        if (activeSessionAvatar) activeSessionAvatar.textContent = sAvatar;
-        if (activeSessionRole) activeSessionRole.textContent = 'ÖĞRENCİ HESABI AKTİF';
-        if (activeSessionName) activeSessionName.textContent = `${sName} • ${sGradeLabel}`;
+        if (activeSessionAvatar) activeSessionAvatar.textContent = av;
+        if (activeSessionRole) activeSessionRole.textContent = `ÖĞRENCİ (${gr})`;
+        if (activeSessionName) activeSessionName.textContent = name;
+      }
+      if (desktopNoticeBanner) {
+        desktopNoticeBanner.classList.add('is-unlocked');
+        desktopNoticeBanner.innerHTML = `
+          <div class="alert-banner-title">
+            <span class="alert-lock-icon" aria-hidden="true">${av}</span>
+            Hoş Geldin ${name}! (${gr})
+          </div>
+          <div class="alert-banner-subtitle">
+            Sınıf Ligi puanların kaydediliyor. İyi dersler!
+          </div>
+        `;
+      }
+      if (mobileNoticeBanner) {
+        mobileNoticeBanner.textContent = `${av} ${name} (${gr})`;
       }
     } else {
-      if (DOM.btnTeacherAuth) DOM.btnTeacherAuth.classList.remove('logged-in');
-      if (DOM.authBtnText) DOM.authBtnText.textContent = 'Giriş Yap / Kayıt Ol';
-      if (DOM.authIcon) {
-        DOM.authIcon.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-      }
-      if (mobileLoginBtn) {
-        mobileLoginBtn.classList.remove('logged-in');
-        mobileLoginBtn.innerHTML = '<span class="btn-icon">👤</span> Giriş Yap';
-      }
+      if (mobileLoginBtn) mobileLoginBtn.textContent = 'Giriş Yap';
       if (desktopLoginText) desktopLoginText.textContent = 'Giriş Yap';
       if (btnDesktopLogin) btnDesktopLogin.classList.remove('logged-in');
-            if (authActiveSessionBox) authActiveSessionBox.classList.add('hide');
+      if (authBtnText) authBtnText.textContent = 'Giriş Yap / Kayıt Ol';
+      if (authIcon) authIcon.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
+      if (authActiveSessionBox) authActiveSessionBox.classList.add('hide');
+      if (desktopNoticeBanner) {
+        desktopNoticeBanner.classList.remove('is-unlocked');
+        desktopNoticeBanner.innerHTML = `
+          <div class="alert-banner-title">
+            <span class="alert-lock-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </span>
+            Öğretmen Paneli
+          </div>
+          <div class="alert-banner-subtitle">
+            Sınıf listenizi kaydetmek ve Sınıf Ligi puanlarını takip etmek için <strong>Öğretmen Girişi Yapın →</strong>
+          </div>
+        `;
+      }
+      if (mobileNoticeBanner) {
+        mobileNoticeBanner.textContent = 'Öğretmen Girişi Yap →';
+      }
     }
 
-    // Hata Bildir Butonları: Sadece oturum açıldığında (öğretmen/kullanıcı) görünür
-    const btnDesktopBugReport = document.getElementById('btnDesktopBugReport');
-    const btnFloatingBugReport = document.getElementById('btnFloatingBugReport');
     const isLoggedIn = isTeacher || isStudent;
-
     if (btnDesktopBugReport) {
       if (isLoggedIn) {
         btnDesktopBugReport.classList.remove('hide');
@@ -22080,56 +22107,152 @@
     if (btnFloatingBugReport) btnFloatingBugReport.classList.remove('hide');
   }
 
-  function switchAuthRoleTab(role) {
-    authUiState.role = (role === 'teacher') ? 'teacher' : 'student';
-    const tabStudent = document.getElementById('authRoleTabStudent');
-    const tabTeacher = document.getElementById('authRoleTabTeacher');
-    const paneStudent = document.getElementById('authPaneStudent');
-    const paneTeacher = document.getElementById('authPaneTeacher');
+  // 1) 2 ANA SEKME GEÇİŞİ (Giriş Yap vs Ücretsiz Üye Ol)
+  function switchAuthMainTab(tab) {
+    authUiState.mainTab = (tab === 'register') ? 'register' : 'login';
+    const tabLogin = document.getElementById('authTabLogin');
+    const tabRegister = document.getElementById('authTabRegister');
+    const paneLogin = document.getElementById('authPaneLogin');
+    const paneRegister = document.getElementById('authPaneRegister');
 
-    if (tabStudent) {
-      tabStudent.classList.toggle('active', authUiState.role === 'student');
-      tabStudent.setAttribute('aria-selected', authUiState.role === 'student' ? 'true' : 'false');
+    if (tabLogin) {
+      tabLogin.classList.toggle('active', authUiState.mainTab === 'login');
+      tabLogin.setAttribute('aria-selected', authUiState.mainTab === 'login' ? 'true' : 'false');
     }
-    if (tabTeacher) {
-      tabTeacher.classList.toggle('active', authUiState.role === 'teacher');
-      tabTeacher.setAttribute('aria-selected', authUiState.role === 'teacher' ? 'true' : 'false');
+    if (tabRegister) {
+      tabRegister.classList.toggle('active', authUiState.mainTab === 'register');
+      tabRegister.setAttribute('aria-selected', authUiState.mainTab === 'register' ? 'true' : 'false');
     }
-    if (paneStudent) paneStudent.classList.toggle('hide', authUiState.role !== 'student');
-    if (paneTeacher) paneTeacher.classList.toggle('hide', authUiState.role !== 'teacher');
+    if (paneLogin) paneLogin.classList.toggle('hide', authUiState.mainTab !== 'login');
+    if (paneRegister) paneRegister.classList.toggle('hide', authUiState.mainTab !== 'register');
   }
 
-  function switchStudentSubMode(mode) {
-    authUiState.studentMode = (mode === 'register') ? 'register' : 'login';
-    const btnLogin = document.getElementById('btnStudentSubLogin');
-    const btnReg = document.getElementById('btnStudentSubRegister');
-    const submitText = document.getElementById('studentAuthSubmitText');
+  // 2) ÜYE OL İÇİNDE TİP SEÇİMİ (Öğrenciyim vs Öğretmenim)
+  function switchRegisterType(type) {
+    authUiState.regType = (type === 'teacher') ? 'teacher' : 'student';
+    const btnStudent = document.getElementById('btnRegTypeStudent');
+    const btnTeacher = document.getElementById('btnRegTypeTeacher');
+    const formStudent = document.getElementById('regFormStudent');
+    const formTeacher = document.getElementById('regFormTeacher');
 
-    if (btnLogin) btnLogin.classList.toggle('active', authUiState.studentMode === 'login');
-    if (btnReg) btnReg.classList.toggle('active', authUiState.studentMode === 'register');
-    if (submitText) {
-      submitText.textContent = authUiState.studentMode === 'register'
-        ? 'Öğrenci Kaydını Tamamla ve Başla'
-        : 'Öğrenci Olarak Giriş Yap';
+    if (btnStudent) btnStudent.classList.toggle('active', authUiState.regType === 'student');
+    if (btnTeacher) btnTeacher.classList.toggle('active', authUiState.regType === 'teacher');
+    if (formStudent) formStudent.classList.toggle('hide', authUiState.regType !== 'student');
+    if (formTeacher) formTeacher.classList.toggle('hide', authUiState.regType !== 'teacher');
+  }
+
+  // 3) TEK KUTUDAN AKILLI GİRİŞ (ÖĞRETMEN VEYA ÖĞRENCİ OTOMATİK ALGILAMA)
+  function handleUniversalLogin() {
+    const userInput = document.getElementById('authLoginUserInput');
+    const passInput = document.getElementById('authLoginPassInput');
+    const username = (userInput ? userInput.value.trim() : '');
+    const password = (passInput ? passInput.value.trim() : '');
+
+    if (!username || username.length < 2) {
+      showToast('⚠️ Lütfen adınızı veya kullanıcı adınızı giriniz.');
+      if (userInput) userInput.focus();
+      return;
     }
+
+    const usernameLower = username.toLowerCase();
+
+    // A) Önce kayıtlı öğretmenler listesinde ara
+    const teachers = getRegisteredTeachers();
+    const foundTeacher = teachers.find(t => 
+      (t.email && t.email.toLowerCase() === usernameLower) || 
+      (t.name && t.name.toLowerCase() === usernameLower)
+    );
+
+    if (foundTeacher) {
+      if (foundTeacher.password && password && foundTeacher.password !== password) {
+        showToast('⚠️ Girdiğiniz öğretmen şifresi hatalı!');
+        if (passInput) passInput.focus();
+        return;
+      }
+
+      state.studentSession = { isLoggedIn: false, name: '', grade: 1, avatar: '🦁' };
+      saveStudentSession();
+
+      state.teacherSession = {
+        isLoggedIn: true,
+        name: foundTeacher.name || username,
+        email: foundTeacher.email || '',
+        school: foundTeacher.school || ''
+      };
+      StorageManager.saveTeacher();
+      updateTeacherAuthUI();
+
+      closeModal(DOM.modalAuth);
+      audio.playCorrect();
+      showToast(`🎓 Hoş geldiniz ${foundTeacher.name || username}! Öğretmen hesabınız aktifleşti.`);
+      return;
+    }
+
+    // B) Kayıtlı öğrenciler listesinde ara
+    const students = getRegisteredStudents();
+    const foundStudent = students.find(s => s.name && s.name.toLowerCase() === usernameLower);
+
+    if (foundStudent) {
+      if (foundStudent.pin && password && foundStudent.pin !== password) {
+        showToast('⚠️ Girdiğiniz PIN kodu hatalı!');
+        if (passInput) passInput.focus();
+        return;
+      }
+
+      state.teacherSession = { isLoggedIn: false, name: '', email: '' };
+      StorageManager.saveTeacher();
+
+      state.studentSession = {
+        isLoggedIn: true,
+        name: foundStudent.name,
+        grade: foundStudent.grade !== undefined ? foundStudent.grade : (state.currentGrade || 1),
+        avatar: foundStudent.avatar || '🦁'
+      };
+      saveStudentSession();
+      state.player1.name = foundStudent.name;
+      updatePlayerNamesUI();
+      updateTeacherAuthUI();
+
+      closeModal(DOM.modalAuth);
+      audio.playCorrect();
+      if (foundStudent.grade !== undefined) setGrade(foundStudent.grade);
+      showToast(`${foundStudent.avatar || '🦁'} Hoş geldin ${foundStudent.name}! İyi dersler!`);
+      return;
+    }
+
+    // C) Henüz kaydı yoksa da uyarı vermeden hızlı ve kolayca öğrenci girişi yap
+    const newStudent = {
+      name: username,
+      grade: state.currentGrade || 1,
+      avatar: '🦁',
+      pin: password || ''
+    };
+    students.push(newStudent);
+    saveRegisteredStudents(students);
+
+    state.teacherSession = { isLoggedIn: false, name: '', email: '' };
+    StorageManager.saveTeacher();
+
+    state.studentSession = {
+      isLoggedIn: true,
+      name: username,
+      grade: state.currentGrade || 1,
+      avatar: '🦁'
+    };
+    saveStudentSession();
+    state.player1.name = username;
+    updatePlayerNamesUI();
+    updateTeacherAuthUI();
+
+    closeModal(DOM.modalAuth);
+    audio.playCorrect();
+    showToast(`🦁 Hoş geldin ${username}! Girişiniz başarıyla yapıldı.`);
   }
 
-  function switchTeacherSubMode(mode) {
-    authUiState.teacherMode = (mode === 'register') ? 'register' : 'login';
-    const btnLogin = document.getElementById('btnTeacherSubLogin');
-    const btnReg = document.getElementById('btnTeacherSubRegister');
-    const loginBox = document.getElementById('teacherLoginFormBox');
-    const regBox = document.getElementById('teacherRegisterFormBox');
-
-    if (btnLogin) btnLogin.classList.toggle('active', authUiState.teacherMode === 'login');
-    if (btnReg) btnReg.classList.toggle('active', authUiState.teacherMode === 'register');
-    if (loginBox) loginBox.classList.toggle('hide', authUiState.teacherMode !== 'login');
-    if (regBox) regBox.classList.toggle('hide', authUiState.teacherMode !== 'register');
-  }
-
-  function handleStudentAuthSubmit() {
-    const nameInput = document.getElementById('studentAuthNameInput');
-    const pinInput = document.getElementById('studentAuthPinInput');
+  // 4) ÖĞRENCİ KAYIT OL
+  function handleStudentRegisterSubmit() {
+    const nameInput = document.getElementById('regStudentNameInput');
+    const pinInput = document.getElementById('regStudentPinInput');
     const name = (nameInput ? nameInput.value.trim() : '');
     const pin = (pinInput ? pinInput.value.trim() : '');
 
@@ -22140,30 +22263,22 @@
     }
 
     const students = getRegisteredStudents();
-    const existingIdx = students.findIndex(s => s.name.toLowerCase() === name.toLowerCase());
+    const existingIdx = students.findIndex(s => s.name && s.name.toLowerCase() === name.toLowerCase());
 
-    if (authUiState.studentMode === 'register') {
-      const newStudent = {
-        name,
-        grade: authUiState.selectedGrade,
-        avatar: authUiState.selectedAvatar,
-        pin: pin || ''
-      };
-      if (existingIdx >= 0) {
-        students[existingIdx] = newStudent;
-      } else {
-        students.push(newStudent);
-      }
-      saveRegisteredStudents(students);
-    } else if (existingIdx >= 0) {
-      const saved = students[existingIdx];
-      if (saved.pin && pin && saved.pin !== pin) {
-        showToast('⚠️ Girdiğiniz öğrenci şifresi/PİN hatalı!');
-        return;
-      }
+    const newStudent = {
+      name,
+      grade: authUiState.selectedGrade,
+      avatar: authUiState.selectedAvatar,
+      pin: pin || ''
+    };
+
+    if (existingIdx >= 0) {
+      students[existingIdx] = newStudent;
+    } else {
+      students.push(newStudent);
     }
+    saveRegisteredStudents(students);
 
-    // Öğrenci oturumunu aktifleştir
     state.teacherSession = { isLoggedIn: false, name: '', email: '' };
     StorageManager.saveTeacher();
 
@@ -22181,12 +22296,71 @@
     closeModal(DOM.modalAuth);
     audio.playCorrect();
     setGrade(authUiState.selectedGrade);
-    showToast(`${authUiState.selectedAvatar} Hoş geldin ${name}! ${getGradeShortLabel(authUiState.selectedGrade)} derslerin hazır!`);
+    showToast(`${authUiState.selectedAvatar} Tebrikler ${name}! Kaydın tamamlandı, derslerin hazır!`);
+  }
+
+  // 5) ÖĞRETMEN KAYIT OL
+  function handleTeacherRegisterSubmit() {
+    const nameInput = document.getElementById('regTeacherNameInput');
+    const schoolInput = document.getElementById('regTeacherSchoolInput');
+    const emailInput = document.getElementById('regTeacherEmailInput');
+    const passInput = document.getElementById('regTeacherPassInput');
+
+    const name = (nameInput ? nameInput.value.trim() : '');
+    const school = (schoolInput ? schoolInput.value.trim() : '');
+    const email = (emailInput ? emailInput.value.trim() : '');
+    const password = (passInput ? passInput.value.trim() : '');
+
+    if (!name || name.length < 2) {
+      showToast('⚠️ Lütfen adınızı veya kullanıcı adınızı giriniz.');
+      if (nameInput) nameInput.focus();
+      return;
+    }
+
+    const teachers = getRegisteredTeachers();
+    const existingIdx = teachers.findIndex(t => 
+      (t.name && t.name.toLowerCase() === name.toLowerCase()) ||
+      (email && t.email && t.email.toLowerCase() === email.toLowerCase())
+    );
+
+    const newTeacher = { name, school, email, password };
+    if (existingIdx >= 0) {
+      teachers[existingIdx] = newTeacher;
+    } else {
+      teachers.push(newTeacher);
+    }
+    saveRegisteredTeachers(teachers);
+
+    state.studentSession = { isLoggedIn: false, name: '', grade: 1, avatar: '🦁' };
+    saveStudentSession();
+
+    state.teacherSession = {
+      isLoggedIn: true,
+      name: name,
+      email: email || '',
+      school: school || ''
+    };
+    StorageManager.saveTeacher();
+    updateTeacherAuthUI();
+
+    closeModal(DOM.modalAuth);
+    audio.playCorrect();
+    showToast(`🎓 Tebrikler ${name}! Öğretmen hesabınız başarıyla oluşturuldu.`);
+  }
+
+  function handleAuthLogout() {
+    state.teacherSession = { isLoggedIn: false, name: '', email: '' };
+    state.studentSession = { isLoggedIn: false, name: '', grade: 1, avatar: '🦁' };
+    StorageManager.saveTeacher();
+    saveStudentSession();
+    updateTeacherAuthUI();
+    audio.playClick();
+    showToast('Oturum kapatıldı.');
   }
 
   function handleStudentGoogleLogin() {
-    const nameInput = document.getElementById('studentAuthNameInput');
-    const enteredName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : 'Öğrenci';
+    const userInput = document.getElementById('authLoginUserInput');
+    const enteredName = (userInput && userInput.value.trim()) ? userInput.value.trim() : 'Öğrenci';
 
     state.teacherSession = { isLoggedIn: false, name: '', email: '' };
     StorageManager.saveTeacher();
@@ -22208,153 +22382,10 @@
     showToast(`${authUiState.selectedAvatar} Google ile hoş geldin ${enteredName}!`);
   }
 
-  function handleTeacherEmailLogin() {
-    const emailInput = document.getElementById('teacherLoginEmail');
-    const passInput = document.getElementById('teacherLoginPassword');
-    const email = (emailInput ? emailInput.value.trim() : '');
-    const password = (passInput ? passInput.value.trim() : '');
-
-    if (!email) {
-      showToast('⚠️ Lütfen e-posta adresinizi veya kullanıcı adınızı giriniz.');
-      if (emailInput) emailInput.focus();
-      return;
-    }
-    if (!password) {
-      showToast('⚠️ Lütfen şifrenizi giriniz.');
-      if (passInput) passInput.focus();
-      return;
-    }
-
-    const teachers = getRegisteredTeachers();
-    const found = teachers.find(t => (t.email && t.email.toLowerCase() === email.toLowerCase()) || (t.name && t.name.toLowerCase() === email.toLowerCase()));
-    if (found && found.password && found.password !== password) {
-      showToast('⚠️ E-posta veya şifre hatalı. Lütfen kontrol ediniz.');
-      return;
-    }
-
-    const displayName = found ? found.name : (email.includes('@') ? email.split('@')[0] : email);
-    const schoolName = found ? (found.school || '') : '';
-
-    state.studentSession = { isLoggedIn: false, name: '', grade: 1, avatar: '🦁' };
-    saveStudentSession();
-
-    state.teacherSession = {
-      isLoggedIn: true,
-      name: displayName,
-      email: email,
-      school: schoolName
-    };
-    StorageManager.saveTeacher();
-    updateTeacherAuthUI();
-
-    closeModal(DOM.modalAuth);
-    audio.playCorrect();
-    showToast(`🎓 Hoş geldiniz ${displayName}! Öğretmen paneliniz aktifleşti.`);
-  }
-
-  function handleTeacherRegister() {
-    const nameInput = document.getElementById('teacherRegName');
-    const schoolInput = document.getElementById('teacherRegSchool');
-    const emailInput = document.getElementById('teacherRegEmail');
-    const passInput = document.getElementById('teacherRegPassword');
-
-    const name = (nameInput ? nameInput.value.trim() : '');
-    const school = (schoolInput ? schoolInput.value.trim() : '');
-    const email = (emailInput ? emailInput.value.trim() : '');
-    const password = (passInput ? passInput.value.trim() : '');
-
-    if (!name || name.length < 2) {
-      showToast('⚠️ Lütfen adınızı ve soyadınızı giriniz.');
-      if (nameInput) nameInput.focus();
-      return;
-    }
-    if (!email) {
-      showToast('⚠️ Lütfen e-posta adresinizi giriniz.');
-      if (emailInput) emailInput.focus();
-      return;
-    }
-    if (!password || password.length < 4) {
-      showToast('⚠️ Lütfen en az 4 karakterli bir şifre belirleyiniz.');
-      if (passInput) passInput.focus();
-      return;
-    }
-
-    const teachers = getRegisteredTeachers();
-    const existingIdx = teachers.findIndex(t => t.email && t.email.toLowerCase() === email.toLowerCase());
-    const newTeacher = { name, school, email, password };
-    if (existingIdx >= 0) {
-      teachers[existingIdx] = newTeacher;
-    } else {
-      teachers.push(newTeacher);
-    }
-    saveRegisteredTeachers(teachers);
-
-    state.studentSession = { isLoggedIn: false, name: '', grade: 1, avatar: '🦁' };
-    saveStudentSession();
-
-    state.teacherSession = {
-      isLoggedIn: true,
-      name: name,
-      email: email,
-      school: school
-    };
-    StorageManager.saveTeacher();
-    updateTeacherAuthUI();
-
-    closeModal(DOM.modalAuth);
-    audio.playCorrect();
-    showToast(`🎉 Kaydınız tamamlandı! Hoş geldiniz ${name}!`);
-  }
-
-  function handleAuthLogout() {
-    state.teacherSession = { isLoggedIn: false, name: '', email: '' };
-    state.studentSession = { isLoggedIn: false, name: '', grade: 1, avatar: '🦁' };
-    StorageManager.saveTeacher();
-    saveStudentSession();
-    updateTeacherAuthUI();
-    audio.playClick();
-    showToast('Oturum kapatıldı.');
-  }
-
   function simulateGoogleLogin() {
-    if (DOM.btnSimulateGoogleLogin) {
-      DOM.btnSimulateGoogleLogin.disabled = true;
-      DOM.btnSimulateGoogleLogin.innerHTML = '<span>⏳ Giriş Yapılıyor...</span>';
-    }
-
-    setTimeout(() => {
-      state.studentSession = { isLoggedIn: false, name: '', grade: 1, avatar: '🦁' };
-      saveStudentSession();
-
-      state.teacherSession = {
-        isLoggedIn: true,
-        name: 'Öğretmenim',
-        email: 'ogretmen@meb.k12.tr',
-        school: 'Fatih Projesi Akıllı Tahta'
-      };
-      StorageManager.saveTeacher();
-      updateTeacherAuthUI();
-
-      if (DOM.btnSimulateGoogleLogin) {
-        DOM.btnSimulateGoogleLogin.disabled = false;
-        DOM.btnSimulateGoogleLogin.innerHTML = `
-          <svg class="google-svg" viewBox="0 0 24 24" width="20" height="20">
-            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/>
-            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-          </svg>
-          <span>Google ile Tek Tıkla Öğretmen Girişi</span>
-        `;
-      }
-
-      closeModal(DOM.modalAuth);
-      audio.playCorrect();
-      showToast('🎉 Hoş geldiniz Öğretmenim! Sınıf listeniz ve özel soru yetkileriniz aktifleşti.');
-    }, 600);
+    handleStudentGoogleLogin();
   }
 
-  
   /* ==========================================================================
      GÜVENLİ GİRİŞ: ŞİFRE GÖSTER / GİZLE (EYE TOGGLE) FONKSİYONU
      ========================================================================== */
@@ -28000,54 +28031,79 @@
     if (DOM.btnTeacherAuth) addTapListener(DOM.btnTeacherAuth, handleAuthClick);
     if (DOM.btnSimulateGoogleLogin) addTapListener(DOM.btnSimulateGoogleLogin, simulateGoogleLogin);
 
-    // Çift Sekmeli Öğrenci & Öğretmen Giriş / Kayıt Dinleyicileri
-    const authRoleTabStudent = document.getElementById('authRoleTabStudent');
-    const authRoleTabTeacher = document.getElementById('authRoleTabTeacher');
-    if (authRoleTabStudent) addTapListener(authRoleTabStudent, () => { audio.playClick(); switchAuthRoleTab('student'); });
-    if (authRoleTabTeacher) addTapListener(authRoleTabTeacher, () => { audio.playClick(); switchAuthRoleTab('teacher'); });
+    // ==============================================================
+    // SADE & MOBİL DOSTU GİRİŞ / ÜYELİK SİSTEMİ DİNLEYİCİLERİ
+    // ==============================================================
+    // 1) 2 Ana Sekme: [🔑 Giriş Yap] | [✨ Ücretsiz Üye Ol]
+    const authTabLogin = document.getElementById('authTabLogin');
+    const authTabRegister = document.getElementById('authTabRegister');
+    if (authTabLogin) addTapListener(authTabLogin, () => { audio.playClick(); switchAuthMainTab('login'); });
+    if (authTabRegister) addTapListener(authTabRegister, () => { audio.playClick(); switchAuthMainTab('register'); });
 
-    const btnStudentSubLogin = document.getElementById('btnStudentSubLogin');
-    const btnStudentSubRegister = document.getElementById('btnStudentSubRegister');
-    if (btnStudentSubLogin) addTapListener(btnStudentSubLogin, () => { audio.playClick(); switchStudentSubMode('login'); });
-    if (btnStudentSubRegister) addTapListener(btnStudentSubRegister, () => { audio.playClick(); switchStudentSubMode('register'); });
+    const linkGoToRegister = document.getElementById('linkGoToRegister');
+    const linkGoToLogin = document.getElementById('linkGoToLogin');
+    if (linkGoToRegister) addTapListener(linkGoToRegister, (e) => { if (e && e.preventDefault) e.preventDefault(); audio.playClick(); switchAuthMainTab('register'); });
+    if (linkGoToLogin) addTapListener(linkGoToLogin, (e) => { if (e && e.preventDefault) e.preventDefault(); audio.playClick(); switchAuthMainTab('login'); });
 
-    const btnTeacherSubLogin = document.getElementById('btnTeacherSubLogin');
-    const btnTeacherSubRegister = document.getElementById('btnTeacherSubRegister');
-    if (btnTeacherSubLogin) addTapListener(btnTeacherSubLogin, () => { audio.playClick(); switchTeacherSubMode('login'); });
-    if (btnTeacherSubRegister) addTapListener(btnTeacherSubRegister, () => { audio.playClick(); switchTeacherSubMode('register'); });
+    // 2) Üye Ol Sekmesinde Tip Seçimi: [🎒 Öğrenciyim] | [🎓 Öğretmenim]
+    const btnRegTypeStudent = document.getElementById('btnRegTypeStudent');
+    const btnRegTypeTeacher = document.getElementById('btnRegTypeTeacher');
+    if (btnRegTypeStudent) addTapListener(btnRegTypeStudent, () => { audio.playClick(); switchRegisterType('student'); });
+    if (btnRegTypeTeacher) addTapListener(btnRegTypeTeacher, () => { audio.playClick(); switchRegisterType('teacher'); });
 
-    document.querySelectorAll('[data-student-grade]').forEach(btn => {
+    // 3) Giriş Yap Butonu ve Enter Tuşu
+    const btnLoginSubmit = document.getElementById('btnLoginSubmit');
+    if (btnLoginSubmit) addTapListener(btnLoginSubmit, handleUniversalLogin);
+
+    const authLoginUserInput = document.getElementById('authLoginUserInput');
+    const authLoginPassInput = document.getElementById('authLoginPassInput');
+    [authLoginUserInput, authLoginPassInput].forEach(inp => {
+      if (inp) {
+        inp.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleUniversalLogin();
+          }
+        });
+      }
+    });
+
+    // 4) Öğrenci Kaydı: Sınıf ve Avatar Seçiciler
+    document.querySelectorAll('#authStudentGradeChips .auth-grade-chip, [data-student-grade]').forEach(btn => {
       addTapListener(btn, () => {
         audio.playClick();
-        authUiState.selectedGrade = parseInt(btn.getAttribute('data-student-grade'), 10);
-        document.querySelectorAll('[data-student-grade]').forEach(b => {
-          b.classList.toggle('active', parseInt(b.getAttribute('data-student-grade'), 10) === authUiState.selectedGrade);
+        const gVal = btn.getAttribute('data-grade') || btn.getAttribute('data-student-grade');
+        authUiState.selectedGrade = parseInt(gVal, 10);
+        document.querySelectorAll('#authStudentGradeChips .auth-grade-chip, [data-student-grade]').forEach(b => {
+          const bVal = b.getAttribute('data-grade') || b.getAttribute('data-student-grade');
+          b.classList.toggle('active', parseInt(bVal, 10) === authUiState.selectedGrade);
+          b.setAttribute('aria-checked', parseInt(bVal, 10) === authUiState.selectedGrade ? 'true' : 'false');
         });
       });
     });
 
-    document.querySelectorAll('[data-student-avatar]').forEach(btn => {
+    document.querySelectorAll('#authStudentAvatarGrid .auth-avatar-chip, [data-student-avatar]').forEach(btn => {
       addTapListener(btn, () => {
         audio.playClick();
-        authUiState.selectedAvatar = btn.getAttribute('data-student-avatar') || '🦁';
-        document.querySelectorAll('[data-student-avatar]').forEach(b => {
-          b.classList.toggle('active', b.getAttribute('data-student-avatar') === authUiState.selectedAvatar);
+        authUiState.selectedAvatar = btn.getAttribute('data-avatar') || btn.getAttribute('data-student-avatar') || '🦁';
+        document.querySelectorAll('#authStudentAvatarGrid .auth-avatar-chip, [data-student-avatar]').forEach(b => {
+          const aVal = b.getAttribute('data-avatar') || b.getAttribute('data-student-avatar');
+          b.classList.toggle('active', aVal === authUiState.selectedAvatar);
+          b.setAttribute('aria-checked', aVal === authUiState.selectedAvatar ? 'true' : 'false');
         });
       });
     });
 
-    const btnStudentAuthSubmit = document.getElementById('btnStudentAuthSubmit');
-    if (btnStudentAuthSubmit) addTapListener(btnStudentAuthSubmit, handleStudentAuthSubmit);
-
-    const btnStudentGoogleLogin = document.getElementById('btnStudentGoogleLogin');
-    if (btnStudentGoogleLogin) addTapListener(btnStudentGoogleLogin, handleStudentGoogleLogin);
-
-    initAuthPasswordToggles(); // Auth eye toggle
-    const btnTeacherLoginSubmit = document.getElementById('btnTeacherLoginSubmit');
-    if (btnTeacherLoginSubmit) addTapListener(btnTeacherLoginSubmit, handleTeacherEmailLogin);
+    const btnStudentRegisterSubmit = document.getElementById('btnStudentRegisterSubmit');
+    if (btnStudentRegisterSubmit) addTapListener(btnStudentRegisterSubmit, handleStudentRegisterSubmit);
 
     const btnTeacherRegisterSubmit = document.getElementById('btnTeacherRegisterSubmit');
-    if (btnTeacherRegisterSubmit) addTapListener(btnTeacherRegisterSubmit, handleTeacherRegister);
+    if (btnTeacherRegisterSubmit) addTapListener(btnTeacherRegisterSubmit, handleTeacherRegisterSubmit);
+
+    const btnUniversalGoogleLogin = document.getElementById('btnUniversalGoogleLogin');
+    if (btnUniversalGoogleLogin) addTapListener(btnUniversalGoogleLogin, handleStudentGoogleLogin);
+
+    initAuthPasswordToggles(); // Auth eye toggle
 
     const btnAuthLogout = document.getElementById('btnAuthLogout');
     if (btnAuthLogout) addTapListener(btnAuthLogout, handleAuthLogout);

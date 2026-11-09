@@ -21971,6 +21971,211 @@ body.is-game-active .universal-game-bgm-fab {
 
 
 /* ============================================================== */
+
+/* ============================================================== */
+/* YENİ SADE & MOBİL DOSTU GİRİŞ / ÜYELİK SİSTEMİ (AUTH MODAL)   */
+/* ============================================================== */
+
+/* 1) 2 ANA SEKME: [🔑 Giriş Yap] | [✨ Ücretsiz Üye Ol] */
+.auth-main-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+  background: #F1F5F9;
+  padding: 4px;
+  border-radius: 16px;
+  border: 1.5px solid #E2E8F0;
+}
+
+.auth-main-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #64748B;
+  font-family: inherit;
+  font-size: 0.98rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  touch-action: manipulation;
+}
+
+.auth-main-tab:hover:not(.active) {
+  color: #1E293B;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.auth-main-tab.active {
+  background: #FFFFFF;
+  color: #0284C7;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid #BAE6FD;
+}
+
+#authTabRegister.active {
+  color: #7C3AED;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-color: #DDD6FE;
+}
+
+.auth-main-pane {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.auth-form-clean {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* 2) ÜYE OL SEKME İÇİ TİP SEÇİCİ ([🎒 Öğrenciyim] | [🎓 Öğretmenim]) */
+.auth-register-type-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 4px;
+}
+
+.auth-reg-type-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+}
+
+.auth-reg-type-btn:hover:not(.active) {
+  color: #1E293B;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.auth-reg-type-btn.active {
+  background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+  color: #FFFFFF;
+  box-shadow: 0 3px 10px rgba(14, 165, 233, 0.35);
+}
+
+#btnRegTypeTeacher.active {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.35);
+}
+
+.auth-reg-form-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* 3) GİRİŞ YAP BUTONU VE YÖNLENDİRME */
+.btn-login-submit {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+  border: 2px solid #6EE7B7 !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35) !important;
+}
+
+.btn-login-submit:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45) !important;
+  transform: translateY(-2px);
+}
+
+.auth-switch-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #64748B;
+  margin-top: 4px;
+}
+
+.auth-switch-link {
+  background: none;
+  border: none;
+  color: #0284C7;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  touch-action: manipulation;
+}
+
+.auth-switch-link:hover {
+  color: #0369A1;
+  background: #F0F9FF;
+}
+
+@media (max-width: 768px) {
+  .auth-main-tabs {
+    margin-bottom: 10px !important;
+    gap: 4px !important;
+    padding: 3px !important;
+  }
+
+  .auth-main-tab {
+    min-height: 40px !important;
+    padding: 8px 10px !important;
+    font-size: 0.88rem !important;
+    gap: 6px !important;
+  }
+
+  .auth-register-type-switch {
+    margin-bottom: 10px !important;
+    padding: 3px !important;
+  }
+
+  .auth-reg-type-btn {
+    min-height: 38px !important;
+    padding: 6px 10px !important;
+    font-size: 0.84rem !important;
+  }
+
+  .auth-form-clean {
+    gap: 10px !important;
+  }
+
+  .auth-switch-prompt {
+    font-size: 0.82rem !important;
+    margin-top: 2px !important;
+  }
+
+  .auth-switch-link {
+    font-size: 0.84rem !important;
+  }
+}
+
 /* GİRİŞ YAP / KAYIT OL (AUTH MODAL) MOBİL & KAPATMA DÜZELTMELERİ */
 /* ============================================================== */
 
