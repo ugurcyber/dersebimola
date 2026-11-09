@@ -7484,15 +7484,441 @@
       }
     ],
 
-    // 2. Sınıf Hayat Bilgisi Karma Düello Motoru (6 Temadan Dengeli Soru Çekimi)
+    // =========================================================================
+    // 2. SINIF HAYAT BİLGİSİ & FEN BİLİMLERİ 2026 MAARİF MODELİ ŞIKSIZ MOTORLARI
+    // =========================================================================
+
+    // 1) 🏫 OKULUMUZDA HAYAT & GÜVENLİ YAŞAM (Havuz: 40 Senaryo)
+    generateGrade2LifeScienceSchoolSafety() {
+      const isEmergency = Math.random() < 0.5;
+
+      if (isEmergency) {
+        const emergencyPool = [
+          {
+            scenario: "Evde veya sokakta aniden yangın çıktı ve dumanlar yükseliyor! 🔥 Hangi acil numarayı aramalıyız?",
+            spoken: "Yangın çıktığında hangi acil numarayı aramalıyız?",
+            correct: "🚒 110 İtfaiye / 112",
+            distractors: ["🚓 155 Polis / 112", "🚑 112 Ambulans"],
+            exp: "Yangın durumlarında derhal İtfaiye (110 / 112) aranır!"
+          },
+          {
+            scenario: "Parkta şüpheli bir durum, hırsızlık veya tehlike gördük! 🚓 Kimi aramalıyız?",
+            spoken: "Şüpheli bir durum veya hırsızlık gördüğümüzde kimi aramalıyız?",
+            correct: "🚓 155 Polis / 112",
+            distractors: ["🚒 110 İtfaiye / 112", "🌲 177 Orman"],
+            exp: "Güvenliğimiz tehlikedeyse veya hırsızlık varsa Polis (155 / 112) aranır!"
+          },
+          {
+            scenario: "Arkadaşımız aniden bayıldı, nefes alamıyor veya yaralandı! 🚑 Kimi aramalıyız?",
+            spoken: "Birisi bayıldığında veya ağır yaralandığında kimi aramalıyız?",
+            correct: "🚑 112 Ambulans",
+            distractors: ["🚒 110 İtfaiye", "🚓 155 Polis"],
+            exp: "Acil sağlık durumlarında ve yaralanmalarda Ambulans (112) aranır!"
+          },
+          {
+            scenario: "Ülkemizde tüm acil durumları tek bir çatı altında toplayan ortak acil çağrı numarası nedir? 🚨",
+            spoken: "Tüm acil durumları toplayan ortak acil çağrı numarası nedir?",
+            correct: "📞 112 Tek Acil Çağrı",
+            distractors: ["📞 100", "📞 180"],
+            exp: "112, tüm acil durumların (polis, ambulans, itfaiye) ortak numarasıdır!"
+          },
+          {
+            scenario: "Ormanda piknik yaparken alev ve yoğun duman gördük! 🌲🔥 Kimi aramalıyız?",
+            spoken: "Orman yangını gördüğümüzde kimi aramalıyız?",
+            correct: "🚒 112 Orman Yangın",
+            distractors: ["🚓 155 Polis", "🏥 182 Randevu"],
+            exp: "Orman yangınlarında derhal 112 Orman Yangın hattı aranmalıdır!"
+          },
+          {
+            scenario: "Denizde veya gölde yüzerken birinin suda çırpındığını ve boğulma tehlikesi geçirdiğini gördük! 🌊🛟 Kimi aramalıyız?",
+            spoken: "Suda boğulma tehlikesinde kimi aramalıyız?",
+            correct: "🛟 112 Sahil Güvenlik",
+            distractors: ["🚒 110 İtfaiye", "🚓 155 Trafik"],
+            exp: "Deniz ve sahil acil durumlarında 112 Sahil Güvenlik aranır!"
+          },
+          {
+            scenario: "Köyde veya dağlık arazide mahsur kalındığında hangi güvenlik birimini aramalıyız? 🏔️",
+            spoken: "Köyde veya dağda mahsur kalındığında kimi aramalıyız?",
+            correct: "👮 112 Jandarma",
+            distractors: ["🚒 110 İtfaiye", "🏥 182"],
+            exp: "Kırsal ve dağlık bölgelerde asayiş ve yardım için 112 Jandarma aranır!"
+          },
+          {
+            scenario: "Evde şiddetli gaz kokusu aldığımızda ilk ne yapmalı ve kimi aramalıyız? ⚠️",
+            spoken: "Gaz kokusu aldığımızda kimi aramalıyız?",
+            correct: "⚠️ 187 Doğalgaz / 112",
+            distractors: ["🚓 155 Polis", "🚑 112 Sağlık"],
+            exp: "Gaz kokusunda pencereler açılır ve 187 Doğalgaz Acil / 112 aranır!"
+          }
+        ];
+
+        const item = this.getUniqueNextItem(emergencyPool, 'ls2_emergency_pool') || emergencyPool[0];
+        const choices = this.fisherYatesShuffle([item.correct, ...item.distractors]);
+
+        return {
+          type: 'ls2_emergency_safety',
+          subMode: 'emergency_call',
+          question: item.scenario,
+          spokenText: item.spoken,
+          correct: item.correct,
+          explanation: item.exp,
+          interactiveData: {
+            subMode: 'emergency_call',
+            scenario: item.scenario,
+            correct: item.correct,
+            choices: choices,
+            exp: item.exp
+          }
+        };
+      } else {
+        const trafficPool = [
+          {
+            scenario: "Trafik ışıklarında yayalar için KIRMIZI IŞIK yandığında ne yapmalıyız? 🛑",
+            spoken: "Yayalar için kırmızı ışık yandığında ne yapmalıyız?",
+            correct: "🛑 Kaldırımda Dur ve Bekle!",
+            distractors: ["🟢 Hızla Karşıya Koş", "🚗 Yola Doğru Atla"],
+            exp: "Kırmızı ışıkta yayalar ve araçlar mutlaka durmalı ve beklemelidir!"
+          },
+          {
+            scenario: "Trafik ışıklarında yayalar için YEŞİL IŞIK yandığında ne yapmalıyız? 🟢",
+            spoken: "Yayalar için yeşil ışık yandığında ne yapmalıyız?",
+            correct: "🚶 Sağa Sola Bakıp Güvenle Geç!",
+            distractors: ["🛑 Geriye Doğru Kaç", "🏃 Gözünü Kapatıp Koş"],
+            exp: "Yeşil ışık yansa bile önce sola, sonra sağa, tekrar sola bakarak güvenle geçilir!"
+          },
+          {
+            scenario: "Karşıdan karşıya geçerken caddenin neresini kullanmalıyız? 🦓",
+            spoken: "Karşıdan karşıya geçerken nereyi kullanmalıyız?",
+            correct: "🦓 Yaya ve Okul Geçidini",
+            distractors: ["🚗 Park Etmiş Arabaların Arasını", "🚧 Virajlı Yol Dönüşünü"],
+            exp: "Yolu her zaman yaya geçidi, okul geçidi veya üst geçitten geçmeliyiz!"
+          },
+          {
+            scenario: "Okul servisine bindiğimizde ilk yapmamız gereken güvenlik kuralı nedir? 🚌",
+            spoken: "Okul servisine bindiğimizde ilk ne yapmalıyız?",
+            correct: "🔒 Emniyet Kemerini Bağlamak",
+            distractors: ["🪟 Camdan Dışarı Sarkmak", "🚶 Koridorda Ayakta Durmak"],
+            exp: "Servis hareket etmeden önce emniyet kemerimizi mutlaka bağlamalıyız!"
+          },
+          {
+            scenario: "Okul merdivenlerinden inerken ve çıkarken nasıl hareket etmeliyiz? 🪜",
+            spoken: "Okul merdivenlerinden inerken nasıl hareket etmeliyiz?",
+            correct: "🚶 Merdivenin Sağından, Sakince",
+            distractors: ["🏃 Trabzanlardan Kayarak", "📢 Koşup Arkadaşını İterek"],
+            exp: "Merdivenlerde kazaları önlemek için daima sağdan ve koşmadan inip çıkarız!"
+          },
+          {
+            scenario: "Kaldırımı olmayan sokak ve yollarda nereden yürümeliyiz? 🚶‍♂️",
+            spoken: "Kaldırımı olmayan yollarda nereden yürümeliyiz?",
+            correct: "🛡️ Yolun Solundan (Taşıtları Görerek)",
+            distractors: ["🚗 Yolun Tam Ortasından", "🙈 Taşıtlara Sırtımızı Dönerek"],
+            exp: "Kaldırım yoksa gelen araçları rahatça görmek için yolun sol kenarından yürürüz!"
+          },
+          {
+            scenario: "Teneffüste veya öğle arasında oyun oynarken hangi alanları tercih etmeliyiz? ⚽",
+            spoken: "Oyun oynarken hangi alanları tercih etmeliyiz?",
+            correct: "🌳 Güvenli Okul Bahçesi",
+            distractors: ["🚧 Okul Dışındaki Cadde", "🪜 Merdiven Boşluğu"],
+            exp: "Oyunlarımızı daima güvenli okul bahçesinde veya çocuk parkında oynamalıyız!"
+          },
+          {
+            scenario: "Okulda tanımadığımız bir yabancı bize şeker verip dışarı çağırdığında ne yapmalıyız? 🚫",
+            spoken: "Tanımadığımız biri bize şeker verip çağırdığında ne yapmalıyız?",
+            correct: "🛑 'Hayır!' Deyip Öğretmenimize Koşmalıyız",
+            distractors: ["🍬 Şekeri Alıp Yanına Gitmeliyiz", "🤫 Kimseye Söylememeliyiz"],
+            exp: "Tanımadığımız kişilere net şekilde HAYIR demeli ve hemen öğretmenimize bildirmeliyiz!"
+          }
+        ];
+
+        const item = this.getUniqueNextItem(trafficPool, 'ls2_traffic_pool') || trafficPool[0];
+        const choices = this.fisherYatesShuffle([item.correct, ...item.distractors]);
+
+        return {
+          type: 'ls2_emergency_safety',
+          subMode: 'traffic_rule',
+          question: item.scenario,
+          spokenText: item.spoken,
+          correct: item.correct,
+          explanation: item.exp,
+          interactiveData: {
+            subMode: 'traffic_rule',
+            scenario: item.scenario,
+            correct: item.correct,
+            choices: choices,
+            exp: item.exp
+          }
+        };
+      }
+    },
+
+    // 2) 🍎 SAĞLIKLI BESLENME & DENGELİ TABAK (Havuz: 40 Besin)
+    generateGrade2LifeScienceHealthyPlate() {
+      const foodPool = [
+        // Sağlıklı Besinler (20)
+        { name: "Taze Kırmızı Elma", icon: "🍎", isHealthy: true, note: "Elma bol vitamin ve lif içerir, dişleri güçlendirir!" },
+        { name: "Yeşil Brokoli", icon: "🥦", isHealthy: true, note: "Brokoli vücudumuzu hastalıklara karşı bir kalkan gibi korur!" },
+        { name: "Günlük Taze Süt", icon: "🥛", isHealthy: true, note: "Süt içerdiği kalsiyumla kemiklerimizi ve boyumuzu uzatır!" },
+        { name: "Fırında Izgara Balık", icon: "🐟", isHealthy: true, note: "Balık hafızamızı ve zekamızı güçlendiren Omega-3 deposudur!" },
+        { name: "Haşlanmış Köy Yumurtası", icon: "🥚", isHealthy: true, note: "Yumurta kaslarımızın güçlenmesi için en kaliteli proteindir!" },
+        { name: "Çıtır Turuncu Havuç", icon: "🥕", isHealthy: true, note: "Havuç A vitamini ile gözlerimizin keskin görmesini sağlar!" },
+        { name: "Beyaz Peynir", icon: "🧀", isHealthy: true, note: "Peynir kemik ve diş sağlığımız için harika bir besindir!" },
+        { name: "Doğal Kaynak Suyu", icon: "💧", isHealthy: true, note: "Su vücudumuzun çalışması için en temel ve sağlıklı içecektir!" },
+        { name: "Ceviz ve Fındık", icon: "🥜", isHealthy: true, note: "Ceviz beyin gelişimimiz ve enerjimiz için çok faydalıdır!" },
+        { name: "Bahçe Çileği", icon: "🍓", isHealthy: true, note: "Çilek bol C vitamini içerir ve bağışıklığımızı güçlendirir!" },
+        { name: "Mercimek Çorbası", icon: "🥣", isHealthy: true, note: "Sıcak mercimek çorbası kışın içimizi ısıtır ve enerji verir!" },
+        { name: "Taze Muz", icon: "🍌", isHealthy: true, note: "Muz potasyum içeriğiyle kaslarımızı ve kalbimizi korur!" },
+        { name: "Mevsim Yeşillikleri Salatası", icon: "🥗", isHealthy: true, note: "Renkli salatalar vitamin ve mineral deposudur!" },
+        { name: "Izgara Tavuk Göğsü", icon: "🍗", isHealthy: true, note: "Tavuk eti protein bakımından zengin ve besleyicidir!" },
+        { name: "Sulu Kış Portakalı", icon: "🍊", isHealthy: true, note: "Portakal kış aylarında bizi gripten koruyan C vitaminidir!" },
+        { name: "Tatlı Mor Üzüm", icon: "🍇", isHealthy: true, note: "Üzüm doğal meyve şekeriyle beynimize enerji verir!" },
+        { name: "Doğal Zeytin", icon: "🫒", isHealthy: true, note: "Kahvaltıda zeytin yemek sindirim sistemimizi korur!" },
+        { name: "Tam Buğday Ekmeği", icon: "🥖", isHealthy: true, note: "Tam buğday ekmeği uzun süre tok tutar ve enerji verir!" },
+        { name: "Kalsiyum Deposu Yoğurt", icon: "🍲", isHealthy: true, note: "Yoğurt dost bakterileriyle midemizi ve bağırsaklarımızı korur!" },
+        { name: "Yaz Karpuzu", icon: "🍉", isHealthy: true, note: "Karpuz yaz sıcağında vücudumuza su ve ferahlık verir!" },
+
+        // Zararlı / Aşırı Paketli Gıdalar (20)
+        { name: "Asitli Şekerli Kola", icon: "🥤", isHealthy: false, note: "Kola aşırı şeker ve asit içerir, dişleri çürütür!" },
+        { name: "Aşırı Yağlı Patates Cipsi", icon: "🍟", isHealthy: false, note: "Cips aşırı tuz ve trans yağ içerir, damarlara zararlıdır!" },
+        { name: "Renkli Jelibon Şekerleme", icon: "🍬", isHealthy: false, note: "Jelibon katkı maddesi ve yapay boya içerir!" },
+        { name: "Kremalı Şekerli Donut", icon: "🍩", isHealthy: false, note: "Donut yoğun şeker ve doymuş yağ içerir, kilo aldırır!" },
+        { name: "Paketli Hazır Sosis", icon: "🌭", isHealthy: false, note: "İşlenmiş et ürünleri sağlığımıza zarar verir!" },
+        { name: "Fast-Food Hamburger", icon: "🍔", isHealthy: false, note: "Aşırı yağlı fast-food yerine ev yemekleri tercih edilmelidir!" },
+        { name: "Şekerli Çikolata Barı", icon: "🍫", isHealthy: false, note: "Aşırı şekerli çikolata diş sağlığımızı bozar!" },
+        { name: "Gazlı Meyveli Gazoz", icon: "🥤", isHealthy: false, note: "Gazoz yapay tatlandırıcı ve asit doludur!" },
+        { name: "Boyalı Lolipop Şeker", icon: "🍭", isHealthy: false, note: "Lolipop diş minemizi aşındırır ve çürüklere yol açar!" },
+        { name: "Aşırı Yağlı Hazır Pizza", icon: "🍕", isHealthy: false, note: "Donmuş hazır pizzalar aşırı tuz ve koruyucu içerir!" },
+        { name: "Katkılı Hazır Konserve", icon: "🥫", isHealthy: false, note: "Taze sebzeler varken paketli konserveler tüketilmemelidir!" },
+        { name: "Paketli Şekerli Kek", icon: "🧁", isHealthy: false, note: "Paketli hazır kekler katkı maddesi ve glikoz şurubu içerir!" },
+        { name: "Bol Tuzlu Kızartma", icon: "🍟", isHealthy: false, note: "Kızartmalar midemizi yorar ve kalbimize zarar verir!" },
+        { name: "Yapay Enerji İçeceği", icon: "🥤", isHealthy: false, note: "Çocukların enerji içeceği tüketmesi çok tehlikelidir!" },
+        { name: "Aşırı Şuruplu Krep", icon: "🥞", isHealthy: false, note: "Aşırı şurup ve yapay soslar kan şekerini dengesizleştirir!" },
+        { name: "Yapay Sakız", icon: "🍬", isHealthy: false, note: "Aşırı şekerli ve tatlandırıcılı sakızlar sağlığa zararlıdır!" },
+        { name: "Hazır Nugget Kızartması", icon: "🍗", isHealthy: false, note: "Hazır paketli kızarmış etler yerine taze et yenmelidir!" },
+        { name: "Kremalı Paketli Bisküvi", icon: "🍪", isHealthy: false, note: "Paketli bisküviler lif içermez ve yapay aroma doludur!" },
+        { name: "Boyalı Buzlu Şekerleme", icon: "🍧", isHealthy: false, note: "Yapay boyalı buzlar boğazımızı ve midemizi hasta eder!" },
+        { name: "Şekerli Gazlı İçecek", icon: "🥤", isHealthy: false, note: "Gazlı içecekler yerine bol bol taze su içmeliyiz!" }
+      ];
+
+      const item = this.getUniqueNextItem(foodPool, 'ls2_healthy_pool') || foodPool[0];
+
+      return {
+        type: 'ls2_healthy_plate',
+        question: `"${item.name}" sağlıklı mı yoksa zararlı/sınırlı bir besin midir? 🍎`,
+        spokenText: `${item.name} sağlıklı bir besin midir, yoksa zararlı bir besin midir? Doğru tabağa koy.`,
+        correct: item.isHealthy ? 'healthy' : 'unhealthy',
+        explanation: `${item.isHealthy ? 'Tebrikler, Sağlıklı Besin!' : 'Doğru, Zararlı/Sınırlı Besin!'} ${item.note} 👏`,
+        interactiveData: {
+          foodName: item.name,
+          foodIcon: item.icon,
+          isHealthy: item.isHealthy,
+          note: item.note
+        }
+      };
+    },
+
+    // 3) 🌳 DOĞAL ÇEVRE & GERİ DÖNÜŞÜM KUTULARI (Havuz: 40 Atık)
+    generateGrade2LifeScienceRecycleBins() {
+      const wastePool = [
+        // Kağıt (10)
+        { name: "Eski Okunmuş Gazete", icon: "📰", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Gazeteler kağıttır ve mavi kutuya atılarak yeni kitaplara dönüşür!" },
+        { name: "Karton Koli Kutusu", icon: "📦", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Kartonlar kağıt kutusunda geri dönüştürülerek ağaçların kesilmesini önler!" },
+        { name: "Kullanılmış Defter Sayfası", icon: "📄", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Kağıt atıklar mavi kutuda toplanır ve doğa korunur!" },
+        { name: "Biten Kağıt Havlu Rulosu", icon: "📜", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Karton rulolar kağıt geri dönüşümüne aittir!" },
+        { name: "Eski Resim Defteri", icon: "📖", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Kağıt defterler mavi geri dönüşüm kutusuna atılır!" },
+        { name: "Zarf ve Kağıt Dosya", icon: "✉️", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Zarflar kağıt atık kutusuna atılmalıdır!" },
+        { name: "Karton Yumurta Kolisi", icon: "📦", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Karton koliler mavi kutuda geri dönüştürülür!" },
+        { name: "İlaç Karton Kutusu", icon: "📦", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "İlacın dışındaki boş karton kutu kağıt kutusuna atılır!" },
+        { name: "Kağıt Kese Kağıdı", icon: "🛍️", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Kağıt torbalar mavi kutuda geri kazandırılır!" },
+        { name: "Eski Dergi ve Broşür", icon: "📑", type: "paper", bin: "Mavi Kağıt Kutusu", exp: "Dergiler kağıt geri dönüşüm kutusuna atılır!" },
+
+        // Plastik (10)
+        { name: "Boş Plastik Su Şişesi (Pet)", icon: "🧴", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Pet şişeler sarı plastik kutusuna atılarak doğaya karışması önlenir!" },
+        { name: "Biten Şampuan Şişesi", icon: "🧴", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Şampuan kutuları sert plastiktir, sarı kutuya atılır!" },
+        { name: "Plastik Alışveriş Poşeti", icon: "🛍️", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Poşetler plastiktir ve sarı kutuda toplanmalıdır!" },
+        { name: "Plastik Ayran Bardağı", icon: "🥛", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Plastik bardaklar sarı geri dönüşüm kutusuna aittir!" },
+        { name: "Sıvı Sabun Plastik Kutusu", icon: "🧴", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Plastik kutular sarı kutuda geri dönüştürülür!" },
+        { name: "Plastik İçecek Pipeti", icon: "🥤", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Pipetler plastiktir, çevre kirliliğini önlemek için sarı kutuya atılır!" },
+        { name: "Boş Plastik Yoğurt Kabı", icon: "🥣", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Yoğurt kapları yıkanıp sarı plastik kutusuna atılır!" },
+        { name: "Plastik Deterjan Bidonu", icon: "🧴", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Deterjan bidonları plastik geri dönüşümüne girer!" },
+        { name: "Eski Plastik Diş Fırçası", icon: "🪥", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Plastik fırçalar sarı geri dönüşüm kutusuna atılır!" },
+        { name: "Plastik Paket Kapağı", icon: "🥡", type: "plastic", bin: "Sarı Plastik Kutusu", exp: "Plastik kapaklar sarı kutuya atılarak geri kazanılır!" },
+
+        // Cam (10)
+        { name: "Maden Suyu Cam Şişesi", icon: "🍾", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam şişeler yeşil kutuya atılır ve sonsuz kez geri dönüştürülebilir!" },
+        { name: "Boş Cam Reçel Kavanozu", icon: "🫙", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam kavanozlar yeşil kutuya atılarak fabrikalarda eritilir!" },
+        { name: "Kırık Cam Su Bardağı", icon: "🥛", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Kırık camlar güvenle yeşil cam kutusuna atılmalıdır!" },
+        { name: "Cam Zeytin Kavanozu", icon: "🫙", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam atıklar yeşil kutuda toplanır ve doğada kum tasarrufu sağlar!" },
+        { name: "Boş Cam Sirke Şişesi", icon: "🍾", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam sirke şişesi yeşil cam kutusuna atılır!" },
+        { name: "Konserve Cam Kavanozu", icon: "🫙", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam konserveler yeşil kutuda geri kazandırılır!" },
+        { name: "Cam Meyve Suyu Şişesi", icon: "🍾", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam şişeler yeşil geri dönüşüm kutusuna aittir!" },
+        { name: "Küçük Cam Baharatlık", icon: "🫙", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam malzemeler yeşil kutuda toplanır!" },
+        { name: "Boş Cam Kolonya Şişesi", icon: "🍶", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam şişeler yeşil kutuda yeniden cam eşyalara dönüşür!" },
+        { name: "Cam Gazoz Şişesi", icon: "🍾", type: "glass", bin: "Yeşil Cam Kutusu", exp: "Cam şişe yeşil kutuya atılarak doğaya zarar vermesi önlenir!" },
+
+        // Organik Atık (10)
+        { name: "Muz Kabuğu", icon: "🍌", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Muz kabukları organik atıktır, gübreye (kompost) dönüşür!" },
+        { name: "Yenmiş Elma Çöpü", icon: "🍎", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Meyve çöpü organik kutuda doğal gübreye dönüşür!" },
+        { name: "Havuç Kabukları", icon: "🥕", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Sebze kabukları organik atık kutusuna atılır!" },
+        { name: "Yumurta Kabukları", icon: "🥚", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Yumurta kabukları toprak için zengin bir organik besindir!" },
+        { name: "Portakal Kabuğu", icon: "🍊", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Narenciye kabukları organik atık kutusuna aittir!" },
+        { name: "Bayat Ekmek Kırıntıları", icon: "🍞", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Yemek ve ekmek artıkları organik kutuya atılır!" },
+        { name: "Karpuz Kabuğu", icon: "🍉", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Karpuz kabuğu organik kutuda toprağı besler!" },
+        { name: "Soyulmuş Patates Kabukları", icon: "🥔", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Patates kabukları organik atıktır!" },
+        { name: "Bahçeden Kurumuş Ağaç Yaprağı", icon: "🍃", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Kuru yapraklar doğada kolayca çözünen organik atıktır!" },
+        { name: "Üzüm Sapı ve Çöpü", icon: "🍇", type: "organic", bin: "Kahverengi Organik Kutusu", exp: "Meyve sapları kahverengi organik kutusuna atılır!" }
+      ];
+
+      const item = this.getUniqueNextItem(wastePool, 'ls2_recycle_pool') || wastePool[0];
+
+      return {
+        type: 'ls2_recycle_bins',
+        question: `"${item.name}" hangi geri dönüşüm kutusuna atılmalıdır? ♻️`,
+        spokenText: `${item.name} hangi geri dönüşüm kutusuna atılmalıdır?`,
+        correct: item.type,
+        explanation: `Harika! ${item.exp} 👏`,
+        interactiveData: {
+          wasteName: item.name,
+          wasteIcon: item.icon,
+          correctType: item.type,
+          correctBin: item.bin,
+          exp: item.exp
+        }
+      };
+    },
+
+    // 4) ☀️ DÜNYA'MIZIN ŞEKLİ & BEŞ DUYUMUZ (Havuz: 40 Soru)
+    generateGrade2LifeScienceEarthSenses() {
+      const isSenses = Math.random() < 0.65;
+
+      if (isSenses) {
+        const sensesPool = [
+          { q: "Gökkuşağının büyüleyici renklerini hangi duyu organımızla görürüz? 🌈", spoken: "Gökkuşağının renklerini hangi duyu organımızla görürüz?", correct: "eye", correctLabel: "👀 Göz (Görme)", exp: "Gözlerimizle görürüz; renkleri, şekilleri ve ışığı algılarız!" },
+          { q: "Kuşların neşeli cik cik ötüşünü hangi organımızla duyarız? 🐦", spoken: "Kuşların ötüşünü hangi organımızla duyarız?", correct: "ear", correctLabel: "👂 Kulak (İşitme)", exp: "Kulaklarımızla işitiriz; sesleri, şarkıları ve konuşmaları duyarız!" },
+          { q: "Fırından çıkan sıcacık ekmeğin mis kokusunu hangisiyle alırız? 🥖", spoken: "Taze ekmeğin kokusunu hangi organımızla alırız?", correct: "nose", correctLabel: "👃 Burun (Koklama)", exp: "Burnumuzla koklarız; güzel çiçek ve yemek kokularını hissederiz!" },
+          { q: "Limonun ekşiliğini ve balın tatlılığını hangi organımızla anlarız? 🍋", spoken: "Limonun ekşi tadını hangi organımızla anlarız?", correct: "tongue", correctLabel: "👅 Dil (Tat Alma)", exp: "Dilimizle tat alırız; tatlı, tuzlu, ekşi ve acı tatları ayırt ederiz!" },
+          { q: "Sevimli yavru kedinin yumuşacık tüylerini hangi organımızla hissederiz? 🐱", spoken: "Kedinin yumuşak tüylerini hangi organımızla hissederiz?", correct: "skin", correctLabel: "✋ Deri (Dokunma)", exp: "Derimizle dokunuruz; sıcak, soğuk, sert ve yumuşak hisleri algılarız!" },
+          { q: "Çalan okul zilinin sesini hangi duyu organımızla algılarız? 🔔", spoken: "Okul zilinin sesini hangi organımızla duyarız?", correct: "ear", correctLabel: "👂 Kulak (İşitme)", exp: "Zil sesini kulaklarımızla işitiriz!" },
+          { q: "Bahçedeki taze güllerin nefis kokusunu hangi organımızla alırız? 🌸", spoken: "Güllerin kokusunu hangi organımızla alırız?", correct: "nose", correctLabel: "👃 Burun (Koklama)", exp: "Çiçek kokularını burnumuzla koklarız!" },
+          { q: "Buz küpünün soğukluğunu ve ateşin sıcaklığını hangisiyle hissederiz? ❄️", spoken: "Buzun soğukluğunu hangi organımızla hissederiz?", correct: "skin", correctLabel: "✋ Deri (Dokunma)", exp: "Sıcak ve soğuğu derimizle hissederiz!" },
+          { q: "Dilimlenmiş sulu karpuzun tatlı lezzetini hangi organımızla anlarız? 🍉", spoken: "Karpuzun tadını hangi organımızla anlarız?", correct: "tongue", correctLabel: "👅 Dil (Tat Alma)", exp: "Yiyeceklerin lezzetini dilimizle tadarız!" },
+          { q: "Trafik ışıklarının kırmızı mı yeşil mi yandığını hangisiyle fark ederiz? 🚦", spoken: "Trafik ışıklarını hangi organımızla görürüz?", correct: "eye", correctLabel: "👀 Göz (Görme)", exp: "Trafik ışıklarını ve renkleri gözümüzle görürüz!" },
+          { q: "Deniz dalgalarının kıyıya vuran şırıltısını hangi organımızla dinleriz? 🌊", spoken: "Deniz dalgalarının sesini hangi organımızla dinleriz?", correct: "ear", correctLabel: "👂 Kulak (İşitme)", exp: "Doğadaki tüm sesleri kulaklarımızla duyarız!" },
+          { q: "Çilekli sabunun banyodaki kokusunu hangi organımızla algılarız? 🧼", spoken: "Sabun kokusunu hangi organımızla algılarız?", correct: "nose", correctLabel: "👃 Burun (Koklama)", exp: "Kokuları burnumuzla alırız!" },
+          { q: "Kırmızı biberin acılığını hangi duyu organımızla tadarız? 🌶️", spoken: "Biberin acılığını hangi organımızla tadarız?", correct: "tongue", correctLabel: "👅 Dil (Tat Alma)", exp: "Acı ve baharatlı tatları dilimiz algılar!" },
+          { q: "Kaldırımdaki taşın sertliğini ve pamuğun yumuşaklığını hangisiyle anlarız? 🪨", spoken: "Taşın sertliğini hangi organımızla hissederiz?", correct: "skin", correctLabel: "✋ Deri (Dokunma)", exp: "Sertlik ve yumuşaklığı dokunma duyumuz (derimiz) hisseder!" },
+          { q: "Kitaptaki renkli resimleri ve harfleri hangi organımızla okuruz? 📖", spoken: "Kitaptaki resimleri ve yazıları hangi organımızla görürüz?", correct: "eye", correctLabel: "👀 Göz (Görme)", exp: "Okuma yaparken görme organımız olan gözümüzü kullanırız!" },
+          { q: "Müzik dersinde öğretmenin çaldığı piyanonun sesini hangisiyle duyarız? 🎹", spoken: "Piyano sesini hangi organımızla duyarız?", correct: "ear", correctLabel: "👂 Kulak (İşitme)", exp: "Piyano melodilerini kulaklarımızla işitiriz!" },
+          { q: "Sıcak çay bardağının ısısını hangi organımızla hissederiz? ☕", spoken: "Çay bardağının sıcaklığını hangi organımızla hissederiz?", correct: "skin", correctLabel: "✋ Deri (Dokunma)", exp: "Sıcaklık hissi derimiz aracılığıyla algılanır!" },
+          { q: "Soğuk dondurmanın vanilya tadını hangi organımızla alırız? 🍦", spoken: "Dondurmanın tadını hangi organımızla alırız?", correct: "tongue", correctLabel: "👅 Dil (Tat Alma)", exp: "Dondurmanın lezzetini dilimizle tadarız!" },
+          { q: "Çam ormanının ferahlatıcı kokusunu hangi organımızla içimize çekeriz? 🌲", spoken: "Ormanın kokusunu hangi organımızla çekeriz?", correct: "nose", correctLabel: "👃 Burun (Koklama)", exp: "Orman havasını ve kokusunu burnumuzla koklarız!" },
+          { q: "Televizyondaki neşeli çizgi filmi hangi organımızla izleriz? 📺", spoken: "Çizgi filmi hangi organımızla izleriz?", correct: "eye", correctLabel: "👀 Göz (Görme)", exp: "Görüntüleri gözlerimizle görürüz!" }
+        ];
+
+        const item = this.getUniqueNextItem(sensesPool, 'ls2_senses_pool') || sensesPool[0];
+
+        return {
+          type: 'ls2_earth_senses',
+          subMode: 'senses',
+          question: item.q,
+          spokenText: item.spoken,
+          correct: item.correct,
+          explanation: `Tebrikler! ${item.exp} 👏`,
+          interactiveData: {
+            subMode: 'senses',
+            questionText: item.q,
+            correct: item.correct,
+            correctLabel: item.correctLabel,
+            exp: item.exp
+          }
+        };
+      } else {
+        const earthPool = [
+          {
+            q: "Uzaydan çekilen fotoğraflara göre Dünya'mızın şekli neye benzer? 🌍",
+            spoken: "Dünya'mızın şekli neye benzer?",
+            correct: "⚽ Küreye benzer",
+            distractors: ["📦 Düz bir kutuya", "📐 Üçgen piramide"],
+            exp: "Dünya'mız alttan ve üstten hafif basık, ortasından şişkin bir küreye benzer!"
+          },
+          {
+            q: "Aşağıdaki meyvelerden hangisi Dünya'mızın şekline en çok benzer? 🍊",
+            spoken: "Hangi meyve Dünya'mızın şekline en çok benzer?",
+            correct: "🍊 Portakal",
+            distractors: ["🍌 Muz", "🥒 Salatalık"],
+            exp: "Portakal yuvarlak ve küre şeklinde olduğu için Dünya'mıza benzer!"
+          },
+          {
+            q: "Kıyıya uzaktan yaklaşan bir geminin önce hangi kısmı görünür? (Dünya'nın küre olduğunu kanıtlar) 🚢",
+            spoken: "Kıyıya yaklaşan geminin neden önce bacası görünür?",
+            correct: "🚩 Önce Bacası ve Direkleri",
+            distractors: ["🚢 Geminin Tamamı", "🌊 Önce Alt Tabanı"],
+            exp: "Dünya küre şeklinde olduğu için yaklaşan geminin önce bacası, sonra gövdesi görünür!"
+          },
+          {
+            q: "Dünya üzerinde bir noktadan hareket edip hep aynı yöne giden bir uçak nereye varır? ✈️",
+            spoken: "Hep aynı yöne giden uçak nereye varır?",
+            correct: "🔄 Başladığı Noktaya Döner",
+            distractors: ["🚀 Uzay Boşluğuna Düşer", "🧱 Yolun Sonundaki Duvara Çarpar"],
+            exp: "Dünya küre şeklinde olduğu için hep aynı yönde ilerleyen araç başladığı yere döner!"
+          },
+          {
+            q: "Aşağıdakilerden hangisi Dünya'mızın şekline benzemez? ❌",
+            spoken: "Hangisi Dünya'mızın şekline benzemez?",
+            correct: "📦 Düz Dikdörtgen Kutu",
+            distractors: ["⚽ Futbol Topu", "🌐 Küre Modeli"],
+            exp: "Dünya küredir; kutu veya tepsi gibi düz değildir!"
+          },
+          {
+            q: "Ay tutulması sırasında Dünya'nın Ay üzerine düşen gölgesi ne şekildedir? 🌕",
+            spoken: "Dünya'nın Ay üzerine düşen gölgesi ne şekildedir?",
+            correct: "🌑 Daire / Yuvarlak",
+            distractors: ["🟦 Kare", "🔺 Üçgen"],
+            exp: "Dünya küre şeklinde olduğu için gölgesi de yuvarlak görünür!"
+          },
+          {
+            q: "Sınıfımızda Dünya'mızı incelemek için kullandığımız dönebilen eğitim aracına ne ad verilir? 🌐",
+            spoken: "Dünya'yı incelediğimiz eğitim aracına ne ad verilir?",
+            correct: "🌐 Dünya Küresi",
+            distractors: ["📏 Cetvel", "⏰ Masa Saati"],
+            exp: "Dünya modeli sınıflarımızda küre şeklinde tasarlanmıştır!"
+          },
+          {
+            q: "Eski zamanlarda bazı insanlar Dünya'yı tepsi sanırken hangi bilim insanları küre olduğunu savunmuştur? 🔭",
+            spoken: "Dünya'nın küre olduğunu savunan bilim insanları kimlerdir?",
+            correct: "🔭 Biruni ve Macellan",
+            distractors: ["🧙 Masal Kahramanları", "🤖 Çizgi Filmciler"],
+            exp: "Biruni ve Macellan gibi bilim insanları Dünya'nın küre şeklinde olduğunu kanıtlamıştır!"
+          }
+        ];
+
+        const item = this.getUniqueNextItem(earthPool, 'ls2_earth_pool') || earthPool[0];
+        const choices = this.fisherYatesShuffle([item.correct, ...item.distractors]);
+
+        return {
+          type: 'ls2_earth_senses',
+          subMode: 'earth',
+          question: item.q,
+          spokenText: item.spoken,
+          correct: item.correct,
+          explanation: `Harika! ${item.exp} 👏`,
+          interactiveData: {
+            subMode: 'earth',
+            questionText: item.q,
+            correct: item.correct,
+            choices: choices,
+            exp: item.exp
+          }
+        };
+      }
+    },
+
+    // 2. Sınıf Hayat Bilgisi & Fen Karma Düello Motoru (4 İnteraktif Motor)
     generateGrade2LifeScienceKarma() {
-      const themeIdx = Math.floor(Math.random() * 6);
-      if (themeIdx === 0) return this.drawFromPool(this.grade2LifeScienceSchoolPool, "grade2LifeScienceSchoolPool");
-      if (themeIdx === 1) return this.drawFromPool(this.grade2LifeScienceHealthPool, "grade2LifeScienceHealthPool");
-      if (themeIdx === 2) return this.drawFromPool(this.grade2LifeScienceSafetyPool, "grade2LifeScienceSafetyPool");
-      if (themeIdx === 3) return this.drawFromPool(this.grade2LifeScienceHomeFamilyPool, "grade2LifeScienceHomeFamilyPool");
-      if (themeIdx === 4) return this.drawFromPool(this.grade2LifeScienceCountryCulturePool, "grade2LifeScienceCountryCulturePool");
-      return this.drawFromPool(this.grade2LifeScienceNatureEnvironmentPool, "grade2LifeScienceNatureEnvironmentPool");
+      const pick = Math.floor(Math.random() * 4);
+      if (pick === 0) return this.generateGrade2LifeScienceSchoolSafety();
+      if (pick === 1) return this.generateGrade2LifeScienceHealthyPlate();
+      if (pick === 2) return this.generateGrade2LifeScienceRecycleBins();
+      return this.generateGrade2LifeScienceEarthSenses();
     },
 
     get grade2TrafficSafeLifePool() { return this.grade2LifeScienceSafetyPool; },
@@ -11333,28 +11759,22 @@
       } else if (gameType === 'grade2_grand_duel') {
         const raw = this.generateGrade2GrandDuel();
         return this.buildQuestionItem(raw, '🏆 2. Sınıf Büyük Karma Düello');
-      // --- 2. SINIF: 2026 MAARİF MODELİ HAYAT BİLGİSİ 6 ÖĞRENME ALANI ---
-      } else if (gameType === 'lifescience_school_2') {
-        const raw = this.drawFromPool(this.grade2LifeScienceSchoolPool, "grade2LifeScienceSchoolPool");
-        return this.buildQuestionItem(raw, '🏫 Ben ve Okulum (Okulumuzda Hayat)');
+      // --- 2. SINIF: 2026 MAARİF MODELİ HAYAT BİLGİSİ & FEN BİLİMLERİ (100% ŞIKSIZ & DOKUNMATİK) ---
+      } else if (gameType === 'lifescience_school_safety_2' || gameType === 'lifescience_school_2' || gameType === 'lifescience_safety_2' || gameType === 'lifescience_traffic_2') {
+        const raw = this.generateGrade2LifeScienceSchoolSafety();
+        return this.buildQuestionItem(raw, '🏫 Okul & Güvenli Yaşam');
       } else if (gameType === 'lifescience_health_2') {
-        const raw = this.drawFromPool(this.grade2LifeScienceHealthPool, "grade2LifeScienceHealthPool");
-        return this.buildQuestionItem(raw, '🍎 Sağlığım ve Güvenliğim (Sağlıklı Hayat)');
-      } else if (gameType === 'lifescience_safety_2' || gameType === 'lifescience_traffic_2') {
-        const raw = this.drawFromPool(this.grade2LifeScienceSafetyPool, "grade2LifeScienceSafetyPool");
-        return this.buildQuestionItem(raw, '🚦 Güvenli Hayat');
-      } else if (gameType === 'lifescience_home_family_2') {
-        const raw = this.drawFromPool(this.grade2LifeScienceHomeFamilyPool, "grade2LifeScienceHomeFamilyPool");
-        return this.buildQuestionItem(raw, '🏡 Ailem ve Toplum (Evimizde Hayat)');
-      } else if (gameType === 'lifescience_country_culture_2' || gameType === 'lifescience_culture_2') {
-        const raw = this.drawFromPool(this.grade2LifeScienceCountryCulturePool, "grade2LifeScienceCountryCulturePool");
-        return this.buildQuestionItem(raw, '🇹🇷 Yaşadığım Yer ve Ülkem (Ülkemizde Hayat)');
+        const raw = this.generateGrade2LifeScienceHealthyPlate();
+        return this.buildQuestionItem(raw, '🍎 Sağlıklı Beslenme & Tabak');
       } else if (gameType === 'lifescience_nature_environment_2') {
-        const raw = this.drawFromPool(this.grade2LifeScienceNatureEnvironmentPool, "grade2LifeScienceNatureEnvironmentPool");
-        return this.buildQuestionItem(raw, '🌿 Doğa ve Çevre (Doğada Hayat)');
+        const raw = this.generateGrade2LifeScienceRecycleBins();
+        return this.buildQuestionItem(raw, '🌳 Çevre & Geri Dönüşüm');
+      } else if (gameType === 'lifescience_earth_senses_2' || gameType === 'lifescience_home_family_2' || gameType === 'lifescience_country_culture_2' || gameType === 'lifescience_culture_2') {
+        const raw = this.generateGrade2LifeScienceEarthSenses();
+        return this.buildQuestionItem(raw, '☀️ Dünya & Beş Duyumuz');
       } else if (gameType === 'lifescience_2_karma') {
         const raw = this.generateGrade2LifeScienceKarma();
-        return this.buildQuestionItem(raw, '🌟 2. Sınıf Hayat Bilgisi Karma Düello');
+        return this.buildQuestionItem(raw, '🌟 2. Sınıf Hayat Bilgisi & Fen Karma Düello');
       } else if (gameType === 'english_school_objects_2') {
         const raw = this.drawFromPool(this.englishSchoolObjectsPool, "englishSchoolObjectsPool");
         return this.buildQuestionItem({
@@ -20888,114 +21308,77 @@
       },
       {
         id: 'lifescience',
-        name: 'Hayat Bilgisi',
+        name: 'Hayat Bilgisi ve Fen Bilimleri',
         icon: '🌱',
         colorTheme: 'theme-lifescience',
         tagline: '2026 Maarif Modeli',
-        description: 'Ben ve okulum, sağlığım, ailem, ülkem, doğa ve çevre 2026 Maarif öğrenme alanları! 🏫🧼🇹🇷',
+        description: 'Güvenli yaşam & 112 acil çağrı, sağlıklı beslenme sepeti, 4 renk geri dönüşüm kutuları ve Dünya\'mızın şekli ile beş duyumuz! 🏫🍎🌳☀️',
         badge: 'Maarif Modeli 2026',
         topics: [
-          { id: 'all', label: '🌟 Hayat Bilgisi Karma Düello' },
-          { id: 'school', label: '🏫 Tema 1: Ben ve Okulum' },
-          { id: 'health_traffic', label: '🧼 Tema 2: Sağlığım ve Güvenliğim' },
-          { id: 'family_home', label: '🏡 Tema 3: Ailem ve Toplum' },
-          { id: 'country_flag', label: '🇹🇷 Tema 4: Yaşadığım Yer ve Ülkem' },
-          { id: 'nature_recycling', label: '🌿 Tema 5: Doğa ve Çevre' }
+          { id: 'all', label: '🌟 Tüm Konular / Karma Düello' },
+          { id: 'school', label: '🏫 Tema 1: Okulumuzda Hayat & Güvenlik' },
+          { id: 'health', label: '🍎 Tema 2: Sağlıklı Beslenme & Tabak' },
+          { id: 'recycle', label: '🌳 Tema 3: Çevre & Geri Dönüşüm' },
+          { id: 'science', label: '☀️ Tema 4: Dünya & Beş Duyumuz' }
         ],
         games: [
           {
-            id: 'lifescience_healthy_basket_1',
+            id: 'lifescience_school_safety_2',
             active: true,
-            title: 'Sağlıklı Beslenme Sepeti',
-            icon: '🥗',
-            badge: '🥗 Sağlıklı Hayat',
-            featureTag: '🧺 İki Sepet',
-            description: 'Yiyecekleri sürükle: Sağlıklı mı, zararlı mı? 🍎🍟',
-            tags: ['🥗 Sağlıklı', '🍟 Zararlı', '🧺 Sınıflandır'],
-            btnText: 'Pratiğe Başla',
-            topic: 'health_traffic'
-          },
-          {
-            id: 'lifescience_school_bag_1',
-            active: true,
-            title: 'Çantamı Hazırlıyorum',
-            icon: '🎒',
-            badge: '🎒 Okulumuzda Hayat',
-            featureTag: '🧺 İki Sepet',
-            description: 'Okul eşyalarını çantaya, oyuncakları oyuncak sepetine sürükle! ✏️🧸',
-            tags: ['🎒 Okul Eşyaları', '🧸 Oyuncaklar', '🧺 Sınıflandır'],
-            btnText: 'Pratiğe Başla',
-            topic: 'school'
-          },
-          {
-            id: 'lifescience_school_1',
-            active: true,
-            title: 'Doğru Davranışı Seç & Okul Rehberi',
+            title: 'Okulumuzda Hayat & Güvenli Yaşam',
             icon: '🏫',
-            badge: '🏫 Ben ve Okulum',
-            featureTag: '🤝 Okul & Nezaket',
-            description: 'Okul ortamı, sınıf kuralları, okul çalışanları, duygularımız ve nezaket ifadeleri (lütfen, teşekkürler, özür dilerim)! 🏫🤝',
-            tags: ['🏫 Sınıf Kuralları', '🤝 Nezaket Sözleri', '😊 Duygularımız', '👨‍🏫 Okul Çalışanları'],
+            badge: '🏫 Okul & Güvenlik',
+            featureTag: '⭐ Şıksız & Dokunmatik',
+            description: '112 Acil durum numaraları (itfaiye, polis, ambulans), okul kuralları ve trafik ışıkları interaktif eşleştirme! 🚨🚦',
+            tags: ['🚨 112 Acil Çağrı', '🚦 Trafik Işıkları', '🏫 Okul Kuralları', '🚶 Yaya Geçidi'],
             btnText: 'Düelloyu Başlat',
             topic: 'school'
           },
           {
-            id: 'lifescience_health_traffic_1',
+            id: 'lifescience_health_2',
             active: true,
-            title: 'Sağlık Sepeti & Güvenli Yol',
-            icon: '🧼',
-            badge: '🧼 Sağlık & Güvenlik',
-            featureTag: '🚦 Trafik & Sağlık',
-            description: 'Kişisel bakım, sağlıklı beslenme, temel trafik kuralları (yaya geçidi, trafik ışıkları), acil durum (112) ve güvenli alanlar! 🧼🚦',
-            tags: ['🧼 Kişisel Bakım', '🍎 Sağlıklı Beslenme', '🚦 Trafik Kuralları', '🚑 112 Acil'],
+            title: 'Sağlıklı Beslenme & Dengeli Tabak',
+            icon: '🍎',
+            badge: '🥗 Sağlıklı Tabak',
+            featureTag: '⭐ Sepetlere Ayrıştır',
+            description: 'Taze meyve, sebze, süt ve balıkları sağlıklı tabağa; asitli içecek ve paketli cipsleri zararlı sepete sürükle! 🥦🥛',
+            tags: ['🥦 Taze Sebze & Meyve', '🥛 Süt & Yoğurt', '❌ Zararlı Paketli Gıda', '⚖️ Dengeli Tabak'],
             btnText: 'Düelloyu Başlat',
-            topic: 'health_traffic'
+            topic: 'health'
           },
           {
-            id: 'lifescience_family_home_1',
+            id: 'lifescience_nature_environment_2',
             active: true,
-            title: 'Mutlu Evim & Sorumluluklarım',
-            icon: '🏡',
-            badge: '🏡 Ailem ve Toplum',
-            featureTag: '🤝 Ev & Sorumluluk',
-            description: 'Aile bireyleri, akrabalık, evdeki görev ve sorumluluklar, ev adresimiz, komşuluk ve yardımlaşma! 🏡❤️',
-            tags: ['👨‍👩‍👧 Aile Bireyleri', '🏡 Ev Sorumlulukları', '📍 Ev Adresi', '🤝 Komşuluk & Yardım'],
+            title: 'Doğal Çevre & Geri Dönüşüm Kutuları',
+            icon: '🌳',
+            badge: '♻️ Geri Dönüşüm',
+            featureTag: '⭐ 4 Renk Kutu',
+            description: 'Atıkları mavi kağıt, sarı plastik, yeşil cam ve kahverengi organik kutularına doğru ayrıştır! ♻️🌍',
+            tags: ['📄 Kağıt (Mavi)', '🧴 Plastik (Sarı)', '🍾 Cam (Yeşil)', '🍌 Organik (Kahverengi)'],
             btnText: 'Düelloyu Başlat',
-            topic: 'family_home'
+            topic: 'recycle'
           },
           {
-            id: 'lifescience_country_flag_1',
+            id: 'lifescience_earth_senses_2',
             active: true,
-            title: 'Milli Değerlerimiz & Bayramlarımız',
-            icon: '🇹🇷',
-            badge: '🇹🇷 Yaşadığım Yer & Ülkem',
-            featureTag: '🇹🇷 Bayrak & Atatürk',
-            description: 'Şanlı bayrağımız, İstiklal Marşımız, Atatürk\'ün hayatı ve milli-dini bayramlarımız (29 Ekim, 23 Nisan vb.)! 🇹🇷🕊️',
-            tags: ['🇹🇷 Türk Bayrağı', '🎶 İstiklal Marşı', '⭐ Atatürk\'ün Hayatı', '🎉 Milli Bayramlar'],
+            title: 'Dünya\'mızın Şekli & Beş Duyumuz',
+            icon: '☀️',
+            badge: '🌍 Dünya & 5 Duyu',
+            featureTag: '⭐ Duyu Organları & Küre',
+            description: 'Göz, kulak, burun, dil ve deri duyu organlarını görevleriyle eşleştir; Dünya\'mızın küre şeklini keşfet! 👁️👂👃',
+            tags: ['👀 Göz & Kulak', '👃 Burun & Dil', '✋ Deri / Dokunma', '🌍 Küre Şekli'],
             btnText: 'Düelloyu Başlat',
-            topic: 'country_flag'
+            topic: 'science'
           },
           {
-            id: 'lifescience_nature_recycling_1',
+            id: 'lifescience_2_karma',
             active: true,
-            title: 'Doğa Dostu & Geri Dönüşüm Avcısı',
-            icon: '🌿',
-            badge: '🌿 Doğa ve Çevre',
-            featureTag: '♻️ Geri Dönüşüm',
-            description: '4 mevsim ve kıyafet seçimi, hayvanları-bitkileri koruma, geri dönüşüm, su ve elektrik tasarrufu! 🌍♻️',
-            tags: ['🍂 4 Mevsim', '♻️ Geri Dönüşüm', '💧 Su Tasarrufu', '🐾 Canlıları Koruma'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'nature_recycling'
-          },
-          {
-            id: 'lifescience_1_karma',
-            active: true,
-            title: 'Hayat Bilgisi Karma Düello (Tüm Konular)',
+            title: 'Hayat Bilgisi & Fen Süper Karma Düello',
             icon: '🌱',
-            badge: '🌟 Süper Karma',
-            featureTag: '⭐ Tüm Müfredat',
-            description: '5 temanın tamamından dengeli ve rastgele sorular çeken genel tekrar ve akıllı tahta sınıf düellosu! 🏫🧼🇹🇷',
-            tags: ['🏫 Okul & Nezaket', '🧼 Sağlık & Trafik', '🏡 Aile & Toplum', '🇹🇷 Milli Değerler'],
+            badge: '🏆 2. Sınıf Karma',
+            featureTag: '🌟 4 Oyun Motoru Karma',
+            description: 'Güvenli Yaşam, Sağlıklı Tabak, Geri Dönüşüm ve Dünya & Beş Duyu motorlarından karma sınıf yarışı!',
+            tags: ['🏫 Güvenli Yaşam', '🍎 Dengeli Tabak', '🌳 Geri Dönüşüm', '☀️ Dünya & Duyular'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
@@ -31124,6 +31507,239 @@
     });
   }
 
+  
+  // =========================================================================
+  // 2. SINIF HAYAT BİLGİSİ & FEN BİLİMLERİ ETKİLEŞİMLİ SAHNE MOTORLARI
+  // =========================================================================
+  function renderGrade2LifeScienceEngine(q) {
+    const data = q.interactiveData || q;
+    const type = q.type;
+
+    const renderHtml = (playerNum) => {
+      // 1) 🏫 OKULUMUZDA HAYAT & GÜVENLİ YAŞAM
+      if (type === 'ls2_emergency_safety') {
+        const isEmergency = data.subMode === 'emergency_call';
+        return `
+          <div class="ls2-arena ls2-emergency-arena" data-player="${playerNum}">
+            <div class="ls2-scenario-card">
+              <div class="ls2-badge-top">${isEmergency ? '🚨 ACİL DURUM ÇAĞRISI' : '🚦 GÜVENLİK VE TRAFİK KURALI'}</div>
+              <div class="ls2-scenario-text">${data.scenario}</div>
+            </div>
+            <div class="ls2-action-prompt">${isEmergency ? 'Acil durumda kimi aramalıyız? Doğru butona dokun:' : 'Doğru güvenlik davranışını seç:'}</div>
+            <div class="ls2-choices-grid">
+              ${data.choices.map(c => `
+                <button type="button" class="ls2-choice-btn ${isEmergency ? 'ls2-call-btn' : 'ls2-rule-btn'}" data-val="${c}" data-correct="${c === data.correct}" data-player="${playerNum}">
+                  <span class="ls2-choice-icon">${isEmergency ? '📞' : '🛡️'}</span>
+                  <span class="ls2-choice-label">${c}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      // 2) 🍎 SAĞLIKLI BESLENME & DENGELİ TABAK
+      else if (type === 'ls2_healthy_plate') {
+        return `
+          <div class="ls2-arena ls2-plate-arena" data-player="${playerNum}">
+            <div class="ls2-food-spotlight" id="ls2FoodCard_p${playerNum}">
+              <div class="ls2-food-icon">${data.foodIcon}</div>
+              <div class="ls2-food-name">${data.foodName}</div>
+            </div>
+            <div class="ls2-baskets-instruction">Bu yiyeceği doğru tabağa/sepete yerleştir:</div>
+            <div class="ls2-baskets-row">
+              <button type="button" class="ls2-basket-btn basket-healthy" data-type="healthy" data-correct="${data.isHealthy === true}" data-player="${playerNum}">
+                <span class="ls2-basket-badge">🥗 SAĞLIKLI BESİNLER</span>
+                <span class="ls2-basket-icon">🟢</span>
+                <span class="ls2-basket-sub">Vücuduma güç verir!</span>
+              </button>
+              <button type="button" class="ls2-basket-btn basket-unhealthy" data-type="unhealthy" data-correct="${data.isHealthy === false}" data-player="${playerNum}">
+                <span class="ls2-basket-badge">❌ ZARARLI / SINIRLI</span>
+                <span class="ls2-basket-icon">🔴</span>
+                <span class="ls2-basket-sub">Sağlığıma zararlıdır!</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+      // 3) 🌳 DOĞAL ÇEVRE & GERİ DÖNÜŞÜM KUTULARI
+      else if (type === 'ls2_recycle_bins') {
+        return `
+          <div class="ls2-arena ls2-recycle-arena" data-player="${playerNum}">
+            <div class="ls2-waste-card" id="ls2WasteCard_p${playerNum}">
+              <span class="ls2-waste-tag">Geri Dönüştürülecek Atık:</span>
+              <div class="ls2-waste-icon">${data.wasteIcon}</div>
+              <div class="ls2-waste-name">${data.wasteName}</div>
+            </div>
+            <div class="ls2-bins-instruction">Doğru renkteki geri dönüşüm kutusuna at:</div>
+            <div class="ls2-bins-grid">
+              ${[
+                { type: 'paper', name: 'Kağıt / Karton', colorClass: 'bin-blue', icon: '📄', colorLbl: 'Mavi' },
+                { type: 'plastic', name: 'Plastik', colorClass: 'bin-yellow', icon: '🧴', colorLbl: 'Sarı' },
+                { type: 'glass', name: 'Cam Atık', colorClass: 'bin-green', icon: '🍾', colorLbl: 'Yeşil' },
+                { type: 'organic', name: 'Organik Atık', colorClass: 'bin-brown', icon: '🍎', colorLbl: 'Kahverengi' }
+              ].map(b => `
+                <button type="button" class="ls2-recycle-bin ${b.colorClass}" data-type="${b.type}" data-correct="${b.type === data.correctType}" data-player="${playerNum}">
+                  <div class="ls2-bin-lid"></div>
+                  <div class="ls2-bin-body">
+                    <span class="ls2-bin-icon">${b.icon}</span>
+                    <span class="ls2-bin-name">${b.name}</span>
+                    <span class="ls2-bin-sub">(${b.colorLbl})</span>
+                  </div>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      // 4) ☀️ DÜNYA'MIZIN ŞEKLİ & BEŞ DUYUMUZ
+      else if (type === 'ls2_earth_senses') {
+        const isSenses = data.subMode === 'senses';
+        if (isSenses) {
+          return `
+            <div class="ls2-arena ls2-senses-arena" data-player="${playerNum}">
+              <div class="ls2-sense-question-card">
+                <span class="ls2-sense-badge">👀 Hangi Duyu Organımız?</span>
+                <div class="ls2-sense-qtext">${data.questionText}</div>
+              </div>
+              <div class="ls2-senses-instruction">Doğru duyu organına dokun:</div>
+              <div class="ls2-senses-grid">
+                ${[
+                  { id: 'eye', label: 'Göz', sub: 'Görme', icon: '👀' },
+                  { id: 'ear', label: 'Kulak', sub: 'İşitme', icon: '👂' },
+                  { id: 'nose', label: 'Burun', sub: 'Koklama', icon: '👃' },
+                  { id: 'tongue', label: 'Dil', sub: 'Tat Alma', icon: '👅' },
+                  { id: 'skin', label: 'Deri', sub: 'Dokunma', icon: '✋' }
+                ].map(s => `
+                  <button type="button" class="ls2-sense-btn" data-sense="${s.id}" data-correct="${s.id === data.correct}" data-player="${playerNum}">
+                    <span class="ls2-sense-icon">${s.icon}</span>
+                    <span class="ls2-sense-label">${s.label}</span>
+                    <span class="ls2-sense-sub">(${s.sub})</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="ls2-arena ls2-earth-arena" data-player="${playerNum}">
+              <div class="ls2-earth-question-card">
+                <span class="ls2-earth-badge">🌍 Dünya'mızın Şekli</span>
+                <div class="ls2-earth-qtext">${data.questionText}</div>
+              </div>
+              <div class="ls2-earth-instruction">Doğru cevaba dokun:</div>
+              <div class="ls2-earth-choices">
+                ${data.choices.map(c => `
+                  <button type="button" class="ls2-earth-btn" data-val="${c}" data-correct="${c === data.correct}" data-player="${playerNum}">
+                    <span class="ls2-earth-choice-icon">🌐</span>
+                    <span class="ls2-earth-choice-label">${c}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+      }
+      return '';
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = renderHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = renderHtml(2);
+
+    // Event Listener Bağlantıları
+    [1, 2].forEach(pNum => {
+      const zone = pNum === 1 ? DOM.p1InteractiveZone : DOM.p2InteractiveZone;
+      if (!zone) return;
+
+      // 1) ACİL DURUM VE GÜVENLİK BUTONLARI
+      if (type === 'ls2_emergency_safety') {
+        zone.querySelectorAll('.ls2-choice-btn').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+              btn.classList.add('is-correct');
+              awardPointAndProgress(pNum);
+            } else {
+              kidsGentleWrong(btn);
+            }
+          });
+        });
+      }
+
+      // 2) SAĞLIKLI BESLENME SEPETLERİ
+      else if (type === 'ls2_healthy_plate') {
+        zone.querySelectorAll('.ls2-basket-btn').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+              btn.classList.add('is-chosen-correct');
+              const foodCard = zone.querySelector(`#ls2FoodCard_p${pNum}`);
+              if (foodCard) foodCard.classList.add('is-flying-to-basket');
+              awardPointAndProgress(pNum);
+            } else {
+              btn.classList.add('t2-shake');
+              setTimeout(() => btn.classList.remove('t2-shake'), 500);
+              audio.playWrong();
+            }
+          });
+        });
+      }
+
+      // 3) GERİ DÖNÜŞÜM KUTULARI
+      else if (type === 'ls2_recycle_bins') {
+        zone.querySelectorAll('.ls2-recycle-bin').forEach(bin => {
+          attachInstantTouch(bin, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+            const isCorrect = bin.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+              bin.classList.add('is-correct-drop');
+              const wasteCard = zone.querySelector(`#ls2WasteCard_p${pNum}`);
+              if (wasteCard) wasteCard.classList.add('is-dropping');
+              awardPointAndProgress(pNum);
+            } else {
+              bin.classList.add('t2-shake');
+              setTimeout(() => bin.classList.remove('t2-shake'), 500);
+              audio.playWrong();
+            }
+          });
+        });
+      }
+
+      // 4) DÜNYA VE BEŞ DUYUMUZ
+      else if (type === 'ls2_earth_senses') {
+        zone.querySelectorAll('.ls2-sense-btn, .ls2-earth-btn').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+              btn.classList.add('is-correct');
+              awardPointAndProgress(pNum);
+            } else {
+              kidsGentleWrong(btn);
+            }
+          });
+        });
+      }
+    });
+  }
+
   function renderInteractiveQuestion(q) {
     if (!q) return;
 
@@ -31133,6 +31749,10 @@
     }
     if (typeof q.type === 'string' && q.type.indexOf('t2_') === 0) {
       renderGrade2TurkishEngine(q);
+      return;
+    }
+    if (typeof q.type === 'string' && q.type.indexOf('ls2_') === 0) {
+      renderGrade2LifeScienceEngine(q);
       return;
     }
     if (typeof q.type === 'string' && q.type.indexOf('k1_') === 0) {

@@ -27477,3 +27477,480 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 0.95rem;
   }
 }
+
+
+/* ==========================================================================
+   2. SINIF HAYAT BİLGİSİ & FEN BİLİMLERİ 2026 MAARİF ŞIKSIZ MOTORLARI
+   ========================================================================== */
+
+.ls2-arena {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 8px 12px;
+}
+
+/* 1) 🏫 ACİL DURUM VE GÜVENLİK */
+.ls2-scenario-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #f8fafc;
+  padding: 16px 20px;
+  border-radius: 20px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 2px solid #334155;
+  text-align: center;
+}
+
+.ls2-badge-top {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.ls2-scenario-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.ls2-action-prompt {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.ls2-choices-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.ls2-choice-btn {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.ls2-choice-btn:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+}
+
+.ls2-choice-icon {
+  font-size: 1.6rem;
+}
+
+.ls2-choice-btn.is-correct {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.45);
+}
+
+/* 2) 🍎 SAĞLIKLI BESLENME VE DENGELİ TABAK */
+.ls2-food-spotlight {
+  background: linear-gradient(135deg, #fefce8, #fef9c3);
+  border: 3px solid #facc15;
+  border-radius: 24px;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(250, 204, 21, 0.25);
+  width: 100%;
+  max-width: 320px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ls2-food-icon {
+  font-size: 3.2rem;
+  animation: ls2FoodFloat 2s infinite ease-in-out;
+}
+
+@keyframes ls2FoodFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.ls2-food-name {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #854d0e;
+  text-align: center;
+}
+
+.ls2-baskets-instruction {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.ls2-baskets-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.ls2-basket-btn {
+  border-radius: 20px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.ls2-basket-btn.basket-healthy {
+  background: linear-gradient(180deg, #ecfdf5, #d1fae5);
+  border: 3px solid #10b981;
+  border-bottom: 5px solid #059669;
+}
+
+.ls2-basket-btn.basket-unhealthy {
+  background: linear-gradient(180deg, #fff1f2, #ffe4e6);
+  border: 3px solid #f43f5e;
+  border-bottom: 5px solid #e11d48;
+}
+
+.ls2-basket-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.ls2-basket-badge {
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.basket-healthy .ls2-basket-badge { color: #065f46; }
+.basket-unhealthy .ls2-basket-badge { color: #9f1239; }
+
+.ls2-basket-icon {
+  font-size: 2.2rem;
+}
+
+.ls2-basket-sub {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.ls2-basket-btn.is-chosen-correct {
+  transform: scale(1.06);
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.6);
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border-color: #047857 !important;
+}
+
+.ls2-basket-btn.is-chosen-correct .ls2-basket-badge,
+.ls2-basket-btn.is-chosen-correct .ls2-basket-sub {
+  color: #ffffff !important;
+}
+
+/* 3) 🌳 GERİ DÖNÜŞÜM KUTULARI */
+.ls2-waste-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 14px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 320px;
+  transition: all 0.3s ease;
+}
+
+.ls2-waste-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.ls2-waste-icon {
+  font-size: 2.8rem;
+}
+
+.ls2-waste-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ls2-bins-instruction {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.ls2-bins-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.ls2-recycle-bin {
+  border-radius: 16px;
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.18s ease;
+  border: 2px solid transparent;
+}
+
+.bin-blue {
+  background: linear-gradient(180deg, #eff6ff, #dbeafe);
+  border-color: #3b82f6;
+  border-bottom: 4px solid #1d4ed8;
+}
+
+.bin-yellow {
+  background: linear-gradient(180deg, #fefce8, #fef08a);
+  border-color: #eab308;
+  border-bottom: 4px solid #ca8a04;
+}
+
+.bin-green {
+  background: linear-gradient(180deg, #f0fdf4, #bbf7d0);
+  border-color: #22c55e;
+  border-bottom: 4px solid #15803d;
+}
+
+.bin-brown {
+  background: linear-gradient(180deg, #fdf8f6, #fed7aa);
+  border-color: #ea580c;
+  border-bottom: 4px solid #c2410c;
+}
+
+.ls2-recycle-bin:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.ls2-bin-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.ls2-bin-icon {
+  font-size: 1.8rem;
+}
+
+.ls2-bin-name {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #1e293b;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.ls2-bin-sub {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.ls2-recycle-bin.is-correct-drop {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border-color: #047857 !important;
+}
+
+.ls2-recycle-bin.is-correct-drop .ls2-bin-name,
+.ls2-recycle-bin.is-correct-drop .ls2-bin-sub {
+  color: #ffffff !important;
+}
+
+/* 4) ☀️ DÜNYA VE BEŞ DUYUMUZ */
+.ls2-sense-question-card,
+.ls2-earth-question-card {
+  background: linear-gradient(135deg, #0369a1, #0c4a6e);
+  color: #ffffff;
+  padding: 16px 20px;
+  border-radius: 20px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(12, 74, 110, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 2px solid #0284c7;
+  text-align: center;
+}
+
+.ls2-sense-badge,
+.ls2-earth-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #7dd3fc;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.ls2-sense-qtext,
+.ls2-earth-qtext {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.ls2-senses-instruction,
+.ls2-earth-instruction {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.ls2-senses-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.ls2-sense-btn {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 16px;
+  padding: 12px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.ls2-sense-btn:hover {
+  transform: translateY(-2px);
+  border-color: #0284c7;
+}
+
+.ls2-sense-icon {
+  font-size: 1.8rem;
+}
+
+.ls2-sense-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ls2-sense-sub {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.ls2-sense-btn.is-correct {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.5);
+}
+
+.ls2-sense-btn.is-correct .ls2-sense-label,
+.ls2-sense-btn.is-correct .ls2-sense-sub {
+  color: #ffffff !important;
+}
+
+.ls2-earth-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.ls2-earth-btn {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.ls2-earth-btn:hover {
+  transform: translateY(-2px);
+  border-color: #0284c7;
+}
+
+.ls2-earth-choice-icon {
+  font-size: 1.5rem;
+}
+
+.ls2-earth-btn.is-correct {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+@media (max-width: 640px) {
+  .ls2-senses-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ls2-bins-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
