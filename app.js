@@ -30104,11 +30104,18 @@
 
   /* ==========================================================================
      3. VE 4. SINIF "MOLİ QUIZ SHOW (JOKERLİ BİLGİ YARIŞMASI)" MOTORU
+     PARÇA 1: 👤 Bireysel Yarışma (3 Jokerli Stüdyo Yarışması)
+     PARÇA 2: ⚔️ 2 Kişilik Hız Düellosu (Bölünmüş Ekran / Split-Screen Tahta Modu)
      ========================================================================== */
   var mqsState = {
     active: false,
+    mode: 'solo', // 'solo' (Bireysel Jokerli) veya 'duel' (2 Kişilik Tahta Düellosu)
     totalQuestions: 10,
     score: 0,
+    player1Score: 0,
+    player2Score: 0,
+    p1Locked: false,
+    p2Locked: false,
     durationSec: 30,
     remainingMs: 30000,
     untimed: false,
@@ -30140,15 +30147,34 @@
     stage.id = 'moliQuizShowStage';
     stage.className = 'mqs-stage hide';
     stage.innerHTML = `
-      <!-- 1) ÜST BAR: Çıkış, Soru Sayacı (1/10), Puan, 30sn Geri Sayım Çubuğu ve Süresiz Mod -->
+      <!-- 1) ÜST BAR: Çıkış, Soru Sayacı (1/10), Hızlı Mod Seçici, Skor ve Zamanlayıcı -->
       <header class="mqs-topbar">
         <div class="mqs-topbar-left">
-          <button type="button" class="mqs-exit-btn" id="btnMqsExit" title="Ünitelere Dön">
+          <button type="button" class="mqs-exit-btn" id="btnMqsExit" title="Lobiye Dön">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
             <span>Lobiye Dön</span>
           </button>
           <div class="mqs-badge mqs-counter-badge" id="mqsQuestionCounter">Soru: 1 / 10</div>
+
+          <!-- HIZLI MOD SEÇİCİ (Bireysel vs 2 Kişilik Düello) -->
+          <div class="mqs-mode-selector" role="group" aria-label="Yarışma Modu">
+            <button type="button" class="mqs-mode-pill is-active" id="btnMqsModeSolo" title="Bireysel Jokerli Yarışma">
+              <span class="mqs-mode-pill-icon">👤</span>
+              <span class="mqs-mode-pill-text">Bireysel (Jokerli)</span>
+            </button>
+            <button type="button" class="mqs-mode-pill" id="btnMqsModeDuel" title="Akıllı Tahtada 2 Kişilik Hız Düellosu">
+              <span class="mqs-mode-pill-icon">⚔️</span>
+              <span class="mqs-mode-pill-text">2 Kişilik Düello</span>
+            </button>
+          </div>
+
+          <!-- SKOR ALANI -->
           <div class="mqs-badge mqs-score-badge" id="mqsScoreBadge">🏆 Puan: 0</div>
+          <div class="mqs-duel-scores-wrap hide" id="mqsDuelScoresWrap">
+            <div class="mqs-duel-score-chip chip-blue" id="mqsTopP1Score">🔵 Mavi: 0</div>
+            <span class="mqs-duel-score-vs">VS</span>
+            <div class="mqs-duel-score-chip chip-red" id="mqsTopP2Score">🔴 Kırmızı: 0</div>
+          </div>
         </div>
 
         <div class="mqs-timer-section" id="mqsTimerSection">
@@ -30173,89 +30199,199 @@
 
       <!-- ANA YARIŞMA GÖVDESİ -->
       <div class="mqs-body">
-        <!-- 2) 3 ÖZEL JOKER HAKKI (Soru kutusunun hemen üstünde yan yana) -->
-        <div class="mqs-jokers-bar" role="region" aria-label="Joker Hakları">
-          <button type="button" class="mqs-joker-btn joker-fifty" id="btnMqsJokerFifty">
-            <span class="joker-emoji">✂️</span>
-            <span class="joker-text">%50 Yarı Yarıya</span>
-          </button>
-          <button type="button" class="mqs-joker-btn joker-ask-class" id="btnMqsJokerAskClass">
-            <span class="joker-emoji">🙋‍♂️</span>
-            <span class="joker-text">Sınıfa Sor</span>
-          </button>
-          <button type="button" class="mqs-joker-btn joker-moli-hint" id="btnMqsJokerMoliHint">
-            <span class="joker-emoji">🤖</span>
-            <span class="joker-text">Moli'nin İpucu</span>
-          </button>
-        </div>
 
-        <!-- JOKER BİLDİRİM ALANLARI (Sınıfa Sor & Moli'nin İpucu) -->
-        <div class="mqs-ask-class-banner hide" id="mqsAskClassBanner">
-          <span class="ask-class-icon">🙋‍♂️</span>
-          <div class="ask-class-text">
-            <strong>Sınıf Oylaması!</strong> Arkadaşların ne düşünüyor, parmakları görelim!
-          </div>
-        </div>
-
-        <div class="mqs-moli-hint-card hide" id="mqsMoliHintCard">
-          <img src="assets/mascot/moli.webp" class="mqs-moli-avatar" alt="Moli" width="52" height="52">
-          <div class="mqs-moli-hint-bubble">
-            <div class="mqs-moli-hint-title">🤖 Moli'nin İpucu:</div>
-            <div class="mqs-moli-hint-body" id="mqsMoliHintText">İpucu yükleniyor...</div>
-          </div>
-        </div>
-
-        <!-- SORU KUTUSU (Ortada Büyük ve Okunaklı) -->
-        <div class="mqs-question-card" id="mqsQuestionCard">
-          <div class="mqs-question-top">
-            <span class="mqs-category-tag" id="mqsCategoryTag">🌟 Moli Quiz Show</span>
-            <button type="button" class="mqs-listen-btn" id="btnMqsListen" title="Soruyu Sesli Dinle">
-              <span>🔊</span>
-              <span>Dinle</span>
+        <!-- ============================================== -->
+        <!-- 1. MOD: 👤 BİREYSEL YARIŞMA (JOKERLİ STÜDYO)    -->
+        <!-- ============================================== -->
+        <div class="mqs-view-solo" id="mqsViewSolo">
+          <!-- 3 ÖZEL JOKER HAKKI (Soru kutusunun hemen üstünde yan yana) -->
+          <div class="mqs-jokers-bar" role="region" aria-label="Joker Hakları">
+            <button type="button" class="mqs-joker-btn joker-fifty" id="btnMqsJokerFifty">
+              <span class="joker-emoji">✂️</span>
+              <span class="joker-text">%50 Yarı Yarıya</span>
+            </button>
+            <button type="button" class="mqs-joker-btn joker-ask-class" id="btnMqsJokerAskClass">
+              <span class="joker-emoji">🙋‍♂️</span>
+              <span class="joker-text">Sınıfa Sor</span>
+            </button>
+            <button type="button" class="mqs-joker-btn joker-moli-hint" id="btnMqsJokerMoliHint">
+              <span class="joker-emoji">🤖</span>
+              <span class="joker-text">Moli'nin İpucu</span>
             </button>
           </div>
-          <div class="mqs-question-text" id="mqsQuestionText">Soru hazırlanıyor...</div>
-        </div>
 
-        <!-- A, B, C, D ŞIKLARI (2x2 Grid, Mobilde Alt Alta, 3D Basılabilir Butonlar) -->
-        <div class="mqs-options-grid" id="mqsOptionsGrid">
-          <button type="button" class="mqs-option-btn" data-mqs-index="0">
-            <span class="mqs-opt-letter">A</span>
-            <span class="mqs-opt-text"></span>
-          </button>
-          <button type="button" class="mqs-option-btn" data-mqs-index="1">
-            <span class="mqs-opt-letter">B</span>
-            <span class="mqs-opt-text"></span>
-          </button>
-          <button type="button" class="mqs-option-btn" data-mqs-index="2">
-            <span class="mqs-opt-letter">C</span>
-            <span class="mqs-opt-text"></span>
-          </button>
-          <button type="button" class="mqs-option-btn" data-mqs-index="3">
-            <span class="mqs-opt-letter">D</span>
-            <span class="mqs-opt-text"></span>
-          </button>
-        </div>
-
-        <!-- 3) YANLIŞ CEVAPTA "💡 MOLİ'NİN ÇÖZÜM NOTU" KUTUSU -->
-        <div class="mqs-solution-box hide" id="mqsSolutionBox">
-          <div class="mqs-solution-header">
-            <img src="assets/mascot/moli.webp" class="mqs-solution-moli" alt="Moli" width="54" height="54">
-            <div class="mqs-solution-titles">
-              <div class="mqs-solution-badge">💡 Moli'nin Çözüm Notu</div>
-              <div class="mqs-solution-correct-line" id="mqsSolutionCorrectLine">Doğru Cevap: ...</div>
+          <!-- JOKER BİLDİRİM ALANLARI -->
+          <div class="mqs-ask-class-banner hide" id="mqsAskClassBanner">
+            <span class="ask-class-icon">🙋‍♂️</span>
+            <div class="ask-class-text">
+              <strong>Sınıf Oylaması!</strong> Arkadaşların ne düşünüyor, parmakları görelim!
             </div>
           </div>
-          <div class="mqs-solution-explanation" id="mqsSolutionExplanation"></div>
-          <button type="button" class="mqs-next-question-btn" id="btnMqsNextAfterWrong">
-            Anladım, Sıradaki Soru ➡️
-          </button>
+
+          <div class="mqs-moli-hint-card hide" id="mqsMoliHintCard">
+            <img src="assets/mascot/moli.webp" class="mqs-moli-avatar" alt="Moli" width="52" height="52">
+            <div class="mqs-moli-hint-bubble">
+              <div class="mqs-moli-hint-title">🤖 Moli'nin İpucu:</div>
+              <div class="mqs-moli-hint-body" id="mqsMoliHintText">İpucu yükleniyor...</div>
+            </div>
+          </div>
+
+          <!-- SORU KUTUSU (Ortada Büyük ve Okunaklı) -->
+          <div class="mqs-question-card" id="mqsQuestionCard">
+            <div class="mqs-question-top">
+              <span class="mqs-category-tag" id="mqsCategoryTag">🌟 Moli Quiz Show</span>
+              <button type="button" class="mqs-listen-btn" id="btnMqsListen" title="Soruyu Sesli Dinle">
+                <span>🔊</span>
+                <span>Dinle</span>
+              </button>
+            </div>
+            <div class="mqs-question-text" id="mqsQuestionText">Soru hazırlanıyor...</div>
+          </div>
+
+          <!-- A, B, C, D ŞIKLARI (2x2 Grid, Mobilde Alt Alta) -->
+          <div class="mqs-options-grid" id="mqsOptionsGrid">
+            <button type="button" class="mqs-option-btn" data-mqs-index="0">
+              <span class="mqs-opt-letter">A</span>
+              <span class="mqs-opt-text"></span>
+            </button>
+            <button type="button" class="mqs-option-btn" data-mqs-index="1">
+              <span class="mqs-opt-letter">B</span>
+              <span class="mqs-opt-text"></span>
+            </button>
+            <button type="button" class="mqs-option-btn" data-mqs-index="2">
+              <span class="mqs-opt-letter">C</span>
+              <span class="mqs-opt-text"></span>
+            </button>
+            <button type="button" class="mqs-option-btn" data-mqs-index="3">
+              <span class="mqs-opt-letter">D</span>
+              <span class="mqs-opt-text"></span>
+            </button>
+          </div>
+
+          <!-- YANLIŞ CEVAPTA "💡 MOLİ'NİN ÇÖZÜM NOTU" KUTUSU -->
+          <div class="mqs-solution-box hide" id="mqsSolutionBox">
+            <div class="mqs-solution-header">
+              <img src="assets/mascot/moli.webp" class="mqs-solution-moli" alt="Moli" width="54" height="54">
+              <div class="mqs-solution-titles">
+                <div class="mqs-solution-badge">💡 Moli'nin Çözüm Notu</div>
+                <div class="mqs-solution-correct-line" id="mqsSolutionCorrectLine">Doğru Cevap: ...</div>
+              </div>
+            </div>
+            <div class="mqs-solution-explanation" id="mqsSolutionExplanation"></div>
+            <button type="button" class="mqs-next-question-btn" id="btnMqsNextAfterWrong">
+              Anladım, Sıradaki Soru ➡️
+            </button>
+          </div>
         </div>
+
+        <!-- ======================================================== -->
+        <!-- 2. MOD: ⚔️ 2 KİŞİLİK HIZ DÜELLOSU (BÖLÜNMÜŞ EKRAN / TAHTA) -->
+        <!-- ======================================================== -->
+        <div class="mqs-view-duel hide" id="mqsViewDuel">
+          <!-- HIZ & UYARI BİLDİRİM BANNERI -->
+          <div class="mqs-duel-announcer hide" id="mqsDuelAnnouncer">
+            <span class="mqs-announcer-icon" id="mqsDuelAnnouncerIcon">⚡</span>
+            <span class="mqs-announcer-text" id="mqsDuelAnnouncerText">Mavi Oyuncu Daha Hızlı!</span>
+          </div>
+
+          <!-- DÜELLO GRID DÜZENİ (Masaüstü: Soru Üstte, Paneller Yan Yana; Mobil: Mavi, Soru, Kırmızı Alt Alta) -->
+          <div class="mqs-duel-grid" id="mqsDuelGrid">
+            <!-- BÜYÜK ORTAK SORU KARTI -->
+            <div class="mqs-duel-question-wrap" id="mqsDuelQuestionWrap">
+              <div class="mqs-duel-question-card" id="mqsDuelQuestionCard">
+                <div class="mqs-question-top">
+                  <span class="mqs-category-tag" id="mqsDuelCategoryTag">🌟 2 Kişilik Hız Düellosu</span>
+                  <button type="button" class="mqs-listen-btn" id="btnMqsDuelListen" title="Soruyu Sesli Dinle">
+                    <span>🔊</span>
+                    <span>Dinle</span>
+                  </button>
+                </div>
+                <div class="mqs-duel-question-text" id="mqsDuelQuestionText">Soru yükleniyor...</div>
+              </div>
+            </div>
+
+            <!-- SOL PANEL: 🔵 1. OYUNCU (MAVİ) -->
+            <div class="mqs-duel-player-panel mqs-duel-blue" id="mqsDuelPlayerBlue">
+              <div class="mqs-player-header">
+                <div class="mqs-player-badge blue-badge">
+                  <span class="player-dot">🔵</span>
+                  <span class="player-name" id="mqsP1Name">1. Oyuncu (Mavi)</span>
+                </div>
+                <div class="mqs-player-score-pill blue-score" id="mqsP1ScorePill">
+                  <span class="score-star">⭐</span>
+                  <span class="score-val" id="mqsP1ScoreText">0 Puan</span>
+                </div>
+              </div>
+
+              <div class="mqs-player-status-badge hide" id="mqsP1StatusBadge">
+                ❌ Kilitlendi! Rakip cevaplıyor...
+              </div>
+
+              <div class="mqs-duel-options-grid" id="mqsP1OptionsGrid">
+                <button type="button" class="mqs-duel-opt-btn btn-blue-theme" data-player="1" data-opt-idx="0">
+                  <span class="mqs-opt-letter">A</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+                <button type="button" class="mqs-duel-opt-btn btn-blue-theme" data-player="1" data-opt-idx="1">
+                  <span class="mqs-opt-letter">B</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+                <button type="button" class="mqs-duel-opt-btn btn-blue-theme" data-player="1" data-opt-idx="2">
+                  <span class="mqs-opt-letter">C</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+                <button type="button" class="mqs-duel-opt-btn btn-blue-theme" data-player="1" data-opt-idx="3">
+                  <span class="mqs-opt-letter">D</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- SAĞ PANEL: 🔴 2. OYUNCU (KIRMIZI) -->
+            <div class="mqs-duel-player-panel mqs-duel-red" id="mqsDuelPlayerRed">
+              <div class="mqs-player-header">
+                <div class="mqs-player-badge red-badge">
+                  <span class="player-dot">🔴</span>
+                  <span class="player-name" id="mqsP2Name">2. Oyuncu (Kırmızı)</span>
+                </div>
+                <div class="mqs-player-score-pill red-score" id="mqsP2ScorePill">
+                  <span class="score-star">⭐</span>
+                  <span class="score-val" id="mqsP2ScoreText">0 Puan</span>
+                </div>
+              </div>
+
+              <div class="mqs-player-status-badge hide" id="mqsP2StatusBadge">
+                ❌ Kilitlendi! Rakip cevaplıyor...
+              </div>
+
+              <div class="mqs-duel-options-grid" id="mqsP2OptionsGrid">
+                <button type="button" class="mqs-duel-opt-btn btn-red-theme" data-player="2" data-opt-idx="0">
+                  <span class="mqs-opt-letter">A</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+                <button type="button" class="mqs-duel-opt-btn btn-red-theme" data-player="2" data-opt-idx="1">
+                  <span class="mqs-opt-letter">B</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+                <button type="button" class="mqs-duel-opt-btn btn-red-theme" data-player="2" data-opt-idx="2">
+                  <span class="mqs-opt-letter">C</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+                <button type="button" class="mqs-duel-opt-btn btn-red-theme" data-player="2" data-opt-idx="3">
+                  <span class="mqs-opt-letter">D</span>
+                  <span class="mqs-opt-text"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     `;
 
     DOM.viewDuel.appendChild(stage);
 
+    // Temel Üst Bar Butonları
     addTapListener(stage.querySelector('#btnMqsExit'), () => {
       returnToLobby();
     });
@@ -30265,10 +30401,16 @@
       readCurrentQuestion();
     });
 
+    addTapListener(stage.querySelector('#btnMqsDuelListen'), () => {
+      audio.playClick();
+      readCurrentQuestion();
+    });
+
     addTapListener(stage.querySelector('#btnMqsUntimed'), () => {
       audio.playClick();
       mqsToggleUntimedMode();
     });
+
     const mqsShareBtn = stage.querySelector('#btnMqsShareWA');
     if (mqsShareBtn) {
       addTapListener(mqsShareBtn, () => {
@@ -30276,6 +30418,18 @@
       });
     }
 
+    // MOD GEÇİŞ BUTONLARI (Bireysel vs 2 Kişilik Düello)
+    addTapListener(stage.querySelector('#btnMqsModeSolo'), () => {
+      audio.playClick();
+      mqsSetMode('solo');
+    });
+
+    addTapListener(stage.querySelector('#btnMqsModeDuel'), () => {
+      audio.playClick();
+      mqsSetMode('duel');
+    });
+
+    // Bireysel Joker Butonları
     addTapListener(stage.querySelector('#btnMqsJokerFifty'), () => {
       mqsUseJokerFifty();
     });
@@ -30288,10 +30442,26 @@
       mqsUseJokerMoliHint();
     });
 
-    stage.querySelectorAll('.mqs-option-btn').forEach(btn => {
+    // Bireysel Şık Butonları
+    stage.querySelectorAll('#mqsOptionsGrid .mqs-option-btn').forEach(btn => {
       addTapListener(btn, () => {
         const idx = parseInt(btn.getAttribute('data-mqs-index'), 10);
         mqsHandleOptionClick(idx, btn);
+      });
+    });
+
+    // 2 Kişilik Düello Şık Butonları (Mavi ve Kırmızı)
+    stage.querySelectorAll('#mqsP1OptionsGrid .mqs-duel-opt-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const idx = parseInt(btn.getAttribute('data-opt-idx'), 10);
+        mqsHandleDuelOptionClick(1, idx, btn);
+      });
+    });
+
+    stage.querySelectorAll('#mqsP2OptionsGrid .mqs-duel-opt-btn').forEach(btn => {
+      addTapListener(btn, () => {
+        const idx = parseInt(btn.getAttribute('data-opt-idx'), 10);
+        mqsHandleDuelOptionClick(2, idx, btn);
       });
     });
 
@@ -30303,6 +30473,44 @@
     return stage;
   }
 
+  function mqsSetMode(newMode) {
+    if (newMode !== 'solo' && newMode !== 'duel') newMode = 'solo';
+    mqsState.mode = newMode;
+
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+
+    const btnSolo = stage.querySelector('#btnMqsModeSolo');
+    const btnDuel = stage.querySelector('#btnMqsModeDuel');
+    if (btnSolo) btnSolo.classList.toggle('is-active', newMode === 'solo');
+    if (btnDuel) btnDuel.classList.toggle('is-active', newMode === 'duel');
+
+    const viewSolo = stage.querySelector('#mqsViewSolo');
+    const viewDuel = stage.querySelector('#mqsViewDuel');
+    const soloScore = stage.querySelector('#mqsScoreBadge');
+    const duelScores = stage.querySelector('#mqsDuelScoresWrap');
+
+    if (newMode === 'duel') {
+      if (viewSolo) viewSolo.classList.add('hide');
+      if (viewDuel) viewDuel.classList.remove('hide');
+      if (soloScore) soloScore.classList.add('hide');
+      if (duelScores) duelScores.classList.remove('hide');
+      stage.classList.add('is-duel-active');
+      stage.classList.remove('is-solo-active');
+    } else {
+      if (viewSolo) viewSolo.classList.remove('hide');
+      if (viewDuel) viewDuel.classList.add('hide');
+      if (soloScore) soloScore.classList.remove('hide');
+      if (duelScores) duelScores.classList.add('hide');
+      stage.classList.remove('is-duel-active');
+      stage.classList.add('is-solo-active');
+    }
+
+    if (state.currentQuestion) {
+      mqsRenderCurrentQuestion();
+    }
+  }
+
   function mqsInitIfApplicable() {
     const stage = mqsEnsureStageDOM();
     if (!mqsIsActive()) {
@@ -30312,6 +30520,10 @@
     mqsState.active = true;
     mqsState.totalQuestions = 10;
     mqsState.score = 0;
+    mqsState.player1Score = 0;
+    mqsState.player2Score = 0;
+    mqsState.p1Locked = false;
+    mqsState.p2Locked = false;
     mqsState.untimed = false;
     mqsState.paused = false;
     mqsState.jokers = {
@@ -30320,6 +30532,10 @@
       moliHint: false
     };
     state.targetScore = 10;
+
+    // Eğer lobi üst barında "Düello Modu" seçiliyse otomatik düello modunda başlat
+    const initialMode = (state.gameMode === 'duel') ? 'duel' : 'solo';
+    mqsState.mode = initialMode;
 
     if (DOM.viewDuel) DOM.viewDuel.classList.add('mqs-mode-active');
     if (stage) {
@@ -30330,6 +30546,7 @@
         untimedBtn.innerHTML = '⏱️ Süresiz Mod';
       }
       mqsUpdateJokerButtonsUI();
+      mqsSetMode(initialMode);
     }
   }
 
@@ -30444,24 +30661,12 @@
       let masked = rawExp;
       if (rawCorrect && rawCorrect.length >= 2) {
         const escaped = rawCorrect.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        masked = masked.replace(new RegExp(escaped, 'gi'), '...');
+        masked = masked.replace(new RegExp(escaped, 'gi'), '***');
       }
-      if (masked && masked !== '...') {
-        return `İpucu: ${masked}`;
-      }
+      return masked;
     }
 
-    const cat = String(q.category || '').toLowerCase();
-    if (cat.includes('matematik') || cat.includes('ünite') || cat.includes('işlem') || cat.includes('kesir') || cat.includes('sayı')) {
-      return 'Verilen sayıları ve işlem sırasını dikkatlice kontrol et; birimlere ve basamak değerlerine odaklan!';
-    }
-    if (cat.includes('fen') || cat.includes('dünya') || cat.includes('madde') || cat.includes('kuvvet')) {
-      return 'Günlük hayattaki gözlemlerini ve doğadaki temel fen kurallarını düşünerek mantıksız şıkları ele!';
-    }
-    if (cat.includes('türkçe') || cat.includes('tema') || cat.includes('anlam') || cat.includes('yazım')) {
-      return 'Cümlenin tamamını okuyup kelimenin cümleye kattığı anlama ve yazım kurallarına dikkat et!';
-    }
-    return 'Sorunun kökündeki anahtar ifadeye odaklan ve çeldirici şıkları eleyerek doğru cevaba ulaş!';
+    return 'Sorudaki anahtar kelimelere dikkat ederek şıkları tek tek eleyebilirsin!';
   }
 
   function mqsStartTimer() {
@@ -30560,38 +30765,103 @@
     state.currentQuestion = mqsEnsureFourOptions(state.currentQuestion);
     state.isQuestionAnswered = false;
     mqsState.paused = false;
+    mqsState.p1Locked = false;
+    mqsState.p2Locked = false;
     mqsState.remainingMs = mqsState.durationSec * 1000;
 
     const counterEl = stage.querySelector('#mqsQuestionCounter');
-    const scoreEl = stage.querySelector('#mqsScoreBadge');
     if (counterEl) counterEl.textContent = `Soru: ${state.questionNumber} / ${mqsState.totalQuestions}`;
+
+    const scoreEl = stage.querySelector('#mqsScoreBadge');
     if (scoreEl) scoreEl.textContent = `🏆 Puan: ${mqsState.score}`;
 
-    const askBanner = stage.querySelector('#mqsAskClassBanner');
-    const hintCard = stage.querySelector('#mqsMoliHintCard');
-    const solBox = stage.querySelector('#mqsSolutionBox');
-    if (askBanner) askBanner.classList.add('hide');
-    if (hintCard) hintCard.classList.add('hide');
-    if (solBox) solBox.classList.add('hide');
-
-    mqsUpdateJokerButtonsUI();
-
-    const catEl = stage.querySelector('#mqsCategoryTag');
-    const qTextEl = stage.querySelector('#mqsQuestionText');
-    if (catEl) catEl.innerHTML = replaceEmojisWith3D(state.currentQuestion.category || '🌟 Moli Quiz Show', 'chip-3d-icon');
-    if (qTextEl) qTextEl.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
+    const topP1 = stage.querySelector('#mqsTopP1Score');
+    const topP2 = stage.querySelector('#mqsTopP2Score');
+    if (topP1) topP1.textContent = `🔵 Mavi: ${mqsState.player1Score}`;
+    if (topP2) topP2.textContent = `🔴 Kırmızı: ${mqsState.player2Score}`;
 
     const letters = ['A', 'B', 'C', 'D'];
     const opts = state.currentQuestion.options || [];
-    const optBtns = stage.querySelectorAll('.mqs-option-btn');
-    optBtns.forEach((btn, idx) => {
-      btn.className = 'mqs-option-btn';
-      btn.disabled = false;
-      const letterSpan = btn.querySelector('.mqs-opt-letter');
-      const textSpan = btn.querySelector('.mqs-opt-text');
-      if (letterSpan) letterSpan.textContent = letters[idx] || '';
-      if (textSpan) textSpan.innerHTML = replaceEmojisWith3D(opts[idx] !== undefined ? String(opts[idx]) : '', 'opt-3d-icon');
-    });
+
+    // 1) BİREYSEL MOD RENDER
+    if (mqsState.mode === 'solo') {
+      const askBanner = stage.querySelector('#mqsAskClassBanner');
+      const hintCard = stage.querySelector('#mqsMoliHintCard');
+      const solBox = stage.querySelector('#mqsSolutionBox');
+      if (askBanner) askBanner.classList.add('hide');
+      if (hintCard) hintCard.classList.add('hide');
+      if (solBox) solBox.classList.add('hide');
+
+      mqsUpdateJokerButtonsUI();
+
+      const catEl = stage.querySelector('#mqsCategoryTag');
+      const qTextEl = stage.querySelector('#mqsQuestionText');
+      if (catEl) catEl.innerHTML = replaceEmojisWith3D(state.currentQuestion.category || '🌟 Moli Quiz Show', 'chip-3d-icon');
+      if (qTextEl) qTextEl.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
+
+      const optBtns = stage.querySelectorAll('#mqsOptionsGrid .mqs-option-btn');
+      optBtns.forEach((btn, idx) => {
+        btn.className = 'mqs-option-btn';
+        btn.disabled = false;
+        const letterSpan = btn.querySelector('.mqs-opt-letter');
+        const textSpan = btn.querySelector('.mqs-opt-text');
+        if (letterSpan) letterSpan.textContent = letters[idx] || '';
+        if (textSpan) textSpan.innerHTML = replaceEmojisWith3D(opts[idx] !== undefined ? String(opts[idx]) : '', 'opt-3d-icon');
+      });
+    }
+
+    // 2) 2 KİŞİLİK DÜELLO MODU RENDER
+    if (mqsState.mode === 'duel') {
+      const duelCatEl = stage.querySelector('#mqsDuelCategoryTag');
+      const duelQTextEl = stage.querySelector('#mqsDuelQuestionText');
+      if (duelCatEl) duelCatEl.innerHTML = replaceEmojisWith3D(state.currentQuestion.category || '🌟 2 Kişilik Hız Düellosu', 'chip-3d-icon');
+      if (duelQTextEl) duelQTextEl.innerHTML = state.currentQuestion.questionHtml || replaceEmojisWith3D(state.currentQuestion.question, 'q-3d-item');
+
+      const announcer = stage.querySelector('#mqsDuelAnnouncer');
+      if (announcer) {
+        announcer.className = 'mqs-duel-announcer hide';
+      }
+
+      const p1Status = stage.querySelector('#mqsP1StatusBadge');
+      const p2Status = stage.querySelector('#mqsP2StatusBadge');
+      if (p1Status) p1Status.classList.add('hide');
+      if (p2Status) p2Status.classList.add('hide');
+
+      const p1NameEl = stage.querySelector('#mqsP1Name');
+      const p2NameEl = stage.querySelector('#mqsP2Name');
+      if (p1NameEl) p1NameEl.textContent = state.player1.name || '1. Oyuncu (Mavi)';
+      if (p2NameEl) p2NameEl.textContent = state.player2.name || '2. Oyuncu (Kırmızı)';
+
+      const p1ScoreEl = stage.querySelector('#mqsP1ScoreText');
+      const p2ScoreEl = stage.querySelector('#mqsP2ScoreText');
+      if (p1ScoreEl) p1ScoreEl.textContent = `${mqsState.player1Score} Puan`;
+      if (p2ScoreEl) p2ScoreEl.textContent = `${mqsState.player2Score} Puan`;
+
+      const p1Panel = stage.querySelector('#mqsDuelPlayerBlue');
+      const p2Panel = stage.querySelector('#mqsDuelPlayerRed');
+      if (p1Panel) p1Panel.classList.remove('is-winner', 'is-locked');
+      if (p2Panel) p2Panel.classList.remove('is-winner', 'is-locked');
+
+      const p1Btns = stage.querySelectorAll('#mqsP1OptionsGrid .mqs-duel-opt-btn');
+      p1Btns.forEach((btn, idx) => {
+        btn.className = 'mqs-duel-opt-btn btn-blue-theme';
+        btn.disabled = false;
+        const letterSpan = btn.querySelector('.mqs-opt-letter');
+        const textSpan = btn.querySelector('.mqs-opt-text');
+        if (letterSpan) letterSpan.textContent = letters[idx] || '';
+        if (textSpan) textSpan.innerHTML = replaceEmojisWith3D(opts[idx] !== undefined ? String(opts[idx]) : '', 'opt-3d-icon');
+      });
+
+      const p2Btns = stage.querySelectorAll('#mqsP2OptionsGrid .mqs-duel-opt-btn');
+      p2Btns.forEach((btn, idx) => {
+        btn.className = 'mqs-duel-opt-btn btn-red-theme';
+        btn.disabled = false;
+        const letterSpan = btn.querySelector('.mqs-opt-letter');
+        const textSpan = btn.querySelector('.mqs-opt-text');
+        if (letterSpan) letterSpan.textContent = letters[idx] || '';
+        if (textSpan) textSpan.innerHTML = replaceEmojisWith3D(opts[idx] !== undefined ? String(opts[idx]) : '', 'opt-3d-icon');
+      });
+    }
 
     mqsStartTimer();
 
@@ -30622,7 +30892,7 @@
 
     const shuffledWrong = QuestionEngine.fisherYatesShuffle(wrongIndices);
     const toEliminate = shuffledWrong.slice(0, 2);
-    const optBtns = stage.querySelectorAll('.mqs-option-btn');
+    const optBtns = stage.querySelectorAll('#mqsOptionsGrid .mqs-option-btn');
     toEliminate.forEach(idx => {
       if (optBtns[idx]) {
         optBtns[idx].classList.add('is-eliminated');
@@ -30666,6 +30936,7 @@
     }
   }
 
+  // 1. MOD: Bireysel Tıklama İşleyicisi
   function mqsHandleOptionClick(optionIndex, clickedBtn) {
     if (state.isQuestionAnswered || !state.currentQuestion) return;
     if (clickedBtn && clickedBtn.disabled) return;
@@ -30681,7 +30952,7 @@
     const chosenText = opts[optionIndex];
     const correctText = state.currentQuestion.correct;
     const isCorrect = (chosenText === correctText);
-    const optBtns = stage.querySelectorAll('.mqs-option-btn');
+    const optBtns = stage.querySelectorAll('#mqsOptionsGrid .mqs-option-btn');
 
     optBtns.forEach(b => { b.disabled = true; });
 
@@ -30723,6 +30994,158 @@
     }
   }
 
+  // 2. MOD: ⚔️ 2 Kişilik Hız Düellosu Tıklama İşleyicisi
+  function mqsHandleDuelOptionClick(player, optionIndex, clickedBtn) {
+    if (state.isQuestionAnswered || !state.currentQuestion) return;
+    if (clickedBtn && clickedBtn.disabled) return;
+
+    // Oyuncu daha önce yanlış yapmış ve kilitlenmişse işlem yapma
+    if (player === 1 && mqsState.p1Locked) return;
+    if (player === 2 && mqsState.p2Locked) return;
+
+    const stage = document.getElementById('moliQuizShowStage');
+    if (!stage) return;
+
+    const opts = state.currentQuestion.options || [];
+    const chosenText = opts[optionIndex];
+    const correctText = state.currentQuestion.correct;
+    const isCorrect = (chosenText === correctText);
+
+    const announcer = stage.querySelector('#mqsDuelAnnouncer');
+    const announcerIcon = stage.querySelector('#mqsDuelAnnouncerIcon');
+    const announcerText = stage.querySelector('#mqsDuelAnnouncerText');
+
+    const p1Btns = stage.querySelectorAll('#mqsP1OptionsGrid .mqs-duel-opt-btn');
+    const p2Btns = stage.querySelectorAll('#mqsP2OptionsGrid .mqs-duel-opt-btn');
+    const p1Panel = stage.querySelector('#mqsDuelPlayerBlue');
+    const p2Panel = stage.querySelector('#mqsDuelPlayerRed');
+
+    if (isCorrect) {
+      // ========================================================
+      // 1) İLK DOĞRU BASAN KAZANIR (HIZ VE REFLEKS ZAFERİ)
+      // ========================================================
+      state.isQuestionAnswered = true;
+      mqsStopTimer();
+      audio.stopQuestionAudio();
+
+      // Tüm butonları dondur
+      p1Btns.forEach(b => { b.disabled = true; });
+      p2Btns.forEach(b => { b.disabled = true; });
+
+      if (clickedBtn) clickedBtn.classList.add('is-correct');
+
+      const playerName = (player === 1)
+        ? (state.player1.name || '1. Oyuncu (Mavi)')
+        : (state.player2.name || '2. Oyuncu (Kırmızı)');
+
+      if (player === 1) {
+        mqsState.player1Score += 10;
+        state.player1.score += 1;
+        if (p1Panel) p1Panel.classList.add('is-winner');
+        const p1ScoreEl = stage.querySelector('#mqsP1ScoreText');
+        const topP1 = stage.querySelector('#mqsTopP1Score');
+        if (p1ScoreEl) p1ScoreEl.textContent = `${mqsState.player1Score} Puan`;
+        if (topP1) topP1.textContent = `🔵 Mavi: ${mqsState.player1Score}`;
+      } else {
+        mqsState.player2Score += 10;
+        state.player2.score += 1;
+        if (p2Panel) p2Panel.classList.add('is-winner');
+        const p2ScoreEl = stage.querySelector('#mqsP2ScoreText');
+        const topP2 = stage.querySelector('#mqsTopP2Score');
+        if (p2ScoreEl) p2ScoreEl.textContent = `${mqsState.player2Score} Puan`;
+        if (topP2) topP2.textContent = `🔴 Kırmızı: ${mqsState.player2Score}`;
+      }
+
+      // Ekranda Parlayan Flaş Bildirim
+      if (announcer) {
+        announcer.className = `mqs-duel-announcer is-${player === 1 ? 'blue' : 'red'}`;
+        if (announcerIcon) announcerIcon.textContent = '⚡';
+        if (announcerText) announcerText.innerHTML = `<strong>${playerName}</strong> Daha Hızlı! (+10 Puan)`;
+      }
+
+      audio.playCorrect();
+      audio.playScorePoints();
+      changeMoliExpression('correct');
+
+      if (clickedBtn) {
+        const rect = clickedBtn.getBoundingClientRect();
+        particles.burst(rect.left + rect.width / 2, rect.top + rect.height / 2, 'stars');
+        spawnFloatingScore(rect.left + rect.width / 2, rect.top + rect.height / 2, '+10 Puan', false);
+      }
+
+      // 1.5 saniye sonra otomatik sıradaki soruya geç
+      setDuelTimeout(() => {
+        if (state.currentView === 'duel') {
+          mqsAdvanceToNextQuestion();
+        }
+      }, 1500);
+
+    } else {
+      // ========================================================
+      // 2) YANLIŞ BASAN CEZALI (SALLAMAYI ÖNLEME KURALI)
+      // ========================================================
+      if (clickedBtn) clickedBtn.classList.add('is-wrong');
+      audio.playWrong();
+      changeMoliExpression('wrong');
+
+      if (player === 1) {
+        mqsState.p1Locked = true;
+        p1Btns.forEach(b => { b.disabled = true; });
+        if (p1Panel) p1Panel.classList.add('is-locked');
+        const p1Status = stage.querySelector('#mqsP1StatusBadge');
+        if (p1Status) {
+          p1Status.innerHTML = '❌ Yanlış! Rakibin cevap hakkı devam ediyor';
+          p1Status.classList.remove('hide');
+        }
+        if (announcer && !mqsState.p2Locked) {
+          announcer.className = 'mqs-duel-announcer is-warning';
+          if (announcerIcon) announcerIcon.textContent = '⚠️';
+          if (announcerText) announcerText.innerHTML = `<strong>Mavi Yanlış Yaptı!</strong> Kırmızı için süre devam ediyor...`;
+        }
+      } else {
+        mqsState.p2Locked = true;
+        p2Btns.forEach(b => { b.disabled = true; });
+        if (p2Panel) p2Panel.classList.add('is-locked');
+        const p2Status = stage.querySelector('#mqsP2StatusBadge');
+        if (p2Status) {
+          p2Status.innerHTML = '❌ Yanlış! Rakibin cevap hakkı devam ediyor';
+          p2Status.classList.remove('hide');
+        }
+        if (announcer && !mqsState.p1Locked) {
+          announcer.className = 'mqs-duel-announcer is-warning';
+          if (announcerIcon) announcerIcon.textContent = '⚠️';
+          if (announcerText) announcerText.innerHTML = `<strong>Kırmızı Yanlış Yaptı!</strong> Mavi için süre devam ediyor...`;
+        }
+      }
+
+      // İKİ OYUNCU DA YANLIŞ YAPTI MI?
+      if (mqsState.p1Locked && mqsState.p2Locked) {
+        state.isQuestionAnswered = true;
+        mqsStopTimer();
+
+        // Her iki tarafta da doğru cevabı yeşil olarak göster
+        opts.forEach((opt, idx) => {
+          if (opt === correctText) {
+            if (p1Btns[idx]) p1Btns[idx].classList.add('is-correct');
+            if (p2Btns[idx]) p2Btns[idx].classList.add('is-correct');
+          }
+        });
+
+        if (announcer) {
+          announcer.className = 'mqs-duel-announcer is-both-wrong';
+          if (announcerIcon) announcerIcon.textContent = '💥';
+          if (announcerText) announcerText.innerHTML = `İki Oyuncu da Yanlış Yaptı! Doğru Cevap: <strong>${replaceEmojisWith3D(String(correctText), 'inline-3d-icon')}</strong>`;
+        }
+
+        setDuelTimeout(() => {
+          if (state.currentView === 'duel') {
+            mqsAdvanceToNextQuestion();
+          }
+        }, 1500);
+      }
+    }
+  }
+
   function mqsHandleTimeout() {
     if (state.isQuestionAnswered || !state.currentQuestion) return;
     state.isQuestionAnswered = true;
@@ -30734,18 +31157,50 @@
 
     const opts = state.currentQuestion.options || [];
     const correctText = state.currentQuestion.correct;
-    const optBtns = stage.querySelectorAll('.mqs-option-btn');
 
-    optBtns.forEach((btn, idx) => {
-      btn.disabled = true;
-      if (opts[idx] === correctText) {
-        btn.classList.add('is-correct');
+    if (mqsState.mode === 'duel') {
+      const p1Btns = stage.querySelectorAll('#mqsP1OptionsGrid .mqs-duel-opt-btn');
+      const p2Btns = stage.querySelectorAll('#mqsP2OptionsGrid .mqs-duel-opt-btn');
+      p1Btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (opts[idx] === correctText) btn.classList.add('is-correct');
+      });
+      p2Btns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (opts[idx] === correctText) btn.classList.add('is-correct');
+      });
+
+      const announcer = stage.querySelector('#mqsDuelAnnouncer');
+      const announcerIcon = stage.querySelector('#mqsDuelAnnouncerIcon');
+      const announcerText = stage.querySelector('#mqsDuelAnnouncerText');
+      if (announcer) {
+        announcer.className = 'mqs-duel-announcer is-warning';
+        if (announcerIcon) announcerIcon.textContent = '⏰';
+        if (announcerText) announcerText.innerHTML = `Süre Doldu! Doğru Cevap: <strong>${replaceEmojisWith3D(String(correctText), 'inline-3d-icon')}</strong>`;
       }
-    });
 
-    audio.playWrong();
-    changeMoliExpression('wrong');
-    mqsShowSolutionBox(true);
+      audio.playWrong();
+      changeMoliExpression('wrong');
+
+      setDuelTimeout(() => {
+        if (state.currentView === 'duel') {
+          mqsAdvanceToNextQuestion();
+        }
+      }, 1500);
+
+    } else {
+      const optBtns = stage.querySelectorAll('#mqsOptionsGrid .mqs-option-btn');
+      optBtns.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (opts[idx] === correctText) {
+          btn.classList.add('is-correct');
+        }
+      });
+
+      audio.playWrong();
+      changeMoliExpression('wrong');
+      mqsShowSolutionBox(true);
+    }
   }
 
   function mqsShowSolutionBox(isTimeout) {
@@ -30781,10 +31236,34 @@
 
   function mqsAdvanceToNextQuestion() {
     if (state.questionNumber >= mqsState.totalQuestions) {
-      triggerVictory({
-        name: `${state.player1.name || 'Şampiyon Öğrenci'} (${mqsState.score} Puan)`,
-        score: state.player1.score
-      });
+      if (mqsState.mode === 'duel') {
+        const p1Score = mqsState.player1Score;
+        const p2Score = mqsState.player2Score;
+        const p1Name = state.player1.name || '1. Oyuncu (Mavi)';
+        const p2Name = state.player2.name || '2. Oyuncu (Kırmızı)';
+
+        if (p1Score > p2Score) {
+          triggerVictory({
+            name: `🏆 ${p1Name} Kazandı! (${p1Score} Puan)`,
+            score: p1Score
+          });
+        } else if (p2Score > p1Score) {
+          triggerVictory({
+            name: `🏆 ${p2Name} Kazandı! (${p2Score} Puan)`,
+            score: p2Score
+          });
+        } else {
+          triggerVictory({
+            name: `🤝 Dostluk Kazandı! Berabere (${p1Score} - ${p2Score})`,
+            score: p1Score
+          });
+        }
+      } else {
+        triggerVictory({
+          name: `${state.player1.name || 'Şampiyon Öğrenci'} (${mqsState.score} Puan)`,
+          score: state.player1.score
+        });
+      }
       return;
     }
     state.questionNumber += 1;
@@ -30792,8 +31271,7 @@
   }
 
 
-
-  /* ==========================================================================
+    /* ==========================================================================
      DEEP LINKING (DOĞRUDAN ETKİNLİK BAĞLANTISI), DİNAMİK URL & WHATSAPP PAYLAŞIM MOTORU
      ========================================================================== */
   let isApplyingDeepLink = false;
