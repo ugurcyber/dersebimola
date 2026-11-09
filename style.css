@@ -26708,3 +26708,772 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 1.15rem;
   }
 }
+
+
+/* ==========================================================================
+   2. SINIF TÜRKÇE 2026 MAARİF MODELİ ŞIKSIZ ETKİLEŞİMLİ OYUN MOTORLARI
+   ========================================================================== */
+
+.t2-arena {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 8px 12px;
+}
+
+/* 1) 🔄 EŞ VE ZIT ANLAMLI KELİME MIKNATISI */
+.t2-magnet-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.t2-word-badge {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #f8fafc;
+  padding: 12px 20px;
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 130px;
+  border: 2px solid #64748b;
+}
+
+.t2-badge-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.t2-main-word {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+}
+
+.t2-arrow-icon {
+  font-size: 1.6rem;
+  color: #6366f1;
+  animation: t2PulseArrow 1.5s infinite ease-in-out;
+}
+
+@keyframes t2PulseArrow {
+  0%, 100% { transform: translateX(0); opacity: 0.7; }
+  50% { transform: translateX(4px); opacity: 1; }
+}
+
+.t2-magnet-slot {
+  background: rgba(99, 102, 241, 0.08);
+  border: 3px dashed #6366f1;
+  border-radius: 18px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.t2-magnet-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #818cf8;
+  text-transform: uppercase;
+}
+
+.t2-slot-placeholder {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #6366f1;
+  margin-top: 4px;
+}
+
+.t2-magnet-slot.is-filled {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: 3px solid #34d399;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.45);
+  transform: scale(1.06);
+}
+
+.t2-slot-word {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+.t2-stones-instruction {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.t2-stones-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+
+.t2-magnet-stone {
+  background: linear-gradient(180deg, #ffffff, #f1f5f9);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 16px;
+  padding: 14px 12px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.t2-magnet-stone:hover {
+  transform: translateY(-2px);
+  border-color: #6366f1;
+  background: #f8fafc;
+}
+
+.t2-magnet-stone:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.t2-magnet-stone.is-correct {
+  background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+  color: #ffffff !important;
+  border-color: #15803d !important;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.5) !important;
+}
+
+/* 2) 🧩 KURALLI VE ANLAMLI CÜMLE TRENİ */
+.t2-train-railway {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  overflow-x: auto;
+  padding: 10px 6px 14px 6px;
+  background: rgba(241, 245, 249, 0.7);
+  border-radius: 18px;
+  border: 2px solid #e2e8f0;
+}
+
+.t2-locomotive-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-width: 50px;
+}
+
+.t2-loco-steam {
+  font-size: 1.2rem;
+  position: absolute;
+  top: -14px;
+  left: 10px;
+  opacity: 0.8;
+  animation: t2SteamRise 1.2s infinite ease-out;
+}
+
+@keyframes t2SteamRise {
+  0% { transform: translateY(0) scale(0.8); opacity: 0.8; }
+  100% { transform: translateY(-12px) scale(1.3); opacity: 0; }
+}
+
+.t2-loco-icon {
+  font-size: 2.2rem;
+}
+
+.t2-locomotive-box.is-chugging .t2-loco-icon {
+  animation: t2ChugWiggle 0.4s infinite alternate ease-in-out;
+}
+
+@keyframes t2ChugWiggle {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px) rotate(2deg); }
+}
+
+.t2-wagons-track {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.t2-train-slot {
+  background: #ffffff;
+  border: 2px dashed #94a3b8;
+  border-radius: 12px;
+  padding: 8px 10px;
+  min-width: 68px;
+  min-height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.t2-train-slot .t2-slot-num {
+  font-size: 0.65rem;
+  color: #94a3b8;
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  font-weight: 700;
+}
+
+.t2-train-slot .t2-slot-text {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.t2-train-slot.is-filled {
+  border: 2px solid #3b82f6;
+  background: linear-gradient(180deg, #eff6ff, #dbeafe);
+  box-shadow: 0 3px 8px rgba(59, 130, 246, 0.2);
+  transform: scale(1.03);
+}
+
+.t2-train-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.t2-train-prompt {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.t2-btn-reset-train {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.t2-btn-reset-train:hover {
+  background: #e2e8f0;
+}
+
+.t2-wagon-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.t2-wagon-btn {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.t2-wagon-btn:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+}
+
+.t2-wagon-btn.is-used {
+  opacity: 0.35;
+  pointer-events: none;
+  border-color: #e2e8f0;
+  transform: none;
+}
+
+/* 3) ❓ NOKTALAMA İŞARETLERİ DEDEKTİFİ */
+.t2-punct-sentence-card {
+  background: linear-gradient(135deg, #1e1b4b, #312e81);
+  color: #f8fafc;
+  padding: 16px 20px;
+  border-radius: 20px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(49, 46, 129, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 2px solid #4338ca;
+}
+
+.t2-detective-badge {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #a5b4fc;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.t2-sentence-content {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #ffffff;
+  display: inline;
+}
+
+.t2-punct-target-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245, 158, 11, 0.2);
+  border: 2px dashed #f59e0b;
+  border-radius: 10px;
+  min-width: 38px;
+  height: 38px;
+  margin: 0 4px;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #fbbf24;
+  vertical-align: middle;
+  animation: t2PulseTarget 1.2s infinite alternate;
+}
+
+@keyframes t2PulseTarget {
+  0% { transform: scale(0.96); box-shadow: 0 0 4px rgba(245, 158, 11, 0.2); }
+  100% { transform: scale(1.05); box-shadow: 0 0 14px rgba(245, 158, 11, 0.5); }
+}
+
+.t2-punct-target-box.is-filled {
+  background: #10b981;
+  border: 2px solid #34d399;
+  color: #ffffff;
+  animation: none;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.6);
+}
+
+.t2-punct-instruction {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.t2-punct-stones-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.t2-punct-stone {
+  background: linear-gradient(180deg, #ffffff, #f1f5f9);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 16px;
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.t2-punct-stone:hover {
+  transform: translateY(-2px);
+  border-color: #6366f1;
+}
+
+.t2-sign-symbol {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #4338ca;
+  line-height: 1;
+}
+
+.t2-sign-name {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #64748b;
+}
+
+.t2-punct-stone.is-correct {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border-color: #047857 !important;
+  color: #ffffff !important;
+}
+
+.t2-punct-stone.is-correct .t2-sign-symbol,
+.t2-punct-stone.is-correct .t2-sign-name {
+  color: #ffffff !important;
+}
+
+/* 4) 📖 5N1K MİNİ HİKAYE DEDEKTİFİ */
+.t2-story-book {
+  background: #fffbeb;
+  border: 2px solid #fde68a;
+  border-radius: 18px;
+  padding: 14px 18px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+}
+
+.t2-story-topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px dashed #fcd34d;
+  padding-bottom: 6px;
+}
+
+.t2-story-icon {
+  font-size: 1.3rem;
+}
+
+.t2-story-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #92400e;
+}
+
+.t2-story-body {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #451a03;
+  font-weight: 600;
+}
+
+.t2-story-question-banner {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 14px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+}
+
+.t2-5n1k-tag {
+  background: #fef08a;
+  color: #854d0e;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.t2-5n1k-qtext {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.t2-story-choices-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.t2-story-stamp {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.t2-story-stamp:hover {
+  transform: translateY(-2px);
+  border-color: #0284c7;
+}
+
+.t2-story-stamp.is-correct {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+/* 5) ✂️ HECE BİLGİSİ, SATIR SONU & BÜYÜK HARF AVCISI */
+.t2-word-showcase {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  color: #ffffff;
+  padding: 16px 24px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+  width: 100%;
+}
+
+.t2-syl-title {
+  font-size: 0.8rem;
+  color: #c7d2fe;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.t2-syl-word {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.t2-syl-prompt {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.t2-syl-btns-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.t2-syl-count-btn {
+  background: linear-gradient(180deg, #ffffff, #f1f5f9);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 16px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.t2-count-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #4f46e5;
+}
+
+.t2-count-lbl {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.t2-syl-count-btn.is-correct {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border-color: #047857 !important;
+}
+
+.t2-syl-count-btn.is-correct .t2-count-num,
+.t2-syl-count-btn.is-correct .t2-count-lbl {
+  color: #ffffff !important;
+}
+
+/* Satır Sonu Bölme */
+.t2-notebook-page {
+  background: #fdfbf7;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.t2-page-margin {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 2px;
+  background: #f87171;
+}
+
+.t2-page-content {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.t2-page-label {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.t2-page-target-word {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.t2-linebreak-prompt {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+}
+
+.t2-linebreak-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.t2-linebreak-card {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 2px solid #cbd5e1;
+  border-bottom: 4px solid #94a3b8;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.t2-linebreak-card.is-correct {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+/* Büyük Harf Avcısı */
+.t2-capital-instruction {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #475569;
+  text-align: center;
+}
+
+.t2-capital-sentence-board {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 18px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.t2-word-token {
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.t2-word-token:hover {
+  border-color: #3b82f6;
+  background: #e2e8f0;
+}
+
+.t2-word-token.is-fixed {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  color: #ffffff !important;
+  border-color: #b45309 !important;
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.5);
+}
+
+/* Shake Efekti */
+.t2-shake {
+  animation: t2ShakeAnim 0.4s ease-in-out;
+}
+
+@keyframes t2ShakeAnim {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@media (max-width: 640px) {
+  .t2-main-word {
+    font-size: 1.25rem;
+  }
+  .t2-magnet-stone {
+    padding: 10px 8px;
+    font-size: 1.05rem;
+  }
+  .t2-sentence-content {
+    font-size: 1.1rem;
+  }
+  .t2-punct-stones-grid {
+    gap: 6px;
+  }
+  .t2-sign-symbol {
+    font-size: 1.5rem;
+  }
+  .t2-sign-name {
+    font-size: 0.7rem;
+  }
+  .t2-story-stamp {
+    padding: 10px 8px;
+    font-size: 0.95rem;
+  }
+}

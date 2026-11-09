@@ -5887,14 +5887,719 @@
       {"q":"Cümle içinde konuşma çizgisi (uzun çizgi) nerede kullanılır? 🗣️","a":"Karşılıklı konuşmaların başında 🗣️","d":["Cümlenin sonunda","Kelime aralarında"],"exp":"Diyaloglarda konuşan kişinin sözü başına uzun çizgi (—) konur.","spokenText":"Konuşma çizgisi nerede kullanılır?"}
     ],
 
-    // 2. Sınıf Türkçe Karma Üreteci (5 Öğrenme Alanından Dengeli Çekim)
+    // =========================================================================
+    // 2. SINIF TÜRKÇE 2026 MAARİF MODELİ ŞIKSIZ ETKİLEŞİMLİ SORU MOTORLARI
+    // =========================================================================
+
+    // 1) 🔄 EŞ VE ZIT ANLAMLI KELİME MIKNATISI (Havuz: 72 Çift)
+    generateGrade2TurkishSynAnt() {
+      const synPairs = [
+        { w: "Siyah", target: "Kara", mode: "synonym" },
+        { w: "Beyaz", target: "Ak", mode: "synonym" },
+        { w: "Kırmızı", target: "Al", mode: "synonym" },
+        { w: "Yaşlı", target: "İhtiyar", mode: "synonym" },
+        { w: "Okul", target: "Mektep", mode: "synonym" },
+        { w: "Öğrenci", target: "Talebe", mode: "synonym" },
+        { w: "Öğretmen", target: "Muallim", mode: "synonym" },
+        { w: "Doktor", target: "Hekim", mode: "synonym" },
+        { w: "Hediye", target: "Armağan", mode: "synonym" },
+        { w: "Cevap", target: "Yanıt", mode: "synonym" },
+        { w: "Soru", target: "Sual", mode: "synonym" },
+        { w: "Yıl", target: "Sene", mode: "synonym" },
+        { w: "Sonbahar", target: "Güz", mode: "synonym" },
+        { w: "Kalp", target: "Yürek", mode: "synonym" },
+        { w: "Ev", target: "Konut", mode: "synonym" },
+        { w: "Vatan", target: "Yurt", mode: "synonym" },
+        { w: "Nehir", target: "Irmak", mode: "synonym" },
+        { w: "Doğa", target: "Tabiat", mode: "synonym" },
+        { w: "Rüzgar", target: "Yel", mode: "synonym" },
+        { w: "Hatıra", target: "Anı", mode: "synonym" },
+        { w: "Şehir", target: "Kent", mode: "synonym" },
+        { w: "Görev", target: "Vazife", mode: "synonym" },
+        { w: "Cümle", target: "Tümce", mode: "synonym" },
+        { w: "Kelime", target: "Sözcük", mode: "synonym" },
+        { w: "Barış", target: "Sulh", mode: "synonym" },
+        { w: "Zaman", target: "Vakit", mode: "synonym" },
+        { w: "Kolay", target: "Basit", mode: "synonym" },
+        { w: "Misafir", target: "Konuk", mode: "synonym" },
+        { w: "Baş", target: "Kafa", mode: "synonym" },
+        { w: "Hızlı", target: "Süratli", mode: "synonym" },
+        { w: "Neşeli", target: "Şen", mode: "synonym" },
+        { w: "Özlem", target: "Hasret", mode: "synonym" },
+        { w: "Duygu", target: "His", mode: "synonym" },
+        { w: "Cesur", target: "Yürekli", mode: "synonym" },
+        { w: "Güçlü", target: "Kuvvetli", mode: "synonym" },
+        { w: "Dost", target: "Arkadaş", mode: "synonym" },
+        { w: "Şair", target: "Ozan", mode: "synonym" },
+        { w: "İsim", target: "Ad", mode: "synonym" },
+        { w: "Lider", target: "Önder", mode: "synonym" },
+        { w: "Millet", target: "Ulus", mode: "synonym" },
+        { w: "Fayda", target: "Yarar", mode: "synonym" },
+        { w: "Küçük", target: "Ufak", mode: "synonym" },
+        { w: "Büyük", target: "İri", mode: "synonym" }
+      ];
+
+      const antPairs = [
+        { w: "Sıcak", target: "Soğuk", mode: "antonym" },
+        { w: "Büyük", target: "Küçük", mode: "antonym" },
+        { w: "Hızlı", target: "Yavaş", mode: "antonym" },
+        { w: "Gece", target: "Gündüz", mode: "antonym" },
+        { w: "Açık", target: "Kapalı", mode: "antonym" },
+        { w: "Kolay", target: "Zor", mode: "antonym" },
+        { w: "Temiz", target: "Kirli", mode: "antonym" },
+        { w: "Dost", target: "Düşman", mode: "antonym" },
+        { w: "Genç", target: "Yaşlı", mode: "antonym" },
+        { w: "Tatlı", target: "Acı", mode: "antonym" },
+        { w: "Uzun", target: "Kısa", mode: "antonym" },
+        { w: "Ağır", target: "Hafif", mode: "antonym" },
+        { w: "Dolu", target: "Boş", mode: "antonym" },
+        { w: "Zengin", target: "Yoksul", mode: "antonym" },
+        { w: "İçeri", target: "Dışarı", mode: "antonym" },
+        { w: "Ön", target: "Arka", mode: "antonym" },
+        { w: "Alt", target: "Üst", mode: "antonym" },
+        { w: "Aşağı", target: "Yukarı", mode: "antonym" },
+        { w: "Erken", target: "Geç", mode: "antonym" },
+        { w: "İyi", target: "Kötü", mode: "antonym" },
+        { w: "Doğru", target: "Yanlış", mode: "antonym" },
+        { w: "Barış", target: "Savaş", mode: "antonym" },
+        { w: "Aydınlık", target: "Karanlık", mode: "antonym" },
+        { w: "Geniş", target: "Dar", mode: "antonym" },
+        { w: "Sert", target: "Yumuşak", mode: "antonym" },
+        { w: "Islak", target: "Kuru", mode: "antonym" },
+        { w: "Pahalı", target: "Ucuz", mode: "antonym" },
+        { w: "Çalışkan", target: "Tembel", mode: "antonym" },
+        { w: "Sabah", target: "Akşam", mode: "antonym" },
+        { w: "İlk", target: "Son", mode: "antonym" },
+        { w: "Aç", target: "Tok", mode: "antonym" },
+        { w: "Giriş", target: "Çıkış", mode: "antonym" },
+        { w: "Yakın", target: "Uzak", mode: "antonym" },
+        { w: "İnce", target: "Kalın", mode: "antonym" },
+        { w: "Yüksek", target: "Alçak", mode: "antonym" },
+        { w: "Cesur", target: "Korkak", mode: "antonym" },
+        { w: "Taze", target: "Bayat", mode: "antonym" },
+        { w: "Acemi", target: "Usta", mode: "antonym" }
+      ];
+
+      const isSyn = Math.random() < 0.5;
+      const pool = isSyn ? synPairs : antPairs;
+      const pair = this.getUniqueNextItem(pool, isSyn ? 't2_syn_pool' : 't2_ant_pool') || pool[0];
+
+      // 3 Çeldirici kelime seç (doğru kelimeden ve ana kelimeden farklı)
+      const distPool = pool.filter(p => p.target !== pair.target && p.w !== pair.w && p.target !== pair.w);
+      const shuffledDist = this.fisherYatesShuffle(distPool);
+      const distractors = shuffledDist.slice(0, 3).map(p => p.target);
+      const choices = this.fisherYatesShuffle([pair.target, ...distractors]);
+
+      const modeLabel = isSyn ? "EŞ ANLAMLISI" : "ZIT ANLAMLISI";
+      const modeIcon = isSyn ? "✨" : "🔄";
+
+      return {
+        type: 't2_syn_ant',
+        question: `"${pair.w}" kelimesinin ${isSyn ? 'eş anlamlısını' : 'zıt anlamlısını'} mıknatıs kutusuna çek! 🧲`,
+        spokenText: `${pair.w} kelimesinin ${isSyn ? 'eş anlamlısı' : 'zıt anlamlısı'} nedir? Mıknatıs kutusuna yerleştir.`,
+        correct: pair.target,
+        explanation: `Harika! "${pair.w}" kelimesinin ${isSyn ? 'eş anlamlısı' : 'zıt anlamlısı'} "${pair.target}" kelimesidir. 👏`,
+        interactiveData: {
+          baseWord: pair.w,
+          mode: isSyn ? 'synonym' : 'antonym',
+          modeLabel: modeLabel,
+          modeIcon: modeIcon,
+          correctWord: pair.target,
+          choices: choices
+        }
+      };
+    },
+
+    // 2) 🧩 KURALLI VE ANLAMLI CÜMLE TRENİ (Havuz: 50 Cümle)
+    generateGrade2TurkishSentenceTrain() {
+      const sentencePool = [
+        "Dün akşam güzel bir kitap okudum.",
+        "Sabah erkenden kalkıp dişlerimi fırçaladım.",
+        "Moli bahçedeki çiçekleri neşeyle suladı.",
+        "Ali ile Ayşe parkta neşeyle koştu.",
+        "Öğretmenimiz bize çok güzel hikaye anlattı.",
+        "Güneş açınca rengarenk kelebekler neşeyle uçuştu.",
+        "Annem pazardan taze elma ve muz aldı.",
+        "Kütüphaneden yeni ve eğitici kitaplar aldık.",
+        "Teneffüste arkadaşlarımızla eğlenceli oyunlar oynadık.",
+        "Yağmur yağınca kocaman renkli şemsiyemi açtım.",
+        "Babam akşam eve gelirken taze ekmek aldı.",
+        "Minik kedi ılık sütünü afiyetle içti.",
+        "Zeynep resim dersinde renkli gökkuşağı çizdi.",
+        "Bahçedeki ağaçlar ilkbaharda bembeyaz çiçek açtı.",
+        "Canan ödevini bitirip odasını düzenli topladı.",
+        "Kuşlar sabah neşeyle şarkı söyledi.",
+        "Emre bisikletine binip sahile doğru gitti.",
+        "Yemekten önce ellerimizi suyla sabunla yıkadık.",
+        "Sonbaharda sarı yapraklar yere döküldü.",
+        "Dedem bize akşam çok güzel masal anlattı.",
+        "Sınıfta hep birlikte neşeli şarkılar söyledik.",
+        "Sıcak sütümü içip erkenden mışıl mışıl uyudum.",
+        "Ablam bana doğum günümde sürpriz hediye verdi.",
+        "Piknikte top oynayıp neşeyle ip atladık.",
+        "Kırmızı uçurtmam gökyüzünde rüzgarla süzüldü.",
+        "Kar yağınca bahçede kocaman kardan adam yaptık.",
+        "Kerem parkta kaybolan kedisini sevinçle buldu.",
+        "Öğretmenimiz tahtaya öğretici ve güzel sorular yazdı.",
+        "Her gün düzenli olarak kitap okumalıyız.",
+        "Yavru sincap palamutları yuvasına taşıdı.",
+        "Elif doğum günü pastasının mumlarını üfledi.",
+        "Ormanda yürürken sevimli bir kaplumbağa gördük.",
+        "Akşam olunca gökyüzünde parlak yıldızlar parladı.",
+        "Eren ile Ece okulda satranç oynadılar.",
+        "Okul servisi sabahleyin tam zamanında geldi.",
+        "Sarı kanarya kafesinde neşeyle cıvıldayarak öttü.",
+        "Odamı toplayıp oyuncaklarımı kutusuna koydum.",
+        "Bahar gelince leylekler gökyüzünde süzülerek döndü.",
+        "Kardeşim ilk adımlarını büyük alkışlarla attı.",
+        "Çantamı hazırlayıp sabah erkenden okula gittim.",
+        "Masadaki cam vazoya taze papatyalar koyduk.",
+        "Kırmızı elmayı dilimleyip kardeşimle afiyetle yedik.",
+        "Yaz mevsiminde denizde yüzmeyi çok seviyorum.",
+        "Mert ile Selim okul bahçesinde futbol oynadı.",
+        "Hafta sonu doğa tarihi müzesini ilgiyle gezdik.",
+        "Moli ile Maviş gölette neşeyle yüzdü.",
+        "Yağmur dindikten sonra gökyüzünde gökkuşağı belirdi.",
+        "Ders zili çalınca sessizce sıramıza oturduk.",
+        "Kuşlara vermek için ekmek kırıntılarını topladım.",
+        "Cumhuriyet Bayramı'nı okulumuzda büyük coşkuyla kutladık."
+      ];
+
+      const fullSentence = this.getUniqueNextItem(sentencePool, 't2_sentence_pool') || sentencePool[0];
+      const orderedWords = fullSentence.replace(/\./g, '').trim().split(/\s+/);
+      const jumbledWords = this.fisherYatesShuffle([...orderedWords]);
+
+      return {
+        type: 't2_sentence_train',
+        question: 'Kelimeleri doğru sırayla dizerek anlamlı cümle trenini oluştur! 🚂',
+        spokenText: 'Kelimeleri doğru sırayla dizerek anlamlı cümle trenini oluştur.',
+        correct: fullSentence,
+        explanation: `Aferin! Doğru cümle: "${fullSentence}" 🚂👏`,
+        interactiveData: {
+          fullSentence: fullSentence,
+          orderedWords: orderedWords,
+          jumbledWords: jumbledWords
+        }
+      };
+    },
+
+    // 3) ❓ NOKTALAMA İŞARETLERİ DEDEKTİFİ (Havuz: 50 Cümle)
+    generateGrade2TurkishPunctuation() {
+      const punctPool = [
+        { before: "Bugün hava çok güzel", sign: ".", after: "", ruleExp: "Tamamlanmış düz cümlenin sonuna nokta konur." },
+        { before: "Sen de bizimle parka gelecek misin", sign: "?", after: "", ruleExp: "Soru sorduğumuz için cümlenin sonuna soru işareti konur." },
+        { before: "Eyvah, süt yere döküldü", sign: "!", after: "", ruleExp: "Korku ve telaş bildirdiği için ünlem işareti konur." },
+        { before: "Pazardan elma", sign: ",", after: " armut ve muz aldık.", ruleExp: "Eş görevli kelimeler arasına virgül konur." },
+        { before: "Yaşasın, sınavdan tam puan aldım", sign: "!", after: "", ruleExp: "Büyük sevinç ve coşku bildirdiği için ünlem işareti konur." },
+        { before: "Kütüphaneden hangi kitabı ödünç aldın", sign: "?", after: "", ruleExp: "Soru anlamı taşıdığı için soru işareti konur." },
+        { before: "Minik kedi sepetinde mışıl mışıl uyuyor", sign: ".", after: "", ruleExp: "Cümlemiz bittiği için sonuna nokta konur." },
+        { before: "Çantamda kalem", sign: ",", after: " silgi ve defter var.", ruleExp: "Sıralanan eşyalar arasına virgül konur." },
+        { before: "İmdat, kedi ağaçta mahsur kaldı", sign: "!", after: "", ruleExp: "Yardım çağrısı ve heyecan bildirdiği için ünlem konur." },
+        { before: "Okul servisi saat kaçta gelecek", sign: "?", after: "", ruleExp: "Zaman sorduğumuz için soru işareti konur." },
+        { before: "Bahçedeki rengarenk çiçekleri her sabah sularım", sign: ".", after: "", ruleExp: "Tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "Manavdan domates", sign: ",", after: " biber ve salatalık aldım.", ruleExp: "Birbiri ardınca sıralanan kelimeler arasına virgül konur." },
+        { before: "Aman Allah'ım, ne kadar da sevimli bir köpek", sign: "!", after: "", ruleExp: "Şaşkınlık ve hayranlık bildirdiği için ünlem konur." },
+        { before: "Bu güzel resmi sen mi çizdin", sign: "?", after: "", ruleExp: "Soru eki mi içerdiği için sonuna soru işareti konur." },
+        { before: "Atatürk, 1881 yılında Selanik'te doğdu", sign: ".", after: "", ruleExp: "Tarih bildiren tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "Ali", sign: ",", after: " Veli ve Ayşe parkta buluştu.", ruleExp: "Öğrenci isimleri arasına virgül konur." },
+        { before: "Dikkat et, yerler çok kaygan", sign: "!", after: "", ruleExp: "Uyarı ve dikkat çağrısı için ünlem işareti konur." },
+        { before: "Hangi mevsimde lapa lapa kar yağar", sign: "?", after: "", ruleExp: "Soru sorduğumuz için soru işareti konur." },
+        { before: "Güneş dünyamızı hem ısıtır hem de aydınlatır", sign: ".", after: "", ruleExp: "Yargı bildiren tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "Kahvaltıda süt", sign: ",", after: " peynir ve zeytin yedik.", ruleExp: "Besin adları arasına virgül konur." },
+        { before: "Tüh, boya kalemlerimi evde unutmuşum", sign: "!", after: "", ruleExp: "Üzüntü ve pişmanlık bildirdiği için ünlem konur." },
+        { before: "Yarın akşam bize ders çalışmaya gelecek misiniz", sign: "?", after: "", ruleExp: "Soru anlamı taşıdığı için soru işareti konur." },
+        { before: "Her akşam yatmadan önce dişlerimi mutlaka fırçalarım", sign: ".", after: "", ruleExp: "Düz cümlenin sonuna nokta konur." },
+        { before: "Masada taze bal", sign: ",", after: " tereyağı ve reçel vardı.", ruleExp: "Yiyecekler arasına virgül konur." },
+        { before: "Dur, kırmızı ışıkta karşıya geçme", sign: "!", after: "", ruleExp: "Trafik uyarısı bildirdiği için ünlem konur." },
+        { before: "En çok hangi renk boyayı seviyorsun", sign: "?", after: "", ruleExp: "Soru cümlesi olduğu için soru işareti konur." },
+        { before: "Cumhuriyetimizi korumak hepimizin en büyük görevidir", sign: ".", after: "", ruleExp: "Tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "Kırmızı", sign: ",", after: " mavi ve sarı ana renklerdir.", ruleExp: "Renk isimleri arasına virgül konur." },
+        { before: "Harika, yarışmayı birincilikle tamamladık", sign: "!", after: "", ruleExp: "Coşku ve tebrik bildirdiği için ünlem konur." },
+        { before: "Bugünkü Türkçe ödevini bitirdin mi", sign: "?", after: "", ruleExp: "Soru sorduğu için soru işareti konur." },
+        { before: "Kitap okumak kelime dağarcığımızı zenginleştirir", sign: ".", after: "", ruleExp: "Tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "Tavşan havuç", sign: ",", after: " maymun ise muz yemeyi çok sever.", ruleExp: "Farklı cümle parçaları arasına virgül konur." },
+        { before: "Vah vah, zavallı kuşun kanadı incinmiş", sign: "!", after: "", ruleExp: "Acıma ve üzüntü bildirdiği için ünlem işareti konur." },
+        { before: "Sen kaçıncı sınıfa gidiyorsun", sign: "?", after: "", ruleExp: "Soru sorduğumuz için soru işareti konur." },
+        { before: "İlkbahar mevsiminde ağaçlar yeşile bürünür", sign: ".", after: "", ruleExp: "Tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "İlkbahar", sign: ",", after: " yaz, sonbahar ve kış mevsimlerimizdir.", ruleExp: "Mevsimler arasına virgül konur." },
+        { before: "Bravo, tüm soruları doğru bildin", sign: "!", after: "", ruleExp: "Kutlama ve övgü bildirdiği için ünlem konur." },
+        { before: "Bu sevimli yavru kedinin adı nedir", sign: "?", after: "", ruleExp: "İsim sorduğu için soru işareti konur." },
+        { before: "Türkiye'nin başkenti güzel Ankara'dır", sign: ".", after: "", ruleExp: "Tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "Piknikte anne keki", sign: ",", after: " börek ve meyve suyu tükettik.", ruleExp: "Yiyecekler arasına virgül konur." },
+        { before: "Aferin sana, gerçekten harika bir iş çıkardın", sign: "!", after: "", ruleExp: "Övgü ve sevinç bildirdiği için ünlem konur." },
+        { before: "Neden dün beden eğitimi dersine gelmedin", sign: "?", after: "", ruleExp: "Sebep soran soru cümlesi olduğu için soru işareti konur." },
+        { before: "Ormanlar yurdumuzun en değerli yeşil akciğerleridir", sign: ".", after: "", ruleExp: "Tamamlanmış cümlenin sonuna nokta konur." },
+        { before: "Sabah", sign: ",", after: " öğle ve akşam öğünlerini kaçırmamalıyız.", ruleExp: "Zaman bildiren kelimeler arasına virgül konur." },
+        { before: "Of, hava bugün ne kadar da sıcak", sign: "!", after: "", ruleExp: "Bıkkınlık ve şikayet bildirdiği için ünlem konur." },
+        { before: "Teneffüs zili çaldı mı", sign: "?", after: "", ruleExp: "Soru eki 'mı' içerdiği için soru işareti konur." },
+        { before: "Doğal kaynaklarımızı korumak geleceğimizi kurtarır", sign: ".", after: "", ruleExp: "Düz cümlenin sonuna nokta konur." },
+        { before: "Sınıfımızda akıllı tahta", sign: ",", after: " tebeşir ve dünya haritası var.", ruleExp: "Sınıf araçları arasına virgül konur." },
+        { before: "Hey, beni beklemeden nereye koşuyorsun", sign: "!", after: "", ruleExp: "Seslenme ve uyarı bildirdiği için ünlem konur." },
+        { before: "Hafta sonu sinemaya gidelim mi", sign: "?", after: "", ruleExp: "Teklif ve soru sorduğu için soru işareti konur." }
+      ];
+
+      const item = this.getUniqueNextItem(punctPool, 't2_punct_pool') || punctPool[0];
+      const signNames = {
+        '.': 'Nokta',
+        ',': 'Virgül',
+        '!': 'Ünlem',
+        '?': 'Soru İşareti'
+      };
+
+      const spokenSentence = `${item.before} ... ${item.after || ''}`.trim();
+
+      return {
+        type: 't2_punctuation',
+        question: 'Cümledeki boşluğa hangi noktalama işareti gelmelidir? ❓',
+        spokenText: `${spokenSentence} Boşluğa hangi noktalama işareti gelmelidir?`,
+        correct: item.sign,
+        explanation: `Tebrikler! ${item.ruleExp} 👏`,
+        interactiveData: {
+          sentenceBefore: item.before,
+          sentenceAfter: item.after,
+          correctSign: item.sign,
+          signName: signNames[item.sign] || 'İşaret',
+          ruleExp: item.ruleExp
+        }
+      };
+    },
+
+    // 4) 📖 5N1K MİNİ HİKAYE DEDEKTİFİ (Havuz: 40 Hikaye)
+    generateGrade2Turkish5N1K() {
+      const stories = [
+        {
+          title: "Moli'nin Sabahı",
+          icon: "🐾",
+          story: "Moli sabah erkenden uyandı. Bahçedeki sevimli kediye ılık süt verdi. Kedi neşeyle mırıldandı.",
+          questions: [
+            { q: "Kediye sütü KİM verdi?", type: "👤 KİM?", a: "Moli", d: ["Öğretmen", "Tavşan", "Kuş"], exp: "Hikayede kediye sütü Moli vermiştir." },
+            { q: "Olay NEREDE gerçekleşti?", type: "📍 NEREDE?", a: "Bahçede", d: ["Sınıfta", "Mutfakta", "Ormanda"], exp: "Hikayedeki olay bahçede geçmektedir." },
+            { q: "Moli kediye NE ZAMAN süt verdi?", type: "⏰ NE ZAMAN?", a: "Sabah erkenden", d: ["Gece yarısı", "Öğlen", "Akşam"], exp: "Moli sütü sabah erkenden vermiştir." },
+            { q: "Moli kediye NE verdi?", type: "🎯 NE VERDİ?", a: "Ilık süt", d: ["Su", "Balık", "Taze peynir"], exp: "Moli kediye ılık süt vermiştir." }
+          ]
+        },
+        {
+          title: "Çiftlik Gezisi",
+          icon: "🐮",
+          story: "Ali hafta sonu dedesinin çiftliğine gitti. Kümesteki tavuklara sarı mısır taneleri serpti. Sepete taze yumurtalar topladı.",
+          questions: [
+            { q: "Tavuklara mısır tanelerini KİM serpti?", type: "👤 KİM?", a: "Ali", d: ["Dedesinin komşusu", "Ayşe", "Öğretmen"], exp: "Tavuklara mısır serpen kişi Ali'dir." },
+            { q: "Olay NEREDE geçti?", type: "📍 NEREDE?", a: "Dedesinin çiftliğinde", d: ["Okul bahçesinde", "Şehir parkında", "Evde"], exp: "Olay dedesinin çiftliğinde geçmiştir." },
+            { q: "Ali çiftliğe NE ZAMAN gitti?", type: "⏰ NE ZAMAN?", a: "Hafta sonu", d: ["Gece vakti", "Okul çıkışı", "Pazartesi sabahı"], exp: "Ali çiftliğe hafta sonu gitmiştir." },
+            { q: "Ali sepete NE topladı?", type: "🎯 NE TOPLADI?", a: "Taze yumurtalar", d: ["Kırmızı elmalar", "Çiçekler", "Kozalaklar"], exp: "Ali sepete taze yumurtalar toplamıştır." }
+          ]
+        },
+        {
+          title: "Kütüphanede Keşif",
+          icon: "📚",
+          story: "Zeynep yağmurlu bir öğleden sonra kütüphaneye gitti. Uzay ve gezegenlerle ilgili resimli bir kitap buldu. Sessizce masaya oturup kitabı keyifle okudu.",
+          questions: [
+            { q: "Uzay kitabını KİM okudu?", type: "👤 KİM?", a: "Zeynep", d: ["Kütüphaneci", "Ali", "Canan"], exp: "Kitabı okuyan kişi Zeynep'tir." },
+            { q: "Zeynep kitabı NEREDE okudu?", type: "📍 NEREDE?", a: "Kütüphanede", d: ["Evde", "Parkta", "Okul servisinde"], exp: "Zeynep kitabı kütüphanede okumuştur." },
+            { q: "Zeynep kütüphaneye NE ZAMAN gitti?", type: "⏰ NE ZAMAN?", a: "Yağmurlu öğleden sonra", d: ["Gece yarısı", "Sabah erkenden", "Pazar akşamı"], exp: "Zeynep yağmurlu bir öğleden sonra gitmiştir." },
+            { q: "Kitap NE hakkındaydı?", type: "🎯 NE HAKKINDA?", a: "Uzay ve gezegenler", d: ["Yemek tarifleri", "Çiçekler", "Deniz canlıları"], exp: "Kitap uzay ve gezegenler hakkındaydı." }
+          ]
+        },
+        {
+          title: "Gökkuşağı Resmi",
+          icon: "🎨",
+          story: "Kerem dün akşam odasında renkli boyalarını çıkardı. Büyük beyaz bir kağıda kocaman bir gökkuşağı çizdi. Resmi gururla annesine gösterdi.",
+          questions: [
+            { q: "Gökkuşağını KİM çizdi?", type: "👤 KİM?", a: "Kerem", d: ["Annesi", "Öğretmeni", "Kardeşi"], exp: "Resmi çizen Kerem'dir." },
+            { q: "Kerem resmi NEREDE yaptı?", type: "📍 NEREDE?", a: "Odasında", d: ["Okulda", "Bahçede", "Salonda"], exp: "Kerem resmi odasında yapmıştır." },
+            { q: "Kerem resmi NE ZAMAN yaptı?", type: "⏰ NE ZAMAN?", a: "Dün akşam", d: ["Sabah erken", "Gece yarısı", "Haftaya"], exp: "Kerem dün akşam çizmiştir." },
+            { q: "Kerem kağıda NE çizdi?", type: "🎯 NE ÇİZDİ?", a: "Gökkuşağı", d: ["Uçak", "Gemi", "Kardan adam"], exp: "Kerem kocaman bir gökkuşağı çizmiştir." }
+          ]
+        },
+        {
+          title: "Parktaki Uçurtma",
+          icon: "🪁",
+          story: "Elif rüzgarlı bir pazar günü sahile gitti. Kırmızı kuyruklu uçurtmasını gökyüzüne doğru bıraktı. Uçurtma masmavi bulutlara kadar yükseldi.",
+          questions: [
+            { q: "Uçurtmayı KİM uçurdu?", type: "👤 KİM?", a: "Elif", d: ["Balıkçı", "Kerem", "Moli"], exp: "Uçurtmayı uçuran Elif'tir." },
+            { q: "Elif uçurtmayı NEREDE uçurdu?", type: "📍 NEREDE?", a: "Sahilde", d: ["Evde", "Ormanda", "Balkonda"], exp: "Elif sahilde uçurtma uçurmuştur." },
+            { q: "Olay NE ZAMAN yaşandı?", type: "⏰ NE ZAMAN?", a: "Rüzgarlı pazar günü", d: ["Gece vakti", "Kış günü", "Pazartesi sabahı"], exp: "Olay rüzgarlı bir pazar günü yaşanmıştır." },
+            { q: "Uçurtmanın kuyruğu NE renkti?", type: "🎯 NE RENK?", a: "Kırmızı", d: ["Mavi", "Sarı", "Yeşil"], exp: "Uçurtmanın kuyruğu kırmızı renkteydi." }
+          ]
+        },
+        {
+          title: "Kardan Adam Şöleni",
+          icon: "⛄",
+          story: "Can karlı bir kış sabahı bahçeye fırladı. Arkadaşlarıyla birlikte kocaman bir kardan adam yaptı. Burnuna turuncu bir havuç taktı.",
+          questions: [
+            { q: "Kardan adamı KİM yaptı?", type: "👤 KİM?", a: "Can ve arkadaşları", d: ["Yalnızca Moli", "Öğretmen", "Dedesi"], exp: "Kardan adamı Can ve arkadaşları yapmıştır." },
+            { q: "Kardan adamı NEREDE yaptılar?", type: "📍 NEREDE?", a: "Bahçede", d: ["Evde", "Sınıfta", "Mutfakta"], exp: "Kardan adam bahçede yapılmıştır." },
+            { q: "Can bahçeye NE ZAMAN çıktı?", type: "⏰ NE ZAMAN?", a: "Karlı bir kış sabahı", d: ["Yaz günü", "Sonbahar akşamı", "Gece yarısı"], exp: "Can karlı bir kış sabahı bahçeye çıkmıştır." },
+            { q: "Kardan adamın burnuna NE taktılar?", type: "🎯 NE TAKTILAR?", a: "Turuncu havuç", d: ["Kömür", "Taş", "Düğme"], exp: "Burnuna turuncu havuç takmışlardır." }
+          ]
+        },
+        {
+          title: "Fidan Dikme Günü",
+          icon: "🌱",
+          story: "Selim ilkbaharda okul bahçesine minik bir çam fidanı dikti. Fidanın dibine can suyu döktü. Büyümesini sabırla beklemeye başladı.",
+          questions: [
+            { q: "Fidanı KİM dikti?", type: "👤 KİM?", a: "Selim", d: ["Bahçıvan", "Müdür", "Ayşe"], exp: "Fidanı Selim dikmiştir." },
+            { q: "Fidan NEREYE dikildi?", type: "📍 NEREDE?", a: "Okul bahçesine", d: ["Ormana", "Balkona", "Parka"], exp: "Fidan okul bahçesine dikilmiştir." },
+            { q: "Fidan NE ZAMAN dikildi?", type: "⏰ NE ZAMAN?", a: "İlkbaharda", d: ["Kışın", "Yaz ortasında", "Sonbahar sonunda"], exp: "Fidan ilkbaharda dikilmiştir." },
+            { q: "Selim fidanın dibine NE döktü?", type: "🎯 NE DÖKTÜ?", a: "Can suyu", d: ["Meyve suyu", "Çay", "Süt"], exp: "Selim fidanın dibine can suyu dökmüştür." }
+          ]
+        },
+        {
+          title: "Yavru Kuşun Yuvası",
+          icon: "🐦",
+          story: "Ayşe dün öğleden sonra balkonda yavru bir serçe gördü. Kutuya pamuk koyarak minik kuşa ılık bir yuva hazırladı. Serçeye su ve yem verdi.",
+          questions: [
+            { q: "Yavru serçeyi KİM gördü?", type: "👤 KİM?", a: "Ayşe", d: ["Kedi", "Babası", "Can"], exp: "Yavru serçeyi Ayşe görmüştür." },
+            { q: "Serçe NEREDEYDİ?", type: "📍 NEREDE?", a: "Balkonda", d: ["Mutfakta", "Çatıda", "Ağaçta"], exp: "Serçe balkondaydı." },
+            { q: "Ayşe kuşa yuvayı NE ZAMAN yaptı?", type: "⏰ NE ZAMAN?", a: "Dün öğleden sonra", d: ["Sabah erkenden", "Gece vakti", "Geçen yıl"], exp: "Ayşe dün öğleden sonra yapmıştır." },
+            { q: "Ayşe kutunun içine NE koydu?", type: "🎯 NE KOYDU?", a: "Yumuşak pamuk", d: ["Kuru yaprak", "Taş", "Toprak"], exp: "Kutuya yumuşak pamuk koymuştur." }
+          ]
+        },
+        {
+          title: "Bisiklet Gezisi",
+          icon: "🚲",
+          story: "Eren pazar sabahı yeni bisikletine bindi. Yeşil çimenlerle dolu büyük şehir parkında tur attı. Kaskını takmayı asla ihmal etmedi.",
+          questions: [
+            { q: "Bisiklete KİM bindi?", type: "👤 KİM?", a: "Eren", d: ["Ali", "Ahmet", "Öğretmen"], exp: "Bisiklete binen kişi Eren'dir." },
+            { q: "Eren NEREDE tur attı?", type: "📍 NEREDE?", a: "Şehir parkında", d: ["Evde", "Okul koridorunda", "Sahilde"], exp: "Eren şehir parkında tur atmıştır." },
+            { q: "Eren tura NE ZAMAN çıktı?", type: "⏰ NE ZAMAN?", a: "Pazar sabahı", d: ["Akşam karanlığında", "Öğle sıcağında", "Gece yarısı"], exp: "Eren pazar sabahı tura çıkmıştır." },
+            { q: "Eren başına NE taktı?", type: "🎯 NE TAKTI?", a: "Güvenlik kaskı", d: ["Şapka", "Bere", "Gözlük"], exp: "Eren kaskını takmıştır." }
+          ]
+        },
+        {
+          title: "Lezzetli Kek",
+          icon: "🧁",
+          story: "Fatma anneannesiyle birlikte dün akşam mutfağa girdi. Fırında mis kokulu havuçlu ve tarçınlı bir kek pişirdiler. Keki dilimleyip komşularına ikram ettiler.",
+          questions: [
+            { q: "Keki KİM pişirdi?", type: "👤 KİM?", a: "Fatma ve anneannesi", d: ["Yalnızca dedesi", "Moli", "Komşu teyze"], exp: "Keki Fatma ile anneannesi pişirmiştir." },
+            { q: "Keki NEREDE pişirdiler?", type: "📍 NEREDE?", a: "Mutfakta", d: ["Bahçede", "Salonda", "Balkonda"], exp: "Kek mutfakta pişirilmiştir." },
+            { q: "Keki NE ZAMAN yaptılar?", type: "⏰ NE ZAMAN?", a: "Dün akşam", d: ["Sabah erkenden", "Öğle vakti", "Gündüz"], exp: "Keki dün akşam yapmışlardır." },
+            { q: "Kek NE aromalıydı?", type: "🎯 NE İÇERİYORDU?", a: "Havuç ve tarçın", d: ["Çikolata ve çilek", "Peynir", "Fındık"], exp: "Kek havuçlu ve tarçınlıydı." }
+          ]
+        },
+        {
+          title: "Kayıp Oyuncak",
+          icon: "🧸",
+          story: "Mert dün okuldan dönünce odasında en sevdiği oyuncak ayısını bulamadı. Yatağın altına baktığında ayıcığını gördü ve sevinçle sarıldı.",
+          questions: [
+            { q: "Oyuncak ayısını KİM aradı?", type: "👤 KİM?", a: "Mert", d: ["Selim", "Kardeşi", "Annesi"], exp: "Oyuncak ayısını arayan Mert'tir." },
+            { q: "Ayıcık NEREDEYDİ?", type: "📍 NEREDE?", a: "Yatağın altında", d: ["Dolapta", "Okul çantasında", "Bahçede"], exp: "Ayıcık yatağın altındaydı." },
+            { q: "Mert ayısını NE ZAMAN aradı?", type: "⏰ NE ZAMAN?", a: "Okuldan dönünce", d: ["Sabah erkenden", "Gece yarısı", "Hafta sonu"], exp: "Mert okuldan dönünce aramıştır." },
+            { q: "Mert ayısını bulunca NE yaptı?", type: "🎯 NE YAPTI?", a: "Sevinçle sarıldı", d: ["Ağladı", "Kutuya attı", "Arkadaşına verdi"], exp: "Mert sevinçle sarılmıştır." }
+          ]
+        },
+        {
+          title: "Deniz Kıyısında Midye",
+          icon: "🐚",
+          story: "Cem yaz tatilinde ailesiyle birlikte sahil kasabasına gitti. Kumsalda yürürken sedefli parlak bir deniz kabuğu buldu. Kabuğu özenle çantasına koydu.",
+          questions: [
+            { q: "Deniz kabuğunu KİM buldu?", type: "👤 KİM?", a: "Cem", d: ["Balıkçı", "Kardeşi", "Annesi"], exp: "Deniz kabuğunu Cem bulmuştur." },
+            { q: "Cem kabuğu NEREDE buldu?", type: "📍 NEREDE?", a: "Kumsalda", d: ["Denizin dibinde", "Otelde", "Teknede"], exp: "Cem kabuğu kumsalda bulmuştur." },
+            { q: "Cem kasabaya NE ZAMAN gitti?", type: "⏰ NE ZAMAN?", a: "Yaz tatilinde", d: ["Kış aylarında", "Sonbaharda", "Bahar başında"], exp: "Cem yaz tatilinde gitmiştir." },
+            { q: "Cem kumsalda NE buldu?", type: "🎯 NE BULDU?", a: "Sedefli deniz kabuğu", d: ["Denizyıldızı", "Mercan", "Cam şişe"], exp: "Cem sedefli deniz kabuğu bulmuştur." }
+          ]
+        },
+        {
+          title: "Tiyatro Oyunu",
+          icon: "🎭",
+          story: "Öğretmenimiz çarşamba günü tüm sınıfı çocuk tiyatrosuna götürdü. Oyuncular sahnede neşeli bir masalı canlandırdılar. Çocuklar oyunu ayakta alkışladılar.",
+          questions: [
+            { q: "Sınıfı tiyatroya KİM götürdü?", type: "👤 KİM?", a: "Öğretmenimiz", d: ["Müdür", "Servis şoförü", "Veliler"], exp: "Sınıfı tiyatroya öğretmenimiz götürmüştür." },
+            { q: "Olay NEREDE geçti?", type: "📍 NEREDE?", a: "Çocuk tiyatrosunda", d: ["Okul bahçesinde", "Müzede", "Sinemada"], exp: "Olay çocuk tiyatrosunda geçmiştir." },
+            { q: "Tiyatroya NE ZAMAN gittiler?", type: "⏰ NE ZAMAN?", a: "Çarşamba günü", d: ["Pazar günü", "Cuma akşamı", "Hafta sonu"], exp: "Tiyatroya çarşamba günü gitmişlerdir." },
+            { q: "Çocuklar oyun bitince NE yaptılar?", type: "🎯 NE YAPTILAR?", a: "Ayakta alkışladılar", d: ["Uyudular", "Dışarı koştular", "Resim yaptılar"], exp: "Çocuklar oyunu ayakta alkışlamışlardır." }
+          ]
+        },
+        {
+          title: "Yağmur Sonrası Sürpriz",
+          icon: "🌈",
+          story: "Ece dün ikindi vakti pencereden dışarı baktı. Yağmur dinmiş, gökyüzünde rengarenk bir gökkuşağı belirmişti. Hemen fotoğrafını çekti.",
+          questions: [
+            { q: "Pencereden dışarı KİM baktı?", type: "👤 KİM?", a: "Ece", d: ["Annesi", "Moli", "Kardeşi"], exp: "Pencereden dışarı bakan Ece'dir." },
+            { q: "Gökkuşağı NEREDE belirdi?", type: "📍 NEREDE?", a: "Gökyüzünde", d: ["Bahçede", "Ormanda", "Denizde"], exp: "Gökkuşağı gökyüzünde belirmiştir." },
+            { q: "Ece gökkuşağını NE ZAMAN gördü?", type: "⏰ NE ZAMAN?", a: "İkindi vakti", d: ["Sabah erkenden", "Gece yarısı", "Öğle vakti"], exp: "Ece ikindi vakti görmüştür." },
+            { q: "Ece gökkuşağını görünce NE yaptı?", type: "🎯 NE YAPTI?", a: "Fotoğrafını çekti", d: ["Dışarı kaçtı", "Resmini sildi", "Ağladı"], exp: "Ece hemen fotoğrafını çekmiştir." }
+          ]
+        },
+        {
+          title: "Meyve Bahçesi",
+          icon: "🍒",
+          story: "Ahmet dedesiyle beraber yaz başında kiraz bahçesine gitti. Ağaçların dallarından taptaze kırmızı kirazlar topladılar. Sepetleri lezzetle doldurdular.",
+          questions: [
+            { q: "Kirazları KİM topladı?", type: "👤 KİM?", a: "Ahmet ve dedesi", d: ["Öğretmen", "Manav", "Ali"], exp: "Kirazları Ahmet ile dedesi toplamıştır." },
+            { q: "Olay NEREDE geçti?", type: "📍 NEREDE?", a: "Kiraz bahçesinde", d: ["Pazarda", "Evde", "Manavda"], exp: "Olay kiraz bahçesinde geçmiştir." },
+            { q: "Kirazları NE ZAMAN topladılar?", type: "⏰ NE ZAMAN?", a: "Yaz başında", d: ["Kış ortasında", "Sonbaharda", "İlkbahar başında"], exp: "Kirazları yaz başında toplamışlardır." },
+            { q: "Sepetleri NE ile doldurdular?", type: "🎯 NE İLE?", a: "Taze kırmızı kiraz", d: ["Elma", "Erik", "Portakal"], exp: "Sepetleri kırmızı kirazla doldurmuşlardır." }
+          ]
+        },
+        {
+          title: "Sokak Kedisi Boncuk",
+          icon: "🐱",
+          story: "Selin dün akşam apartmanın kapısında üşüyen sarı bir kedi gördü. Ona Boncuk adını verdi ve bir kap ılık süt bıraktı. Kedi mırıldanarak sütünü içti.",
+          questions: [
+            { q: "Kediye sütü KİM verdi?", type: "👤 KİM?", a: "Selin", d: ["Kapıcı", "Ali", "Can"], exp: "Kediye sütü Selin vermiştir." },
+            { q: "Kedi NEREDEYDİ?", type: "📍 NEREDE?", a: "Apartman kapısında", d: ["Bahçede", "Çatıda", "Parkta"], exp: "Kedi apartman kapısındaydı." },
+            { q: "Selin kediyi NE ZAMAN gördü?", type: "⏰ NE ZAMAN?", a: "Dün akşam", d: ["Sabah erkenden", "Öğlen", "Gece yarısı"], exp: "Selin dün akşam görmüştür." },
+            { q: "Selin kediye NE adını verdi?", type: "🎯 NE ADI VERDİ?", a: "Boncuk", d: ["Pamuk", "Tekir", "Mırmır"], exp: "Selin kediye Boncuk adını vermiştir." }
+          ]
+        },
+        {
+          title: "Akıllı Saat",
+          icon: "⌚",
+          story: "Barış doğum gününde babasından mavi renkli bir akıllı saat hediye aldı. Saati koluna takıp odasındaki adımlarını saydı. Çok mutlu oldu.",
+          questions: [
+            { q: "Hediyeyi KİM verdi?", type: "👤 KİM?", a: "Babası", d: ["Annesi", "Arkadaşı", "Dedesi"], exp: "Hediyeyi babası vermiştir." },
+            { q: "Barış adımlarını NEREDE saydı?", type: "📍 NEREDE?", a: "Odasında", d: ["Bahçede", "Okulda", "Salonda"], exp: "Barış adımlarını odasında saymıştır." },
+            { q: "Barış saati NE ZAMAN aldı?", type: "⏰ NE ZAMAN?", a: "Doğum gününde", d: ["Yılbaşında", "Bayramda", "Karne gününde"], exp: "Barış doğum gününde hediye almıştır." },
+            { q: "Hediye NE idi?", type: "🎯 HEDİYE NEYDİ?", a: "Mavi akıllı saat", d: ["Bisiklet", "Kitap", "Top"], exp: "Hediye mavi akıllı saattir." }
+          ]
+        },
+        {
+          title: "Kuş Yemliği",
+          icon: "🕊️",
+          story: "Deniz karlı bir kış günü tahta parçalarından küçük bir kuş yemliği yaptı. Yemliği bahçedeki dut ağacına astı. Kuşlar neşeyle yem yediler.",
+          questions: [
+            { q: "Kuş yemliğini KİM yaptı?", type: "👤 KİM?", a: "Deniz", d: ["Babası", "Moli", "Kerem"], exp: "Yemliği Deniz yapmıştır." },
+            { q: "Yemliği NEREYE astı?", type: "📍 NEREYE?", a: "Dut ağacına", d: ["Balkon demirine", "Pencereye", "Çatıya"], exp: "Yemliği dut ağacına asmıştır." },
+            { q: "Yemliği NE ZAMAN yaptı?", type: "⏰ NE ZAMAN?", a: "Karlı bir kış günü", d: ["Yaz günü", "Sonbaharda", "İlkbaharda"], exp: "Karlı bir kış günü yapmıştır." },
+            { q: "Yemliği NE maddesinden yaptı?", type: "🎯 NEYLE YAPTI?", a: "Tahta parçalarından", d: ["Plastikten", "Camdan", "Demirden"], exp: "Tahta parçalarından yapmıştır." }
+          ]
+        },
+        {
+          title: "Kayıp Köpek Karabaş",
+          icon: "🐕",
+          story: "Emre dün öğle saatlerinde mahallede kaybolan sevimli köpeği Karabaş'ı aradı. Kasap amcanın dükkanının önünde dinlenirken buldu. Sevinçle eve getirdi.",
+          questions: [
+            { q: "Köpeği KİM aradı?", type: "👤 KİM?", a: "Emre", d: ["Kasap", "Polis", "Ali"], exp: "Köpeği arayan Emre'dir." },
+            { q: "Köpek NEREDEYDİ?", type: "📍 NEREDE?", a: "Kasap dükkanının önünde", d: ["Parkta", "Okulda", "Evde"], exp: "Köpek kasap dükkanının önündeydi." },
+            { q: "Emre köpeği NE ZAMAN buldu?", type: "⏰ NE ZAMAN?", a: "Dün öğle saatlerinde", d: ["Gece vakti", "Sabah erkenden", "Akşamüstü"], exp: "Dün öğle saatlerinde bulmuştur." },
+            { q: "Köpeğin adı NE idi?", type: "🎯 ADI NEYDİ?", a: "Karabaş", d: ["Pamuk", "Fındık", "Duman"], exp: "Köpeğin adı Karabaş'tır." }
+          ]
+        },
+        {
+          title: "Okul Koşusu",
+          icon: "🏃",
+          story: "Selim 23 Nisan töreninde okul bahçesindeki bayrak koşusuna katıldı. Hızla koşarak bitiş çizgisine ilk sırada ulaştı. Öğretmeni ona madalya taktı.",
+          questions: [
+            { q: "Koşuyu KİM kazandı?", type: "👤 KİM?", a: "Selim", d: ["Mert", "Ali", "Can"], exp: "Koşuyu Selim kazanmıştır." },
+            { q: "Yarış NEREDE yapıldı?", type: "📍 NEREDE?", a: "Okul bahçesinde", d: ["Stadyumda", "Parkta", "Sokakta"], exp: "Yarış okul bahçesinde yapılmıştır." },
+            { q: "Yarış NE ZAMAN yapıldı?", type: "⏰ NE ZAMAN?", a: "23 Nisan töreninde", d: ["29 Ekim'de", "Yılbaşında", "Yaz tatilinde"], exp: "23 Nisan töreninde yapılmıştır." },
+            { q: "Öğretmen Selim'e NE taktı?", type: "🎯 NE TAKTI?", a: "Madalya", d: ["Kupa", "Rozet", "Şapka"], exp: "Öğretmeni ona madalya takmıştır." }
+          ]
+        },
+        {
+          title: "Balon Turu",
+          icon: "🎈",
+          story: "Ayça bayram tatilinde ailesiyle Kapadokya'ya gitti. Sabahın erken saatlerinde gökyüzünde süzülen renkli sıcak hava balonlarını izledi. Bol bol hatıra fotoğrafı çekti.",
+          questions: [
+            { q: "Balonları KİM izledi?", type: "👤 KİM?", a: "Ayça", d: ["Pilot", "Rehber", "Zeynep"], exp: "Balonları izleyen Ayça'dır." },
+            { q: "Ayça NEREYE gitti?", type: "📍 NEREYE?", a: "Kapadokya'ya", d: ["Antalya'ya", "Bursa'ya", "Trabzon'a"], exp: "Ayça Kapadokya'ya gitmiştir." },
+            { q: "Balonları NE ZAMAN izledi?", type: "⏰ NE ZAMAN?", a: "Sabahın erken saatlerinde", d: ["Gece yarısı", "Öğle sıcağında", "Akşam yemeğinde"], exp: "Sabahın erken saatlerinde izlemiştir." },
+            { q: "Ayça hatıra olarak NE çekti?", type: "🎯 NE ÇEKTİ?", a: "Fotoğraf", d: ["Video film", "Resim tablosu", "Harita"], exp: "Ayça hatıra fotoğrafı çekmiştir." }
+          ]
+        },
+        {
+          title: "Saksıdaki Domates",
+          icon: "🍅",
+          story: "Murat nisan ayında balkondaki büyük saksıya bir domates tohumu ekti. Her akşam suyunu verip güneş almasını sağladı. Yaz gelince saksıda kırmızı domatesler kızardı.",
+          questions: [
+            { q: "Tohumu KİM ekti?", type: "👤 KİM?", a: "Murat", d: ["Babası", "Komşusu", "Moli"], exp: "Tohumu Murat ekmiştir." },
+            { q: "Domatesi NEREYE ekti?", type: "📍 NEREYE?", a: "Balkondaki saksıya", d: ["Bahçeye", "Ormana", "Tarlaya"], exp: "Balkondaki saksıya ekmiştir." },
+            { q: "Domatesler NE ZAMAN kızardı?", type: "⏰ NE ZAMAN?", a: "Yaz gelince", d: ["Kışın", "Sonbaharda", "İlkbahar başında"], exp: "Domatesler yazın kızarmıştır." },
+            { q: "Saksıda NE yetişti?", type: "🎯 NE YETİŞTİ?", a: "Kırmızı domates", d: ["Biber", "Salatalık", "Çilek"], exp: "Saksıda kırmızı domates yetişmiştir." }
+          ]
+        },
+        {
+          title: "Müze Ziyareti",
+          icon: "🏛️",
+          story: "Ceren cuma günü sınıf arkadaşlarıyla birlikte Etnografya Müzesi'ni gezdi. Eski Türk kıyafetlerini ve el sanatlarını hayranlıkla inceledi. Not defterine bilgiler yazdı.",
+          questions: [
+            { q: "Müzeyi KİM gezdi?", type: "👤 KİM?", a: "Ceren ve sınıf arkadaşları", d: ["Yalnızca öğretmen", "Turistler", "Rehber"], exp: "Müzeyi Ceren ve arkadaşları gezmiştir." },
+            { q: "Ceren NEREYİ gezdi?", type: "📍 NEREYİ?", a: "Etnografya Müzesi'ni", d: ["Hayvanat bahçesini", "Stadyumu", "Lunaparkı"], exp: "Etnografya Müzesi'ni gezmiştir." },
+            { q: "Müzeye NE ZAMAN gittiler?", type: "⏰ NE ZAMAN?", a: "Cuma günü", d: ["Pazar akşamı", "Tatil günü", "Gece vakti"], exp: "Cuma günü gitmişlerdir." },
+            { q: "Ceren not defterine NE yazdı?", type: "🎯 NE YAZDI?", a: "Önemli bilgiler", d: ["Şiir", "Resim", "Şarkı"], exp: "Not defterine bilgiler yazmıştır." }
+          ]
+        },
+        {
+          title: "Göletteki Kurbağa",
+          icon: "🐸",
+          story: "Ozan ılık bir bahar ikindisinde orman göletine gitti. Nilüfer yaprağı üzerinde vıraklayan yeşil bir kurbağa gördü. Kurbağa suya cup diye atladı.",
+          questions: [
+            { q: "Kurbağayı KİM gördü?", type: "👤 KİM?", a: "Ozan", d: ["Balıkçı", "Avcı", "Ali"], exp: "Kurbağayı Ozan görmüştür." },
+            { q: "Kurbağa NEREDEYDİ?", type: "📍 NEREDE?", a: "Nilüfer yaprağı üzerinde", d: ["Ağaç dalında", "Kumsalda", "Çimende"], exp: "Kurbağa nilüfer yaprağındaydı." },
+            { q: "Ozan gölete NE ZAMAN gitti?", type: "⏰ NE ZAMAN?", a: "Bahar ikindisinde", d: ["Kış sabahında", "Gece yarısı", "Öğle sıcağında"], exp: "Bahar ikindisinde gitmiştir." },
+            { q: "Kurbağa nereye NE YAPTI?", type: "🎯 NE YAPTI?", a: "Suya cup diye atladı", d: ["Ağaca tırmandı", "Uçtu", "Uyudu"], exp: "Kurbağa suya cup diye atlamıştır." }
+          ]
+        },
+        {
+          title: "Satranç Şampiyonası",
+          icon: "♟️",
+          story: "Defne hafta sonu okullar arası satranç turnuvasına katıldı. Sakin ve dikkatli hamlelerle tüm rakiplerini yendi. Turnuva sonunda birincilik kupasını kaldırdı.",
+          questions: [
+            { q: "Turnuvayı KİM kazandı?", type: "👤 KİM?", a: "Defne", d: ["Eren", "Hakem", "Ayşe"], exp: "Turnuvayı Defne kazanmıştır." },
+            { q: "Turnuva NEREDE yapıldı?", type: "📍 NEREDE?", a: "Okullar arası salonda", d: ["Bahçede", "Evde", "Parkta"], exp: "Okullar arası turnuvada yapılmıştır." },
+            { q: "Turnuva NE ZAMAN yapıldı?", type: "⏰ NE ZAMAN?", a: "Hafta sonu", d: ["Gece vakti", "Yaz ortasında", "Çarşamba sabahı"], exp: "Hafta sonu yapılmıştır." },
+            { q: "Defne ödül olarak NE aldı?", type: "🎯 NE ALDI?", a: "Birincilik kupası", d: ["Madalya", "Kitap", "Saat"], exp: "Birincilik kupasını kaldırmıştır." }
+          ]
+        }
+      ];
+
+      const item = this.getUniqueNextItem(stories, 't2_5n1k_pool') || stories[0];
+      const qObj = item.questions[Math.floor(Math.random() * item.questions.length)];
+      const choices = this.fisherYatesShuffle([qObj.a, ...qObj.d]);
+
+      return {
+        type: 't2_5n1k_story',
+        question: 'Mini hikayeyi oku ve dedektif sorusunu yanıtla! 🔍',
+        spokenText: `${item.story} Soru: ${qObj.q}`,
+        correct: qObj.a,
+        explanation: `Doğru! ${qObj.exp} 👏`,
+        interactiveData: {
+          title: item.title,
+          icon: item.icon,
+          story: item.story,
+          questionText: qObj.q,
+          qTypeBadge: qObj.type,
+          correctAnswer: qObj.a,
+          choices: choices,
+          explanation: qObj.exp
+        }
+      };
+    },
+
+    // 5) ✂️ HECE BİLGİSİ, SATIR SONU BÖLME & YAZIM YANLIŞLARI (Havuz: 54 Soru)
+    generateGrade2TurkishSyllableSpelling() {
+      const mode = Math.random() < 0.34 ? 'syllable_count' : (Math.random() < 0.67 ? 'line_break' : 'capital_hunter');
+
+      if (mode === 'syllable_count') {
+        const words = [
+          { w: "KÜTÜPHANE", count: 4, split: "Kü-tüp-ha-ne" },
+          { w: "CUMHURİYET", count: 4, split: "Cum-hu-ri-yet" },
+          { w: "BİLGİSAYAR", count: 4, split: "Bil-gi-sa-yar" },
+          { w: "İLKOKUL", count: 3, split: "İl-ko-kul" },
+          { w: "KELEBEK", count: 3, split: "Ke-le-bek" },
+          { w: "ARKADAŞ", count: 3, split: "Ar-ka-daş" },
+          { w: "DONDURMA", count: 3, split: "Don-dur-ma" },
+          { w: "GÖKKUŞAĞI", count: 4, split: "Gök-ku-şa-ğı" },
+          { w: "ÖĞRETMEN", count: 3, split: "Öğ-ret-men" },
+          { w: "PORTAKAL", count: 3, split: "Por-ta-kal" },
+          { w: "UÇURTMA", count: 3, split: "U-çurt-ma" },
+          { w: "TREN", count: 1, split: "Tren (Tek hece)" },
+          { w: "TÜRK", count: 1, split: "Türk (Tek hece)" },
+          { w: "GÖZ", count: 1, split: "Göz (Tek hece)" },
+          { w: "BALIK", count: 2, split: "Ba-lık" },
+          { w: "GÜNEŞ", count: 2, split: "Gü-neş" },
+          { w: "KİTAP", count: 2, split: "Ki-tap" },
+          { w: "KEDİ", count: 2, split: "Ke-di" }
+        ];
+
+        const item = this.getUniqueNextItem(words, 't2_syl_count') || words[0];
+        const buttons = [1, 2, 3, 4];
+
+        return {
+          type: 't2_syllable_spelling',
+          subMode: 'syllable_count',
+          question: `"${item.w}" kelimesi kaç hecelidir? ✂️`,
+          spokenText: `${item.w} kelimesi kaç hecelidir?`,
+          correct: item.count,
+          explanation: `Harika! "${item.w}" kelimesi ${item.count} hecelidir (${item.split}). 👏`,
+          interactiveData: {
+            subMode: 'syllable_count',
+            word: item.w,
+            correctCount: item.count,
+            split: item.split,
+            buttons: buttons
+          }
+        };
+      } else if (mode === 'line_break') {
+        const lineBreakItems = [
+          { word: "İLKOKUL", correct: "ilko-kul", wrong: ["ilk-okul"], rule: "Bileşik kelimeler hecelenirken ilk-okul değil, il-ko-kul şeklinde hecelenir." },
+          { word: "ARABA", correct: "ara-ba", wrong: ["a-raba"], rule: "Satır sonunda veya başında tek harf tek başına bırakılamaz." },
+          { word: "UÇAK", correct: "uçak sığdırılır", wrong: ["u-çak"], rule: "Tek harfli hece (u-) satır sonunda tek başına bırakılmaz." },
+          { word: "BAŞÖĞRETMEN", correct: "başöğ-retmen", wrong: ["baş-öğretmen"], rule: "Bileşik sözcükler ulama kuralına göre hecelerinden bölünür." },
+          { word: "ELMA", correct: "el-ma", wrong: ["e-lma"], rule: "Hece bütünlüğü korunur, tek harf satır başında bırakılmaz." },
+          { word: "KÜTÜPHANE", correct: "kütüp-hane", wrong: ["küt-üphane"], rule: "Kelime hecelerine uygun olarak 'kü-tüp-ha-ne' şeklinde bölünür." },
+          { word: "CUMHURİYET", correct: "Cumhu-riyet", wrong: ["Cumhuriy-et"], rule: "Heceler 'Cum-hu-ri-yet' şeklindedir, son hece 'yet' olarak kalır." },
+          { word: "HANIMELİ", correct: "hanı-meli", wrong: ["hanım-eli"], rule: "Bileşik sözcükler tek kelime gibi 'ha-nı-me-li' şeklinde hecelenir." },
+          { word: "OKULUMUZ", correct: "oku-lumuz", wrong: ["o-kulumuz"], rule: "Satır sonunda tek harf (o-) bırakılamaz." },
+          { word: "ÖĞRENCİ", correct: "öğren-ci", wrong: ["ö-ğrenci"], rule: "Tek harf (ö-) satır sonunda bırakılmaz." },
+          { word: "BİLGİSAYAR", correct: "bilgi-sayar", wrong: ["b-ilgisayar"], rule: "Satır başında tek harf bırakılmaz." },
+          { word: "ŞEMSİYE", correct: "şem-siye", wrong: ["ş-emsiye"], rule: "Heceden bölünür: şem-si-ye." },
+          { word: "KARTOPU", correct: "kar-topu", wrong: ["ka-rtopu"], rule: "Doğru hece: kar-to-pu." },
+          { word: "ASTRONOT", correct: "as-tronot", wrong: ["a-stronot"], rule: "Tek harf (a-) satır sonunda yalnız bırakılamaz." },
+          { word: "ERZURUM", correct: "Erzu-rum", wrong: ["E-rzurum"], rule: "İlk hece tek sesli harften oluşsa da satır sonunda tek başına kalamaz." },
+          { word: "KESTANE", correct: "kes-tane", wrong: ["ke-stane"], rule: "Doğru heceleme 'kes-ta-ne' şeklindedir." }
+        ];
+
+        const item = this.getUniqueNextItem(lineBreakItems, 't2_line_break') || lineBreakItems[0];
+        const choices = this.fisherYatesShuffle([item.correct, ...item.wrong]);
+
+        return {
+          type: 't2_syllable_spelling',
+          subMode: 'line_break',
+          question: `"${item.word}" kelimesi satır sonuna sığmadığında hangisi gibi bölünür? ✂️`,
+          spokenText: `${item.word} kelimesi satır sonuna nasıl bölünür?`,
+          correct: item.correct,
+          explanation: `Doğru! ${item.rule} 👏`,
+          interactiveData: {
+            subMode: 'line_break',
+            word: item.word,
+            correctSplit: item.correct,
+            rule: item.rule,
+            choices: choices
+          }
+        };
+      } else {
+        const capitalItems = [
+          { sentence: "Yaz tatilinde ankara'ya hızlı trenle gittik.", words: ["Yaz", "tatilinde", "ankara'ya", "hızlı", "trenle", "gittik."], wrongWord: "ankara'ya", fixedWord: "Ankara'ya", rule: "Şehir adları özel isimdir, büyük harfle başlar." },
+          { sentence: "Arkadaşım mehmet ile parkta buluştuk.", words: ["Arkadaşım", "mehmet", "ile", "parkta", "buluştuk."], wrongWord: "mehmet", fixedWord: "Mehmet", rule: "İnsan isimleri özel isimdir ve mutlaka büyük harfle başlar." },
+          { sentence: "Köpeğimiz karabaş bahçede havladı.", words: ["Köpeğimiz", "karabaş", "bahçede", "neşeyle", "havladı."], wrongWord: "karabaş", fixedWord: "Karabaş", rule: "Hayvanlara verilen özel adlar büyük harfle başlar." },
+          { sentence: "Cumhuriyet bayramı'nı okulumuzda kutladık.", words: ["Cumhuriyet", "bayramı'nı", "okulumuzda", "coşkuyla", "kutladık."], wrongWord: "bayramı'nı", fixedWord: "Bayramı'nı", rule: "Milli bayram adlarının her kelimesi büyük harfle başlar." },
+          { sentence: "Kedim pamuk sütünü afiyetle içti.", words: ["Kedim", "pamuk", "sütünü", "afiyetle", "içti."], wrongWord: "pamuk", fixedWord: "Pamuk", rule: "Evcil hayvan adları özel isimdir, büyük harfle yazılır." },
+          { sentence: "Teyzem izmir'den bize taze incir getirdi.", words: ["Teyzem", "izmir'den", "bize", "taze", "incir", "getirdi."], wrongWord: "izmir'den", fixedWord: "İzmir'den", rule: "Şehir isimleri büyük harfle başlar." },
+          { sentence: "Mustafa kemal atatürk yurdumuzu kurtardı.", words: ["Mustafa", "kemal", "atatürk", "yurdumuzu", "kurtardı."], wrongWord: "kemal", fixedWord: "Kemal", rule: "Kişi adları her zaman büyük harfle başlar." },
+          { sentence: "Dün ali ile kütüphanede ders çalıştık.", words: ["Dün", "ali", "ile", "kütüphanede", "ders", "çalıştık."], wrongWord: "ali", fixedWord: "Ali", rule: "İnsan isimleri büyük harfle başlar." },
+          { sentence: "Kardeşim zeynep birinci sınıfa başladı.", words: ["Kardeşim", "zeynep", "birinci", "sınıfa", "başladı."], wrongWord: "zeynep", fixedWord: "Zeynep", rule: "Özel isimler büyük harfle başlar." },
+          { sentence: "Okulumuz van gölü kıyısındadır.", words: ["Okulumuz", "van", "gölü", "kıyısındadır."], wrongWord: "van", fixedWord: "Van", rule: "Göl ve şehir adları büyük harfle başlar." },
+          { sentence: "Babam istanbul'a iş toplantısına gitti.", words: ["Babam", "istanbul'a", "iş", "toplantısına", "gitti."], wrongWord: "istanbul'a", fixedWord: "İstanbul'a", rule: "Şehir adları büyük harfle yazılır." },
+          { sentence: "Arkadaşım canan güzel piyano çalıyor.", words: ["Arkadaşım", "canan", "güzel", "piyano", "çalıyor."], wrongWord: "canan", fixedWord: "Canan", rule: "Kişi isimleri büyük harfle yazılır." },
+          { sentence: "Yaz tatilinde antalya'da yüzdük.", words: ["Yaz", "tatilinde", "antalya'da", "bolca", "yüzdük."], wrongWord: "antalya'da", fixedWord: "Antalya'da", rule: "Şehir adları büyük harfle başlar." },
+          { sentence: "Biz türkçe dersini çok seviyoruz.", words: ["Biz", "türkçe", "dersini", "çok", "seviyoruz."], wrongWord: "türkçe", fixedWord: "Türkçe", rule: "Dil adları özel isimdir ve büyük harfle başlar." },
+          { sentence: "Kuşumuz maviş kafesinde ötüyor.", words: ["Kuşumuz", "maviş", "kafesinde", "neşeyle", "ötüyor."], wrongWord: "maviş", fixedWord: "Maviş", rule: "Hayvanlara verilen adlar büyük harfle başlar." },
+          { sentence: "Öğretmenimiz fatma hanım sınıfa girdi.", words: ["Öğretmenimiz", "fatma", "hanım", "gülümseyerek", "sınıfa", "girdi."], wrongWord: "fatma", fixedWord: "Fatma", rule: "Kişi isimleri büyük harfle başlar." },
+          { sentence: "Cumhuriyet 29 ekim günü ilan edildi.", words: ["Cumhuriyet", "29", "ekim", "günü", "ilan", "edildi."], wrongWord: "ekim", fixedWord: "Ekim", rule: "Belirli bir tarihi gösteren ay adları büyük harfle başlar." },
+          { sentence: "Yarın bursa'ya teyzemlere gideceğiz.", words: ["Yarın", "bursa'ya", "teyzemlere", "ziyarete", "gideceğiz."], wrongWord: "bursa'ya", fixedWord: "Bursa'ya", rule: "Şehir isimleri büyük harfle başlar." }
+        ];
+
+        const item = this.getUniqueNextItem(capitalItems, 't2_capital') || capitalItems[0];
+
+        return {
+          type: 't2_syllable_spelling',
+          subMode: 'capital_hunter',
+          question: 'Cümledeki küçük harfle yazılmış özel isme dokunarak düzelt! 🔤',
+          spokenText: 'Cümledeki küçük harfle yazılmış özel isme dokunarak düzelt.',
+          correct: item.wrongWord,
+          explanation: `Aferin! "${item.fixedWord}" özel isim olduğu için büyük harfle başlamalıdır. (${item.rule}) 👏`,
+          interactiveData: {
+            subMode: 'capital_hunter',
+            sentence: item.sentence,
+            words: item.words,
+            wrongWord: item.wrongWord,
+            fixedWord: item.fixedWord,
+            rule: item.rule
+          }
+        };
+      }
+    },
+
+    // 2. SINIF TÜRKÇE SÜPER KARMA DÜELLO (5 Oyun Motorundan Dengeli Çekim)
     generateGrade2TurkishKarma() {
       const topic = Math.floor(Math.random() * 5);
-      if (topic === 0) return this.drawFromPool(this.grade2TurkishSynAntPool, "grade2TurkishSynAntPool");
-      if (topic === 1) return this.drawFromPool(this.grade2TurkishAlphabetSyllablePool, "grade2TurkishAlphabetSyllablePool");
-      if (topic === 2) return this.drawFromPool(this.grade2TurkishReading5N1KPool, "grade2TurkishReading5N1KPool");
-      if (topic === 3) return this.drawFromPool(this.grade2TurkishSentenceLogicPool, "grade2TurkishSentenceLogicPool");
-      return this.drawFromPool(this.grade2TurkishPunctuationSpellingPool, "grade2TurkishPunctuationSpellingPool");
+      if (topic === 0) return this.generateGrade2TurkishSynAnt();
+      if (topic === 1) return this.generateGrade2TurkishSentenceTrain();
+      if (topic === 2) return this.generateGrade2TurkishPunctuation();
+      if (topic === 3) return this.generateGrade2Turkish5N1K();
+      return this.generateGrade2TurkishSyllableSpelling();
     },
 
     // 2. SINIF BÜYÜK KARMA DÜELLO (Hayat Bilgisi, Matematik, Türkçe)
@@ -10606,25 +11311,25 @@
       } else if (gameType === 'math_2_karma') {
         const raw = this.generateGrade2MathKarma();
         return this.buildQuestionItem(raw, '🏆 2. Sınıf Matematik Karma Düello');
-      // --- 2. SINIF: 2026 MAARİF MODELİ TÜRKÇE 5 ÖĞRENME ALANI ---
+      // --- 2. SINIF: 2026 MAARİF MODELİ TÜRKÇE 5 ÖĞRENME ALANI (100% ŞIKSIZ & DOKUNMATİK) ---
       } else if (gameType === 'turkish_syn_ant_2') {
-        const raw = this.drawFromPool(this.grade2TurkishSynAntPool, "grade2TurkishSynAntPool");
-        return this.buildQuestionItem(raw, '✨ Eş ve Zıt Anlam Avcısı');
-      } else if (gameType === 'turkish_alphabet_syllable_2') {
-        const raw = this.drawFromPool(this.grade2TurkishAlphabetSyllablePool, "grade2TurkishAlphabetSyllablePool");
-        return this.buildQuestionItem(raw, '🔤 Sözlük Sırası & Doğru Hece Bölme');
-      } else if (gameType === 'turkish_reading_5n1k_2') {
-        const raw = this.drawFromPool(this.grade2TurkishReading5N1KPool, "grade2TurkishReading5N1KPool");
-        return this.buildQuestionItem(raw, '🔍 5N1K Dedektifi & Metin Anlama');
+        const raw = this.generateGrade2TurkishSynAnt();
+        return this.buildQuestionItem(raw, '🔄 Eş ve Zıt Anlam Mıknatısı');
       } else if (gameType === 'turkish_sentence_logic_2') {
-        const raw = this.drawFromPool(this.grade2TurkishSentenceLogicPool, "grade2TurkishSentenceLogicPool");
-        return this.buildQuestionItem(raw, '🧱 Kurallı Cümle İnşası');
+        const raw = this.generateGrade2TurkishSentenceTrain();
+        return this.buildQuestionItem(raw, '🧩 Cümle Treni');
       } else if (gameType === 'turkish_punctuation_spelling_2' || gameType === 'turkish_punctuation_2') {
-        const raw = this.drawFromPool(this.grade2TurkishPunctuationSpellingPool, "grade2TurkishPunctuationSpellingPool");
-        return this.buildQuestionItem(raw, '✍️ Noktalama & Yazım Ustası');
+        const raw = this.generateGrade2TurkishPunctuation();
+        return this.buildQuestionItem(raw, '❓ Noktalama Dedektifi');
+      } else if (gameType === 'turkish_reading_5n1k_2') {
+        const raw = this.generateGrade2Turkish5N1K();
+        return this.buildQuestionItem(raw, '📖 5N1K Mini Hikaye Dedektifi');
+      } else if (gameType === 'turkish_alphabet_syllable_2') {
+        const raw = this.generateGrade2TurkishSyllableSpelling();
+        return this.buildQuestionItem(raw, '✂️ Hece & Yazım Avcısı');
       } else if (gameType === 'turkish_2_karma') {
         const raw = this.generateGrade2TurkishKarma();
-        return this.buildQuestionItem(raw, '📚 2. Sınıf Türkçe Karma Düello');
+        return this.buildQuestionItem(raw, '🏆 2. Sınıf Türkçe Süper Karma');
       } else if (gameType === 'grade2_grand_duel') {
         const raw = this.generateGrade2GrandDuel();
         return this.buildQuestionItem(raw, '🏆 2. Sınıf Büyük Karma Düello');
@@ -20096,60 +20801,86 @@
         icon: '📚',
         colorTheme: 'theme-turkish',
         tagline: '2026 Maarif Modeli',
-        description: 'Dinleme ve görsel anlama, zıt kavramlar, kurallı cümleler ve temel noktalama işaretleri! 🦉📖',
+        description: 'Eş-zıt anlam mıknatısı, anlamlı cümle treni, noktalama dedektifi, 5N1K mini hikaye ve hece-yazım atölyesi! 🔄🚂❓📖✂️',
         badge: 'Maarif Modeli 2026',
         topics: [
           { id: 'all', label: '🌟 Tüm Konular / Karma Düello' },
-          { id: 'listen_comprehend', label: '🎧 Dinleme & Görsel Okuma' },
-          { id: 'antonyms', label: '🔄 Zıt Kavramlar' },
-          { id: 'sentence_punctuation', label: '✍️ Cümle & Noktalama' }
+          { id: 'syn_ant', label: '🔄 Tema 1: Eş & Zıt Anlam Mıknatısı' },
+          { id: 'sentence_logic', label: '🚂 Tema 2: Cümle Treni (Sıralama)' },
+          { id: 'punctuation_spelling', label: '❓ Tema 3: Noktalama Dedektifi' },
+          { id: 'reading_5n1k', label: '📖 Tema 4: 5N1K Mini Hikaye' },
+          { id: 'alphabet_syllable', label: '✂️ Tema 5: Hece & Yazım Avcısı' }
         ],
         games: [
           {
-            id: 'turkish_listen_comprehend_1',
+            id: 'turkish_syn_ant_2',
             active: true,
-            title: 'Dinle, Anla ve Resmi Bul!',
-            icon: '🎧',
-            badge: '🎧 Dinleme & Anlama',
-            featureTag: '🔊 TTS Destekli',
-            description: 'Sesli okunan cümleyi dinle, anlatan doğru görseli bul veya olayları oluş sırasına (Önce-Sonra) koy! 🎧🖼️',
-            tags: ['🎧 Sesli Dinleme', '🖼️ Görsel Eşleştirme', '⏳ Önce - Sonra', '🦉 Anlama Becerisi'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'listen_comprehend'
-          },
-          {
-            id: 'turkish_antonyms_1',
-            active: true,
-            title: 'Zıt Kavramlar Düellosu',
+            title: 'Eş ve Zıt Anlamlı Kelime Mıknatısı',
             icon: '🔄',
-            badge: '🔄 Zıt Anlam',
-            featureTag: '⭐ 35+ Kelime',
-            description: 'Büyük-küçük, uzun-kısa, sıcak-soğuk, açık-kapalı gibi 1. sınıf temel zıt kavramlarını şimşek gibi yakala! 🔄⚡',
-            tags: ['🔄 Karşıt Kavramlar', '⚡ Hızlı Eşleştirme', '🐘 Büyük - Küçük', '🥛 Dolu - Boş'],
+            badge: '🔄 Kelime Mıknatısı',
+            featureTag: '⭐ Şıksız & Dokunmatik',
+            description: 'Eş ve zıt anlamlı kelimeleri mıknatıs kutusuna çek! Siyah-kara, büyük-küçük 70+ kelime hazinesi.',
+            tags: ['🧲 Mıknatıs Kutusu', '✨ Eş Anlamlılar', '🔄 Zıt Anlamlılar'],
             btnText: 'Düelloyu Başlat',
-            topic: 'antonyms'
+            topic: 'syn_ant'
           },
           {
-            id: 'turkish_sentence_punctuation_1',
+            id: 'turkish_sentence_logic_2',
             active: true,
-            title: 'Cümle Kurucu & Noktalama Avcısı',
-            icon: '✍️',
-            badge: '✍️ Cümle & Noktalama',
-            featureTag: '✍️ Nokta & Soru',
-            description: 'Karışık kelimelerden anlamlı cümle kur, cümle sonuna Nokta (.) mı yoksa Soru İşareti (?) mi geleceğini bul! ✍️🎯',
-            tags: ['✍️ Anlamlı Cümle', '🎯 Nokta (.) & Soru (?)', '🔠 Büyük Harf Kuralı', '✨ Kelime Sıralama'],
+            title: 'Kurallı ve Anlamlı Cümle Treni',
+            icon: '🧩',
+            badge: '🚂 Cümle Treni',
+            featureTag: '⭐ Vagonları Sırayla Diz',
+            description: 'Karışık kelimeleri doğru sırayla dizerek anlamlı cümle lokomotifini hareketlendir! 🚂💨',
+            tags: ['🚂 Cümle Treni', '🧩 Kelime Sıralama', '✍️ Anlamlı Cümle'],
             btnText: 'Düelloyu Başlat',
-            topic: 'sentence_punctuation'
+            topic: 'sentence_logic'
           },
           {
-            id: 'turkish_1_karma',
+            id: 'turkish_punctuation_spelling_2',
             active: true,
-            title: 'Türkçe Süper Karma Düello (Tüm Konular)',
+            title: 'Noktalama İşaretleri Dedektifi ( . , ! ? )',
+            icon: '❓',
+            badge: '🕵️ Noktalama Dedektifi',
+            featureTag: '⭐ Nokta, Virgül, Ünlem, Soru',
+            description: 'Cümledeki eksik noktalama işaretini bul, dedektif büyüteciyle yerine yerleştir! 🕵️🔍',
+            tags: ['🔴 Nokta (.)', '⚡ Ünlem (!)', '❓ Soru İşareti (?)', 'Comma Virgül (,)'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'punctuation_spelling'
+          },
+          {
+            id: 'turkish_reading_5n1k_2',
+            active: true,
+            title: '5N1K Mini Hikaye Dedektifi',
+            icon: '📖',
+            badge: '🔍 Okuduğunu Anlama',
+            featureTag: '⭐ 5N1K Soru Pulları',
+            description: '2-3 cümlelik sevimli hikayeyi oku; Kim, Nerede, Ne zaman, Ne yaptı sorularını çöz! 📖🦉',
+            tags: ['📖 Mini Hikaye', '👤 Kim? & Nerede?', '⏰ Ne Zaman?', '🎯 Ne Yaptı?'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'reading_5n1k'
+          },
+          {
+            id: 'turkish_alphabet_syllable_2',
+            active: true,
+            title: 'Hece Bilgisi, Satır Sonu & Yazım Avcısı',
+            icon: '✂️',
+            badge: '✂️ Hece & Yazım',
+            featureTag: '⭐ Dokunmatik Atölye',
+            description: 'Hece sayısı sayma, satır sonu doğru bölme ve büyük harf avcısı atölyesi! ✂️🔤',
+            tags: ['🔢 Hece Sayısı', '➖ Satır Sonu Bölme', '🔤 Büyük Harf Avcısı'],
+            btnText: 'Düelloyu Başlat',
+            topic: 'alphabet_syllable'
+          },
+          {
+            id: 'turkish_2_karma',
+            active: true,
+            title: '2. Sınıf Türkçe Süper Karma Düello',
             icon: '🦉',
-            badge: '🌟 Süper Karma',
-            featureTag: '🏆 Büyük Yarışma',
-            description: 'Görsel okuma, temel sözcük anlamı, zıt kavramlar ve cümle kurma konularından oluşan karma düello! 🦉📚',
-            tags: ['🎧 Görsel Okuma', '🔄 Zıt Kavramlar', '✍️ Cümle & Noktalama', '🏆 Büyük Düello'],
+            badge: '🏆 2. Sınıf Türkçe Karma',
+            featureTag: '🌟 5 Oyun Motoru Karma',
+            description: 'Mıknatıs, Cümle Treni, Noktalama, 5N1K ve Hece motorlarından karma akıllı tahta sınıf kapışması!',
+            tags: ['🔄 Kelime Mıknatısı', '🚂 Cümle Treni', '❓ Noktalama', '📖 5N1K', '✂️ Hece & Yazım'],
             btnText: 'Düelloyu Başlat',
             topic: 'all'
           }
@@ -30003,11 +30734,405 @@
     });
   }
 
-function renderInteractiveQuestion(q) {
+
+  // =========================================================================
+  // 2. SINIF TÜRKÇE ETKİLEŞİMLİ VE ŞIKSIZ SAHNE MOTORLARI (RENDER & EVENTLER)
+  // =========================================================================
+  function renderGrade2TurkishEngine(q) {
+    const data = q.interactiveData || q;
+    const type = q.type;
+
+    const renderHtml = (playerNum) => {
+      // 1) EŞ VE ZIT ANLAMLI KELİME MIKNATISI
+      if (type === 't2_syn_ant') {
+        return `
+          <div class="t2-arena t2-magnet-arena" data-player="${playerNum}">
+            <div class="t2-magnet-header">
+              <div class="t2-word-badge">
+                <span class="t2-badge-title">Ana Kelime:</span>
+                <span class="t2-main-word">${data.baseWord}</span>
+              </div>
+              <div class="t2-arrow-icon">➡️</div>
+              <div class="t2-magnet-slot" id="t2Slot_p${playerNum}">
+                <span class="t2-magnet-tag">${data.modeIcon} ${data.modeLabel}</span>
+                <span class="t2-slot-placeholder">🧲 Mıknatıs Kutusu</span>
+              </div>
+            </div>
+            <div class="t2-stones-instruction">Doğru kelime taşına dokun veya kutuya çek:</div>
+            <div class="t2-stones-grid">
+              ${data.choices.map(c => `
+                <button type="button" class="t2-magnet-stone" data-val="${c}" data-correct="${c === data.correctWord}" data-player="${playerNum}">
+                  <span>${c}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      // 2) KURALLI VE ANLAMLI CÜMLE TRENİ
+      else if (type === 't2_sentence_train') {
+        return `
+          <div class="t2-arena t2-train-arena" data-player="${playerNum}">
+            <div class="t2-train-railway" id="t2Railway_p${playerNum}">
+              <div class="t2-locomotive-box" id="t2Loco_p${playerNum}">
+                <span class="t2-loco-steam">💨</span>
+                <span class="t2-loco-icon">🚂</span>
+              </div>
+              <div class="t2-wagons-track" id="t2Track_p${playerNum}">
+                ${data.orderedWords.map((_, idx) => `
+                  <div class="t2-train-slot" data-slot-idx="${idx}">
+                    <span class="t2-slot-num">${idx + 1}</span>
+                    <span class="t2-slot-text"></span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div class="t2-train-control-bar">
+              <span class="t2-train-prompt">Vagonları sırayla dizerek cümleyi tamamla:</span>
+              <button type="button" class="t2-btn-reset-train" data-player="${playerNum}">🔄 Sıfırla</button>
+            </div>
+            <div class="t2-wagon-choices" id="t2Wagons_p${playerNum}">
+              ${data.jumbledWords.map((w, idx) => `
+                <button type="button" class="t2-wagon-btn" data-word="${w}" data-idx="${idx}" data-player="${playerNum}">
+                  <span class="t2-wagon-wheel">🚃</span>
+                  <span class="t2-wagon-label">${w}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      // 3) NOKTALAMA İŞARETLERİ DEDEKTİFİ
+      else if (type === 't2_punctuation') {
+        return `
+          <div class="t2-arena t2-punct-arena" data-player="${playerNum}">
+            <div class="t2-punct-sentence-card">
+              <div class="t2-detective-badge">🕵️ Dedektif Görevi: Boşluğa Uygun İşareti Bul!</div>
+              <div class="t2-sentence-content">
+                <span class="t2-sent-before">${data.sentenceBefore}</span>
+                <span class="t2-punct-target-box" id="t2PunctSlot_p${playerNum}">?</span>
+                <span class="t2-sent-after">${data.sentenceAfter || ''}</span>
+              </div>
+            </div>
+            <div class="t2-punct-instruction">Doğru noktalama işareti taşını seç:</div>
+            <div class="t2-punct-stones-grid">
+              ${[
+                { sign: '.', name: 'Nokta', icon: '🔴', desc: 'Cümle sonu' },
+                { sign: ',', name: 'Virgül', icon: 'Comma', desc: 'Sıralama' },
+                { sign: '!', name: 'Ünlem', icon: '⚡', desc: 'Heyecan/Korku' },
+                { sign: '?', name: 'Soru İşareti', icon: '❓', desc: 'Soru sorma' }
+              ].map(p => `
+                <button type="button" class="t2-punct-stone" data-sign="${p.sign}" data-correct="${p.sign === data.correctSign}" data-player="${playerNum}">
+                  <span class="t2-sign-symbol">${p.sign}</span>
+                  <span class="t2-sign-name">${p.name}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      // 4) 5N1K MİNİ HİKAYE DEDEKTİFİ
+      else if (type === 't2_5n1k_story') {
+        return `
+          <div class="t2-arena t2-story-arena" data-player="${playerNum}">
+            <div class="t2-story-book">
+              <div class="t2-story-topbar">
+                <span class="t2-story-icon">${data.icon || '📖'}</span>
+                <span class="t2-story-title">${data.title}</span>
+              </div>
+              <div class="t2-story-body">${data.story}</div>
+            </div>
+            <div class="t2-story-question-banner">
+              <span class="t2-5n1k-tag">${data.qTypeBadge}</span>
+              <span class="t2-5n1k-qtext">${data.questionText}</span>
+            </div>
+            <div class="t2-story-choices-grid">
+              ${data.choices.map(c => `
+                <button type="button" class="t2-story-stamp" data-val="${c}" data-correct="${c === data.correctAnswer}" data-player="${playerNum}">
+                  <span class="t2-stamp-check">✨</span>
+                  <span class="t2-stamp-text">${c}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      // 5) HECE BİLGİSİ, SATIR SONU & YAZIM AVCI
+      else if (type === 't2_syllable_spelling') {
+        const subMode = data.subMode;
+        if (subMode === 'syllable_count') {
+          return `
+            <div class="t2-arena t2-syllable-arena" data-player="${playerNum}">
+              <div class="t2-word-showcase">
+                <span class="t2-syl-title">Kaç Heceli?</span>
+                <span class="t2-syl-word">${data.word}</span>
+              </div>
+              <div class="t2-syl-prompt">Doğru hece sayısına dokun:</div>
+              <div class="t2-syl-btns-grid">
+                ${data.buttons.map(num => `
+                  <button type="button" class="t2-syl-count-btn" data-count="${num}" data-correct="${num === data.correctCount}" data-player="${playerNum}">
+                    <span class="t2-count-num">${num}</span>
+                    <span class="t2-count-lbl">Hece</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        } else if (subMode === 'line_break') {
+          return `
+            <div class="t2-arena t2-linebreak-arena" data-player="${playerNum}">
+              <div class="t2-notebook-page">
+                <div class="t2-page-margin"></div>
+                <div class="t2-page-content">
+                  <span class="t2-page-label">Satır sonuna sığmayan sözcük:</span>
+                  <span class="t2-page-target-word">${data.word}</span>
+                </div>
+              </div>
+              <div class="t2-linebreak-prompt">Doğru kısa çizgi (-) ile bölünüşü seç:</div>
+              <div class="t2-linebreak-choices">
+                ${data.choices.map(c => `
+                  <button type="button" class="t2-linebreak-card" data-val="${c}" data-correct="${c === data.correctSplit}" data-player="${playerNum}">
+                    <span class="t2-break-line">${c}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        } else {
+          // capital_hunter
+          return `
+            <div class="t2-arena t2-capital-arena" data-player="${playerNum}">
+              <div class="t2-capital-instruction">
+                <span>🔤 Küçük yazılmış <strong>özel isme</strong> dokunarak düzelt:</span>
+              </div>
+              <div class="t2-capital-sentence-board" id="t2CapitalBoard_p${playerNum}">
+                ${data.words.map((w, idx) => `
+                  <button type="button" class="t2-word-token ${w === data.wrongWord ? 't2-target-token' : ''}" 
+                          data-word="${w}" 
+                          data-is-target="${w === data.wrongWord}" 
+                          data-player="${playerNum}">
+                    ${w}
+                  </button>
+                `).join(' ')}
+              </div>
+            </div>
+          `;
+        }
+      }
+      return '';
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = renderHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = renderHtml(2);
+
+    // Event Listener Bağlantıları (1. ve 2. Oyuncu için)
+    [1, 2].forEach(pNum => {
+      const zone = pNum === 1 ? DOM.p1InteractiveZone : DOM.p2InteractiveZone;
+      if (!zone) return;
+
+      // 1) EŞ/ZİT ANLAM MIKNATISI BUTONLARI
+      if (type === 't2_syn_ant') {
+        zone.querySelectorAll('.t2-magnet-stone').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+              btn.classList.add('is-correct');
+              const slot = zone.querySelector(`#t2Slot_p${pNum}`);
+              if (slot) {
+                slot.classList.add('is-filled');
+                slot.innerHTML = `<span class="t2-slot-word">🧲 ${data.correctWord}</span>`;
+              }
+              awardPointAndProgress(pNum);
+            } else {
+              kidsGentleWrong(btn);
+            }
+          });
+        });
+      }
+
+      // 2) KURALLI VE ANLAMLI CÜMLE TRENİ
+      else if (type === 't2_sentence_train') {
+        let placedCount = 0;
+        const resetTrain = () => {
+          placedCount = 0;
+          zone.querySelectorAll('.t2-train-slot').forEach(s => {
+            s.classList.remove('is-filled');
+            const txt = s.querySelector('.t2-slot-text');
+            if (txt) txt.textContent = '';
+          });
+          zone.querySelectorAll('.t2-wagon-btn').forEach(b => {
+            b.classList.remove('is-used');
+          });
+        };
+
+        const resetBtn = zone.querySelector('.t2-btn-reset-train');
+        if (resetBtn) {
+          attachInstantTouch(resetBtn, () => {
+            audio.playClick();
+            resetTrain();
+          });
+        }
+
+        zone.querySelectorAll('.t2-wagon-btn').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+            if (btn.classList.contains('is-used')) return;
+
+            const clickedWord = btn.getAttribute('data-word');
+            const expectedWord = data.orderedWords[placedCount];
+
+            if (clickedWord === expectedWord) {
+              audio.playPop();
+              const slot = zone.querySelector(`.t2-train-slot[data-slot-idx="${placedCount}"]`);
+              if (slot) {
+                slot.classList.add('is-filled');
+                const txt = slot.querySelector('.t2-slot-text');
+                if (txt) txt.textContent = clickedWord;
+              }
+              btn.classList.add('is-used');
+              placedCount++;
+
+              if (placedCount === data.orderedWords.length) {
+                // Tren tamamlandı!
+                const loco = zone.querySelector(`#t2Loco_p${pNum}`);
+                const railway = zone.querySelector(`#t2Railway_p${pNum}`);
+                if (loco) loco.classList.add('is-chugging');
+                if (railway) railway.classList.add('is-complete');
+                awardPointAndProgress(pNum);
+              }
+            } else {
+              btn.classList.add('t2-shake');
+              setTimeout(() => btn.classList.remove('t2-shake'), 500);
+              audio.playWrong();
+            }
+          });
+        });
+      }
+
+      // 3) NOKTALAMA İŞARETLERİ DEDEKTİFİ
+      else if (type === 't2_punctuation') {
+        zone.querySelectorAll('.t2-punct-stone').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+              btn.classList.add('is-correct');
+              const slot = zone.querySelector(`#t2PunctSlot_p${pNum}`);
+              if (slot) {
+                slot.textContent = data.correctSign;
+                slot.classList.add('is-filled');
+              }
+              awardPointAndProgress(pNum);
+            } else {
+              kidsGentleWrong(btn);
+            }
+          });
+        });
+      }
+
+      // 4) 5N1K MİNİ HİKAYE DEDEKTİFİ
+      else if (type === 't2_5n1k_story') {
+        zone.querySelectorAll('.t2-story-stamp').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+            if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+            const isCorrect = btn.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+              btn.classList.add('is-correct');
+              awardPointAndProgress(pNum);
+            } else {
+              kidsGentleWrong(btn);
+            }
+          });
+        });
+      }
+
+      // 5) HECE BİLGİSİ, SATIR SONU & BÜYÜK HARF AVCISI
+      else if (type === 't2_syllable_spelling') {
+        const subMode = data.subMode;
+        if (subMode === 'syllable_count') {
+          zone.querySelectorAll('.t2-syl-count-btn').forEach(btn => {
+            attachInstantTouch(btn, () => {
+              if (state.isQuestionAnswered) return;
+              if (state.gameMode === 'solo' && pNum !== 1) return;
+              if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+              if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+              const isCorrect = btn.getAttribute('data-correct') === 'true';
+              if (isCorrect) {
+                btn.classList.add('is-correct');
+                awardPointAndProgress(pNum);
+              } else {
+                kidsGentleWrong(btn);
+              }
+            });
+          });
+        } else if (subMode === 'line_break') {
+          zone.querySelectorAll('.t2-linebreak-card').forEach(btn => {
+            attachInstantTouch(btn, () => {
+              if (state.isQuestionAnswered) return;
+              if (state.gameMode === 'solo' && pNum !== 1) return;
+              if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+              if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+              const isCorrect = btn.getAttribute('data-correct') === 'true';
+              if (isCorrect) {
+                btn.classList.add('is-correct');
+                awardPointAndProgress(pNum);
+              } else {
+                kidsGentleWrong(btn);
+              }
+            });
+          });
+        } else if (subMode === 'capital_hunter') {
+          zone.querySelectorAll('.t2-word-token').forEach(btn => {
+            attachInstantTouch(btn, () => {
+              if (state.isQuestionAnswered) return;
+              if (state.gameMode === 'solo' && pNum !== 1) return;
+              if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+              if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+              const isTarget = btn.getAttribute('data-is-target') === 'true';
+              if (isTarget) {
+                btn.classList.add('is-fixed');
+                btn.textContent = data.fixedWord + " ✨";
+                awardPointAndProgress(pNum);
+              } else {
+                btn.classList.add('t2-shake');
+                setTimeout(() => btn.classList.remove('t2-shake'), 400);
+                audio.playWrong();
+              }
+            });
+          });
+        }
+      }
+    });
+  }
+
+  function renderInteractiveQuestion(q) {
     if (!q) return;
 
     if (typeof q.type === 'string' && q.type.indexOf('m2_') === 0) {
       renderGrade2MathEngine(q);
+      return;
+    }
+    if (typeof q.type === 'string' && q.type.indexOf('t2_') === 0) {
+      renderGrade2TurkishEngine(q);
       return;
     }
     if (typeof q.type === 'string' && q.type.indexOf('k1_') === 0) {
