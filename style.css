@@ -23758,3 +23758,677 @@ body.is-game-active .universal-game-bgm-fab {
   box-shadow: 0 8px 0 #15803D, 0 0 22px rgba(34, 197, 94, 0.5) !important;
   transform: scale(1.06);
 }
+
+
+/* ==========================================================================
+   2. SINIF MATEMATİK 2026 MAARİF MODELİ ŞIKSIZ ETKİLEŞİMLİ OYUN MOTORLARI
+   ========================================================================== */
+
+.m2-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 1.1) ONLUK VE BİRLİK BLOK ATÖLYESİ */
+.m2-target-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #f8fafc;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25);
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.m2-target-badge .m2-target-val {
+  color: #facc15;
+  font-size: 1.45rem;
+  font-weight: 900;
+  text-shadow: 0 2px 8px rgba(250, 204, 21, 0.5);
+}
+
+.m2-blocks-tray {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  gap: 16px;
+  width: 100%;
+  min-height: 140px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px dashed #94a3b8;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+}
+.m2-blocks-tray.m2-success-glow {
+  border-color: #22c55e !important;
+  background: #f0fdf4 !important;
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.45) !important;
+}
+.m2-blocks-tray.m2-shake {
+  animation: m2ShakeAnim 0.45s ease-in-out;
+  border-color: #ef4444 !important;
+  background: #fef2f2 !important;
+}
+
+.m2-tray-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100px;
+}
+.m2-tray-divider {
+  width: 2px;
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+.m2-col-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.m2-tower-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 70px;
+}
+.m2-tower-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 80px;
+  background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+  border: 2px solid #c2410c;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 900;
+  box-shadow: 0 4px 6px rgba(234, 88, 12, 0.3);
+  animation: m2PopIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.m2-cube-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  min-height: 70px;
+  max-width: 160px;
+}
+.m2-unit-cube {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  border: 2px solid #0369a1;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(2, 132, 199, 0.3);
+  animation: m2PopIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.m2-current-sum {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #334155;
+  background: #f1f5f9;
+  padding: 6px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+.m2-current-sum .m2-sum-val {
+  color: #0284c7;
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.m2-block-btns {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+}
+.m2-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.m2-action-btn:active {
+  transform: scale(0.96);
+}
+.btn-add-ten {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+}
+.btn-add-unit {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+}
+.btn-reset-blocks {
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
+}
+
+/* 1.2) RİTMİK SAYMA TRENİ */
+.m2-train-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 6px;
+  background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+  border: 3px solid #cbd5e1;
+  border-radius: 20px;
+  overflow-x: auto;
+}
+.m2-locomotive {
+  font-size: 2.5rem;
+  line-height: 1;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15));
+}
+.m2-wagon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  height: 58px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border: 3px solid #1e40af;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 900;
+  box-shadow: 0 4px 10px rgba(29, 78, 216, 0.25);
+  position: relative;
+}
+.m2-wagon::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  background: #334155;
+  border-radius: 50%;
+  box-shadow: 28px 0 0 #334155;
+}
+.m2-missing-wagon {
+  background: #fef08a !important;
+  border: 3px dashed #eab308 !important;
+  color: #854d0e !important;
+  box-shadow: 0 0 16px rgba(234, 179, 8, 0.35) !important;
+  animation: m2PulseSlot 1.5s infinite alternate;
+}
+.m2-missing-wagon.is-filled {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border: 3px solid #15803d !important;
+  color: #fff !important;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.5) !important;
+  animation: none;
+}
+
+.m2-train-prompt, .m2-stones-instruction {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #475569;
+  text-align: center;
+}
+
+.m2-stone-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
+.m2-stone-btn, .m2-calc-stone, .m2-share-stone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 68px;
+  min-height: 56px;
+  padding: 10px 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border: 3px solid #94a3b8;
+  border-radius: 16px;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #1e293b;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 6px 0 #64748b, 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.12s, box-shadow 0.12s, background 0.2s;
+}
+.m2-stone-btn:hover, .m2-calc-stone:hover, .m2-share-stone:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #64748b, 0 12px 20px rgba(0, 0, 0, 0.12);
+}
+.m2-stone-btn:active, .m2-calc-stone:active, .m2-share-stone:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #64748b;
+}
+.m2-stone-btn.is-correct, .m2-calc-stone.is-correct, .m2-share-stone.is-correct {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border-color: #15803d !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 0 #15803d, 0 0 24px rgba(34, 197, 94, 0.5) !important;
+}
+
+/* 2) TOPLAMA & ÇIKARMA MAKİNESİ */
+.m2-calc-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 4px solid #f59e0b;
+  border-radius: 24px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.15);
+}
+.m2-calc-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  background: #090d16;
+  border: 2px solid #334155;
+  border-radius: 16px;
+  padding: 14px 18px;
+  color: #f8fafc;
+  font-size: 1.85rem;
+  font-weight: 900;
+  box-sizing: border-box;
+}
+.m2-calc-op {
+  color: #f59e0b;
+  font-size: 2.1rem;
+}
+.m2-calc-eq {
+  color: #94a3b8;
+}
+.m2-calc-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  height: 54px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 3px dashed #f59e0b;
+  border-radius: 12px;
+  color: #fbbf24;
+  font-size: 1.8rem;
+  font-weight: 900;
+  transition: all 0.2s;
+  animation: m2PulseSlot 1.5s infinite alternate;
+}
+.m2-calc-slot.m2-slot-correct {
+  background: #22c55e !important;
+  border: 3px solid #16a34a !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.6) !important;
+  animation: none !important;
+}
+
+/* 3.1) EŞİT PAYLAŞTIRMA (BÖLME) */
+.m2-share-pool {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #fffbeb;
+  border: 2px solid #fde68a;
+  border-radius: 16px;
+  padding: 10px 16px;
+  width: 100%;
+}
+.m2-share-items-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #92400e;
+}
+.m2-share-emojis {
+  font-size: 1.7rem;
+  letter-spacing: 4px;
+  text-align: center;
+}
+.m2-share-targets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
+.m2-target-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 85px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.m2-target-box .m2-target-icon {
+  font-size: 2.2rem;
+}
+.m2-target-box .m2-target-num {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #64748b;
+}
+.m2-target-box .m2-target-share-val {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #0284c7;
+}
+
+/* 3.2) ÇARPMA HEDEF TAHTASI */
+.m2-mult-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 2px solid #bfdbfe;
+  border-radius: 20px;
+}
+.m2-mult-expr {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #1e3a8a;
+}
+.m2-targets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+  max-width: 380px;
+}
+.m2-target-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 64px;
+  background: #ffffff;
+  border: 3px solid #ef4444;
+  border-radius: 20px;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 6px 0 #b91c1c, 0 8px 16px rgba(239, 68, 68, 0.2);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.m2-target-circle:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #b91c1c;
+}
+.m2-target-circle .target-bullseye {
+  font-size: 1.6rem;
+}
+.m2-target-circle .target-val {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #1e293b;
+}
+.m2-target-circle.is-correct {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border-color: #15803d !important;
+  box-shadow: 0 6px 0 #15803d, 0 0 24px rgba(34, 197, 94, 0.5) !important;
+}
+.m2-target-circle.is-correct .target-val {
+  color: #ffffff !important;
+}
+
+/* 4.1) KESİRLER */
+.m2-fraction-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 3px solid #f472b6;
+  border-radius: 24px;
+  padding: 14px 28px;
+  box-shadow: 0 8px 20px rgba(244, 114, 182, 0.2);
+}
+.m2-fraction-img-box {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+.m2-fraction-caption {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #831843;
+}
+.m2-baskets-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+.m2-basket-choice {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 80px;
+  background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
+  border: 3px solid #f472b6;
+  border-radius: 18px;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 6px 0 #db2777, 0 8px 16px rgba(219, 39, 119, 0.15);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.m2-basket-choice:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #db2777;
+}
+.m2-basket-choice .m2-basket-icon {
+  font-size: 2.2rem;
+}
+.m2-basket-choice .m2-basket-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #831843;
+}
+.m2-basket-choice.is-correct {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border-color: #15803d !important;
+  box-shadow: 0 6px 0 #15803d, 0 0 24px rgba(34, 197, 94, 0.5) !important;
+}
+.m2-basket-choice.is-correct .m2-basket-title {
+  color: #ffffff !important;
+}
+
+/* 4.2) ANALOG SAAT */
+.m2-clock-svg {
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.12));
+}
+
+/* 4.3) KUMBARA PARA */
+.m2-piggy-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #fefce8;
+  border: 3px solid #facc15;
+  border-radius: 22px;
+  padding: 12px 20px;
+  width: 100%;
+}
+.m2-piggy-icon {
+  font-size: 3.2rem;
+}
+.m2-coins-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.m2-banknote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 900;
+  font-size: 1.05rem;
+  border: 2px solid rgba(0,0,0,0.15);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+.m2-bn-50 { background: #ea580c; }
+.m2-bn-20 { background: #16a34a; }
+.m2-bn-10 { background: #dc2626; }
+.m2-bn-5 { background: #7c3aed; }
+.m2-coin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: radial-gradient(circle, #fef08a 0%, #ca8a04 100%);
+  border: 2px solid #854d0e;
+  border-radius: 50%;
+  color: #713f12;
+  font-weight: 900;
+  font-size: 0.82rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+/* 5) GEOMETRİK CİSİMLER VE ŞEKİLLER BİLMECESİ */
+.m2-geometry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+}
+.m2-geom-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 3px solid #cbd5e1;
+  border-radius: 18px;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 5px 0 #94a3b8, 0 6px 14px rgba(0,0,0,0.06);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.m2-geom-card:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #94a3b8;
+}
+.m2-geom-card .geom-icon {
+  font-size: 2.3rem;
+  line-height: 1;
+}
+.m2-geom-card .geom-name {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #1e293b;
+}
+.m2-geom-card.is-correct {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+  border-color: #15803d !important;
+  box-shadow: 0 5px 0 #15803d, 0 0 22px rgba(34, 197, 94, 0.5) !important;
+}
+.m2-geom-card.is-correct .geom-name {
+  color: #ffffff !important;
+}
+
+/* ANİMASYONLAR */
+@keyframes m2PopIn {
+  0% { transform: scale(0.4); opacity: 0; }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes m2PulseSlot {
+  0% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+@keyframes m2ShakeAnim {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* MOBİL & BÖLÜNMÜŞ EKRAN UYUMLULUĞU */
+@media (max-width: 768px) {
+  .m2-arena {
+    padding: 8px 10px;
+    gap: 10px;
+  }
+  .m2-calc-screen {
+    font-size: 1.45rem;
+    padding: 10px 12px;
+  }
+  .m2-calc-slot {
+    min-width: 50px;
+    height: 44px;
+    font-size: 1.4rem;
+  }
+  .m2-stone-btn, .m2-calc-stone, .m2-share-stone {
+    min-width: 58px;
+    min-height: 48px;
+    font-size: 1.2rem;
+    padding: 8px 14px;
+  }
+  .m2-targets-grid, .m2-geometry-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .m2-fraction-img-box {
+    font-size: 3.5rem;
+  }
+}

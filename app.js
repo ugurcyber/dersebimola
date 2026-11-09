@@ -5320,635 +5320,387 @@
     // (100'e Kadar Sayılar, Çarpma Sadece 1-5 ve 10, Bölme <= 20 Kalansız)
     // -------------------------------------------------------------
 
-    // 1. Sayılar ve Nicelikler (100'e Kadar Doğal Sayılar)
+    // =========================================================================
+    // 2. SINIF MATEMATİK 2026 MAARİF MODELİ ŞIKSIZ ETKİLEŞİMLİ SORU MOTORLARI
+    // =========================================================================
+
+    // 1.1) ONLUK VE BİRLİK BLOK İNŞASI
+    generateM2PlaceBlocks() {
+      const tens = Math.floor(Math.random() * 8) + 1; // 1-8
+      const units = Math.floor(Math.random() * 8) + 1; // 1-8
+      const targetNum = tens * 10 + units;
+
+      return {
+        type: 'm2_place_blocks',
+        question: `${targetNum} sayısını onluk ve birlik bloklarla oluştur! 📦`,
+        spokenText: `${targetNum} sayısını onluk ve birlik bloklarla oluştur.`,
+        correct: targetNum,
+        explanation: `Tebrikler! ${tens} onluk (${tens * 10}) ve ${units} birlik (${units}) tam ${targetNum} eder! 👏`,
+        interactiveData: {
+          targetNum,
+          tens,
+          units
+        }
+      };
+    },
+
+    // 1.2) RİTMİK SAYMA TRENİ
+    generateM2RhythmicTrain() {
+      const steps = [2, 3, 4, 5, 10];
+      const step = this.getUniqueNextItem(steps, 'm2_train_step') || 3;
+      const stepLabels = { 2: "2'şer", 3: "3'er", 4: "4'er", 5: "5'er", 10: "10'ar" };
+      const mult = Math.floor(Math.random() * 4) + 1;
+      const start = step * mult;
+      const seq = [start, start + step, start + 2 * step, start + 3 * step, start + 4 * step];
+      const missingIdx = [1, 2, 3][Math.floor(Math.random() * 3)];
+      const targetVal = seq[missingIdx];
+
+      const d1 = targetVal + step;
+      const d2 = Math.max(1, targetVal - step);
+      const choices = this.fisherYatesShuffle([targetVal, d1, d2]);
+
+      return {
+        type: 'm2_rhythmic_train',
+        question: `${stepLabels[step] || step + "'er"} ritmik saymada boş vagona hangi sayı gelmelidir? 🚂`,
+        spokenText: `${stepLabels[step] || step + "er"} ritmik saymada boş vagona hangi sayı gelmelidir?`,
+        correct: targetVal,
+        explanation: `Harika! ${seq.join(' - ')} kuralında boş vagon ${targetVal} olmalıdır. 🚂👏`,
+        interactiveData: {
+          step,
+          seq,
+          missingIdx,
+          targetVal,
+          choices
+        }
+      };
+    },
+
+    // 2) TOPLAMA VE ÇIKARMA MAKİNESİ
+    generateM2OperationsMachine() {
+      const subMode = Math.random() < 0.5 ? 'add' : 'sub';
+      let num1, num2, op, answer, question, spokenText, exp;
+
+      if (subMode === 'add') {
+        op = '+';
+        num1 = Math.floor(Math.random() * 38) + 14;
+        num2 = Math.floor(Math.random() * 38) + 12;
+        answer = num1 + num2;
+        question = `${num1} + ${num2} = [ ? ] işleminin sonucunu bul! ➕`;
+        spokenText = `${num1} artı ${num2} kaç eder?`;
+        exp = `${num1} ile ${num2} toplandığında sonuç ${answer} eder. 👏`;
+      } else {
+        op = '-';
+        num1 = Math.floor(Math.random() * 45) + 38;
+        num2 = Math.floor(Math.random() * (num1 - 15)) + 12;
+        answer = num1 - num2;
+        question = `${num1} - ${num2} = [ ? ] işleminin sonucunu bul! ➖`;
+        spokenText = `${num1} eksi ${num2} kaç eder?`;
+        exp = `${num1} sayısından ${num2} çıktığında sonuç ${answer} kalır. 👏`;
+      }
+
+      const d1 = answer + 10;
+      const d2 = Math.max(2, answer - 10);
+      const d3 = answer % 2 === 0 ? answer + 2 : answer - 2;
+      const options = this.fisherYatesShuffle([answer, d1, d2, d3]);
+
+      return {
+        type: 'm2_operations_machine',
+        question,
+        spokenText,
+        correct: answer,
+        explanation: exp,
+        interactiveData: {
+          num1,
+          num2,
+          op,
+          answer,
+          options
+        }
+      };
+    },
+
+    // 3.1) GÖRSEL EŞİT PAYLAŞTIRMA (BÖLME)
+    generateM2EqualShare() {
+      const perTarget = [2, 3, 4, 5][Math.floor(Math.random() * 4)];
+      const targetCount = [2, 3, 4][Math.floor(Math.random() * 3)];
+      const total = perTarget * targetCount;
+
+      const scenarios = [
+        { item: 'elma', text: `${total} elmayı ${targetCount} sepete eşit paylaştırırsak her sepete kaç elma düşer? 🍎`, itemEmoji: '🍎', targetEmoji: '🧺', targetLabel: 'Sepet' },
+        { item: 'havuç', text: `${total} havucu ${targetCount} sevimli tavşana eşit paylaştırırsak her tavşana kaç havuç düşer? 🥕`, itemEmoji: '🥕', targetEmoji: '🐰', targetLabel: 'Tavşan' },
+        { item: 'balık', text: `${total} balığı ${targetCount} akvaryuma eşit paylaştırırsak her akvaryuma kaç balık düşer? 🐟`, itemEmoji: '🐟', targetEmoji: '🫧', targetLabel: 'Akvaryum' },
+        { item: 'fındık', text: `${total} fındığı ${targetCount} çalışkan sincaba eşit paylaştırırsak her sincaba kaç fındık düşer? 🌰`, itemEmoji: '🌰', targetEmoji: '🐿️', targetLabel: 'Sincap' },
+        { item: 'kurabiye', text: `${total} kurabiyeyi ${targetCount} tabağa eşit paylaştırırsak her tabağa kaç kurabiye düşer? 🍪`, itemEmoji: '🍪', targetEmoji: '🍽️', targetLabel: 'Tabak' }
+      ];
+      const sc = this.getUniqueNextItem(scenarios, 'm2_share_sc') || scenarios[0];
+
+      const d1 = perTarget + 1;
+      const d2 = Math.max(1, perTarget - 1);
+      const d3 = perTarget + 2;
+      const options = this.fisherYatesShuffle([perTarget, d1, d2, d3]);
+
+      return {
+        type: 'm2_equal_share',
+        question: sc.text,
+        spokenText: sc.text.replace(/[\u{1F300}-\u{1FAFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').trim(),
+        correct: perTarget,
+        explanation: `Harika paylaştırma! ${total} ÷ ${targetCount} = ${perTarget} ${sc.item} düşer! 👏`,
+        interactiveData: {
+          total,
+          targetCount,
+          scenario: sc,
+          answer: perTarget,
+          options
+        }
+      };
+    },
+
+    // 3.2) ÇARPMA HEDEF TAHTASI
+    generateM2MultiplicationTarget() {
+      const aList = [2, 3, 4, 5, 10];
+      const a = this.getUniqueNextItem(aList, 'm2_mult_a') || 3;
+      const b = Math.floor(Math.random() * 8) + 2; // 2-9
+      const answer = a * b;
+
+      const d1 = answer + a;
+      const d2 = Math.max(a, answer - a);
+      const d3 = answer + 4;
+      const options = this.fisherYatesShuffle([answer, d1, d2, d3]);
+
+      const question = `${a} × ${b} işleminin sonucu kaçtır? 🎯`;
+      const spokenText = `${a} kere ${b} kaçtır?`;
+
+      return {
+        type: 'm2_multiplication_target',
+        question,
+        spokenText,
+        correct: answer,
+        explanation: `Tam isabet! ${a} × ${b} = ${answer}'dir! 🎯👏`,
+        interactiveData: {
+          a,
+          b,
+          answer,
+          options
+        }
+      };
+    },
+
+    // 4.1) BÜTÜN - YARIM - ÇEYREK
+    generateM2Fractions() {
+      const pool = [
+        { name: 'Bütün Pizza', type: 'tam', emoji: '🍕', icon: '🍕' },
+        { name: 'Yarım Elma', type: 'yarim', emoji: '🍎', icon: '🍎' },
+        { name: 'Çeyrek Pasta Dilimi', type: 'ceyrek', emoji: '🍰', icon: '🍰' },
+        { name: 'Bütün Taze Ekmek', type: 'tam', emoji: '🍞', icon: '🍞' },
+        { name: 'Yarım Karpuz', type: 'yarim', emoji: '🍉', icon: '🍉' },
+        { name: 'Çeyrek Portakal Dilimi', type: 'ceyrek', emoji: '🍊', icon: '🍊' },
+        { name: 'Bütün Simit', type: 'tam', emoji: '🥯', icon: '🥯' },
+        { name: 'Yarım Daire Şekli', type: 'yarim', emoji: '🌓', icon: '🌓' },
+        { name: 'Çeyrek Daire Şekli', type: 'ceyrek', emoji: '🌘', icon: '🌘' }
+      ];
+
+      const item = this.getUniqueNextItem(pool, 'm2_fraction_item') || pool[0];
+      const typeLabels = { tam: '1 Bütün', yarim: 'Yarım (½)', ceyrek: 'Çeyrek (¼)' };
+
+      return {
+        type: 'm2_fractions',
+        question: `Görseldeki "${item.name}" modeli neyi temsil eder? Sepete dokun! 🍰`,
+        spokenText: `Görseldeki model neyi temsil eder? Bütün mü, yarım mı, çeyrek mi?`,
+        correct: item.type,
+        explanation: `Doğru! "${item.name}" bir ${typeLabels[item.type]} modelidir! 👏`,
+        interactiveData: {
+          item,
+          correctType: item.type
+        }
+      };
+    },
+
+    // 4.2) ANALOG SAAT OKUMA
+    generateM2ClockRead() {
+      const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+      const hour = this.getUniqueNextItem(hours, 'm2_clock_h') || 3;
+      const kind = ['tam', 'yarim', 'ceyrek'][Math.floor(Math.random() * 3)];
+      let minute = 0;
+      let label = '';
+      let digital = '';
+
+      if (kind === 'tam') {
+        minute = 0;
+        digital = `${String(hour).padStart(2, '0')}:00`;
+        label = `Saat ${hour}`;
+      } else if (kind === 'yarim') {
+        minute = 30;
+        digital = `${String(hour).padStart(2, '0')}:30`;
+        label = `Saat ${hour} buçuk`;
+      } else {
+        minute = 15;
+        digital = `${String(hour).padStart(2, '0')}:15`;
+        label = `Saat ${hour}'i çeyrek geçiyor`;
+      }
+
+      const wrongHour1 = (hour % 12) + 1;
+      const wrongDigital1 = `${String(wrongHour1).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+      const wrongDigital2 = `${String(hour).padStart(2, '0')}:${minute === 0 ? '30' : '00'}`;
+      const options = this.fisherYatesShuffle([digital, wrongDigital1, wrongDigital2]);
+
+      return {
+        type: 'm2_clock_read',
+        question: `Analog saat kaçı gösteriyor? Doğru saate dokun! ⏰`,
+        spokenText: `Analog saat kaçı gösteriyor?`,
+        correct: digital,
+        explanation: `Harika zaman dedektifi! Saat tam olarak ${digital} (${label})'dir! ⏰👏`,
+        interactiveData: {
+          hour,
+          minute,
+          digital,
+          label,
+          options
+        }
+      };
+    },
+
+    // 4.3) KUMBARA PARA TOPLAMA
+    generateM2MoneyCount() {
+      const comboOptions = [
+        { banknotes: [20, 10, 5], coins: 1, total: 36 },
+        { banknotes: [50, 10], coins: 3, total: 63 },
+        { banknotes: [20, 20, 5], coins: 2, total: 47 },
+        { banknotes: [10, 10, 5], coins: 4, total: 29 },
+        { banknotes: [50, 20], coins: 5, total: 75 },
+        { banknotes: [20, 10], coins: 3, total: 33 }
+      ];
+      const combo = this.getUniqueNextItem(comboOptions, 'm2_money_combo') || comboOptions[0];
+
+      const d1 = combo.total + 10;
+      const d2 = Math.max(10, combo.total - 10);
+      const d3 = combo.total + 5;
+      const options = this.fisherYatesShuffle([combo.total, d1, d2, d3]);
+
+      return {
+        type: 'm2_money_count',
+        question: `Kumbarada toplam kaç Türk Lirası (TL) var? 🪙`,
+        spokenText: `Kumbarada toplam kaç lira var?`,
+        correct: combo.total,
+        explanation: `Doğru hesap! Kumbarada tam ${combo.total} TL birikmiş! 🪙👏`,
+        interactiveData: {
+          banknotes: combo.banknotes,
+          coins: combo.coins,
+          total: combo.total,
+          options
+        }
+      };
+    },
+
+    // 5) GEOMETRİK CİSİMLER VE ŞEKİLLER BİLMECESİ
+    generateM2GeometrySolids() {
+      const riddles = [
+        {
+          name: 'Üçgen',
+          icon: '🔺',
+          text: '3 kenarım ve 3 köşem var, çatılara benzerim. Ben hangi şeklim? 📐',
+          spoken: 'Üç kenarım ve üç köşem var. Ben hangi şeklim?',
+          exp: 'Üçgenin 3 kenarı ve 3 köşesi vardır! 🔺'
+        },
+        {
+          name: 'Kare',
+          icon: '🟩',
+          text: '4 kenarımın dördü de birbirine eşittir ve 4 dik köşem var. Ben kimim? 🔲',
+          spoken: 'Dört kenarımın dördü de birbirine eşit ve dört köşem var. Ben kimim?',
+          exp: 'Kare dört eşit kenarı ve dört köşesi olan düzlemsel şekildir! 🟩'
+        },
+        {
+          name: 'Dikdörtgen',
+          icon: '🔲',
+          text: 'Karşılıklı iki uzun ve iki kısa kenarım var, kapıya benzerim. Ben kimim? 🚪',
+          spoken: 'Karşılıklı iki uzun ve iki kısa kenarım var. Ben kimim?',
+          exp: 'Dikdörtgenin karşılıklı kenarları eşittir ve 4 köşesi vardır! 🚪'
+        },
+        {
+          name: 'Çember',
+          icon: '⭕',
+          text: 'Hiç köşem veya kenarım yok, simit gibi yuvarlağım. Ben kimim? ⭕',
+          spoken: 'Hiç köşem ve kenarım yok, yuvarlağım. Ben kimim?',
+          exp: 'Çemberin köşesi ve kenarı yoktur, yuvarlaktır! ⭕'
+        },
+        {
+          name: 'Küp',
+          icon: '🎲',
+          text: 'Kare şeklinde 6 eş yüzüm var, tıpkı oyun zarı ve hediye kutusu gibiyim. Ben kimim? 🎲',
+          spoken: 'Kare şeklinde altı eş yüzüm var. Ben kimim?',
+          exp: 'Küpün 6 eş karesel yüzü, 8 köşesi ve 12 ayrıtı vardır! 🎲'
+        },
+        {
+          name: 'Silindir',
+          icon: '🥫',
+          text: '2 daire kapağım ve 1 eğri yüzüm var, konserve kutusuna benzerim. Ben kimim? 🥫',
+          spoken: 'İki daire kapağım ve bir eğri yüzüm var. Ben kimim?',
+          exp: 'Silindirin 2 düz dairesel tabanı ve 1 eğri yüzü vardır! 🥫'
+        },
+        {
+          name: 'Koni',
+          icon: '🍦',
+          text: 'Tıpkı dondurma külahı veya parti şapkası gibiyim, 1 sivri tepem var. Ben kimim? 🍦',
+          spoken: 'Dondurma külahı veya parti şapkası gibiyim. Ben kimim?',
+          exp: 'Koninin 1 dairesel tabanı ve 1 sivri tepesi vardır! 🍦'
+        },
+        {
+          name: 'Küre',
+          icon: '⚽',
+          text: 'Köşem ve kenarım yoktur, futbol topu gibi her yöne yuvarlanırım! Ben kimim? ⚽',
+          spoken: 'Köşem ve kenarım yok, futbol topu gibi yuvarlanırım. Ben kimim?',
+          exp: 'Kürenin köşesi ve ayrıtı yoktur, tek bir eğri yüzeyden oluşur! ⚽'
+        }
+      ];
+
+      const r = this.getUniqueNextItem(riddles, 'm2_geom_riddle') || riddles[0];
+      const wrongs = this.fisherYatesShuffle(riddles.filter(item => item.name !== r.name)).slice(0, 3);
+      const options = this.fisherYatesShuffle([r, ...wrongs]);
+
+      return {
+        type: 'm2_geometry_solids',
+        question: r.text,
+        spokenText: r.spoken,
+        correct: r.name,
+        explanation: `Tebrikler! Doğru cevap ${r.name}! ${r.exp} 👏`,
+        interactiveData: {
+          riddle: r,
+          options
+        }
+      };
+    },
+
+    // 2. SINIF MATEMATİK ANA GİRİŞ NOKTALARI (100% ŞIKSIZ & İNTERAKTİF)
     generateGrade2PlaceValue() {
-      const mode = Math.floor(Math.random() * 5);
-
-      if (mode === 0) {
-        // Onluk ve Birlik Modeli
-        const tens = Math.floor(Math.random() * 9) + 1; // 1-9
-        const units = Math.floor(Math.random() * 10);   // 0-9
-        const num = tens * 10 + units;
-        const qType = Math.random() < 0.5;
-
-        if (qType) {
-          const question = `${tens} onluk ve ${units} birlikten oluşan doğal sayı kaçtır? 📦`;
-          const spokenText = `${tens} onluk ve ${units} birlikten oluşan doğal sayı kaçtır?`;
-          const correct = `${num}`;
-          const distractors = [
-            `${units * 10 + tens}`,
-            `${Math.max(10, num + (num > 50 ? -10 : 10))}`
-          ];
-          return { question, spokenText, correct, distractors, explanation: `${tens} onluk (${tens * 10}) + ${units} birlik = ${num} eder.` };
-        } else {
-          const question = `${num} doğal sayısında kaç onluk ve kaç birlik vardır? 🔢`;
-          const spokenText = `${num} sayısında kaç onluk ve kaç birlik vardır?`;
-          const correct = `${tens} onluk, ${units} birlik`;
-          const distractors = [
-            `${units} onluk, ${tens} birlik`,
-            `${tens} onluk, ${(units + 2) % 10} birlik`
-          ];
-          return { question, spokenText, correct, distractors, explanation: `${num} sayısının onlar basamağında ${tens}, birler basamağında ${units} vardır.` };
-        }
-      } else if (mode === 1) {
-        // Basamak Değeri
-        const tens = Math.floor(Math.random() * 9) + 1;
-        const units = Math.floor(Math.random() * 9) + 1;
-        const num = tens * 10 + units;
-        const askTens = Math.random() < 0.5;
-
-        if (askTens) {
-          const question = `${num} sayısındaki "${tens}" rakamının basamak değeri kaçtır? 🎯`;
-          const spokenText = `${num} sayısındaki ${tens} rakamının basamak değeri kaçtır?`;
-          const correct = `${tens * 10}`;
-          const distractors = [`${tens}`, `${units * 10}`];
-          return { question, spokenText, correct, distractors, explanation: `"${tens}" rakamı onlar basamağında olduğu için basamak değeri ${tens} × 10 = ${tens * 10}'dur.` };
-        } else {
-          const question = `${num} sayısındaki "${units}" rakamının basamak değeri kaçtır? 🎯`;
-          const spokenText = `${num} sayısındaki ${units} rakamının basamak değeri kaçtır?`;
-          const correct = `${units}`;
-          const distractors = [`${units * 10}`, `${tens * 10}`];
-          return { question, spokenText, correct, distractors, explanation: `"${units}" rakamı birler basamağında olduğu için basamak değeri ${units} × 1 = ${units}'tir.` };
-        }
-      } else if (mode === 2) {
-        // En Yakın Onluğa Yuvarlama
-        const tens = Math.floor(Math.random() * 9) + 1; // 1-9
-        const units = Math.floor(Math.random() * 9) + 1; // 1-9
-        const num = tens * 10 + units;
-        const rounded = units >= 5 ? (tens + 1) * 10 : tens * 10;
-        const otherTens = units >= 5 ? tens * 10 : (tens + 1) * 10;
-        const thirdTens = (tens > 2 ? tens - 1 : tens + 2) * 10;
-
-        const question = `${num} doğal sayısı en yakın hangi onluğa yuvarlanır? 🎯`;
-        const spokenText = `${num} sayısı en yakın hangi onluğa yuvarlanır?`;
-        const correct = `${rounded}`;
-        const distractors = [`${otherTens}`, `${thirdTens}`];
-        return {
-          question,
-          spokenText,
-          correct,
-          distractors,
-          explanation: `${num} sayısının birler basamağında ${units} vardır. ${units >= 5 ? '5 ve 5\'ten büyük olduğu için bir sonraki onluk olan ' + rounded + '\'a yuvarlanır.' : '5\'ten küçük olduğu için kendi onluğu olan ' + rounded + '\'a yuvarlanır.'}`
-        };
-      } else if (mode === 3) {
-        // Ritmik Sayma (2, 3, 4, 5, 10)
-        const steps = [2, 3, 4, 5, 10];
-        const step = steps[Math.floor(Math.random() * steps.length)];
-        const maxStart = 100 - (step * 4);
-        const start = Math.floor(Math.random() * Math.floor(maxStart / step)) * step + step;
-        const seq = [start, start + step, start + (step * 2), start + (step * 3)];
-        const missingIdx = Math.floor(Math.random() * 4);
-        const ans = seq[missingIdx];
-        const displaySeq = seq.map((val, idx) => idx === missingIdx ? '?' : val).join(' - ');
-
-        const question = `${displaySeq} (${step}'er ileri ritmik saymada "?" yerine kaç gelmelidir? 🚂)`;
-        const spokenText = `${step}'er ileri ritmik saymada soru işareti yerine hangi sayı gelmelidir?`;
-        const correct = `${ans}`;
-        const distractors = [
-          `${ans - step > 0 ? ans - step : ans + (step * 2)}`,
-          `${ans + step <= 100 ? ans + step : ans - (step * 2)}`
-        ];
-        return { question, spokenText, correct, distractors, explanation: `Kural ${step}'er artarak saymaktır. Eksik sayı ${ans}'dir.` };
-      } else {
-        // Deste ve Düzine / Sayı Örüntüsü
-        const pool = [
-          { q: '1 deste kalem ile 1 düzine kalemin toplamı kaç kalem eder? ✏️', spoken: 'Bir deste ile bir düzinenin toplamı kaçtır?', a: '22', d: ['20', '24'], exp: '1 deste = 10, 1 düzine = 12. Toplam: 10 + 12 = 22 eder.' },
-          { q: '3 deste silgi toplam kaç silgi eder? 🧼', spoken: 'Üç deste silgi kaç silgi eder?', a: '30', d: ['20', '36'], exp: '1 deste 10 tanedir. 3 × 10 = 30 silgi eder.' },
-          { q: '2 düzine bardak toplam kaç bardak eder? 🥛', spoken: 'İki düzine bardak kaç bardak eder?', a: '24', d: ['20', '22'], exp: '1 düzine 12 tanedir. 2 × 12 = 24 bardak eder.' },
-          { q: '4 deste fındık, 3 düzine fındıktan kaç fazladır? 🌰', spoken: 'Dört deste fındık, üç düzine fındıktan kaç fazladır?', a: '4', d: ['2', '6'], exp: '4 deste = 40. 3 düzine = 36. Fark: 40 - 36 = 4 fazladır.' },
-          { q: '18 - 22 - 26 - ? Sayı örüntüsünde soru işareti yerine hangi sayı gelmelidir? 🧩', spoken: 'Sayı örüntüsünde soru işareti yerine ne gelmelidir?', a: '30', d: ['28', '32'], exp: 'Örüntü dörder artmaktadır. 26 + 4 = 30 olur.' },
-          { q: '50 - 45 - 40 - ? Geriye doğru beşer azalan örüntüde soru işareti kaçtır? 🧩', spoken: 'Geriye doğru beşer azalan örüntüde soru işareti kaçtır?', a: '35', d: ['30', '38'], exp: 'Örüntü beşer azalmaktadır. 40 - 5 = 35 olur.' }
-        ];
-        const item = pool[Math.floor(Math.random() * pool.length)];
-        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
-      }
+      return Math.random() < 0.5 ? this.generateM2PlaceBlocks() : this.generateM2RhythmicTrain();
     },
 
-    // 2. Toplama ve Çıkarma İşlemleri (100 İçinde)
     generateGrade2Operations() {
-      const mode = Math.floor(Math.random() * 5);
-
-      if (mode === 0) {
-        // 2 Basamaklı Toplama (Sonuç <= 100)
-        const a = Math.floor(Math.random() * 45) + 15; // 15-59
-        const maxB = 100 - a;
-        const b = Math.floor(Math.random() * (maxB - 10)) + 10;
-        const sum = a + b;
-        const question = `${a} + ${b} işleminin sonucu kaçtır? ➕`;
-        const spokenText = `${a} artı ${b} işleminin sonucu kaçtır?`;
-        const correct = `${sum}`;
-        const distractors = [
-          `${sum - 10 > 0 ? sum - 10 : sum + 5}`,
-          `${sum + (sum % 2 === 0 ? 2 : -2)}`
-        ];
-        return { question, spokenText, correct, distractors, explanation: `${a} + ${b} = ${sum} eder.` };
-      } else if (mode === 1) {
-        // 2 Basamaklı Çıkarma (Onluk bozarak / eldesiz, Eksilen <= 100)
-        const a = Math.floor(Math.random() * 60) + 35; // 35-94
-        const b = Math.floor(Math.random() * (a - 15)) + 12; // < a
-        const diff = a - b;
-        const question = `${a} - ${b} işleminin sonucu kaçtır? ➖`;
-        const spokenText = `${a} eksi ${b} işleminin sonucu kaçtır?`;
-        const correct = `${diff}`;
-        const distractors = [
-          `${diff + 10 <= 100 ? diff + 10 : diff - 5}`,
-          `${diff + (diff % 2 === 0 ? 2 : -2)}`
-        ];
-        return { question, spokenText, correct, distractors, explanation: `${a} - ${b} = ${diff} eder.` };
-      } else if (mode === 2) {
-        // Verilmeyen toplananı bulma (A + ? = C)
-        const a = Math.floor(Math.random() * 40) + 15;
-        const missing = Math.floor(Math.random() * 40) + 12;
-        const total = a + missing;
-
-        const question = `${a} + ? = ${total} işleminde verilmeyen toplanan sayı kaçtır? ❓`;
-        const spokenText = `${a} artı soru işareti eşittir ${total} işleminde verilmeyen sayı kaçtır?`;
-        const correct = `${missing}`;
-        const distractors = [
-          `${missing + 10 <= 100 ? missing + 10 : missing - 5}`,
-          `${missing - 2 > 0 ? missing - 2 : missing + 4}`
-        ];
-        return { question, spokenText, correct, distractors, explanation: `Verilmeyen toplananı bulmak için toplamdan verilen sayı çıkarılır: ${total} - ${a} = ${missing}.` };
-      } else if (mode === 3) {
-        // Zihinden ve Tahmini İşlemler
-        const pool = [
-          { q: '50 + 30 işlemini zihinden yaparsak sonuç kaç olur? 🧠', spoken: '50 artı 30 işlemini zihinden yaparsak sonuç kaç olur?', a: '80', d: ['70', '90'], exp: '5 onluk + 3 onluk = 8 onluk, yani 80 eder.' },
-          { q: '90 - 40 işlemini zihinden yaparsak sonuç kaç olur? 🧠', spoken: '90 eksi 40 işlemini zihinden yaparsak sonuç kaç olur?', a: '50', d: ['40', '60'], exp: '9 onluk - 4 onluk = 5 onluk, yani 50 eder.' },
-          { q: '60 + 20 işleminin sonucu zihinden kaçtır? 🧠', spoken: '60 artı 20 işleminin sonucu kaçtır?', a: '80', d: ['70', '90'], exp: '6 onluk + 2 onluk = 80 eder.' },
-          { q: '80 - 50 işleminin sonucu zihinden kaçtır? 🧠', spoken: '80 eksi 50 işleminin sonucu kaçtır?', a: '30', d: ['20', '40'], exp: '8 onluktan 5 onluk çıkarsa 3 onluk (30) kalır.' },
-          { q: '32 + 49 işleminin tahmini sonucu en yakın onluklara yuvarlanarak kaçtır? 🎯', spoken: '32 artı 49 işleminin tahmini sonucu en yakın onluklara yuvarlanarak kaçtır?', a: '80', d: ['70', '90'], exp: '32 -> 30\'a, 49 -> 50\'ye yuvarlanır. 30 + 50 = 80 olur.' },
-          { q: '71 - 29 işleminin tahmini sonucu en yakın onluklarla kaçtır? 🎯', spoken: '71 eksi 29 işleminin tahmini sonucu kaçtır?', a: '40', d: ['50', '30'], exp: '71 -> 70\'e, 29 -> 30\'a yuvarlanır. 70 - 30 = 40 olur.' }
-        ];
-        const item = pool[Math.floor(Math.random() * pool.length)];
-        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
-      } else {
-        // Günlük Hayat Problemleri
-        const problems = [
-          { q: 'Bir otobüste 38 yolcu vardı. İlk durakta 17 yolcu daha bindi. Otobüste kaç yolcu oldu? 🚌', spoken: 'Otobüste 38 yolcu vardı. 17 yolcu daha bindi. Toplam kaç yolcu oldu?', a: '55 yolcu', d: ['45 yolcu', '51 yolcu'], exp: '38 + 17 = 55 yolcu olur.' },
-          { q: 'Ali\'nin 64 lirası vardı. 28 lirasına hikaye kitabı aldı. Ali\'nin kaç lirası kaldı? 📚', spoken: 'Ali\'nin 64 lirası vardı. 28 liraya kitap aldı. Kaç lirası kaldı?', a: '36 lira', d: ['46 lira', '34 lira'], exp: '64 - 28 = 36 lira kalır.' },
-          { q: 'Bir çiftlikte 27 koyun, koyunlardan 15 fazla kuzu vardır. Çiftlikte kaç kuzu vardır? 🐑', spoken: 'Çiftlikte 27 koyun ve 15 fazla kuzu vardır. Kaç kuzu vardır?', a: '42 kuzu', d: ['32 kuzu', '45 kuzu'], exp: '27 + 15 = 42 kuzu vardır.' },
-          { q: 'Ayşe 80 sayfalık kitabın 45 sayfasını okudu. Okunacak kaç sayfa kaldı? 📖', spoken: 'Ayşe 80 sayfalık kitabın 45 sayfasını okudu. Kaç sayfa kaldı?', a: '35 sayfa', d: ['45 sayfa', '25 sayfa'], exp: '80 - 45 = 35 sayfa kalır.' },
-          { q: 'Bir manavda sabah 52 kg elma vardı. Gün boyu 36 kg elma satıldı. Geriye kaç kg elma kaldı? 🍎', spoken: '52 kilo elmanın 36 kilosu satıldı. Geriye kaç kilo elma kaldı?', a: '16 kg', d: ['26 kg', '18 kg'], exp: '52 - 36 = 16 kg elma kalır.' }
-        ];
-        const item = problems[Math.floor(Math.random() * problems.length)];
-        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
-      }
+      return this.generateM2OperationsMachine();
     },
 
-    // 3. Çarpma ve Bölme (1-5 ve 10'lar ile Çarpma, 20 İçinde Kalansız Bölme)
     generateGrade2MultiplicationDivision() {
-      const isMult = Math.random() < 0.65;
-
-      if (isMult) {
-        const mode = Math.floor(Math.random() * 4);
-        if (mode === 0) {
-          // Çarpmanın tekrarlı toplama anlamı
-          const factorA = Math.floor(Math.random() * 4) + 2; // 2-5
-          const factorB = Math.floor(Math.random() * 5) + 1; // 1-5
-          const sumArray = Array(factorA).fill(factorB);
-          const sumStr = sumArray.join(' + ');
-
-          const question = `${sumStr} toplama işlemi çarpma olarak nasıl yazılır? ✖️`;
-          const spokenText = `${sumStr} toplama işlemi çarpma olarak nasıl yazılır?`;
-          const correct = `${factorA} × ${factorB}`;
-          const distractors = [
-            `${factorA + 1} × ${factorB}`,
-            `${factorA} × ${factorB + 1}`
-          ];
-          return { question, spokenText, correct, distractors, explanation: `${factorA} tane ${factorB}'nin toplamı ${factorA} × ${factorB} olarak yazılır.` };
-        } else if (mode === 1) {
-          // 0 ve 1'in Etkisi
-          const pool = [
-            { q: 'Çarpma işleminde "0" (sıfır) hangi elemandır? ✖️', spoken: 'Çarpma işleminde sıfır hangi elemandır?', a: 'Yutan eleman (Sonucu 0 yapar) 🕳️', d: ['Etkisiz eleman', 'Büyüten eleman'], exp: 'Sıfır çarpmada yutan elemandır; ne ile çarpılırsa sonuç sıfır olur.' },
-            { q: 'Çarpma işleminde "1" (bir) hangi elemandır? ✖️', spoken: 'Çarpma işleminde bir hangi elemandır?', a: 'Etkisiz eleman (Sayıyı değiştirmez) ✨', d: ['Yutan eleman', 'Sıfırlayan eleman'], exp: 'Bir çarpmada etkisiz elemandır; sayıyı olduğu gibi korur.' },
-            { q: '9 × 1 işleminin sonucu kaçtır? ✖️', spoken: 'Dokuz kere bir işleminin sonucu kaçtır?', a: '9', d: ['1', '0'], exp: '1 etkisiz elemandır: 9 × 1 = 9 eder.' },
-            { q: '8 × 0 işleminin sonucu kaçtır? ✖️', spoken: 'Sekiz kere sıfır işleminin sonucu kaçtır?', a: '0', d: ['8', '1'], exp: '0 yutan elemandır: 8 × 0 = 0 eder.' }
-          ];
-          const item = pool[Math.floor(Math.random() * pool.length)];
-          return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
-        } else {
-          // Çarpım Tablosu (SADECE 1, 2, 3, 4, 5 ve 10'lar!)
-          const validFactors = [1, 2, 3, 4, 5, 10];
-          const a = validFactors[Math.floor(Math.random() * validFactors.length)];
-          const b = Math.floor(Math.random() * 9) + 1; // 1-9
-          const prod = a * b;
-
-          const question = `${a} × ${b} işleminin sonucu kaçtır? ✖️`;
-          const spokenText = `${a} kere ${b} işleminin sonucu kaçtır?`;
-          const correct = `${prod}`;
-          const distractors = [
-            `${prod + a <= 100 ? prod + a : prod - a}`,
-            `${prod - a > 0 ? prod - a : prod + (a * 2)}`
-          ];
-          return { question, spokenText, correct, distractors, explanation: `${a} × ${b} = ${prod} eder.` };
-        }
-      } else {
-        // Bölme İşlemi (SADECE 20 İçinde, Kalansız ve Eşit Paylaştırma)
-        const validDivisions = [
-          { total: 20, div: 4, quo: 5, item: 'elmayı 4 tabağa', unit: 'elma' },
-          { total: 20, div: 5, quo: 4, item: 'balonu 5 çocuğa', unit: 'balon' },
-          { total: 20, div: 2, quo: 10, item: 'cevizi 2 kardeşe', unit: 'ceviz' },
-          { total: 18, div: 2, quo: 9, item: 'kurabiyeyi 2 tabağa', unit: 'kurabiye' },
-          { total: 18, div: 3, quo: 6, item: 'fındığı 3 sincaba', unit: 'fındık' },
-          { total: 16, div: 4, quo: 4, item: 'kalemi 4 kutuya', unit: 'kalem' },
-          { total: 16, div: 2, quo: 8, item: 'sayfayı 2 günde', unit: 'sayfa' },
-          { total: 15, div: 3, quo: 5, item: 'çiçeği 3 vazoya', unit: 'çiçek' },
-          { total: 15, div: 5, quo: 3, item: 'şekeri 5 arkadaşa', unit: 'şeker' },
-          { total: 14, div: 2, quo: 7, item: 'havucu 2 tavşana', unit: 'havuç' },
-          { total: 12, div: 3, quo: 4, item: 'kitabı 3 rafa', unit: 'kitap' },
-          { total: 12, div: 4, quo: 3, item: 'bardağı 4 tepsiye', unit: 'bardak' },
-          { total: 12, div: 2, quo: 6, item: 'armudu 2 sepete', unit: 'armut' },
-          { total: 10, div: 2, quo: 5, item: 'lirayı 2 kumbaraya', unit: 'lira' },
-          { total: 10, div: 5, quo: 2, item: 'cevizi 5 çocuğa', unit: 'ceviz' },
-          { total: 8, div: 2, quo: 4, item: 'çileği 2 tabağa', unit: 'çilek' },
-          { total: 8, div: 4, quo: 2, item: 'balığı 4 akvaryuma', unit: 'balık' },
-          { total: 6, div: 2, quo: 3, item: 'topu 2 fileye', unit: 'top' },
-          { total: 6, div: 3, quo: 2, item: 'kuşu 3 kafese', unit: 'kuş' }
-        ];
-
-        const divItem = validDivisions[Math.floor(Math.random() * validDivisions.length)];
-        const isWordProblem = Math.random() < 0.5;
-
-        if (isWordProblem) {
-          const question = `${divItem.total} ${divItem.item} eşit şekilde paylaştırırsak her birine kaç ${divItem.unit} düşer? ➗`;
-          const spokenText = `${divItem.total} nesne ${divItem.div} gruba eşit paylaştırılırsa her gruba kaç tane düşer?`;
-          const correct = `${divItem.quo} ${divItem.unit}`;
-          const distractors = [
-            `${divItem.quo + 1} ${divItem.unit}`,
-            `${divItem.quo - 1 > 0 ? divItem.quo - 1 : divItem.quo + 2} ${divItem.unit}`
-          ];
-          return { question, spokenText, correct, distractors, explanation: `${divItem.total} ÷ ${divItem.div} = ${divItem.quo} ${divItem.unit} düşer.` };
-        } else {
-          const question = `${divItem.total} ÷ ${divItem.div} işleminin sonucu kaçtır? ➗`;
-          const spokenText = `${divItem.total} bölü ${divItem.div} işleminin sonucu kaçtır?`;
-          const correct = `${divItem.quo}`;
-          const distractors = [
-            `${divItem.quo + 1}`,
-            `${divItem.quo - 1 > 0 ? divItem.quo - 1 : divItem.quo + 2}`
-          ];
-          return { question, spokenText, correct, distractors, explanation: `${divItem.total} sayısının içinde ${divItem.div}, ${divItem.quo} defa vardır.` };
-        }
-      }
+      return Math.random() < 0.5 ? this.generateM2EqualShare() : this.generateM2MultiplicationTarget();
     },
 
-    // 4. Kesirler, Zaman ve Paralarımız
     generateGrade2FractionsTimeMoney() {
-      const mode = Math.floor(Math.random() * 3);
-
-      if (mode === 0) {
-        // Bütün, Yarım, Çeyrek (1 Bütün = 2 Yarım = 4 Çeyrek)
-        const fractionPool = [
-          { q: '1 bütün ekmek kaç yarım ekmek eder? 🥖', spoken: 'Bir bütün ekmek kaç yarım ekmek eder?', a: '2 yarım', d: ['4 yarım', '1 yarım'], exp: '1 bütün 2 eşit yarımdan oluşur.' },
-          { q: '1 bütün pizzadan kaç adet çeyrek pizza dilimi çıkar? 🍕', spoken: 'Bir bütün pizzadan kaç çeyrek dilim çıkar?', a: '4 çeyrek', d: ['2 çeyrek', '8 çeyrek'], exp: '1 bütün 4 eşit çeyrekten oluşur.' },
-          { q: '4 yarım elma kaç bütün elma eder? 🍎', spoken: 'Dört yarım elma kaç bütün elma eder?', a: '2 bütün', d: ['1 bütün', '4 bütün'], exp: '2 yarım 1 bütün ettiğine göre, 4 yarım 2 bütün eder.' },
-          { q: '8 çeyrek portakal kaç bütün portakal eder? 🍊', spoken: 'Sekiz çeyrek portakal kaç bütün portakal eder?', a: '2 bütün', d: ['4 bütün', '1 bütün'], exp: '4 çeyrek 1 bütündür. 8 çeyrek = 2 bütün portakal eder.' },
-          { q: '6 yarım simit kaç bütün simit eder? 🥯', spoken: 'Altı yarım simit kaç bütün simit eder?', a: '3 bütün', d: ['2 bütün', '4 bütün'], exp: '6 ÷ 2 = 3 bütün simit eder.' },
-          { q: '12 çeyrek pasta kaç bütün pasta eder? 🎂', spoken: 'On iki çeyrek pasta kaç bütün pasta eder?', a: '3 bütün', d: ['4 bütün', '2 bütün'], exp: '12 ÷ 4 = 3 bütün pasta eder.' },
-          { q: '2 bütün elma ile 4 yarım elma toplam kaç bütün elma eder? 🍏', spoken: 'İki bütün ve dört yarım elma toplam kaç bütün elma eder?', a: '4 bütün', d: ['3 bütün', '6 bütün'], exp: '4 yarım = 2 bütün. 2 + 2 = 4 bütün elma eder.' }
-        ];
-        const item = fractionPool[Math.floor(Math.random() * fractionPool.length)];
-        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
-      } else if (mode === 1) {
-        // Zamanı Ölçme (Tam, Yarım, Çeyrek Saatler, Takvim)
-        const timePool = [
-          { q: 'Saat üzerinde kısa ve kalın olan kola ne ad verilir? ⏰', spoken: 'Saat üzerindeki kısa kola ne denir?', a: 'Akrep (Saati gösterir) ⏰', d: ['Yelkovan', 'Saniye ibresi'], exp: 'Kısa kol akreptir ve saat başlarını gösterir.' },
-          { q: 'Saat üzerinde uzun olan kola ne ad verilir? ⏰', spoken: 'Saat üzerindeki uzun kola ne denir?', a: 'Yelkovan (Dakikayı gösterir) ⏰', d: ['Akrep', 'Takvim'], exp: 'Uzun kol yelkovandır ve dakikaları gösterir.' },
-          { q: 'Akrep 4\'ü, yelkovan tam 12\'yi gösteriyorsa saat kaçtır? ⏰', spoken: 'Akrep 4\'ü, yelkovan 12\'yi gösteriyorsa saat kaçtır?', a: '04:00 (Tam dört) ⏰', d: ['04:30', '12:20'], exp: 'Yelkovan 12 üzerinde iken tam saattir.' },
-          { q: 'Yelkovan tam 6\'nın üzerindeyken saat nasıl okunur? ⏳', spoken: 'Yelkovan 6 üzerindeyken saat nasıl okunur?', a: 'Buçuk (Yarım saat) ⏳', d: ['Çeyrek geçiyor', 'Tam saat'], exp: 'Yelkovan 6 üzerinde iken yarım saati, yani "buçuk" olduğunu gösterir.' },
-          { q: 'Yelkovan 3\'ün üzerindeyken saat nasıl okunur? ⏰', spoken: 'Yelkovan 3 üzerindeyken saat nasıl okunur?', a: 'Çeyrek geçiyor ⏰', d: ['Çeyrek var', 'Buçuk'], exp: 'Yelkovan 3\'te iken 15 dakika geçmektedir (çeyrek geçiyor).' },
-          { q: 'Yelkovan 9\'un üzerindeyken saat nasıl okunur? ⏰', spoken: 'Yelkovan 9 üzerindeyken saat nasıl okunur?', a: 'Çeyrek var ⏰', d: ['Çeyrek geçiyor', 'Tam saat'], exp: 'Yelkovan 9\'da iken bir sonraki saate 15 dakika kalmıştır (çeyrek var).' },
-          { q: 'Öğleden sonra saat 2:00 dijital saatte nasıl gösterilir? ⏰', spoken: 'Öğleden sonra saat iki dijital saatte nasıl gösterilir?', a: '14:00 ⏰', d: ['12:00', '16:00'], exp: 'Öğleden sonra saatlere 12 eklenir: 12 + 2 = 14:00.' },
-          { q: '1 saat kaç dakikadır? ⏳', spoken: 'Bir saat kaç dakikadır?', a: '60 dakika ⏳', d: ['30 dakika', '100 dakika'], exp: '1 saat 60 dakikadır.' },
-          { q: 'Yarım saat kaç dakikadır? ⏳', spoken: 'Yarım saat kaç dakikadır?', a: '30 dakika ⏳', d: ['15 dakika', '45 dakika'], exp: '60 dakikanın yarısı 30 dakikadır.' },
-          { q: 'Çeyrek saat kaç dakikadır? ⏳', spoken: 'Çeyrek saat kaç dakikadır?', a: '15 dakika ⏳', d: ['30 dakika', '20 dakika'], exp: 'Bir saatin çeyreği (dörtte biri) 15 dakikadır.' },
-          { q: 'Bir yılda kaç mevsim ve kaç ay vardır? 🍂', spoken: 'Bir yılda kaç mevsim ve kaç ay vardır?', a: '4 mevsim, 12 ay 🗓️', d: ['2 mevsim, 10 ay', '4 mevsim, 52 ay'], exp: 'Bir takvim yılında 4 mevsim ve 12 ay bulunur.' },
-          { q: 'Bir hafta kaç gündür? 📅', spoken: 'Bir hafta kaç gündür?', a: '7 gün 📅', d: ['5 gün', '10 gün'], exp: 'Pazartesiden Pazara bir haftada 7 gün vardır.' }
-        ];
-        const item = timePool[Math.floor(Math.random() * timePool.length)];
-        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
-      } else {
-        // Paralarımız (Lira ve Kuruş Hesapları)
-        const moneyPool = [
-          { q: '1 Türk Lirası (1 TL) kaç Kuruşa eşittir? 🪙', spoken: 'Bir Türk Lirası kaç kuruşa eşittir?', a: '100 Kuruş 🪙', d: ['10 Kuruş', '50 Kuruş'], exp: '1 TL = 100 Kuruştur.' },
-          { q: '2 tane 50 Kuruş toplam kaç Lira eder? 🪙', spoken: 'İki tane 50 kuruş kaç lira eder?', a: '1 TL 🪙', d: ['2 TL', '50 TL'], exp: '50 Kuruş + 50 Kuruş = 100 Kuruş, yani 1 TL eder.' },
-          { q: '4 tane 25 Kuruş toplam kaç Lira eder? 🪙', spoken: 'Dört tane 25 kuruş kaç lira eder?', a: '1 TL 🪙', d: ['4 TL', '2 TL'], exp: '25 + 25 + 25 + 25 = 100 Kuruş = 1 TL eder.' },
-          { q: 'En büyük madeni paramız hangisidir? 🪙', spoken: 'En büyük madeni paramız hangisidir?', a: '1 TL 🪙', d: ['50 Kuruş', '5 TL'], exp: 'Türkiye\'de tedavüldeki en büyük madeni para 1 Türk Lirasıdır.' },
-          { q: 'Kumbarasında 3 tane 10 TL ve 1 tane 20 TL olan Elif\'in toplam kaç lirası vardır? 💰', spoken: 'Kumbarasında üç tane 10 lira ve bir tane 20 lira olanın kaç lirası vardır?', a: '50 TL 💰', d: ['40 TL', '60 TL'], exp: '3 × 10 = 30 TL. 30 + 20 = 50 TL eder.' },
-          { q: 'Fiyatı 35 TL olan kitaba 50 TL veren biri kaç TL para üstü alır? 💵', spoken: '35 liralık kitaba 50 lira veren biri kaç lira para üstü alır?', a: '15 TL', d: ['25 TL', '10 TL'], exp: '50 - 35 = 15 TL para üstü alır.' },
-          { q: 'Tanesi 5 lira olan kalemlerden 4 tane alan Can 50 TL verirse kaç lira para üstü alır? ✏️', spoken: 'Tanesi 5 lira olan kalemlerden 4 tane alan 50 lira verirse para üstü ne kadar alır?', a: '30 TL', d: ['20 TL', '35 TL'], exp: '4 × 5 = 20 TL harcar. 50 - 20 = 30 TL para üstü alır.' }
-        ];
-        const item = moneyPool[Math.floor(Math.random() * moneyPool.length)];
-        return { question: item.q, spokenText: item.spoken, correct: item.a, distractors: item.d, explanation: item.exp };
-      }
+      const r = Math.random();
+      if (r < 0.35) return this.generateM2Fractions();
+      if (r < 0.70) return this.generateM2ClockRead();
+      return this.generateM2MoneyCount();
     },
-
-    // 5. Geometri ve Simetri (20 Özgün Soru)
-    grade2GeometrySolidsPool: [
-      {
-        q: 'Tüm yüzleri birbirine eşit 6 karesel bölgeden oluşan, 8 köşesi ve 12 ayrıtı olan geometrik cisim hangisidir? 🎲',
-        spokenText: 'Tüm yüzleri eşit 6 kareden oluşan, 8 köşesi olan geometrik cisim hangisidir?',
-        a: 'Küp 🎲',
-        d: ['Silindir 🥫', 'Koni 🍦'],
-        exp: 'Küpün 6 karesel yüzü, 8 köşesi ve 12 ayrıtı vardır (Örn: zeka küpü, tavla zarı).'
-      },
-      {
-        q: 'Bir kibrit kutusu, ayakkabı kutusu veya tuğla hangi geometrik cisme benzer? 📦',
-        spokenText: 'Kibrit kutusu veya tuğla hangi geometrik cisme benzer?',
-        a: 'Dikdörtgen Prizma 📦',
-        d: ['Küre ⚽', 'Koni 🍦'],
-        exp: 'Tüm yüzleri dikdörtgen olan üç boyutlu cisim dikdörtgen prizmadır.'
-      },
-      {
-        q: 'Tabanları daire olan, eğri bir yan yüzeyi bulunan, köşesi ve ayrıtı OLMAYAN cisim hangisidir? 🥫',
-        spokenText: 'Tabanları daire olan, köşesi ve ayrıtı olmayan cisim hangisidir?',
-        a: 'Silindir (Örn: Salça kutusu, pil) 🥫',
-        d: ['Küp 🎲', 'Üçgen prizma ⛺'],
-        exp: 'Silindirin 2 düz dairesel tabanı ve 1 eğri yüzü vardır; köşe ve ayrıtı yoktur.'
-      },
-      {
-        q: 'Dondurma külahı veya doğum günü şapkası hangi geometrik cisme benzer? 🍦',
-        spokenText: 'Dondurma külahı veya parti şapkası hangi cisme benzer?',
-        a: 'Koni 🍦',
-        d: ['Silindir 🥫', 'Küp 🎲'],
-        exp: 'Daire tabanı ve sivri tepesi olan eğri yüzeyli cisim konidir; köşesi ve ayrıtı yoktur.'
-      },
-      {
-        q: 'Futbol topu, portakal veya gezegenimiz Dünya hangi geometrik cisme modeldir? ⚽',
-        spokenText: 'Futbol topu veya portakal hangi geometrik cisme modeldir?',
-        a: 'Küre ⚽',
-        d: ['Küp 🎲', 'Kare prizma 🧊'],
-        exp: 'Küre tek bir eğri yüzeyden oluşur; köşesi ve ayrıtı yoktur.'
-      },
-      {
-        q: 'Kamp çadırı veya evlerin çatısı genellikle hangi geometrik cisme benzer? ⛺',
-        spokenText: 'Kamp çadırı genellikle hangi geometrik cisme benzer?',
-        a: 'Üçgen Prizma ⛺',
-        d: ['Koni 🍦', 'Silindir 🥫'],
-        exp: 'Üçgen prizmanın 2 üçgen tabanı ve 3 dikdörtgen yan yüzü vardır.'
-      },
-      {
-        q: 'Küpün kaç adet köşesi ve kaç adet ayrıtı (kenarı) vardır? 🎲',
-        spokenText: 'Küpün kaç köşesi ve kaç ayrıtı vardır?',
-        a: '8 köşesi, 12 ayrıtı 🎲',
-        d: ['6 köşesi, 8 ayrıtı', '4 köşesi, 6 ayrıtı'],
-        exp: 'Küpün 8 köşesi ve 12 ayrıtı bulunur.'
-      },
-      {
-        q: 'Silindir, koni ve kürenin ortak özelliği nedir? ⚪',
-        spokenText: 'Silindir, koni ve kürenin ortak özelliği nedir?',
-        a: 'Köşelerinin ve ayrıtlarının olmaması ⚪',
-        d: ['Tüm yüzlerinin kare olması', '12 ayrıtlarının olması'],
-        exp: 'Silindir, koni ve kürenin köşe ve ayrıtları yoktur, eğri yüzeyleri vardır.'
-      },
-      {
-        q: 'Bir şekli tam ortasından katladığımızda iki parça üst üste tam çakışıyorsa bu şekle ne denir? 🪞',
-        spokenText: 'Katlandığında iki parça tam çakışıyorsa bu şekle ne denir?',
-        a: 'Simetrik şekil 🪞',
-        d: ['Geometrik cisim', 'Örüntü'],
-        exp: 'Katlandığında iki eş parçaya ayrılan şekiller simetriktir.'
-      },
-      {
-        q: 'Simetrik bir şekli iki eş parçaya ayıran çizgiye ne ad verilir? 📏',
-        spokenText: 'Simetrik bir şekli iki eş parçaya ayıran çizgiye ne ad verilir?',
-        a: 'Simetri doğrusu 📏',
-        d: ['Köşegen', 'Ayrıt'],
-        exp: 'Şekli iki ayna görüntüsüne ayıran çizgiye simetri doğrusu denir.'
-      },
-      {
-        q: 'Bir karenin kaç adet simetri doğrusu vardır? 🟦',
-        spokenText: 'Bir karenin kaç adet simetri doğrusu vardır?',
-        a: '4 adet 🟦',
-        d: ['2 adet', '1 adet'],
-        exp: 'Karenin yatay, dikey ve iki köşegen olmak üzere 4 simetri doğrusu vardır.'
-      },
-      {
-        q: 'Bir dikdörtgenin kaç adet simetri doğrusu vardır? 🚪',
-        spokenText: 'Bir dikdörtgenin kaç adet simetri doğrusu vardır?',
-        a: '2 adet (Yatay ve dikey) 🚪',
-        d: ['4 adet', '1 adet'],
-        exp: 'Dikdörtgenin köşegenleri simetri doğrusu değildir; 2 simetri doğrusu vardır.'
-      },
-      {
-        q: 'Alfabemizdeki hangi harf dikey bir simetri doğrusuna sahiptir? (Katlandığında eşleşir) 🔤',
-        spokenText: 'Hangi harf dikey bir simetri doğrusuna sahiptir?',
-        a: 'A harfi 🅰️',
-        d: ['F harfi', 'P harfi'],
-        exp: 'A harfi ortadan dikey katlandığında sağ ve sol yarıları tam üst üste gelir.'
-      },
-      {
-        q: 'Aşağıdaki hayvanlardan hangisinin vücudu mükemmel bir doğal simetri örneğidir? 🦋',
-        spokenText: 'Hangi hayvanın kanatları doğal bir simetri örneğidir?',
-        a: 'Kelebek 🦋',
-        d: ['Salyangoz 🐌', 'Yengeç 🦀'],
-        exp: 'Kelebeğin sağ ve sol kanatları birbirinin simetri aynasıdır.'
-      },
-      {
-        q: '3 kenarı ve 3 köşesi olan düzlemsel geometrik şekil hangisidir? 🔺',
-        spokenText: '3 kenarı ve 3 köşesi olan geometrik şekil hangisidir?',
-        a: 'Üçgen 🔺',
-        d: ['Kare 🟦', 'Çember ⚪'],
-        exp: 'Üçgen 3 kenar ve 3 köşeden oluşur.'
-      },
-      {
-        q: 'Tüm kenar uzunlukları birbirine EŞİT olan 4 köşeli şekil hangisidir? 🟦',
-        spokenText: 'Tüm kenarları eşit olan 4 köşeli şekil hangisidir?',
-        a: 'Kare 🟦',
-        d: ['Dikdörtgen 🚪', 'Çember ⚪'],
-        exp: 'Karenin 4 kenarı eşit uzunluktadır ve 4 köşesi vardır.'
-      },
-      {
-        q: 'Karşılıklı kenarları eşit (2 uzun, 2 kısa) olan 4 köşeli şekil hangisidir? 🚪',
-        spokenText: 'İki uzun ve iki kısa kenarı olan şekil hangisidir?',
-        a: 'Dikdörtgen 🚪',
-        d: ['Kare 🟦', 'Üçgen 🔺'],
-        exp: 'Dikdörtgenin karşılıklı kenarları birbirine eşittir.'
-      },
-      {
-        q: 'Hiç köşesi ve düz kenarı olmayan yuvarlak şekil hangisidir? ⚪',
-        spokenText: 'Hiç köşesi ve kenarı olmayan yuvarlak şekil hangisidir?',
-        a: 'Çember ⚪',
-        d: ['Kare 🟦', 'Üçgen 🔺'],
-        exp: 'Çember yuvarlaktır, kenarı ve köşesi yoktur.'
-      },
-      {
-        q: 'Kare prizmanın tabanları hangi geometrik şekildedir? 🧊',
-        spokenText: 'Kare prizmanın tabanları hangi şekildedir?',
-        a: 'Kare 🟦',
-        d: ['Üçgen 🔺', 'Daire ⚪'],
-        exp: 'Kare prizmanın alt ve üst tabanları kare, yan yüzleri dikdörtgendir.'
-      },
-      {
-        q: 'Buzdolabı veya çamaşır makinesi kutusu genellikle hangi geometrik cisme örnektir? 🧊',
-        spokenText: 'Buzdolabı genellikle hangi geometrik cisme örnektir?',
-        a: 'Kare Prizma veya Dikdörtgen Prizma 🧊',
-        d: ['Küre ⚽', 'Koni 🍦'],
-        exp: 'Tabanı kare, yüksekliği farklı olan kutular kare prizmadır.'
-      }
-    ],
 
     generateGrade2GeometrySolids() {
-      return this.drawFromPool(this.grade2GeometrySolidsPool, "grade2GeometrySolidsPool");
+      return this.generateM2GeometrySolids();
     },
 
-    // 6. Ölçme ve Veri (Grafik/Tablo - 20 Özgün Soru)
-    grade2MeasureDataPool: [
-      {
-        q: 'Sınıf tahtasının boyunu, odanın uzunluğunu veya kapının yüksekliğini hangi standart birimle ölçeriz? 🚪',
-        spokenText: 'Kapının boyunu veya oda uzunluğunu hangi standart birimle ölçeriz?',
-        a: 'Metre (m) 📏',
-        d: ['Kilogram (kg)', 'Litre (L)'],
-        exp: 'Büyük uzunluklar standart ölçme birimi olan metre (m) ile ölçülür.'
-      },
-      {
-        q: '1 metre (1 m) kaç santimetreye (cm) eşittir? 📏',
-        spokenText: 'Bir metre kaç santimetreye eşittir?',
-        a: '100 cm 📏',
-        d: ['10 cm', '1000 cm'],
-        exp: '1 metre = 100 santimetredir.'
-      },
-      {
-        q: 'Kalemimizin, silgimizin veya defterimizin boyunu cetvelle hangi birimle ölçmek uygundur? ✏️',
-        spokenText: 'Kalem ve defter boyunu hangi birimle ölçmek uygundur?',
-        a: 'Santimetre (cm) 📏',
-        d: ['Metre (m)', 'Kilogram (kg)'],
-        exp: 'Küçük nesnelerin uzunlukları santimetre ile cetvel kullanılarak ölçülür.'
-      },
-      {
-        q: 'Boyu 1 metre 35 cm olan bir çocuğun boyu toplam kaç santimetredir? 📏',
-        spokenText: '1 metre 35 santimetre toplam kaç santimetre eder?',
-        a: '135 cm 📏',
-        d: ['130 cm', '145 cm'],
-        exp: '1 m = 100 cm. 100 + 35 = 135 cm eder.'
-      },
-      {
-        q: '50 cm uzunluğundaki bir kumaşa kaç cm daha eklenirse 1 metre (100 cm) olur? 🧵',
-        spokenText: '50 santimetreye kaç santimetre eklenirse bir metre olur?',
-        a: '50 cm 🧵',
-        d: ['40 cm', '60 cm'],
-        exp: '100 - 50 = 50 cm daha eklenmelidir (yarım metre).'
-      },
-      {
-        q: 'Pazardan elma, patates veya un alırken ağırlıkları hangi birimle tartılır? ⚖️',
-        spokenText: 'Elma veya patatesin ağırlığı hangi birimle tartılır?',
-        a: 'Kilogram (kg) ⚖️',
-        d: ['Metre (m)', 'Santimetre (cm)'],
-        exp: 'Kütle (ağırlık) standart birimi kilogramdır (kg).'
-      },
-      {
-        q: '2 adet yarım kilogramlık un paketi toplam kaç kilogram eder? 🌾',
-        spokenText: 'İki yarım kilogram un kaç kilogram eder?',
-        a: '1 kilogram (1 kg) 🌾',
-        d: ['2 kg', '4 kg'],
-        exp: '2 yarım kilogram = 1 tam kilogram eder.'
-      },
-      {
-        q: 'Aşağıdakilerden hangisi 1 kilogramdan DAHA HAFİFTİR? 🪶',
-        spokenText: 'Hangisi 1 kilogramdan daha hafiftir?',
-        a: 'Bir adet kurşun kalem ✏️',
-        d: ['Büyük bir karpuz 🍉', 'Dolu bir okul çantası 🎒'],
-        exp: 'Kurşun kalem birkaç gramdır, 1 kilogramdan çok daha hafiftir.'
-      },
-      {
-        q: 'Aşağıdakilerden hangisi 1 kilogramdan DAHA AĞIRDIR? 🍉',
-        spokenText: 'Hangisi 1 kilogramdan daha ağırdır?',
-        a: 'Büyük bir kış karpuzu 🍉',
-        d: ['Bir adet silgi 🧼', 'Bir adet elma 🍎'],
-        exp: 'Büyük bir karpuz genellikle 5-10 kilogram gelir.'
-      },
-      {
-        q: 'Çetele tablosunda dört dikey çizgi ve üzerini kesen bir yatay çizgi (卌) hangi sayıyı ifade eder? 📊',
-        spokenText: 'Çetele tablosunda beşli çizgi grubu hangi sayıyı gösterir?',
-        a: '5 (Beş) 📊',
-        d: ['4', '10'],
-        exp: 'Çetele tablosunda her grup 5 çizgiden oluşur.'
-      },
-      {
-        q: 'Çetele tablosundaki çizgilerin sayı rakamlarıyla yazılmış haline ne ad verilir? 📋',
-        spokenText: 'Verilerin sayılarla gösterildiği tabloya ne ad verilir?',
-        a: 'Sıklık Tablosu 📋',
-        d: ['Boy cetveli', 'Nesne listesi'],
-        exp: 'Verilerin sayılarla gösterildiği tabloya sıklık tablosu denir.'
-      },
-      {
-        q: 'Bir nesne grafiğinde her yıldız sembolü 2 kitabı gösteriyorsa, 4 yıldız sembolü kaç kitabı temsil eder? ⭐',
-        spokenText: 'Her yıldız 2 kitabı gösteriyorsa 4 yıldız kaç kitaptır?',
-        a: '8 kitap (4 × 2 = 8) 📚',
-        d: ['6 kitap', '10 kitap'],
-        exp: '4 × 2 = 8 kitap eder.'
-      },
-      {
-        q: 'Grafikteki her gülen yüz 3 öğrenciyi gösteriyorsa, 5 gülen yüz kaç öğrencidir? 😊',
-        spokenText: 'Her gülen yüz 3 öğrenciyi gösteriyorsa 5 gülen yüz kaç öğrencidir?',
-        a: '15 öğrenci (5 × 3 = 15) 👥',
-        d: ['12 öğrenci', '18 öğrenci'],
-        exp: '5 × 3 = 15 öğrenci eder.'
-      },
-      {
-        q: 'Bir sıklık tablosunda: Elma=14, Muz=8, Çilek=18 ise en çok sevilen meyve hangisidir? 🍓',
-        spokenText: 'Elma 14, Muz 8, Çilek 18 ise en çok sevilen meyve hangisidir?',
-        a: 'Çilek (18) 🍓',
-        d: ['Elma (14)', 'Muz (8)'],
-        exp: 'En büyük sayı 18 olduğu için en çok çilek sevilmektedir.'
-      },
-      {
-        q: 'Bir sınıfta 16 öğrenci futbol, 9 öğrenci basketbol seviyorsa, futbol sevenler basketbol sevenlerden kaç fazladır? ⚽',
-        spokenText: '16 futbol ve 9 basketbol varsa futbol sevenler kaç fazladır?',
-        a: '7 öğrenci fazla (16 - 9 = 7) ⚽',
-        d: ['5 öğrenci', '8 öğrenci'],
-        exp: '16 - 9 = 7 fazladır.'
-      },
-      {
-        q: '1 sürahi su ile 4 su bardağı doluyorsa, 3 sürahi su ile kaç su bardağı doldurulabilir? 🥛',
-        spokenText: '1 sürahi 4 bardak dolduruyorsa 3 sürahi kaç bardak doldurur?',
-        a: '12 bardak (3 × 4 = 12) 🥛',
-        d: ['10 bardak', '14 bardak'],
-        exp: '3 × 4 = 12 bardak su dolar.'
-      },
-      {
-        q: 'Aşağıdaki kaplardan hangisi en fazla sıvı alır? 🪣',
-        spokenText: 'Aşağıdaki kaplardan hangisi en fazla sıvı alır?',
-        a: 'Büyük bir su kovası 🪣',
-        d: ['Çay bardağı ☕', 'Çorba kaşığı 🥄'],
-        exp: 'Kovanın hacmi bardak ve kaşıktan çok daha büyüktür.'
-      },
-      {
-        q: 'Aşağıdaki kaplardan hangisi en az sıvı alır? 🥄',
-        spokenText: 'Aşağıdaki kaplardan hangisi en az sıvı alır?',
-        a: 'Çay kaşığı 🥄',
-        d: ['Su bardağı 🥛', 'Sürahi 🫖'],
-        exp: 'Çay kaşığı en küçük sıvı kabıdır.'
-      },
-      {
-        q: '3 metre uzunluğundaki bir ipten 1 metresi kesilirse geriye kaç metre ip kalır? 🧵',
-        spokenText: '3 metre ipten 1 metresi kesilirse kaç metre kalır?',
-        a: '2 metre (3 - 1 = 2) 🧵',
-        d: ['1 metre', '4 metre'],
-        exp: '3 - 1 = 2 metre kalır.'
-      },
-      {
-        q: 'Ali 28 kilogram, kardeşi ise 19 kilogramdır. İki kardeşin toplam ağırlığı kaç kilogramdır? ⚖️',
-        spokenText: '28 kilo ve 19 kilonun toplamı kaç kilogramdır?',
-        a: '47 kg (28 + 19 = 47) ⚖️',
-        d: ['37 kg', '49 kg'],
-        exp: '28 + 19 = 47 kilogram eder.'
-      }
-    ],
-
-    generateGrade2MeasureData() {
-      return this.drawFromPool(this.grade2MeasureDataPool, "grade2MeasureDataPool");
-    },
-
-    // 2. Sınıf Matematik Büyük Karma Düello (6 Konudan Dengeli Soru Çekimi)
     generateGrade2MathKarma() {
-      const topicIdx = Math.floor(Math.random() * 6);
+      const topicIdx = Math.floor(Math.random() * 5);
       if (topicIdx === 0) return this.generateGrade2PlaceValue();
       if (topicIdx === 1) return this.generateGrade2Operations();
       if (topicIdx === 2) return this.generateGrade2MultiplicationDivision();
       if (topicIdx === 3) return this.generateGrade2FractionsTimeMoney();
-      if (topicIdx === 4) return this.generateGrade2GeometrySolids();
-      return this.generateGrade2MeasureData();
+      return this.generateGrade2GeometrySolids();
     },
-
     // Geriye Dönük Uyumluluk Fonksiyonları (Legacy Aliases)
     generateGrade2Math() {
       return this.generateGrade2MathKarma();
@@ -10835,19 +10587,19 @@
       // --- 2. SINIF: 2026 MAARİF MODELİ MATEMATİK 6 ÖĞRENME ALANI ---
       } else if (gameType === 'math_place_value_2') {
         const raw = this.generateGrade2PlaceValue();
-        return this.buildQuestionItem(raw, '🔢 Sayılar ve Nicelikler (100\'e Kadar)');
+        return this.buildQuestionItem(raw, '🔢 Onluk ve Birlik Atölyesi');
       } else if (gameType === 'math_operations_2') {
         const raw = this.generateGrade2Operations();
-        return this.buildQuestionItem(raw, '➕➖ Toplama ve Çıkarma (100 İçinde)');
+        return this.buildQuestionItem(raw, '➕ Toplama ve Çıkarma Makinesi');
       } else if (gameType === 'math_multiplication_division_2' || gameType === 'math_multiplication_2') {
         const raw = this.generateGrade2MultiplicationDivision();
-        return this.buildQuestionItem(raw, '✖️➗ Çarpma ve Bölme (1-5 & 10)');
+        return this.buildQuestionItem(raw, '✖️ Çarpma ve Eşit Paylaştırma');
       } else if (gameType === 'math_fractions_time_money_2' || gameType === 'math_clock_2') {
         const raw = this.generateGrade2FractionsTimeMoney();
-        return this.buildQuestionItem(raw, '🍰 Kesirler, Zaman ve Paralarımız');
+        return this.buildQuestionItem(raw, '🕒 Kesirler, Saatler ve Paralarımız');
       } else if (gameType === 'math_geometry_solids_2') {
         const raw = this.generateGrade2GeometrySolids();
-        return this.buildQuestionItem(raw, '📐 Geometri ve Simetri');
+        return this.buildQuestionItem(raw, '📐 Geometrik Cisimler ve Şekiller');
       } else if (gameType === 'math_measure_data_2') {
         const raw = this.generateGrade2MeasureData();
         return this.buildQuestionItem(raw, '📊 Ölçme ve Veri (Grafik/Tablo)');
@@ -18007,11 +17759,11 @@
           {
             id: 'math_place_value_2',
             active: true,
-            title: 'Basamak Değeri & Onluğa Yuvarlama Ustası',
+            title: 'Onluk ve Birlik Atölyesi (100\'e Kadar Sayılar)',
             icon: '📦',
             badge: '🔢 Sayılar (1-100)',
             featureTag: '📦 Onluk & Birlik',
-            description: '100\'e kadar sayılar, basamak değeri, en yakın onluğa yuvarlama ve ritmik sayma treni!',
+            description: '100\'e kadar sayılar, onluk kule ve birlik küp inşası ile ritmik sayma treni!',
             tags: ['📦 Onluk & Birlik', '🎯 Basamak Değeri', '🔄 Onluğa Yuvarlama', '🚂 Ritmik Sayma'],
             btnText: 'Düelloyu Başlat',
             topic: 'numbers'
@@ -18019,11 +17771,11 @@
           {
             id: 'math_operations_2',
             active: true,
-            title: 'Hızlı İşlem & Kayıp Sayı Düellosu',
+            title: 'Toplama ve Çıkarma Makinesi',
             icon: '➕',
             badge: '➕➖ Toplama & Çıkarma',
             featureTag: '⚡ Eldeli & Onluk Bozma',
-            description: '100 içinde eldeli toplama, onluk bozarak çıkarma, kayıp toplananı bulma ve zihinden işlemler!',
+            description: '100 içinde eldeli toplama, onluk bozarak çıkarma ve sayı taşlarıyla interaktif makine!',
             tags: ['➕ Eldeli Toplama', '➖ Onluk Bozma', '❓ Kayıp Sayıyı Bul', '🧠 Zihinden İşlem'],
             btnText: 'Düelloyu Başlat',
             topic: 'operations'
@@ -18031,11 +17783,11 @@
           {
             id: 'math_multiplication_division_2',
             active: true,
-            title: 'Çarpım Kahramanı (1-5 & 10\'lar) & Eşit Paylaştır',
+            title: 'Çarpma ve Eşit Paylaştırma (Bölme)',
             icon: '✖️',
             badge: '✖️➗ Çarpma & Bölme',
             featureTag: '🎯 1-5 ve 10 Katları',
-            description: '1, 2, 3, 4, 5 ve 10\'lar çarpım tablosu, tekrarlı toplama ve 20 içinde eşit paylaştırma/bölme!',
+            description: 'Sepetlere görsel eşit paylaştırma ve 1-5, 10 katları çarpma hedef tahtası!',
             tags: ['✖️ Çarpım Tablosu (1-5, 10)', '➗ Eşit Paylaştırma (≤20)', '🍎 Çarpma Problemleri', '🐿️ Kalansız Bölme'],
             btnText: 'Düelloyu Başlat',
             topic: 'mult_div'
@@ -18043,11 +17795,11 @@
           {
             id: 'math_fractions_time_money_2',
             active: true,
-            title: 'Bütün-Yarım-Çeyrek & Saat/Kumbara Atölyesi',
+            title: 'Kesirler, Saatler ve Paralarımız',
             icon: '⏰',
             badge: '🍰 Kesir, Saat & Para',
             featureTag: '⏰ Tam/Yarım/Çeyrek',
-            description: 'Bütün-yarım-çeyrek modelleri, tam-yarım-çeyrek saatler, takvim ve TL-Kuruş hesaplamaları!',
+            description: 'Bütün, yarım ve çeyrek ayırma, analog saat okuma ve kumbara para toplama!',
             tags: ['🍰 Bütün, Yarım, Çeyrek', '⏰ Saat Okuma', '🪙 TL & Kuruş', '📅 Takvim & Zaman'],
             btnText: 'Düelloyu Başlat',
             topic: 'fractions_time_money'
@@ -18055,11 +17807,11 @@
           {
             id: 'math_geometry_solids_2',
             active: true,
-            title: 'Geometrik Cisim Avcısı & Simetri Aynası',
+            title: 'Geometrik Cisimler ve Şekiller',
             icon: '📐',
             badge: '📐 Geometri & Cisimler',
             featureTag: '🎲 Küp, Prizma, Silindir',
-            description: 'Küp, prizma, silindir, koni, küre özellikleri, temel şekiller ve simetri doğrusu!',
+            description: 'Üçgen, kare, dikdörtgen, çember ile küp, silindir, koni, küre özellik bilmeceleri!',
             tags: ['🎲 Geometrik Cisimler', '🪞 Simetri Doğrusu', '🔺 Yüz, Köşe, Ayrıt', '🟦 Düzlemsel Şekiller'],
             btnText: 'Düelloyu Başlat',
             topic: 'geometry'
@@ -27235,9 +26987,375 @@
     root.appendChild(container);
   }
 
-  function renderInteractiveQuestion(q) {
+  
+  /* ==========================================================================
+     2. SINIF MATEMATİK 2026 MAARİF MODELİ ŞIKSIZ ETKİLEŞİMLİ RENDER MOTORU
+     ========================================================================== */
+  function generateClockSvg(hour, minute) {
+    const hourAngle = ((hour % 12) + minute / 60) * 30;
+    const minuteAngle = minute * 6;
+
+    return `
+      <svg viewBox="0 0 200 200" class="m2-clock-svg" width="150" height="150">
+        <defs>
+          <radialGradient id="clockFaceGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="90%" stop-color="#f8fafc"/>
+            <stop offset="100%" stop-color="#e2e8f0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="100" cy="100" r="92" fill="url(#clockFaceGrad)" stroke="#3b82f6" stroke-width="8"/>
+        <circle cx="100" cy="100" r="84" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+        <g font-family="Nunito, sans-serif" font-weight="900" font-size="16" fill="#1e293b" text-anchor="middle" dominant-baseline="central">
+          <text x="100" y="32">12</text>
+          <text x="138" y="44">1</text>
+          <text x="160" y="68">2</text>
+          <text x="168" y="100">3</text>
+          <text x="160" y="132">4</text>
+          <text x="138" y="156">5</text>
+          <text x="100" y="168">6</text>
+          <text x="62" y="156">7</text>
+          <text x="40" y="132">8</text>
+          <text x="32" y="100">9</text>
+          <text x="40" y="68">10</text>
+          <text x="62" y="44">11</text>
+        </g>
+        <line x1="100" y1="100" x2="100" y2="58" stroke="#1e3a8a" stroke-width="6" stroke-linecap="round" transform="rotate(${hourAngle} 100 100)"/>
+        <line x1="100" y1="100" x2="100" y2="38" stroke="#ef4444" stroke-width="4" stroke-linecap="round" transform="rotate(${minuteAngle} 100 100)"/>
+        <circle cx="100" cy="100" r="6" fill="#1e293b"/>
+        <circle cx="100" cy="100" r="2.5" fill="#f8fafc"/>
+      </svg>
+    `;
+  }
+
+  function renderGrade2MathEngine(q) {
+    const data = q.interactiveData || q;
+    const type = q.type;
+
+    const renderHtml = (playerNum) => {
+      if (type === 'm2_place_blocks') {
+        return `
+          <div class="m2-arena m2-blocks-arena" data-player="${playerNum}">
+            <div class="m2-target-badge">
+              <span class="m2-target-lbl">Hedef Sayı:</span>
+              <span class="m2-target-val">${data.targetNum}</span>
+            </div>
+            <div class="m2-blocks-tray" id="m2Tray_p${playerNum}">
+              <div class="m2-tray-col tens-col">
+                <div class="m2-col-title">🏢 Onluklar (<span class="m2-tens-count" id="m2TensCount_p${playerNum}">0</span>)</div>
+                <div class="m2-tower-list" id="m2Towers_p${playerNum}"></div>
+              </div>
+              <div class="m2-tray-divider"></div>
+              <div class="m2-tray-col units-col">
+                <div class="m2-col-title">🧊 Birlikler (<span class="m2-units-count" id="m2UnitsCount_p${playerNum}">0</span>)</div>
+                <div class="m2-cube-grid" id="m2Cubes_p${playerNum}"></div>
+              </div>
+            </div>
+            <div class="m2-current-sum">
+              Şu Anki Sayı: <strong class="m2-sum-val" id="m2SumVal_p${playerNum}">0</strong> / ${data.targetNum}
+            </div>
+            <div class="m2-block-btns">
+              <button type="button" class="m2-action-btn btn-add-ten" data-action="ten" data-player="${playerNum}">
+                <span class="btn-icon">🏢</span> +1 Onluk (10)
+              </button>
+              <button type="button" class="m2-action-btn btn-add-unit" data-action="unit" data-player="${playerNum}">
+                <span class="btn-icon">🧊</span> +1 Birlik (1)
+              </button>
+              <button type="button" class="m2-action-btn btn-reset-blocks" data-action="reset" data-player="${playerNum}">
+                <span class="btn-icon">🔄</span> Sıfırla
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_rhythmic_train') {
+        return `
+          <div class="m2-arena m2-train-arena" data-player="${playerNum}">
+            <div class="m2-train-track">
+              <div class="m2-locomotive">🚂</div>
+              ${data.seq.map((val, idx) => `
+                <div class="m2-wagon ${idx === data.missingIdx ? 'm2-missing-wagon' : ''}" id="m2Wagon_p${playerNum}_${idx}" data-idx="${idx}">
+                  <span class="m2-wagon-val">${idx === data.missingIdx ? '?' : val}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="m2-train-prompt">Boş vagon için doğru sayı taşını seç:</div>
+            <div class="m2-stone-row">
+              ${data.choices.map(c => `
+                <div class="m2-stone-btn" data-val="${c}" data-correct="${c === data.targetVal}" data-player="${playerNum}" role="button" tabindex="0">
+                  <span>${c}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_operations_machine') {
+        return `
+          <div class="m2-arena m2-calc-arena" data-player="${playerNum}">
+            <div class="m2-calc-machine">
+              <div class="m2-calc-screen">
+                <span class="m2-calc-num">${data.num1}</span>
+                <span class="m2-calc-op">${data.op}</span>
+                <span class="m2-calc-num">${data.num2}</span>
+                <span class="m2-calc-eq">=</span>
+                <div class="m2-calc-slot" id="m2Slot_p${playerNum}">?</div>
+              </div>
+            </div>
+            <div class="m2-stones-instruction">Doğru sonuç taşını seç veya kutuya dokun:</div>
+            <div class="m2-stone-row">
+              ${data.options.map(opt => `
+                <div class="m2-calc-stone" data-val="${opt}" data-correct="${opt === data.answer}" data-player="${playerNum}" role="button" tabindex="0">
+                  <span>${opt}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_equal_share') {
+        const sc = data.scenario;
+        return `
+          <div class="m2-arena m2-share-arena" data-player="${playerNum}">
+            <div class="m2-share-pool">
+              <div class="m2-share-items-label">Toplam ${data.total} ${sc.item}:</div>
+              <div class="m2-share-emojis">${sc.itemEmoji.repeat(data.total)}</div>
+            </div>
+            <div class="m2-share-targets">
+              ${Array(data.targetCount).fill(0).map((_, i) => `
+                <div class="m2-target-box">
+                  <span class="m2-target-icon">${sc.targetEmoji}</span>
+                  <span class="m2-target-num">${i + 1}. ${sc.targetLabel}</span>
+                  <span class="m2-target-share-val" id="m2ShareVal_p${playerNum}_${i}">[ ? ]</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="m2-stones-instruction">Her birine kaç ${sc.item} düşer?</div>
+            <div class="m2-stone-row">
+              ${data.options.map(opt => `
+                <div class="m2-share-stone" data-val="${opt}" data-correct="${opt === data.answer}" data-player="${playerNum}" role="button" tabindex="0">
+                  <span>${opt} ${sc.itemEmoji}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_multiplication_target') {
+        return `
+          <div class="m2-arena m2-mult-arena" data-player="${playerNum}">
+            <div class="m2-mult-board">
+              <div class="m2-mult-expr">${data.a} × ${data.b} = ?</div>
+              <div class="m2-mult-visual-hint">(${data.a} tane ${data.b})</div>
+            </div>
+            <div class="m2-targets-grid">
+              ${data.options.map(opt => `
+                <div class="m2-target-circle" data-val="${opt}" data-correct="${opt === data.answer}" data-player="${playerNum}" role="button" tabindex="0">
+                  <span class="target-bullseye">🎯</span>
+                  <span class="target-val">${opt}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_fractions') {
+        const item = data.item;
+        return `
+          <div class="m2-arena m2-fractions-arena" data-player="${playerNum}">
+            <div class="m2-fraction-display">
+              <div class="m2-fraction-img-box">${replaceEmojisWith3D(item.icon, 'q-3d-fruit')}</div>
+              <div class="m2-fraction-caption">${item.name}</div>
+            </div>
+            <div class="m2-baskets-row">
+              <div class="m2-basket-choice" data-type="tam" data-correct="${data.correctType === 'tam'}" data-player="${playerNum}" role="button" tabindex="0">
+                <span class="m2-basket-icon">🌕</span>
+                <span class="m2-basket-title">1 Bütün</span>
+              </div>
+              <div class="m2-basket-choice" data-type="yarim" data-correct="${data.correctType === 'yarim'}" data-player="${playerNum}" role="button" tabindex="0">
+                <span class="m2-basket-icon">🌗</span>
+                <span class="m2-basket-title">Yarım (½)</span>
+              </div>
+              <div class="m2-basket-choice" data-type="ceyrek" data-correct="${data.correctType === 'ceyrek'}" data-player="${playerNum}" role="button" tabindex="0">
+                <span class="m2-basket-icon">🌘</span>
+                <span class="m2-basket-title">Çeyrek (¼)</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_clock_read') {
+        const clockSvg = generateClockSvg(data.hour, data.minute);
+        return `
+          <div class="m2-arena m2-clock-arena" data-player="${playerNum}">
+            <div class="m2-clock-box">
+              ${clockSvg}
+            </div>
+            <div class="m2-stones-instruction">Doğru saate dokun:</div>
+            <div class="m2-stone-row">
+              ${data.options.map(opt => `
+                <div class="m2-stone-btn m2-clock-btn" data-val="${opt}" data-correct="${opt === data.digital}" data-player="${playerNum}" role="button" tabindex="0">
+                  <span>${opt}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_money_count') {
+        return `
+          <div class="m2-arena m2-money-arena" data-player="${playerNum}">
+            <div class="m2-piggy-container">
+              <div class="m2-piggy-icon">🐷</div>
+              <div class="m2-coins-display">
+                ${data.banknotes.map(b => `<div class="m2-banknote m2-bn-${b}">${b} TL</div>`).join('')}
+                ${Array(data.coins).fill(0).map(() => `<div class="m2-coin">1₺</div>`).join('')}
+              </div>
+            </div>
+            <div class="m2-stones-instruction">Kumbaradaki toplam tutarı seç:</div>
+            <div class="m2-stone-row">
+              ${data.options.map(opt => `
+                <div class="m2-stone-btn m2-money-btn" data-val="${opt}" data-correct="${opt === data.total}" data-player="${playerNum}" role="button" tabindex="0">
+                  <span>${opt} TL</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (type === 'm2_geometry_solids') {
+        return `
+          <div class="m2-arena m2-geometry-arena" data-player="${playerNum}">
+            <div class="m2-geometry-grid">
+              ${data.options.map(opt => `
+                <div class="m2-geom-card" data-name="${opt.name}" data-correct="${opt.name === data.riddle.name}" data-player="${playerNum}" role="button" tabindex="0">
+                  <span class="geom-icon">${replaceEmojisWith3D(opt.icon, 'q-3d-item')}</span>
+                  <span class="geom-name">${opt.name}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      return '';
+    };
+
+    if (DOM.p1InteractiveZone) DOM.p1InteractiveZone.innerHTML = renderHtml(1);
+    if (DOM.p2InteractiveZone) DOM.p2InteractiveZone.innerHTML = renderHtml(2);
+
+    // Event Listener Bağlantıları
+    [1, 2].forEach(pNum => {
+      const zone = pNum === 1 ? DOM.p1InteractiveZone : DOM.p2InteractiveZone;
+      if (!zone) return;
+
+      // 1) Blok İnşası Butonları
+      if (type === 'm2_place_blocks') {
+        let currentTens = 0;
+        let currentUnits = 0;
+
+        const updateBlocksUi = () => {
+          const sum = currentTens * 10 + currentUnits;
+          const tensCountEl = zone.querySelector(`#m2TensCount_p${pNum}`);
+          const unitsCountEl = zone.querySelector(`#m2UnitsCount_p${pNum}`);
+          const sumValEl = zone.querySelector(`#m2SumVal_p${pNum}`);
+          const towersEl = zone.querySelector(`#m2Towers_p${pNum}`);
+          const cubesEl = zone.querySelector(`#m2Cubes_p${pNum}`);
+          const trayEl = zone.querySelector(`#m2Tray_p${pNum}`);
+
+          if (tensCountEl) tensCountEl.textContent = currentTens;
+          if (unitsCountEl) unitsCountEl.textContent = currentUnits;
+          if (sumValEl) sumValEl.textContent = sum;
+
+          if (towersEl) {
+            towersEl.innerHTML = Array(currentTens).fill(0).map(() => `<div class="m2-tower-block">10</div>`).join('');
+          }
+          if (cubesEl) {
+            cubesEl.innerHTML = Array(currentUnits).fill(0).map(() => `<div class="m2-unit-cube">1</div>`).join('');
+          }
+
+          if (sum === data.targetNum) {
+            if (trayEl) trayEl.classList.add('m2-success-glow');
+            awardPointAndProgress(pNum);
+          } else if (sum > data.targetNum) {
+            if (trayEl) {
+              trayEl.classList.add('m2-shake');
+              setTimeout(() => {
+                trayEl.classList.remove('m2-shake');
+                currentTens = 0;
+                currentUnits = 0;
+                updateBlocksUi();
+              }, 600);
+            }
+          }
+        };
+
+        zone.querySelectorAll('.m2-action-btn').forEach(btn => {
+          attachInstantTouch(btn, () => {
+            if (state.isQuestionAnswered) return;
+            if (state.gameMode === 'solo' && pNum !== 1) return;
+            const action = btn.getAttribute('data-action');
+            if (action === 'ten') {
+              audio.playClick();
+              currentTens++;
+              updateBlocksUi();
+            } else if (action === 'unit') {
+              audio.playClick();
+              currentUnits++;
+              updateBlocksUi();
+            } else if (action === 'reset') {
+              audio.playClick();
+              currentTens = 0;
+              currentUnits = 0;
+              updateBlocksUi();
+            }
+          });
+        });
+      }
+
+      // 2) Diğer Genel Seçim Kartları / Taşları
+      const selectableCards = zone.querySelectorAll('.m2-stone-btn, .m2-calc-stone, .m2-share-stone, .m2-target-circle, .m2-basket-choice, .m2-geom-card');
+      selectableCards.forEach(card => {
+        attachInstantTouch(card, () => {
+          if (state.isQuestionAnswered) return;
+          if (state.gameMode === 'solo' && pNum !== 1) return;
+          if (pNum === 1 && state.player1 && state.player1.isLocked) return;
+          if (pNum === 2 && state.player2 && state.player2.isLocked) return;
+
+          const isCorrect = card.getAttribute('data-correct') === 'true';
+
+          if (isCorrect) {
+            card.classList.add('is-correct');
+            // Tren vagonunu doldur
+            if (type === 'm2_rhythmic_train') {
+              const missingWagon = zone.querySelector('.m2-missing-wagon');
+              if (missingWagon) {
+                missingWagon.classList.add('is-filled');
+                missingWagon.querySelector('.m2-wagon-val').textContent = data.targetVal;
+              }
+            }
+            // Hesap makinesi slotunu doldur
+            if (type === 'm2_operations_machine') {
+              const slot = zone.querySelector(`#m2Slot_p${pNum}`);
+              if (slot) {
+                slot.textContent = data.answer;
+                slot.classList.add('m2-slot-correct');
+              }
+            }
+            // Paylaştırma sepetlerini güncelle
+            if (type === 'm2_equal_share') {
+              for (let i = 0; i < data.targetCount; i++) {
+                const sEl = zone.querySelector(`#m2ShareVal_p${pNum}_${i}`);
+                if (sEl) sEl.textContent = `${data.answer} ${data.scenario.itemEmoji}`;
+              }
+            }
+            awardPointAndProgress(pNum);
+          } else {
+            kidsGentleWrong(card);
+          }
+        });
+      });
+    });
+  }
+
+function renderInteractiveQuestion(q) {
     if (!q) return;
 
+    if (typeof q.type === 'string' && q.type.indexOf('m2_') === 0) {
+      renderGrade2MathEngine(q);
+      return;
+    }
     if (typeof q.type === 'string' && q.type.indexOf('k1_') === 0) {
       renderK1Engine(q);
     } else if (q.type === 'kids_cards' || q.type === 'kids_drag' || q.type === 'kids_balloon') {
