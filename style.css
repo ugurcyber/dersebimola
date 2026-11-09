@@ -26049,3 +26049,662 @@ body.is-game-active .universal-game-bgm-fab {
     padding: 3px 6px;
   }
 }
+
+/* ==========================================================================
+   🎡 ŞANS ÇARKI & SÜRPRİZ KUTULAR (WHEEL OF FORTUNE) STİLLERİ
+   ========================================================================== */
+
+/* Lobi Kartı */
+.theme-wheel {
+  --card-accent: #8B5CF6;
+}
+
+.banner-wheel {
+  background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 50%, #E9D5FF 100%);
+  border: 2px solid #D8B4FE;
+}
+
+.scene-wheel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  gap: 12px;
+}
+
+.mini-wheel-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2E1065;
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 2px solid #A855F7;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+}
+
+.mini-wheel-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  animation: miniWheelSpin 3s infinite linear;
+}
+
+.mini-gift-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  animation: miniGiftBounce 1.2s infinite alternate ease-in-out;
+}
+
+/* Arena Kapsayıcı */
+.arc-wheel-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+}
+
+/* Skor Tablosu */
+.wheel-scoreboard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wheel-team-pill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s ease;
+}
+
+.wheel-team-pill.pill-blue { border-color: #BFDBFE; background: #EFF6FF; }
+.wheel-team-pill.pill-red { border-color: #FECACA; background: #FEF2F2; }
+.wheel-team-pill.pill-solo { border-color: #DDD6FE; background: #FAF5FF; }
+
+.wheel-team-pill.is-active-turn {
+  transform: scale(1.04);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.35), 0 8px 20px rgba(139, 92, 246, 0.2);
+  border-color: #8B5CF6 !important;
+}
+
+.team-label {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.shield-badge {
+  background: #0D9488;
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: 900;
+}
+
+.team-score {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin-top: 2px;
+}
+
+.wheel-round-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-radius: 14px;
+  padding: 6px 14px;
+  min-width: 80px;
+}
+
+.round-label {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #64748B;
+  letter-spacing: 0.5px;
+}
+
+.round-count {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #0F172A;
+}
+
+/* İkaz Bandı */
+.wheel-turn-banner {
+  width: 100%;
+  padding: 9px 16px;
+  border-radius: 14px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1rem;
+  text-align: center;
+  border: 2px solid;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease;
+}
+
+.wheel-turn-banner.team-blue { background: #DBEAFE; border-color: #3B82F6; color: #1E40AF; }
+.wheel-turn-banner.team-red { background: #FEE2E2; border-color: #EF4444; color: #B91C1C; }
+
+/* Soru Kartı */
+.wheel-question-card {
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 14px 18px;
+  border: 3px solid #E2E8F0;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.wheel-question-card.is-question-answered {
+  opacity: 0.92;
+  background: #F8FAFC;
+}
+
+.wheel-q-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.wheel-q-tag {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.wheel-btn-speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EEF2FF;
+  color: #4F46E5;
+  border: 1.5px solid #C7D2FE;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wheel-btn-speak:hover, .wheel-btn-speak:active {
+  background: #4F46E5;
+  color: #FFFFFF;
+  transform: scale(1.04);
+}
+
+.wheel-q-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.wheel-q-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  text-align: center;
+}
+
+.wheel-q-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.wheel-opt-btn {
+  flex: 1;
+  min-width: 130px;
+  max-width: 240px;
+  padding: 10px 14px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1E293B;
+  background: #F8FAFC;
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  text-align: center;
+}
+
+.wheel-opt-btn:hover:not(:disabled) {
+  background: #F5F3FF;
+  border-color: #8B5CF6;
+  border-bottom-color: #6D28D9;
+  transform: translateY(-2px);
+}
+
+.wheel-opt-btn.opt-correct {
+  background: #DCFCE7 !important;
+  border-color: #22C55E !important;
+  border-bottom-color: #15803D !important;
+  color: #15803D !important;
+}
+
+.wheel-opt-btn.opt-wrong {
+  background: #FEE2E2 !important;
+  border-color: #EF4444 !important;
+  border-bottom-color: #B91C1C !important;
+  color: #B91C1C !important;
+}
+
+.wheel-opt-btn:disabled {
+  opacity: 0.85;
+  cursor: default;
+}
+
+/* Aşama 2: Ödül Sahnesi (Kilitli veya Aktif) */
+.wheel-reward-stage {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  border: 3px solid #CBD5E1;
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.wheel-reward-stage.is-stage-active {
+  border-color: #8B5CF6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25), 0 10px 28px rgba(139, 92, 246, 0.15);
+  animation: rewardStagePulse 1.4s infinite alternate ease-in-out;
+}
+
+.stage-lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.lock-box {
+  background: #FFFFFF;
+  padding: 12px 22px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.lock-icon {
+  font-size: 1.6rem;
+}
+
+.lock-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1E293B;
+}
+
+.reward-columns-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: 100%;
+}
+
+.reward-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 14px 12px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.col-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #334155;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Şans Çarkı Cihazı */
+.wheel-device-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel-arrow-marker {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.8rem;
+  color: #DC2626;
+  z-index: 8;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  line-height: 1;
+}
+
+.wheel-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.wheel-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wheel-spin-center-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  border: 3px solid #FEF3C7;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.5);
+  color: #FFFFFF;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.85rem;
+  font-weight: 900;
+  cursor: pointer;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.wheel-spin-center-btn:hover:not(:disabled) {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.7);
+}
+
+.wheel-spin-center-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* 6 Sürpriz Kutu Izgarası */
+.mystery-boxes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.mystery-box-item {
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 2.5px solid #F59E0B;
+  border-bottom: 5px solid #D97706;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.2);
+  transition: all 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.mystery-box-item:hover:not(.is-box-opened) {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 18px rgba(217, 119, 6, 0.35);
+}
+
+.mystery-box-item:active:not(.is-box-opened) {
+  transform: translateY(1px);
+  border-bottom-width: 2.5px;
+}
+
+.box-closed-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.box-num {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #B45309;
+}
+
+.box-gift-ico {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.mystery-box-item.is-box-opening {
+  animation: boxOpenShake 0.5s ease;
+}
+
+.mystery-box-item.is-box-opened {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  border-bottom-width: 2.5px;
+  cursor: default;
+  box-shadow: none;
+}
+
+.box-opened-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4px;
+}
+
+.box-rew-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.box-rew-label {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #1E293B;
+  margin-top: 2px;
+  line-height: 1.1;
+}
+
+/* Sonuç Bildirim Pop-up */
+.wheel-result-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FFFFFF;
+  border: 4px solid;
+  border-radius: 24px;
+  padding: 16px 26px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 25;
+  animation: resultPopIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 90%;
+}
+
+.wheel-result-popup.res-positive { border-color: #22C55E; background: #F0FDF4; }
+.wheel-result-popup.res-negative { border-color: #EF4444; background: #FEF2F2; }
+.wheel-result-popup.res-shield { border-color: #0D9488; background: #F0FDFA; }
+.wheel-result-popup.res-swap { border-color: #8B5CF6; background: #FAF5FF; }
+
+.popup-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.popup-text strong {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #0F172A;
+  display: block;
+}
+
+.popup-text p {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #475569;
+  margin: 4px 0 0;
+}
+
+/* Animasyonlar */
+@keyframes miniWheelSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes miniGiftBounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px); }
+}
+
+@keyframes rewardStagePulse {
+  0% { box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2), 0 8px 24px rgba(139, 92, 246, 0.1); }
+  100% { box-shadow: 0 0 0 5px rgba(139, 92, 246, 0.4), 0 12px 32px rgba(139, 92, 246, 0.25); }
+}
+
+@keyframes boxOpenShake {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.1) rotate(-6deg); }
+  75% { transform: scale(1.1) rotate(6deg); }
+}
+
+@keyframes resultPopIn {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Mobil & Tablet Uyumluluğu (max-width: 768px) */
+@media (max-width: 768px) {
+  .arc-wheel-arena {
+    gap: 8px;
+    padding: 6px;
+  }
+  .wheel-scoreboard {
+    gap: 8px;
+  }
+  .wheel-team-pill {
+    padding: 6px 10px;
+  }
+  .team-score {
+    font-size: 1.15rem;
+  }
+  .wheel-turn-banner {
+    font-size: 0.92rem;
+    padding: 7px 10px;
+  }
+  .wheel-question-card {
+    padding: 10px 14px;
+    border-radius: 16px;
+    gap: 8px;
+  }
+  .wheel-q-text {
+    font-size: 1.15rem;
+  }
+  .wheel-opt-btn {
+    min-width: 90px;
+    padding: 8px 10px;
+    font-size: 0.98rem;
+  }
+  .reward-columns-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .wheel-device-wrap {
+    width: 190px;
+    height: 190px;
+  }
+  .wheel-spin-center-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 0.78rem;
+  }
+  .mystery-boxes-grid {
+    max-width: 260px;
+    gap: 8px;
+  }
+  .box-gift-ico {
+    font-size: 1.5rem;
+  }
+  .wheel-result-popup {
+    padding: 12px 18px;
+  }
+  .popup-icon {
+    font-size: 2.2rem;
+  }
+  .popup-text strong {
+    font-size: 1.15rem;
+  }
+}

@@ -14098,6 +14098,27 @@
       hideTimeouts: []
     },
 
+    // 🎡 Şans Çarkı & Sürpriz Kutular
+    wheel: {
+      mode: 'duel',
+      topic: 'math',
+      activePlayer: 1,
+      p1Score: 0,
+      p2Score: 0,
+      p1Shield: false,
+      p2Shield: false,
+      round: 1,
+      maxRounds: 8,
+      currentQ: null,
+      state: 'question',
+      bannerText: '',
+      wheelRotation: 0,
+      boxRewards: [],
+      openedBoxes: [],
+      lastResult: null,
+      isBusy: false
+    },
+
     // 4) 🧠 Hafıza Kartları Düellosu
     memory: {
       players: 2,        // 1 | 2
@@ -14304,6 +14325,7 @@
     else if (gameId === 'connect4' || gameId === 'hedef4') initArcadeConnect4Game();
     else if (gameId === 'bomb' || gameId === 'bomba') initArcadeBombGame();
     else if (gameId === 'mole' || gameId === 'kostebek') initArcadeMoleGame();
+    else if (gameId === 'wheel' || gameId === 'sanscarki') initArcadeWheelGame();
     else if (gameId === 'memory') initArcadeMemoryGame();
     else if (gameId === 'flower') initArcadeFlowerGame();
     else if (gameId === 'buzzer') initArcadeBuzzerGame();
@@ -17299,6 +17321,720 @@
           audio.speakTurkishText(target.spoken || target.title);
         }
       });
+    }
+  }
+
+
+
+  // =========================================================================
+  // OYUN: 🎡 ŞANS ÇARKI & SÜRPRİZ KUTULAR (WHEEL OF FORTUNE & MYSTERY BOXES)
+  // =========================================================================
+
+  const WHEEL_SLICES = [
+    { id: 'p100', label: '+100', sub: 'Puan', color: '#3B82F6', type: 'points', val: 100 },
+    { id: 'p250', label: '+250', sub: 'Puan', color: '#10B981', type: 'points', val: 250 },
+    { id: 'bankrupt', label: '💥 İFLAS', sub: 'Sıfırla', color: '#EF4444', type: 'bankrupt', val: 0 },
+    { id: 'p500', label: '+500', sub: 'Puan', color: '#8B5CF6', type: 'points', val: 500 },
+    { id: 'double', label: 'x2', sub: 'İkiye Katla', color: '#F59E0B', type: 'double', val: 2 },
+    { id: 'p150', label: '+150', sub: 'Puan', color: '#06B6D4', type: 'points', val: 150 },
+    { id: 'shield', label: '🛡️ KALKAN', sub: '+150 Puan', color: '#14B8A6', type: 'shield', val: 150 },
+    { id: 'p50', label: '+50', sub: 'Puan', color: '#EC4899', type: 'points', val: 50 }
+  ];
+
+  const WHEEL_READING_POOL = [
+    { q: "Hangi kelime 'K' sesi ile başlar? ✏️", s: "Hangi kelime K sesi ile başlar?", a: "Kalem ✏️", d: ["Masa", "Elma"] },
+    { q: "'Güneş' kelimesi kaç hecelidir? ☀️", s: "Güneş kelimesi kaç hecelidir?", a: "2 hece ☀️", d: ["1 hece", "3 hece"] },
+    { q: "'Açık' kelimesinin zıt anlamlısı nedir? 🚪", s: "Açık kelimesinin zıt anlamlısı nedir?", a: "Kapalı 🚪", d: ["Uzun", "Büyük"] },
+    { q: "'Hızlı' kelimesinin zıt anlamlısı nedir? 🐇🐢", s: "Hızlı kelimesinin zıt anlamlısı nedir?", a: "Yavaş 🐢", d: ["Çabuk", "Seri"] },
+    { q: "'Al' kelimesinin eş anlamlısı nedir? 🔴", s: "Al kelimesinin eş anlamlısı nedir?", a: "Kırmızı 🔴", d: ["Beyaz", "Sarı"] },
+    { q: "'Okul' kelimesinin eş anlamlısı nedir? 🏫", s: "Okul kelimesinin eş anlamlısı nedir?", a: "Mektep 🏫", d: ["Sınıf", "Sıra"] },
+    { q: "'Öğrenci' kelimesinin eş anlamlısı nedir? 🎒", s: "Öğrenci kelimesinin eş anlamlısı nedir?", a: "Talebe 🎒", d: ["Öğretmen", "Müdür"] },
+    { q: "Hangi kelimede 2 tane 'A' sesi vardır? 🍉", s: "Hangi kelimede iki tane A sesi vardır?", a: "Karpuz 🍉", d: ["Balık", "Gül"] },
+    { q: "'Kİ-TAP' heceleri birleşince ne oluşur? 📚", s: "Ki tap heceleri birleşince ne oluşur?", a: "Kitap 📚", d: ["Kilit", "Katip"] },
+    { q: "Cümlenin sonuna hangi noktalama işareti konur? ✍️", s: "Tamamlanan cümlenin sonuna hangi noktalama işareti konur?", a: "Nokta (.) ✍️", d: ["Virgül (,)", "Soru İşareti (?)"] }
+  ];
+
+  const WHEEL_MATH_POOL = [
+    { q: "8 + 7 işleminin sonucu kaçtır? ➕", s: "Sekiz artı yedi kaç eder?", a: "15", d: ["14", "16"] },
+    { q: "16 - 9 işleminin sonucu kaçtır? ➖", s: "On altı eksi dokuz kaç eder?", a: "7", d: ["8", "6"] },
+    { q: "4 × 5 işleminin sonucu kaçtır? ✖️", s: "Dört kere beş kaç eder?", a: "20", d: ["15", "25"] },
+    { q: "3 onluk ve 4 birlikten oluşan sayı kaçtır? 🔢", s: "Üç onluk ve dört birlikten oluşan sayı kaçtır?", a: "34", d: ["43", "30"] },
+    { q: "12 + 18 işleminin sonucu kaçtır? ➕", s: "On iki artı on sekiz kaç eder?", a: "30", d: ["28", "32"] },
+    { q: "25 - 8 işleminin sonucu kaçtır? ➖", s: "Yirmi beş eksi sekiz kaç eder?", a: "17", d: ["16", "18"] },
+    { q: "3 × 6 işleminin sonucu kaçtır? ✖️", s: "Üç kere altı kaç eder?", a: "18", d: ["15", "21"] },
+    { q: "5'er saymada 20'den sonra hangi sayı gelir? 🖐️", s: "Beşer saymada yirmiden sonra hangi sayı gelir?", a: "25", d: ["30", "15"] },
+    { q: "40'tan bir önceki sayı kaçtır? 🔢", s: "Kırktan bir önceki sayı kaçtır?", a: "39", d: ["41", "38"] },
+    { q: "Hangi geometrik şeklin 3 köşesi ve 3 kenarı vardır? 🔺", s: "Hangi geometrik şeklin üç köşesi ve üç kenarı vardır?", a: "Üçgen 🔺", d: ["Kare", "Çember"] }
+  ];
+
+  const WHEEL_GENERAL_POOL = [
+    { q: "7 × 8 işleminin sonucu kaçtır? ✖️", s: "Yedi kere sekiz kaç eder?", a: "56", d: ["54", "64"] },
+    { q: "72 ÷ 8 işleminin sonucu kaçtır? ➗", s: "Yetmiş iki bölü sekiz kaç eder?", a: "9", d: ["8", "7"] },
+    { q: "Türkiye'nin başkenti neresidir? 🏛️", s: "Türkiye'nin başkenti neresidir?", a: "Ankara 🏛️", d: ["İstanbul", "İzmir"] },
+    { q: "Güneş sistemindeki en büyük gezegen hangisidir? 🪐", s: "Güneş sistemindeki en büyük gezegen hangisidir?", a: "Jüpiter 🪐", d: ["Dünya", "Mars"] },
+    { q: "Vücudumuzda kanı pompalayan organ hangisidir? ❤️", s: "Vücudumuzda kanı pompalayan organ hangisidir?", a: "Kalp ❤️", d: ["Akciğer", "Mide"] },
+    { q: "1 metre kaç santimetredir? 📏", s: "Bir metre kaç santimetredir?", a: "100 cm 📏", d: ["10 cm", "1000 cm"] },
+    { q: "İstiklal Marşı'mızın şairi kimdir? 🇹🇷", s: "İstiklal Marşı'mızın şairi kimdir?", a: "Mehmet Âkif Ersoy 🇹🇷", d: ["Atatürk", "Namık Kemal"] },
+    { q: "Mıknatıs hangisini ÇEKER? 🧲", s: "Mıknatıs hangisini çeker?", a: "Demir çivi 🧲", d: ["Plastik cetvel", "Tahta"] },
+    { q: "65 + 45 işleminin sonucu kaçtır? ➕", s: "Altmış beş artı kırk beş kaç eder?", a: "110", d: ["100", "120"] },
+    { q: "100 - 35 işleminin sonucu kaçtır? ➖", s: "Yüz eksi otuz beş kaç eder?", a: "65", d: ["75", "55"] }
+  ];
+
+  function playWheelTickSound() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audio._wheelAudioCtx) audio._wheelAudioCtx = new AudioCtx();
+      const ctx = audio._wheelAudioCtx;
+      if (ctx.state === 'suspended') ctx.resume();
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.035);
+
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.035);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.04);
+    } catch (e) {}
+  }
+
+  function playBoxOpenSound() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audio._wheelAudioCtx) audio._wheelAudioCtx = new AudioCtx();
+      const ctx = audio._wheelAudioCtx;
+      if (ctx.state === 'suspended') ctx.resume();
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(780, ctx.currentTime + 0.16);
+
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.2);
+    } catch (e) {}
+  }
+
+  function getWheelUniqueQuestion(topic) {
+    let pool = WHEEL_MATH_POOL;
+    if (topic === 'reading') pool = WHEEL_READING_POOL;
+    else if (topic === 'general') pool = WHEEL_GENERAL_POOL;
+
+    let item = null;
+    if (typeof getUniqueNextItem === 'function') {
+      item = getUniqueNextItem(pool, 'wheel_q_' + topic);
+    } else if (typeof QuestionEngine !== 'undefined' && typeof QuestionEngine.getUniqueNextItem === 'function') {
+      item = QuestionEngine.getUniqueNextItem(pool, 'wheel_q_' + topic);
+    } else {
+      item = pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    const allOpts = [item.a, ...item.d].sort(() => Math.random() - 0.5);
+    return {
+      text: item.q,
+      spokenText: item.s || item.q,
+      options: allOpts,
+      answer: item.a,
+      answered: false,
+      selectedIdx: null
+    };
+  }
+
+  function generateWheelBoxRewards(isSolo = false) {
+    const rawRewards = [
+      { id: 'box_gold', icon: '💎', title: '+300 Altın Puan!', text: 'Kutudan parlayan bir elmas hazine çıktı! +300 Puan!', type: 'points', val: 300 },
+      { id: 'box_shield', icon: '🛡️', title: 'İflas Kalkanı +150', text: 'Kalkan seni iflastan korur ve +150 puan kazandırır!', type: 'shield', val: 150 },
+      { id: 'box_bomb', icon: '💣', title: 'Eyvah! -100 Puan', text: 'Kutudan küçük bir şaka bombası çıktı! -100 Puan!', type: 'points', val: -100 },
+      { id: 'box_bankrupt', icon: '💥', title: 'İFLAS!', text: 'Eyvah! Kutudaki tuzak puanlarını sıfırladı!', type: 'bankrupt', val: 0 },
+      isSolo
+        ? { id: 'box_solo_steal', icon: '⭐', title: '+200 Süper Puan!', text: 'Kutudan ekstra yıldız puanı çıktı! +200 Puan!', type: 'points', val: 200 }
+        : { id: 'box_steal', icon: '🦊', title: 'Rakip Puanı Çal!', text: 'Kurnaz tilki rakibin puanından 100 puan kaptı!', type: 'steal', val: 100 },
+      isSolo
+        ? { id: 'box_solo_swap', icon: '👑', title: '+400 Kral Bonus!', text: 'Muazzam bir hazine sandığı buldun! +400 Puan!', type: 'points', val: 400 }
+        : { id: 'box_swap', icon: '🔄', title: 'PUANLARI TAKAS ET!', text: 'İnanılmaz bir sürpriz! İki takımın puanları yer değiştirdi!', type: 'swap' }
+    ];
+
+    return rawRewards.sort(() => Math.random() - 0.5);
+  }
+
+  function initArcadeWheelGame(keepScores = false) {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🎡';
+    if (titleEl) titleEl.textContent = 'Şans Çarkı & Sürpriz Kutular';
+
+    const w = ArcadeHub.wheel;
+    w.state = 'question';
+    w.activePlayer = 1;
+    w.round = 1;
+    w.maxRounds = 8;
+    w.wheelRotation = 0;
+    w.isBusy = false;
+    w.lastResult = null;
+    w.bannerText = '❓ Önce soruyu doğru bil, ardından Çarkı Çevir veya Sürpriz Kutu Aç!';
+
+    if (!keepScores) {
+      w.p1Score = 0;
+      w.p2Score = 0;
+      w.p1Shield = false;
+      w.p2Shield = false;
+    }
+
+    w.currentQ = getWheelUniqueQuestion(w.topic || 'math');
+    w.boxRewards = generateWheelBoxRewards(w.mode === 'solo');
+    w.openedBoxes = [];
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${w.mode === 'duel' ? 'active' : ''}" data-wheel-mode="duel" type="button">⚔️ 2 Takım (Mavi vs Kırmızı)</button>
+          <button class="arc-pill-btn ${w.mode === 'solo' ? 'active' : ''}" data-wheel-mode="solo" type="button">👤 Tek Kişilik Rekor</button>
+          <button class="arc-pill-btn ${w.topic === 'reading' ? 'active' : ''}" data-wheel-topic="reading" type="button">📖 1. Sınıf Okuma-Kelime</button>
+          <button class="arc-pill-btn ${w.topic === 'math' ? 'active' : ''}" data-wheel-topic="math" type="button">🔢 2. Sınıf Matematik & Türkçe</button>
+          <button class="arc-pill-btn ${w.topic === 'general' ? 'active' : ''}" data-wheel-topic="general" type="button">🌍 3-4. Sınıf Genel Kültür & 4 İşlem</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnWheelReset" type="button">🔄 Yeniden Başlat</button>
+        </div>
+      `;
+
+      toolbarEl.querySelectorAll('[data-wheel-mode]').forEach(btn => {
+        addTapListener(btn, () => {
+          w.mode = btn.getAttribute('data-wheel-mode');
+          audio.playClick();
+          initArcadeWheelGame(false);
+        });
+      });
+
+      toolbarEl.querySelectorAll('[data-wheel-topic]').forEach(btn => {
+        addTapListener(btn, () => {
+          w.topic = btn.getAttribute('data-wheel-topic');
+          audio.playClick();
+          initArcadeWheelGame(false);
+        });
+      });
+
+      const btnReset = document.getElementById('btnWheelReset');
+      if (btnReset) {
+        addTapListener(btnReset, () => {
+          audio.playClick();
+          initArcadeWheelGame(false);
+        });
+      }
+    }
+
+    renderWheelArena();
+  }
+
+  function renderWheelArena() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const w = ArcadeHub.wheel;
+    const q = w.currentQ;
+
+    const isP1 = (w.activePlayer === 1);
+    const activePlayerName = isP1 ? '🔵 MAVİ TAKIM' : '🔴 KIRMIZI TAKIM';
+    const activePlayerCls = isP1 ? 'team-blue' : 'team-red';
+
+    canvas.innerHTML = `
+      <div class="arc-wheel-arena">
+        <!-- Skor Tablosu & Tur Sayacı -->
+        <div class="wheel-scoreboard">
+          ${w.mode === 'duel' ? `
+            <div class="wheel-team-pill pill-blue ${isP1 ? 'is-active-turn' : ''}">
+              <div class="team-label">🔵 Mavi Takım ${w.p1Shield ? '<span class="shield-badge">🛡️ Kalkan</span>' : ''}</div>
+              <div class="team-score">${w.p1Score} Puan</div>
+            </div>
+            <div class="wheel-round-pill">
+              <span class="round-label">TUR</span>
+              <strong class="round-count">${w.round} / ${w.maxRounds}</strong>
+            </div>
+            <div class="wheel-team-pill pill-red ${!isP1 ? 'is-active-turn' : ''}">
+              <div class="team-label">🔴 Kırmızı Takım ${w.p2Shield ? '<span class="shield-badge">🛡️ Kalkan</span>' : ''}</div>
+              <div class="team-score">${w.p2Score} Puan</div>
+            </div>
+          ` : `
+            <div class="wheel-team-pill pill-solo">
+              <div class="team-label">⭐ Toplam Puan ${w.p1Shield ? '<span class="shield-badge">🛡️ Kalkan</span>' : ''}</div>
+              <div class="team-score">${w.p1Score} Puan</div>
+            </div>
+            <div class="wheel-round-pill">
+              <span class="round-label">TUR</span>
+              <strong class="round-count">${w.round} / ${w.maxRounds}</strong>
+            </div>
+          `}
+        </div>
+
+        <!-- Üst Bilgi / İkaz Bandı -->
+        <div class="wheel-turn-banner ${activePlayerCls}">
+          ${w.mode === 'duel' ? `👉 <strong>SIRA: [${activePlayerName}]'DE!</strong> — ` : ''}${w.bannerText}
+        </div>
+
+        <!-- Aşama 1: Soru Kartı -->
+        <div class="wheel-question-card ${activePlayerCls} ${w.state !== 'question' ? 'is-question-answered' : ''}">
+          <div class="wheel-q-header">
+            <span class="wheel-q-tag">❓ Soruyu Bil, Ödülü Seç!</span>
+            <button class="wheel-btn-speak" id="btnWheelSpeak" type="button" aria-label="Soruyu Sesli Oku">
+              <span>🔊</span>
+              <span>Dinle</span>
+            </button>
+          </div>
+          <div class="wheel-q-body">
+            <div class="wheel-q-text">${q ? q.text : ''}</div>
+            <div class="wheel-q-options">
+              ${q ? q.options.map((opt, idx) => {
+                let optCls = '';
+                if (q.answered) {
+                  if (opt === q.answer) optCls = 'opt-correct';
+                  else if (idx === q.selectedIdx) optCls = 'opt-wrong';
+                }
+                const isDisabled = q.answered || w.isBusy || w.state !== 'question';
+                return `
+                  <button class="wheel-opt-btn ${optCls}" data-wheel-opt="${idx}" type="button" ${isDisabled ? 'disabled' : ''}>
+                    ${opt}
+                  </button>
+                `;
+              }).join('') : ''}
+            </div>
+          </div>
+        </div>
+
+        <!-- Aşama 2: Ödül Alanı (Çark + 6 Sürpriz Kutu Yan Yana) -->
+        <div class="wheel-reward-stage ${w.state === 'question' ? 'is-stage-locked' : 'is-stage-active'}">
+          ${w.state === 'question' ? `
+            <div class="stage-lock-overlay">
+              <div class="lock-box">
+                <span class="lock-icon">🔒</span>
+                <span class="lock-text">Önce Yukarıdaki Soruyu Doğru Cevapla!</span>
+              </div>
+            </div>
+          ` : ''}
+
+          <div class="reward-columns-grid">
+            <!-- Sol Sütun: 8 Dilimli Şans Çarkı -->
+            <div class="reward-col reward-wheel-col">
+              <div class="col-title">🎡 1. Şans: Renkli Çarkı Çevir!</div>
+              <div class="wheel-device-wrap">
+                <div class="wheel-arrow-marker">▼</div>
+                <div class="wheel-disc" id="wheelDiscGraphic" style="transform: rotate(${w.wheelRotation}deg);">
+                  ${renderWheelSvgSlices()}
+                </div>
+                <button class="wheel-spin-center-btn" id="btnWheelSpin" type="button" ${w.state !== 'reward_choice' || w.isBusy ? 'disabled' : ''}>
+                  <span>ÇEVİR</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Sağ Sütun: 6 Gizemli Hediye Kutusu -->
+            <div class="reward-col reward-boxes-col">
+              <div class="col-title">🎁 2. Şans: Sürpriz Kutu Aç!</div>
+              <div class="mystery-boxes-grid">
+                ${[0, 1, 2, 3, 4, 5].map(idx => {
+                  const isOpened = w.openedBoxes.includes(idx);
+                  const rew = w.boxRewards[idx];
+                  return `
+                    <div class="mystery-box-item ${isOpened ? 'is-box-opened' : ''}" data-box-idx="${idx}" role="button" tabindex="0">
+                      ${isOpened && rew ? `
+                        <div class="box-opened-content">
+                          <span class="box-rew-icon">${rew.icon}</span>
+                          <span class="box-rew-label">${rew.title}</span>
+                        </div>
+                      ` : `
+                        <div class="box-closed-content">
+                          <span class="box-num">${idx + 1}</span>
+                          <span class="box-gift-ico">🎁</span>
+                        </div>
+                      `}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sonuç Bildirim Alanı (Ödül Açıldığında Patlayan Kutlama) -->
+        ${w.lastResult ? `
+          <div class="wheel-result-popup ${w.lastResult.cls}">
+            <span class="popup-icon">${w.lastResult.icon}</span>
+            <div class="popup-text">
+              <strong>${w.lastResult.title}</strong>
+              <p>${w.lastResult.text}</p>
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    // 🔊 Dinle butonu
+    const btnSpeak = document.getElementById('btnWheelSpeak');
+    if (btnSpeak && q) {
+      addTapListener(btnSpeak, () => {
+        if (typeof audio !== 'undefined' && typeof audio.speakTurkishText === 'function') {
+          audio.speakTurkishText(q.spokenText || q.text);
+        }
+      });
+    }
+
+    // Şık butonları
+    canvas.querySelectorAll('[data-wheel-opt]').forEach(btn => {
+      addTapListener(btn, () => {
+        const optIdx = parseInt(btn.getAttribute('data-wheel-opt'), 10);
+        handleWheelAnswer(optIdx);
+      });
+    });
+
+    // Çarkı Çevir butonu
+    const btnSpin = document.getElementById('btnWheelSpin');
+    if (btnSpin) {
+      addTapListener(btnSpin, () => {
+        spinTheWheel();
+      });
+    }
+
+    // Kutulara dokunma
+    canvas.querySelectorAll('[data-box-idx]').forEach(box => {
+      addTapListener(box, () => {
+        const idx = parseInt(box.getAttribute('data-box-idx'), 10);
+        openMysteryBox(idx);
+      });
+    });
+  }
+
+  function renderWheelSvgSlices() {
+    const totalSlices = 8;
+    const sliceAngle = 360 / totalSlices;
+    const r = 120;
+    const cx = 130;
+    const cy = 130;
+
+    let paths = '';
+    for (let i = 0; i < totalSlices; i++) {
+      const slice = WHEEL_SLICES[i];
+      const startAngle = i * sliceAngle - 90;
+      const endAngle = (i + 1) * sliceAngle - 90;
+
+      const x1 = cx + r * Math.cos(Math.PI * startAngle / 180);
+      const y1 = cy + r * Math.sin(Math.PI * startAngle / 180);
+      const x2 = cx + r * Math.cos(Math.PI * endAngle / 180);
+      const y2 = cy + r * Math.sin(Math.PI * endAngle / 180);
+
+      const d = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} Z`;
+      const midAngle = startAngle + sliceAngle / 2;
+      const tx = cx + (r * 0.65) * Math.cos(Math.PI * midAngle / 180);
+      const ty = cy + (r * 0.65) * Math.sin(Math.PI * midAngle / 180);
+
+      paths += `
+        <path d="${d}" fill="${slice.color}" stroke="#FFFFFF" stroke-width="2.5"/>
+        <text x="${tx}" y="${ty}" fill="#FFFFFF" font-size="11" font-weight="900" font-family="'Fredoka', sans-serif" text-anchor="middle" dominant-baseline="middle" transform="rotate(${midAngle + 90}, ${tx}, ${ty})">
+          ${slice.label}
+        </text>
+      `;
+    }
+
+    return `
+      <svg viewBox="0 0 260 260" class="wheel-svg" aria-hidden="true">
+        <circle cx="130" cy="130" r="126" fill="#1E293B" stroke="#F8FAFC" stroke-width="4"/>
+        ${paths}
+        <circle cx="130" cy="130" r="24" fill="#0F172A" stroke="#FFFFFF" stroke-width="3"/>
+      </svg>
+    `;
+  }
+
+  function handleWheelAnswer(optIdx) {
+    const w = ArcadeHub.wheel;
+    const q = w.currentQ;
+    if (!q || q.answered || w.state !== 'question' || w.isBusy) return;
+
+    q.answered = true;
+    q.selectedIdx = optIdx;
+    const chosen = q.options[optIdx];
+
+    if (chosen === q.answer) {
+      // DOĞRU CEVAP: Ödül alanını aktif et!
+      audio.playCorrect();
+      w.state = 'reward_choice';
+      w.bannerText = '🎉 Doğru Bildin! Şimdi şansını seç: Çarkı mı çevireceksin, Sürpriz Kutu mu açacaksın?';
+      renderWheelArena();
+    } else {
+      // YANLIŞ CEVAP: Sıra rakibe geçer!
+      audio.playWrong();
+      w.bannerText = '❌ Yanlış cevap! Çark hakkı kaçtı, sıra rakibe geçiyor...';
+      renderWheelArena();
+
+      setTimeout(() => {
+        advanceWheelRoundOrPlayer();
+      }, 1300);
+    }
+  }
+
+  function spinTheWheel() {
+    const w = ArcadeHub.wheel;
+    if (w.state !== 'reward_choice' || w.isBusy) return;
+
+    w.isBusy = true;
+    w.state = 'spinning';
+
+    // Rastgele bir dilim seç (0..7)
+    const sliceIdx = Math.floor(Math.random() * WHEEL_SLICES.length);
+    const slice = WHEEL_SLICES[sliceIdx];
+
+    // Dilimin ok altına (en tepeye = 270 derece) gelmesi için gereken açı
+    const sliceAngle = 360 / WHEEL_SLICES.length;
+    const targetAngle = 360 - (sliceIdx * sliceAngle + sliceAngle / 2);
+    // 5 tam tur + hedef açı
+    const extraRounds = 5 * 360;
+    const newRotation = w.wheelRotation + extraRounds + (targetAngle - (w.wheelRotation % 360));
+    w.wheelRotation = newRotation;
+
+    // Çark dönüş tıkırtısı
+    let tickCount = 0;
+    const tickInterval = setInterval(() => {
+      playWheelTickSound();
+      tickCount++;
+      if (tickCount >= 18) clearInterval(tickInterval);
+    }, 120);
+
+    const discEl = document.getElementById('wheelDiscGraphic');
+    if (discEl) {
+      discEl.style.transition = 'transform 3.2s cubic-bezier(0.15, 0.9, 0.25, 1)';
+      discEl.style.transform = `rotate(${newRotation}deg)`;
+    }
+
+    setTimeout(() => {
+      clearInterval(tickInterval);
+      applyWheelReward(slice);
+    }, 3350);
+  }
+
+  function openMysteryBox(idx) {
+    const w = ArcadeHub.wheel;
+    if (w.state !== 'reward_choice' || w.isBusy) return;
+    if (w.openedBoxes.includes(idx)) {
+      if (typeof showToast === 'function') showToast('⚠️ Bu kutu zaten açılmış!');
+      return;
+    }
+
+    w.isBusy = true;
+    w.state = 'opening_box';
+    w.openedBoxes.push(idx);
+
+    playBoxOpenSound();
+    const rew = w.boxRewards[idx] || WHEEL_SLICES[0];
+
+    const boxEl = document.querySelector(`[data-box-idx="${idx}"]`);
+    if (boxEl) {
+      boxEl.classList.add('is-box-opening');
+    }
+
+    setTimeout(() => {
+      applyMysteryBoxReward(rew);
+    }, 550);
+  }
+
+  function applyWheelReward(slice) {
+    const w = ArcadeHub.wheel;
+    let title = '';
+    let text = '';
+    let icon = '🎡';
+    let cls = 'res-positive';
+
+    const isP1 = (w.activePlayer === 1);
+    const pScoreKey = isP1 ? 'p1Score' : 'p2Score';
+    const pShieldKey = isP1 ? 'p1Shield' : 'p2Shield';
+
+    if (slice.type === 'points') {
+      w[pScoreKey] += slice.val;
+      audio.playCorrect();
+      title = `${slice.label} PUAN KAZANDIN!`;
+      text = `Harika bir çeviriş! Takımına tam ${slice.val} puan eklendi.`;
+      icon = '💎';
+    } else if (slice.type === 'double') {
+      w[pScoreKey] = Math.max(100, w[pScoreKey] * 2);
+      audio.playFanfare();
+      title = 'x2 PUANLAR İKİYE KATLANDI!';
+      text = 'İnanılmaz şans! Puanların anında iki katına çıktı!';
+      icon = '🔥';
+      if (typeof launchConfetti === 'function') launchConfetti();
+    } else if (slice.type === 'shield') {
+      w[pShieldKey] = true;
+      w[pScoreKey] += slice.val;
+      audio.playCorrect();
+      title = '🛡️ İFLAS KALKANI +150 PUAN!';
+      text = 'Artık seni iflastan koruyacak sihirli bir kalkanın var!';
+      icon = '🛡️';
+    } else if (slice.type === 'bankrupt') {
+      if (w[pShieldKey]) {
+        w[pShieldKey] = false;
+        audio.playCorrect();
+        title = '🛡️ KALKAN SENİ KURTARDI!';
+        text = 'İflas dilimine geldin ama kalkanın sayesinde puanların korundu!';
+        icon = '🛡️';
+        cls = 'res-shield';
+      } else {
+        w[pScoreKey] = 0;
+        audio.playWrong();
+        title = '💥 EYVAH! İFLAS!';
+        text = 'Tüm puanların sıfırlandı! Pes etmek yok, devam!';
+        icon = '💥';
+        cls = 'res-negative';
+      }
+    }
+
+    w.lastResult = { title, text, icon, cls };
+    renderWheelArena();
+
+    setTimeout(() => {
+      advanceWheelRoundOrPlayer();
+    }, 1500);
+  }
+
+  function applyMysteryBoxReward(rew) {
+    const w = ArcadeHub.wheel;
+    let title = rew.title;
+    let text = rew.text;
+    let icon = rew.icon;
+    let cls = 'res-positive';
+
+    const isP1 = (w.activePlayer === 1);
+    const pScoreKey = isP1 ? 'p1Score' : 'p2Score';
+    const pOtherScoreKey = isP1 ? 'p2Score' : 'p1Score';
+    const pShieldKey = isP1 ? 'p1Shield' : 'p2Shield';
+
+    if (rew.type === 'points') {
+      w[pScoreKey] = Math.max(0, w[pScoreKey] + rew.val);
+      if (rew.val > 0) {
+        audio.playCorrect();
+        cls = 'res-positive';
+      } else {
+        audio.playWrong();
+        cls = 'res-negative';
+      }
+    } else if (rew.type === 'shield') {
+      w[pShieldKey] = true;
+      w[pScoreKey] += rew.val;
+      audio.playCorrect();
+      cls = 'res-shield';
+    } else if (rew.type === 'steal') {
+      const stolen = Math.min(rew.val, w[pOtherScoreKey]);
+      w[pOtherScoreKey] = Math.max(0, w[pOtherScoreKey] - stolen);
+      w[pScoreKey] += stolen;
+      audio.playFanfare();
+      cls = 'res-positive';
+    } else if (rew.type === 'swap') {
+      const tmp = w.p1Score;
+      w.p1Score = w.p2Score;
+      w.p2Score = tmp;
+      audio.playFanfare();
+      if (typeof launchConfetti === 'function') launchConfetti();
+      cls = 'res-swap';
+    } else if (rew.type === 'bankrupt') {
+      if (w[pShieldKey]) {
+        w[pShieldKey] = false;
+        audio.playCorrect();
+        title = '🛡️ KALKAN SENİ KURTARDI!';
+        text = 'Tuzak kutusu çıktı ama iflas kalkanın puanlarını kurtardı!';
+        icon = '🛡️';
+        cls = 'res-shield';
+      } else {
+        w[pScoreKey] = 0;
+        audio.playWrong();
+        cls = 'res-negative';
+      }
+    }
+
+    w.lastResult = { title, text, icon, cls };
+    renderWheelArena();
+
+    setTimeout(() => {
+      advanceWheelRoundOrPlayer();
+    }, 1500);
+  }
+
+  function advanceWheelRoundOrPlayer() {
+    const w = ArcadeHub.wheel;
+    w.isBusy = false;
+    w.lastResult = null;
+    w.state = 'question';
+
+    if (w.mode === 'duel') {
+      if (w.activePlayer === 1) {
+        w.activePlayer = 2;
+      } else {
+        w.activePlayer = 1;
+        w.round += 1;
+      }
+    } else {
+      w.round += 1;
+    }
+
+    // Oyun bitti mi kontrol et (maxRounds tamamlandıysa)
+    if (w.round > w.maxRounds) {
+      finishWheelGame();
+      return;
+    }
+
+    // Yeni tur soruları ve kutuları
+    w.currentQ = getWheelUniqueQuestion(w.topic || 'math');
+    if (w.openedBoxes.length >= 6) {
+      w.openedBoxes = [];
+      w.boxRewards = generateWheelBoxRewards(w.mode === 'solo');
+    }
+    w.bannerText = '❓ Önce soruyu doğru bil, ardından Çarkı Çevir veya Sürpriz Kutu Aç!';
+    renderWheelArena();
+  }
+
+  function finishWheelGame() {
+    const w = ArcadeHub.wheel;
+    audio.playFanfare();
+    if (typeof launchConfetti === 'function') launchConfetti();
+
+    if (w.mode === 'duel') {
+      let winTitle = '';
+      let winSub = `Mavi Takım: ${w.p1Score} Puan | Kırmızı Takım: ${w.p2Score} Puan`;
+      let winIcon = '🏆';
+      if (w.p1Score > w.p2Score) {
+        winTitle = '🏆 MAVİ TAKIM KAZANDI!';
+        winIcon = '🔵';
+      } else if (w.p2Score > w.p1Score) {
+        winTitle = '🏆 KIRMIZI TAKIM KAZANDI!';
+        winIcon = '🔴';
+      } else {
+        winTitle = '🤝 DOSTLUK KAZANDI! BERABERE!';
+        winIcon = '🤝';
+      }
+
+      setTimeout(() => {
+        showArcadeVictoryModal({
+          title: winTitle,
+          subtitle: winSub,
+          badgeText: 'ŞANS ÇARKI ŞAMPİYONU',
+          icon: winIcon,
+          onRestart: () => initArcadeWheelGame(false)
+        });
+      }, 350);
+    } else {
+      setTimeout(() => {
+        showArcadeVictoryModal({
+          title: '🎉 TEBRİKLER! OYUN TAMAMLANDI!',
+          subtitle: `Mükemmel şans ve zeka! Toplamda tam ${w.p1Score} Puan toplayarak rekor kırdın! ⭐`,
+          badgeText: 'ŞANS ŞAMPİYONU',
+          icon: '🎡',
+          onRestart: () => initArcadeWheelGame(false)
+        });
+      }, 350);
     }
   }
 
@@ -31588,6 +32324,13 @@ function renderInteractiveQuestion(q) {
           if (typeof launchArcadeGame === 'function') launchArcadeGame('mole');
         }
       }, 100);
+    } else if (hash === '#sanscarki' || hash === '#/sanscarki' || hash === '#wheel' || hash === '#/wheel' || hash === '#cark' || hash === '#/cark') {
+      setTimeout(() => {
+        if (typeof openArcadeHub === 'function') {
+          openArcadeHub();
+          if (typeof launchArcadeGame === 'function') launchArcadeGame('wheel');
+        }
+      }, 100);
     } else if (/^#\/?ingilizce[-\/]/.test(hash) || path.includes('/ingilizce/')) {
       const gMatch = (hash + path).match(/([1-4])(?:-sinif)?/);
       const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
@@ -33576,6 +34319,9 @@ function renderInteractiveQuestion(q) {
       } else if (arcGame === 'mole' || arcGame === 'kostebek') {
         params.set('oyun', 'kostebek');
         return params.toString();
+      } else if (arcGame === 'wheel' || arcGame === 'sanscarki' || arcGame === 'cark') {
+        params.set('oyun', 'sanscarki');
+        return params.toString();
       } else if (arcGame) {
         params.set('oyun', arcGame);
         return params.toString();
@@ -33663,6 +34409,8 @@ function renderInteractiveQuestion(q) {
         return '🔥 En Popüler Oyunlar - 💣 Saatli Bomba (Sıcak Patates)';
       } else if (arcGame === 'mole' || arcGame === 'kostebek') {
         return '🔥 En Popüler Oyunlar - 🔨 Köstebek Avı (Hızlı Yakala!)';
+      } else if (arcGame === 'wheel' || arcGame === 'sanscarki' || arcGame === 'cark') {
+        return '🔥 En Popüler Oyunlar - 🎡 Şans Çarkı & Sürpriz Kutular';
       }
     }
     const grade = overrides.grade !== undefined ? parseInt(overrides.grade, 10) : parseInt(state.currentGrade, 10);
@@ -33963,6 +34711,12 @@ function renderInteractiveQuestion(q) {
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
           openArcadeHub();
           launchArcadeGame('mole');
+          return true;
+        } else if (oyunNorm === 'sanscarki' || oyunNorm === 'cark' || oyunNorm === 'wheel') {
+          interactionLockUntil = 0;
+          if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+          openArcadeHub();
+          launchArcadeGame('wheel');
           return true;
         }
         let resolvedGameId = null;
