@@ -14042,6 +14042,24 @@
       aiThinking: false
     },
 
+    // 🔴🟡 Hedef 4 (Dörtlü Sıra - Connect 4)
+    connect4: {
+      vsAi: false,
+      topic: 'math',
+      board: Array.from({ length: 6 }, () => Array(7).fill(null)),
+      turn: 'R',
+      canDrop: false,
+      currentQ: null,
+      winner: null,
+      winCells: [],
+      scoreR: 0,
+      scoreY: 0,
+      aiThinking: false,
+      droppingCol: null,
+      droppingRow: null,
+      bannerText: ''
+    },
+
     // 4) 🧠 Hafıza Kartları Düellosu
     memory: {
       players: 2,        // 1 | 2
@@ -14243,6 +14261,7 @@
     if (gameId === 'tug') initArcadeTugGame();
     else if (gameId === 'sudoku') initArcadeSudokuGame();
     else if (gameId === 'xox') initArcadeXoxGame();
+    else if (gameId === 'connect4' || gameId === 'hedef4') initArcadeConnect4Game();
     else if (gameId === 'memory') initArcadeMemoryGame();
     else if (gameId === 'flower') initArcadeFlowerGame();
     else if (gameId === 'buzzer') initArcadeBuzzerGame();
@@ -15384,6 +15403,667 @@
 
     return empty[Math.floor(Math.random() * empty.length)];
   }
+
+
+  // =========================================================================
+  // OYUN: 🔴🟡 HEDEF 4 (DÖRTLÜ SIRA KAPIŞMASI - CONNECT 4)
+  // =========================================================================
+  const C4_READING_POOL = [
+    { q: "Hangi kelime 'K' sesi ile başlar? ✏️", s: "Hangi kelime K sesi ile başlar?", a: "Kalem ✏️", d: ["Masa", "Elma"] },
+    { q: "Hangi kelime 'E' sesi ile başlar? 🍏", s: "Hangi kelime E sesi ile başlar?", a: "Elma 🍏", d: ["Kedi", "Top"] },
+    { q: "Hangi kelimede 'A' sesi vardır? 🚗", s: "Hangi kelimede A sesi vardır?", a: "Araba 🚗", d: ["Ev", "Kedi"] },
+    { q: "'Kelebek' kelimesi kaç hecelidir? 🦋", s: "Kelebek kelimesi kaç hecelidir?", a: "3 hece 🦋", d: ["2 hece", "4 hece"] },
+    { q: "'Okul' kelimesi kaç hecelidir? 🏫", s: "Okul kelimesi kaç hecelidir?", a: "2 hece 🏫", d: ["1 hece", "3 hece"] },
+    { q: "'Bilgisayar' kelimesi kaç hecelidir? 💻", s: "Bilgisayar kelimesi kaç hecelidir?", a: "4 hece 💻", d: ["3 hece", "5 hece"] },
+    { q: "'Gözlük' kelimesinin son sesi hangisidir? 👓", s: "Gözlük kelimesinin son sesi hangisidir?", a: "K sesi 👓", d: ["G sesi", "L sesi"] },
+    { q: "'Orman' kelimesinin ilk hecesi hangisidir? 🌲", s: "Orman kelimesinin ilk hecesi hangisidir?", a: "Or 🌲", d: ["Man", "Ma"] },
+    { q: "Hangi kelime bir hayvandır? 🐱", s: "Hangi kelime bir hayvandır?", a: "Kedi 🐱", d: ["Kitap", "Sandalye"] },
+    { q: "Hangi kelime bir meyvedir? 🍌", s: "Hangi kelime bir meyvedir?", a: "Muz 🍌", d: ["Defter", "Güneş"] },
+    { q: "'Kedi' kelimesinin çoğulu hangisidir? 🐾", s: "Kedi kelimesinin çoğulu hangisidir?", a: "Kediler 🐾", d: ["Kedici", "Kedilik"] },
+    { q: "Hangi kelime 'M' sesi ile biter? ✏️", s: "Hangi kelime M sesi ile biter?", a: "Kalem ✏️", d: ["Elma", "Defter"] },
+    { q: "Hangi kelimede 2 tane 'A' sesi vardır? 🍉", s: "Hangi kelimede iki tane A sesi vardır?", a: "Karpuz 🍉", d: ["Balık", "Gül"] },
+    { q: "'A-R-I' heceleri birleşince hangi kelime oluşur? 🐝", s: "A rı heceleri birleşince hangi kelime oluşur?", a: "Arı 🐝", d: ["Ayı", "Araba"] },
+    { q: "'Çİ-ÇEK' heceleri birleşince ne oluşur? 🌸", s: "Çi çek heceleri birleşince ne oluşur?", a: "Çiçek 🌸", d: ["Çilek", "Çimen"] },
+    { q: "'Kİ-TAP' heceleri birleşince ne oluşur? 📚", s: "Ki tap heceleri birleşince ne oluşur?", a: "Kitap 📚", d: ["Kilit", "Katip"] },
+    { q: "Cümlenin sonuna hangi noktalama işareti konur? ✍️", s: "Tamamlanan cümlenin sonuna hangi noktalama işareti konur?", a: "Nokta (.) ✍️", d: ["Virgül (,)", "Soru İşareti (?)"] },
+    { q: "Soru bildiren cümlenin sonuna ne konur? ❓", s: "Soru bildiren cümlenin sonuna hangi noktalama işareti konur?", a: "Soru İşareti (?) ❓", d: ["Nokta (.)", "Ünlem (!)"] },
+    { q: "Özel isimlerin ilk harfi nasıl yazılır? 👑", s: "Özel isimlerin ilk harfi nasıl yazılır?", a: "Büyük Harfle 👑", d: ["Küçük Harfle", "Rakamla"] },
+    { q: "'Gündüz' kelimesinin zıt anlamlısı nedir? ☀️🌙", s: "Gündüz kelimesinin zıt anlamlısı nedir?", a: "Gece 🌙", d: ["Aydınlık", "Sabah"] },
+    { q: "'Büyük' kelimesinin zıt anlamlısı nedir? 🐘🐁", s: "Büyük kelimesinin zıt anlamlısı nedir?", a: "Küçük 🐁", d: ["Geniş", "Uzun"] },
+    { q: "'Sıcak' kelimesinin zıt anlamlısı nedir? ❄️🔥", s: "Sıcak kelimesinin zıt anlamlısı nedir?", a: "Soğuk ❄️", d: ["Ilık", "Ateş"] },
+    { q: "'Hızlı' kelimesinin zıt anlamlısı nedir? 🐇🐢", s: "Hızlı kelimesinin zıt anlamlısı nedir?", a: "Yavaş 🐢", d: ["Çabuk", "Seri"] }
+  ];
+
+  const C4_GENERAL_POOL = [
+    { q: "Türkiye'nin başkenti neresidir? 🏛️", s: "Türkiye'nin başkenti neresidir?", a: "Ankara 🏛️", d: ["İstanbul", "İzmir"] },
+    { q: "Güneş sistemindeki en büyük gezegen hangisidir? 🪐", s: "Güneş sistemindeki en büyük gezegen hangisidir?", a: "Jüpiter 🪐", d: ["Dünya", "Mars"] },
+    { q: "Dünya kendi ekseni etrafında 1 tam turu kaç saatte tamamlar? 🌍", s: "Dünya kendi ekseni etrafında bir tam turu kaç saatte tamamlar?", a: "24 saat 🌍", d: ["12 saat", "48 saat"] },
+    { q: "Dünya Güneş etrafındaki 1 tam turunu ne kadar sürede tamamlar? ☀️", s: "Dünya Güneş etrafındaki bir tam turunu ne kadar sürede tamamlar?", a: "365 gün 6 saat (1 Yıl) ☀️", d: ["24 saat", "1 Ay"] },
+    { q: "Vücudumuzda kanı pompalayan organımız hangisidir? ❤️", s: "Vücudumuzda kanı pompalayan organımız hangisidir?", a: "Kalp ❤️", d: ["Akciğer", "Mide"] },
+    { q: "Nefes alıp vermemizi sağlayan temel solunum organımız hangisidir? 🫁", s: "Nefes alıp vermemizi sağlayan temel solunum organımız hangisidir?", a: "Akciğer 🫁", d: ["Böbrek", "Karaciğer"] },
+    { q: "1 metre kaç santimetredir? 📏", s: "Bir metre kaç santimetredir?", a: "100 cm 📏", d: ["10 cm", "1000 cm"] },
+    { q: "1 kilogram kaç gramdır? ⚖️", s: "Bir kilogram kaç gramdır?", a: "1.000 gram ⚖️", d: ["100 gram", "10.000 gram"] },
+    { q: "Maddenin kaç temel fiziksel hali vardır? 🧊💧💨", s: "Maddenin kaç temel fiziksel hali vardır?", a: "3 (Katı, Sıvı, Gaz) 🧊", d: ["2", "5"] },
+    { q: "İstiklal Marşı'mızın şairi kimdir? 🇹🇷", s: "İstiklal Marşı'mızın şairi kimdir?", a: "Mehmet Âkif Ersoy 🇹🇷", d: ["Mustafa Kemal Atatürk", "Namık Kemal"] },
+    { q: "Mıknatıs aşağıdaki metallerden hangisini ÇEKER? 🧲", s: "Mıknatıs aşağıdaki metallerden hangisini çeker?", a: "Demir ve nikel 🧲", d: ["Plastik", "Tahta"] },
+    { q: "Aşağıdakilerden hangisi bir doğal unsurdur? 🌲", s: "Aşağıdakilerden hangisi bir doğal unsurdur?", a: "Van Gölü 🌲", d: ["Boğaz Köprüsü", "Okul Binası"] },
+    { q: "Bir haftada kaç gün vardır? 📅", s: "Bir haftada kaç gün vardır?", a: "7 gün 📅", d: ["5 gün", "10 gün"] },
+    { q: "Bir yılda kaç mevsim vardır? 🍂🌸", s: "Bir yılda kaç mevsim vardır?", a: "4 mevsim 🍂", d: ["12 mevsim", "6 mevsim"] }
+  ];
+
+  function getConnect4UniqueItem(pool, key) {
+    if (typeof getUniqueNextItem === 'function') {
+      return getUniqueNextItem(pool, key);
+    } else if (typeof QuestionEngine !== 'undefined' && typeof QuestionEngine.getUniqueNextItem === 'function') {
+      return QuestionEngine.getUniqueNextItem(pool, key);
+    }
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function generateConnect4Question(topic) {
+    if (topic === 'reading') {
+      const item = getConnect4UniqueItem(C4_READING_POOL, 'c4_reading_pool');
+      const allOpts = [item.a, ...item.d].sort(() => Math.random() - 0.5);
+      return {
+        text: item.q,
+        spokenText: item.s || item.q,
+        options: allOpts,
+        answer: item.a,
+        answered: false,
+        selectedIdx: null
+      };
+    } else if (topic === 'general') {
+      const isMath = Math.random() < 0.45;
+      if (isMath) {
+        const mode = Math.floor(Math.random() * 4);
+        let text = '', spoken = '', ans = 0;
+        if (mode === 0) {
+          const a = Math.floor(Math.random() * 4) + 6;
+          const b = Math.floor(Math.random() * 8) + 2;
+          ans = a * b;
+          text = a + ' × ' + b + ' = ? ✖️';
+          spoken = a + ' kere ' + b + ' işleminin sonucu kaçtır?';
+        } else if (mode === 1) {
+          const b = Math.floor(Math.random() * 7) + 3;
+          ans = Math.floor(Math.random() * 8) + 2;
+          const a = b * ans;
+          text = a + ' ÷ ' + b + ' = ? ➗';
+          spoken = a + ' bölü ' + b + ' işleminin sonucu kaçtır?';
+        } else if (mode === 2) {
+          const a = Math.floor(Math.random() * 45) + 20;
+          const b = Math.floor(Math.random() * 45) + 15;
+          ans = a + b;
+          text = a + ' + ' + b + ' = ? ➕';
+          spoken = a + ' artı ' + b + ' işleminin sonucu kaçtır?';
+        } else {
+          const a = Math.floor(Math.random() * 50) + 40;
+          const b = Math.floor(Math.random() * 30) + 10;
+          ans = a - b;
+          text = a + ' - ' + b + ' = ? ➖';
+          spoken = a + ' eksi ' + b + ' işleminin sonucu kaçtır?';
+        }
+        const optsSet = new Set([String(ans)]);
+        while (optsSet.size < 3) {
+          const delta = (Math.floor(Math.random() * 4) + 1) * (Math.random() < 0.5 ? 1 : -1);
+          const cand = Math.max(1, ans + delta);
+          optsSet.add(String(cand));
+        }
+        return {
+          text,
+          spokenText: spoken,
+          options: Array.from(optsSet).sort(() => Math.random() - 0.5),
+          answer: String(ans),
+          answered: false,
+          selectedIdx: null
+        };
+      } else {
+        const item = getConnect4UniqueItem(C4_GENERAL_POOL, 'c4_general_pool');
+        const allOpts = [item.a, ...item.d].sort(() => Math.random() - 0.5);
+        return {
+          text: item.q,
+          spokenText: item.s || item.q,
+          options: allOpts,
+          answer: item.a,
+          answered: false,
+          selectedIdx: null
+        };
+      }
+    } else {
+      // 1-2. Sınıf Hızlı Matematik
+      const mode = Math.floor(Math.random() * 4);
+      let text = '', spoken = '', ans = 0;
+      if (mode === 0) {
+        const a = Math.floor(Math.random() * 10) + 3;
+        const b = Math.floor(Math.random() * 9) + 2;
+        ans = a + b;
+        text = a + ' + ' + b + ' = ? ➕';
+        spoken = a + ' artı ' + b + ' kaç eder?';
+      } else if (mode === 1) {
+        const a = Math.floor(Math.random() * 10) + 10;
+        const b = Math.floor(Math.random() * 8) + 2;
+        ans = a - b;
+        text = a + ' - ' + b + ' = ? ➖';
+        spoken = a + ' eksi ' + b + ' kaç eder?';
+      } else if (mode === 2) {
+        const a = [2, 3, 4, 5][Math.floor(Math.random() * 4)];
+        const b = Math.floor(Math.random() * 8) + 2;
+        ans = a * b;
+        text = a + ' × ' + b + ' = ? ✖️';
+        spoken = a + ' kere ' + b + ' kaç eder?';
+      } else {
+        const tens = Math.floor(Math.random() * 6) + 2;
+        const ones = Math.floor(Math.random() * 8) + 1;
+        ans = tens * 10 + ones;
+        text = tens + ' onluk + ' + ones + ' birlik = ? 🔢';
+        spoken = tens + ' onluk ve ' + ones + ' birlik kaç eder?';
+      }
+      const optsSet = new Set([String(ans)]);
+      while (optsSet.size < 3) {
+        const delta = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+        const cand = Math.max(1, ans + delta);
+        optsSet.add(String(cand));
+      }
+      return {
+        text,
+        spokenText: spoken,
+        options: Array.from(optsSet).sort(() => Math.random() - 0.5),
+        answer: String(ans),
+        answered: false,
+        selectedIdx: null
+      };
+    }
+  }
+
+  function checkConnect4Win(board) {
+    const ROWS = 6;
+    const COLS = 7;
+    // 1) Yatay
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS - 3; c++) {
+        const color = board[r][c];
+        if (color && color === board[r][c+1] && color === board[r][c+2] && color === board[r][c+3]) {
+          return { winner: color, cells: [[r, c], [r, c+1], [r, c+2], [r, c+3]] };
+        }
+      }
+    }
+    // 2) Dikey
+    for (let r = 0; r < ROWS - 3; r++) {
+      for (let c = 0; c < COLS; c++) {
+        const color = board[r][c];
+        if (color && color === board[r+1][c] && color === board[r+2][c] && color === board[r+3][c]) {
+          return { winner: color, cells: [[r, c], [r+1, c], [r+2, c], [r+3, c]] };
+        }
+      }
+    }
+    // 3) Çapraz Aşağı-Sağa (\)
+    for (let r = 0; r < ROWS - 3; r++) {
+      for (let c = 0; c < COLS - 3; c++) {
+        const color = board[r][c];
+        if (color && color === board[r+1][c+1] && color === board[r+2][c+2] && color === board[r+3][c+3]) {
+          return { winner: color, cells: [[r, c], [r+1, c+1], [r+2, c+2], [r+3, c+3]] };
+        }
+      }
+    }
+    // 4) Çapraz Yukarı-Sağa (/)
+    for (let r = 3; r < ROWS; r++) {
+      for (let c = 0; c < COLS - 3; c++) {
+        const color = board[r][c];
+        if (color && color === board[r-1][c+1] && color === board[r-2][c+2] && color === board[r-3][c+3]) {
+          return { winner: color, cells: [[r, c], [r-1, c+1], [r-2, c+2], [r-3, c+3]] };
+        }
+      }
+    }
+    // 5) Doluluk / Beraberlik
+    let full = true;
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        if (board[r][c] === null) {
+          full = false;
+          break;
+        }
+      }
+    }
+    if (full) return { winner: 'draw', cells: [] };
+    return null;
+  }
+
+  function initArcadeConnect4Game(keepScores = false) {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🔴🟡';
+    if (titleEl) titleEl.textContent = 'Hedef 4: Dörtlü Sıra Kapışması';
+
+    const c = ArcadeHub.connect4;
+    c.board = Array.from({ length: 6 }, () => Array(7).fill(null));
+    c.turn = 'R';
+    c.canDrop = false;
+    c.winner = null;
+    c.winCells = [];
+    c.aiThinking = false;
+    c.droppingCol = null;
+    c.droppingRow = null;
+    c.bannerText = '❓ Soruyu doğru cevapla, jeton atma hakkı kazan!';
+    if (!keepScores) {
+      c.scoreR = 0;
+      c.scoreY = 0;
+    }
+    c.currentQ = generateConnect4Question(c.topic || 'math');
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${!c.vsAi ? 'active' : ''}" id="btnC42P" type="button">👥 2 Kişilik (Arkadaşınla)</button>
+          <button class="arc-pill-btn ${c.vsAi ? 'active' : ''}" id="btnC4Ai" type="button">🤖 Moli'ye Karşı (AI)</button>
+          <button class="arc-pill-btn ${c.topic === 'reading' ? 'active' : ''}" data-c4-topic="reading" type="button">📖 1. Sınıf Okuma-Hece</button>
+          <button class="arc-pill-btn ${c.topic === 'math' ? 'active' : ''}" data-c4-topic="math" type="button">🔢 1-2. Sınıf Hızlı Matematik</button>
+          <button class="arc-pill-btn ${c.topic === 'general' ? 'active' : ''}" data-c4-topic="general" type="button">🌍 3-4. Sınıf Genel Kültür & 4 İşlem</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnC4Reset" type="button">🔄 Yeni Maç</button>
+        </div>
+      `;
+      const b2p = document.getElementById('btnC42P');
+      const bAi = document.getElementById('btnC4Ai');
+      const bRes = document.getElementById('btnC4Reset');
+      if (b2p) addTapListener(b2p, () => { c.vsAi = false; audio.playClick(); initArcadeConnect4Game(false); });
+      if (bAi) addTapListener(bAi, () => { c.vsAi = true; audio.playClick(); initArcadeConnect4Game(false); });
+      if (bRes) addTapListener(bRes, () => { audio.playClick(); initArcadeConnect4Game(true); });
+
+      toolbarEl.querySelectorAll('[data-c4-topic]').forEach(btn => {
+        addTapListener(btn, () => {
+          c.topic = btn.getAttribute('data-c4-topic');
+          audio.playClick();
+          initArcadeConnect4Game(false);
+        });
+      });
+    }
+
+    renderConnect4Arena();
+  }
+
+  function renderConnect4Arena() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const c = ArcadeHub.connect4;
+    const q = c.currentQ;
+
+    const isRedTurn = (c.turn === 'R');
+    const turnPlayerLabel = isRedTurn
+      ? '🔴 1. Oyuncu (Kırmızı Jeton)'
+      : (c.vsAi ? '🤖 Moli (Sarı Jeton)' : '🟡 2. Oyuncu (Sarı Jeton)');
+
+    const winCellMap = {};
+    if (c.winCells && c.winCells.length > 0) {
+      c.winCells.forEach(([wr, wc]) => {
+        winCellMap[wr + '_' + wc] = true;
+      });
+    }
+
+    canvas.innerHTML = `
+      <div class="arc-c4-arena">
+        <!-- Skor Tablosu -->
+        <div class="c4-scoreboard">
+          <div class="c4-player-pill pill-r ${isRedTurn && !c.winner ? 'active-turn' : ''}">
+            <span class="c4-player-name">🔴 1. Oyuncu</span>
+            <span class="c4-player-score">${c.scoreR}</span>
+          </div>
+          <div class="c4-status-banner ${c.canDrop ? 'status-can-drop' : ''}">
+            ${c.bannerText}
+          </div>
+          <div class="c4-player-pill pill-y ${!isRedTurn && !c.winner ? 'active-turn' : ''}">
+            <span class="c4-player-name">${c.vsAi ? '🤖 Moli' : '🟡 2. Oyuncu'}</span>
+            <span class="c4-player-score">${c.scoreY}</span>
+          </div>
+        </div>
+
+        <!-- Soru Paneli -->
+        ${!c.winner ? `
+          <div class="c4-question-card ${isRedTurn ? 'card-turn-red' : 'card-turn-yellow'}">
+            <div class="c4-q-header">
+              <span class="c4-q-turn-tag">${turnPlayerLabel}</span>
+              <button class="c4-btn-speak" id="btnC4Speak" type="button" aria-label="Soruyu Oku">
+                <span>🔊</span>
+                <span>Dinle</span>
+              </button>
+            </div>
+            <div class="c4-q-body">
+              <div class="c4-q-text" id="c4QuestionText">${q ? q.text : ''}</div>
+              <div class="c4-q-options">
+                ${q ? q.options.map((opt, idx) => {
+                  let optCls = '';
+                  if (q.answered) {
+                    if (opt === q.answer) optCls = 'opt-correct';
+                    else if (idx === q.selectedIdx) optCls = 'opt-wrong';
+                  }
+                  const isDisabled = q.answered || c.canDrop || c.aiThinking;
+                  return `
+                    <button class="c4-opt-btn ${optCls}" data-c4-opt="${idx}" type="button" ${isDisabled ? 'disabled' : ''}>
+                      ${opt}
+                    </button>
+                  `;
+                }).join('') : ''}
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Jeton Bırakma Okları ve 7x6 Oyun Tahtası -->
+        <div class="c4-board-wrapper">
+          <!-- Üst Ok İndikatörleri (7 Sütun) -->
+          <div class="c4-drop-arrows-row ${c.canDrop ? 'can-drop-active' : ''}">
+            ${[0, 1, 2, 3, 4, 5, 6].map(col => {
+              const isColFull = (c.board[0][col] !== null);
+              return `
+                <button class="c4-col-arrow-btn ${c.canDrop && !isColFull ? 'is-ready' : ''}" 
+                        data-c4-col="${col}" 
+                        type="button" 
+                        ${!c.canDrop || isColFull || c.winner || c.aiThinking ? 'disabled' : ''} 
+                        aria-label="${col + 1}. Sütuna Jeton Bırak">
+                  <span>⬇️</span>
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- 7 Sütun x 6 Satır Tahta -->
+          <div class="c4-grid-board ${c.winner ? 'is-game-over' : ''} ${c.canDrop ? 'board-can-drop' : ''}">
+            ${[0, 1, 2, 3, 4, 5, 6].map(col => {
+              const isColFull = (c.board[0][col] !== null);
+              return `
+                <div class="c4-column ${c.canDrop && !isColFull ? 'col-droppable' : ''}" data-c4-col="${col}" role="button" tabindex="0">
+                  ${[0, 1, 2, 3, 4, 5].map(row => {
+                    const cellVal = c.board[row][col];
+                    const isWinCell = !!winCellMap[row + '_' + col];
+                    const isDroppingCell = (c.droppingCol === col && c.droppingRow === row);
+
+                    let tokenHtml = '';
+                    if (cellVal === 'R') {
+                      tokenHtml = `<div class="c4-token token-r ${isWinCell ? 'is-win-token' : ''} ${isDroppingCell ? 'animate-drop' : ''}"></div>`;
+                    } else if (cellVal === 'Y') {
+                      tokenHtml = `<div class="c4-token token-y ${isWinCell ? 'is-win-token' : ''} ${isDroppingCell ? 'animate-drop' : ''}"></div>`;
+                    }
+
+                    return `
+                      <div class="c4-slot" data-slot="${row}_${col}">
+                        <div class="c4-hole">
+                          ${tokenHtml}
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        ${c.winner ? `
+          <div class="c4-rematch-row">
+            <button class="tt-ctrl-btn tt-btn-start" id="btnC4PlayAgain" type="button">🔄 Tekrar Oyna</button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    // 🔊 Dinle butonu
+    const btnSpeak = document.getElementById('btnC4Speak');
+    if (btnSpeak && q) {
+      addTapListener(btnSpeak, () => {
+        if (typeof audio !== 'undefined' && typeof audio.speakTurkishText === 'function') {
+          audio.speakTurkishText(q.spokenText || q.text);
+        }
+      });
+    }
+
+    // Şık butonları
+    canvas.querySelectorAll('[data-c4-opt]').forEach(btn => {
+      addTapListener(btn, () => {
+        const optIdx = parseInt(btn.getAttribute('data-c4-opt'), 10);
+        handleConnect4Answer(optIdx);
+      });
+    });
+
+    // Sütun tıklama / jeton bırakma (hem ok butonları hem de sütun gövdesi)
+    canvas.querySelectorAll('[data-c4-col]').forEach(el => {
+      addTapListener(el, () => {
+        const col = parseInt(el.getAttribute('data-c4-col'), 10);
+        dropConnect4Token(col);
+      });
+    });
+
+    // Tekrar Oyna
+    const btnAgain = document.getElementById('btnC4PlayAgain');
+    if (btnAgain) {
+      addTapListener(btnAgain, () => {
+        audio.playClick();
+        initArcadeConnect4Game(true);
+      });
+    }
+  }
+
+  function handleConnect4Answer(optIdx) {
+    const c = ArcadeHub.connect4;
+    const q = c.currentQ;
+    if (!q || q.answered || c.winner || c.aiThinking) return;
+
+    q.answered = true;
+    q.selectedIdx = optIdx;
+    const selectedOpt = q.options[optIdx];
+
+    if (selectedOpt === q.answer) {
+      audio.playCorrect();
+      c.canDrop = true;
+      c.bannerText = '🎯 Harika! Şimdi jetonunu bırakmak istediğin sütuna dokun!';
+      renderConnect4Arena();
+    } else {
+      audio.playWrong();
+      c.canDrop = false;
+      c.bannerText = '❌ Yanlış cevap! Jeton hakkı rakibe geçti!';
+      renderConnect4Arena();
+      setTimeout(() => {
+        switchConnect4Turn();
+      }, 1200);
+    }
+  }
+
+  function dropConnect4Token(colIdx) {
+    const c = ArcadeHub.connect4;
+    if (!c.canDrop || c.winner || c.aiThinking) return;
+
+    let targetRow = -1;
+    for (let r = 5; r >= 0; r--) {
+      if (c.board[r][colIdx] === null) {
+        targetRow = r;
+        break;
+      }
+    }
+
+    if (targetRow === -1) {
+      if (typeof showToast === 'function') {
+        showToast('⚠️ Bu sütun tamamen dolu! Başka bir sütun seç.');
+      }
+      return;
+    }
+
+    c.board[targetRow][colIdx] = c.turn;
+    c.canDrop = false;
+    c.droppingCol = colIdx;
+    c.droppingRow = targetRow;
+    audio.playPop();
+
+    const res = checkConnect4Win(c.board);
+    if (res) {
+      c.winner = res.winner;
+      c.winCells = res.cells || [];
+      renderConnect4Arena();
+
+      if (res.winner === 'R') {
+        c.scoreR += 1;
+        audio.playFanfare();
+        if (typeof launchConfetti === 'function') {
+          launchConfetti();
+          setTimeout(launchConfetti, 400);
+        }
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: "🎉 TEBRİKLER! KIRMIZI OYUNCU KAZANDI!",
+            subtitle: "Harika strateji! 4'lü sırayı tamamlayarak maçı kazandın!",
+            badgeText: 'HEDEF 4 ŞAMPİYONU',
+            icon: '🔴',
+            onRestart: () => initArcadeConnect4Game(true)
+          });
+        }, 320);
+      } else if (res.winner === 'Y') {
+        c.scoreY += 1;
+        audio.playFanfare();
+        if (typeof launchConfetti === 'function') {
+          launchConfetti();
+          setTimeout(launchConfetti, 400);
+        }
+        const yTitle = c.vsAi ? "🤖 MOLI KAZANDI!" : "🎉 TEBRİKLER! SARI OYUNCU KAZANDI!";
+        const ySub = c.vsAi
+          ? "Moli bu turda akıllıca 4'lü sırayı kurdu! Rövanş için hemen tekrar dene!"
+          : "Harika strateji! 4'lü sırayı tamamlayarak maçı kazandın!";
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: yTitle,
+            subtitle: ySub,
+            badgeText: c.vsAi ? 'MOLİ GALİP' : 'HEDEF 4 ŞAMPİYONU',
+            icon: '🟡',
+            onRestart: () => initArcadeConnect4Game(true)
+          });
+        }, 320);
+      } else if (res.winner === 'draw') {
+        audio.playVictory();
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: '🤝 DOSTLUK KAZANDI! BERABERE!',
+            subtitle: 'Tüm delikler doldu, iki taraf da müthiş mücadele etti!',
+            badgeText: 'BERABERLİK',
+            icon: '🤝',
+            onRestart: () => initArcadeConnect4Game(true)
+          });
+        }, 320);
+      }
+    } else {
+      renderConnect4Arena();
+      setTimeout(() => {
+        switchConnect4Turn();
+      }, 420);
+    }
+  }
+
+  function switchConnect4Turn() {
+    const c = ArcadeHub.connect4;
+    c.droppingCol = null;
+    c.droppingRow = null;
+    c.canDrop = false;
+    c.turn = (c.turn === 'R') ? 'Y' : 'R';
+    c.bannerText = '❓ Soruyu doğru cevapla, jeton atma hakkı kazan!';
+    c.currentQ = generateConnect4Question(c.topic || 'math');
+    renderConnect4Arena();
+
+    if (c.turn === 'Y' && c.vsAi && !c.winner) {
+      runMoliConnect4Turn();
+    }
+  }
+
+  function runMoliConnect4Turn() {
+    const c = ArcadeHub.connect4;
+    c.aiThinking = true;
+    c.bannerText = '🤖 Moli soruyu düşünüyor...';
+    renderConnect4Arena();
+
+    setTimeout(() => {
+      if (c.winner || c.turn !== 'Y' || !c.currentQ) {
+        c.aiThinking = false;
+        return;
+      }
+
+      const q = c.currentQ;
+      const isCorrect = (Math.random() < 0.90);
+
+      if (isCorrect) {
+        const correctIdx = q.options.indexOf(q.answer);
+        q.answered = true;
+        q.selectedIdx = correctIdx >= 0 ? correctIdx : 0;
+        audio.playCorrect();
+        c.canDrop = true;
+        c.bannerText = '🤖 Moli doğru bildi! Jetonunu bırakıyor...';
+        renderConnect4Arena();
+
+        setTimeout(() => {
+          if (c.winner || c.turn !== 'Y') {
+            c.aiThinking = false;
+            return;
+          }
+          const bestCol = computeMoliConnect4Move();
+          c.aiThinking = false;
+          if (bestCol !== -1) {
+            dropConnect4Token(bestCol);
+          } else {
+            switchConnect4Turn();
+          }
+        }, 750);
+      } else {
+        const wrongOpts = q.options.map((_, i) => i).filter(i => q.options[i] !== q.answer);
+        const wrongIdx = wrongOpts.length > 0 ? wrongOpts[0] : 0;
+        q.answered = true;
+        q.selectedIdx = wrongIdx;
+        audio.playWrong();
+        c.canDrop = false;
+        c.bannerText = '❌ Moli soruyu bilemedi! Sıra sana geçti!';
+        renderConnect4Arena();
+
+        setTimeout(() => {
+          c.aiThinking = false;
+          switchConnect4Turn();
+        }, 1200);
+      }
+    }, 850);
+  }
+
+  function computeMoliConnect4Move() {
+    const c = ArcadeHub.connect4;
+    const validCols = [];
+    for (let col = 0; col < 7; col++) {
+      if (c.board[0][col] === null) validCols.push(col);
+    }
+    if (validCols.length === 0) return -1;
+
+    // 1) Moli bu hamlede kazanabiliyor mu?
+    for (const col of validCols) {
+      const sim = c.board.map(r => r.slice());
+      for (let r = 5; r >= 0; r--) {
+        if (sim[r][col] === null) {
+          sim[r][col] = 'Y';
+          break;
+        }
+      }
+      const res = checkConnect4Win(sim);
+      if (res && res.winner === 'Y') return col;
+    }
+
+    // 2) Kırmızı sonraki hamlede kazanacak mı? (Bloklama)
+    for (const col of validCols) {
+      const sim = c.board.map(r => r.slice());
+      for (let r = 5; r >= 0; r--) {
+        if (sim[r][col] === null) {
+          sim[r][col] = 'R';
+          break;
+        }
+      }
+      const res = checkConnect4Win(sim);
+      if (res && res.winner === 'R') return col;
+    }
+
+    // 3) Orta sütun önceliği (3. sütun)
+    if (validCols.includes(3) && Math.random() < 0.65) return 3;
+    if (validCols.includes(2) && Math.random() < 0.5) return 2;
+    if (validCols.includes(4) && Math.random() < 0.5) return 4;
+
+    return validCols[Math.floor(Math.random() * validCols.length)];
+  }
+
 
   // =========================================================================
   // OYUN 4: 🧠 HAFIZA KARTLARI DÜELLOSU (EŞİNİ BUL - 1 VEYA 2 KİŞİLİK)
@@ -29649,6 +30329,13 @@ function renderInteractiveQuestion(q) {
       if (typeof openArcadeHub === 'function') {
         setTimeout(openArcadeHub, 100);
       }
+    } else if (hash === '#hedef4' || hash === '#/hedef4' || hash === '#connect4' || hash === '#/connect4') {
+      setTimeout(() => {
+        if (typeof openArcadeHub === 'function') {
+          openArcadeHub();
+          if (typeof launchArcadeGame === 'function') launchArcadeGame('connect4');
+        }
+      }, 100);
     } else if (/^#\/?ingilizce[-\/]/.test(hash) || path.includes('/ingilizce/')) {
       const gMatch = (hash + path).match(/([1-4])(?:-sinif)?/);
       const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
@@ -31625,6 +32312,18 @@ function renderInteractiveQuestion(q) {
     const subjectId = overrides.subjectId !== undefined ? overrides.subjectId : state.currentSubject;
     const gameId = overrides.gameId !== undefined ? overrides.gameId : (view === 'duel' ? state.currentGameType : null);
 
+    // Popüler Oyunlar / Hedef 4 Arcade paylaşımı
+    if (section === 'arcade' || overrides.arcadeGame || (typeof ArcadeHub !== 'undefined' && ArcadeHub.activeGame)) {
+      const arcGame = overrides.arcadeGame || (typeof ArcadeHub !== 'undefined' ? ArcadeHub.activeGame : null);
+      if (arcGame === 'connect4' || arcGame === 'hedef4') {
+        params.set('oyun', 'hedef4');
+        return params.toString();
+      } else if (arcGame) {
+        params.set('oyun', arcGame);
+        return params.toString();
+      }
+    }
+
     // Ana sayfadaysa ve özel bir oyun zorlanmadıysa boş parametre döndür
     if (view === 'lobby' && section === 'home' && !overrides.gameId && !overrides.forceGrade) {
       return '';
@@ -31697,6 +32396,13 @@ function renderInteractiveQuestion(q) {
   window.syncDeepLinkUrl = syncDeepLinkUrl;
 
   function buildHumanReadableActivitySummary(overrides = {}) {
+    const section = overrides.section || state.currentSection;
+    if (section === 'arcade' || (typeof ArcadeHub !== 'undefined' && ArcadeHub.activeGame)) {
+      const arcGame = overrides.arcadeGame || (typeof ArcadeHub !== 'undefined' ? ArcadeHub.activeGame : null);
+      if (arcGame === 'connect4' || arcGame === 'hedef4') {
+        return '🔥 En Popüler Oyunlar - 🔴🟡 Hedef 4 (Dörtlü Sıra Kapışması)';
+      }
+    }
     const grade = overrides.grade !== undefined ? parseInt(overrides.grade, 10) : parseInt(state.currentGrade, 10);
     const gradeLabel = grade === 0 ? 'Anasınıfı' : `${grade}. Sınıf`;
     const view = overrides.view || state.currentView;
@@ -31978,6 +32684,13 @@ function renderInteractiveQuestion(q) {
       // 5. Oyun / Etkinlik parametresi varsa doğrudan oyun sahnesini aç!
       if (rawOyun) {
         const oyunNorm = rawOyun.toLocaleLowerCase('tr-TR').trim();
+        if (oyunNorm === 'hedef4' || oyunNorm === 'connect4') {
+          interactionLockUntil = 0;
+          if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+          openArcadeHub();
+          launchArcadeGame('connect4');
+          return true;
+        }
         let resolvedGameId = null;
 
         if (SLUG_TO_MAARIF_GAME[oyunNorm]) {
