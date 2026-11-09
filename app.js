@@ -14077,6 +14077,27 @@
       wrongCooldown: false
     },
 
+    // 🔨 Köstebek Avı (Hızlı Yakala!)
+    mole: {
+      mode: 'solo',
+      topic: 'math',
+      speed: 'normal',
+      isPlaying: false,
+      isOver: false,
+      score: 0,
+      p1Score: 0,
+      p2Score: 0,
+      currentTurnPlayer: 1,
+      timeLeft: 45,
+      currentTarget: null,
+      holes: [],
+      targetHitsInStage: 0,
+      combo: 0,
+      spawnTimerId: null,
+      clockTimerId: null,
+      hideTimeouts: []
+    },
+
     // 4) 🧠 Hafıza Kartları Düellosu
     memory: {
       players: 2,        // 1 | 2
@@ -14176,6 +14197,7 @@
     if (stageView) stageView.classList.add('hide');
     ArcadeHub.activeGame = null;
     if (typeof stopBombTimer === 'function') stopBombTimer();
+    if (typeof stopMoleGameEngine === 'function') stopMoleGameEngine();
     if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.stop(true);
 
     try {
@@ -14281,6 +14303,7 @@
     else if (gameId === 'xox') initArcadeXoxGame();
     else if (gameId === 'connect4' || gameId === 'hedef4') initArcadeConnect4Game();
     else if (gameId === 'bomb' || gameId === 'bomba') initArcadeBombGame();
+    else if (gameId === 'mole' || gameId === 'kostebek') initArcadeMoleGame();
     else if (gameId === 'memory') initArcadeMemoryGame();
     else if (gameId === 'flower') initArcadeFlowerGame();
     else if (gameId === 'buzzer') initArcadeBuzzerGame();
@@ -16609,6 +16632,673 @@
         b.currentQ = generateBombQuestion(b.topic || 'math');
         renderBombArena();
       }, 950);
+    }
+  }
+
+
+
+  // =========================================================================
+  // OYUN: 🔨 KÖSTEBEK AVI (HIZLI YAKALA! - WHACK-A-MOLE)
+  // =========================================================================
+
+  const MOLE_READING_TARGETS = [
+    {
+      id: 'sound_k',
+      title: 'İçinde "K" sesi olan köstebeklere dokun! ✏️',
+      spoken: 'İçinde K sesi olan köstebeklere dokun!',
+      valid: ["Kalem", "Kedi", "Okul", "Kitap", "Karpuz", "Tavuk", "Balık", "Köpek", "Kuş", "Kek", "Kilit", "Kutu"],
+      invalid: ["Elma", "Masa", "Araba", "Orman", "Bal", "Gül", "Ayı", "Ev", "Tren", "Deniz", "Bulut", "Göz"]
+    },
+    {
+      id: 'sound_m',
+      title: 'İçinde "M" sesi olan köstebeklere dokun! 🍎',
+      spoken: 'İçinde M sesi olan köstebeklere dokun!',
+      valid: ["Masa", "Elma", "Orman", "Kalem", "Armut", "Maymun", "Limon", "Gemi", "Cami", "Muz", "Resim", "Demir"],
+      invalid: ["Kedi", "Kuş", "Balık", "Araba", "Gözlük", "Okul", "Kitap", "Güneş", "Top", "Saat", "Çit", "Gül"]
+    },
+    {
+      id: 'sound_a',
+      title: 'İçinde "A" sesi olan köstebeklere dokun! 🚗',
+      spoken: 'İçinde A sesi olan köstebeklere dokun!',
+      valid: ["Araba", "Masa", "Balık", "Kalem", "Armut", "Tavuk", "Karpuz", "Pasta", "Bal", "Ayı", "Çanta", "Saat"],
+      invalid: ["Kedi", "Kuş", "Ev", "Gözlük", "Gül", "Göl", "Çit", "Fil", "Güneş", "İp", "Tül", "Süt"]
+    },
+    {
+      id: 'syllable_2',
+      title: 'Tam 2 heceli kelimelere dokun! ✌️',
+      spoken: 'Tam iki heceli kelimelere dokun!',
+      valid: ["Okul", "Kalem", "Kitap", "Elma", "Masa", "Kedi", "Balık", "Orman", "Güneş", "Karpuz", "Tavşan", "Aslan"],
+      invalid: ["Kelebek", "Bilgisayar", "Televizyon", "Top", "Kuş", "Ev", "Göz", "İp", "Fil", "Dondurma", "Mandalina"]
+    },
+    {
+      id: 'animals',
+      title: 'HAYVAN isimli köstebeklere dokun! 🐾',
+      spoken: 'Hayvan isimli köstebeklere dokun!',
+      valid: ["Kedi", "Köpek", "Balık", "Kuş", "Aslan", "Fil", "Tavşan", "Ayı", "Kuzu", "Tilki", "Maymun", "Kurt"],
+      invalid: ["Masa", "Kitap", "Elma", "Kalem", "Araba", "Okul", "Güneş", "Defter", "Sandalye", "Ayakkabı", "Gözlük"]
+    }
+  ];
+
+  const MOLE_MATH_TARGETS = [
+    {
+      id: 'math_10',
+      title: 'Sonucu "10" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu on olan işlemlere dokun!',
+      valid: ["5 + 5", "7 + 3", "8 + 2", "6 + 4", "9 + 1", "12 - 2", "15 - 5", "20 - 10", "13 - 3", "14 - 4"],
+      invalid: ["6 + 3", "8 + 4", "15 - 3", "7 + 5", "10 - 2", "5 + 4", "12 - 4", "9 + 3", "11 - 2", "7 + 4"]
+    },
+    {
+      id: 'math_12',
+      title: 'Sonucu "12" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu on iki olan işlemlere dokun!',
+      valid: ["6 + 6", "10 + 2", "7 + 5", "8 + 4", "9 + 3", "15 - 3", "16 - 4", "20 - 8", "14 - 2", "17 - 5"],
+      invalid: ["5 + 5", "7 + 3", "10 - 2", "6 + 4", "14 - 4", "8 + 2", "9 + 5", "15 - 5", "8 + 3", "11 - 1"]
+    },
+    {
+      id: 'math_15',
+      title: 'Sonucu "15" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu on beş olan işlemlere dokun!',
+      valid: ["10 + 5", "8 + 7", "9 + 6", "11 + 4", "12 + 3", "20 - 5", "18 - 3", "17 - 2", "19 - 4", "16 - 1"],
+      invalid: ["10 + 4", "8 + 6", "20 - 6", "7 + 7", "12 + 4", "16 - 3", "9 + 5", "11 + 3", "18 - 4", "15 - 2"]
+    },
+    {
+      id: 'math_8',
+      title: 'Sonucu "8" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu sekiz olan işlemlere dokun!',
+      valid: ["4 + 4", "5 + 3", "6 + 2", "7 + 1", "10 - 2", "12 - 4", "15 - 7", "18 - 10", "9 - 1", "14 - 6"],
+      invalid: ["5 + 4", "6 + 3", "10 - 3", "7 + 2", "12 - 3", "14 - 5", "8 + 2", "4 + 3", "11 - 4", "9 - 2"]
+    },
+    {
+      id: 'math_20',
+      title: 'Sonucu "20" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu yirmi olan işlemlere dokun!',
+      valid: ["10 + 10", "15 + 5", "12 + 8", "16 + 4", "17 + 3", "18 + 2", "25 - 5", "30 - 10", "22 - 2", "24 - 4"],
+      invalid: ["10 + 9", "12 + 7", "15 + 4", "16 + 5", "25 - 6", "18 + 3", "30 - 9", "21 - 2", "14 + 5"]
+    }
+  ];
+
+  const MOLE_GENERAL_TARGETS = [
+    {
+      id: 'general_24',
+      title: 'Sonucu "24" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu yirmi dört olan işlemlere dokun!',
+      valid: ["6 × 4", "8 × 3", "4 × 6", "3 × 8", "12 × 2", "20 + 4", "30 - 6", "18 + 6", "25 - 1"],
+      invalid: ["6 × 3", "7 × 4", "8 × 4", "5 × 5", "20 + 5", "30 - 4", "7 × 3", "9 × 3", "15 + 8"]
+    },
+    {
+      id: 'general_36',
+      title: 'Sonucu "36" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu otuz altı olan işlemlere dokun!',
+      valid: ["6 × 6", "9 × 4", "4 × 9", "12 × 3", "30 + 6", "40 - 4", "18 × 2", "20 + 16"],
+      invalid: ["6 × 5", "7 × 5", "9 × 3", "8 × 4", "35 + 2", "40 - 5", "8 × 5", "7 × 6"]
+    },
+    {
+      id: 'general_even',
+      title: 'ÇİFT sayıları yakala! (2, 4, 6, 8, 0...) ✌️',
+      spoken: 'Çift sayılara dokun!',
+      valid: ["12", "24", "18", "30", "42", "16", "28", "8", "14", "22", "36", "48", "50", "64"],
+      invalid: ["13", "25", "17", "31", "43", "15", "27", "9", "21", "35", "47", "11", "53", "65"]
+    },
+    {
+      id: 'general_odd',
+      title: 'TEK sayıları yakala! (1, 3, 5, 7, 9...) ☝️',
+      spoken: 'Tek sayılara dokun!',
+      valid: ["11", "15", "19", "23", "27", "31", "35", "39", "45", "17", "21", "29", "49", "55"],
+      invalid: ["12", "16", "20", "24", "28", "32", "36", "40", "18", "22", "30", "42", "50", "60"]
+    },
+    {
+      id: 'general_30',
+      title: 'Sonucu "30" olan işlemleri yakala! 🎯',
+      spoken: 'Sonucu otuz olan işlemlere dokun!',
+      valid: ["5 × 6", "6 × 5", "10 × 3", "3 × 10", "15 × 2", "25 + 5", "40 - 10", "35 - 5", "15 + 15"],
+      invalid: ["5 × 5", "6 × 6", "7 × 4", "8 × 4", "20 + 8", "40 - 8", "9 × 3", "7 × 5"]
+    }
+  ];
+
+  function playMoleBonkSound() {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!audio._moleAudioCtx) audio._moleAudioCtx = new AudioCtx();
+      const ctx = audio._moleAudioCtx;
+      if (ctx.state === 'suspended') ctx.resume();
+
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.12);
+
+      gain.gain.setValueAtTime(0.35, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.15);
+    } catch (e) {}
+  }
+
+  function getMoleUniqueTarget(topic) {
+    let pool = MOLE_MATH_TARGETS;
+    if (topic === 'reading') pool = MOLE_READING_TARGETS;
+    else if (topic === 'general') pool = MOLE_GENERAL_TARGETS;
+
+    if (typeof getUniqueNextItem === 'function') {
+      return getUniqueNextItem(pool, 'mole_target_' + topic);
+    } else if (typeof QuestionEngine !== 'undefined' && typeof QuestionEngine.getUniqueNextItem === 'function') {
+      return QuestionEngine.getUniqueNextItem(pool, 'mole_target_' + topic);
+    }
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function initArcadeMoleGame(keepScores = false) {
+    const iconEl = document.getElementById('arcadeStageIcon');
+    const titleEl = document.getElementById('arcadeStageTitle');
+    const toolbarEl = document.getElementById('arcadeStageToolbar');
+    if (iconEl) iconEl.textContent = '🔨';
+    if (titleEl) titleEl.textContent = 'Köstebek Avı: Hızlı Yakala!';
+
+    const m = ArcadeHub.mole;
+    stopMoleGameEngine();
+
+    m.isPlaying = true;
+    m.isOver = false;
+    m.holes = Array(9).fill(null).map(() => ({ active: false, text: '', isTarget: false, hit: false }));
+    m.activeHolesCount = 0;
+    m.streak = 0;
+    m.targetHitsInStage = 0;
+    m.combo = 0;
+
+    if (!keepScores) {
+      m.score = 0;
+      m.p1Score = 0;
+      m.p2Score = 0;
+      m.currentTurnPlayer = 1; // 1 | 2 (Duel modu için)
+    }
+
+    m.timeLeft = (m.mode === 'duel') ? 30 : 45;
+    m.currentTarget = getMoleUniqueTarget(m.topic || 'math');
+
+    if (toolbarEl) {
+      toolbarEl.innerHTML = `
+        <div class="arc-toolbar-group">
+          <button class="arc-pill-btn ${m.mode === 'solo' ? 'active' : ''}" data-mole-mode="solo" type="button">👤 Tek Kişi (45sn Rekor)</button>
+          <button class="arc-pill-btn ${m.mode === 'duel' ? 'active' : ''}" data-mole-mode="duel" type="button">⚔️ 2 Kişilik Kapışma (Sıralı)</button>
+          <button class="arc-pill-btn ${m.topic === 'reading' ? 'active' : ''}" data-mole-topic="reading" type="button">🅰️ 1. Sınıf Hece-Ses</button>
+          <button class="arc-pill-btn ${m.topic === 'math' ? 'active' : ''}" data-mole-topic="math" type="button">➕ 1-2. Sınıf Matematik</button>
+          <button class="arc-pill-btn ${m.topic === 'general' ? 'active' : ''}" data-mole-topic="general" type="button">✖️ 3-4. Sınıf Çarpım & Genel Kültür</button>
+          <button class="arc-pill-btn ${m.speed === 'normal' ? 'active' : ''}" data-mole-speed="normal" type="button">🐢 Normal</button>
+          <button class="arc-pill-btn ${m.speed === 'fast' ? 'active' : ''}" data-mole-speed="fast" type="button">🚀 Hızlı</button>
+          <button class="arc-pill-btn arc-btn-restart" id="btnMoleRestart" type="button">🔄 Yeniden Başlat</button>
+        </div>
+      `;
+
+      toolbarEl.querySelectorAll('[data-mole-mode]').forEach(btn => {
+        addTapListener(btn, () => {
+          m.mode = btn.getAttribute('data-mole-mode');
+          audio.playClick();
+          initArcadeMoleGame(false);
+        });
+      });
+
+      toolbarEl.querySelectorAll('[data-mole-topic]').forEach(btn => {
+        addTapListener(btn, () => {
+          m.topic = btn.getAttribute('data-mole-topic');
+          audio.playClick();
+          initArcadeMoleGame(false);
+        });
+      });
+
+      toolbarEl.querySelectorAll('[data-mole-speed]').forEach(btn => {
+        addTapListener(btn, () => {
+          m.speed = btn.getAttribute('data-mole-speed');
+          audio.playClick();
+          initArcadeMoleGame(true);
+        });
+      });
+
+      const btnRes = document.getElementById('btnMoleRestart');
+      if (btnRes) {
+        addTapListener(btnRes, () => {
+          audio.playClick();
+          initArcadeMoleGame(false);
+        });
+      }
+    }
+
+    renderMoleArena();
+    startMoleGameLoop();
+  }
+
+  function stopMoleGameEngine() {
+    const m = ArcadeHub.mole;
+    m.isPlaying = false;
+    if (m.spawnTimerId) {
+      clearInterval(m.spawnTimerId);
+      m.spawnTimerId = null;
+    }
+    if (m.clockTimerId) {
+      clearInterval(m.clockTimerId);
+      m.clockTimerId = null;
+    }
+    if (m.hideTimeouts) {
+      m.hideTimeouts.forEach(tid => clearTimeout(tid));
+      m.hideTimeouts = [];
+    }
+  }
+
+  function startMoleGameLoop() {
+    stopMoleGameEngine();
+    const m = ArcadeHub.mole;
+    m.isPlaying = true;
+    m.isOver = false;
+    m.hideTimeouts = [];
+
+    // Zaman sayacı (1 saniyelik aralıklarla)
+    m.clockTimerId = setInterval(() => {
+      if (!m.isPlaying || m.isOver) return;
+      m.timeLeft -= 1;
+      updateMoleClockUI();
+
+      if (m.timeLeft <= 0) {
+        finishMoleStage();
+      }
+    }, 1000);
+
+    // Köstebek çıkarma döngüsü (Hıza bağlı: Normal 1.7s, Hızlı 1.1s)
+    const spawnInterval = (m.speed === 'fast') ? 1100 : 1700;
+    spawnMolesWave();
+    m.spawnTimerId = setInterval(() => {
+      if (!m.isPlaying || m.isOver) return;
+      spawnMolesWave();
+    }, spawnInterval);
+  }
+
+  function updateMoleClockUI() {
+    const m = ArcadeHub.mole;
+    const timeEl = document.getElementById('moleTimerDisplay');
+    if (timeEl) {
+      timeEl.textContent = m.timeLeft + 's';
+      if (m.timeLeft <= 5) {
+        timeEl.classList.add('time-warning');
+      } else {
+        timeEl.classList.remove('time-warning');
+      }
+    }
+  }
+
+  function spawnMolesWave() {
+    const m = ArcadeHub.mole;
+    if (!m.isPlaying || m.isOver) return;
+
+    // Aktif olmayan boş delikleri bul
+    const emptyIndices = [];
+    for (let i = 0; i < 9; i++) {
+      if (!m.holes[i] || !m.holes[i].active) {
+        emptyIndices.push(i);
+      }
+    }
+    if (emptyIndices.length === 0) return;
+
+    // 2 veya 3 delikten köstebek çıkar
+    const countToSpawn = Math.min(emptyIndices.length, Math.random() < 0.65 ? 2 : 3);
+    const shuffledEmpty = emptyIndices.sort(() => Math.random() - 0.5).slice(0, countToSpawn);
+
+    const targetObj = m.currentTarget;
+    if (!targetObj) return;
+
+    const stayDuration = (m.speed === 'fast') ? 1500 : 2300;
+
+    // En az 1 tanesi doğru hedef olsun ki oyuncu vuracak köstebek bulabilsin
+    let guaranteedTargetPlaced = false;
+
+    shuffledEmpty.forEach((idx, order) => {
+      let isTarget = false;
+      if (!guaranteedTargetPlaced && (order === 0 || Math.random() < 0.48)) {
+        isTarget = true;
+        guaranteedTargetPlaced = true;
+      } else {
+        isTarget = (Math.random() < 0.45);
+      }
+
+      let text = '';
+      if (isTarget && targetObj.valid && targetObj.valid.length > 0) {
+        text = targetObj.valid[Math.floor(Math.random() * targetObj.valid.length)];
+      } else if (targetObj.invalid && targetObj.invalid.length > 0) {
+        text = targetObj.invalid[Math.floor(Math.random() * targetObj.invalid.length)];
+        isTarget = false;
+      }
+
+      m.holes[idx] = {
+        active: true,
+        text,
+        isTarget,
+        hit: false
+      };
+
+      animateMolePop(idx, text, isTarget);
+
+      // Otomatik geri içeri saklanma zamanlayıcısı
+      const tid = setTimeout(() => {
+        if (m.holes[idx] && m.holes[idx].active && !m.holes[idx].hit) {
+          animateMoleHide(idx);
+        }
+      }, stayDuration);
+
+      m.hideTimeouts.push(tid);
+    });
+  }
+
+  function animateMolePop(idx, text, isTarget) {
+    const holeEl = document.getElementById('moleHole_' + idx);
+    if (!holeEl) return;
+
+    holeEl.innerHTML = `
+      <div class="mole-creature is-emerging" data-mole-idx="${idx}" role="button" tabindex="0">
+        <div class="mole-hammer-hitbox"></div>
+        <div class="mole-sign ${isTarget ? 'is-target-sign' : ''}">
+          <span class="sign-text">${text}</span>
+        </div>
+        <div class="mole-character">
+          <div class="mole-ears">
+            <span class="mole-ear ear-left"></span>
+            <span class="mole-ear ear-right"></span>
+          </div>
+          <div class="mole-face">
+            <div class="mole-eyes">
+              <span class="mole-eye"></span>
+              <span class="mole-eye"></span>
+            </div>
+            <div class="mole-nose"></div>
+            <div class="mole-cheeks">
+              <span class="mole-cheek"></span>
+              <span class="mole-cheek"></span>
+            </div>
+          </div>
+          <div class="mole-paws">
+            <span class="mole-paw"></span>
+            <span class="mole-paw"></span>
+          </div>
+        </div>
+      </div>
+      <div class="mole-mound"></div>
+    `;
+
+    const creature = holeEl.querySelector('.mole-creature');
+    if (creature) {
+      addTapListener(creature, () => {
+        handleMoleHit(idx);
+      });
+    }
+  }
+
+  function animateMoleHide(idx) {
+    const m = ArcadeHub.mole;
+    if (m.holes[idx]) {
+      m.holes[idx].active = false;
+    }
+    const holeEl = document.getElementById('moleHole_' + idx);
+    if (!holeEl) return;
+
+    const creature = holeEl.querySelector('.mole-creature');
+    if (creature) {
+      creature.classList.remove('is-emerging');
+      creature.classList.add('is-hiding');
+      setTimeout(() => {
+        if (!m.holes[idx] || !m.holes[idx].active) {
+          holeEl.innerHTML = '<div class="mole-mound"></div>';
+        }
+      }, 250);
+    }
+  }
+
+  function handleMoleHit(idx) {
+    const m = ArcadeHub.mole;
+    if (!m.isPlaying || m.isOver) return;
+
+    const hole = m.holes[idx];
+    if (!hole || !hole.active || hole.hit) return;
+
+    hole.hit = true;
+    const holeEl = document.getElementById('moleHole_' + idx);
+    const creature = holeEl ? holeEl.querySelector('.mole-creature') : null;
+
+    if (hole.isTarget) {
+      // DOĞRU VURUŞ!
+      playMoleBonkSound();
+      audio.playCorrect();
+
+      const earned = 10;
+      m.score += earned;
+      if (m.mode === 'duel') {
+        if (m.currentTurnPlayer === 1) m.p1Score += earned;
+        else m.p2Score += earned;
+      }
+      m.targetHitsInStage += 1;
+      m.combo += 1;
+
+      if (creature) {
+        creature.classList.add('is-whacked');
+        // Vuruş efekti ve yıldız
+        const splash = document.createElement('div');
+        splash.className = 'mole-score-splash';
+        splash.innerHTML = '⭐ +10!';
+        creature.appendChild(splash);
+      }
+
+      updateMoleScoreboardUI();
+
+      // Her 5 doğru vuruşta hedefi yenile!
+      if (m.targetHitsInStage >= 5) {
+        m.targetHitsInStage = 0;
+        m.currentTarget = getMoleUniqueTarget(m.topic || 'math');
+        showMoleNewTargetBanner();
+      }
+
+      setTimeout(() => {
+        animateMoleHide(idx);
+      }, 350);
+
+    } else {
+      // YANLIŞ VURUŞ!
+      audio.playWrong();
+      m.combo = 0;
+      if (creature) {
+        creature.classList.add('is-wrong-whack');
+        const splash = document.createElement('div');
+        splash.className = 'mole-wrong-splash';
+        splash.innerHTML = '❌ Yanlış!';
+        creature.appendChild(splash);
+      }
+
+      const canvas = document.getElementById('arcadeStageCanvas');
+      if (canvas) {
+        canvas.classList.add('mole-wrong-shake');
+        setTimeout(() => canvas.classList.remove('mole-wrong-shake'), 400);
+      }
+
+      setTimeout(() => {
+        animateMoleHide(idx);
+      }, 400);
+    }
+  }
+
+  function showMoleNewTargetBanner() {
+    const m = ArcadeHub.mole;
+    const target = m.currentTarget;
+    if (!target) return;
+
+    const bannerEl = document.getElementById('moleTargetBanner');
+    if (bannerEl) {
+      bannerEl.innerHTML = `🎯 <strong>YENİ HEDEF:</strong> ${target.title}`;
+      bannerEl.classList.add('is-target-swapped');
+      setTimeout(() => bannerEl.classList.remove('is-target-swapped'), 800);
+    }
+
+    if (typeof audio !== 'undefined' && typeof audio.speakTurkishText === 'function') {
+      audio.speakTurkishText(target.spoken || target.title);
+    }
+  }
+
+  function updateMoleScoreboardUI() {
+    const m = ArcadeHub.mole;
+    const scoreVal = document.getElementById('moleScoreDisplay');
+    if (scoreVal) {
+      scoreVal.textContent = m.score;
+    }
+    const p1Val = document.getElementById('moleP1ScoreVal');
+    const p2Val = document.getElementById('moleP2ScoreVal');
+    if (p1Val) p1Val.textContent = m.p1Score;
+    if (p2Val) p2Val.textContent = m.p2Score;
+  }
+
+  function finishMoleStage() {
+    const m = ArcadeHub.mole;
+    stopMoleGameEngine();
+    m.isOver = true;
+
+    audio.playFanfare();
+    if (typeof launchConfetti === 'function') {
+      launchConfetti();
+    }
+
+    if (m.mode === 'duel') {
+      if (m.currentTurnPlayer === 1) {
+        // 1. Oyuncunun süresi bitti, sıra 2. oyuncuya geçiyor
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: "⏱️ 1. OYUNCU TAMAMLADI!",
+            subtitle: `1. Oyuncu tam ${m.p1Score} puan topladı! Şimdi sıra 2. Oyuncuda!`,
+            badgeText: 'SIRA 2. OYUNCUDA',
+            icon: '🔴',
+            buttonText: '2. Oyuncu Başlasın ➡️',
+            onRestart: () => {
+              m.currentTurnPlayer = 2;
+              m.score = 0;
+              m.timeLeft = 30;
+              initArcadeMoleGame(true);
+            }
+          });
+        }, 300);
+        return;
+      } else {
+        // 2. Oyuncu da tamamladı, kazananı belirle
+        let winText = '';
+        let winSub = '';
+        let winIcon = '🏆';
+        if (m.p1Score > m.p2Score) {
+          winText = "🏆 1. OYUNCU (MAVİ) KAZANDI!";
+          winSub = `1. Oyuncu: ${m.p1Score} Puan | 2. Oyuncu: ${m.p2Score} Puan`;
+          winIcon = '🔵';
+        } else if (m.p2Score > m.p1Score) {
+          winText = "🏆 2. OYUNCU (KIRMIZI) KAZANDI!";
+          winSub = `2. Oyuncu: ${m.p2Score} Puan | 1. Oyuncu: ${m.p1Score} Puan`;
+          winIcon = '🔴';
+        } else {
+          winText = "🤝 DOSTLUK KAZANDI! BERABERE!";
+          winSub = `Her iki oyuncu da ${m.p1Score} puan topladı!`;
+          winIcon = '🤝';
+        }
+
+        setTimeout(() => {
+          showArcadeVictoryModal({
+            title: winText,
+            subtitle: winSub,
+            badgeText: 'DÜELLO ŞAMPİYONU',
+            icon: winIcon,
+            onRestart: () => {
+              m.p1Score = 0;
+              m.p2Score = 0;
+              m.currentTurnPlayer = 1;
+              initArcadeMoleGame(false);
+            }
+          });
+        }, 300);
+        return;
+      }
+    }
+
+    // Solo Rekor Modu Bitişi
+    setTimeout(() => {
+      showArcadeVictoryModal({
+        title: "🎉 SÜRE DOLDU! HARİKA BİR AV ÇIKARDIN!",
+        subtitle: `Tebrikler! 45 saniyede tam ${m.score} Puan toplayarak rekor kırdın! ⭐`,
+        badgeText: 'KÖSTEBEK AVCISI',
+        icon: '🔨',
+        onRestart: () => initArcadeMoleGame(false)
+      });
+    }, 300);
+  }
+
+  function renderMoleArena() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const m = ArcadeHub.mole;
+    const target = m.currentTarget;
+
+    canvas.innerHTML = `
+      <div class="arc-mole-arena">
+        <!-- Skor ve Süre Başlık Çubuğu -->
+        <div class="mole-scoreboard">
+          ${m.mode === 'duel' ? `
+            <div class="mole-stat-pill ${m.currentTurnPlayer === 1 ? 'pill-active-player pill-blue' : ''}">
+              <span>🔵 1. Oyuncu:</span>
+              <strong id="moleP1ScoreVal">${m.p1Score}</strong>
+            </div>
+            <div class="mole-stat-pill pill-timer">
+              <span>⏱️ Kalan:</span>
+              <strong id="moleTimerDisplay">${m.timeLeft}s</strong>
+            </div>
+            <div class="mole-stat-pill ${m.currentTurnPlayer === 2 ? 'pill-active-player pill-red' : ''}">
+              <span>🔴 2. Oyuncu:</span>
+              <strong id="moleP2ScoreVal">${m.p2Score}</strong>
+            </div>
+          ` : `
+            <div class="mole-stat-pill pill-score">
+              <span>⭐ Toplam Puan:</span>
+              <strong id="moleScoreDisplay">${m.score}</strong>
+            </div>
+            <div class="mole-stat-pill pill-timer">
+              <span>⏱️ Kalan Süre:</span>
+              <strong id="moleTimerDisplay">${m.timeLeft}s</strong>
+            </div>
+          `}
+        </div>
+
+        <!-- Üst Hedef Açıklama Kartı -->
+        <div class="mole-target-card">
+          <div class="mole-target-info">
+            <span class="mole-target-badge">🎯 TUR HEDEFİ</span>
+            <div class="mole-target-title" id="moleTargetBanner">${target ? target.title : ''}</div>
+          </div>
+          <button class="mole-btn-speak" id="btnMoleSpeak" type="button" aria-label="Hedefi Sesli Oku">
+            <span>🔊</span>
+            <span>Dinle</span>
+          </button>
+        </div>
+
+        <!-- 3x3 = 9 Toprak Delik ve Çim Zemin -->
+        <div class="mole-grass-field">
+          <div class="mole-grid-9">
+            ${Array.from({ length: 9 }).map((_, idx) => `
+              <div class="mole-hole-cell" id="moleHole_${idx}">
+                <div class="mole-mound"></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 🔊 Dinle butonu
+    const btnSpeak = document.getElementById('btnMoleSpeak');
+    if (btnSpeak && target) {
+      addTapListener(btnSpeak, () => {
+        if (typeof audio !== 'undefined' && typeof audio.speakTurkishText === 'function') {
+          audio.speakTurkishText(target.spoken || target.title);
+        }
+      });
     }
   }
 
@@ -30891,6 +31581,13 @@ function renderInteractiveQuestion(q) {
           if (typeof launchArcadeGame === 'function') launchArcadeGame('bomb');
         }
       }, 100);
+    } else if (hash === '#kostebek' || hash === '#/kostebek' || hash === '#mole' || hash === '#/mole') {
+      setTimeout(() => {
+        if (typeof openArcadeHub === 'function') {
+          openArcadeHub();
+          if (typeof launchArcadeGame === 'function') launchArcadeGame('mole');
+        }
+      }, 100);
     } else if (/^#\/?ingilizce[-\/]/.test(hash) || path.includes('/ingilizce/')) {
       const gMatch = (hash + path).match(/([1-4])(?:-sinif)?/);
       const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
@@ -32876,6 +33573,9 @@ function renderInteractiveQuestion(q) {
       } else if (arcGame === 'bomb' || arcGame === 'bomba') {
         params.set('oyun', 'bomba');
         return params.toString();
+      } else if (arcGame === 'mole' || arcGame === 'kostebek') {
+        params.set('oyun', 'kostebek');
+        return params.toString();
       } else if (arcGame) {
         params.set('oyun', arcGame);
         return params.toString();
@@ -32961,6 +33661,8 @@ function renderInteractiveQuestion(q) {
         return '🔥 En Popüler Oyunlar - 🔴🟡 Hedef 4 (Dörtlü Sıra Kapışması)';
       } else if (arcGame === 'bomb' || arcGame === 'bomba') {
         return '🔥 En Popüler Oyunlar - 💣 Saatli Bomba (Sıcak Patates)';
+      } else if (arcGame === 'mole' || arcGame === 'kostebek') {
+        return '🔥 En Popüler Oyunlar - 🔨 Köstebek Avı (Hızlı Yakala!)';
       }
     }
     const grade = overrides.grade !== undefined ? parseInt(overrides.grade, 10) : parseInt(state.currentGrade, 10);
@@ -33255,6 +33957,12 @@ function renderInteractiveQuestion(q) {
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
           openArcadeHub();
           launchArcadeGame('bomb');
+          return true;
+        } else if (oyunNorm === 'kostebek' || oyunNorm === 'mole') {
+          interactionLockUntil = 0;
+          if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+          openArcadeHub();
+          launchArcadeGame('mole');
           return true;
         }
         let resolvedGameId = null;

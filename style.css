@@ -25512,3 +25512,540 @@ body.is-game-active .universal-game-bgm-fab {
     padding: 8px 12px;
   }
 }
+
+/* ==========================================================================
+   🔨 KÖSTEBEK AVI (HIZLI YAKALA! - WHACK-A-MOLE) STİLLERİ
+   ========================================================================== */
+
+/* Lobi Kartı */
+.theme-mole {
+  --card-accent: #16A34A;
+}
+
+.banner-mole {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #BBF7D0 100%);
+  border: 2px solid #86EFAC;
+}
+
+.scene-mole {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  gap: 12px;
+}
+
+.mini-mole-hole {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #78350F;
+  width: 56px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid #451A03;
+  box-shadow: 0 4px 12px rgba(69, 26, 3, 0.4);
+}
+
+.mini-mole-head {
+  font-size: 1.8rem;
+  line-height: 1;
+  position: relative;
+  top: -6px;
+  animation: miniMolePeek 1.3s infinite ease-in-out;
+}
+
+.mini-mole-hammer {
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  font-size: 1.4rem;
+  animation: miniHammerSwing 1s infinite alternate ease-in-out;
+}
+
+/* Arena Kapsayıcı */
+.arc-mole-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Hata Titreşimi */
+.mole-wrong-shake {
+  animation: moleCanvasShake 0.4s ease;
+}
+
+/* Skor ve Süre Çubuğu */
+.mole-scoreboard {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mole-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 14px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 0.98rem;
+  font-weight: 800;
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+  color: #334155;
+  transition: all 0.25s ease;
+}
+
+.mole-stat-pill strong {
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.mole-stat-pill.pill-score strong {
+  color: #15803D;
+}
+
+.mole-stat-pill.pill-timer strong {
+  color: #D97706;
+}
+
+.mole-stat-pill.pill-timer strong.time-warning {
+  color: #DC2626 !important;
+  animation: moleTimeWarningPulse 0.5s infinite alternate;
+}
+
+.mole-stat-pill.pill-active-player.pill-blue {
+  background: #EFF6FF;
+  border-color: #3B82F6;
+  color: #1D4ED8;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.mole-stat-pill.pill-active-player.pill-red {
+  background: #FEF2F2;
+  border-color: #EF4444;
+  color: #B91C1C;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25);
+}
+
+/* Üst Hedef Açıklama Kartı */
+.mole-target-card {
+  width: 100%;
+  background: linear-gradient(135deg, #FEFCE8 0%, #FEF9C3 100%);
+  border: 2.5px solid #FACC15;
+  border-bottom: 4px solid #EAB308;
+  border-radius: 18px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.15);
+  transition: all 0.25s ease;
+}
+
+.mole-target-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mole-target-badge {
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #A16207;
+  letter-spacing: 0.5px;
+}
+
+.mole-target-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #713F12;
+  line-height: 1.25;
+}
+
+.mole-target-title.is-target-swapped {
+  animation: moleTargetSwap 0.8s ease;
+}
+
+.mole-btn-speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  color: #A16207;
+  border: 1.5px solid #FDE047;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.mole-btn-speak:hover, .mole-btn-speak:active {
+  background: #EAB308;
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+/* Yeşil Çim Alanı */
+.mole-grass-field {
+  width: 100%;
+  background: linear-gradient(180deg, #4ADE80 0%, #22C55E 50%, #16A34A 100%);
+  border: 6px solid #15803D;
+  border-bottom: 12px solid #14532D;
+  border-radius: 28px;
+  box-shadow: 0 16px 36px rgba(21, 128, 61, 0.35), inset 0 2px 6px rgba(255, 255, 255, 0.3);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 3x3 Delik Izgarası */
+.mole-grid-9 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 14px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Delik Yuvası */
+.mole-hole-cell {
+  position: relative;
+  border-radius: 50%;
+  background: #3E1E09;
+  border: 4px solid #271204;
+  box-shadow: inset 0 8px 16px rgba(0, 0, 0, 0.8), 0 3px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Toprak Tümseği (Delik Önü) */
+.mole-mound {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28%;
+  background: radial-gradient(ellipse at 50% 100%, #78350F 0%, #451A03 100%);
+  border-radius: 50% 50% 0 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Köstebek Karakteri */
+.mole-creature {
+  position: absolute;
+  bottom: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.mole-creature.is-emerging {
+  animation: molePopUp 0.24s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.mole-creature.is-hiding {
+  animation: molePopDown 0.22s ease-in forwards;
+}
+
+.mole-creature.is-whacked {
+  animation: moleWhacked 0.35s ease forwards;
+}
+
+.mole-creature.is-wrong-whack {
+  animation: moleWrongShake 0.38s ease forwards;
+}
+
+/* Ahşap Tabela */
+.mole-sign {
+  background: linear-gradient(180deg, #FDE68A 0%, #F59E0B 100%);
+  border: 2px solid #78350F;
+  border-radius: 10px;
+  padding: 4px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2px;
+  max-width: 120px;
+  text-align: center;
+  transform: rotate(-2deg);
+  transition: all 0.2s ease;
+}
+
+.mole-sign.is-target-sign {
+  background: linear-gradient(180deg, #FEF08A 0%, #EAB308 100%);
+  border-color: #A16207;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+}
+
+.sign-text {
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #451A03;
+  line-height: 1.1;
+  display: block;
+  white-space: nowrap;
+}
+
+/* Köstebek Çizimi (Vektörel CSS) */
+.mole-character {
+  position: relative;
+  width: 68px;
+  height: 52px;
+  background: #854D0E;
+  border-radius: 34px 34px 20px 20px;
+  border: 3px solid #583101;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.35);
+}
+
+.mole-ears {
+  position: absolute;
+  top: -8px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.mole-ear {
+  width: 14px;
+  height: 14px;
+  background: #CA8A04;
+  border: 2px solid #583101;
+  border-radius: 50%;
+}
+
+.mole-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.mole-eyes {
+  display: flex;
+  gap: 12px;
+}
+
+.mole-eye {
+  width: 7px;
+  height: 9px;
+  background: #18181B;
+  border-radius: 50%;
+  position: relative;
+}
+
+.mole-eye::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 2.5px;
+  height: 2.5px;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
+.mole-nose {
+  width: 14px;
+  height: 9px;
+  background: #F43F5E;
+  border-radius: 50%;
+  margin-top: 3px;
+  border: 1.5px solid #881337;
+}
+
+.mole-cheeks {
+  display: flex;
+  width: 48px;
+  justify-content: space-between;
+  position: absolute;
+  top: 20px;
+}
+
+.mole-cheek {
+  width: 8px;
+  height: 5px;
+  background: rgba(251, 113, 133, 0.45);
+  border-radius: 50%;
+}
+
+.mole-paws {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.mole-paw {
+  width: 12px;
+  height: 8px;
+  background: #EAB308;
+  border-radius: 50%;
+  border: 1.5px solid #854D0E;
+}
+
+/* Vuruş Yıldızı & Efekti */
+.mole-score-splash {
+  position: absolute;
+  top: -30px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #FEF08A;
+  text-shadow: 0 0 10px #CA8A04, 0 2px 4px #000;
+  animation: scoreSplash 0.5s ease-out forwards;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.mole-wrong-splash {
+  position: absolute;
+  top: -26px;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #F87171;
+  text-shadow: 0 0 8px #991B1B, 0 2px 4px #000;
+  animation: scoreSplash 0.5s ease-out forwards;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+/* Animasyonlar */
+@keyframes miniMolePeek {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes miniHammerSwing {
+  0% { transform: rotate(-25deg); }
+  100% { transform: rotate(20deg); }
+}
+
+@keyframes molePopUp {
+  0% { transform: translateY(100%); opacity: 0.5; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes molePopDown {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes moleWhacked {
+  0% { transform: scale(1) translateY(0); }
+  30% { transform: scale(1.15, 0.75) translateY(10px); }
+  100% { transform: scale(0.6) translateY(90%); opacity: 0; }
+}
+
+@keyframes moleWrongShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px) rotate(-6deg); }
+  75% { transform: translateX(8px) rotate(6deg); }
+}
+
+@keyframes scoreSplash {
+  0% { transform: translateY(10px) scale(0.6); opacity: 0; }
+  50% { transform: translateY(-16px) scale(1.2); opacity: 1; }
+  100% { transform: translateY(-28px) scale(1); opacity: 0; }
+}
+
+@keyframes moleCanvasShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+@keyframes moleTimeWarningPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.18); }
+}
+
+@keyframes moleTargetSwap {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Mobil & Tablet Uyumluluğu (max-width: 768px) */
+@media (max-width: 768px) {
+  .arc-mole-arena {
+    gap: 8px;
+    padding: 6px;
+    max-width: 100%;
+  }
+  .mole-scoreboard {
+    gap: 6px;
+  }
+  .mole-stat-pill {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+  .mole-stat-pill strong {
+    font-size: 1.05rem;
+  }
+  .mole-target-card {
+    padding: 8px 12px;
+    border-radius: 14px;
+  }
+  .mole-target-title {
+    font-size: 0.98rem;
+  }
+  .mole-grass-field {
+    padding: 10px;
+    border-radius: 20px;
+    border-width: 4px;
+    border-bottom-width: 8px;
+  }
+  .mole-grid-9 {
+    gap: 8px;
+    max-width: 340px;
+  }
+  .mole-character {
+    width: 54px;
+    height: 42px;
+  }
+  .sign-text {
+    font-size: 0.82rem;
+  }
+  .mole-sign {
+    max-width: 95px;
+    padding: 3px 6px;
+  }
+}
