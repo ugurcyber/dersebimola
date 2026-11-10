@@ -15826,7 +15826,6 @@ p,
 }
 
 @media (max-width: 640px) {
-  .arcade-games-grid,
   .tug-split-players,
   .buzzer-split-panels {
     grid-template-columns: 1fr;
@@ -17075,7 +17074,6 @@ a.stage-grade-card { text-decoration: none !important; color: inherit !important
   #btnModeDuel,
   .duel-settings-bar,
   #btnPickerModeDuel,
-  .arcade-game-card.theme-tug,
   .setting-item-duel-mode {
     display: none !important;
   }
@@ -29085,5 +29083,376 @@ body.is-game-active .universal-game-bgm-fab {
   }
   .en-memory-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+
+/* ==========================================================================
+   🔥 EN POPÜLER OYUNLAR (ARCADE HUB) MOBİL RESPONSİVE & 2 SÜTUNLU IZGARA
+   Kural 1: Yatay taşmayı ve gizlenmeyi kaldır, flex-wrap/grid düzeltmesi
+   Kural 2: min-width: 769px'de ferah ızgara, max-width: 768px'de 2 sütunlu kompakt ızgara
+   Kural 3: Oyun içi mobil sahne taşmalarını tam sığdır (Hedef 4, Bomba, Köstebek, Çark)
+   ========================================================================== */
+
+/* 1) MASAÜSTÜ & AKILLI TAHTA (min-width: 769px) */
+@media (min-width: 769px) {
+  .arcade-games-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+  .arcade-game-card {
+    display: flex !important;
+  }
+}
+
+/* 2) MOBİL TELEFONLAR (max-width: 768px) - 2 SÜTUNLU KOMPAKT IZGARA */
+@media (max-width: 768px) {
+  /* Kapsayıcılardaki kısıtlamaları kaldır */
+  .arcade-hub-section {
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    min-height: 100% !important;
+    padding: 10px 8px 30px !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .arcade-cards-view {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .arcade-hub-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    padding: 6px 4px !important;
+  }
+
+  /* 2'şerli kompakt grid (Yan yana 2 kart, ekran dışına taşmaz) */
+  .arcade-games-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    margin-top: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  /* Hiçbir oyun kartı mobilde gizlenmez! */
+  .arcade-game-card,
+  .arcade-game-card.theme-tug,
+  div.arcade-game-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 12px 8px !important;
+    border-radius: 16px !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-width: 1.5px !important;
+    border-bottom-width: 3.5px !important;
+  }
+
+  /* Kompakt Hero Banner ve İkonlar */
+  .arcade-card-hero-banner {
+    height: 60px !important;
+    border-radius: 12px !important;
+    margin-bottom: 2px !important;
+  }
+  .arcade-card-hero-banner .banner-scene {
+    transform: scale(0.8) !important;
+    transform-origin: center center !important;
+  }
+  .arcade-card-emoji {
+    font-size: 28px !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Başlık ve Etiket Optimizasyonu */
+  .arcade-card-top {
+    gap: 4px !important;
+    flex-wrap: wrap !important;
+  }
+  .arcade-card-tag {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    padding: 2px 6px !important;
+    border-radius: 6px !important;
+    line-height: 1.2 !important;
+  }
+  .arcade-card-chip {
+    font-size: 9px !important;
+    padding: 2px 5px !important;
+    border-radius: 6px !important;
+  }
+  .arcade-card-title {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .arcade-card-desc {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    color: #64748b !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  .arcade-card-badges {
+    display: none !important; /* Telefon ekranına tam sığması için gizle */
+  }
+
+  /* Butonlar */
+  .arcade-card-play-btn {
+    font-size: 12px !important;
+    padding: 7px 8px !important;
+    border-radius: 10px !important;
+    border-bottom-width: 2.5px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+  }
+  .arcade-card-actions-group {
+    display: flex !important;
+    gap: 4px !important;
+    margin-top: 4px !important;
+    width: 100% !important;
+  }
+  .arcade-card-share-btn {
+    font-size: 10px !important;
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+  }
+
+  /* ========================================================================
+     3) OYUN İÇİ MOBİL SAHNE TAŞMALARINI KONTROL ET (Hedef 4, Bomba, Köstebek, Çark)
+     ======================================================================== */
+  #arcadeStageView,
+  .arcade-stage-view {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 4px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  .arcade-stage-topbar {
+    padding: 6px 8px !important;
+    border-radius: 14px !important;
+    margin-bottom: 8px !important;
+    gap: 6px !important;
+  }
+  .arcade-stage-title {
+    font-size: 15px !important;
+  }
+  #arcadeStageCanvas,
+  .arcade-stage-canvas {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 2px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 🔴🟡 HEDEF 4 (CONNECT 4) MOBİL TAŞMA DÜZELTMESİ */
+  .c4-arena-wrap,
+  .c4-board-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    padding: 2px !important;
+    margin: 0 auto !important;
+  }
+  .c4-grid-board {
+    width: 100% !important;
+    max-width: 96vw !important;
+    box-sizing: border-box !important;
+    padding: 6px !important;
+    gap: 4px !important;
+    border-width: 3px !important;
+    border-bottom-width: 6px !important;
+    border-radius: 16px !important;
+    margin: 0 auto !important;
+  }
+  .c4-column {
+    gap: 4px !important;
+    padding: 1px !important;
+  }
+  .c4-slot {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+  .c4-col-arrow-btn {
+    height: 24px !important;
+    font-size: 1rem !important;
+  }
+  .c4-question-card {
+    padding: 8px 10px !important;
+    border-radius: 14px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .c4-q-text {
+    font-size: 1rem !important;
+    line-height: 1.3 !important;
+  }
+  .c4-opt-btn {
+    min-width: 65px !important;
+    padding: 6px 8px !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* 💣 SAATLİ BOMBA MOBİL TAŞMA DÜZELTMESİ */
+  .arc-bomb-arena,
+  .bomb-stage-center {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    padding: 4px !important;
+  }
+  .bomb-scoreboard {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+  .bomb-player-card {
+    padding: 6px 8px !important;
+    border-radius: 12px !important;
+  }
+  .cartoon-bomb {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  .bomb-body {
+    width: 65px !important;
+    height: 65px !important;
+  }
+  .bomb-question-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 8px 10px !important;
+  }
+  .bomb-q-text {
+    font-size: 1rem !important;
+  }
+  .bomb-opt-btn {
+    min-width: 70px !important;
+    padding: 8px 10px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* 🔨 KÖSTEBEK AVI MOBİL TAŞMA DÜZELTMESİ */
+  .arc-mole-arena,
+  .mole-arena-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    padding: 4px !important;
+  }
+  .mole-grass-field {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 8px !important;
+    border-radius: 16px !important;
+  }
+  .mole-grid-9 {
+    gap: 6px !important;
+    max-width: 310px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+  .mole-hole-unit {
+    min-height: 85px !important;
+  }
+  .mole-character {
+    width: 48px !important;
+    height: 38px !important;
+  }
+  .mole-sign {
+    max-width: 85px !important;
+    padding: 2px 4px !important;
+  }
+  .sign-text {
+    font-size: 0.74rem !important;
+  }
+
+  /* 🎡 ŞANS ÇARKI & SÜRPRİZ KUTULAR MOBİL TAŞMA DÜZELTMESİ */
+  .arc-wheel-arena,
+  .wheel-stage-center {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+    padding: 4px !important;
+  }
+  .wheel-scoreboard {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 6px !important;
+  }
+  .wheel-play-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    gap: 12px !important;
+    box-sizing: border-box !important;
+  }
+  .wheel-col-side {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 8px !important;
+  }
+  .wheel-device-wrap {
+    width: 180px !important;
+    height: 180px !important;
+    margin: 0 auto !important;
+  }
+  .mystery-boxes-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .mystery-box-item {
+    height: 70px !important;
+    border-radius: 12px !important;
+  }
+  .box-gift-ico {
+    font-size: 1.4rem !important;
+  }
+  .box-num {
+    font-size: 0.75rem !important;
   }
 }
