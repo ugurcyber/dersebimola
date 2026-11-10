@@ -1283,6 +1283,8 @@
           .replace(/\s+/g, ' ')
           .trim();
       } else {
+        // Merkezi Türkçe TTS filtresi (NFC + sembol/emoji temizliği + okunuş dönüşümleri)
+        cleanText = sanitizeTurkishTTS(cleanText);
         // Matematik sembollerini doğal Türkçe metne dönüştür
         if (cleanText.includes('=')) {
           cleanText = cleanText
@@ -1386,8 +1388,8 @@
 
           const u = new SpeechSynthesisUtterance(cleanText);
           u.lang = synthLang;
-          u.rate = isEn ? 0.88 : 0.88;
-          u.pitch = isEn ? 1.05 : 1.1;
+          u.rate = isEn ? 0.88 : 0.95;
+          u.pitch = isEn ? 1.05 : 1.05;
 
           if (matchedVoice) {
             u.voice = matchedVoice;
@@ -1455,14 +1457,16 @@
             audioEl.preload = 'auto';
             audioEl.volume = 1.0;
             // Tane tane, sıcak ve yumuşak okuma (0.92 hız)
-            audioEl.defaultPlaybackRate = 0.92;
-            audioEl.playbackRate = 0.92;
+            const cloudRate = isEn ? 0.92 : 1.0;
+            audioEl.defaultPlaybackRate = cloudRate;
+            audioEl.playbackRate = cloudRate;
             this.currentAudio = audioEl;
+            window.currentTTSAudio = audioEl;
 
             const applyWarmRate = () => {
               try {
-                audioEl.defaultPlaybackRate = 0.92;
-                audioEl.playbackRate = 0.92;
+                audioEl.defaultPlaybackRate = cloudRate;
+                audioEl.playbackRate = cloudRate;
               } catch (e) {}
             };
             audioEl.onloadedmetadata = applyWarmRate;
@@ -1547,6 +1551,7 @@
               localAudio.preload = 'auto';
               localAudio.volume = 1.0;
               this.currentAudio = localAudio;
+              window.currentTTSAudio = localAudio;
 
               localAudio.onended = () => {
                 if (currentSeq === this.speechSeq) finish();
@@ -1597,6 +1602,10 @@
 
     stopQuestionAudio() {
       this.speechSeq = (this.speechSeq || 0) + 1;
+      if (window.currentTTSAudio && window.currentTTSAudio !== this.currentAudio) {
+        try { window.currentTTSAudio.onended = null; window.currentTTSAudio.onerror = null; window.currentTTSAudio.pause(); window.currentTTSAudio.currentTime = 0; } catch (e) {}
+      }
+      window.currentTTSAudio = null;
       if (this.ttsTimeout) {
         clearTimeout(this.ttsTimeout);
         this.ttsTimeout = null;
@@ -1640,6 +1649,76 @@
   const audio = new SoundEngine();
   window.__DERSE_BI_MOLA_AUDIO__ = audio;
   window.__DERSE_BI_MOLA_STATE__ = state;
+
+  // ==========================================================================
+  // 🎙️ MoliVoiceEngine: Merkezi Türkçe Bulut MP3 Ses Motoru (Pardus / Mobil uyumlu)
+  // Birincil: Bulut MP3 (yerel kayıt -> Google TTS tl=tr), yedek: speechSynthesis tr-TR
+  // ==========================================================================
+  function sanitizeTurkishTTS(text) {
+    let s = (text == null ? '' : String(text));
+    try { s = s.normalize('NFC'); } catch (e) {}
+    s = s
+      .replace(/\[\s*\?\s*\]/g, ' soru işaretli kutu ')
+      .replace(/(^|[^\d])2\s*[xX×]\s*2(?!\d)/g, '$1 ikiye iki ')
+      .replace(/(^|[^\d])3\s*[xX×]\s*3(?!\d)/g, '$1 üçe üç ')
+      .replace(/(^|[^\d])4\s*[xX×]\s*4(?!\d)/g, '$1 dörde dört ')
+      .replace(/->|=>|➔|➡️?|→/g, ' ')
+      .replace(/❓/g, ' ')
+      .replace(/\p{Extended_Pictographic}/gu, ' ')
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, ' ')
+      .replace(/[\uFE00-\uFE0F\u200D]/g, '')
+      .replace(/[\[\]{}()<>|_~^*#@\\"“”]/g, ' ')
+      .replace(/\s*([,.;:!?])\s*/g, '$1 ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    return s;
+  }
+  window.sanitizeTurkishTTS = sanitizeTurkishTTS;
+
+  let __ttsUnlocked = false;
+  function unlockAudio(forceUnmute) {
+    try {
+      if (forceUnmute) {
+        state.isMuted = false;
+        state.soundEnabled = true;
+        window.isMuted = false;
+        try { localStorage.setItem('isMuted', 'false'); } catch (e) {}
+      }
+      if (__ttsUnlocked) return;
+      try {
+        audio.ensureContext();
+        if (audio.ctx && audio.ctx.state === 'suspended') audio.ctx.resume();
+      } catch (e) {}
+      try {
+        const a = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=');
+        a.volume = 0;
+        const pr = a.play();
+        if (pr && pr.catch) pr.catch(() => {});
+      } catch (e) {}
+      try { if ('speechSynthesis' in window) window.speechSynthesis.getVoices(); } catch (e) {}
+      __ttsUnlocked = true;
+    } catch (e) {}
+  }
+  ['pointerdown', 'touchstart', 'click', 'keydown'].forEach(evt => {
+    document.addEventListener(evt, () => unlockAudio(false), { once: false, passive: true, capture: true });
+  });
+
+  window.MoliVoiceEngine = {
+    sanitize: sanitizeTurkishTTS,
+    unlock: unlockAudio,
+    speak(text, onEnded) {
+      unlockAudio(true);
+      window.currentTTSAudio = null;
+      audio.speakTurkishText(sanitizeTurkishTTS(text), onEnded);
+    },
+    stop() {
+      try { audio.stopQuestionAudio(); } catch (e) {}
+      if (window.currentTTSAudio) {
+        try { window.currentTTSAudio.pause(); window.currentTTSAudio.currentTime = 0; } catch (e) {}
+        window.currentTTSAudio = null;
+      }
+    }
+  };
 
   // Anasınıfı / 1. / 2. sınıf düello ekranında korkutucu "yanlış" sesi çalmaz (Sınav stresi yok)
   const _origPlayWrong = audio.playWrong.bind(audio);
@@ -50020,35 +50099,19 @@ matrix: [
 
     let mainOk = false;
     try {
-      if (typeof window.derseBiMolaSpeakText === 'function') {
-        window.derseBiMolaSpeakText(cleanText);
+      if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.speak === 'function') {
+        window.MoliVoiceEngine.speak(cleanText);
         mainOk = true;
-      } else if (window.__DERSE_BI_MOLA_AUDIO__ && typeof window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText === 'function') {
-        window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText(cleanText);
+      } else if (typeof window.derseBiMolaSpeakText === 'function') {
+        window.derseBiMolaSpeakText(cleanText);
         mainOk = true;
       }
     } catch (e) {
       mainOk = false;
     }
 
-    if (!mainOk) {
-      bilsemFallbackSpeak(cleanText, seq);
-      return;
-    }
-
-    // Ana motor 2 sn içinde ses başlatamadıysa yedek akışa geç
-    setTimeout(() => {
-      if (seq !== bilsemSpeechSeq) return;
-      const A = window.__DERSE_BI_MOLA_AUDIO__;
-      const playing = (A && A.currentAudio && !A.currentAudio.paused) ||
-        ('speechSynthesis' in window && window.speechSynthesis.speaking);
-      if (!playing) {
-        try { if (A && typeof A.stopQuestionAudio === 'function') A.stopQuestionAudio(); } catch (e) {}
-        bilsemFallbackSpeak(cleanText, seq);
-      }
-    }, 2000);
+    if (!mainOk) bilsemFallbackSpeak(cleanText, seq);
   }
-
   function speakCurrentQuestion() {
     let text = '';
     if (currentQuestion) text = currentQuestion.prompt || currentQuestion.question || '';
