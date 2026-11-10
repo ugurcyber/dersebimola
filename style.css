@@ -32684,3 +32684,363 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 1.7rem;
   }
 }
+
+
+/* ==========================================================================
+   📗 2. SINIF BİLSEM TABLET SINAVI MODÜLÜ EK STİLLERİ
+   ========================================================================== */
+
+/* 1. 3x3 Matris Izgarası */
+.bilsem-matrix-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, 82px);
+  grid-template-rows: repeat(3, 82px);
+  gap: 10px;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  border: 2.5px solid #10b981;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+}
+
+.matrix-3x3-cell {
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.matrix-3x3-cell.empty-slot {
+  border: 2.5px dashed #f59e0b;
+  background: #fffbeb;
+  color: #b45309;
+  font-size: 2rem;
+  font-weight: 800;
+  animation: pulseSlot 1.5s ease-in-out infinite;
+}
+
+/* 2. Kriptoloji / Şifreleme Tablosu */
+.bilsem-crypto-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.bilsem-clues-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 14px 20px;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.bilsem-clue-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6px 14px;
+}
+
+.clue-symbols {
+  display: flex;
+  gap: 8px;
+  font-size: 1.8rem;
+}
+
+.clue-arrow {
+  color: #64748b;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.clue-code {
+  font-family: monospace;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1e293b;
+  background: #e2e8f0;
+  padding: 4px 12px;
+  border-radius: 8px;
+  letter-spacing: 4px;
+}
+
+.bilsem-crypto-target-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #eff6ff;
+  border: 2px solid #3b82f6;
+  border-radius: 14px;
+  padding: 10px 18px;
+  width: 100%;
+}
+
+.target-slots {
+  display: flex;
+  gap: 8px;
+}
+
+.target-slot-digit {
+  width: 38px;
+  height: 42px;
+  border: 2px dashed #3b82f6;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1d4ed8;
+}
+
+/* 3. Ayna Simetrisi Alanı */
+.bilsem-mirror-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 540px;
+}
+
+.bilsem-mirror-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 18px 24px;
+  width: 100%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.mirror-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 130px;
+  min-height: 90px;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 2.2rem;
+  padding: 8px 14px;
+}
+
+.mirror-panel.target-empty {
+  border: 2.5px dashed #8b5cf6;
+  background: #f5f3ff;
+  color: #6d28d9;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+.mirror-axis-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-left: 3px dashed #8b5cf6;
+  height: 100px;
+  padding-left: 8px;
+  color: #7c3aed;
+  font-size: 0.76rem;
+  font-weight: 800;
+  justify-content: center;
+}
+
+/* 4. 5 Saniye Konumsal Hafıza Izgarası (3x3 Tıklanabilir Hücreler) */
+.bilsem-spatial-grid-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, 84px);
+  grid-template-rows: repeat(3, 84px);
+  gap: 10px;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  border: 2.5px solid #6366f1;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+}
+
+.spatial-grid-cell {
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spatial-grid-cell:hover {
+  background: #eef2ff;
+  border-color: #6366f1;
+  transform: scale(1.04);
+}
+
+.spatial-grid-cell.hidden-cell {
+  background: #f1f5f9;
+  color: #94a3b8;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.spatial-grid-cell.correct-cell {
+  border-color: #10b981 !important;
+  background: #dcfce7 !important;
+  transform: scale(1.08) !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.5) !important;
+}
+
+.spatial-grid-cell.wrong-cell {
+  border-color: #ef4444 !important;
+  background: #fee2e2 !important;
+  animation: shakeOpt 0.4s ease;
+}
+
+/* 5. Uzamsal Algı ve Ok Navigasyonu Haritası */
+.bilsem-nav-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.bilsem-nav-commands-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fffbeb;
+  border: 2px solid #f59e0b;
+  border-radius: 16px;
+  padding: 10px 18px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #92400e;
+  flex-wrap: wrap;
+}
+
+.nav-arrows-list {
+  display: flex;
+  gap: 6px;
+  font-size: 1.8rem;
+}
+
+.bilsem-nav-grid-4x4 {
+  display: grid;
+  grid-template-columns: repeat(4, 68px);
+  grid-template-rows: repeat(4, 68px);
+  gap: 8px;
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 18px;
+  border: 2.5px solid #f59e0b;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15);
+}
+
+.nav-grid-cell {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.nav-grid-cell:hover {
+  border-color: #f59e0b;
+  background: #fef3c7;
+  transform: scale(1.05);
+}
+
+.nav-grid-cell.start-cell {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+/* Mobilde Responsive Uyum */
+@media (max-width: 768px) {
+  .bilsem-matrix-3x3 {
+    grid-template-columns: repeat(3, 62px);
+    grid-template-rows: repeat(3, 62px);
+    gap: 6px;
+    padding: 10px;
+  }
+  .matrix-3x3-cell {
+    font-size: 1.7rem;
+    border-radius: 10px;
+  }
+  .bilsem-crypto-wrap {
+    gap: 12px;
+  }
+  .clue-symbols {
+    font-size: 1.4rem;
+  }
+  .clue-code {
+    font-size: 1.1rem;
+    padding: 3px 8px;
+    letter-spacing: 2px;
+  }
+  .mirror-panel {
+    min-width: 100px;
+    min-height: 70px;
+    font-size: 1.7rem;
+    padding: 6px 8px;
+  }
+  .mirror-axis-line {
+    height: 70px;
+    font-size: 0.68rem;
+  }
+  .bilsem-spatial-grid-3x3 {
+    grid-template-columns: repeat(3, 64px);
+    grid-template-rows: repeat(3, 64px);
+    gap: 8px;
+    padding: 10px;
+  }
+  .spatial-grid-cell {
+    font-size: 1.8rem;
+    border-radius: 10px;
+  }
+  .bilsem-nav-grid-4x4 {
+    grid-template-columns: repeat(4, 52px);
+    grid-template-rows: repeat(4, 52px);
+    gap: 6px;
+    padding: 8px;
+  }
+  .nav-grid-cell {
+    font-size: 1.5rem;
+    border-radius: 8px;
+  }
+  .nav-arrows-list {
+    font-size: 1.4rem;
+  }
+}

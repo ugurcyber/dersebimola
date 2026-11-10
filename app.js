@@ -37850,8 +37850,8 @@
         } else if (oyunNorm === 'bilsem-2' || oyunNorm === 'bilsem2') {
           interactionLockUntil = 0;
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
-          if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
-            MindGamesEngine.open({ grade: 2 });
+          if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.open === 'function') {
+            BilsemExamEngine.open({ grade: 2 });
           }
           return true;
         } else if (oyunNorm === 'bilsem-3' || oyunNorm === 'bilsem3') {
@@ -48017,6 +48017,7 @@ window.MindGamesEngine = MindGamesEngine;
 // 🧠 BİLSEM HAZIRLIK AKADEMİSİ - 1. SINIF TABLET SINAVI MOTORU (MEB FORMATI)
 // ============================================================================
 const BilsemExamEngine = (function() {
+  let activeGrade = 1;
   let activeCategory = 'matrix';
   let currentScore = 0;
   let currentQuestion = null;
@@ -48026,10 +48027,34 @@ const BilsemExamEngine = (function() {
   let memoryPhase = 'preview'; // 'preview' | 'hidden'
   const shuffleBags = {};
 
-  // 1. SORU HAVUZLARI (Her Kategori için 40'ar MEB Tablet Sınavı Formatında Soru)
+  const GRADE_CONFIG = {
+    1: {
+      title: '🎒 1. Sınıf MEB Tablet Sınavı',
+      defaultCategory: 'matrix',
+      tabs: [
+        { cat: 'matrix', icon: '🧩', txt: '2x2 Matris', title: 'Desen ve 2x2 Matris Tamamlama' },
+        { cat: 'flash_memory', icon: '⏱️', txt: 'Foto-Hafıza', title: '4 Saniye Kısa Süreli Foto-Hafıza' },
+        { cat: 'shadow_part', icon: '🔍', txt: 'Gölge & Parça', title: 'Gölge ve Silüet Analizi' },
+        { cat: 'analogy', icon: '🔁', txt: 'Örüntü & Analoji', title: 'Örüntü ve Görsel Analoji' },
+        { cat: 'odd_detail', icon: '🕵️', txt: 'Farkı Yakala', title: 'Farklı Olanı Yakalama' }
+      ]
+    },
+    2: {
+      title: '📗 2. Sınıf MEB Tablet Sınavı',
+      defaultCategory: 'matrix_3x3',
+      tabs: [
+        { cat: 'matrix_3x3', icon: '🕸️', txt: '3x3 Matris', title: '3x3 Matris ve Kural Bulma' },
+        { cat: 'crypto', icon: '🔐', txt: 'Şifreleme', title: 'BİLSEM Kriptoloji & Şifre Çözücü' },
+        { cat: 'mirror_symmetry', icon: '🪞', txt: 'Ayna Simetrisi', title: 'Ayna Simetrisi & Yansıma' },
+        { cat: 'spatial_memory_5s', icon: '⏱️', txt: '5s Konumsal Hafıza', title: '5 Saniye Konumsal Hafıza' },
+        { cat: 'spatial_navigation', icon: '🧭', txt: 'Ok & Uzamsal Algı', title: 'Ok Komutları & Uzamsal Algı' }
+      ]
+    }
+  };
+
+  // 1. SORU HAVUZLARI (1. ve 2. Sınıf - Toplam 400 MEB Tablet Sorusu)
   const QUESTION_BANK = {
-    // 🧩 KATEGORİ 1: 2x2 DESEN VE MATRİS TAMAMLAMA (40 Soru)
-    matrix: [
+matrix: [
       { id: 'm1', prompt: 'Soru işaretli kutuya hangi şekil gelmelidir?', hint: 'Renk kuralına dikkat et: Kırmızı, Mavi', cells: ['🔴', '🔵', '🔴', '?'], correct: '🔵', options: ['🔵', '🟢', '🟡', '🟣'] },
       { id: 'm2', prompt: 'Soru işaretli kutuya hangi şekil gelmelidir?', hint: 'Şekil sırasını takip et: Yıldız, Hilal', cells: ['⭐', '🌙', '⭐', '?'], correct: '🌙', options: ['🌙', '☀️', '☁️', '🪐'] },
       { id: 'm3', prompt: 'Soru işaretli kutuya hangi yön oku gelmelidir?', hint: 'Dönme yönünü takip et: Yukarı, Sağa', cells: ['⬆️', '➡️', '⬆️', '?'], correct: '➡️', options: ['➡️', '⬇️', '⬅️', '↗️'] },
@@ -48246,7 +48271,232 @@ const BilsemExamEngine = (function() {
       { id: 'o38', prompt: 'Bu grupta kuralı bozan FARKLI iletişim nesnesi hangisidir?', hint: 'Yazı ve ekran araçları ve Davul!', items: ['📱', '💻', '✉️', '📻', '🥁'], odd: '🥁', reason: 'Davul haberleşme değil müzik aletidir.' },
       { id: 'o39', prompt: 'Bu grupta kuralı bozan FARKLI sıcak yiyecek hangisidir?', hint: 'Sıcak yemekler ve Soğuk dondurma!', items: ['🍲', '🍕', '🍔', '🍟', '🍦'], odd: '🍦', reason: 'Dondurma buz gibi soğuk yenir.' },
       { id: 'o40', prompt: 'Bu grupta kuralı bozan FARKLI gökyüzü bulutu hangisidir?', hint: 'Yağmurlu/Fırtınalı bulutlar ve Parlak güneş!', items: ['🌧️', '⛈️', '🌩️', '🌨️', '☀️'], odd: '☀️', reason: 'Güneş bulut değildir, parlak yıldızımızdır.' }
+    ],
+
+    // ========================================================================
+    // 📗 2. SINIF BİLSEM TABLET SINAVI KATEGORİLERİ (200 YENİ SORU)
+    // ========================================================================
+
+    // 🕸️ KATEGORİ 1: 3x3 MATRİS VE KURAL BULMA (40 Soru)
+    matrix_3x3: [
+      { id: 'm3_1', prompt: 'Soru işaretli kutuya hangi şekil gelmelidir?', hint: 'Satırlardaki şekil sırasını incele: Üçgen, Kare, Daire', grid: ['🔺', '🟩', '🔴', '🟩', '🔴', '🔺', '🔴', '🔺', '?'], correct: '🟩', options: ['🟩', '⭐', '🔷', '🟡'] },
+      { id: 'm3_2', prompt: 'Soru işaretli kutuya hangi renk daire gelmelidir?', hint: 'Her satırda Sarı, Mavi ve Kırmızı olmalı', grid: ['🟡', '🔵', '🔴', '🔵', '🔴', '🟡', '🔴', '🟡', '?'], correct: '🔵', options: ['🔵', '🟢', '🟣', '🟠'] },
+      { id: 'm3_3', prompt: 'Soru işaretli kutuya hangi yön oku gelmelidir?', hint: 'Dönme yönünü takip et: Yukarı, Sağa, Aşağı', grid: ['⬆️', '➡️', '⬇️', '➡️', '⬇️', '⬅️', '⬇️', '⬅️', '?'], correct: '⬆️', options: ['⬆️', '↗️', '↘️', '➡️'] },
+      { id: 'm3_4', prompt: 'Soru işaretli kutuya hangi meyve gelmelidir?', hint: 'Her satırda Elma, Muz ve Üzüm bulunmalı', grid: ['🍎', '🍌', '🍇', '🍌', '🍇', '🍎', '🍇', '🍎', '?'], correct: '🍌', options: ['🍌', '🍓', '🍊', '🍉'] },
+      { id: 'm3_5', prompt: 'Soru işaretli kutuya hangi geometrik şekil gelmelidir?', hint: 'Kenar sayısına dikkat et: 3, 4, 5 kenar', grid: ['🔺', '🟩', '⬟', '🟩', '⬟', '🔺', '⬟', '🔺', '?'], correct: '🟩', options: ['🟩', '⭕', '⬡', '⭐'] },
+      { id: 'm3_6', prompt: 'Soru işaretli kutuya hangi gök cismi gelmelidir?', hint: 'Güneş, Bulut ve Hilal kuralı', grid: ['☀️', '☁️', '🌙', '☁️', '🌙', '☀️', '🌙', '☀️', '?'], correct: '☁️', options: ['☁️', '⭐', '⚡', '🌈'] },
+      { id: 'm3_7', prompt: 'Soru işaretli kutuya hangi spor topu gelmelidir?', hint: 'Futbol, Basketbol ve Tenis topu sırası', grid: ['⚽', '🏀', '🎾', '🏀', '🎾', '⚽', '🎾', '⚽', '?'], correct: '🏀', options: ['🏀', '🏐', '⚾', '🎱'] },
+      { id: 'm3_8', prompt: 'Soru işaretli kutuya hangi sayı gelmelidir?', hint: 'Her satırda 1, 2 ve 3 rakamları yer almalı', grid: ['1️⃣', '2️⃣', '3️⃣', '2️⃣', '3️⃣', '1️⃣', '3️⃣', '1️⃣', '?'], correct: '2️⃣', options: ['2️⃣', '4️⃣', '5️⃣', '0️⃣'] },
+      { id: 'm3_9', prompt: 'Soru işaretli kutuya hangi renk kare gelmelidir?', hint: 'Kırmızı, Mavi ve Yeşil kare sırası', grid: ['🟥', '🟦', '🟩', '🟦', '🟩', '🟥', '🟩', '🟥', '?'], correct: '🟦', options: ['🟦', '🟨', '🟪', '🟧'] },
+      { id: 'm3_10', prompt: 'Soru işaretli kutuya hangi hayvan gelmelidir?', hint: 'Kedi, Köpek ve Tavşan kombinasyonu', grid: ['🐱', '🐶', '🐰', '🐶', '🐰', '🐱', '🐰', '🐱', '?'], correct: '🐶', options: ['🐶', '🦊', '🐻', '🐼'] },
+      { id: 'm3_11', prompt: 'Soru işaretli kutuya hangi yıldız gelmelidir?', hint: 'Her satırda Altın Yıldız, Parıltı ve Gezegen olmalı', grid: ['⭐', '✨', '🪐', '✨', '🪐', '⭐', '🪐', '⭐', '?'], correct: '✨', options: ['✨', '☀️', '🌙', '🛸'] },
+      { id: 'm3_12', prompt: 'Soru işaretli kutuya hangi taşıt gelmelidir?', hint: 'Araba, Uçak ve Gemi dengesini koru', grid: ['🚗', '✈️', '🚢', '✈️', '🚢', '🚗', '🚢', '🚗', '?'], correct: '✈️', options: ['✈️', '🚆', '🚲', '🚁'] },
+      { id: 'm3_13', prompt: 'Soru işaretli kutuya hangi elmas şekli gelmelidir?', hint: 'Mavi baklava, Turuncu baklava ve Yeşil kare', grid: ['🔷', '🔶', '🟩', '🔶', '🟩', '🔷', '🟩', '🔷', '?'], correct: '🔶', options: ['🔶', '🔴', '⭐', '🟡'] },
+      { id: 'm3_14', prompt: 'Soru işaretli kutuya hangi çiçek gelmelidir?', hint: 'Lale, Ayçiçeği ve Gül üçlüsü', grid: ['🌷', '🌻', '🌹', '🌻', '🌹', '🌷', '🌹', '🌷', '?'], correct: '🌻', options: ['🌻', '🌼', '🌺', '🌸'] },
+      { id: 'm3_15', prompt: 'Soru işaretli kutuya hangi doluluk dairesi gelmelidir?', hint: 'Beyaz, Noktalı ve Siyah daire dizilimi', grid: ['⚪', '🔘', '⚫', '🔘', '⚫', '⚪', '⚫', '⚪', '?'], correct: '🔘', options: ['🔘', '🔴', '🔵', '🟢'] },
+      { id: 'm3_16', prompt: 'Soru işaretli kutuya hangi müzik aleti gelmelidir?', hint: 'Gitar, Piyano ve Davul kombinasyonu', grid: ['🎸', '🎹', '🥁', '🎹', '🥁', '🎸', '🥁', '🎸', '?'], correct: '🎹', options: ['🎹', '🎺', '🎻', '🎷'] },
+      { id: 'm3_17', prompt: 'Soru işaretli kutuya hangi yön oku gelmelidir?', hint: 'Çapraz yönler: Kuzeydoğu, Güneydoğu, Güneybatı', grid: ['↗️', '↘️', '↙️', '↘️', '↙️', '↗️', '↙️', '↗️', '?'], correct: '↘️', options: ['↘️', '↖️', '⬆️', '⬇️'] },
+      { id: 'm3_18', prompt: 'Soru işaretli kutuya hangi tatlı gelmelidir?', hint: 'Dondurma, Pasta ve Kurabiye sırası', grid: ['🍦', '🍰', '🍪', '🍰', '🍪', '🍦', '🍪', '🍦', '?'], correct: '🍰', options: ['🍰', '🍩', '🍫', '🍬'] },
+      { id: 'm3_19', prompt: 'Soru işaretli kutuya hangi kırtasiye nesnesi gelmelidir?', hint: 'Kalem, Makas ve Cetvel üçlüsü', grid: ['✏️', '✂️', '📏', '✂️', '📏', '✏️', '📏', '✏️', '?'], correct: '✂️', options: ['✂️', '📎', '📌', '📐'] },
+      { id: 'm3_20', prompt: 'Soru işaretli kutuya hangi deniz canlısı gelmelidir?', hint: 'Balık, Ahtapot ve Yengeç dizilimi', grid: ['🐟', '🐙', '🦀', '🐙', '🦀', '🐟', '🦀', '🐟', '?'], correct: '🐙', options: ['🐙', '🐬', '🦈', '🐡'] },
+      { id: 'm3_21', prompt: 'Soru işaretli kutuya hangi sonbahar yaprağı gelmelidir?', hint: 'Yeşil yaprak, Sarı yaprak ve Kırmızı akçaağaç', grid: ['🍃', '🍂', '🍁', '🍂', '🍁', '🍃', '🍁', '🍃', '?'], correct: '🍂', options: ['🍂', '🌱', '🌿', '🌾'] },
+      { id: 'm3_22', prompt: 'Soru işaretli kutuya hangi çiftlik hayvanı gelmelidir?', hint: 'İnek, Koyun ve At üçlüsü', grid: ['🐮', '🐑', '🐴', '🐑', '🐴', '🐮', '🐴', '🐮', '?'], correct: '🐑', options: ['🐑', '🐷', '🐔', '🦆'] },
+      { id: 'm3_23', prompt: 'Soru işaretli kutuya hangi sevimli yüz gelmelidir?', hint: 'Gözlüklü, Yıldızlı ve Taçlı yüz dengesi', grid: ['😎', '🤩', '🥳', '🤩', '🥳', '😎', '🥳', '😎', '?'], correct: '🤩', options: ['🤩', '😊', '😇', '😴'] },
+      { id: 'm3_24', prompt: 'Soru işaretli kutuya hangi kalp gelmelidir?', hint: 'Kırmızı, Mavi ve Sarı kalp kuralı', grid: ['❤️', '💙', '💛', '💙', '💛', '❤️', '💛', '❤️', '?'], correct: '💙', options: ['💙', '💚', '💜', '🤍'] },
+      { id: 'm3_25', prompt: 'Soru işaretli kutuya hangi içecek gelmelidir?', hint: 'Süt, Meyve Suyu ve Sıcak Çay', grid: ['🥛', '🧃', '🍵', '🧃', '🍵', '🥛', '🍵', '🥛', '?'], correct: '🧃', options: ['🧃', '🥤', '☕', '🍶'] },
+      { id: 'm3_26', prompt: 'Soru işaretli kutuya hangi kış nesnesi gelmelidir?', hint: 'Kardan Adam, Kar Tanesi ve Atkı', grid: ['⛄', '❄️', '🧣', '❄️', '🧣', '⛄', '🧣', '⛄', '?'], correct: '❄️', options: ['❄️', '🧤', '🎿', '🏂'] },
+      { id: 'm3_27', prompt: 'Soru işaretli kutuya hangi böcek gelmelidir?', hint: 'Uğur Böceği, Kelebek ve Arı dengesi', grid: ['🐞', '🦋', '🐝', '🦋', '🐝', '🐞', '🐝', '🐞', '?'], correct: '🦋', options: ['🦋', '🐜', '🦗', '🕷️'] },
+      { id: 'm3_28', prompt: 'Soru işaretli kutuya hangi giysi gelmelidir?', hint: 'Tişört, Pantolon ve Şapka üçlüsü', grid: ['👕', '👖', '🧢', '👖', '🧢', '👕', '🧢', '👕', '?'], correct: '👖', options: ['👖', '👗', '🧥', '🧦'] },
+      { id: 'm3_29', prompt: 'Soru işaretli kutuya hangi kutlama nesnesi gelmelidir?', hint: 'Balon, Hediye ve Konfeti dizilimi', grid: ['🎈', '🎁', '🎉', '🎁', '🎉', '🎈', '🎉', '🎈', '?'], correct: '🎁', options: ['🎁', '🎊', '🎀', '🎂'] },
+      { id: 'm3_30', prompt: 'Soru işaretli kutuya hangi aydınlatma gelmelidir?', hint: 'Mum, Ampul ve El Feneri', grid: ['🕯️', '💡', '🔦', '💡', '🔦', '🕯️', '🔦', '🕯️', '?'], correct: '💡', options: ['💡', '🏮', '🔥', '⚡'] },
+      { id: 'm3_31', prompt: 'Soru işaretli kutuya hangi zaman simgesi gelmelidir?', hint: 'Kum Saati, Çalar Saat ve Kol Saati', grid: ['⏳', '⏰', '⌚', '⏰', '⌚', '⏳', '⌚', '⏳', '?'], correct: '⏰', options: ['⏰', '⏱️', '🕰️', '⌛'] },
+      { id: 'm3_32', prompt: 'Soru işaretli kutuya hangi uzay nesnesi gelmelidir?', hint: 'Roket, Gezegen ve Uçan Daire', grid: ['🚀', '🪐', '🛸', '🪐', '🛸', '🚀', '🛸', '🚀', '?'], correct: '🪐', options: ['🪐', '🛰️', '☄️', '⭐'] },
+      { id: 'm3_33', prompt: 'Soru işaretli kutuya hangi ağaç gelmelidir?', hint: 'Çam, Yapraklı Ağaç ve Palmiye', grid: ['🌲', '🌳', '🌴', '🌳', '🌴', '🌲', '🌴', '🌲', '?'], correct: '🌳', options: ['🌳', '🌵', '🌾', '🌱'] },
+      { id: 'm3_34', prompt: 'Soru işaretli kutuya hangi sebze gelmelidir?', hint: 'Havuç, Brokoli ve Mısır üçlüsü', grid: ['🥕', '🥦', '🌽', '🥦', '🌽', '🥕', '🌽', '🥕', '?'], correct: '🥦', options: ['🥦', '🍅', '🥔', '🥒'] },
+      { id: 'm3_35', prompt: 'Soru işaretli kutuya hangi ödül gelmelidir?', hint: 'Altın Kupa, Madalya ve Rozet', grid: ['🏆', '🥇', '🎖️', '🥇', '🎖️', '🏆', '🎖️', '🏆', '?'], correct: '🥇', options: ['🥇', '🥈', '🥉', '🎗️'] },
+      { id: 'm3_36', prompt: 'Soru işaretli kutuya hangi el hareketi gelmelidir?', hint: 'El sallama, Beşlik ve Barış işareti', grid: ['👋', '🖐️', '✌️', '🖐️', '✌️', '👋', '✌️', '👋', '?'], correct: '🖐️', options: ['🖐️', '👍', '👏', '✊'] },
+      { id: 'm3_37', prompt: 'Soru işaretli kutuya hangi kuş gelmelidir?', hint: 'Penguen, Papağan ve Baykuş sırası', grid: ['🐧', '🦜', '🦉', '🦜', '🦉', '🐧', '🦉', '🐧', '?'], correct: '🦜', options: ['🦜', '🦆', '🦅', '🦢'] },
+      { id: 'm3_38', prompt: 'Soru işaretli kutuya hangi kitap gelmelidir?', hint: 'Açık Kitap, Kırmızı Kitap ve Mavi Kitap', grid: ['📖', '📕', '📘', '📕', '📘', '📖', '📘', '📖', '?'], correct: '📕', options: ['📕', '📗', '📙', '📚'] },
+      { id: 'm3_39', prompt: 'Soru işaretli kutuya hangi ayakkabı gelmelidir?', hint: 'Spor Ayakkabı, Bot ve Topuklu Ayakkabı', grid: ['👟', '🥾', '👠', '🥾', '👠', '👟', '👠', '👟', '?'], correct: '🥾', options: ['🥾', '👡', '👞', '🥿'] },
+      { id: 'm3_40', prompt: 'Soru işaretli kutuya hangi hava durumu simgesi gelmelidir?', hint: 'Güneş, Yağmur ve Şimşek dengesi', grid: ['☀️', '🌧️', '⚡', '🌧️', '⚡', '☀️', '⚡', '☀️', '?'], correct: '🌧️', options: ['🌧️', '🌈', '❄️', '🌪️'] }
+    ],
+
+    // 🔐 KATEGORİ 2: BİLSEM ŞİFRELEME (KRİPTOLOJİ) (40 Soru)
+    crypto: [
+      { id: 'cr_1', prompt: 'Şifreleri çöz ve hedef şekil grubunun şifresini bul!', hint: 'Sembolleri sayılarla eşleştir: Üçgen=2, Daire=5, Yıldız=8', clues: [{ s: ['🔺', '🔵', '⭐'], c: '2 5 8' }, { s: ['⭐', '🔵', '🟩'], c: '8 5 4' }, { s: ['🟩', '🔺', '🔵'], c: '4 2 5' }], target: ['🟩', '🔺', '⭐'], correct: '428', options: ['428', '458', '248', '824'] },
+      { id: 'cr_2', prompt: 'Şifreleri çöz ve hedef şekil grubunun şifresini bul!', hint: 'Daire=3, Hilal=7, Elmas=9', clues: [{ s: ['🔴', '🌙', '🔷'], c: '3 7 9' }, { s: ['🔷', '🌙', '⭐'], c: '9 7 1' }, { s: ['⭐', '🔴', '🌙'], c: '1 3 7' }], target: ['⭐', '🔷', '🔴'], correct: '193', options: ['193', '139', '913', '319'] },
+      { id: 'cr_3', prompt: 'Meyve şifrelerini çözerek sorulan diziyi bul!', hint: 'Elma=6, Muz=4, Üzüm=2', clues: [{ s: ['🍎', '🍌', '🍇'], c: '6 4 2' }, { s: ['🍇', '🍌', '🍓'], c: '2 4 8' }, { s: ['🍓', '🍎', '🍌'], c: '8 6 4' }], target: ['🍓', '🍇', '🍎'], correct: '826', options: ['826', '862', '286', '682'] },
+      { id: 'cr_4', prompt: 'Harf şifrelerini çöz ve sorulan kelime kodunu bul!', hint: 'A=1, B=7, C=5', clues: [{ s: ['A', 'B', 'C'], c: '1 7 5' }, { s: ['C', 'B', 'D'], c: '5 7 9' }, { s: ['D', 'A', 'B'], c: '9 1 7' }], target: ['D', 'C', 'A'], correct: '951', options: ['951', '915', '591', '159'] },
+      { id: 'cr_5', prompt: 'Geometrik şifreleri çöz ve hedef kodu bul!', hint: 'Kare=4, Üçgen=3, Beşgen=5', clues: [{ s: ['🟩', '🔺', '⬟'], c: '4 3 5' }, { s: ['⬟', '🔺', '🔵'], c: '5 3 0' }, { s: ['🔵', '🟩', '🔺'], c: '0 4 3' }], target: ['🔵', '⬟', '🟩'], correct: '054', options: ['054', '504', '405', '045'] },
+      { id: 'cr_6', prompt: 'Hayvan dostlarımızın şifresini çöz!', hint: 'Kedi=3, Köpek=6, Tavşan=9', clues: [{ s: ['🐱', '🐶', '🐰'], c: '3 6 9' }, { s: ['🐰', '🐶', '🦊'], c: '9 6 1' }, { s: ['🦊', '🐱', '🐶'], c: '1 3 6' }], target: ['🦊', '🐰', '🐱'], correct: '193', options: ['193', '139', '913', '391'] },
+      { id: 'cr_7', prompt: 'Yön oku şifrelerini çöz ve hedef kodu bul!', hint: 'Yukarı=8, Sağa=4, Aşağı=2', clues: [{ s: ['⬆️', '➡️', '⬇️'], c: '8 4 2' }, { s: ['⬇️', '➡️', '⬅️'], c: '2 4 6' }, { s: ['⬅️', '⬆️', '➡️'], c: '6 8 4' }], target: ['⬅️', '⬇️', '⬆️'], correct: '628', options: ['628', '682', '268', '826'] },
+      { id: 'cr_8', prompt: 'Renk şifrelerini çöz ve hedef diziyi bul!', hint: 'Sarı=5, Mavi=1, Kırmızı=7', clues: [{ s: ['🟡', '🔵', '🔴'], c: '5 1 7' }, { s: ['🔴', '🔵', '🟢'], c: '7 1 3' }, { s: ['🟢', '🟡', '🔵'], c: '3 5 1' }], target: ['🟢', '🔴', '🟡'], correct: '375', options: ['375', '357', '735', '537'] },
+      { id: 'cr_9', prompt: 'Gök cismi şifrelerini çöz ve hedef kodu bul!', hint: 'Güneş=9, Bulut=4, Ay=2', clues: [{ s: ['☀️', '☁️', '🌙'], c: '9 4 2' }, { s: ['🌙', '☁️', '⭐'], c: '2 4 8' }, { s: ['⭐', '☀️', '☁️'], c: '8 9 4' }], target: ['⭐', '🌙', '☀️'], correct: '829', options: ['829', '892', '289', '928'] },
+      { id: 'cr_10', prompt: 'Spor topu şifrelerini çöz ve hedef kodu bul!', hint: 'Futbol=5, Basketbol=7, Tenis=3', clues: [{ s: ['⚽', '🏀', '🎾'], c: '5 7 3' }, { s: ['🎾', '🏀', '🏐'], c: '3 7 9' }, { s: ['🏐', '⚽', '🏀'], c: '9 5 7' }], target: ['🏐', '🎾', '⚽'], correct: '935', options: ['935', '953', '395', '539'] },
+      { id: 'cr_11', prompt: 'Müzik şifrelerini çöz ve hedef kodu bul!', hint: 'Gitar=2, Piyano=6, Davul=8', clues: [{ s: ['🎸', '🎹', '🥁'], c: '2 6 8' }, { s: ['🥁', '🎹', '🎺'], c: '8 6 4' }, { s: ['🎺', '🎸', '🎹'], c: '4 2 6' }], target: ['🎺', '🥁', '🎸'], correct: '482', options: ['482', '428', '842', '284'] },
+      { id: 'cr_12', prompt: 'Taşıt şifrelerini çöz ve hedef kodu bul!', hint: 'Araba=1, Uçak=5, Gemi=9', clues: [{ s: ['🚗', '✈️', '🚢'], c: '1 5 9' }, { s: ['🚢', '✈️', '🚆'], c: '9 5 3' }, { s: ['🚆', '🚗', '✈️'], c: '3 1 5' }], target: ['🚆', '🚢', '🚗'], correct: '391', options: ['391', '319', '931', '193'] },
+      { id: 'cr_13', prompt: 'Kırtasiye şifrelerini çöz ve hedef kodu bul!', hint: 'Kalem=7, Makas=2, Cetvel=4', clues: [{ s: ['✏️', '✂️', '📏'], c: '7 2 4' }, { s: ['📏', '✂️', '📌'], c: '4 2 8' }, { s: ['📌', '✏️', '✂️'], c: '8 7 2' }], target: ['📌', '📏', '✏️'], correct: '847', options: ['847', '874', '487', '748'] },
+      { id: 'cr_14', prompt: 'Çiçek şifrelerini çöz ve hedef kodu bul!', hint: 'Lale=3, Ayçiçeği=8, Gül=5', clues: [{ s: ['🌷', '🌻', '🌹'], c: '3 8 5' }, { s: ['🌹', '🌻', '🌼'], c: '5 8 1' }, { s: ['🌼', '🌷', '🌻'], c: '1 3 8' }], target: ['🌼', '🌹', '🌷'], correct: '153', options: ['153', '135', '513', '351'] },
+      { id: 'cr_15', prompt: 'Deniz canlısı şifrelerini çöz ve hedef kodu bul!', hint: 'Balık=4, Ahtapot=8, Yengeç=6', clues: [{ s: ['🐟', '🐙', '🦀'], c: '4 8 6' }, { s: ['🦀', '🐙', '🐬'], c: '6 8 2' }, { s: ['🐬', '🐟', '🐙'], c: '2 4 8' }], target: ['🐬', '🦀', '🐟'], correct: '264', options: ['264', '246', '624', '462'] },
+      { id: 'cr_16', prompt: 'Tatlı şifrelerini çöz ve hedef kodu bul!', hint: 'Dondurma=9, Pasta=3, Kurabiye=7', clues: [{ s: ['🍦', '🍰', '🍪'], c: '9 3 7' }, { s: ['🍪', '🍰', '🍩'], c: '7 3 5' }, { s: ['🍩', '🍦', '🍰'], c: '5 9 3' }], target: ['🍩', '🍪', '🍦'], correct: '579', options: ['579', '597', '759', '975'] },
+      { id: 'cr_17', prompt: 'Kış şifrelerini çöz ve hedef kodu bul!', hint: 'Kardan Adam=6, Kar Tanesi=1, Atkı=8', clues: [{ s: ['⛄', '❄️', '🧣'], c: '6 1 8' }, { s: ['🧣', '❄️', '🧤'], c: '8 1 4' }, { s: ['🧤', '⛄', '❄️'], c: '4 6 1' }], target: ['🧤', '🧣', '⛄'], correct: '486', options: ['486', '468', '846', '684'] },
+      { id: 'cr_18', prompt: 'Böcek şifrelerini çöz ve hedef kodu bul!', hint: 'Uğur Böceği=2, Kelebek=7, Arı=5', clues: [{ s: ['🐞', '🦋', '🐝'], c: '2 7 5' }, { s: ['🐝', '🦋', '🐜'], c: '5 7 9' }, { s: ['🐜', '🐞', '🦋'], c: '9 2 7' }], target: ['🐜', '🐝', '🐞'], correct: '952', options: ['952', '925', '592', '295'] },
+      { id: 'cr_19', prompt: 'Giysi şifrelerini çöz ve hedef kodu bul!', hint: 'Tişört=3, Pantolon=5, Şapka=1', clues: [{ s: ['👕', '👖', '🧢'], c: '3 5 1' }, { s: ['🧢', '👖', '👗'], c: '1 5 7' }, { s: ['👗', '👕', '👖'], c: '7 3 5' }], target: ['👗', '🧢', '👕'], correct: '713', options: ['713', '731', '173', '317'] },
+      { id: 'cr_20', prompt: 'Aydınlatma şifrelerini çöz ve hedef kodu bul!', hint: 'Mum=8, Ampul=4, Fener=2', clues: [{ s: ['🕯️', '💡', '🔦'], c: '8 4 2' }, { s: ['🔦', '💡', '🏮'], c: '2 4 6' }, { s: ['🏮', '🕯️', '💡'], c: '6 8 4' }], target: ['🏮', '🔦', '🕯️'], correct: '628', options: ['628', '682', '268', '862'] },
+      { id: 'cr_21', prompt: 'Zaman simgesi şifrelerini çöz ve hedef kodu bul!', hint: 'Kum Saati=5, Çalar Saat=9, Kol Saati=1', clues: [{ s: ['⏳', '⏰', '⌚'], c: '5 9 1' }, { s: ['⌚', '⏰', '⏱️'], c: '1 9 7' }, { s: ['⏱️', '⏳', '⏰'], c: '7 5 9' }], target: ['⏱️', '⌚', '⏳'], correct: '715', options: ['715', '751', '175', '517'] },
+      { id: 'cr_22', prompt: 'Uzay şifrelerini çöz ve hedef kodu bul!', hint: 'Roket=4, Gezegen=8, Uçan Daire=2', clues: [{ s: ['🚀', '🪐', '🛸'], c: '4 8 2' }, { s: ['🛸', '🪐', '🛰️'], c: '2 8 6' }, { s: ['🛰️', '🚀', '🪐'], c: '6 4 8' }], target: ['🛰️', '🛸', '🚀'], correct: '624', options: ['624', '642', '264', '462'] },
+      { id: 'cr_23', prompt: 'Ağaç şifrelerini çöz ve hedef kodu bul!', hint: 'Çam=3, Yapraklı=7, Palmiye=5', clues: [{ s: ['🌲', '🌳', '🌴'], c: '3 7 5' }, { s: ['🌴', '🌳', '🌵'], c: '5 7 1' }, { s: ['🌵', '🌲', '🌳'], c: '1 3 7' }], target: ['🌵', '🌴', '🌲'], correct: '153', options: ['153', '135', '513', '315'] },
+      { id: 'cr_24', prompt: 'Sebze şifrelerini çöz ve hedef kodu bul!', hint: 'Havuç=9, Brokoli=2, Mısır=6', clues: [{ s: ['🥕', '🥦', '🌽'], c: '9 2 6' }, { s: ['🌽', '🥦', '🍅'], c: '6 2 4' }, { s: ['🍅', '🥕', '🥦'], c: '4 9 2' }], target: ['🍅', '🌽', '🥕'], correct: '469', options: ['469', '496', '649', '946'] },
+      { id: 'cr_25', prompt: 'Ödül şifrelerini çöz ve hedef kodu bul!', hint: 'Kupa=8, Madalya=1, Rozet=5', clues: [{ s: ['🏆', '🥇', '🎖️'], c: '8 1 5' }, { s: ['🎖️', '🥇', '🥈'], c: '5 1 3' }, { s: ['🥈', '🏆', '🥇'], c: '3 8 1' }], target: ['🥈', '🎖️', '🏆'], correct: '358', options: ['358', '385', '538', '853'] },
+      { id: 'cr_26', prompt: 'Kuş şifrelerini çöz ve hedef kodu bul!', hint: 'Penguen=4, Papağan=9, Baykuş=2', clues: [{ s: ['🐧', '🦜', '🦉'], c: '4 9 2' }, { s: ['🦉', '🦜', '🦆'], c: '2 9 7' }, { s: ['🦆', '🐧', '🦜'], c: '7 4 9' }], target: ['🦆', '🦉', '🐧'], correct: '724', options: ['724', '742', '274', '472'] },
+      { id: 'cr_27', prompt: 'Kitap şifrelerini çöz ve hedef kodu bul!', hint: 'Açık Kitap=6, Kırmızı=2, Mavi=8', clues: [{ s: ['📖', '📕', '📘'], c: '6 2 8' }, { s: ['📘', '📕', '📗'], c: '8 2 4' }, { s: ['📗', '📖', '📕'], c: '4 6 2' }], target: ['📗', '📘', '📖'], correct: '486', options: ['486', '468', '846', '648'] },
+      { id: 'cr_28', prompt: 'Ayakkabı şifrelerini çöz ve hedef kodu bul!', hint: 'Spor=5, Bot=1, Topuklu=7', clues: [{ s: ['👟', '🥾', '👠'], c: '5 1 7' }, { s: ['👠', '🥾', '👡'], c: '7 1 3' }, { s: ['👡', '👟', '🥾'], c: '3 5 1' }], target: ['👡', '👠', '👟'], correct: '375', options: ['375', '357', '735', '573'] },
+      { id: 'cr_29', prompt: 'Hava durumu şifrelerini çöz ve hedef kodu bul!', hint: 'Güneş=3, Yağmur=8, Şimşek=5', clues: [{ s: ['☀️', '🌧️', '⚡'], c: '3 8 5' }, { s: ['⚡', '🌧️', '❄️'], c: '5 8 1' }, { s: ['❄️', '☀️', '🌧️'], c: '1 3 8' }], target: ['❄️', '⚡', '☀️'], correct: '153', options: ['153', '135', '513', '351'] },
+      { id: 'cr_30', prompt: 'El hareketi şifrelerini çöz ve hedef kodu bul!', hint: 'El Sallama=7, Beşlik=2, Zafer=9', clues: [{ s: ['👋', '🖐️', '✌️'], c: '7 2 9' }, { s: ['✌️', '🖐️', '👍'], c: '9 2 4' }, { s: ['👍', '👋', '🖐️'], c: '4 7 2' }], target: ['👍', '✌️', '👋'], correct: '497', options: ['497', '479', '947', '794'] },
+      { id: 'cr_31', prompt: 'Şekil şifrelerini çöz ve hedef kodu bul!', hint: 'Baklava=1, Daire=6, Kare=4', clues: [{ s: ['🔷', '🔴', '🟩'], c: '1 6 4' }, { s: ['🟩', '🔴', '⭐'], c: '4 6 9' }, { s: ['⭐', '🔷', '🔴'], c: '9 1 6' }], target: ['⭐', '🟩', '🔷'], correct: '941', options: ['941', '914', '491', '194'] },
+      { id: 'cr_32', prompt: 'Parti şifrelerini çöz ve hedef kodu bul!', hint: 'Balon=8, Hediye=3, Konfeti=5', clues: [{ s: ['🎈', '🎁', '🎉'], c: '8 3 5' }, { s: ['🎉', '🎁', '🎂'], c: '5 3 7' }, { s: ['🎂', '🎈', '🎁'], c: '7 8 3' }], target: ['🎂', '🎉', '🎈'], correct: '758', options: ['758', '785', '578', '875'] },
+      { id: 'cr_33', prompt: 'Ev eşyası şifrelerini çöz ve hedef kodu bul!', hint: 'Sandalye=2, Koltuk=6, Yatak=4', clues: [{ s: ['🪑', '🛋️', '🛏️'], c: '2 6 4' }, { s: ['🛏️', '🛋️', '🚪'], c: '4 6 8' }, { s: ['🚪', '🪑', '🛋️'], c: '8 2 6' }], target: ['🚪', '🛏️', '🪑'], correct: '842', options: ['842', '824', '482', '248'] },
+      { id: 'cr_34', prompt: 'Duygu şifrelerini çöz ve hedef kodu bul!', hint: 'Gözlüklü=5, Yıldızlı=9, Partili=1', clues: [{ s: ['😎', '🤩', '🥳'], c: '5 9 1' }, { s: ['🥳', '🤩', '😊'], c: '1 9 7' }, { s: ['😊', '😎', '🤩'], c: '7 5 9' }], target: ['😊', '🥳', '😎'], correct: '715', options: ['715', '751', '175', '571'] },
+      { id: 'cr_35', prompt: 'İçecek şifrelerini çöz ve hedef kodu bul!', hint: 'Süt=4, Meyve Suyu=8, Çay=2', clues: [{ s: ['🥛', '🧃', '🍵'], c: '4 8 2' }, { s: ['🍵', '🧃', '🥤'], c: '2 8 6' }, { s: ['🥤', '🥛', '🧃'], c: '6 4 8' }], target: ['🥤', '🍵', '🥛'], correct: '624', options: ['624', '642', '264', '426'] },
+      { id: 'cr_36', prompt: 'Kalp şifrelerini çöz ve hedef kodu bul!', hint: 'Kırmızı=9, Mavi=3, Sarı=7', clues: [{ s: ['❤️', '💙', '💛'], c: '9 3 7' }, { s: ['💛', '💙', '💚'], c: '7 3 5' }, { s: ['💚', '❤️', '💙'], c: '5 9 3' }], target: ['💚', '💛', '❤️'], correct: '579', options: ['579', '597', '759', '957'] },
+      { id: 'cr_37', prompt: 'Doğa şifrelerini çöz ve hedef kodu bul!', hint: 'Yaprak=3, Kuru Yaprak=8, Akçaağaç=1', clues: [{ s: ['🍃', '🍂', '🍁'], c: '3 8 1' }, { s: ['🍁', '🍂', '🍄'], c: '1 8 6' }, { s: ['🍄', '🍃', '🍂'], c: '6 3 8' }], target: ['🍄', '🍁', '🍃'], correct: '613', options: ['613', '631', '163', '361'] },
+      { id: 'cr_38', prompt: 'Çiftlik şifrelerini çöz ve hedef kodu bul!', hint: 'İnek=2, Koyun=7, At=4', clues: [{ s: ['🐮', '🐑', '🐴'], c: '2 7 4' }, { s: ['🐴', '🐑', '🐷'], c: '4 7 9' }, { s: ['🐷', '🐮', '🐑'], c: '9 2 7' }], target: ['🐷', '🐴', '🐮'], correct: '942', options: ['942', '924', '492', '249'] },
+      { id: 'cr_39', prompt: 'İletişim şifrelerini çöz ve hedef kodu bul!', hint: 'Telefon=6, Bilgisayar=1, Mektup=5', clues: [{ s: ['📱', '💻', '✉️'], c: '6 1 5' }, { s: ['✉️', '💻', '📻'], c: '5 1 9' }, { s: ['📻', '📱', '💻'], c: '9 6 1' }], target: ['📻', '✉️', '📱'], correct: '956', options: ['956', '965', '596', '659'] },
+      { id: 'cr_40', prompt: 'Sayı sembol şifrelerini çöz ve hedef kodu bul!', hint: 'Bir=1, İki=2, Üç=3', clues: [{ s: ['1️⃣', '2️⃣', '3️⃣'], c: '1 2 3' }, { s: ['3️⃣', '2️⃣', '4️⃣'], c: '3 2 4' }, { s: ['4️⃣', '1️⃣', '2️⃣'], c: '4 1 2' }], target: ['4️⃣', '3️⃣', '1️⃣'], correct: '431', options: ['431', '413', '341', '134'] }
+    ],
+
+    // 🪞 KATEGORİ 3: AYNA SİMETRİSİ VE NOKTALI KAĞIT YANSIMASI (40 Soru)
+    mirror_symmetry: [
+      { id: 'sym_1', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Aynaya yakın duran şekil yansımada da aynaya en yakın olandır!', left: ['🔴', '➡️'], correct: ['⬅️', '🔴'], options: [['⬅️', '🔴'], ['➡️', '🔴'], ['🔴', '⬅️'], ['⬇️', '🔴']] },
+      { id: 'sym_2', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Yıldız ve üçgenin simetrisini takip et', left: ['⭐', '🔺'], correct: ['🔺', '⭐'], options: [['🔺', '⭐'], ['⭐', '🔺'], ['🔻', '⭐'], ['⭐', '🔻']] },
+      { id: 'sym_3', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Sağa bakan ok aynada sola bakar', left: ['🟦', '➡️'], correct: ['⬅️', '🟦'], options: [['⬅️', '🟦'], ['➡️', '🟦'], ['🟦', '⬅️'], ['⬆️', '🟦']] },
+      { id: 'sym_4', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Hilal ve Güneşin aynadaki yerini incele', left: ['🌙', '☀️'], correct: ['☀️', '🌙'], options: [['☀️', '🌙'], ['🌙', '☀️'], ['⭐', '🌙'], ['☀️', '⭐']] },
+      { id: 'sym_5', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Kırmızı ve Mavi daire simetrisi', left: ['🔴', '🔵'], correct: ['🔵', '🔴'], options: [['🔵', '🔴'], ['🔴', '🔵'], ['🟢', '🔴'], ['🔵', '🟡']] },
+      { id: 'sym_6', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Yukarı ok ve sağa ok simetrisi', left: ['⬆️', '➡️'], correct: ['⬅️', '⬆️'], options: [['⬅️', '⬆️'], ['⬆️', '➡️'], ['➡️', '⬆️'], ['⬇️', '⬅️']] },
+      { id: 'sym_7', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Kedi ve Balık simetrisi', left: ['🐱', '🐟'], correct: ['🐟', '🐱'], options: [['🐟', '🐱'], ['🐱', '🐟'], ['🐶', '🐟'], ['🐟', '🐶']] },
+      { id: 'sym_8', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Elma ve Muzun aynadaki konumu', left: ['🍎', '🍌'], correct: ['🍌', '🍎'], options: [['🍌', '🍎'], ['🍎', '🍌'], ['🍇', '🍎'], ['🍌', '🍇']] },
+      { id: 'sym_9', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Üçgen ve Kare simetrisi', left: ['🔺', '🟩'], correct: ['🟩', '🔺'], options: [['🟩', '🔺'], ['🔺', '🟩'], ['🟩', '🔻'], ['🔻', '🟩']] },
+      { id: 'sym_10', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Çapraz okların simetrisi', left: ['↗️', '🟩'], correct: ['🟩', '↖️'], options: [['🟩', '↖️'], ['↖️', '🟩'], ['🟩', '↗️'], ['↘️', '🟩']] },
+      { id: 'sym_11', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Futbol ve Basketbol topu simetrisi', left: ['⚽', '🏀'], correct: ['🏀', '⚽'], options: [['🏀', '⚽'], ['⚽', '🏀'], ['🎾', '⚽'], ['🏀', '🎾']] },
+      { id: 'sym_12', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Gitar ve Piyano simetrisi', left: ['🎸', '🎹'], correct: ['🎹', '🎸'], options: [['🎹', '🎸'], ['🎸', '🎹'], ['🥁', '🎸'], ['🎹', '🥁']] },
+      { id: 'sym_13', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Siyah ve Beyaz daire simetrisi', left: ['⚫', '⚪'], correct: ['⚪', '⚫'], options: [['⚪', '⚫'], ['⚫', '⚪'], ['🔘', '⚫'], ['⚪', '🔘']] },
+      { id: 'sym_14', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Aşağı bakan ok ve sola bakan ok', left: ['⬇️', '⬅️'], correct: ['➡️', '⬇️'], options: [['➡️', '⬇️'], ['⬇️', '⬅️'], ['⬅️', '⬇️'], ['⬆️', '➡️']] },
+      { id: 'sym_15', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Lale ve Gül simetrisi', left: ['🌷', '🌹'], correct: ['🌹', '🌷'], options: [['🌹', '🌷'], ['🌷', '🌹'], ['🌻', '🌷'], ['🌹', '🌻']] },
+      { id: 'sym_16', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Kalem ve Defter simetrisi', left: ['✏️', '📖'], correct: ['📖', '✏️'], options: [['📖', '✏️'], ['✏️', '📖'], ['✂️', '📖'], ['📖', '✂️']] },
+      { id: 'sym_17', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Gözlüklü yüz ve Kalp simetrisi', left: ['😎', '❤️'], correct: ['❤️', '😎'], options: [['❤️', '😎'], ['😎', '❤️'], ['💙', '😎'], ['❤️', '😊']] },
+      { id: 'sym_18', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Dondurma ve Pasta simetrisi', left: ['🍦', '🍰'], correct: ['🍰', '🍦'], options: [['🍰', '🍦'], ['🍦', '🍰'], ['🍩', '🍦'], ['🍰', '🍩']] },
+      { id: 'sym_19', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Araba ve Uçak simetrisi', left: ['🚗', '✈️'], correct: ['✈️', '🚗'], options: [['✈️', '🚗'], ['🚗', '✈️'], ['🚢', '🚗'], ['✈️', '🚢']] },
+      { id: 'sym_20', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Mavi ve Turuncu elmas simetrisi', left: ['🔷', '🔶'], correct: ['🔶', '🔷'], options: [['🔶', '🔷'], ['🔷', '🔶'], ['🟩', '🔷'], ['🔶', '🟩']] },
+      { id: 'sym_21', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Kardan adam ve Kar tanesi', left: ['⛄', '❄️'], correct: ['❄️', '⛄'], options: [['❄️', '⛄'], ['⛄', '❄️'], ['🧣', '⛄'], ['❄️', '🧣']] },
+      { id: 'sym_22', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Saat ve Kum saati simetrisi', left: ['⏰', '⏳'], correct: ['⏳', '⏰'], options: [['⏳', '⏰'], ['⏰', '⏳'], ['⌚', '⏰'], ['⏳', '⌚']] },
+      { id: 'sym_23', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Tişört ve Pantolon simetrisi', left: ['👕', '👖'], correct: ['👖', '👕'], options: [['👖', '👕'], ['👕', '👖'], ['🧢', '👕'], ['👖', '🧢']] },
+      { id: 'sym_24', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Balon ve Hediye simetrisi', left: ['🎈', '🎁'], correct: ['🎁', '🎈'], options: [['🎁', '🎈'], ['🎈', '🎁'], ['🎉', '🎈'], ['🎁', '🎉']] },
+      { id: 'sym_25', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Mum ve Ampul simetrisi', left: ['🕯️', '💡'], correct: ['💡', '🕯️'], options: [['💡', '🕯️'], ['🕯️', '💡'], ['🔦', '🕯️'], ['💡', '🔦']] },
+      { id: 'sym_26', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Roket ve Gezegen simetrisi', left: ['🚀', '🪐'], correct: ['🪐', '🚀'], options: [['🪐', '🚀'], ['🚀', '🪐'], ['🛸', '🚀'], ['🪐', '🛸']] },
+      { id: 'sym_27', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Çam ve Palmiye ağacı simetrisi', left: ['🌲', '🌴'], correct: ['🌴', '🌲'], options: [['🌴', '🌲'], ['🌲', '🌴'], ['🌳', '🌲'], ['🌴', '🌳']] },
+      { id: 'sym_28', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Havuç ve Mısır simetrisi', left: ['🥕', '🌽'], correct: ['🌽', '🥕'], options: [['🌽', '🥕'], ['🥕', '🌽'], ['🥦', '🥕'], ['🌽', '🥦']] },
+      { id: 'sym_29', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Kupa ve Madalya simetrisi', left: ['🏆', '🥇'], correct: ['🥇', '🏆'], options: [['🥇', '🏆'], ['🏆', '🥇'], ['🎖️', '🏆'], ['🥇', '🎖️']] },
+      { id: 'sym_30', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Güneydoğu oku simetrisi', left: ['↘️', '🟡'], correct: ['🟡', '↙️'], options: [['🟡', '↙️'], ['↙️', '🟡'], ['🟡', '↘️'], ['↖️', '🟡']] },
+      { id: 'sym_31', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Penguen ve Baykuş simetrisi', left: ['🐧', '🦉'], correct: ['🦉', '🐧'], options: [['🦉', '🐧'], ['🐧', '🦉'], ['🦆', '🐧'], ['🦉', '🦆']] },
+      { id: 'sym_32', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Yeşil yaprak ve Akçaağaç yaprağı', left: ['🍃', '🍁'], correct: ['🍁', '🍃'], options: [['🍁', '🍃'], ['🍃', '🍁'], ['🍂', '🍃'], ['🍁', '🍂']] },
+      { id: 'sym_33', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'İnek ve Koyun simetrisi', left: ['🐮', '🐑'], correct: ['🐑', '🐮'], options: [['🐑', '🐮'], ['🐮', '🐑'], ['🐴', '🐮'], ['🐑', '🐴']] },
+      { id: 'sym_34', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'El sallama ve Zafer işareti', left: ['👋', '✌️'], correct: ['✌️', '👋'], options: [['✌️', '👋'], ['👋', '✌️'], ['👍', '👋'], ['✌️', '👍']] },
+      { id: 'sym_35', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Spor ayakkabı ve Bot simetrisi', left: ['👟', '🥾'], correct: ['🥾', '👟'], options: [['🥾', '👟'], ['👟', '🥾'], ['👠', '👟'], ['🥾', '👠']] },
+      { id: 'sym_36', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Telefon ve Mektup simetrisi', left: ['📱', '✉️'], correct: ['✉️', '📱'], options: [['✉️', '📱'], ['📱', '✉️'], ['💻', '📱'], ['✉️', '💻']] },
+      { id: 'sym_37', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Süt ve Meyve Suyu simetrisi', left: ['🥛', '🧃'], correct: ['🧃', '🥛'], options: [['🧃', '🥛'], ['🥛', '🧃'], ['🥤', '🥛'], ['🧃', '🥤']] },
+      { id: 'sym_38', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Uğur Böceği ve Kelebek simetrisi', left: ['🐞', '🦋'], correct: ['🦋', '🐞'], options: [['🦋', '🐞'], ['🐞', '🦋'], ['🐝', '🐞'], ['🦋', '🐝']] },
+      { id: 'sym_39', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Çekiç ve Anahtar aleti simetrisi', left: ['🔨', '🔧'], correct: ['🔧', '🔨'], options: [['🔧', '🔨'], ['🔨', '🔧'], ['🪛', '🔨'], ['🔧', '🪛']] },
+      { id: 'sym_40', prompt: 'Aynanın sağ tarafındaki doğru simetrik yansımayı dokunarak seç!', hint: 'Yağmur ve Şimşek simetrisi', left: ['🌧️', '⚡'], correct: ['⚡', '🌧️'], options: [['⚡', '🌧️'], ['🌧️', '⚡'], ['☀️', '🌧️'], ['⚡', '☀️']] }
+    ],
+
+    // ⏱️ KATEGORİ 4: 5 SANİYE GÖRSEL & KONUMSAL HAFIZA (40 Soru)
+    spatial_memory_5s: [
+      { id: 'sm_1', prompt: 'Az önce 🚀 (Roket) hangi kutudaydı? O kutuya dokun!', hint: '5 saniye boyunca 3x3 ızgarada roketin yerini aklında tuttun!', items: [{ pos: 0, icon: '⭐' }, { pos: 4, icon: '🚀' }, { pos: 8, icon: '🐱' }], targetIcon: '🚀', correctPos: 4 },
+      { id: 'sm_2', prompt: 'Az önce 🍎 (Elma) hangi kutudaydı? O kutuya dokun!', hint: 'Elmanın durduğu hücreyi hatırla!', items: [{ pos: 1, icon: '🍎' }, { pos: 3, icon: '🚗' }, { pos: 7, icon: '⚽' }], targetIcon: '🍎', correctPos: 1 },
+      { id: 'sm_3', prompt: 'Az önce 👑 (Taç) hangi kutudaydı? O kutuya dokun!', hint: 'Kral tacının kutusuna dokun!', items: [{ pos: 2, icon: '👑' }, { pos: 5, icon: '💎' }, { pos: 6, icon: '🛡️' }], targetIcon: '👑', correctPos: 2 },
+      { id: 'sm_4', prompt: 'Az önce 🐶 (Köpek) hangi kutudaydı? O kutuya dokun!', hint: 'Sevimli dostumuzun kutusunu bul!', items: [{ pos: 0, icon: '🐱' }, { pos: 6, icon: '🐶' }, { pos: 4, icon: '🐰' }], targetIcon: '🐶', correctPos: 6 },
+      { id: 'sm_5', prompt: 'Az önce ☀️ (Güneş) hangi kutudaydı? O kutuya dokun!', hint: 'Işık saçan güneşin yerini hatırla!', items: [{ pos: 2, icon: '🌙' }, { pos: 4, icon: '⭐' }, { pos: 8, icon: '☀️' }], targetIcon: '☀️', correctPos: 8 },
+      { id: 'sm_6', prompt: 'Az önce 🏆 (Kupa) hangi kutudaydı? O kutuya dokun!', hint: 'Şampiyonluk kupasının yerini hatırla!', items: [{ pos: 3, icon: '🏆' }, { pos: 1, icon: '🥇' }, { pos: 7, icon: '⚽' }], targetIcon: '🏆', correctPos: 3 },
+      { id: 'sm_7', prompt: 'Az önce ✈️ (Uçak) hangi kutudaydı? O kutuya dokun!', hint: 'Uçağın havalandığı kutuyu bul!', items: [{ pos: 0, icon: '🚗' }, { pos: 5, icon: '✈️' }, { pos: 6, icon: '🚢' }], targetIcon: '✈️', correctPos: 5 },
+      { id: 'sm_8', prompt: 'Az önce 🍦 (Dondurma) hangi kutudaydı? O kutuya dokun!', hint: 'Lezzetli dondurmanın hücresini seç!', items: [{ pos: 7, icon: '🍦' }, { pos: 2, icon: '🍰' }, { pos: 4, icon: '🍩' }], targetIcon: '🍦', correctPos: 7 },
+      { id: 'sm_9', prompt: 'Az önce 🎸 (Gitar) hangi kutudaydı? O kutuya dokun!', hint: 'Gitarın durduğu kareye dokun!', items: [{ pos: 0, icon: '🎸' }, { pos: 4, icon: '🎹' }, { pos: 8, icon: '🥁' }], targetIcon: '🎸', correctPos: 0 },
+      { id: 'sm_10', prompt: 'Az önce 🐬 (Yunus) hangi kutudaydı? O kutuya dokun!', hint: 'Denizin sevimli dostunun hücresi!', items: [{ pos: 1, icon: '🐟' }, { pos: 5, icon: '🐬' }, { pos: 6, icon: '🐙' }], targetIcon: '🐬', correctPos: 5 },
+      { id: 'sm_11', prompt: 'Az önce 🍄 (Mantar) hangi kutudaydı? O kutuya dokun!', hint: 'Ormandaki kırmızı mantar!', items: [{ pos: 2, icon: '🌲' }, { pos: 3, icon: '🍄' }, { pos: 7, icon: '🍁' }], targetIcon: '🍄', correctPos: 3 },
+      { id: 'sm_12', prompt: 'Az önce 🎈 (Balon) hangi kutudaydı? O kutuya dokun!', hint: 'Uçan kırmızı balonun kutusu!', items: [{ pos: 1, icon: '🎁' }, { pos: 4, icon: '🎈' }, { pos: 6, icon: '🎉' }], targetIcon: '🎈', correctPos: 4 },
+      { id: 'sm_13', prompt: 'Az önce 🦁 (Aslan) hangi kutudaydı? O kutuya dokun!', hint: 'Ormanlar kralının hücresi!', items: [{ pos: 0, icon: '🐯' }, { pos: 2, icon: '🦁' }, { pos: 8, icon: '🐻' }], targetIcon: '🦁', correctPos: 2 },
+      { id: 'sm_14', prompt: 'Az önce ⚡ (Şimşek) hangi kutudaydı? O kutuya dokun!', hint: 'Sarı şimşek simgesi!', items: [{ pos: 3, icon: '🌧️' }, { pos: 7, icon: '⚡' }, { pos: 5, icon: '☀️' }], targetIcon: '⚡', correctPos: 7 },
+      { id: 'sm_15', prompt: 'Az önce 🍕 (Pizza) hangi kutudaydı? O kutuya dokun!', hint: 'Nefis pizzanın bulunduğu kare!', items: [{ pos: 6, icon: '🍕' }, { pos: 1, icon: '🍔' }, { pos: 8, icon: '🍟' }], targetIcon: '🍕', correctPos: 6 },
+      { id: 'sm_16', prompt: 'Az önce ⏰ (Saat) hangi kutudaydı? O kutuya dokun!', hint: 'Zamanı gösteren çalar saat!', items: [{ pos: 0, icon: '⏰' }, { pos: 5, icon: '⏳' }, { pos: 7, icon: '⌚' }], targetIcon: '⏰', correctPos: 0 },
+      { id: 'sm_17', prompt: 'Az önce 🦋 (Kelebek) hangi kutudaydı? O kutuya dokun!', hint: 'Renkli kanatlı kelebeğin yeri!', items: [{ pos: 1, icon: '🐞' }, { pos: 8, icon: '🦋' }, { pos: 3, icon: '🐝' }], targetIcon: '🦋', correctPos: 8 },
+      { id: 'sm_18', prompt: 'Az önce 🛸 (UFO) hangi kutudaydı? O kutuya dokun!', hint: 'Uzay aracının bulunduğu kutu!', items: [{ pos: 2, icon: '🚀' }, { pos: 4, icon: '🛸' }, { pos: 6, icon: '🪐' }], targetIcon: '🛸', correctPos: 4 },
+      { id: 'sm_19', prompt: 'Az önce 🌷 (Lale) hangi kutudaydı? O kutuya dokun!', hint: 'Kırmızı lalenin kutusu!', items: [{ pos: 0, icon: '🌻' }, { pos: 5, icon: '🌷' }, { pos: 7, icon: '🌹' }], targetIcon: '🌷', correctPos: 5 },
+      { id: 'sm_20', prompt: 'Az önce 🏀 (Basketbol) hangi kutudaydı? O kutuya dokun!', hint: 'Turuncu basketbol topu!', items: [{ pos: 3, icon: '🏀' }, { pos: 2, icon: '⚽' }, { pos: 8, icon: '🎾' }], targetIcon: '🏀', correctPos: 3 },
+      { id: 'sm_21', prompt: 'Az önce 🍓 (Çilek) hangi kutudaydı? O kutuya dokun!', hint: 'Tatlı kırmızı çileğin hücresi!', items: [{ pos: 1, icon: '🍓' }, { pos: 6, icon: '🍌' }, { pos: 4, icon: '🍇' }], targetIcon: '🍓', correctPos: 1 },
+      { id: 'sm_22', prompt: 'Az önce ⛄ (Kardan Adam) hangi kutudaydı? O kutuya dokun!', hint: 'Sevimli kardan adamın karesi!', items: [{ pos: 2, icon: '❄️' }, { pos: 7, icon: '⛄' }, { pos: 0, icon: '🧣' }], targetIcon: '⛄', correctPos: 7 },
+      { id: 'sm_23', prompt: 'Az önce 💡 (Ampul) hangi kutudaydı? O kutuya dokun!', hint: 'Fikir veren sarı ampul!', items: [{ pos: 8, icon: '💡' }, { pos: 3, icon: '🕯️' }, { pos: 5, icon: '🔦' }], targetIcon: '💡', correctPos: 8 },
+      { id: 'sm_24', prompt: 'Az önce 🦉 (Baykuş) hangi kutudaydı? O kutuya dokun!', hint: 'Bilge baykuşun durduğu yer!', items: [{ pos: 4, icon: '🦉' }, { pos: 0, icon: '🐧' }, { pos: 6, icon: '🦜' }], targetIcon: '🦉', correctPos: 4 },
+      { id: 'sm_25', prompt: 'Az önce 💎 (Elmas) hangi kutudaydı? O kutuya dokun!', hint: 'Mavi parlak elmas!', items: [{ pos: 1, icon: '💎' }, { pos: 5, icon: '👑' }, { pos: 7, icon: '🏆' }], targetIcon: '💎', correctPos: 1 },
+      { id: 'sm_26', prompt: 'Az önce 🚲 (Bisiklet) hangi kutudaydı? O kutuya dokun!', hint: 'İki tekerlekli bisiklet!', items: [{ pos: 0, icon: '🚗' }, { pos: 6, icon: '🚲' }, { pos: 2, icon: '✈️' }], targetIcon: '🚲', correctPos: 6 },
+      { id: 'sm_27', prompt: 'Az önce 🌈 (Gökkuşağı) hangi kutudaydı? O kutuya dokun!', hint: 'Yedi renkli gökkuşağı!', items: [{ pos: 2, icon: '🌈' }, { pos: 4, icon: '☀️' }, { pos: 8, icon: '☁️' }], targetIcon: '🌈', correctPos: 2 },
+      { id: 'sm_28', prompt: 'Az önce 🦄 (Unicorn) hangi kutudaydı? O kutuya dokun!', hint: 'Sihirli boynuzlu at!', items: [{ pos: 3, icon: '🦄' }, { pos: 5, icon: '🐴' }, { pos: 7, icon: '🐮' }], targetIcon: '🦄', correctPos: 3 },
+      { id: 'sm_29', prompt: 'Az önce 🥕 (Havuç) hangi kutudaydı? O kutuya dokun!', hint: 'Turuncu kıtır havuç!', items: [{ pos: 0, icon: '🥦' }, { pos: 4, icon: '🥕' }, { pos: 8, icon: '🌽' }], targetIcon: '🥕', correctPos: 4 },
+      { id: 'sm_30', prompt: 'Az önce 🔔 (Zil) hangi kutudaydı? O kutuya dokun!', hint: 'Okul zili gibi çalan sarı çan!', items: [{ pos: 5, icon: '🔔' }, { pos: 1, icon: '🎵' }, { pos: 6, icon: '🎶' }], targetIcon: '🔔', correctPos: 5 },
+      { id: 'sm_31', prompt: 'Az önce 🍩 (Donut) hangi kutudaydı? O kutuya dokun!', hint: 'Ortası delik tatlı donut!', items: [{ pos: 7, icon: '🍩' }, { pos: 2, icon: '🍪' }, { pos: 0, icon: '🍰' }], targetIcon: '🍩', correctPos: 7 },
+      { id: 'sm_32', prompt: 'Az önce 🐢 (Kaplumbağa) hangi kutudaydı? O kutuya dokun!', hint: 'Sert kabuklu sevimli kaplumbağa!', items: [{ pos: 0, icon: '🐢' }, { pos: 3, icon: '🐸' }, { pos: 8, icon: '🦎' }], targetIcon: '🐢', correctPos: 0 },
+      { id: 'sm_33', prompt: 'Az önce 🏰 (Kale) hangi kutudaydı? O kutuya dokun!', hint: 'Tarihi büyük taş kale!', items: [{ pos: 6, icon: '🏰' }, { pos: 4, icon: '🏠' }, { pos: 1, icon: '🏫' }], targetIcon: '🏰', correctPos: 6 },
+      { id: 'sm_34', prompt: 'Az önce 🍉 (Karpuz) hangi kutudaydı? O kutuya dokun!', hint: 'Yazın serinleten karpuz dilimi!', items: [{ pos: 2, icon: '🍉' }, { pos: 5, icon: '🍎' }, { pos: 7, icon: '🍌' }], targetIcon: '🍉', correctPos: 2 },
+      { id: 'sm_35', prompt: 'Az önce 🧢 (Şapka) hangi kutudaydı? O kutuya dokun!', hint: 'Mavi siperlikli şapka!', items: [{ pos: 4, icon: '🧢' }, { pos: 0, icon: '👕' }, { pos: 8, icon: '👖' }], targetIcon: '🧢', correctPos: 4 },
+      { id: 'sm_36', prompt: 'Az önce 🦀 (Yengeç) hangi kutudaydı? O kutuya dokun!', hint: 'Kıskaçlı kırmızı yengeç!', items: [{ pos: 1, icon: '🐙' }, { pos: 3, icon: '🦀' }, { pos: 5, icon: '🐟' }], targetIcon: '🦀', correctPos: 3 },
+      { id: 'sm_37', prompt: 'Az önce 🌵 (Kaktüs) hangi kutudaydı? O kutuya dokun!', hint: 'Çölün yeşil kaktüsü!', items: [{ pos: 8, icon: '🌵' }, { pos: 2, icon: '🌴' }, { pos: 6, icon: '🌲' }], targetIcon: '🌵', correctPos: 8 },
+      { id: 'sm_38', prompt: 'Az önce 🥁 (Davul) hangi kutudaydı? O kutuya dokun!', hint: 'Güm güm çalan davul!', items: [{ pos: 5, icon: '🥁' }, { pos: 0, icon: '🎸' }, { pos: 7, icon: '🎹' }], targetIcon: '🥁', correctPos: 5 },
+      { id: 'sm_39', prompt: 'Az önce 🧃 (Meyve Suyu) hangi kutudaydı? O kutuya dokun!', hint: 'Pipetli kutu içecek!', items: [{ pos: 1, icon: '🧃' }, { pos: 4, icon: '🥛' }, { pos: 6, icon: '🍵' }], targetIcon: '🧃', correctPos: 1 },
+      { id: 'sm_40', prompt: 'Az önce 🦊 (Tilki) hangi kutudaydı? O kutuya dokun!', hint: 'Kurnaz tatlı tilki!', items: [{ pos: 7, icon: '🦊' }, { pos: 3, icon: '🐺' }, { pos: 0, icon: '🐰' }], targetIcon: '🦊', correctPos: 7 }
+    ],
+
+    // 🧭 KATEGORİ 5: UZAMSAL ALGI VE OK NAVİGASYONU (40 Soru)
+    spatial_navigation: [
+      { id: 'sn_1', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: '1 sağa, 1 sağa, 1 aşağı, 1 sağa git!', start: [0, 0], arrows: ['➡️', '➡️', '⬇️', '➡️'], targets: [{ pos: [1, 3], icon: '🏆' }, { pos: [0, 2], icon: '🍎' }, { pos: [2, 1], icon: '⭐' }, { pos: [3, 3], icon: '🎁' }], correct: '🏆', options: ['🏆', '🍎', '⭐', '🎁'] },
+      { id: 'sn_2', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı ve Sağa git!', start: [0, 1], arrows: ['⬇️', '⬇️', '➡️'], targets: [{ pos: [2, 2], icon: '🍎' }, { pos: [1, 2], icon: '🍌' }, { pos: [3, 1], icon: '🧀' }], correct: '🍎', options: ['🍎', '🍌', '🧀', '⭐'] },
+      { id: 'sn_3', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Aşağı ve Sağa git!', start: [0, 0], arrows: ['➡️', '⬇️', '⬇️', '➡️'], targets: [{ pos: [2, 2], icon: '⭐' }, { pos: [1, 3], icon: '🚀' }, { pos: [3, 1], icon: '💎' }], correct: '⭐', options: ['⭐', '🚀', '💎', '🏆'] },
+      { id: 'sn_4', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Sağa, Aşağı git!', start: [1, 0], arrows: ['⬇️', '➡️', '➡️', '⬇️'], targets: [{ pos: [3, 2], icon: '🧀' }, { pos: [2, 3], icon: '🍎' }, { pos: [1, 2], icon: '🥕' }], correct: '🧀', options: ['🧀', '🍎', '🥕', '🎁'] },
+      { id: 'sn_5', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Aşağı, Sağa git!', start: [0, 0], arrows: ['➡️', '➡️', '⬇️', '➡️'], targets: [{ pos: [1, 3], icon: '🎁' }, { pos: [2, 2], icon: '⭐' }, { pos: [3, 0], icon: '🏆' }], correct: '🎁', options: ['🎁', '⭐', '🏆', '💎'] },
+      { id: 'sn_6', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Aşağı git!', start: [0, 2], arrows: ['⬇️', '⬇️', '⬇️'], targets: [{ pos: [3, 2], icon: '💎' }, { pos: [2, 1], icon: '🍎' }, { pos: [3, 3], icon: '⭐' }], correct: '💎', options: ['💎', '🍎', '⭐', '🧀'] },
+      { id: 'sn_7', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Sağa, Aşağı git!', start: [0, 1], arrows: ['➡️', '⬇️', '➡️', '⬇️'], targets: [{ pos: [2, 3], icon: '🚀' }, { pos: [1, 2], icon: '🏆' }, { pos: [3, 1], icon: '🍎' }], correct: '🚀', options: ['🚀', '🏆', '🍎', '🎁'] },
+      { id: 'sn_8', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Aşağı git!', start: [1, 1], arrows: ['⬇️', '➡️', '⬇️'], targets: [{ pos: [3, 2], icon: '🥕' }, { pos: [2, 3], icon: '🧀' }, { pos: [3, 3], icon: '⭐' }], correct: '🥕', options: ['🥕', '🧀', '⭐', '💎'] },
+      { id: 'sn_9', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Sağa git!', start: [2, 0], arrows: ['➡️', '➡️', '➡️'], targets: [{ pos: [2, 3], icon: '👑' }, { pos: [1, 2], icon: '🏆' }, { pos: [3, 2], icon: '🍎' }], correct: '👑', options: ['👑', '🏆', '🍎', '🎁'] },
+      { id: 'sn_10', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Sağa git!', start: [0, 0], arrows: ['⬇️', '➡️', '➡️'], targets: [{ pos: [1, 2], icon: '🍇' }, { pos: [2, 1], icon: '🍌' }, { pos: [0, 3], icon: '🍎' }], correct: '🍇', options: ['🍇', '🍌', '🍎', '⭐'] },
+      { id: 'sn_11', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Aşağı, Sağa git!', start: [0, 1], arrows: ['➡️', '⬇️', '⬇️', '➡️'], targets: [{ pos: [2, 3], icon: '🍉' }, { pos: [3, 2], icon: '🍎' }, { pos: [1, 1], icon: '🍌' }], correct: '🍉', options: ['🍉', '🍎', '🍌', '🧀'] },
+      { id: 'sn_12', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Sağa, Sağa git!', start: [1, 0], arrows: ['⬇️', '⬇️', '➡️', '➡️'], targets: [{ pos: [3, 2], icon: '🍕' }, { pos: [2, 3], icon: '🍔' }, { pos: [3, 3], icon: '🍟' }], correct: '🍕', options: ['🍕', '🍔', '🍟', '🍦'] },
+      { id: 'sn_13', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Aşağı, Aşağı git!', start: [0, 1], arrows: ['➡️', '➡️', '⬇️', '⬇️'], targets: [{ pos: [2, 3], icon: '🍩' }, { pos: [1, 2], icon: '🍪' }, { pos: [3, 1], icon: '🍰' }], correct: '🍩', options: ['🍩', '🍪', '🍰', '🍫'] },
+      { id: 'sn_14', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Aşağı, Sağa git!', start: [0, 0], arrows: ['⬇️', '➡️', '⬇️', '➡️'], targets: [{ pos: [2, 2], icon: '🍦' }, { pos: [3, 3], icon: '🍰' }, { pos: [1, 3], icon: '🍩' }], correct: '🍦', options: ['🍦', '🍰', '🍩', '🍪'] },
+      { id: 'sn_15', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Aşağı, Aşağı git!', start: [0, 2], arrows: ['➡️', '⬇️', '⬇️', '⬇️'], targets: [{ pos: [3, 3], icon: '🔔' }, { pos: [2, 2], icon: '🎵' }, { pos: [3, 1], icon: '🎶' }], correct: '🔔', options: ['🔔', '🎵', '🎶', '🥁'] },
+      { id: 'sn_16', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Sağa git!', start: [0, 2], arrows: ['⬇️', '⬇️', '➡️'], targets: [{ pos: [2, 3], icon: '🎸' }, { pos: [3, 1], icon: '🎹' }, { pos: [1, 2], icon: '🥁' }], correct: '🎸', options: ['🎸', '🎹', '🥁', '🎺'] },
+      { id: 'sn_17', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Aşağı git!', start: [1, 0], arrows: ['➡️', '➡️', '⬇️'], targets: [{ pos: [2, 2], icon: '⚽' }, { pos: [1, 3], icon: '🏀' }, { pos: [3, 1], icon: '🎾' }], correct: '⚽', options: ['⚽', '🏀', '🎾', '🏐'] },
+      { id: 'sn_18', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Sağa, Sağa git!', start: [2, 0], arrows: ['⬇️', '➡️', '➡️', '➡️'], targets: [{ pos: [3, 3], icon: '🏀' }, { pos: [2, 2], icon: '⚽' }, { pos: [3, 1], icon: '🎾' }], correct: '🏀', options: ['🏀', '⚽', '🎾', '⚾'] },
+      { id: 'sn_19', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Sağa, Sağa git!', start: [0, 0], arrows: ['➡️', '⬇️', '➡️', '➡️'], targets: [{ pos: [1, 3], icon: '🚗' }, { pos: [2, 2], icon: '✈️' }, { pos: [3, 1], icon: '🚢' }], correct: '🚗', options: ['🚗', '✈️', '🚢', '🚆'] },
+      { id: 'sn_20', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Sağa, Aşağı git!', start: [0, 1], arrows: ['⬇️', '⬇️', '➡️', '⬇️'], targets: [{ pos: [3, 2], icon: '✈️' }, { pos: [2, 3], icon: '🚗' }, { pos: [1, 2], icon: '🚲' }], correct: '✈️', options: ['✈️', '🚗', '🚲', '🚁'] },
+      { id: 'sn_21', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Aşağı, Sağa git!', start: [1, 0], arrows: ['➡️', '➡️', '⬇️', '➡️'], targets: [{ pos: [2, 3], icon: '🚢' }, { pos: [3, 2], icon: '🚗' }, { pos: [1, 2], icon: '✈️' }], correct: '🚢', options: ['🚢', '🚗', '✈️', '⛵'] },
+      { id: 'sn_22', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Aşağı, Sağa git!', start: [1, 1], arrows: ['⬇️', '➡️', '⬇️', '➡️'], targets: [{ pos: [3, 3], icon: '🌲' }, { pos: [2, 2], icon: '🌳' }, { pos: [3, 1], icon: '🌴' }], correct: '🌲', options: ['🌲', '🌳', '🌴', '🌵'] },
+      { id: 'sn_23', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Aşağı git!', start: [0, 0], arrows: ['➡️', '⬇️', '⬇️'], targets: [{ pos: [2, 1], icon: '🌻' }, { pos: [1, 2], icon: '🌷' }, { pos: [3, 1], icon: '🌹' }], correct: '🌻', options: ['🌻', '🌷', '🌹', '🌼'] },
+      { id: 'sn_24', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Aşağı, Sağa git!', start: [0, 1], arrows: ['⬇️', '⬇️', '⬇️', '➡️'], targets: [{ pos: [3, 2], icon: '🌷' }, { pos: [2, 3], icon: '🌻' }, { pos: [3, 0], icon: '🌹' }], correct: '🌷', options: ['🌷', '🌻', '🌹', '🌺'] },
+      { id: 'sn_25', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Sağa, Aşağı git!', start: [0, 0], arrows: ['➡️', '➡️', '➡️', '⬇️'], targets: [{ pos: [1, 3], icon: '🌹' }, { pos: [2, 2], icon: '🌷' }, { pos: [0, 2], icon: '🌻' }], correct: '🌹', options: ['🌹', '🌷', '🌻', '🌸'] },
+      { id: 'sn_26', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Aşağı git!', start: [0, 2], arrows: ['⬇️', '➡️', '⬇️'], targets: [{ pos: [2, 3], icon: '🍄' }, { pos: [3, 2], icon: '🍃' }, { pos: [1, 1], icon: '🍂' }], correct: '🍄', options: ['🍄', '🍃', '🍂', '🍁'] },
+      { id: 'sn_27', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Sağa git!', start: [1, 0], arrows: ['➡️', '⬇️', '➡️'], targets: [{ pos: [2, 2], icon: '🍂' }, { pos: [3, 1], icon: '🍄' }, { pos: [1, 3], icon: '🍃' }], correct: '🍂', options: ['🍂', '🍄', '🍃', '🌾'] },
+      { id: 'sn_28', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Sağa, Sağa git!', start: [0, 0], arrows: ['⬇️', '⬇️', '➡️', '➡️'], targets: [{ pos: [2, 2], icon: '🍁' }, { pos: [3, 1], icon: '🍂' }, { pos: [1, 3], icon: '🍄' }], correct: '🍁', options: ['🍁', '🍂', '🍄', '🌱'] },
+      { id: 'sn_29', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Aşağı, Aşağı git!', start: [1, 1], arrows: ['➡️', '➡️', '⬇️', '⬇️'], targets: [{ pos: [3, 3], icon: '🐱' }, { pos: [2, 2], icon: '🐶' }, { pos: [3, 1], icon: '🐰' }], correct: '🐱', options: ['🐱', '🐶', '🐰', '🦊'] },
+      { id: 'sn_30', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Sağa git!', start: [1, 0], arrows: ['⬇️', '➡️', '➡️'], targets: [{ pos: [2, 2], icon: '🐶' }, { pos: [3, 1], icon: '🐱' }, { pos: [1, 3], icon: '🐰' }], correct: '🐶', options: ['🐶', '🐱', '🐰', '🐼'] },
+      { id: 'sn_31', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Sağa, Aşağı git!', start: [0, 1], arrows: ['➡️', '⬇️', '➡️', '⬇️'], targets: [{ pos: [2, 3], icon: '🐰' }, { pos: [3, 2], icon: '🐶' }, { pos: [1, 2], icon: '🐱' }], correct: '🐰', options: ['🐰', '🐶', '🐱', '🐻'] },
+      { id: 'sn_32', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Sağa git!', start: [1, 1], arrows: ['⬇️', '⬇️', '➡️'], targets: [{ pos: [3, 2], icon: '🦊' }, { pos: [2, 3], icon: '🐰' }, { pos: [3, 0], icon: '🐶' }], correct: '🦊', options: ['🦊', '🐰', '🐶', '🐺'] },
+      { id: 'sn_33', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Aşağı git!', start: [0, 0], arrows: ['➡️', '➡️', '⬇️'], targets: [{ pos: [1, 2], icon: '🐼' }, { pos: [2, 1], icon: '🐻' }, { pos: [0, 3], icon: '🦊' }], correct: '🐼', options: ['🐼', '🐻', '🦊', '🐨'] },
+      { id: 'sn_34', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Sağa, Aşağı git!', start: [0, 0], arrows: ['⬇️', '➡️', '➡️', '⬇️'], targets: [{ pos: [2, 2], icon: '🐻' }, { pos: [3, 3], icon: '🐼' }, { pos: [1, 3], icon: '🦁' }], correct: '🐻', options: ['🐻', '🐼', '🦁', '🐯'] },
+      { id: 'sn_35', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Aşağı, Sağa git!', start: [0, 0], arrows: ['➡️', '⬇️', '⬇️', '➡️'], targets: [{ pos: [2, 2], icon: '🦁' }, { pos: [1, 3], icon: '🐯' }, { pos: [3, 1], icon: '🐻' }], correct: '🦁', options: ['🦁', '🐯', '🐻', '🐼'] },
+      { id: 'sn_36', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Aşağı git!', start: [0, 3], arrows: ['⬇️', '⬇️', '⬇️'], targets: [{ pos: [3, 3], icon: '🐯' }, { pos: [2, 2], icon: '🦁' }, { pos: [3, 1], icon: '🐻' }], correct: '🐯', options: ['🐯', '🦁', '🐻', '🦊'] },
+      { id: 'sn_37', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Sağa, Sağa git!', start: [1, 0], arrows: ['➡️', '➡️', '➡️'], targets: [{ pos: [1, 3], icon: '🦄' }, { pos: [2, 2], icon: '🐴' }, { pos: [0, 3], icon: '🐮' }], correct: '🦄', options: ['🦄', '🐴', '🐮', '🐑'] },
+      { id: 'sn_38', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Sağa, Sağa git!', start: [2, 0], arrows: ['⬇️', '➡️', '➡️'], targets: [{ pos: [3, 2], icon: '🐴' }, { pos: [2, 3], icon: '🐮' }, { pos: [3, 3], icon: '🦄' }], correct: '🐴', options: ['🐴', '🐮', '🦄', '🐷'] },
+      { id: 'sn_39', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Sağa, Aşağı, Sağa git!', start: [0, 1], arrows: ['➡️', '⬇️', '➡️'], targets: [{ pos: [1, 3], icon: '🐮' }, { pos: [2, 2], icon: '🐴' }, { pos: [3, 1], icon: '🐑' }], correct: '🐮', options: ['🐮', '🐴', '🐑', '🐔'] },
+      { id: 'sn_40', prompt: 'Robot komutları takip ettiğinde hangi hedefe ulaşır?', hint: 'Aşağı, Aşağı, Sağa, Sağa git!', start: [1, 0], arrows: ['⬇️', '⬇️', '➡️', '➡️'], targets: [{ pos: [3, 2], icon: '🐑' }, { pos: [2, 3], icon: '🐮' }, { pos: [3, 3], icon: '🐴' }], correct: '🐑', options: ['🐑', '🐮', '🐴', '🐷'] }
     ]
+
   };
 
   // 2. SHUFFLE BAG (Aynı Sorunun Üst Üste Gelmesini Engelleyen Algoritma)
@@ -48264,8 +48514,18 @@ const BilsemExamEngine = (function() {
 
   // 3. ARENA AÇMA VE KAPAMA
   function open(options = {}) {
-    const category = options.category || 'matrix';
-    activeCategory = category;
+    const grade = options.grade || 1;
+    activeGrade = (grade === 2) ? 2 : 1;
+
+    const cfg = GRADE_CONFIG[activeGrade];
+    activeCategory = options.category || cfg.defaultCategory;
+
+    // Badge güncelle
+    const badgeEl = document.getElementById('bilsemExamBadge');
+    if (badgeEl) badgeEl.textContent = cfg.title;
+
+    // Sekmeleri dinamik oluştur
+    renderTabsForGrade(activeGrade);
 
     // Ana lobi ve diğer ekranları gizle
     const lobbyView = document.getElementById('lobbyView');
@@ -48284,11 +48544,27 @@ const BilsemExamEngine = (function() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Tab butonlarını senkronize et
     updateTabButtons();
-
-    // Sınavı başlat
     nextQuestion();
+  }
+
+  function renderTabsForGrade(grade) {
+    const tabsWrap = document.getElementById('bilsemExamTabs');
+    if (!tabsWrap) return;
+    const cfg = GRADE_CONFIG[grade] || GRADE_CONFIG[1];
+    tabsWrap.innerHTML = cfg.tabs.map(t => `
+      <button class="bilsem-tab-btn ${t.cat === activeCategory ? 'active' : ''}" data-cat="${t.cat}" type="button" role="tab" title="${t.title}">
+        <span class="tab-icon">${t.icon}</span>
+        <span class="tab-txt">${t.txt}</span>
+      </button>
+    `).join('');
+
+    tabsWrap.querySelectorAll('.bilsem-tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const cat = this.getAttribute('data-cat');
+        if (cat) switchCategory(cat);
+      });
+    });
   }
 
   function close() {
@@ -48332,11 +48608,18 @@ const BilsemExamEngine = (function() {
     const titleEl = document.getElementById('bilsemExamTitle');
     if (titleEl) {
       const titles = {
+        // Grade 1
         matrix: 'Desen & 2x2 Matris Tamamlama',
         flash_memory: 'Kısa Süreli Görsel Foto-Hafıza',
         shadow_part: 'Gölge, Silüet & Parça Analizi',
         analogy: 'Görsel Örüntü & Mantık Analojisi',
-        odd_detail: 'Kuralı Bozan Farklı Olanı Yakalama'
+        odd_detail: 'Kuralı Bozan Farklı Olanı Yakalama',
+        // Grade 2
+        matrix_3x3: '3x3 Matris ve Kural Bulma',
+        crypto: 'BİLSEM Şifreleme (Kriptoloji)',
+        mirror_symmetry: 'Ayna Simetrisi & Yansıma',
+        spatial_memory_5s: '5 Saniye Konumsal Hafıza',
+        spatial_navigation: 'Ok Komutları & Uzamsal Algı'
       };
       titleEl.textContent = titles[activeCategory] || 'MEB Tablet Sınavı';
     }
@@ -48371,6 +48654,7 @@ const BilsemExamEngine = (function() {
     const stage = document.getElementById('bilsemStageContainer');
     if (!stage) return;
 
+    // 1. Sınıf Motorları
     if (activeCategory === 'matrix') {
       renderMatrixStage(stage, currentQuestion);
     } else if (activeCategory === 'flash_memory') {
@@ -48382,13 +48666,25 @@ const BilsemExamEngine = (function() {
     } else if (activeCategory === 'odd_detail') {
       renderOddDetailStage(stage, currentQuestion);
     }
+    // 2. Sınıf Motorları
+    else if (activeCategory === 'matrix_3x3') {
+      renderMatrix3x3Stage(stage, currentQuestion);
+    } else if (activeCategory === 'crypto') {
+      renderCryptoStage(stage, currentQuestion);
+    } else if (activeCategory === 'mirror_symmetry') {
+      renderMirrorStage(stage, currentQuestion);
+    } else if (activeCategory === 'spatial_memory_5s') {
+      renderSpatialMemoryStage(stage, currentQuestion);
+    } else if (activeCategory === 'spatial_navigation') {
+      renderSpatialNavigationStage(stage, currentQuestion);
+    }
   }
 
-  // 5. KATEGORİ RENDER MOTORLARI
+  // 5. KATEGORİ RENDER MOTORLARI (1. SINIF)
 
   // 🧩 KATEGORİ 1: 2x2 MATRİS
   function renderMatrixStage(container, q) {
-    const cellsHtml = q.cells.map((cell, idx) => {
+    const cellsHtml = q.cells.map(cell => {
       if (cell === '?') {
         return `<div class="matrix-2x2-cell empty-slot" id="bilsemMatrixTargetSlot">?</div>`;
       }
@@ -48458,7 +48754,6 @@ const BilsemExamEngine = (function() {
         clearInterval(countdownTimer);
         countdownTimer = null;
 
-        // 4 Saniye bitti: Perdeyi kapat ve seçenekleri aç!
         const disp = document.getElementById('bilsemMemoryDisplay');
         const optWrap = document.getElementById('bilsemMemoryOptionsWrap');
         if (disp) {
@@ -48487,13 +48782,11 @@ const BilsemExamEngine = (function() {
   // 🔍 KATEGORİ 3: GÖLGE VE SİLÜET
   function renderShadowStage(container, q) {
     const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
-    const optsHtml = shuffledOpts.map(opt => {
-      return `
-        <button class="bilsem-opt-card opt-silhouette" data-val="${opt}" type="button" title="Gölge Seçeneği">
-          ${opt}
-        </button>
-      `;
-    }).join('');
+    const optsHtml = shuffledOpts.map(opt => `
+      <button class="bilsem-opt-card opt-silhouette" data-val="${opt}" type="button" title="Gölge Seçeneği">
+        ${opt}
+      </button>
+    `).join('');
 
     container.innerHTML = `
       <div class="bilsem-shadow-box">
@@ -48520,9 +48813,9 @@ const BilsemExamEngine = (function() {
   // 🔁 KATEGORİ 4: ANALOJİ VE ÖRÜNTÜ
   function renderAnalogyStage(container, q) {
     const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
-    const optsHtml = shuffledOpts.map(opt => {
-      return `<button class="bilsem-opt-card" data-val="${opt}" type="button" style="font-size:1.05rem; padding:6px 12px; width:auto; min-width:110px;">${opt}</button>`;
-    }).join('');
+    const optsHtml = shuffledOpts.map(opt => `
+      <button class="bilsem-opt-card" data-val="${opt}" type="button" style="font-size:1.05rem; padding:6px 12px; width:auto; min-width:110px;">${opt}</button>
+    `).join('');
 
     container.innerHTML = `
       <div class="bilsem-analogy-box">
@@ -48554,9 +48847,9 @@ const BilsemExamEngine = (function() {
   // 🕵️ KATEGORİ 5: FARKLI OLANI YAKALAMA
   function renderOddDetailStage(container, q) {
     const shuffledItems = [...q.items].sort(() => Math.random() - 0.5);
-    const itemsHtml = shuffledItems.map(item => {
-      return `<button class="bilsem-odd-card" data-val="${item}" type="button">${item}</button>`;
-    }).join('');
+    const itemsHtml = shuffledItems.map(item => `
+      <button class="bilsem-odd-card" data-val="${item}" type="button">${item}</button>
+    `).join('');
 
     container.innerHTML = `
       <div class="bilsem-odd-box">
@@ -48577,7 +48870,308 @@ const BilsemExamEngine = (function() {
     });
   }
 
-  // 6. CEVAP KONTROLÜ VE OTOMATİK GEÇİŞ (1.3 SANİYE)
+  // ==========================================================================
+  // 6. KATEGORİ RENDER MOTORLARI (2. SINIF)
+  // ==========================================================================
+
+  // 🕸️ KATEGORİ 2.1: 3x3 MATRİS VE KURAL BULMA
+  function renderMatrix3x3Stage(container, q) {
+    const cellsHtml = q.grid.map(cell => {
+      if (cell === '?') {
+        return `<div class="matrix-3x3-cell empty-slot" id="bilsemMatrix3x3Slot">?</div>`;
+      }
+      return `<div class="matrix-3x3-cell">${cell}</div>`;
+    }).join('');
+
+    const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
+    const optsHtml = shuffledOpts.map(opt => `
+      <button class="bilsem-opt-card" data-val="${opt}" type="button">${opt}</button>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="bilsem-matrix-wrap">
+        <div class="bilsem-matrix-3x3">
+          ${cellsHtml}
+        </div>
+        <div class="bilsem-options-wrap">
+          <div class="bilsem-options-title">3x3 matrisi tamamlayan doğru parçayı dokunarak seç:</div>
+          <div class="bilsem-options-grid">
+            ${optsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelectorAll('.bilsem-opt-card').forEach(btn => {
+      btn.addEventListener('click', function() {
+        handleOptionClick(this, this.getAttribute('data-val'), q.correct);
+      });
+    });
+  }
+
+  // 🔐 KATEGORİ 2.2: BİLSEM ŞİFRELEME (KRİPTOLOJİ)
+  function renderCryptoStage(container, q) {
+    const cluesHtml = q.clues.map(c => `
+      <div class="bilsem-clue-row">
+        <div class="clue-symbols">${c.s.join(' ')}</div>
+        <span class="clue-arrow">➔</span>
+        <div class="clue-code">${c.c}</div>
+      </div>
+    `).join('');
+
+    const targetSymbolsHtml = q.target.join(' ');
+    const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
+    const optsHtml = shuffledOpts.map(opt => `
+      <button class="bilsem-opt-card" data-val="${opt}" type="button" style="font-family:monospace; font-size:1.4rem; font-weight:800; width:auto; min-width:96px; padding:6px 14px; letter-spacing:2px;">
+        ${opt.split('').join(' ')}
+      </button>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="bilsem-crypto-wrap">
+        <div class="bilsem-clues-box">
+          <div style="font-size:0.8rem; font-weight:800; color:#64748b; margin-bottom:4px; text-transform:uppercase;">Örnek Şifre Eşleştirmeleri:</div>
+          ${cluesHtml}
+        </div>
+        <div class="bilsem-crypto-target-row">
+          <div style="font-size:1.8rem; font-weight:800;">${targetSymbolsHtml}</div>
+          <span style="font-size:1.4rem; font-weight:800; color:#2563eb;">➔</span>
+          <div class="target-slots">
+            <span class="target-slot-digit" id="crSlot0">?</span>
+            <span class="target-slot-digit" id="crSlot1">?</span>
+            <span class="target-slot-digit" id="crSlot2">?</span>
+          </div>
+        </div>
+        <div class="bilsem-options-wrap">
+          <div class="bilsem-options-title">Doğru şifreyi dokunarak seç:</div>
+          <div class="bilsem-options-grid">
+            ${optsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelectorAll('.bilsem-opt-card').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const selectedVal = this.getAttribute('data-val');
+        if (selectedVal === q.correct) {
+          const digits = selectedVal.split('');
+          const s0 = document.getElementById('crSlot0');
+          const s1 = document.getElementById('crSlot1');
+          const s2 = document.getElementById('crSlot2');
+          if (s0) s0.textContent = digits[0] || '';
+          if (s1) s1.textContent = digits[1] || '';
+          if (s2) s2.textContent = digits[2] || '';
+        }
+        handleOptionClick(this, selectedVal, q.correct);
+      });
+    });
+  }
+
+  // 🪞 KATEGORİ 2.3: AYNA SİMETRİSİ VE YANSIMA
+  function renderMirrorStage(container, q) {
+    const leftVisualHtml = q.left.join(' ');
+    const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
+    const optsHtml = shuffledOpts.map(opt => `
+      <button class="bilsem-opt-card" data-val="${opt.join('')}" type="button" style="font-size:1.8rem; width:auto; min-width:96px; padding:6px 12px; gap:6px;">
+        ${opt.join(' ')}
+      </button>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="bilsem-mirror-wrap">
+        <div class="bilsem-mirror-stage">
+          <div class="mirror-panel">
+            <span>${leftVisualHtml}</span>
+          </div>
+          <div class="mirror-axis-line">
+            <span>🪞</span>
+            <span>A</span>
+            <span>Y</span>
+            <span>N</span>
+            <span>A</span>
+            <span>🪞</span>
+          </div>
+          <div class="mirror-panel target-empty" id="bilsemMirrorSlot">
+            <span>?</span>
+          </div>
+        </div>
+        <div class="bilsem-options-wrap">
+          <div class="bilsem-options-title">Aynadaki doğru simetrik yansımayı seç:</div>
+          <div class="bilsem-options-grid">
+            ${optsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    const correctStr = q.correct.join('');
+    container.querySelectorAll('.bilsem-opt-card').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const val = this.getAttribute('data-val');
+        if (val === correctStr) {
+          const slot = document.getElementById('bilsemMirrorSlot');
+          if (slot) {
+            slot.classList.remove('target-empty');
+            slot.innerHTML = `<span>${q.correct.join(' ')}</span>`;
+          }
+        }
+        handleOptionClick(this, val, correctStr);
+      });
+    });
+  }
+
+  // ⏱️ KATEGORİ 2.4: 5 SANİYE GÖRSEL & KONUMSAL HAFIZA (3x3 Izgarada)
+  function renderSpatialMemoryStage(container, q) {
+    memoryPhase = 'preview';
+    const cdWrap = document.getElementById('bilsemCountdownContainer');
+    const cdSec = document.getElementById('bilsemCountdownSeconds');
+    const cdBar = document.getElementById('bilsemCountdownProgress');
+
+    if (cdWrap) cdWrap.classList.remove('hide');
+    if (cdBar) cdBar.style.width = '100%';
+
+    const previewGrid = Array(9).fill('');
+    q.items.forEach(it => {
+      previewGrid[it.pos] = it.icon;
+    });
+
+    const cellsHtml = previewGrid.map((icon, idx) => `
+      <div class="spatial-grid-cell ${icon ? '' : 'empty-cell'}" data-index="${idx}">
+        ${icon || ''}
+      </div>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="bilsem-memory-box">
+        <div class="bilsem-spatial-grid-3x3" id="bilsemSpatialMemoryGrid">
+          ${cellsHtml}
+        </div>
+        <div class="bilsem-hint-text" id="bilsemMemoryStatusText" style="text-align:center; font-weight:700; color:#4f46e5;">
+          ⏱️ Nesnelerin yerlerini aklında tut! Süre bitince kapanacak...
+        </div>
+      </div>
+    `;
+
+    countdownRemaining = 5.0;
+    const interval = 100;
+    countdownTimer = setInterval(() => {
+      countdownRemaining -= (interval / 1000);
+      if (countdownRemaining <= 0) {
+        countdownRemaining = 0;
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+
+        if (cdWrap) cdWrap.classList.add('hide');
+
+        const statusText = document.getElementById('bilsemMemoryStatusText');
+        if (statusText) {
+          statusText.textContent = `🎯 Şimdi "${q.targetIcon}" nesnesinin bulunduğu kutuya dokun!`;
+          statusText.style.color = '#e11d48';
+        }
+
+        const gridEl = document.getElementById('bilsemSpatialMemoryGrid');
+        if (gridEl) {
+          const cells = gridEl.querySelectorAll('.spatial-grid-cell');
+          cells.forEach(cell => {
+            cell.classList.add('hidden-cell');
+            cell.textContent = '❓';
+            cell.addEventListener('click', function() {
+              if (isAnswerLocked) return;
+              const clickedPos = parseInt(this.getAttribute('data-index') || '0', 10);
+              if (clickedPos === q.correctPos) {
+                isAnswerLocked = true;
+                this.classList.remove('hidden-cell');
+                this.classList.add('correct-cell');
+                this.textContent = q.targetIcon;
+                
+                try {
+                  if (typeof audio !== 'undefined') {
+                    if (typeof audio.playSuccess === 'function') audio.playSuccess();
+                    else if (typeof audio.playCorrect === 'function') audio.playCorrect();
+                  }
+                } catch (e) {}
+
+                currentScore += 10;
+                updateScoreUI();
+
+                const speechEl = document.getElementById('bilsemSpeechText');
+                if (speechEl) speechEl.textContent = '🎉 "Harika hafıza! Doğru kutuyu buldun!"';
+
+                setTimeout(() => {
+                  nextQuestion();
+                }, 1300);
+              } else {
+                this.classList.add('wrong-cell');
+                try {
+                  if (typeof audio !== 'undefined') {
+                    if (typeof audio.playWrong === 'function') audio.playWrong();
+                    else if (typeof audio.playError === 'function') audio.playError();
+                  }
+                } catch (e) {}
+                setTimeout(() => {
+                  this.classList.remove('wrong-cell');
+                }, 600);
+              }
+            });
+          });
+        }
+      } else {
+        if (cdSec) cdSec.textContent = `${countdownRemaining.toFixed(1)}s`;
+        if (cdBar) cdBar.style.width = `${(countdownRemaining / 5.0) * 100}%`;
+      }
+    }, interval);
+  }
+
+  // 🧭 KATEGORİ 2.5: UZAMSAL ALGI VE OK NAVİGASYONU (4x4 Harita)
+  function renderSpatialNavigationStage(container, q) {
+    const mapGrid = Array(16).fill('');
+    const startIdx = q.start[0] * 4 + q.start[1];
+    mapGrid[startIdx] = '🤖';
+
+    q.targets.forEach(t => {
+      const idx = t.pos[0] * 4 + t.pos[1];
+      mapGrid[idx] = t.icon;
+    });
+
+    const cellsHtml = mapGrid.map((icon, idx) => `
+      <div class="nav-grid-cell ${idx === startIdx ? 'start-cell' : ''}" data-index="${idx}">
+        ${icon || ''}
+      </div>
+    `).join('');
+
+    const arrowsHtml = q.arrows.map(arr => `<span>${arr}</span>`).join(' ');
+    const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
+    const optsHtml = shuffledOpts.map(opt => `
+      <button class="bilsem-opt-card" data-val="${opt}" type="button">${opt}</button>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="bilsem-nav-wrap">
+        <div class="bilsem-nav-commands-card">
+          <span>🧭 Robotun Komutları:</span>
+          <div class="nav-arrows-list">${arrowsHtml}</div>
+        </div>
+        <div class="bilsem-nav-grid-4x4">
+          ${cellsHtml}
+        </div>
+        <div class="bilsem-options-wrap">
+          <div class="bilsem-options-title">Robot okları takip edince hangi ödüle ulaşır?</div>
+          <div class="bilsem-options-grid">
+            ${optsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelectorAll('.bilsem-opt-card').forEach(btn => {
+      btn.addEventListener('click', function() {
+        handleOptionClick(this, this.getAttribute('data-val'), q.correct);
+      });
+    });
+  }
+
+  // 7. CEVAP KONTROLÜ VE OTOMATİK GEÇİŞ (1.3 SANİYE)
   function handleOptionClick(btnElement, selectedValue, correctValue) {
     if (isAnswerLocked) return;
 
@@ -48585,7 +49179,6 @@ const BilsemExamEngine = (function() {
       isAnswerLocked = true;
       btnElement.classList.add('correct');
 
-      // Ses efekti
       try {
         if (typeof audio !== 'undefined') {
           if (typeof audio.playSuccess === 'function') audio.playSuccess();
@@ -48593,15 +49186,12 @@ const BilsemExamEngine = (function() {
         }
       } catch (e) {}
 
-      // Puan Artışı
       currentScore += 10;
       updateScoreUI();
 
-      // Moli Tebrik
       const speechEl = document.getElementById('bilsemSpeechText');
-      if (speechEl) speechEl.textContent = '🎉 "Harika! Doğru buldun! Sıradaki soruya geçiyoruz..."';
+      if (speechEl) speechEl.textContent = '🎉 "Mükemmel! Doğru buldun! Sıradaki soruya geçiyoruz..."';
 
-      // 1.3 Saniye sonra sıradaki soruya geç
       setTimeout(() => {
         nextQuestion();
       }, 1300);
@@ -48635,7 +49225,7 @@ const BilsemExamEngine = (function() {
     } catch (e) {}
   }
 
-  // 7. ETKİNLİK DİNLEYİCİLERİNİ BAĞLA
+  // 8. ETKİNLİK DİNLEYİCİLERİNİ BAĞLA
   function init() {
     // 1. Vitrindeki Kartlar
     const cards = document.querySelectorAll('.bilsem-grade-card');
@@ -48645,6 +49235,8 @@ const BilsemExamEngine = (function() {
         const grade = parseInt(this.getAttribute('data-bilsem-grade') || '1', 10);
         if (grade === 1) {
           open({ grade: 1, category: 'matrix' });
+        } else if (grade === 2) {
+          open({ grade: 2, category: 'matrix_3x3' });
         } else {
           if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
             MindGamesEngine.open({ grade: grade });
@@ -48683,16 +49275,7 @@ const BilsemExamEngine = (function() {
       });
     }
 
-    // 5. Kategori Sekmeleri
-    const tabBtns = document.querySelectorAll('#bilsemExamTabs .bilsem-tab-btn');
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const cat = this.getAttribute('data-cat');
-        if (cat) switchCategory(cat);
-      });
-    });
-
-    // 6. Yönergeyi Dinle Butonu
+    // 5. Yönergeyi Dinle Butonu
     const voiceBtn = document.getElementById('btnBilsemRepeatVoice');
     if (voiceBtn) {
       voiceBtn.addEventListener('click', function() {
@@ -48700,7 +49283,7 @@ const BilsemExamEngine = (function() {
       });
     }
 
-    // 7. Müzik Aç / Kapat Butonu
+    // 6. Müzik Aç / Kapat Butonu
     const soundBtn = document.getElementById('btnBilsemSoundToggle');
     if (soundBtn) {
       soundBtn.addEventListener('click', function() {
