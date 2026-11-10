@@ -49513,7 +49513,7 @@ matrix: [
     const shuffledOpts = [...q.options].sort(() => Math.random() - 0.5);
     const optsHtml = shuffledOpts.map(opt => `
       <button class="bilsem-opt-card opt-silhouette" data-val="${opt}" type="button" title="Gölge Seçeneği">
-        ${opt}
+        <span class="silhouette-emoji">${opt}</span>
       </button>
     `).join('');
 
