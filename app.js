@@ -25428,6 +25428,12 @@
    */
   function openHomePage() {
     lockInteractions(400);
+    try {
+      if (window.location.hash || window.location.search) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+    } catch (e) {}
+    state.isDirectEnglishMode = false;
     if (typeof stopAllAudio === 'function') stopAllAudio();
     setTimeout(() => { if (typeof window.playHomeMusic === 'function') window.playHomeMusic(); }, 50);
     state.currentSection = 'home';
@@ -26821,6 +26827,10 @@
    */
   function returnToLobby() {
     lockInteractions(400);
+    try {
+      history.replaceState(null, '', window.location.pathname);
+    } catch (e) {}
+    state.isDirectEnglishMode = false;
     // 1) Sesleri ve konuşmayı anında tamamen durdur
     audio.stopAllAudio();
     if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.stop(true);
@@ -33968,6 +33978,7 @@
     const btnEnglishBackHome = document.getElementById('btnEnglishBackHome');
     if (btnEnglishBackHome) {
       addTapListener(btnEnglishBackHome, () => {
+        try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
         if (typeof openHomePage === 'function') openHomePage();
       });
     }
@@ -34058,6 +34069,13 @@
     }
     const hash = (window.location.hash || '').toLowerCase();
     const path = (window.location.pathname || '').toLowerCase();
+
+    // Hash veya rota yoksa her zaman temiz Ana Sayfayı aç
+    if (!hash || hash === '#' || hash === '#home' || hash === '#lobi') {
+      try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
+      if (typeof openHomePage === 'function') openHomePage();
+      return;
+    }
 
     if (hash === '#admin-panel' || hash === '#/admin-panel' || path.endsWith('/admin-panel') || hash === '#admin-raporlar' || hash === '#/admin-raporlar') {
       setTimeout(() => {
@@ -34576,6 +34594,12 @@
     updatePlayerNamesUI();
     initDailyRiddle();
     renderSubjects();
+    try {
+      const initHash = (window.location.hash || '').toLowerCase();
+      if (!initHash || initHash === '#' || initHash === '#home') {
+        history.replaceState(null, '', window.location.pathname);
+      }
+    } catch (e) {}
     openHomePage(); // Varsayılan olarak Ana Sayfa Vitrini ile başla!
 
     // Kayıtlı ayarları UI'a yansıt
