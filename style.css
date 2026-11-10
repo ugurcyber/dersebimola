@@ -33543,9 +33543,20 @@ body.is-game-active .universal-game-bgm-fab {
 }
 
 /* ==========================================================================
-   POPÜLER OYUNLAR & TÜM SAHNELER TAM EKRAN DÜZENİ (V9.6.1)
+   POPÜLER OYUNLAR & TÜM SAHNELER TAM EKRAN DİKEY YERLEŞİM (FULL-HEIGHT V9.7.1)
    ========================================================================== */
-/* 1. Popüler Oyunlar aktifken diğer TÜM kardeş sahneleri sıfırla ve gizle (üstteki boşluğu yok et!) */
+/* 1. Üst kapsayıcılarda dikey ortalamayı sıfırla ve en tepeye yasla */
+.app-layout:has(#arcadeHubSection:not(.hide)),
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)),
+#viewLobby:has(#arcadeHubSection:not(.hide)),
+.lobby-content:has(#arcadeHubSection:not(.hide)) {
+  justify-content: flex-start !important;
+  align-items: center !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* 2. Popüler Oyunlar aktifken diğer TÜM kardeş sahneleri sıfırla ve gizle */
 .lobby-content:has(#arcadeHubSection:not(.hide)) > *:not(#arcadeHubSection),
 #viewLobby:has(#arcadeHubSection:not(.hide)) .home-showcase-section,
 #viewLobby:has(#arcadeHubSection:not(.hide)) #homeShowcaseSection,
@@ -33569,14 +33580,15 @@ body.is-game-active .universal-game-bgm-fab {
   overflow: hidden !important;
 }
 
-/* 2. Popüler Oyunlar Ana Kapsayıcısı: En baştan başlasın, tüm ekranı kullansın */
-#arcadeHubSection:not(.hide) {
-  margin: 4px auto 0 auto !important;
-  padding: 4px clamp(10px, 1.6vw, 24px) 24px clamp(10px, 1.6vw, 24px) !important;
+/* 3. Popüler Oyunlar Ana Kapsayıcısı: En baştan başlasın, tüm ekranı dikeyde ferah kullansın */
+#arcadeHubSection:not(.hide),
+.arcade-hub-section:not(.hide) {
+  margin: 0 auto !important;
+  padding: 6px clamp(10px, 1.6vw, 24px) 30px clamp(10px, 1.6vw, 24px) !important;
   width: 98% !important;
   max-width: 1380px !important;
-  height: calc(100vh - 76px) !important;
-  max-height: calc(100vh - 76px) !important;
+  min-height: calc(100vh - 76px) !important;
+  height: auto !important;
   overflow-y: auto !important;
   align-self: flex-start !important;
   justify-content: flex-start !important;
@@ -33584,7 +33596,7 @@ body.is-game-active .universal-game-bgm-fab {
   flex: 1 1 auto;
 }
 
-/* 3. Oyun Kartları Vitrini */
+/* 4. Oyun Kartları Vitrini */
 #arcadeHubSection .arcade-cards-view {
   margin: 0 auto !important;
   width: 100%;
@@ -33600,7 +33612,7 @@ body.is-game-active .universal-game-bgm-fab {
   overflow: visible !important;
 }
 
-/* 4. Aktif Oyun Sahnesi: Ekranın tam genişliğini kullansın, tek ekrana sığsın */
+/* 5. Aktif Oyun Sahnesi: Üstten boşluksuz, en tepeden başlasın */
 #arcadeStageView:not(.hide),
 .arcade-stage-view:not(.hide) {
   width: 100% !important;
@@ -33610,23 +33622,51 @@ body.is-game-active .universal-game-bgm-fab {
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
+  align-items: center !important;
   box-sizing: border-box !important;
 }
 
 .arcade-stage-topbar {
-  margin-bottom: 8px !important;
+  width: 95% !important;
+  max-width: 1100px !important;
+  margin: 2px auto 8px auto !important;
   padding: 8px 16px !important;
   border-radius: 16px !important;
+  box-sizing: border-box !important;
 }
 
-/* 5. ⚔️ Çarpma Savaşı / Halat Çekme: Ekranın tamamını kullanan ferah ve nizami düzen */
-.arc-tug-arena {
+.arcade-stage-canvas {
   width: 100% !important;
-  max-width: 1320px !important;
-  margin: 0 auto !important;
-  padding: 10px 18px !important;
-  gap: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 0 !important;
   box-sizing: border-box !important;
+}
+
+/* 6. Tüm Popüler Oyun Ana Panelleri (Akıllı XOX, Halat Çekme, Sudoku, Hedef 4 vb.):
+   Üst menünün hemen altından başlasın ve ekranın geri kalanını dikeyde ferahça doldursun */
+.arc-tug-arena,
+.arc-xox-arena,
+.arc-sudoku-arena,
+.c4-arena-wrap,
+.arc-bomb-arena,
+.arc-mole-arena,
+.arc-wheel-arena,
+.arc-memory-arena,
+.arc-flower-arena,
+.arc-buzzer-arena,
+.arc-tangram-arena,
+.arc-craft-arena,
+.arc-energy-arena,
+.arc-sync-arena {
+  width: 95% !important;
+  max-width: 1100px !important;
+  margin: 2px auto 30px auto !important;
+  padding: 14px 18px !important;
+  box-sizing: border-box !important;
+  align-self: center !important;
 }
 
 .tug-top-scoreboard {

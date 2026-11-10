@@ -15440,7 +15440,13 @@
       if (el) el.classList.add('hide');
     });
     if (arcadeSec) arcadeSec.scrollTop = 0;
+    if (stageView) stageView.scrollTop = 0;
+    const viewLobbyEl = document.getElementById('viewLobby');
+    if (viewLobbyEl) viewLobbyEl.scrollTop = 0;
+    const lobbyContentEl = document.querySelector('.lobby-content');
+    if (lobbyContentEl) lobbyContentEl.scrollTop = 0;
     window.scrollTo(0, 0);
+    try { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; } catch (e) {}
 
     try {
       if (window.location.hash !== '#populer-oyunlar' && window.location.hash !== '#oyunlar') {
