@@ -940,7 +940,48 @@
               </div>
             </div>
 
-            <!-- 4 Oyun Seçim Sekmeleri (Tabs) -->
+            <!-- 1) SINIF SEÇİCİ SEKME BARI (Anasınıfı & 1. Sınıf | 2. Sınıf | 3. Sınıf | 4. Sınıf) -->
+            <div class="funlab-grade-tabs-bar" id="enGradeTabsBar">
+              <div class="funlab-grade-tabs-label">📚 Sınıfını Seç:</div>
+              <div class="funlab-grade-tabs" id="enGradeTabs" role="tablist" aria-label="İngilizce Sınıf Seçimi">
+                <button class="funlab-grade-tab active" data-grade="1" type="button" role="tab" title="Anasınıfı &amp; 1. Sınıf İngilizce">
+                  <span class="tab-g-icon">🎒</span>
+                  <span class="tab-g-text">Anasınıfı &amp; 1. Sınıf</span>
+                </button>
+                <button class="funlab-grade-tab" data-grade="2" type="button" role="tab" title="2. Sınıf İngilizce">
+                  <span class="tab-g-icon">📗</span>
+                  <span class="tab-g-text">2. Sınıf</span>
+                </button>
+                <button class="funlab-grade-tab" data-grade="3" type="button" role="tab" title="3. Sınıf İngilizce">
+                  <span class="tab-g-icon">📘</span>
+                  <span class="tab-g-text">3. Sınıf</span>
+                </button>
+                <button class="funlab-grade-tab" data-grade="4" type="button" role="tab" title="4. Sınıf İngilizce">
+                  <span class="tab-g-icon">📙</span>
+                  <span class="tab-g-text">4. Sınıf</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2) SEÇİLİ SINIFIN MÜFREDAT KARTLARI (Şıksız İnteraktif Oyunlar Vitrini) -->
+            <div class="funlab-curriculum-section" id="enCurriculumSection">
+              <div class="en-curriculum-header">
+                <div class="en-curr-title-wrap">
+                  <span class="en-curr-badge" id="enCurrGradeBadge">1. Sınıf MEB Maarif Modeli</span>
+                  <h3 class="en-curr-heading" id="enCurrHeading">Şıksız &amp; İnteraktif İngilizce Oyunları</h3>
+                </div>
+                <div class="en-curr-units-rail" id="enCurrUnitsRail">
+                  <!-- Seçili sınıfın ünite hapları dinamik render edilecek -->
+                </div>
+              </div>
+
+              <!-- 3 Adet Şıksız Oyun Kartı Grid'i (Mobilde 2 sütunlu kompakt grid) -->
+              <div class="en-curriculum-grid" id="enCurriculumGrid">
+                <!-- JS ile aktif sınıfın 3 şıksız oyunu dinamik listelenecek -->
+              </div>
+            </div>
+
+            <!-- 3) OYUN SEÇİM VE ETKİNLİK ARENASI -->
             <div class="funlab-game-tabs" id="enLabGameTabs" role="tablist" aria-label="Oyun Seçimi">
               <button class="funlab-tab active" data-game="wordMatch" type="button" role="tab">
                 <span class="tab-emoji">🧩</span>
