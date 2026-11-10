@@ -33353,3 +33353,49 @@ body.is-game-active .universal-game-bgm-fab {
 }
 .bilsem-analogy-box .analogy-item.empty-slot { min-width: 70px; font-size: 1.6rem; }
 .bilsem-analogy-box .bilsem-opt-card { color: #1e293b; font-weight: 800; height: auto; min-height: 56px; }
+
+/* ==========================================================================
+   MOBİL BİLSEM GÖRÜNÜRLÜK & HERO BUTONU (V9.3.0)
+   ========================================================================== */
+@keyframes blinkPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.badge-blinking-new.mini-badge { background: #ff1744 !important; color: #fff !important; font-weight: 900 !important; animation: blinkPulse 1.2s ease-in-out infinite !important; }
+
+.stage-cta-container { flex-wrap: wrap; justify-content: center; }
+.stage-btn-bilsem-hero {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 12px 26px; border: 0; border-radius: 999px; cursor: pointer;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff; font-family: inherit; font-weight: 900; font-size: 1.1rem;
+  box-shadow: 0 6px 0 #4338ca, 0 10px 24px rgba(99, 102, 241, 0.4);
+  transition: transform 0.15s ease;
+}
+.stage-btn-bilsem-hero:hover { transform: translateY(-2px); }
+.stage-btn-bilsem-hero:active { transform: translateY(3px); box-shadow: 0 3px 0 #4338ca; }
+.stage-btn-bilsem-hero .bilsem-hero-emoji { font-size: 1.3rem; }
+
+/* Mobilde sol menü (çekmece) BİLSEM butonu daima görünür */
+#btnSidebarBilsem { display: flex !important; visibility: visible !important; opacity: 1 !important; position: relative; }
+#btnSidebarBilsem .mini-badge { margin-left: auto; white-space: nowrap; }
+.sidebar-grade-nav { overflow: visible !important; }
+
+@media (max-width: 768px) {
+  .stage-cta-container { flex-direction: column !important; align-items: center !important; gap: 10px !important; }
+  .stage-btn-bilsem-hero {
+    width: min(300px, 86vw) !important; padding: 11px 20px !important; font-size: 1.05rem !important; white-space: nowrap;
+  }
+  .bilsem-hub-section { padding: 12px 10px 32px 10px !important; overflow-x: hidden; }
+  .bilsem-hub-section .bilsem-levels-grid {
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; width: 100%;
+  }
+  .bilsem-hub-section .bilsem-grade-card { min-width: 0 !important; width: 100% !important; padding: 10px 8px !important; box-sizing: border-box; }
+  .bilsem-hub-section .bilsem-card-title { font-size: 0.98rem !important; }
+  .bilsem-hub-section .bilsem-card-subtitle { font-size: 0.74rem !important; }
+  .bilsem-hub-section .bilsem-card-features span { font-size: 0.68rem !important; padding: 3px 6px !important; }
+  .bilsem-hub-section .bilsem-card-action { flex-wrap: wrap; gap: 6px; }
+  .bilsem-hub-section .btn-bilsem-card-start { font-size: 0.78rem !important; padding: 7px 8px !important; }
+  .bilsem-hub-section .bilsem-showcase-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .bilsem-hub-section .bilsem-section-title { font-size: 1.15rem !important; }
+}

@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=9.2.2">
+  <link rel="stylesheet" href="style.css?v=9.3.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -180,13 +180,6 @@
             <span class="grade-icon-box grade-icon-4"><img src="assets/icons/3d/books.webp" class="chip-3d-icon" alt="4. Sınıf" width="22" height="22" loading="lazy" decoding="async"></span>
             <span class="grade-chip-name">4. Sınıf</span>
           </button>
-          <!-- 1) İNGİLİZCE MENÜSÜ (🇬🇧 İngilizce Yönlendirmesi) -->
-          <a class="grade-chip chip-english" href="#ingilizce" data-route="/ingilizce" id="btnSidebarEnglish" title="İngilizce Eğlenceli Kelime ve Soru Düelloları" onclick="if(window.navigateTo){window.navigateTo('ingilizce'); return false;}">
-            <span class="grade-icon-box grade-icon-english">
-              <span class="chip-flag-icon" aria-hidden="true">🇬🇧</span>
-            </span>
-            <span class="grade-chip-name">🇬🇧 İngilizce</span>
-          </a>
           <!-- 🧠 BİLSEM MENÜSÜ (/bilsem Yönlendirmesi) -->
           <a class="grade-chip chip-bilsem" href="#bilsem" data-route="/bilsem" id="btnSidebarBilsem" title="BİLSEM Hazırlık Akademisi (1-4. Sınıf MEB Tablet Sınavı)" onclick="if(window.navigateTo){window.navigateTo('bilsem'); return false;} else if(window.openBilsemHub){window.openBilsemHub(); return false;}">
             <span class="grade-icon-box grade-icon-bilsem">
@@ -194,6 +187,13 @@
             </span>
             <span class="grade-chip-name">🧠 BİLSEM Akademisi</span>
             <span class="badge-blinking-new mini-badge" aria-hidden="true">🔴 YENİ</span>
+          </a>
+          <!-- 1) İNGİLİZCE MENÜSÜ (🇬🇧 İngilizce Yönlendirmesi) -->
+          <a class="grade-chip chip-english" href="#ingilizce" data-route="/ingilizce" id="btnSidebarEnglish" title="İngilizce Eğlenceli Kelime ve Soru Düelloları" onclick="if(window.navigateTo){window.navigateTo('ingilizce'); return false;}">
+            <span class="grade-icon-box grade-icon-english">
+              <span class="chip-flag-icon" aria-hidden="true">🇬🇧</span>
+            </span>
+            <span class="grade-chip-name">🇬🇧 İngilizce</span>
           </a>
           <!-- 2) OYUNLAR MENÜSÜ (/populer-oyunlar Yönlendirmesi) -->
           <a class="grade-chip chip-duels" href="#populer-oyunlar" data-route="/populer-oyunlar" id="btnSidebarDuels" title="Popüler Oyunlar - Zeka ve Beceri Merkezi" onclick="if(window.navigateTo){window.navigateTo('populer-oyunlar'); return false;} else if(window.handleQuickDuelsClick){window.handleQuickDuelsClick(event); return false;}">
@@ -415,17 +415,7 @@
                 <!-- Sınıflar ile Özel Butonlar Arasında Zarif Ayırıcı Çizgi -->
                 <div class="stage-sidebar-divider" aria-hidden="true"></div>
 
-                <a class="stage-grade-card card-english" id="btnStageQuickEnglish" href="#ingilizce" data-route="/ingilizce" role="button" tabindex="0" title="İngilizce (Fotoğraflı &amp; Görselli Kelime Düelloları)">
-                  <div class="grade-icon-cube icon-theme-indigo">
-                    <img src="assets/icons/3d/globe.webp" class="grade-card-3d-img" alt="İngilizce" width="30" height="30" loading="lazy" decoding="async">
-                  </div>
-                  <div class="grade-card-text-group">
-                    <span class="grade-card-label">İngilizce</span>
-                  </div>
-                  <span class="grade-card-chevron" aria-hidden="true">›</span>
-                </a>
-
-                <!-- 🧠 BİLSEM AKADEMİSİ MENÜ KARTI (İNGİLİZCE'NİN HEMEN ALTINDA) -->
+                <!-- 🧠 BİLSEM AKADEMİSİ MENÜ KARTI (4. SINIF İLE İNGİLİZCE ARASINDA) -->
                 <div class="stage-grade-card card-bilsem" id="btnStageQuickBilsem" role="button" tabindex="0" title="BİLSEM Akademisi (1-4. Sınıf)" onclick="if(window.navigateTo){window.navigateTo('bilsem');}else if(typeof openBilsemHub==='function'){openBilsemHub();}">
                   <div class="grade-icon-cube icon-theme-purple">
                     <span class="stage-card-emoji-icon" aria-hidden="true">🧠</span>
@@ -436,6 +426,17 @@
                   <span class="badge-blinking-new mini-badge" aria-hidden="true">🔴 YENİ</span>
                   <span class="grade-card-chevron" aria-hidden="true">›</span>
                 </div>
+
+                <a class="stage-grade-card card-english" id="btnStageQuickEnglish" href="#ingilizce" data-route="/ingilizce" role="button" tabindex="0" title="İngilizce (Fotoğraflı &amp; Görselli Kelime Düelloları)">
+                  <div class="grade-icon-cube icon-theme-indigo">
+                    <img src="assets/icons/3d/globe.webp" class="grade-card-3d-img" alt="İngilizce" width="30" height="30" loading="lazy" decoding="async">
+                  </div>
+                  <div class="grade-card-text-group">
+                    <span class="grade-card-label">İngilizce</span>
+                  </div>
+                  <span class="grade-card-chevron" aria-hidden="true">›</span>
+                </a>
+
 
                 <div class="stage-grade-card card-duels" id="btnStageQuickDuels" role="button" tabindex="0" title="Popüler Oyunlar & Düellolar" onclick="if(window.navigateTo){window.navigateTo('populer-oyunlar');}else if(typeof openArcadeHub==='function'){openArcadeHub();}">
                   <div class="grade-icon-cube icon-theme-duel">
@@ -479,6 +480,11 @@
                       </svg>
                     </span>
                     <span class="btn-text">Hemen Başla</span>
+                  </button>
+                  <button class="stage-btn-bilsem-hero" id="btnHeroBilsem" type="button" aria-label="BİLSEM Hazırlık" onclick="if(window.navigateTo){window.navigateTo('bilsem');}else if(window.openBilsemHub){window.openBilsemHub();}">
+                    <span class="bilsem-hero-emoji" aria-hidden="true">🧠</span>
+                    <span class="bilsem-hero-text">BİLSEM Hazırlık</span>
+                    <span class="badge-blinking-new mini-badge" aria-hidden="true">🔴 YENİ</span>
                   </button>
                 </div>
 
@@ -3548,6 +3554,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=9.2.2" defer></script>
+  <script src="app.js?v=9.3.0" defer></script>
 </body>
 </html>
