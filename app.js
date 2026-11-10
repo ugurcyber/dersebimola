@@ -24573,10 +24573,6 @@
     if (e && e.stopPropagation) e.stopPropagation();
     if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
     if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
-    if (typeof EnglishFunLab !== 'undefined' && EnglishFunLab.open) {
-      EnglishFunLab.open({ grade: (state && state.currentGrade) || 1, fromClass: false });
-      return;
-    }
 
     const modalSelectGrade = document.getElementById('modalSelectGrade');
     if (modalSelectGrade && typeof closeModal === 'function') closeModal(modalSelectGrade);
@@ -24629,9 +24625,13 @@
 
   // İngilizce Sınıf Kartına Dokunulduğunda İlgili Sınıfın İngilizce Oyun Havuzuna Geçiş
       function openEnglishGradeGames(grade) {
-    const g = parseInt(grade, 10) || 2;
+    const g = parseInt(grade, 10) || 1;
     if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
     if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
+    if (typeof EnglishFunLab !== 'undefined' && EnglishFunLab.open) {
+      EnglishFunLab.open({ grade: g, fromClass: false });
+      return;
+    }
 
     state.isDirectEnglishMode = true;
     state.currentGrade = g;
@@ -34996,7 +34996,7 @@
         if (this.fromClass && state && state.currentGrade) {
           btnBack.innerHTML = `<span class="back-icon" aria-hidden="true">‹</span><span>${state.currentGrade}. Sınıfa Dön</span>`;
         } else {
-          btnBack.innerHTML = `<span class="back-icon" aria-hidden="true">‹</span><span>Ana Sayfa</span>`;
+          btnBack.innerHTML = `<span class="back-icon" aria-hidden="true">‹</span><span>Sınıf Seçimi</span>`;
         }
       }
 
@@ -35022,6 +35022,8 @@
 
       if (this.fromClass && state && state.currentGrade && typeof selectGrade === 'function') {
         selectGrade(state.currentGrade);
+      } else if (typeof openEnglishHub === 'function') {
+        openEnglishHub();
       } else if (typeof openHomePage === 'function') {
         openHomePage();
       }
