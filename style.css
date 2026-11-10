@@ -31290,3 +31290,452 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 22px;
   }
 }
+
+
+/* ==========================================================================
+   🧠 AKIL VE ZEKA OYUNLARI 2. AŞAMA (3. VE 4. SINIF BİLSEM OYUNLARI)
+   (Sayı Piramidi, 3D Birim Küp, Eşit Terazi, 3x3 Matris,
+    İleri Kriptoloji, İşlem Karesi, Küp Açınımı, 4x4 KenKen)
+   ========================================================================== */
+
+/* 1. SAYI PİRAMİDİ (pyramid_sum) */
+.pyramid-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 440px;
+  margin: 10px auto 16px;
+  padding: 16px;
+  background: linear-gradient(180deg, #FDF4FF 0%, #FAE8FF 100%);
+  border: 2px solid #F0ABFC;
+  border-radius: 24px;
+  box-shadow: 0 6px 20px rgba(192, 38, 211, 0.08);
+}
+
+.pyramid-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pyramid-cell {
+  width: 68px;
+  height: 60px;
+  background: #FFFFFF;
+  border: 2.5px solid #D946EF;
+  border-bottom: 5px solid #C026D3;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #86198F;
+  box-shadow: 0 4px 10px rgba(217, 70, 239, 0.15);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.pyramid-cell.target-slot {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  border-bottom-color: #D97706;
+  color: #D97706;
+  font-size: 1.5rem;
+  animation: pulseSlot 1.5s infinite alternate;
+}
+
+/* 2. 3D BİRİM KÜP SAYMA (cube_count) */
+.cube-isometric-stage {
+  max-width: 480px;
+  margin: 0 auto 16px;
+  padding: 16px;
+  background: linear-gradient(180deg, #F0FDF4 0%, #DCFCE7 100%);
+  border: 2px solid #86EFAC;
+  border-radius: 24px;
+  text-align: center;
+}
+
+.cube-svg-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  margin-bottom: 12px;
+}
+
+.cube-svg-canvas {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 16px rgba(16, 185, 129, 0.2));
+}
+
+/* 3. EŞİT TERAZİ MANTIĞI (scale_balance) */
+.scale-stage {
+  max-width: 540px;
+  margin: 0 auto 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scale-box {
+  background: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.scale-box.hint-scale {
+  border-left: 6px solid #3B82F6;
+  background: #F8FAFC;
+}
+
+.scale-box.question-scale {
+  border-left: 6px solid #F59E0B;
+  background: #FFFBEB;
+}
+
+.scale-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #64748B;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scale-visual-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.scale-pan-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 110px;
+  min-height: 54px;
+  padding: 6px 14px;
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  border-radius: 14px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1E293B;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.scale-pan-box.target-slot {
+  background: #FEF3C7;
+  border: 2.5px dashed #F59E0B;
+  color: #D97706;
+  animation: pulseSlot 1.5s infinite alternate;
+}
+
+.scale-center-fulcrum {
+  font-size: 26px;
+  color: #64748B;
+}
+
+/* 4. 3x3 BİLSEM MATRİS TAMAMLAMA (matrix_3x3) */
+.matrix-wrapper-3x3 {
+  max-width: 480px;
+  margin: 0 auto 16px;
+  background: #FFFFFF;
+  border: 3px solid #C4B5FD;
+  border-radius: 24px;
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.14);
+}
+
+.matrix-grid-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.matrix-cell-3x3 {
+  aspect-ratio: 1;
+  background: #F5F3FF;
+  border: 2px solid #DDD6FE;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  position: relative;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.matrix-cell-3x3.target-slot {
+  border: 3px dashed #8B5CF6;
+  background: #FAF5FF;
+  color: #8B5CF6;
+  font-size: 30px;
+  font-weight: 900;
+  animation: pulseSlot 1.5s infinite alternate;
+}
+
+/* 5. İLERİ KRİPTOLOJİ (advanced_crypto) - 4. Sınıf */
+.adv-crypto-stage {
+  max-width: 500px;
+  margin: 0 auto 16px;
+}
+
+.adv-crypto-clues {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+
+.adv-crypto-clue-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #1E293B;
+}
+
+.adv-crypto-target-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 0;
+  flex-wrap: wrap;
+}
+
+.adv-crypto-slot {
+  width: 54px;
+  height: 66px;
+  background: #FFFFFF;
+  border: 2.5px solid #6366F1;
+  border-bottom: 5px solid #4F46E5;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15);
+}
+
+.adv-crypto-slot-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #64748B;
+}
+
+.adv-crypto-slot-val {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #10B981;
+}
+
+.adv-crypto-slot-val.empty {
+  color: #CBD5E1;
+}
+
+/* 6. İŞLEM KARESİ (math_operator_puzzle) - 4. Sınıf */
+.math-op-stage {
+  max-width: 500px;
+  margin: 0 auto 16px;
+  text-align: center;
+}
+
+.math-op-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 100%);
+  border: 2px solid #93C5FD;
+  border-radius: 20px;
+  padding: 16px 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.math-op-item {
+  min-width: 48px;
+  height: 56px;
+  padding: 0 10px;
+  background: #FFFFFF;
+  border: 2px solid #BFDBFE;
+  border-bottom: 4px solid #60A5FA;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #1E3A8A;
+}
+
+.math-op-item.op-symbol {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #2563EB;
+}
+
+.math-op-item.target-slot {
+  background: #FEF3C7;
+  border: 2.5px dashed #F59E0B;
+  color: #D97706;
+  animation: pulseSlot 1.5s infinite alternate;
+}
+
+/* 7. KÜP AÇINIMI VE DÖNDÜRME (cube_net_rotation) - 4. Sınıf */
+.cube-net-stage {
+  max-width: 440px;
+  margin: 0 auto 16px;
+  text-align: center;
+}
+
+.cube-net-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 56px);
+  grid-template-rows: repeat(3, 56px);
+  gap: 4px;
+  justify-content: center;
+  margin: 12px auto 16px;
+}
+
+.cube-net-cell {
+  width: 56px;
+  height: 56px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.cube-net-cell.active-face {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-bottom: 4px solid #94A3B8;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.cube-net-cell.highlight-face {
+  border-color: #8B5CF6;
+  background: #EDE9FE;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+}
+
+/* 8. 4x4 KENKEN / TOPLAM IZGARASI (kenken_grid) - 4. Sınıf */
+.kenken-stage {
+  max-width: 360px;
+  margin: 0 auto 16px;
+}
+
+.kenken-board-wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 48px;
+  gap: 4px;
+  padding: 10px;
+  background: #1E293B;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  margin-bottom: 14px;
+}
+
+.kenken-cell {
+  aspect-ratio: 1;
+  background: #FFFFFF;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #0F172A;
+  user-select: none;
+}
+
+.kenken-cell.target-slot {
+  background: #FEF3C7;
+  border: 2px dashed #F59E0B;
+  color: #D97706;
+  cursor: pointer;
+}
+
+.kenken-cell.active-slot {
+  background: #EDE9FE;
+  border: 2.5px solid #8B5CF6;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+.kenken-row-target {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: #38BDF8;
+  background: #0F172A;
+  border-radius: 8px;
+}
+
+/* MOBİL (MAX-WIDTH: 768px) EK UYUMLULUK */
+@media (max-width: 768px) {
+  .pyramid-cell {
+    width: 54px;
+    height: 48px;
+    font-size: 1.15rem;
+  }
+  .scale-pan-box {
+    min-width: 90px;
+    min-height: 46px;
+    font-size: 1.15rem;
+    padding: 4px 8px;
+  }
+  .matrix-cell-3x3 {
+    font-size: 28px;
+  }
+  .adv-crypto-slot {
+    width: 44px;
+    height: 56px;
+  }
+  .adv-crypto-slot-val {
+    font-size: 1.15rem;
+  }
+  .math-op-item {
+    min-width: 40px;
+    height: 48px;
+    font-size: 1.15rem;
+  }
+  .cube-net-grid {
+    grid-template-columns: repeat(4, 46px);
+    grid-template-rows: repeat(3, 46px);
+  }
+  .cube-net-cell {
+    width: 46px;
+    height: 46px;
+    font-size: 24px;
+  }
+}

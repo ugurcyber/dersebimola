@@ -22483,88 +22483,64 @@
         name: 'Akıl ve Zeka Oyunları',
         icon: '🧠',
         colorTheme: 'theme-brain',
-        tagline: 'Algı & Foto-Hafıza',
-        description: 'Geometrik fark avcılığı, ters köşe Stroop ve şimşek köstebek! 🎯⚡',
-        badge: 'Zeka Ligi',
+        tagline: 'Sayısal Mantık & Uzamsal Zeka',
+        description: 'Sayı piramidi, 3D birim küp sayma, eşit terazi dengesi ve 3x3 matris! 🔺🧊⚖️',
+        badge: '3. Sınıf BİLSEM',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'oddone', label: '👀 Detay Avı' },
-          { id: 'stroop', label: '🎯 Stroop' },
-          { id: 'memory', label: '🧠 4\'lü Dizi' },
-          { id: 'reflex', label: '⚡ Şimşek Hız' }
+          { id: 'pyramid_sum', label: '🔺 Sayı Piramidi' },
+          { id: 'cube_count', label: '🧊 3D Birim Küp' },
+          { id: 'scale_balance', label: '⚖️ Eşit Terazi' },
+          { id: 'matrix_3x3', label: '🕸️ 3x3 Matris' }
         ],
         games: [
           {
-            id: 'oddone',
+            id: 'pyramid_sum',
             active: true,
-            title: 'Farklı Olanı Yakala',
-            icon: '👀',
-            badge: '⚡ Görsel Zeka',
-            featureTag: '🎯 Şahin Bakışı',
-            description: 'Birbirine benzeyen geometrik şekillerdeki minik farkı ilk gören puanı kapar! 🎯',
-            tags: ['🎯 Detay Avcılığı', '🧠 Görsel Zeka', '🔍 Hızlı Tarama'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'oddone'
+            title: 'Sayı Piramidi (Toplam Kulesi)',
+            icon: '🔺',
+            badge: '⚡ Toplam Kulesi',
+            featureTag: '🔺 Sayısal Mantık',
+            description: 'Yan yana iki kutunun toplamı üst kutuyu verir! Eksik kutuları tamamla! 🔺',
+            tags: ['🔺 Sayı Piramidi', '➕ Toplam Mantığı', '⭐ Şıksız BİLSEM'],
+            btnText: 'Atölyeye Başla',
+            topic: 'pyramid_sum'
           },
           {
-            id: 'stroop',
+            id: 'cube_count',
             active: true,
-            title: 'Renk Tuzakları (Stroop)',
-            icon: '🎯',
-            badge: '⚡ Beyin Jimnastiği',
-            featureTag: '⚡ Ters Köşe',
-            description: 'Ters köşe kelimeler! Zihnini şaşırtmaya çalışan tuzağı aş! ⚡',
-            tags: ['⚡ Ters Köşe', '🎯 Konsantrasyon', '🧠 Görsel Odak'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'stroop'
+            title: '3D Birim Küp Sayma',
+            icon: '🧊',
+            badge: '⚡ Uzamsal Zeka',
+            featureTag: '🧊 Görünmeyen Küpler',
+            description: 'Görünmeyen alt ve arka destek küpleri dahil toplam küp sayısını bul! 🧊',
+            tags: ['🧊 İzometrik Küp', '👁️ Uzamsal Algı', '🎯 3 Boyutlu Düşün'],
+            btnText: 'Atölyeye Başla',
+            topic: 'cube_count'
           },
           {
-            id: 'memory',
+            id: 'scale_balance',
             active: true,
-            title: 'Süper Hafıza: Sırayı Hatırla',
-            icon: '🧠',
-            badge: '⚡ Şampiyon Bellek',
-            featureTag: '⭐ Şampiyon Bellek',
-            description: '4\'lü sembol sırasını zihninde canlandır ve puanı kap! ⭐',
-            tags: ['⭐ 4\'lü Dizi', '🧠 Detaylı Hatırlama', '⚡ Hızlı Çağırma'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'memory'
+            title: 'Eşit Terazi Mantığı',
+            icon: '⚖️',
+            badge: '⚡ Cebirsel Terazi',
+            featureTag: '⚖️ Dengeyi Kur',
+            description: 'İpucu terazilerindeki ilişkiyi çöz, soru terazisinin sağ kefesini dengele! ⚖️',
+            tags: ['⚖️ Eşit Terazi', '🍉 Meyve Dengesi', '💡 Cebirsel Muhakeme'],
+            btnText: 'Atölyeye Başla',
+            topic: 'scale_balance'
           },
           {
-            id: 'reflex',
+            id: 'matrix_3x3',
             active: true,
-            title: 'Şimşek Refleks: Köstebek & Av',
-            icon: '⚡',
-            badge: '⚡ Süper Hız',
-            featureTag: '🎯 Keskin Refleks',
-            description: 'Hedef çıktığı an rekor hızla dokun! Sahte bombalara asla basma! ⚡',
-            tags: ['⚡ Köstebek Avı', '🎯 Seçici Dikkat', '⚡ Hızlı Refleks'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'true_false',
-            active: true,
-            title: 'Doğru mu Yanlış mı? (Refleks)',
-            icon: '⚡',
-            badge: '✅❌ Hızlı Karar',
-            featureTag: '⚡ 2x Hızlı Süre',
-            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
-            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'matching',
-            active: true,
-            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
-            icon: '🧩',
-            badge: '🧩 Ardışık Dokunma',
-            featureTag: '⭐ Kart Eşleştirme',
-            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
-            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
+            title: '3x3 BİLSEM Matris',
+            icon: '🕸️',
+            badge: '⚡ 3x3 Soyutlama',
+            featureTag: '🧩 Kuralı Çöz',
+            description: 'Satır ve sütunlardaki şekil, yön ve sayı kurallarını incele, eksik parçayı bul! 🕸️',
+            tags: ['🕸️ 3x3 Tablo', '🔄 Şekil Döndürme', '🧠 İleri BİLSEM'],
+            btnText: 'Atölyeye Başla',
+            topic: 'matrix_3x3'
           }
         ]
       }
@@ -23139,88 +23115,64 @@
         name: 'Akıl ve Zeka Oyunları',
         icon: '🧠',
         colorTheme: 'theme-brain',
-        tagline: 'Usta Düzey Zeka & Refleks',
-        description: '12 sembol dedektifliği, usta Stroop, foto-bellek ve zirve refleks! 👑⚡',
-        badge: 'Şampiyonlar Ligi',
+        tagline: 'İleri Kriptoloji & Algoritma',
+        description: 'Kelime-sayı kriptolojisi, işlem karesi, küp açınımı ve 4x4 KenKen toplam ızgarası! 👑⚡',
+        badge: '4. Sınıf BİLSEM',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'oddone', label: '🕵️ Usta Dedektif' },
-          { id: 'stroop', label: '👑 Nöro-Hız' },
-          { id: 'memory', label: '🧠 Foto-Bellek' },
-          { id: 'reflex', label: '⚡ Zirve Refleks' }
+          { id: 'advanced_crypto', label: '🕵️ İleri Kripto' },
+          { id: 'math_operator_puzzle', label: '🧮 İşlem Karesi' },
+          { id: 'cube_net_rotation', label: '🔄 Küp Açınımı' },
+          { id: 'kenken_grid', label: '👑 4x4 KenKen' }
         ],
         games: [
           {
-            id: 'oddone',
+            id: 'advanced_crypto',
             active: true,
-            title: 'Farklı Olanı Yakala',
-            icon: '👀',
-            badge: '👑 Usta Dedektif',
-            featureTag: '🕵️ Usta Dedektif',
-            description: '12 sembol labirentindeki gizli detayı saliseler içinde yakala! 🕵️',
-            tags: ['🕵️ Usta Dedektif', '⚡ Saliselik Fark', '🧩 Zorlu Labirent'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'oddone'
+            title: 'İleri Kriptoloji (Harf-Sayı)',
+            icon: '🕵️',
+            badge: '👑 BİLSEM Kripto',
+            featureTag: '🔢 Kelime Şifresi',
+            description: 'İpucu kelime ve sayı tablolarından harflerin gizli sayılarını çöz, şifreyi tuşla! 🕵️',
+            tags: ['🕵️ İleri Kriptoloji', '🔢 Harf-Sayı Eşleme', '💡 Analitik Zeka'],
+            btnText: 'Atölyeye Başla',
+            topic: 'advanced_crypto'
           },
           {
-            id: 'stroop',
+            id: 'math_operator_puzzle',
             active: true,
-            title: 'Süper Stroop: Renk Tuzakları',
-            icon: '🎯',
-            badge: '👑 Nöro-Dikkat',
-            featureTag: '👑 Nöro-Hız',
-            description: 'Usta seviye Stroop düellosu! Şampiyon refleksle ters köşeyi çöz! 👑',
-            tags: ['👑 İleri Stroop', '⚡ Saliselik Karar', '🧠 Zihinsel Çeviklik'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'stroop'
+            title: 'İşlem Karesi (Eksik İşaret)',
+            icon: '🧮',
+            badge: '👑 İşlem Önceliği',
+            featureTag: '➕➖✖️➗ Eşitlik',
+            description: 'İşlem önceliğine göre boş kutulara doğru işlem ve sayıları yerleştirerek eşitliği sağla! 🧮',
+            tags: ['🧮 İşlem Karesi', '⚡ Hızlı Denklem', '🎯 Matematiksel Zeka'],
+            btnText: 'Atölyeye Başla',
+            topic: 'math_operator_puzzle'
           },
           {
-            id: 'memory',
+            id: 'cube_net_rotation',
             active: true,
-            title: 'Usta Hafıza: Sırayı Hatırla',
-            icon: '🧠',
-            badge: '👑 Fotoğrafik Hafıza',
-            featureTag: '👑 Fotoğrafik Hafıza',
-            description: 'Fotoğrafik hafıza meydan okuması! Sıraları bil, tahtanın kralı ol! 👑',
-            tags: ['👑 Fotoğrafik Bellek', '🔍 Sıra Analizi', '⚡ Süper Konsantrasyon'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'memory'
+            title: 'Küp Açınımı ve Döndürme',
+            icon: '🔄',
+            badge: '👑 Soyut Görsel',
+            featureTag: '📦 Zıt Yüzler',
+            description: 'Açık küp kapatıldığında hangi sembollerin karşılıklı geleceğini zihninde canlandır! 🔄',
+            tags: ['📦 Küp Açınımı', '🔄 Zihinsel Döndürme', '👁️ 3D Mekansal'],
+            btnText: 'Atölyeye Başla',
+            topic: 'cube_net_rotation'
           },
           {
-            id: 'reflex',
+            id: 'kenken_grid',
             active: true,
-            title: 'Şimşek Refleks: Köstebek & Av',
-            icon: '⚡',
-            badge: '👑 Şimşek Hızı',
-            featureTag: '🏆 Zirve Refleks',
-            description: 'Tahtanın en hızlısı kim? Saliseler içinde hedefi avla, zaferi kazan! 🏆',
-            tags: ['🏆 Zirve Refleks', '⭐ Sıfır Hata', '👑 Tahta Rekoru'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'true_false',
-            active: true,
-            title: 'Doğru mu Yanlış mı? (Refleks)',
-            icon: '⚡',
-            badge: '✅❌ Hızlı Karar',
-            featureTag: '⚡ 2x Hızlı Süre',
-            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
-            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'matching',
-            active: true,
-            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
-            icon: '🧩',
-            badge: '🧩 Ardışık Dokunma',
-            featureTag: '⭐ Kart Eşleştirme',
-            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
-            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
+            title: '4x4 KenKen (Toplam Izgarası)',
+            icon: '👑',
+            badge: '👑 Strateji & Toplam',
+            featureTag: '🎯 Hedef Toplam',
+            description: 'Satır ve sütunlardaki hedef toplamlara ulaşmak için boş kutuları çakışmasız tamamla! 👑',
+            tags: ['👑 4x4 KenKen', '🎯 Hedef Toplam', '🧩 Zeka Izgarası'],
+            btnText: 'Atölyeye Başla',
+            topic: 'kenken_grid'
           }
         ]
       }
@@ -24651,7 +24603,7 @@
         return;
       }
     }
-    if (subjectId === 'brain' && (state.currentGrade === 1 || state.currentGrade === 2 || state.currentGrade === 0)) {
+    if (subjectId === 'brain') {
       if (typeof MindGamesEngine !== 'undefined' && MindGamesEngine.open) {
         MindGamesEngine.open({ grade: state.currentGrade || 1 });
         return;
@@ -26684,7 +26636,12 @@
   }
 
   function startDuel(gameType) {
-    const mindGamesKeys = ['pattern_train', 'odd_one_out', 'matrix_2x2', 'memory_match', 'crypto_code', 'mirror_symmetry', 'shidoku_4x4', 'arrow_algorithm'];
+    const mindGamesKeys = [
+      'pattern_train', 'odd_one_out', 'matrix_2x2', 'memory_match',
+      'crypto_code', 'mirror_symmetry', 'shidoku_4x4', 'arrow_algorithm',
+      'pyramid_sum', 'cube_count', 'scale_balance', 'matrix_3x3',
+      'advanced_crypto', 'math_operator_puzzle', 'cube_net_rotation', 'kenken_grid'
+    ];
     if (mindGamesKeys.includes(gameType)) {
       if (typeof MindGamesEngine !== 'undefined' && MindGamesEngine.open) {
         MindGamesEngine.open({ grade: state.currentGrade || 1, gameKey: gameType });
@@ -39173,7 +39130,7455 @@ const MindGamesEngine = {
         answer: '🏆',
         prompt: 'Tam çapraz merdiven rotası! Hangi büyük kupaya ulaşırsın?'
       }
-    ]
+    ],
+
+    pyramid_sum: [
+      {
+            "id": "pyr1",
+            "cells": {
+                  "top": null,
+                  "m1": 5,
+                  "m2": 7,
+                  "b1": 2,
+                  "b2": 3,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 12,
+            "options": [
+                  10,
+                  12,
+                  14,
+                  16
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr2",
+            "cells": {
+                  "top": 11,
+                  "m1": null,
+                  "m2": 6,
+                  "b1": 1,
+                  "b2": 4,
+                  "b3": 2
+            },
+            "target": "m1",
+            "answer": 5,
+            "options": [
+                  4,
+                  5,
+                  6,
+                  8
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr3",
+            "cells": {
+                  "top": 12,
+                  "m1": 5,
+                  "m2": 7,
+                  "b1": 3,
+                  "b2": null,
+                  "b3": 5
+            },
+            "target": "b2",
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr4",
+            "cells": {
+                  "top": null,
+                  "m1": 5,
+                  "m2": 4,
+                  "b1": 4,
+                  "b2": 1,
+                  "b3": 3
+            },
+            "target": "top",
+            "answer": 9,
+            "options": [
+                  7,
+                  9,
+                  11,
+                  13
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr5",
+            "cells": {
+                  "top": 13,
+                  "m1": null,
+                  "m2": 6,
+                  "b1": 2,
+                  "b2": 5,
+                  "b3": 1
+            },
+            "target": "m1",
+            "answer": 7,
+            "options": [
+                  6,
+                  7,
+                  8,
+                  10
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr6",
+            "cells": {
+                  "top": 13,
+                  "m1": 7,
+                  "m2": 6,
+                  "b1": 3,
+                  "b2": null,
+                  "b3": 2
+            },
+            "target": "b2",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  5,
+                  6
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr7",
+            "cells": {
+                  "top": null,
+                  "m1": 6,
+                  "m2": 5,
+                  "b1": 5,
+                  "b2": 1,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 11,
+            "options": [
+                  9,
+                  11,
+                  13,
+                  15
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr8",
+            "cells": {
+                  "top": 9,
+                  "m1": null,
+                  "m2": 5,
+                  "b1": 2,
+                  "b2": 2,
+                  "b3": 3
+            },
+            "target": "m1",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  5,
+                  7
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr9",
+            "cells": {
+                  "top": 11,
+                  "m1": 6,
+                  "m2": 5,
+                  "b1": 3,
+                  "b2": null,
+                  "b3": 2
+            },
+            "target": "b2",
+            "answer": 3,
+            "options": [
+                  2,
+                  3,
+                  4,
+                  5
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr10",
+            "cells": {
+                  "top": null,
+                  "m1": 6,
+                  "m2": 6,
+                  "b1": 4,
+                  "b2": 2,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 12,
+            "options": [
+                  10,
+                  12,
+                  14,
+                  16
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr11",
+            "cells": {
+                  "top": 13,
+                  "m1": null,
+                  "m2": 5,
+                  "b1": 5,
+                  "b2": 3,
+                  "b3": 2
+            },
+            "target": "m1",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  11
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr12",
+            "cells": {
+                  "top": 15,
+                  "m1": 7,
+                  "m2": 8,
+                  "b1": 1,
+                  "b2": null,
+                  "b3": 2
+            },
+            "target": "b2",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  7,
+                  8
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr13",
+            "cells": {
+                  "top": null,
+                  "m1": 8,
+                  "m2": 6,
+                  "b1": 3,
+                  "b2": 5,
+                  "b3": 1
+            },
+            "target": "top",
+            "answer": 14,
+            "options": [
+                  12,
+                  14,
+                  16,
+                  18
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr14",
+            "cells": {
+                  "top": 15,
+                  "m1": null,
+                  "m2": 7,
+                  "b1": 4,
+                  "b2": 4,
+                  "b3": 3
+            },
+            "target": "m1",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  11
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr15",
+            "cells": {
+                  "top": 17,
+                  "m1": 8,
+                  "m2": 9,
+                  "b1": 2,
+                  "b2": null,
+                  "b3": 3
+            },
+            "target": "b2",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  7,
+                  8
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr16",
+            "cells": {
+                  "top": null,
+                  "m1": 5,
+                  "m2": 8,
+                  "b1": 3,
+                  "b2": 2,
+                  "b3": 6
+            },
+            "target": "top",
+            "answer": 13,
+            "options": [
+                  11,
+                  13,
+                  15,
+                  17
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr17",
+            "cells": {
+                  "top": 14,
+                  "m1": null,
+                  "m2": 5,
+                  "b1": 5,
+                  "b2": 4,
+                  "b3": 1
+            },
+            "target": "m1",
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  10,
+                  12
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr18",
+            "cells": {
+                  "top": 15,
+                  "m1": 7,
+                  "m2": 8,
+                  "b1": 4,
+                  "b2": null,
+                  "b3": 5
+            },
+            "target": "b2",
+            "answer": 3,
+            "options": [
+                  2,
+                  3,
+                  4,
+                  5
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr19",
+            "cells": {
+                  "top": null,
+                  "m1": 8,
+                  "m2": 5,
+                  "b1": 6,
+                  "b2": 2,
+                  "b3": 3
+            },
+            "target": "top",
+            "answer": 13,
+            "options": [
+                  11,
+                  13,
+                  15,
+                  17
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr20",
+            "cells": {
+                  "top": 15,
+                  "m1": null,
+                  "m2": 9,
+                  "b1": 1,
+                  "b2": 5,
+                  "b3": 4
+            },
+            "target": "m1",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  7,
+                  9
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr21",
+            "cells": {
+                  "top": 16,
+                  "m1": 9,
+                  "m2": 7,
+                  "b1": 4,
+                  "b2": null,
+                  "b3": 2
+            },
+            "target": "b2",
+            "answer": 5,
+            "options": [
+                  4,
+                  5,
+                  6,
+                  7
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr22",
+            "cells": {
+                  "top": null,
+                  "m1": 6,
+                  "m2": 9,
+                  "b1": 2,
+                  "b2": 4,
+                  "b3": 5
+            },
+            "target": "top",
+            "answer": 15,
+            "options": [
+                  13,
+                  15,
+                  17,
+                  19
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr23",
+            "cells": {
+                  "top": 11,
+                  "m1": null,
+                  "m2": 4,
+                  "b1": 6,
+                  "b2": 1,
+                  "b3": 3
+            },
+            "target": "m1",
+            "answer": 7,
+            "options": [
+                  6,
+                  7,
+                  8,
+                  10
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr24",
+            "cells": {
+                  "top": 17,
+                  "m1": 9,
+                  "m2": 8,
+                  "b1": 3,
+                  "b2": null,
+                  "b3": 2
+            },
+            "target": "b2",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  7,
+                  8
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr25",
+            "cells": {
+                  "top": null,
+                  "m1": 7,
+                  "m2": 6,
+                  "b1": 5,
+                  "b2": 2,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 13,
+            "options": [
+                  11,
+                  13,
+                  15,
+                  17
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr26",
+            "cells": {
+                  "top": 14,
+                  "m1": null,
+                  "m2": 9,
+                  "b1": 2,
+                  "b2": 3,
+                  "b3": 6
+            },
+            "target": "m1",
+            "answer": 5,
+            "options": [
+                  4,
+                  5,
+                  6,
+                  8
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr27",
+            "cells": {
+                  "top": 11,
+                  "m1": 5,
+                  "m2": 6,
+                  "b1": 4,
+                  "b2": null,
+                  "b3": 5
+            },
+            "target": "b2",
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr28",
+            "cells": {
+                  "top": null,
+                  "m1": 7,
+                  "m2": 8,
+                  "b1": 3,
+                  "b2": 4,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 15,
+            "options": [
+                  13,
+                  15,
+                  17,
+                  19
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr29",
+            "cells": {
+                  "top": 14,
+                  "m1": null,
+                  "m2": 6,
+                  "b1": 5,
+                  "b2": 3,
+                  "b3": 3
+            },
+            "target": "m1",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  11
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr30",
+            "cells": {
+                  "top": 17,
+                  "m1": 9,
+                  "m2": 8,
+                  "b1": 2,
+                  "b2": null,
+                  "b3": 1
+            },
+            "target": "b2",
+            "answer": 7,
+            "options": [
+                  6,
+                  7,
+                  8,
+                  9
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr31",
+            "cells": {
+                  "top": null,
+                  "m1": 9,
+                  "m2": 5,
+                  "b1": 6,
+                  "b2": 3,
+                  "b3": 2
+            },
+            "target": "top",
+            "answer": 14,
+            "options": [
+                  12,
+                  14,
+                  16,
+                  18
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr32",
+            "cells": {
+                  "top": 18,
+                  "m1": null,
+                  "m2": 10,
+                  "b1": 1,
+                  "b2": 7,
+                  "b3": 3
+            },
+            "target": "m1",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  11
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr33",
+            "cells": {
+                  "top": 14,
+                  "m1": 6,
+                  "m2": 8,
+                  "b1": 4,
+                  "b2": null,
+                  "b3": 6
+            },
+            "target": "b2",
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr34",
+            "cells": {
+                  "top": null,
+                  "m1": 8,
+                  "m2": 9,
+                  "b1": 3,
+                  "b2": 5,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 17,
+            "options": [
+                  15,
+                  17,
+                  19,
+                  21
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr35",
+            "cells": {
+                  "top": 15,
+                  "m1": null,
+                  "m2": 6,
+                  "b1": 5,
+                  "b2": 4,
+                  "b3": 2
+            },
+            "target": "m1",
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  10,
+                  12
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr36",
+            "cells": {
+                  "top": 17,
+                  "m1": 7,
+                  "m2": 10,
+                  "b1": 2,
+                  "b2": null,
+                  "b3": 5
+            },
+            "target": "b2",
+            "answer": 5,
+            "options": [
+                  4,
+                  5,
+                  6,
+                  7
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr37",
+            "cells": {
+                  "top": null,
+                  "m1": 8,
+                  "m2": 6,
+                  "b1": 6,
+                  "b2": 2,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 14,
+            "options": [
+                  12,
+                  14,
+                  16,
+                  18
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "pyr38",
+            "cells": {
+                  "top": 18,
+                  "m1": null,
+                  "m2": 8,
+                  "b1": 3,
+                  "b2": 7,
+                  "b3": 1
+            },
+            "target": "m1",
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  11,
+                  13
+            ],
+            "prompt": "Kural: Yan yana iki kutunun toplamı üsttekini verir! Boş kutuya hangi sayı gelir?"
+      },
+      {
+            "id": "pyr39",
+            "cells": {
+                  "top": 17,
+                  "m1": 9,
+                  "m2": 8,
+                  "b1": 4,
+                  "b2": null,
+                  "b3": 3
+            },
+            "target": "b2",
+            "answer": 5,
+            "options": [
+                  4,
+                  5,
+                  6,
+                  7
+            ],
+            "prompt": "Piramit kuralına göre tabandaki eksik sayıyı tamamla!"
+      },
+      {
+            "id": "pyr40",
+            "cells": {
+                  "top": null,
+                  "m1": 8,
+                  "m2": 5,
+                  "b1": 7,
+                  "b2": 1,
+                  "b3": 4
+            },
+            "target": "top",
+            "answer": 13,
+            "options": [
+                  11,
+                  13,
+                  15,
+                  17
+            ],
+            "prompt": "Yan yana iki kutunun toplamı üstü verir! Tepedeki soru işaretine hangi sayı gelmeli?"
+      }
+],
+    cube_count: [
+      {
+            "id": "cube1",
+            "heights": [
+                  2,
+                  1
+            ],
+            "answer": 3,
+            "options": [
+                  2,
+                  3,
+                  4,
+                  5
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube2",
+            "heights": [
+                  2,
+                  2
+            ],
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  5,
+                  6
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube3",
+            "heights": [
+                  3,
+                  1
+            ],
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  5,
+                  6
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube4",
+            "heights": [
+                  2,
+                  3
+            ],
+            "answer": 5,
+            "options": [
+                  4,
+                  5,
+                  6,
+                  7
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube5",
+            "heights": [
+                  1,
+                  2,
+                  2
+            ],
+            "answer": 5,
+            "options": [
+                  4,
+                  5,
+                  6,
+                  7
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube6",
+            "heights": [
+                  3,
+                  2,
+                  1
+            ],
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  7,
+                  8
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube7",
+            "heights": [
+                  2,
+                  2,
+                  2
+            ],
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  7,
+                  8
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube8",
+            "heights": [
+                  1,
+                  3,
+                  2
+            ],
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  7,
+                  8
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube9",
+            "heights": [
+                  3,
+                  3,
+                  1
+            ],
+            "answer": 7,
+            "options": [
+                  6,
+                  7,
+                  8,
+                  9
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube10",
+            "heights": [
+                  2,
+                  3,
+                  2
+            ],
+            "answer": 7,
+            "options": [
+                  6,
+                  7,
+                  8,
+                  9
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube11",
+            "heights": [
+                  4,
+                  2,
+                  1
+            ],
+            "answer": 7,
+            "options": [
+                  6,
+                  7,
+                  8,
+                  9
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube12",
+            "heights": [
+                  2,
+                  2,
+                  2,
+                  2
+            ],
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  10
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube13",
+            "heights": [
+                  3,
+                  3,
+                  2
+            ],
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  10
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube14",
+            "heights": [
+                  4,
+                  3,
+                  1
+            ],
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  10
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube15",
+            "heights": [
+                  1,
+                  2,
+                  3,
+                  2
+            ],
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  9,
+                  10
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube16",
+            "heights": [
+                  3,
+                  3,
+                  3
+            ],
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  10,
+                  11
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube17",
+            "heights": [
+                  4,
+                  3,
+                  2
+            ],
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  10,
+                  11
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube18",
+            "heights": [
+                  2,
+                  4,
+                  3
+            ],
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  10,
+                  11
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube19",
+            "heights": [
+                  1,
+                  3,
+                  3,
+                  2
+            ],
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  10,
+                  11
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube20",
+            "heights": [
+                  4,
+                  4,
+                  1
+            ],
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  10,
+                  11
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube21",
+            "heights": [
+                  4,
+                  3,
+                  3
+            ],
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  11,
+                  12
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube22",
+            "heights": [
+                  2,
+                  3,
+                  3,
+                  2
+            ],
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  11,
+                  12
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube23",
+            "heights": [
+                  5,
+                  3,
+                  2
+            ],
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  11,
+                  12
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube24",
+            "heights": [
+                  4,
+                  4,
+                  2
+            ],
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  11,
+                  12
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube25",
+            "heights": [
+                  1,
+                  4,
+                  3,
+                  2
+            ],
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  11,
+                  12
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube26",
+            "heights": [
+                  4,
+                  4,
+                  3
+            ],
+            "answer": 11,
+            "options": [
+                  10,
+                  11,
+                  12,
+                  13
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube27",
+            "heights": [
+                  3,
+                  3,
+                  3,
+                  2
+            ],
+            "answer": 11,
+            "options": [
+                  10,
+                  11,
+                  12,
+                  13
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube28",
+            "heights": [
+                  5,
+                  4,
+                  2
+            ],
+            "answer": 11,
+            "options": [
+                  10,
+                  11,
+                  12,
+                  13
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube29",
+            "heights": [
+                  2,
+                  4,
+                  3,
+                  2
+            ],
+            "answer": 11,
+            "options": [
+                  10,
+                  11,
+                  12,
+                  13
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube30",
+            "heights": [
+                  5,
+                  3,
+                  3
+            ],
+            "answer": 11,
+            "options": [
+                  10,
+                  11,
+                  12,
+                  13
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube31",
+            "heights": [
+                  4,
+                  4,
+                  4
+            ],
+            "answer": 12,
+            "options": [
+                  11,
+                  12,
+                  13,
+                  14
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube32",
+            "heights": [
+                  3,
+                  3,
+                  3,
+                  3
+            ],
+            "answer": 12,
+            "options": [
+                  11,
+                  12,
+                  13,
+                  14
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube33",
+            "heights": [
+                  5,
+                  4,
+                  3
+            ],
+            "answer": 12,
+            "options": [
+                  11,
+                  12,
+                  13,
+                  14
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube34",
+            "heights": [
+                  2,
+                  4,
+                  4,
+                  2
+            ],
+            "answer": 12,
+            "options": [
+                  11,
+                  12,
+                  13,
+                  14
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube35",
+            "heights": [
+                  6,
+                  3,
+                  3
+            ],
+            "answer": 12,
+            "options": [
+                  11,
+                  12,
+                  13,
+                  14
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube36",
+            "heights": [
+                  5,
+                  4,
+                  4
+            ],
+            "answer": 13,
+            "options": [
+                  12,
+                  13,
+                  14,
+                  15
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube37",
+            "heights": [
+                  4,
+                  4,
+                  3,
+                  2
+            ],
+            "answer": 13,
+            "options": [
+                  12,
+                  13,
+                  14,
+                  15
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube38",
+            "heights": [
+                  5,
+                  5,
+                  3
+            ],
+            "answer": 13,
+            "options": [
+                  12,
+                  13,
+                  14,
+                  15
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube39",
+            "heights": [
+                  3,
+                  4,
+                  4,
+                  2
+            ],
+            "answer": 13,
+            "options": [
+                  12,
+                  13,
+                  14,
+                  15
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      },
+      {
+            "id": "cube40",
+            "heights": [
+                  6,
+                  4,
+                  3
+            ],
+            "answer": 13,
+            "options": [
+                  12,
+                  13,
+                  14,
+                  15
+            ],
+            "prompt": "Bu yapıda (görünmeyen alt destek küpleri dahil) toplam kaç birim küp vardır?"
+      }
+],
+    scale_balance: [
+      {
+            "id": "scale1",
+            "clue1": "1 🍉 = 2 🍍",
+            "clue2": "1 🍍 = 3 🍎",
+            "targetLeft": "1 🍉",
+            "targetRightSym": "🍎",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍉 kaç tane 🍎 eder?"
+      },
+      {
+            "id": "scale2",
+            "clue1": "1 🍉 = 2 🍍",
+            "clue2": "1 🍍 = 2 🍌",
+            "targetLeft": "1 🍉",
+            "targetRightSym": "🍌",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍉 kaç tane 🍌 eder?"
+      },
+      {
+            "id": "scale3",
+            "clue1": "1 ⭐ = 2 🌙",
+            "clue2": "1 🌙 = 2 ☀️",
+            "targetLeft": "1 ⭐",
+            "targetRightSym": "☀️",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 ⭐ kaç tane ☀️ eder?"
+      },
+      {
+            "id": "scale4",
+            "clue1": "1 ⭐ = 3 🌙",
+            "clue2": "1 🌙 = 2 ☀️",
+            "targetLeft": "1 ⭐",
+            "targetRightSym": "☀️",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 ⭐ kaç tane ☀️ eder?"
+      },
+      {
+            "id": "scale5",
+            "clue1": "1 🦁 = 2 🦊",
+            "clue2": "1 🦊 = 3 🐰",
+            "targetLeft": "1 🦁",
+            "targetRightSym": "🐰",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🦁 kaç tane 🐰 eder?"
+      },
+      {
+            "id": "scale6",
+            "clue1": "1 🦁 = 2 🦊",
+            "clue2": "1 🦊 = 4 🐱",
+            "targetLeft": "1 🦁",
+            "targetRightSym": "🐱",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  10,
+                  11
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🦁 kaç tane 🐱 eder?"
+      },
+      {
+            "id": "scale7",
+            "clue1": "1 🚗 = 2 🏍️",
+            "clue2": "1 🏍️ = 2 🚲",
+            "targetLeft": "1 🚗",
+            "targetRightSym": "🚲",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🚗 kaç tane 🚲 eder?"
+      },
+      {
+            "id": "scale8",
+            "clue1": "1 🚗 = 3 🏍️",
+            "clue2": "1 🏍️ = 2 🚲",
+            "targetLeft": "1 🚗",
+            "targetRightSym": "🚲",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🚗 kaç tane 🚲 eder?"
+      },
+      {
+            "id": "scale9",
+            "clue1": "1 💎 = 2 💍",
+            "clue2": "1 💍 = 4 🪙",
+            "targetLeft": "1 💎",
+            "targetRightSym": "🪙",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  10,
+                  11
+            ],
+            "prompt": "Terazi dengesini sağla: 1 💎 kaç tane 🪙 eder?"
+      },
+      {
+            "id": "scale10",
+            "clue1": "1 💎 = 3 💍",
+            "clue2": "1 💍 = 3 🪙",
+            "targetLeft": "1 💎",
+            "targetRightSym": "🪙",
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  11,
+                  12
+            ],
+            "prompt": "Terazi dengesini sağla: 1 💎 kaç tane 🪙 eder?"
+      },
+      {
+            "id": "scale11",
+            "clue1": "1 🍇 = 2 🍓",
+            "clue2": "1 🍓 = 2 🍒",
+            "targetLeft": "1 🍇",
+            "targetRightSym": "🍒",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍇 kaç tane 🍒 eder?"
+      },
+      {
+            "id": "scale12",
+            "clue1": "1 🍇 = 2 🍓",
+            "clue2": "1 🍓 = 3 🍒",
+            "targetLeft": "1 🍇",
+            "targetRightSym": "🍒",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍇 kaç tane 🍒 eder?"
+      },
+      {
+            "id": "scale13",
+            "clue1": "1 🐘 = 2 🐴",
+            "clue2": "1 🐴 = 3 🐑",
+            "targetLeft": "1 🐘",
+            "targetRightSym": "🐑",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🐘 kaç tane 🐑 eder?"
+      },
+      {
+            "id": "scale14",
+            "clue1": "1 🐘 = 2 🐴",
+            "clue2": "1 🐴 = 4 🐑",
+            "targetLeft": "1 🐘",
+            "targetRightSym": "🐑",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  10,
+                  11
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🐘 kaç tane 🐑 eder?"
+      },
+      {
+            "id": "scale15",
+            "clue1": "1 👑 = 2 🏆",
+            "clue2": "1 🏆 = 3 🎖️",
+            "targetLeft": "1 👑",
+            "targetRightSym": "🎖️",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 👑 kaç tane 🎖️ eder?"
+      },
+      {
+            "id": "scale16",
+            "clue1": "1 👑 = 3 🏆",
+            "clue2": "1 🏆 = 2 🎖️",
+            "targetLeft": "1 👑",
+            "targetRightSym": "🎖️",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 👑 kaç tane 🎖️ eder?"
+      },
+      {
+            "id": "scale17",
+            "clue1": "1 🚀 = 2 ✈️",
+            "clue2": "1 ✈️ = 2 🚁",
+            "targetLeft": "1 🚀",
+            "targetRightSym": "🚁",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🚀 kaç tane 🚁 eder?"
+      },
+      {
+            "id": "scale18",
+            "clue1": "1 🚀 = 2 ✈️",
+            "clue2": "1 ✈️ = 3 🚁",
+            "targetLeft": "1 🚀",
+            "targetRightSym": "🚁",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🚀 kaç tane 🚁 eder?"
+      },
+      {
+            "id": "scale19",
+            "clue1": "1 🥥 = 2 🥑",
+            "clue2": "1 🥑 = 2 🍋",
+            "targetLeft": "1 🥥",
+            "targetRightSym": "🍋",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🥥 kaç tane 🍋 eder?"
+      },
+      {
+            "id": "scale20",
+            "clue1": "1 🥥 = 2 🥑",
+            "clue2": "1 🥑 = 3 🍋",
+            "targetLeft": "1 🥥",
+            "targetRightSym": "🍋",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🥥 kaç tane 🍋 eder?"
+      },
+      {
+            "id": "scale21",
+            "clue1": "1 🔴 = 2 🔵",
+            "clue2": "1 🔵 = 3 🟢",
+            "targetLeft": "1 🔴",
+            "targetRightSym": "🟢",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🔴 kaç tane 🟢 eder?"
+      },
+      {
+            "id": "scale22",
+            "clue1": "1 🔴 = 2 🔵",
+            "clue2": "1 🔵 = 4 🟢",
+            "targetLeft": "1 🔴",
+            "targetRightSym": "🟢",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  10,
+                  11
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🔴 kaç tane 🟢 eder?"
+      },
+      {
+            "id": "scale23",
+            "clue1": "1 🟦 = 2 🔺",
+            "clue2": "1 🔺 = 2 🟡",
+            "targetLeft": "1 🟦",
+            "targetRightSym": "🟡",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🟦 kaç tane 🟡 eder?"
+      },
+      {
+            "id": "scale24",
+            "clue1": "1 🟦 = 3 🔺",
+            "clue2": "1 🔺 = 2 🟡",
+            "targetLeft": "1 🟦",
+            "targetRightSym": "🟡",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🟦 kaç tane 🟡 eder?"
+      },
+      {
+            "id": "scale25",
+            "clue1": "1 🐼 = 2 🐨",
+            "clue2": "1 🐨 = 3 🐿️",
+            "targetLeft": "1 🐼",
+            "targetRightSym": "🐿️",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🐼 kaç tane 🐿️ eder?"
+      },
+      {
+            "id": "scale26",
+            "clue1": "1 🐼 = 2 🐨",
+            "clue2": "1 🐨 = 4 🐿️",
+            "targetLeft": "1 🐼",
+            "targetRightSym": "🐿️",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  10,
+                  11
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🐼 kaç tane 🐿️ eder?"
+      },
+      {
+            "id": "scale27",
+            "clue1": "1 🍰 = 2 🍩",
+            "clue2": "1 🍩 = 3 🍪",
+            "targetLeft": "1 🍰",
+            "targetRightSym": "🍪",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍰 kaç tane 🍪 eder?"
+      },
+      {
+            "id": "scale28",
+            "clue1": "1 🍰 = 2 🍩",
+            "clue2": "1 🍩 = 2 🍪",
+            "targetLeft": "1 🍰",
+            "targetRightSym": "🍪",
+            "answer": 4,
+            "options": [
+                  3,
+                  4,
+                  6,
+                  7
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍰 kaç tane 🍪 eder?"
+      },
+      {
+            "id": "scale29",
+            "clue1": "1 ⚽ = 2 🏀",
+            "clue2": "1 🏀 = 3 🎾",
+            "targetLeft": "1 ⚽",
+            "targetRightSym": "🎾",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 ⚽ kaç tane 🎾 eder?"
+      },
+      {
+            "id": "scale30",
+            "clue1": "1 ⚽ = 2 🏀",
+            "clue2": "1 🏀 = 4 🎾",
+            "targetLeft": "1 ⚽",
+            "targetRightSym": "🎾",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  10,
+                  11
+            ],
+            "prompt": "Terazi dengesini sağla: 1 ⚽ kaç tane 🎾 eder?"
+      },
+      {
+            "id": "scale31",
+            "clue1": "1 🍉 = 3 🍍",
+            "clue2": "1 🍍 = 2 🍎",
+            "targetLeft": "1 🍉",
+            "targetRightSym": "🍎",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍉 kaç tane 🍎 eder?"
+      },
+      {
+            "id": "scale32",
+            "clue1": "1 🍉 = 3 🍍",
+            "clue2": "1 🍍 = 3 🍎",
+            "targetLeft": "1 🍉",
+            "targetRightSym": "🍎",
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  11,
+                  12
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🍉 kaç tane 🍎 eder?"
+      },
+      {
+            "id": "scale33",
+            "clue1": "1 ⭐ = 2 🌙",
+            "clue2": "1 🌙 = 3 ☀️",
+            "targetLeft": "1 ⭐",
+            "targetRightSym": "☀️",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 ⭐ kaç tane ☀️ eder?"
+      },
+      {
+            "id": "scale34",
+            "clue1": "1 ⭐ = 2 🌙",
+            "clue2": "1 🌙 = 4 ☀️",
+            "targetLeft": "1 ⭐",
+            "targetRightSym": "☀️",
+            "answer": 8,
+            "options": [
+                  7,
+                  8,
+                  10,
+                  11
+            ],
+            "prompt": "Terazi dengesini sağla: 1 ⭐ kaç tane ☀️ eder?"
+      },
+      {
+            "id": "scale35",
+            "clue1": "1 🦁 = 3 🦊",
+            "clue2": "1 🦊 = 2 🐰",
+            "targetLeft": "1 🦁",
+            "targetRightSym": "🐰",
+            "answer": 6,
+            "options": [
+                  5,
+                  6,
+                  8,
+                  9
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🦁 kaç tane 🐰 eder?"
+      },
+      {
+            "id": "scale36",
+            "clue1": "1 🦁 = 3 🦊",
+            "clue2": "1 🦊 = 3 🐰",
+            "targetLeft": "1 🦁",
+            "targetRightSym": "🐰",
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  11,
+                  12
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🦁 kaç tane 🐰 eder?"
+      },
+      {
+            "id": "scale37",
+            "clue1": "1 💎 = 2 💍",
+            "clue2": "1 💍 = 5 🪙",
+            "targetLeft": "1 💎",
+            "targetRightSym": "🪙",
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  12,
+                  13
+            ],
+            "prompt": "Terazi dengesini sağla: 1 💎 kaç tane 🪙 eder?"
+      },
+      {
+            "id": "scale38",
+            "clue1": "1 👑 = 2 🏆",
+            "clue2": "1 🏆 = 5 🎖️",
+            "targetLeft": "1 👑",
+            "targetRightSym": "🎖️",
+            "answer": 10,
+            "options": [
+                  9,
+                  10,
+                  12,
+                  13
+            ],
+            "prompt": "Terazi dengesini sağla: 1 👑 kaç tane 🎖️ eder?"
+      },
+      {
+            "id": "scale39",
+            "clue1": "1 🐘 = 3 🐴",
+            "clue2": "1 🐴 = 3 🐑",
+            "targetLeft": "1 🐘",
+            "targetRightSym": "🐑",
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  11,
+                  12
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🐘 kaç tane 🐑 eder?"
+      },
+      {
+            "id": "scale40",
+            "clue1": "1 🚀 = 3 ✈️",
+            "clue2": "1 ✈️ = 3 🚁",
+            "targetLeft": "1 🚀",
+            "targetRightSym": "🚁",
+            "answer": 9,
+            "options": [
+                  8,
+                  9,
+                  11,
+                  12
+            ],
+            "prompt": "Terazi dengesini sağla: 1 🚀 kaç tane 🚁 eder?"
+      }
+],
+    matrix_3x3: [
+      {
+            "id": "mat3_1",
+            "cells": [
+                  "1 ⭐",
+                  "2 ⭐",
+                  "3 ⭐",
+                  "1 🌙",
+                  "2 🌙",
+                  "3 🌙",
+                  "1 ☀️",
+                  "2 ☀️"
+            ],
+            "answer": "3 ☀️",
+            "options": [
+                  "3 ☀️",
+                  "4 ☀️",
+                  "2 ☀️",
+                  "1 ☀️"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_2",
+            "cells": [
+                  "1 🍎",
+                  "2 🍎",
+                  "3 🍎",
+                  "1 🍌",
+                  "2 🍌",
+                  "3 🍌",
+                  "1 🍇",
+                  "2 🍇"
+            ],
+            "answer": "3 🍇",
+            "options": [
+                  "3 🍇",
+                  "4 🍇",
+                  "2 🍇",
+                  "1 🍇"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_3",
+            "cells": [
+                  "🔴",
+                  "🔵",
+                  "🟢",
+                  "🔵",
+                  "🟢",
+                  "🔴",
+                  "🟢",
+                  "🔴"
+            ],
+            "answer": "🔵",
+            "options": [
+                  "🔵",
+                  "🔴",
+                  "🟢",
+                  "🟡"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_4",
+            "cells": [
+                  "🔺",
+                  "🟦",
+                  "🟡",
+                  "🟦",
+                  "🟡",
+                  "🔺",
+                  "🟡",
+                  "🔺"
+            ],
+            "answer": "🟦",
+            "options": [
+                  "🟦",
+                  "🔺",
+                  "🟡",
+                  "⭐"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_5",
+            "cells": [
+                  "⬆️",
+                  "➡️",
+                  "⬇️",
+                  "➡️",
+                  "⬇️",
+                  "⬅️",
+                  "⬇️",
+                  "⬅️"
+            ],
+            "answer": "⬆️",
+            "options": [
+                  "⬆️",
+                  "⬇️",
+                  "➡️",
+                  "⬅️"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_6",
+            "cells": [
+                  "🚗",
+                  "✈️",
+                  "🚀",
+                  "✈️",
+                  "🚀",
+                  "🚗",
+                  "🚀",
+                  "🚗"
+            ],
+            "answer": "✈️",
+            "options": [
+                  "✈️",
+                  "🚗",
+                  "🚀",
+                  "⛵"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_7",
+            "cells": [
+                  "🐶",
+                  "🐱",
+                  "🐰",
+                  "🐱",
+                  "🐰",
+                  "🐶",
+                  "🐰",
+                  "🐶"
+            ],
+            "answer": "🐱",
+            "options": [
+                  "🐱",
+                  "🐶",
+                  "🐰",
+                  "🐼"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_8",
+            "cells": [
+                  "🌸",
+                  "🌻",
+                  "🌹",
+                  "🌻",
+                  "🌹",
+                  "🌸",
+                  "🌹",
+                  "🌸"
+            ],
+            "answer": "🌻",
+            "options": [
+                  "🌻",
+                  "🌸",
+                  "🌹",
+                  "🌷"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_9",
+            "cells": [
+                  "1",
+                  "2",
+                  "3",
+                  "2",
+                  "3",
+                  "4",
+                  "3",
+                  "4"
+            ],
+            "answer": "5",
+            "options": [
+                  "5",
+                  "4",
+                  "6",
+                  "3"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_10",
+            "cells": [
+                  "2",
+                  "4",
+                  "6",
+                  "3",
+                  "6",
+                  "9",
+                  "4",
+                  "8"
+            ],
+            "answer": "12",
+            "options": [
+                  "12",
+                  "10",
+                  "14",
+                  "16"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_11",
+            "cells": [
+                  "⭐",
+                  "⭐⭐",
+                  "⭐⭐⭐",
+                  "🌙",
+                  "🌙🌙",
+                  "🌙🌙🌙",
+                  "☀️",
+                  "☀️☀️"
+            ],
+            "answer": "☀️☀️☀️",
+            "options": [
+                  "☀️☀️☀️",
+                  "☀️",
+                  "☀️☀️☀️☀️",
+                  "🌙"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_12",
+            "cells": [
+                  "🍎",
+                  "🍎🍎",
+                  "🍎🍎🍎",
+                  "🍌",
+                  "🍌🍌",
+                  "🍌🍌🍌",
+                  "🍓",
+                  "🍓🍓"
+            ],
+            "answer": "🍓🍓🍓",
+            "options": [
+                  "🍓🍓🍓",
+                  "🍓",
+                  "🍓🍓🍓🍓",
+                  "🍇"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_13",
+            "cells": [
+                  "🔴",
+                  "🔴🔴",
+                  "🔴🔴🔴",
+                  "🔵",
+                  "🔵🔵",
+                  "🔵🔵🔵",
+                  "🟢",
+                  "🟢🟢"
+            ],
+            "answer": "🟢🟢🟢",
+            "options": [
+                  "🟢🟢🟢",
+                  "🟢",
+                  "🟡",
+                  "🟣"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_14",
+            "cells": [
+                  "🔺",
+                  "🔺🔺",
+                  "🔺🔺🔺",
+                  "🟦",
+                  "🟦🟦",
+                  "🟦🟦🟦",
+                  "⭐",
+                  "⭐⭐"
+            ],
+            "answer": "⭐⭐⭐",
+            "options": [
+                  "⭐⭐⭐",
+                  "⭐",
+                  "⭐⭐⭐⭐",
+                  "🟡"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_15",
+            "cells": [
+                  "⬆️",
+                  "⬆️⬆️",
+                  "⬆️⬆️⬆️",
+                  "➡️",
+                  "➡️➡️",
+                  "➡️➡️➡️",
+                  "⬇️",
+                  "⬇️⬇️"
+            ],
+            "answer": "⬇️⬇️⬇️",
+            "options": [
+                  "⬇️⬇️⬇️",
+                  "⬇️",
+                  "⬅️",
+                  "⬆️"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_16",
+            "cells": [
+                  "💎",
+                  "👑",
+                  "🏆",
+                  "👑",
+                  "🏆",
+                  "💎",
+                  "🏆",
+                  "💎"
+            ],
+            "answer": "👑",
+            "options": [
+                  "👑",
+                  "💎",
+                  "🏆",
+                  "💍"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_17",
+            "cells": [
+                  "🍕",
+                  "🍔",
+                  "🍟",
+                  "🍔",
+                  "🍟",
+                  "🍕",
+                  "🍟",
+                  "🍕"
+            ],
+            "answer": "🍔",
+            "options": [
+                  "🍔",
+                  "🍕",
+                  "🍟",
+                  "🌭"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_18",
+            "cells": [
+                  "🦁",
+                  "🐯",
+                  "🐻",
+                  "🐯",
+                  "🐻",
+                  "🦁",
+                  "🐻",
+                  "🦁"
+            ],
+            "answer": "🐯",
+            "options": [
+                  "🐯",
+                  "🦁",
+                  "🐻",
+                  "🦊"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_19",
+            "cells": [
+                  "☀️",
+                  "🌤️",
+                  "🌧️",
+                  "🌤️",
+                  "🌧️",
+                  "☀️",
+                  "🌧️",
+                  "☀️"
+            ],
+            "answer": "🌤️",
+            "options": [
+                  "🌤️",
+                  "☀️",
+                  "🌧️",
+                  "❄️"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_20",
+            "cells": [
+                  "10",
+                  "20",
+                  "30",
+                  "20",
+                  "30",
+                  "40",
+                  "30",
+                  "40"
+            ],
+            "answer": "50",
+            "options": [
+                  "50",
+                  "40",
+                  "60",
+                  "70"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_21",
+            "cells": [
+                  "5",
+                  "10",
+                  "15",
+                  "10",
+                  "15",
+                  "20",
+                  "15",
+                  "20"
+            ],
+            "answer": "25",
+            "options": [
+                  "25",
+                  "20",
+                  "30",
+                  "35"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_22",
+            "cells": [
+                  "A",
+                  "B",
+                  "C",
+                  "B",
+                  "C",
+                  "D",
+                  "C",
+                  "D"
+            ],
+            "answer": "E",
+            "options": [
+                  "E",
+                  "D",
+                  "F",
+                  "C"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_23",
+            "cells": [
+                  "K",
+                  "L",
+                  "M",
+                  "L",
+                  "M",
+                  "N",
+                  "M",
+                  "N"
+            ],
+            "answer": "O",
+            "options": [
+                  "O",
+                  "N",
+                  "P",
+                  "M"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_24",
+            "cells": [
+                  "🔴",
+                  "🟧",
+                  "🟨",
+                  "🟧",
+                  "🟨",
+                  "🟩",
+                  "🟨",
+                  "🟩"
+            ],
+            "answer": "🟦",
+            "options": [
+                  "🟦",
+                  "🟪",
+                  "🔴",
+                  "🟧"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_25",
+            "cells": [
+                  "❤️",
+                  "🧡",
+                  "💛",
+                  "🧡",
+                  "💛",
+                  "💚",
+                  "💛",
+                  "💚"
+            ],
+            "answer": "💙",
+            "options": [
+                  "💙",
+                  "💜",
+                  "❤️",
+                  "🖤"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_26",
+            "cells": [
+                  "🐱",
+                  "🐶",
+                  "🐭",
+                  "🐶",
+                  "🐭",
+                  "🐹",
+                  "🐭",
+                  "🐹"
+            ],
+            "answer": "🐰",
+            "options": [
+                  "🐰",
+                  "🐱",
+                  "🐶",
+                  "🦊"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_27",
+            "cells": [
+                  "⚽",
+                  "🏀",
+                  "🎾",
+                  "🏀",
+                  "🎾",
+                  "🏐",
+                  "🎾",
+                  "🏐"
+            ],
+            "answer": "🏉",
+            "options": [
+                  "🏉",
+                  "⚽",
+                  "🏀",
+                  "⚾"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_28",
+            "cells": [
+                  "🚗",
+                  "🚕",
+                  "🚙",
+                  "🚕",
+                  "🚙",
+                  "🚌",
+                  "🚙",
+                  "🚌"
+            ],
+            "answer": "🚎",
+            "options": [
+                  "🚎",
+                  "🚗",
+                  "🚕",
+                  "🏎️"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_29",
+            "cells": [
+                  "1",
+                  "3",
+                  "5",
+                  "2",
+                  "4",
+                  "6",
+                  "3",
+                  "5"
+            ],
+            "answer": "7",
+            "options": [
+                  "7",
+                  "6",
+                  "8",
+                  "9"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_30",
+            "cells": [
+                  "10",
+                  "9",
+                  "8",
+                  "7",
+                  "6",
+                  "5",
+                  "4",
+                  "3"
+            ],
+            "answer": "2",
+            "options": [
+                  "2",
+                  "1",
+                  "0",
+                  "3"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_31",
+            "cells": [
+                  "100",
+                  "200",
+                  "300",
+                  "200",
+                  "300",
+                  "400",
+                  "300",
+                  "400"
+            ],
+            "answer": "500",
+            "options": [
+                  "500",
+                  "400",
+                  "600",
+                  "700"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_32",
+            "cells": [
+                  "⭐",
+                  "🌙",
+                  "☀️",
+                  "🌙",
+                  "☀️",
+                  "⭐",
+                  "☀️",
+                  "⭐"
+            ],
+            "answer": "🌙",
+            "options": [
+                  "🌙",
+                  "⭐",
+                  "☀️",
+                  "🪐"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_33",
+            "cells": [
+                  "🍎",
+                  "🍐",
+                  "🍊",
+                  "🍐",
+                  "🍊",
+                  "🍎",
+                  "🍊",
+                  "🍎"
+            ],
+            "answer": "🍐",
+            "options": [
+                  "🍐",
+                  "🍎",
+                  "🍊",
+                  "🍋"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_34",
+            "cells": [
+                  "🐶",
+                  "🐺",
+                  "🦊",
+                  "🐺",
+                  "🦊",
+                  "🐶",
+                  "🦊",
+                  "🐶"
+            ],
+            "answer": "🐺",
+            "options": [
+                  "🐺",
+                  "🐶",
+                  "🦊",
+                  "🐻"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_35",
+            "cells": [
+                  "⬆️",
+                  "↗️",
+                  "➡️",
+                  "↗️",
+                  "➡️",
+                  "↘️",
+                  "➡️",
+                  "↘️"
+            ],
+            "answer": "⬇️",
+            "options": [
+                  "⬇️",
+                  "⬆️",
+                  "⬅️",
+                  "↙️"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_36",
+            "cells": [
+                  "2",
+                  "3",
+                  "5",
+                  "3",
+                  "4",
+                  "7",
+                  "4",
+                  "5"
+            ],
+            "answer": "9",
+            "options": [
+                  "9",
+                  "8",
+                  "10",
+                  "11"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_37",
+            "cells": [
+                  "4",
+                  "3",
+                  "1",
+                  "5",
+                  "2",
+                  "3",
+                  "6",
+                  "1"
+            ],
+            "answer": "5",
+            "options": [
+                  "5",
+                  "4",
+                  "6",
+                  "7"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_38",
+            "cells": [
+                  "3",
+                  "6",
+                  "9",
+                  "2",
+                  "4",
+                  "6",
+                  "1",
+                  "2"
+            ],
+            "answer": "3",
+            "options": [
+                  "3",
+                  "2",
+                  "4",
+                  "5"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_39",
+            "cells": [
+                  "🔺",
+                  "🔻",
+                  "🔺",
+                  "🔻",
+                  "🔺",
+                  "🔻",
+                  "🔺",
+                  "🔻"
+            ],
+            "answer": "🔺",
+            "options": [
+                  "🔺",
+                  "🔻",
+                  "🟦",
+                  "🟡"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      },
+      {
+            "id": "mat3_40",
+            "cells": [
+                  "🔴",
+                  "⚪",
+                  "🔴",
+                  "⚪",
+                  "🔴",
+                  "⚪",
+                  "🔴",
+                  "⚪"
+            ],
+            "answer": "🔴",
+            "options": [
+                  "🔴",
+                  "⚪",
+                  "🔵",
+                  "🟢"
+            ],
+            "prompt": "3x3 matris kuralını satır ve sütunlarda incele! Soru işaretine hangi parça gelmeli?"
+      }
+],
+    advanced_crypto: [
+      {
+            "id": "ac1",
+            "clues": [
+                  {
+                        "word": "K A L E",
+                        "code": "4 1 7 2"
+                  },
+                  {
+                        "word": "E L M A",
+                        "code": "2 7 9 1"
+                  },
+                  {
+                        "word": "M A S A",
+                        "code": "9 1 5 1"
+                  }
+            ],
+            "targetWord": "K A L E M",
+            "answer": [
+                  "4",
+                  "1",
+                  "7",
+                  "2",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E M\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac2",
+            "clues": [
+                  {
+                        "word": "P A R A",
+                        "code": "6 1 3 1"
+                  },
+                  {
+                        "word": "A R P A",
+                        "code": "1 3 6 1"
+                  },
+                  {
+                        "word": "P A K T",
+                        "code": "6 1 8 5"
+                  }
+            ],
+            "targetWord": "P A R K",
+            "answer": [
+                  "6",
+                  "1",
+                  "3",
+                  "8"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P A R K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac3",
+            "clues": [
+                  {
+                        "word": "M A S A",
+                        "code": "8 2 5 2"
+                  },
+                  {
+                        "word": "K A S A",
+                        "code": "7 2 5 2"
+                  },
+                  {
+                        "word": "M O L İ",
+                        "code": "8 9 3 1"
+                  }
+            ],
+            "targetWord": "K A L E",
+            "answer": [
+                  "7",
+                  "2",
+                  "3",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac4",
+            "clues": [
+                  {
+                        "word": "D E N İ Z",
+                        "code": "3 1 7 5 9"
+                  },
+                  {
+                        "word": "D E R E",
+                        "code": "3 1 4 1"
+                  },
+                  {
+                        "word": "R E N K",
+                        "code": "4 1 7 8"
+                  }
+            ],
+            "targetWord": "K R E D İ",
+            "answer": [
+                  "8",
+                  "4",
+                  "1",
+                  "3",
+                  "5"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K R E D İ\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac5",
+            "clues": [
+                  {
+                        "word": "B A L I K",
+                        "code": "7 2 8 4 1"
+                  },
+                  {
+                        "word": "K A L P",
+                        "code": "1 2 8 9"
+                  },
+                  {
+                        "word": "A K I L",
+                        "code": "2 1 4 8"
+                  }
+            ],
+            "targetWord": "P L A K",
+            "answer": [
+                  "9",
+                  "8",
+                  "2",
+                  "1"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P L A K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac6",
+            "clues": [
+                  {
+                        "word": "K A P I",
+                        "code": "3 1 7 5"
+                  },
+                  {
+                        "word": "P A T I",
+                        "code": "7 1 9 5"
+                  },
+                  {
+                        "word": "K I T A",
+                        "code": "3 5 9 1"
+                  }
+            ],
+            "targetWord": "K A T",
+            "answer": [
+                  "3",
+                  "1",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A T\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac7",
+            "clues": [
+                  {
+                        "word": "B A B A",
+                        "code": "4 2 4 2"
+                  },
+                  {
+                        "word": "B O R U",
+                        "code": "4 8 6 1"
+                  },
+                  {
+                        "word": "O B U R",
+                        "code": "8 4 1 6"
+                  }
+            ],
+            "targetWord": "B O R A",
+            "answer": [
+                  "4",
+                  "8",
+                  "6",
+                  "2"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"B O R A\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac8",
+            "clues": [
+                  {
+                        "word": "G Ü N E Ş",
+                        "code": "5 2 7 1 9"
+                  },
+                  {
+                        "word": "G Ü L",
+                        "code": "5 2 4"
+                  },
+                  {
+                        "word": "E Ş İ K",
+                        "code": "1 9 6 3"
+                  }
+            ],
+            "targetWord": "G E N İ Ş",
+            "answer": [
+                  "5",
+                  "1",
+                  "7",
+                  "6",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"G E N İ Ş\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac9",
+            "clues": [
+                  {
+                        "word": "Y I L D I Z",
+                        "code": "8 4 2 9 4 1"
+                  },
+                  {
+                        "word": "A Y I",
+                        "code": "3 8 4"
+                  },
+                  {
+                        "word": "Z A M A N",
+                        "code": "1 3 5 3 7"
+                  }
+            ],
+            "targetWord": "Y A Z I",
+            "answer": [
+                  "8",
+                  "3",
+                  "1",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"Y A Z I\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac10",
+            "clues": [
+                  {
+                        "word": "O K U L",
+                        "code": "6 3 8 2"
+                  },
+                  {
+                        "word": "K U R T",
+                        "code": "3 8 5 9"
+                  },
+                  {
+                        "word": "T U R K",
+                        "code": "9 8 5 3"
+                  }
+            ],
+            "targetWord": "K O R T",
+            "answer": [
+                  "3",
+                  "6",
+                  "5",
+                  "9"
+            ],
+            "keypad": [
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K O R T\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac11",
+            "clues": [
+                  {
+                        "word": "K A L E",
+                        "code": "4 1 7 2"
+                  },
+                  {
+                        "word": "E L M A",
+                        "code": "2 7 9 1"
+                  },
+                  {
+                        "word": "M A S A",
+                        "code": "9 1 5 1"
+                  }
+            ],
+            "targetWord": "K A L E M",
+            "answer": [
+                  "4",
+                  "1",
+                  "7",
+                  "2",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E M\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac12",
+            "clues": [
+                  {
+                        "word": "P A R A",
+                        "code": "6 1 3 1"
+                  },
+                  {
+                        "word": "A R P A",
+                        "code": "1 3 6 1"
+                  },
+                  {
+                        "word": "P A K T",
+                        "code": "6 1 8 5"
+                  }
+            ],
+            "targetWord": "P A R K",
+            "answer": [
+                  "6",
+                  "1",
+                  "3",
+                  "8"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P A R K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac13",
+            "clues": [
+                  {
+                        "word": "M A S A",
+                        "code": "8 2 5 2"
+                  },
+                  {
+                        "word": "K A S A",
+                        "code": "7 2 5 2"
+                  },
+                  {
+                        "word": "M O L İ",
+                        "code": "8 9 3 1"
+                  }
+            ],
+            "targetWord": "K A L E",
+            "answer": [
+                  "7",
+                  "2",
+                  "3",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac14",
+            "clues": [
+                  {
+                        "word": "D E N İ Z",
+                        "code": "3 1 7 5 9"
+                  },
+                  {
+                        "word": "D E R E",
+                        "code": "3 1 4 1"
+                  },
+                  {
+                        "word": "R E N K",
+                        "code": "4 1 7 8"
+                  }
+            ],
+            "targetWord": "K R E D İ",
+            "answer": [
+                  "8",
+                  "4",
+                  "1",
+                  "3",
+                  "5"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K R E D İ\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac15",
+            "clues": [
+                  {
+                        "word": "B A L I K",
+                        "code": "7 2 8 4 1"
+                  },
+                  {
+                        "word": "K A L P",
+                        "code": "1 2 8 9"
+                  },
+                  {
+                        "word": "A K I L",
+                        "code": "2 1 4 8"
+                  }
+            ],
+            "targetWord": "P L A K",
+            "answer": [
+                  "9",
+                  "8",
+                  "2",
+                  "1"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P L A K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac16",
+            "clues": [
+                  {
+                        "word": "K A P I",
+                        "code": "3 1 7 5"
+                  },
+                  {
+                        "word": "P A T I",
+                        "code": "7 1 9 5"
+                  },
+                  {
+                        "word": "K I T A",
+                        "code": "3 5 9 1"
+                  }
+            ],
+            "targetWord": "K A T",
+            "answer": [
+                  "3",
+                  "1",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A T\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac17",
+            "clues": [
+                  {
+                        "word": "B A B A",
+                        "code": "4 2 4 2"
+                  },
+                  {
+                        "word": "B O R U",
+                        "code": "4 8 6 1"
+                  },
+                  {
+                        "word": "O B U R",
+                        "code": "8 4 1 6"
+                  }
+            ],
+            "targetWord": "B O R A",
+            "answer": [
+                  "4",
+                  "8",
+                  "6",
+                  "2"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"B O R A\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac18",
+            "clues": [
+                  {
+                        "word": "G Ü N E Ş",
+                        "code": "5 2 7 1 9"
+                  },
+                  {
+                        "word": "G Ü L",
+                        "code": "5 2 4"
+                  },
+                  {
+                        "word": "E Ş İ K",
+                        "code": "1 9 6 3"
+                  }
+            ],
+            "targetWord": "G E N İ Ş",
+            "answer": [
+                  "5",
+                  "1",
+                  "7",
+                  "6",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"G E N İ Ş\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac19",
+            "clues": [
+                  {
+                        "word": "Y I L D I Z",
+                        "code": "8 4 2 9 4 1"
+                  },
+                  {
+                        "word": "A Y I",
+                        "code": "3 8 4"
+                  },
+                  {
+                        "word": "Z A M A N",
+                        "code": "1 3 5 3 7"
+                  }
+            ],
+            "targetWord": "Y A Z I",
+            "answer": [
+                  "8",
+                  "3",
+                  "1",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"Y A Z I\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac20",
+            "clues": [
+                  {
+                        "word": "O K U L",
+                        "code": "6 3 8 2"
+                  },
+                  {
+                        "word": "K U R T",
+                        "code": "3 8 5 9"
+                  },
+                  {
+                        "word": "T U R K",
+                        "code": "9 8 5 3"
+                  }
+            ],
+            "targetWord": "K O R T",
+            "answer": [
+                  "3",
+                  "6",
+                  "5",
+                  "9"
+            ],
+            "keypad": [
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K O R T\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac21",
+            "clues": [
+                  {
+                        "word": "K A L E",
+                        "code": "4 1 7 2"
+                  },
+                  {
+                        "word": "E L M A",
+                        "code": "2 7 9 1"
+                  },
+                  {
+                        "word": "M A S A",
+                        "code": "9 1 5 1"
+                  }
+            ],
+            "targetWord": "K A L E M",
+            "answer": [
+                  "4",
+                  "1",
+                  "7",
+                  "2",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E M\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac22",
+            "clues": [
+                  {
+                        "word": "P A R A",
+                        "code": "6 1 3 1"
+                  },
+                  {
+                        "word": "A R P A",
+                        "code": "1 3 6 1"
+                  },
+                  {
+                        "word": "P A K T",
+                        "code": "6 1 8 5"
+                  }
+            ],
+            "targetWord": "P A R K",
+            "answer": [
+                  "6",
+                  "1",
+                  "3",
+                  "8"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P A R K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac23",
+            "clues": [
+                  {
+                        "word": "M A S A",
+                        "code": "8 2 5 2"
+                  },
+                  {
+                        "word": "K A S A",
+                        "code": "7 2 5 2"
+                  },
+                  {
+                        "word": "M O L İ",
+                        "code": "8 9 3 1"
+                  }
+            ],
+            "targetWord": "K A L E",
+            "answer": [
+                  "7",
+                  "2",
+                  "3",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac24",
+            "clues": [
+                  {
+                        "word": "D E N İ Z",
+                        "code": "3 1 7 5 9"
+                  },
+                  {
+                        "word": "D E R E",
+                        "code": "3 1 4 1"
+                  },
+                  {
+                        "word": "R E N K",
+                        "code": "4 1 7 8"
+                  }
+            ],
+            "targetWord": "K R E D İ",
+            "answer": [
+                  "8",
+                  "4",
+                  "1",
+                  "3",
+                  "5"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K R E D İ\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac25",
+            "clues": [
+                  {
+                        "word": "B A L I K",
+                        "code": "7 2 8 4 1"
+                  },
+                  {
+                        "word": "K A L P",
+                        "code": "1 2 8 9"
+                  },
+                  {
+                        "word": "A K I L",
+                        "code": "2 1 4 8"
+                  }
+            ],
+            "targetWord": "P L A K",
+            "answer": [
+                  "9",
+                  "8",
+                  "2",
+                  "1"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P L A K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac26",
+            "clues": [
+                  {
+                        "word": "K A P I",
+                        "code": "3 1 7 5"
+                  },
+                  {
+                        "word": "P A T I",
+                        "code": "7 1 9 5"
+                  },
+                  {
+                        "word": "K I T A",
+                        "code": "3 5 9 1"
+                  }
+            ],
+            "targetWord": "K A T",
+            "answer": [
+                  "3",
+                  "1",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A T\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac27",
+            "clues": [
+                  {
+                        "word": "B A B A",
+                        "code": "4 2 4 2"
+                  },
+                  {
+                        "word": "B O R U",
+                        "code": "4 8 6 1"
+                  },
+                  {
+                        "word": "O B U R",
+                        "code": "8 4 1 6"
+                  }
+            ],
+            "targetWord": "B O R A",
+            "answer": [
+                  "4",
+                  "8",
+                  "6",
+                  "2"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"B O R A\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac28",
+            "clues": [
+                  {
+                        "word": "G Ü N E Ş",
+                        "code": "5 2 7 1 9"
+                  },
+                  {
+                        "word": "G Ü L",
+                        "code": "5 2 4"
+                  },
+                  {
+                        "word": "E Ş İ K",
+                        "code": "1 9 6 3"
+                  }
+            ],
+            "targetWord": "G E N İ Ş",
+            "answer": [
+                  "5",
+                  "1",
+                  "7",
+                  "6",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"G E N İ Ş\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac29",
+            "clues": [
+                  {
+                        "word": "Y I L D I Z",
+                        "code": "8 4 2 9 4 1"
+                  },
+                  {
+                        "word": "A Y I",
+                        "code": "3 8 4"
+                  },
+                  {
+                        "word": "Z A M A N",
+                        "code": "1 3 5 3 7"
+                  }
+            ],
+            "targetWord": "Y A Z I",
+            "answer": [
+                  "8",
+                  "3",
+                  "1",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"Y A Z I\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac30",
+            "clues": [
+                  {
+                        "word": "O K U L",
+                        "code": "6 3 8 2"
+                  },
+                  {
+                        "word": "K U R T",
+                        "code": "3 8 5 9"
+                  },
+                  {
+                        "word": "T U R K",
+                        "code": "9 8 5 3"
+                  }
+            ],
+            "targetWord": "K O R T",
+            "answer": [
+                  "3",
+                  "6",
+                  "5",
+                  "9"
+            ],
+            "keypad": [
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K O R T\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac31",
+            "clues": [
+                  {
+                        "word": "K A L E",
+                        "code": "4 1 7 2"
+                  },
+                  {
+                        "word": "E L M A",
+                        "code": "2 7 9 1"
+                  },
+                  {
+                        "word": "M A S A",
+                        "code": "9 1 5 1"
+                  }
+            ],
+            "targetWord": "K A L E M",
+            "answer": [
+                  "4",
+                  "1",
+                  "7",
+                  "2",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E M\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac32",
+            "clues": [
+                  {
+                        "word": "P A R A",
+                        "code": "6 1 3 1"
+                  },
+                  {
+                        "word": "A R P A",
+                        "code": "1 3 6 1"
+                  },
+                  {
+                        "word": "P A K T",
+                        "code": "6 1 8 5"
+                  }
+            ],
+            "targetWord": "P A R K",
+            "answer": [
+                  "6",
+                  "1",
+                  "3",
+                  "8"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P A R K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac33",
+            "clues": [
+                  {
+                        "word": "M A S A",
+                        "code": "8 2 5 2"
+                  },
+                  {
+                        "word": "K A S A",
+                        "code": "7 2 5 2"
+                  },
+                  {
+                        "word": "M O L İ",
+                        "code": "8 9 3 1"
+                  }
+            ],
+            "targetWord": "K A L E",
+            "answer": [
+                  "7",
+                  "2",
+                  "3",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A L E\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac34",
+            "clues": [
+                  {
+                        "word": "D E N İ Z",
+                        "code": "3 1 7 5 9"
+                  },
+                  {
+                        "word": "D E R E",
+                        "code": "3 1 4 1"
+                  },
+                  {
+                        "word": "R E N K",
+                        "code": "4 1 7 8"
+                  }
+            ],
+            "targetWord": "K R E D İ",
+            "answer": [
+                  "8",
+                  "4",
+                  "1",
+                  "3",
+                  "5"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K R E D İ\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac35",
+            "clues": [
+                  {
+                        "word": "B A L I K",
+                        "code": "7 2 8 4 1"
+                  },
+                  {
+                        "word": "K A L P",
+                        "code": "1 2 8 9"
+                  },
+                  {
+                        "word": "A K I L",
+                        "code": "2 1 4 8"
+                  }
+            ],
+            "targetWord": "P L A K",
+            "answer": [
+                  "9",
+                  "8",
+                  "2",
+                  "1"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"P L A K\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac36",
+            "clues": [
+                  {
+                        "word": "K A P I",
+                        "code": "3 1 7 5"
+                  },
+                  {
+                        "word": "P A T I",
+                        "code": "7 1 9 5"
+                  },
+                  {
+                        "word": "K I T A",
+                        "code": "3 5 9 1"
+                  }
+            ],
+            "targetWord": "K A T",
+            "answer": [
+                  "3",
+                  "1",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "3",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K A T\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac37",
+            "clues": [
+                  {
+                        "word": "B A B A",
+                        "code": "4 2 4 2"
+                  },
+                  {
+                        "word": "B O R U",
+                        "code": "4 8 6 1"
+                  },
+                  {
+                        "word": "O B U R",
+                        "code": "8 4 1 6"
+                  }
+            ],
+            "targetWord": "B O R A",
+            "answer": [
+                  "4",
+                  "8",
+                  "6",
+                  "2"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "4",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"B O R A\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac38",
+            "clues": [
+                  {
+                        "word": "G Ü N E Ş",
+                        "code": "5 2 7 1 9"
+                  },
+                  {
+                        "word": "G Ü L",
+                        "code": "5 2 4"
+                  },
+                  {
+                        "word": "E Ş İ K",
+                        "code": "1 9 6 3"
+                  }
+            ],
+            "targetWord": "G E N İ Ş",
+            "answer": [
+                  "5",
+                  "1",
+                  "7",
+                  "6",
+                  "9"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "7",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"G E N İ Ş\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac39",
+            "clues": [
+                  {
+                        "word": "Y I L D I Z",
+                        "code": "8 4 2 9 4 1"
+                  },
+                  {
+                        "word": "A Y I",
+                        "code": "3 8 4"
+                  },
+                  {
+                        "word": "Z A M A N",
+                        "code": "1 3 5 3 7"
+                  }
+            ],
+            "targetWord": "Y A Z I",
+            "answer": [
+                  "8",
+                  "3",
+                  "1",
+                  "4"
+            ],
+            "keypad": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"Y A Z I\" kelimesinin şifresini tuşla!"
+      },
+      {
+            "id": "ac40",
+            "clues": [
+                  {
+                        "word": "O K U L",
+                        "code": "6 3 8 2"
+                  },
+                  {
+                        "word": "K U R T",
+                        "code": "3 8 5 9"
+                  },
+                  {
+                        "word": "T U R K",
+                        "code": "9 8 5 3"
+                  }
+            ],
+            "targetWord": "K O R T",
+            "answer": [
+                  "3",
+                  "6",
+                  "5",
+                  "9"
+            ],
+            "keypad": [
+                  "2",
+                  "3",
+                  "5",
+                  "6",
+                  "8",
+                  "9"
+            ],
+            "prompt": "Harf-sayı kriptoloji analizi yap! \"K O R T\" kelimesinin şifresini tuşla!"
+      }
+],
+    math_operator_puzzle: [
+      {
+            "id": "mo1",
+            "equation": [
+                  "12",
+                  "?",
+                  "4",
+                  "?",
+                  "3",
+                  "=",
+                  "6"
+            ],
+            "answer": [
+                  "÷",
+                  "+"
+            ],
+            "options": [
+                  "+",
+                  "-",
+                  "x",
+                  "÷"
+            ],
+            "prompt": "Eşitliği sağlayan işlem işaretlerini sırayla seç!"
+      },
+      {
+            "id": "mo2",
+            "equation": [
+                  "?",
+                  "x",
+                  "4",
+                  "+",
+                  "5",
+                  "=",
+                  "25"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "3",
+                  "4",
+                  "5",
+                  "6"
+            ],
+            "prompt": "Hangi sayının 4 katının 5 fazlası 25 eder?"
+      },
+      {
+            "id": "mo3",
+            "equation": [
+                  "18",
+                  "-",
+                  "?",
+                  "x",
+                  "2",
+                  "=",
+                  "10"
+            ],
+            "answer": [
+                  "4"
+            ],
+            "options": [
+                  "3",
+                  "4",
+                  "5",
+                  "6"
+            ],
+            "prompt": "İşlem önceliğine göre soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "mo4",
+            "equation": [
+                  "24",
+                  "÷",
+                  "?",
+                  "+",
+                  "2",
+                  "=",
+                  "8"
+            ],
+            "answer": [
+                  "4"
+            ],
+            "options": [
+                  "3",
+                  "4",
+                  "6",
+                  "8"
+            ],
+            "prompt": "Eşitliği sağlamak için boş kutuya hangi sayı gelmeli?"
+      },
+      {
+            "id": "mo5",
+            "equation": [
+                  "6",
+                  "x",
+                  "3",
+                  "-",
+                  "?",
+                  "=",
+                  "11"
+            ],
+            "answer": [
+                  "7"
+            ],
+            "options": [
+                  "5",
+                  "6",
+                  "7",
+                  "8"
+            ],
+            "prompt": "18 eksi kaç 11 eder? Soru işaretini bul!"
+      },
+      {
+            "id": "mo6",
+            "equation": [
+                  "?",
+                  "+",
+                  "15",
+                  "÷",
+                  "3",
+                  "=",
+                  "12"
+            ],
+            "answer": [
+                  "7"
+            ],
+            "options": [
+                  "5",
+                  "6",
+                  "7",
+                  "8"
+            ],
+            "prompt": "Önce bölme! Sonra hangi sayıyı eklersek 12 olur?"
+      },
+      {
+            "id": "mo7",
+            "equation": [
+                  "20",
+                  "-",
+                  "4",
+                  "x",
+                  "?",
+                  "=",
+                  "8"
+            ],
+            "answer": [
+                  "3"
+            ],
+            "options": [
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+            ],
+            "prompt": "20 eksi (4 x ?) = 8 eşitliğinde soru işareti nedir?"
+      },
+      {
+            "id": "mo8",
+            "equation": [
+                  "30",
+                  "÷",
+                  "5",
+                  "+",
+                  "?",
+                  "=",
+                  "14"
+            ],
+            "answer": [
+                  "8"
+            ],
+            "options": [
+                  "6",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "6 artı kaç 14 eder?"
+      },
+      {
+            "id": "mo9",
+            "equation": [
+                  "8",
+                  "x",
+                  "?",
+                  "-",
+                  "10",
+                  "=",
+                  "22"
+            ],
+            "answer": [
+                  "4"
+            ],
+            "options": [
+                  "3",
+                  "4",
+                  "5",
+                  "6"
+            ],
+            "prompt": "Hangi sayıyı 8 ile çarpıp 10 çıkarırsak 22 kalır?"
+      },
+      {
+            "id": "mo10",
+            "equation": [
+                  "36",
+                  "÷",
+                  "?",
+                  "+",
+                  "7",
+                  "=",
+                  "13"
+            ],
+            "answer": [
+                  "6"
+            ],
+            "options": [
+                  "4",
+                  "6",
+                  "8",
+                  "9"
+            ],
+            "prompt": "36 bölü kaç artı 7 eşittir 13?"
+      },
+      {
+            "id": "mo11",
+            "equation": [
+                  "15",
+                  "?",
+                  "3",
+                  "?",
+                  "2",
+                  "=",
+                  "7"
+            ],
+            "answer": [
+                  "÷",
+                  "+"
+            ],
+            "options": [
+                  "+",
+                  "-",
+                  "x",
+                  "÷"
+            ],
+            "prompt": "Eşitliği sağlayan işlem işaretlerini sırayla seç!"
+      },
+      {
+            "id": "mo12",
+            "equation": [
+                  "7",
+                  "x",
+                  "3",
+                  "+",
+                  "?",
+                  "=",
+                  "26"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "21 artı kaç 26 eder?"
+      },
+      {
+            "id": "mo13",
+            "equation": [
+                  "40",
+                  "÷",
+                  "?",
+                  "-",
+                  "3",
+                  "=",
+                  "5"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "8",
+                  "10"
+            ],
+            "prompt": "40 bölü kaç eksi 3 eşittir 5 eder?"
+      },
+      {
+            "id": "mo14",
+            "equation": [
+                  "?",
+                  "x",
+                  "6",
+                  "-",
+                  "8",
+                  "=",
+                  "22"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "Hangi sayının 6 katının 8 eksiği 22 eder?"
+      },
+      {
+            "id": "mo15",
+            "equation": [
+                  "16",
+                  "+",
+                  "12",
+                  "÷",
+                  "?",
+                  "=",
+                  "20"
+            ],
+            "answer": [
+                  "3"
+            ],
+            "options": [
+                  "2",
+                  "3",
+                  "4",
+                  "6"
+            ],
+            "prompt": "12 bölü kaç 4 eder?"
+      },
+      {
+            "id": "mo16",
+            "equation": [
+                  "9",
+                  "x",
+                  "?",
+                  "+",
+                  "4",
+                  "=",
+                  "31"
+            ],
+            "answer": [
+                  "3"
+            ],
+            "options": [
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+            ],
+            "prompt": "9 ile kaçı çarpıp 4 eklersek 31 eder?"
+      },
+      {
+            "id": "mo17",
+            "equation": [
+                  "50",
+                  "-",
+                  "?",
+                  "x",
+                  "5",
+                  "=",
+                  "20"
+            ],
+            "answer": [
+                  "6"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "50 eksi kaç kere 5 eşittir 20 eder?"
+      },
+      {
+            "id": "mo18",
+            "equation": [
+                  "28",
+                  "÷",
+                  "4",
+                  "+",
+                  "?",
+                  "=",
+                  "15"
+            ],
+            "answer": [
+                  "8"
+            ],
+            "options": [
+                  "6",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "7 artı kaç 15 eder?"
+      },
+      {
+            "id": "mo19",
+            "equation": [
+                  "?",
+                  "x",
+                  "7",
+                  "+",
+                  "6",
+                  "=",
+                  "41"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "Hangi sayının 7 katının 6 fazlası 41 eder?"
+      },
+      {
+            "id": "mo20",
+            "equation": [
+                  "32",
+                  "÷",
+                  "?",
+                  "+",
+                  "9",
+                  "=",
+                  "17"
+            ],
+            "answer": [
+                  "4"
+            ],
+            "options": [
+                  "3",
+                  "4",
+                  "6",
+                  "8"
+            ],
+            "prompt": "32 bölü kaç 8 eder?"
+      },
+      {
+            "id": "mo21",
+            "equation": [
+                  "14",
+                  "?",
+                  "2",
+                  "?",
+                  "5",
+                  "=",
+                  "12"
+            ],
+            "answer": [
+                  "÷",
+                  "+"
+            ],
+            "options": [
+                  "+",
+                  "-",
+                  "x",
+                  "÷"
+            ],
+            "prompt": "İşlem işaretlerini belirle!"
+      },
+      {
+            "id": "mo22",
+            "equation": [
+                  "6",
+                  "x",
+                  "4",
+                  "-",
+                  "?",
+                  "=",
+                  "15"
+            ],
+            "answer": [
+                  "9"
+            ],
+            "options": [
+                  "7",
+                  "8",
+                  "9",
+                  "10"
+            ],
+            "prompt": "24 eksi kaç 15 eder?"
+      },
+      {
+            "id": "mo23",
+            "equation": [
+                  "45",
+                  "÷",
+                  "?",
+                  "+",
+                  "4",
+                  "=",
+                  "9"
+            ],
+            "answer": [
+                  "9"
+            ],
+            "options": [
+                  "5",
+                  "7",
+                  "9",
+                  "10"
+            ],
+            "prompt": "45 bölü kaç 5 eder?"
+      },
+      {
+            "id": "mo24",
+            "equation": [
+                  "?",
+                  "x",
+                  "8",
+                  "-",
+                  "12",
+                  "=",
+                  "28"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "Hangi sayının 8 katının 12 eksiği 28 eder?"
+      },
+      {
+            "id": "mo25",
+            "equation": [
+                  "21",
+                  "+",
+                  "18",
+                  "÷",
+                  "?",
+                  "=",
+                  "27"
+            ],
+            "answer": [
+                  "3"
+            ],
+            "options": [
+                  "2",
+                  "3",
+                  "6",
+                  "9"
+            ],
+            "prompt": "18 bölü kaç 6 eder?"
+      },
+      {
+            "id": "mo26",
+            "equation": [
+                  "8",
+                  "x",
+                  "?",
+                  "+",
+                  "7",
+                  "=",
+                  "47"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "8 ile kaçı çarpıp 7 eklersek 47 eder?"
+      },
+      {
+            "id": "mo27",
+            "equation": [
+                  "60",
+                  "-",
+                  "?",
+                  "x",
+                  "6",
+                  "=",
+                  "24"
+            ],
+            "answer": [
+                  "6"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "60 eksi kaç kere 6 eşittir 24 eder?"
+      },
+      {
+            "id": "mo28",
+            "equation": [
+                  "35",
+                  "÷",
+                  "5",
+                  "+",
+                  "?",
+                  "=",
+                  "16"
+            ],
+            "answer": [
+                  "9"
+            ],
+            "options": [
+                  "7",
+                  "8",
+                  "9",
+                  "10"
+            ],
+            "prompt": "7 artı kaç 16 eder?"
+      },
+      {
+            "id": "mo29",
+            "equation": [
+                  "?",
+                  "x",
+                  "9",
+                  "+",
+                  "5",
+                  "=",
+                  "50"
+            ],
+            "answer": [
+                  "5"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "Hangi sayının 9 katının 5 fazlası 50 eder?"
+      },
+      {
+            "id": "mo30",
+            "equation": [
+                  "48",
+                  "÷",
+                  "?",
+                  "+",
+                  "8",
+                  "=",
+                  "16"
+            ],
+            "answer": [
+                  "6"
+            ],
+            "options": [
+                  "4",
+                  "6",
+                  "8",
+                  "12"
+            ],
+            "prompt": "48 bölü kaç 8 eder?"
+      },
+      {
+            "id": "mo31",
+            "equation": [
+                  "10",
+                  "?",
+                  "2",
+                  "?",
+                  "4",
+                  "=",
+                  "9"
+            ],
+            "answer": [
+                  "÷",
+                  "+"
+            ],
+            "options": [
+                  "+",
+                  "-",
+                  "x",
+                  "÷"
+            ],
+            "prompt": "İşlem işaretlerini seç!"
+      },
+      {
+            "id": "mo32",
+            "equation": [
+                  "5",
+                  "x",
+                  "5",
+                  "-",
+                  "?",
+                  "=",
+                  "18"
+            ],
+            "answer": [
+                  "7"
+            ],
+            "options": [
+                  "5",
+                  "6",
+                  "7",
+                  "8"
+            ],
+            "prompt": "25 eksi kaç 18 eder?"
+      },
+      {
+            "id": "mo33",
+            "equation": [
+                  "54",
+                  "÷",
+                  "?",
+                  "+",
+                  "6",
+                  "=",
+                  "15"
+            ],
+            "answer": [
+                  "6"
+            ],
+            "options": [
+                  "6",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "54 bölü kaç 9 eder?"
+      },
+      {
+            "id": "mo34",
+            "equation": [
+                  "?",
+                  "x",
+                  "5",
+                  "-",
+                  "15",
+                  "=",
+                  "20"
+            ],
+            "answer": [
+                  "7"
+            ],
+            "options": [
+                  "5",
+                  "6",
+                  "7",
+                  "8"
+            ],
+            "prompt": "Hangi sayının 5 katının 15 eksiği 20 eder?"
+      },
+      {
+            "id": "mo35",
+            "equation": [
+                  "25",
+                  "+",
+                  "20",
+                  "÷",
+                  "?",
+                  "=",
+                  "30"
+            ],
+            "answer": [
+                  "4"
+            ],
+            "options": [
+                  "2",
+                  "4",
+                  "5",
+                  "10"
+            ],
+            "prompt": "20 bölü kaç 5 eder?"
+      },
+      {
+            "id": "mo36",
+            "equation": [
+                  "7",
+                  "x",
+                  "?",
+                  "+",
+                  "8",
+                  "=",
+                  "36"
+            ],
+            "answer": [
+                  "4"
+            ],
+            "options": [
+                  "3",
+                  "4",
+                  "5",
+                  "6"
+            ],
+            "prompt": "7 ile kaçı çarpıp 8 eklersek 36 eder?"
+      },
+      {
+            "id": "mo37",
+            "equation": [
+                  "70",
+                  "-",
+                  "?",
+                  "x",
+                  "7",
+                  "=",
+                  "28"
+            ],
+            "answer": [
+                  "6"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "70 eksi kaç kere 7 eşittir 28 eder?"
+      },
+      {
+            "id": "mo38",
+            "equation": [
+                  "42",
+                  "÷",
+                  "6",
+                  "+",
+                  "?",
+                  "=",
+                  "18"
+            ],
+            "answer": [
+                  "11"
+            ],
+            "options": [
+                  "9",
+                  "10",
+                  "11",
+                  "12"
+            ],
+            "prompt": "7 artı kaç 18 eder?"
+      },
+      {
+            "id": "mo39",
+            "equation": [
+                  "?",
+                  "x",
+                  "6",
+                  "+",
+                  "9",
+                  "=",
+                  "45"
+            ],
+            "answer": [
+                  "6"
+            ],
+            "options": [
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+            ],
+            "prompt": "Hangi sayının 6 katının 9 fazlası 45 eder?"
+      },
+      {
+            "id": "mo40",
+            "equation": [
+                  "56",
+                  "÷",
+                  "?",
+                  "+",
+                  "5",
+                  "=",
+                  "12"
+            ],
+            "answer": [
+                  "8"
+            ],
+            "options": [
+                  "6",
+                  "7",
+                  "8",
+                  "9"
+            ],
+            "prompt": "56 bölü kaç 7 eder?"
+      }
+],
+    cube_net_rotation: [
+      {
+            "id": "net1",
+            "net": {
+                  "top": "⭐",
+                  "row": [
+                        "🌙",
+                        "☀️",
+                        "❤️",
+                        "🔷"
+                  ],
+                  "bottom": "🍀"
+            },
+            "targetFace": "⭐",
+            "answer": "🍀",
+            "options": [
+                  "☀️",
+                  "❤️",
+                  "🌙",
+                  "🍀"
+            ],
+            "prompt": "Bu küp kapatıldığında \"⭐\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net2",
+            "net": {
+                  "top": "🍎",
+                  "row": [
+                        "🍌",
+                        "🍇",
+                        "🍓",
+                        "🍊"
+                  ],
+                  "bottom": "🍍"
+            },
+            "targetFace": "🍌",
+            "answer": "🍓",
+            "options": [
+                  "🍇",
+                  "🍊",
+                  "🍎",
+                  "🍓"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🍌\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net3",
+            "net": {
+                  "top": "🐶",
+                  "row": [
+                        "🐱",
+                        "🐰",
+                        "🐼",
+                        "🦁"
+                  ],
+                  "bottom": "🦊"
+            },
+            "targetFace": "🐰",
+            "answer": "🦁",
+            "options": [
+                  "🐱",
+                  "🐶",
+                  "🐼",
+                  "🦁"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🐰\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net4",
+            "net": {
+                  "top": "🚗",
+                  "row": [
+                        "🚀",
+                        "⛵",
+                        "✈️",
+                        "🚂"
+                  ],
+                  "bottom": "🚁"
+            },
+            "targetFace": "🚗",
+            "answer": "🚁",
+            "options": [
+                  "⛵",
+                  "✈️",
+                  "🚀",
+                  "🚁"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🚗\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net5",
+            "net": {
+                  "top": "1",
+                  "row": [
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                  ],
+                  "bottom": "6"
+            },
+            "targetFace": "2",
+            "answer": "4",
+            "options": [
+                  "1",
+                  "3",
+                  "4",
+                  "5"
+            ],
+            "prompt": "Bu küp kapatıldığında \"2\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net6",
+            "net": {
+                  "top": "🔴",
+                  "row": [
+                        "🔵",
+                        "🟡",
+                        "🟢",
+                        "🟣"
+                  ],
+                  "bottom": "🟧"
+            },
+            "targetFace": "🟡",
+            "answer": "🟣",
+            "options": [
+                  "🔴",
+                  "🔵",
+                  "🟢",
+                  "🟣"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🟡\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net7",
+            "net": {
+                  "top": "🔺",
+                  "row": [
+                        "🟦",
+                        "🟡",
+                        "⭐",
+                        "🔷"
+                  ],
+                  "bottom": "🔶"
+            },
+            "targetFace": "🔺",
+            "answer": "🔶",
+            "options": [
+                  "⭐",
+                  "🔶",
+                  "🟡",
+                  "🟦"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🔺\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net8",
+            "net": {
+                  "top": "💎",
+                  "row": [
+                        "👑",
+                        "🏆",
+                        "💍",
+                        "🪙"
+                  ],
+                  "bottom": "🎁"
+            },
+            "targetFace": "👑",
+            "answer": "💍",
+            "options": [
+                  "🏆",
+                  "💍",
+                  "💎",
+                  "🪙"
+            ],
+            "prompt": "Bu küp kapatıldığında \"👑\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net9",
+            "net": {
+                  "top": "⭐",
+                  "row": [
+                        "🌙",
+                        "☀️",
+                        "❤️",
+                        "🔷"
+                  ],
+                  "bottom": "🍀"
+            },
+            "targetFace": "☀️",
+            "answer": "🔷",
+            "options": [
+                  "❤️",
+                  "⭐",
+                  "🌙",
+                  "🔷"
+            ],
+            "prompt": "Bu küp kapatıldığında \"☀️\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net10",
+            "net": {
+                  "top": "🍎",
+                  "row": [
+                        "🍌",
+                        "🍇",
+                        "🍓",
+                        "🍊"
+                  ],
+                  "bottom": "🍍"
+            },
+            "targetFace": "🍎",
+            "answer": "🍍",
+            "options": [
+                  "🍇",
+                  "🍌",
+                  "🍍",
+                  "🍓"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🍎\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net11",
+            "net": {
+                  "top": "🐶",
+                  "row": [
+                        "🐱",
+                        "🐰",
+                        "🐼",
+                        "🦁"
+                  ],
+                  "bottom": "🦊"
+            },
+            "targetFace": "🐱",
+            "answer": "🐼",
+            "options": [
+                  "🐰",
+                  "🐶",
+                  "🐼",
+                  "🦁"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🐱\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net12",
+            "net": {
+                  "top": "🚗",
+                  "row": [
+                        "🚀",
+                        "⛵",
+                        "✈️",
+                        "🚂"
+                  ],
+                  "bottom": "🚁"
+            },
+            "targetFace": "⛵",
+            "answer": "🚂",
+            "options": [
+                  "✈️",
+                  "🚀",
+                  "🚂",
+                  "🚗"
+            ],
+            "prompt": "Bu küp kapatıldığında \"⛵\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net13",
+            "net": {
+                  "top": "1",
+                  "row": [
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                  ],
+                  "bottom": "6"
+            },
+            "targetFace": "1",
+            "answer": "6",
+            "options": [
+                  "2",
+                  "3",
+                  "4",
+                  "6"
+            ],
+            "prompt": "Bu küp kapatıldığında \"1\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net14",
+            "net": {
+                  "top": "🔴",
+                  "row": [
+                        "🔵",
+                        "🟡",
+                        "🟢",
+                        "🟣"
+                  ],
+                  "bottom": "🟧"
+            },
+            "targetFace": "🔵",
+            "answer": "🟢",
+            "options": [
+                  "🔴",
+                  "🟡",
+                  "🟢",
+                  "🟣"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🔵\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net15",
+            "net": {
+                  "top": "🔺",
+                  "row": [
+                        "🟦",
+                        "🟡",
+                        "⭐",
+                        "🔷"
+                  ],
+                  "bottom": "🔶"
+            },
+            "targetFace": "🟡",
+            "answer": "🔷",
+            "options": [
+                  "⭐",
+                  "🔷",
+                  "🔺",
+                  "🟦"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🟡\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net16",
+            "net": {
+                  "top": "💎",
+                  "row": [
+                        "👑",
+                        "🏆",
+                        "💍",
+                        "🪙"
+                  ],
+                  "bottom": "🎁"
+            },
+            "targetFace": "💎",
+            "answer": "🎁",
+            "options": [
+                  "🎁",
+                  "🏆",
+                  "👑",
+                  "💍"
+            ],
+            "prompt": "Bu küp kapatıldığında \"💎\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net17",
+            "net": {
+                  "top": "⭐",
+                  "row": [
+                        "🌙",
+                        "☀️",
+                        "❤️",
+                        "🔷"
+                  ],
+                  "bottom": "🍀"
+            },
+            "targetFace": "🌙",
+            "answer": "❤️",
+            "options": [
+                  "☀️",
+                  "❤️",
+                  "⭐",
+                  "🔷"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🌙\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net18",
+            "net": {
+                  "top": "🍎",
+                  "row": [
+                        "🍌",
+                        "🍇",
+                        "🍓",
+                        "🍊"
+                  ],
+                  "bottom": "🍍"
+            },
+            "targetFace": "🍇",
+            "answer": "🍊",
+            "options": [
+                  "🍊",
+                  "🍌",
+                  "🍎",
+                  "🍓"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🍇\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net19",
+            "net": {
+                  "top": "🐶",
+                  "row": [
+                        "🐱",
+                        "🐰",
+                        "🐼",
+                        "🦁"
+                  ],
+                  "bottom": "🦊"
+            },
+            "targetFace": "🐶",
+            "answer": "🦊",
+            "options": [
+                  "🐰",
+                  "🐱",
+                  "🐼",
+                  "🦊"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🐶\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net20",
+            "net": {
+                  "top": "🚗",
+                  "row": [
+                        "🚀",
+                        "⛵",
+                        "✈️",
+                        "🚂"
+                  ],
+                  "bottom": "🚁"
+            },
+            "targetFace": "🚀",
+            "answer": "✈️",
+            "options": [
+                  "⛵",
+                  "✈️",
+                  "🚂",
+                  "🚗"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🚀\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net21",
+            "net": {
+                  "top": "1",
+                  "row": [
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                  ],
+                  "bottom": "6"
+            },
+            "targetFace": "3",
+            "answer": "5",
+            "options": [
+                  "1",
+                  "2",
+                  "4",
+                  "5"
+            ],
+            "prompt": "Bu küp kapatıldığında \"3\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net22",
+            "net": {
+                  "top": "🔴",
+                  "row": [
+                        "🔵",
+                        "🟡",
+                        "🟢",
+                        "🟣"
+                  ],
+                  "bottom": "🟧"
+            },
+            "targetFace": "🔴",
+            "answer": "🟧",
+            "options": [
+                  "🔵",
+                  "🟡",
+                  "🟢",
+                  "🟧"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🔴\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net23",
+            "net": {
+                  "top": "🔺",
+                  "row": [
+                        "🟦",
+                        "🟡",
+                        "⭐",
+                        "🔷"
+                  ],
+                  "bottom": "🔶"
+            },
+            "targetFace": "🟦",
+            "answer": "⭐",
+            "options": [
+                  "⭐",
+                  "🔷",
+                  "🔺",
+                  "🟡"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🟦\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net24",
+            "net": {
+                  "top": "💎",
+                  "row": [
+                        "👑",
+                        "🏆",
+                        "💍",
+                        "🪙"
+                  ],
+                  "bottom": "🎁"
+            },
+            "targetFace": "🏆",
+            "answer": "🪙",
+            "options": [
+                  "👑",
+                  "💍",
+                  "💎",
+                  "🪙"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🏆\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net25",
+            "net": {
+                  "top": "⭐",
+                  "row": [
+                        "🌙",
+                        "☀️",
+                        "❤️",
+                        "🔷"
+                  ],
+                  "bottom": "🍀"
+            },
+            "targetFace": "⭐",
+            "answer": "🍀",
+            "options": [
+                  "☀️",
+                  "❤️",
+                  "🌙",
+                  "🍀"
+            ],
+            "prompt": "Bu küp kapatıldığında \"⭐\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net26",
+            "net": {
+                  "top": "🍎",
+                  "row": [
+                        "🍌",
+                        "🍇",
+                        "🍓",
+                        "🍊"
+                  ],
+                  "bottom": "🍍"
+            },
+            "targetFace": "🍌",
+            "answer": "🍓",
+            "options": [
+                  "🍇",
+                  "🍊",
+                  "🍎",
+                  "🍓"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🍌\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net27",
+            "net": {
+                  "top": "🐶",
+                  "row": [
+                        "🐱",
+                        "🐰",
+                        "🐼",
+                        "🦁"
+                  ],
+                  "bottom": "🦊"
+            },
+            "targetFace": "🐰",
+            "answer": "🦁",
+            "options": [
+                  "🐱",
+                  "🐶",
+                  "🐼",
+                  "🦁"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🐰\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net28",
+            "net": {
+                  "top": "🚗",
+                  "row": [
+                        "🚀",
+                        "⛵",
+                        "✈️",
+                        "🚂"
+                  ],
+                  "bottom": "🚁"
+            },
+            "targetFace": "🚗",
+            "answer": "🚁",
+            "options": [
+                  "⛵",
+                  "✈️",
+                  "🚀",
+                  "🚁"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🚗\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net29",
+            "net": {
+                  "top": "1",
+                  "row": [
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                  ],
+                  "bottom": "6"
+            },
+            "targetFace": "2",
+            "answer": "4",
+            "options": [
+                  "1",
+                  "3",
+                  "4",
+                  "5"
+            ],
+            "prompt": "Bu küp kapatıldığında \"2\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net30",
+            "net": {
+                  "top": "🔴",
+                  "row": [
+                        "🔵",
+                        "🟡",
+                        "🟢",
+                        "🟣"
+                  ],
+                  "bottom": "🟧"
+            },
+            "targetFace": "🟡",
+            "answer": "🟣",
+            "options": [
+                  "🔴",
+                  "🔵",
+                  "🟢",
+                  "🟣"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🟡\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net31",
+            "net": {
+                  "top": "🔺",
+                  "row": [
+                        "🟦",
+                        "🟡",
+                        "⭐",
+                        "🔷"
+                  ],
+                  "bottom": "🔶"
+            },
+            "targetFace": "🔺",
+            "answer": "🔶",
+            "options": [
+                  "⭐",
+                  "🔶",
+                  "🟡",
+                  "🟦"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🔺\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net32",
+            "net": {
+                  "top": "💎",
+                  "row": [
+                        "👑",
+                        "🏆",
+                        "💍",
+                        "🪙"
+                  ],
+                  "bottom": "🎁"
+            },
+            "targetFace": "👑",
+            "answer": "💍",
+            "options": [
+                  "🏆",
+                  "💍",
+                  "💎",
+                  "🪙"
+            ],
+            "prompt": "Bu küp kapatıldığında \"👑\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net33",
+            "net": {
+                  "top": "⭐",
+                  "row": [
+                        "🌙",
+                        "☀️",
+                        "❤️",
+                        "🔷"
+                  ],
+                  "bottom": "🍀"
+            },
+            "targetFace": "☀️",
+            "answer": "🔷",
+            "options": [
+                  "❤️",
+                  "⭐",
+                  "🌙",
+                  "🔷"
+            ],
+            "prompt": "Bu küp kapatıldığında \"☀️\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net34",
+            "net": {
+                  "top": "🍎",
+                  "row": [
+                        "🍌",
+                        "🍇",
+                        "🍓",
+                        "🍊"
+                  ],
+                  "bottom": "🍍"
+            },
+            "targetFace": "🍎",
+            "answer": "🍍",
+            "options": [
+                  "🍇",
+                  "🍌",
+                  "🍍",
+                  "🍓"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🍎\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net35",
+            "net": {
+                  "top": "🐶",
+                  "row": [
+                        "🐱",
+                        "🐰",
+                        "🐼",
+                        "🦁"
+                  ],
+                  "bottom": "🦊"
+            },
+            "targetFace": "🐱",
+            "answer": "🐼",
+            "options": [
+                  "🐰",
+                  "🐶",
+                  "🐼",
+                  "🦁"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🐱\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net36",
+            "net": {
+                  "top": "🚗",
+                  "row": [
+                        "🚀",
+                        "⛵",
+                        "✈️",
+                        "🚂"
+                  ],
+                  "bottom": "🚁"
+            },
+            "targetFace": "⛵",
+            "answer": "🚂",
+            "options": [
+                  "✈️",
+                  "🚀",
+                  "🚂",
+                  "🚗"
+            ],
+            "prompt": "Bu küp kapatıldığında \"⛵\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net37",
+            "net": {
+                  "top": "1",
+                  "row": [
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                  ],
+                  "bottom": "6"
+            },
+            "targetFace": "1",
+            "answer": "6",
+            "options": [
+                  "2",
+                  "3",
+                  "4",
+                  "6"
+            ],
+            "prompt": "Bu küp kapatıldığında \"1\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net38",
+            "net": {
+                  "top": "🔴",
+                  "row": [
+                        "🔵",
+                        "🟡",
+                        "🟢",
+                        "🟣"
+                  ],
+                  "bottom": "🟧"
+            },
+            "targetFace": "🔵",
+            "answer": "🟢",
+            "options": [
+                  "🔴",
+                  "🟡",
+                  "🟢",
+                  "🟣"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🔵\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net39",
+            "net": {
+                  "top": "🔺",
+                  "row": [
+                        "🟦",
+                        "🟡",
+                        "⭐",
+                        "🔷"
+                  ],
+                  "bottom": "🔶"
+            },
+            "targetFace": "🟡",
+            "answer": "🔷",
+            "options": [
+                  "⭐",
+                  "🔷",
+                  "🔺",
+                  "🟦"
+            ],
+            "prompt": "Bu küp kapatıldığında \"🟡\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      },
+      {
+            "id": "net40",
+            "net": {
+                  "top": "💎",
+                  "row": [
+                        "👑",
+                        "🏆",
+                        "💍",
+                        "🪙"
+                  ],
+                  "bottom": "🎁"
+            },
+            "targetFace": "💎",
+            "answer": "🎁",
+            "options": [
+                  "🎁",
+                  "🏆",
+                  "👑",
+                  "💍"
+            ],
+            "prompt": "Bu küp kapatıldığında \"💎\" sembolünün TAM KARŞISINA hangi sembol gelir?"
+      }
+],
+    kenken_grid: [
+      {
+            "id": "ken1",
+            "grid": [
+                  1,
+                  2,
+                  null,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  1,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 2,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken2",
+            "grid": [
+                  2,
+                  3,
+                  4,
+                  1,
+                  3,
+                  null,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 5,
+            "answer": 4,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken3",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  null,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 8,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken4",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  1,
+                  null,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 11,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken5",
+            "grid": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  null,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 14,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken6",
+            "grid": [
+                  2,
+                  null,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 1,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken7",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  null,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 4,
+            "answer": 4,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken8",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  null,
+                  3,
+                  4,
+                  1,
+                  1,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 7,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken9",
+            "grid": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  null,
+                  2,
+                  3,
+                  4,
+                  1,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 10,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken10",
+            "grid": [
+                  2,
+                  3,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  null,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 13,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken11",
+            "grid": [
+                  null,
+                  4,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 0,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken12",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  null,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  1,
+                  1,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 3,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken13",
+            "grid": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  2,
+                  3,
+                  null,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  1,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 6,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken14",
+            "grid": [
+                  2,
+                  3,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  null,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 9,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken15",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  4,
+                  4,
+                  null,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 12,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken16",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  1,
+                  1,
+                  2,
+                  3,
+                  4,
+                  null
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 15,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken17",
+            "grid": [
+                  1,
+                  2,
+                  null,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  1,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 2,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken18",
+            "grid": [
+                  2,
+                  3,
+                  4,
+                  1,
+                  3,
+                  null,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 5,
+            "answer": 4,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken19",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  null,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 8,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken20",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  1,
+                  null,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 11,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken21",
+            "grid": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  null,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 14,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken22",
+            "grid": [
+                  2,
+                  null,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 1,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken23",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  null,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 4,
+            "answer": 4,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken24",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  null,
+                  3,
+                  4,
+                  1,
+                  1,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 7,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken25",
+            "grid": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  null,
+                  2,
+                  3,
+                  4,
+                  1,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 10,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken26",
+            "grid": [
+                  2,
+                  3,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  null,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 13,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken27",
+            "grid": [
+                  null,
+                  4,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 0,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken28",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  null,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  1,
+                  1,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 3,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken29",
+            "grid": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  2,
+                  3,
+                  null,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  1,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 6,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken30",
+            "grid": [
+                  2,
+                  3,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  null,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 9,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken31",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  4,
+                  4,
+                  null,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 12,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken32",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  1,
+                  1,
+                  2,
+                  3,
+                  4,
+                  null
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 15,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken33",
+            "grid": [
+                  1,
+                  2,
+                  null,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  1,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 2,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken34",
+            "grid": [
+                  2,
+                  3,
+                  4,
+                  1,
+                  3,
+                  null,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 5,
+            "answer": 4,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken35",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  null,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 8,
+            "answer": 2,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken36",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  3,
+                  4,
+                  1,
+                  null,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 11,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "3. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken37",
+            "grid": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  1,
+                  2,
+                  2,
+                  3,
+                  4,
+                  null,
+                  3
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 14,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "4. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken38",
+            "grid": [
+                  2,
+                  null,
+                  4,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  1,
+                  2,
+                  3,
+                  3,
+                  4,
+                  1,
+                  2,
+                  4
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  9,
+                  11
+            ],
+            "targetIdx": 1,
+            "answer": 3,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "1. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken39",
+            "grid": [
+                  3,
+                  4,
+                  1,
+                  2,
+                  null,
+                  1,
+                  3,
+                  4,
+                  2,
+                  3,
+                  4,
+                  4,
+                  1,
+                  2,
+                  3,
+                  1
+            ],
+            "rowTargets": [
+                  10,
+                  12,
+                  13,
+                  7
+            ],
+            "targetIdx": 4,
+            "answer": 4,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      },
+      {
+            "id": "ken40",
+            "grid": [
+                  4,
+                  1,
+                  2,
+                  3,
+                  1,
+                  2,
+                  4,
+                  null,
+                  3,
+                  4,
+                  1,
+                  1,
+                  2,
+                  3,
+                  4,
+                  2
+            ],
+            "rowTargets": [
+                  10,
+                  8,
+                  9,
+                  11
+            ],
+            "targetIdx": 7,
+            "answer": 1,
+            "options": [
+                  1,
+                  2,
+                  3,
+                  4
+            ],
+            "prompt": "2. satırın hedef toplamına dikkat et! Soru işaretine hangi sayı gelmeli?"
+      }
+]
+
   },
 
   // -------------------------------------------------------------
@@ -39221,11 +46626,15 @@ const MindGamesEngine = {
   // -------------------------------------------------------------
   open({ grade = 1, gameKey = null } = {}) {
     // 0 Anasınıfı ise 1. sınıf oyun havuzunu okumasız kullanır
-    this.currentGrade = (grade === 0 || grade === 1) ? 1 : 2;
+    this.currentGrade = (grade === 0) ? 1 : grade;
     
     // Varsayılan ilk oyun
     if (!gameKey) {
-      gameKey = (this.currentGrade === 1) ? 'pattern_train' : 'crypto_code';
+      if (this.currentGrade === 1) gameKey = 'pattern_train';
+      else if (this.currentGrade === 2) gameKey = 'crypto_code';
+      else if (this.currentGrade === 3) gameKey = 'pyramid_sum';
+      else if (this.currentGrade === 4) gameKey = 'advanced_crypto';
+      else gameKey = 'pattern_train';
     }
     this.currentGame = gameKey;
     this.score = 0;
@@ -39256,7 +46665,11 @@ const MindGamesEngine = {
     // Başlık ve Rozetleri Güncelle
     const gradeBadge = document.getElementById('mindArenaGradeBadge');
     if (gradeBadge) {
-      gradeBadge.textContent = (this.currentGrade === 1) ? '1. Sınıf & Anasınıfı BİLSEM' : '2. Sınıf BİLSEM & Mantık';
+      if (this.currentGrade === 1) gradeBadge.textContent = '1. Sınıf & Anasınıfı BİLSEM';
+      else if (this.currentGrade === 2) gradeBadge.textContent = '2. Sınıf BİLSEM & Mantık';
+      else if (this.currentGrade === 3) gradeBadge.textContent = '3. Sınıf BİLSEM (Sayısal & Uzamsal)';
+      else if (this.currentGrade === 4) gradeBadge.textContent = '4. Sınıf BİLSEM (Kripto & Algoritma)';
+      else gradeBadge.textContent = `${this.currentGrade}. Sınıf BİLSEM`;
     }
 
     // Skor Sıfırla
@@ -39290,12 +46703,26 @@ const MindGamesEngine = {
         { key: 'matrix_2x2', icon: '🧩', title: '2x2 Matris' },
         { key: 'memory_match', icon: '🃏', title: 'Hafıza Kartları' }
       ];
-    } else {
+    } else if (this.currentGrade === 2) {
       tabs = [
         { key: 'crypto_code', icon: '🔐', title: 'Şifre Çözücü' },
         { key: 'mirror_symmetry', icon: '🪞', title: 'Ayna Simetrisi' },
         { key: 'shidoku_4x4', icon: '🔢', title: '4x4 Sudoku' },
         { key: 'arrow_algorithm', icon: '🧭', title: 'Okları Takip Et' }
+      ];
+    } else if (this.currentGrade === 3) {
+      tabs = [
+        { key: 'pyramid_sum', icon: '🔺', title: 'Sayı Piramidi' },
+        { key: 'cube_count', icon: '🧊', title: '3D Birim Küp' },
+        { key: 'scale_balance', icon: '⚖️', title: 'Eşit Terazi' },
+        { key: 'matrix_3x3', icon: '🕸️', title: '3x3 Matris' }
+      ];
+    } else if (this.currentGrade === 4) {
+      tabs = [
+        { key: 'advanced_crypto', icon: '🕵️', title: 'İleri Kripto' },
+        { key: 'math_operator_puzzle', icon: '🧮', title: 'İşlem Karesi' },
+        { key: 'cube_net_rotation', icon: '🔄', title: 'Küp Açınımı' },
+        { key: 'kenken_grid', icon: '👑', title: '4x4 KenKen' }
       ];
     }
 
@@ -39382,7 +46809,15 @@ const MindGamesEngine = {
       crypto_code: '🔐 Resimli Şifre Çözücü (BİLSEM Kriptoloji)',
       mirror_symmetry: '🪞 Ayna Simetrisi (Yansıma Bulmacası)',
       shidoku_4x4: '🔢 Mini Resimli Sudoku (4x4 Shidoku)',
-      arrow_algorithm: '🧭 Okları Takip Et (Algoritma ve Yön Bulma)'
+      arrow_algorithm: '🧭 Okları Takip Et (Algoritma ve Yön Bulma)',
+      pyramid_sum: '🔺 Sayı Piramidi (Toplam Kulesi)',
+      cube_count: '🧊 3 Boyutlu Birim Küp Sayma (BİLSEM Uzamsal Zeka)',
+      scale_balance: '⚖️ Eşit Terazi Mantığı (Cebirsel Muhakeme)',
+      matrix_3x3: '🕸️ 3x3 BİLSEM Matris Tamamlama',
+      advanced_crypto: '🕵️‍♂️ İleri Kriptoloji (Kelime - Sayı Eşleştirme)',
+      math_operator_puzzle: '🧮 İşlem Karesi (Eksik İşaret ve Sayı)',
+      cube_net_rotation: '🔄 Küp Açınımı ve Şekil Döndürme',
+      kenken_grid: '👑 4x4 KenKen / Toplam Izgarası'
     };
     const titleEl = document.getElementById('mindArenaTitle');
     if (titleEl) titleEl.textContent = titles[gameKey] || 'Akıl ve Zeka Oyunları';
@@ -39429,6 +46864,38 @@ const MindGamesEngine = {
       const q = this.getUniqueNextItem('arrow_algorithm');
       this.currentItem = q;
       this.renderArrowAlgorithm(stage, q);
+    } else if (this.currentGame === 'pyramid_sum') {
+      const q = this.getUniqueNextItem('pyramid_sum');
+      this.currentItem = q;
+      this.renderPyramidSum(stage, q);
+    } else if (this.currentGame === 'cube_count') {
+      const q = this.getUniqueNextItem('cube_count');
+      this.currentItem = q;
+      this.renderCubeCount(stage, q);
+    } else if (this.currentGame === 'scale_balance') {
+      const q = this.getUniqueNextItem('scale_balance');
+      this.currentItem = q;
+      this.renderScaleBalance(stage, q);
+    } else if (this.currentGame === 'matrix_3x3') {
+      const q = this.getUniqueNextItem('matrix_3x3');
+      this.currentItem = q;
+      this.renderMatrix3x3(stage, q);
+    } else if (this.currentGame === 'advanced_crypto') {
+      const q = this.getUniqueNextItem('advanced_crypto');
+      this.currentItem = q;
+      this.renderAdvancedCrypto(stage, q);
+    } else if (this.currentGame === 'math_operator_puzzle') {
+      const q = this.getUniqueNextItem('math_operator_puzzle');
+      this.currentItem = q;
+      this.renderMathOperatorPuzzle(stage, q);
+    } else if (this.currentGame === 'cube_net_rotation') {
+      const q = this.getUniqueNextItem('cube_net_rotation');
+      this.currentItem = q;
+      this.renderCubeNetRotation(stage, q);
+    } else if (this.currentGame === 'kenken_grid') {
+      const q = this.getUniqueNextItem('kenken_grid');
+      this.currentItem = q;
+      this.renderKenkenGrid(stage, q);
     }
   },
 
@@ -40005,7 +47472,512 @@ const MindGamesEngine = {
         }
       };
     });
+  },
+
+  // =============================================================
+  // 9. OYUN: SAYI PİRAMİDİ (pyramid_sum) - 3. Sınıf
+  // =============================================================
+  renderPyramidSum(stage, q) {
+    this.setPrompt(q.prompt, 'Kural: Yan yana iki kutunun toplamı tam üstteki kutuyu verir (A + B = C)!');
+    const c = q.cells;
+    
+    const getCellHtml = (key, val) => {
+      if (val === null) {
+        return `<div class="pyramid-cell target-slot" id="pyrSlot_${key}">❓</div>`;
+      }
+      return `<div class="pyramid-cell">${val}</div>`;
+    };
+
+    const optionsShuffled = [...q.options].sort(() => 0.5 - Math.random());
+    const optionsHtml = optionsShuffled.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}">${opt}</div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="pyramid-stage">
+        <div class="pyramid-row">
+          ${getCellHtml('top', c.top)}
+        </div>
+        <div class="pyramid-row">
+          ${getCellHtml('m1', c.m1)}
+          ${getCellHtml('m2', c.m2)}
+        </div>
+        <div class="pyramid-row">
+          ${getCellHtml('b1', c.b1)}
+          ${getCellHtml('b2', c.b2)}
+          ${getCellHtml('b3', c.b3)}
+        </div>
+      </div>
+      <div class="mind-choice-tray" id="pyrChoiceTray">
+        ${optionsHtml}
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = parseInt(tile.getAttribute('data-val'), 10);
+        if (val === q.answer) {
+          const slot = document.getElementById(`pyrSlot_${q.target}`);
+          if (slot) {
+            slot.textContent = val;
+            slot.classList.remove('target-slot');
+            slot.style.border = '2.5px solid #10B981';
+            slot.style.background = '#ECFDF5';
+          }
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Mükemmel toplam kulesi! Doğru sayı ${q.answer}!`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 10. OYUN: 3D BİRİM KÜP SAYMA (cube_count) - 3. Sınıf
+  // =============================================================
+  renderCubeCount(stage, q) {
+    this.setPrompt(q.prompt, 'Altta ve arkada kalan görünmeyen destek küpleri de kural gereği sayılır!');
+
+    // İzometrik SVG Küp Blokları
+    // q.heights örn: [3, 2, 1] veya [2, 3, 2, 2]
+    const cols = q.heights.length;
+    const svgWidth = Math.max(320, cols * 70 + 80);
+    const svgHeight = 220;
+    
+    // Her sütun için izometrik küpler çiz
+    let cubesSvg = '';
+    const startX = 60;
+    const baseY = 160;
+    
+    q.heights.forEach((colHeight, cIdx) => {
+      const colX = startX + cIdx * 56;
+      for (let h = 0; h < colHeight; h++) {
+        const cx = colX;
+        const cy = baseY - h * 30;
+
+        // Üst yüz (Açık Yeşil)
+        const topFace = `${cx},${cy - 16} ${cx + 26},${cy - 4} ${cx},${cy + 8} ${cx - 26},${cy - 4}`;
+        // Sol yüz (Orta Yeşil)
+        const leftFace = `${cx - 26},${cy - 4} ${cx},${cy + 8} ${cx},${cy + 34} ${cx - 26},${cy + 22}`;
+        // Sağ yüz (Koyu Yeşil)
+        const rightFace = `${cx},${cy + 8} ${cx + 26},${cy - 4} ${cx + 26},${cy + 22} ${cx},${cy + 34}`;
+
+        cubesSvg += `
+          <g class="iso-cube" style="transition: transform 0.2s;">
+            <polygon points="${topFace}" fill="#6EE7B7" stroke="#059669" stroke-width="1.5" />
+            <polygon points="${leftFace}" fill="#10B981" stroke="#047857" stroke-width="1.5" />
+            <polygon points="${rightFace}" fill="#047857" stroke="#065F46" stroke-width="1.5" />
+          </g>
+        `;
+      }
+    });
+
+    const optionsShuffled = [...q.options].sort(() => 0.5 - Math.random());
+    const optionsHtml = optionsShuffled.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}">${opt} Küp</div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="cube-isometric-stage">
+        <div class="cube-svg-view">
+          <svg class="cube-svg-canvas" viewBox="0 0 ${svgWidth} ${svgHeight}" width="${svgWidth}" height="${svgHeight}">
+            ${cubesSvg}
+          </svg>
+        </div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: #047857;">💡 İpucu: Üstteki her küpün altında onu taşıyan bir küp vardır!</div>
+      </div>
+      <div class="mind-choice-tray" id="cubeChoiceTray">
+        ${optionsHtml}
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = parseInt(tile.getAttribute('data-val'), 10);
+        if (val === q.answer) {
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Müthiş uzamsal bakış! Bu yapıda tam ${q.answer} birim küp var! 🧊✨`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 11. OYUN: EŞİT TERAZİ MANTIĞI (scale_balance) - 3. Sınıf
+  // =============================================================
+  renderScaleBalance(stage, q) {
+    this.setPrompt(q.prompt, 'Yukarıdaki iki ipucu terazisini incele ve soru terazisinin dengesini kur!');
+    
+    const optionsShuffled = [...q.options].sort(() => 0.5 - Math.random());
+    const optionsHtml = optionsShuffled.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}">
+        <span>${opt} ${q.targetRightSym}</span>
+      </div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="scale-stage">
+        <div class="scale-box hint-scale">
+          <div class="scale-title">⚖️ İpucu Terazileri (Dengede)</div>
+          <div class="scale-visual-wrap">
+            <div class="scale-pan-box">${q.clue1}</div>
+            <div class="scale-center-fulcrum">⚖️</div>
+            <div class="scale-pan-box">${q.clue2}</div>
+          </div>
+        </div>
+        <div class="scale-box question-scale">
+          <div class="scale-title">🎯 Soru Terazisi: Dengeyi Sağla!</div>
+          <div class="scale-visual-wrap">
+            <div class="scale-pan-box">${q.targetLeft}</div>
+            <div class="scale-center-fulcrum">⚖️</div>
+            <div class="scale-pan-box target-slot" id="scaleTargetSlot">❓</div>
+          </div>
+        </div>
+      </div>
+      <div class="mind-choice-tray" id="scaleChoiceTray">
+        ${optionsHtml}
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = parseInt(tile.getAttribute('data-val'), 10);
+        if (val === q.answer) {
+          const slot = document.getElementById('scaleTargetSlot');
+          if (slot) {
+            slot.textContent = `${val} ${q.targetRightSym}`;
+            slot.classList.remove('target-slot');
+            slot.style.border = '2px solid #10B981';
+            slot.style.background = '#ECFDF5';
+            slot.style.color = '#065F46';
+          }
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Mükemmel terazi dengesi! ${q.targetLeft} = ${val} ${q.targetRightSym}! ⚖️✨`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 12. OYUN: 3x3 BİLSEM MATRİS TAMAMLAMA (matrix_3x3) - 3. Sınıf
+  // =============================================================
+  renderMatrix3x3(stage, q) {
+    this.setPrompt(q.prompt, 'Satırlardaki ve sütunlardaki dönüşüm kuralını incele!');
+
+    const cellsHtml = q.cells.map(c => `
+      <div class="matrix-cell-3x3"><span>${c}</span></div>
+    `).join('');
+
+    const optionsShuffled = [...q.options].sort(() => 0.5 - Math.random());
+    const optionsHtml = optionsShuffled.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}"><span>${opt}</span></div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="matrix-wrapper-3x3">
+        <div class="matrix-grid-3x3">
+          ${cellsHtml}
+          <div class="matrix-cell-3x3 target-slot" id="mat3TargetSlot">❓</div>
+        </div>
+      </div>
+      <div class="mind-choice-tray" id="mat3ChoiceTray">
+        ${optionsHtml}
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = tile.getAttribute('data-val');
+        if (val === q.answer) {
+          const slot = document.getElementById('mat3TargetSlot');
+          if (slot) {
+            slot.innerHTML = `<span>${val}</span>`;
+            slot.classList.remove('target-slot');
+            slot.style.border = '2px solid #10B981';
+            slot.style.background = '#ECFDF5';
+          }
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Harika matris analizi! Doğru parça ${q.answer}! 🕸️✨`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 13. OYUN: İLERİ KRİPTOLOJİ (advanced_crypto) - 4. Sınıf
+  // =============================================================
+  renderAdvancedCrypto(stage, q) {
+    this.setPrompt(q.prompt, 'İpucu kelimeleri ile sayı kodlarını eşleştirerek harflerin değerini bul!');
+
+    this.cryptoState = {
+      targetSeq: q.answer,
+      currentIndex: 0,
+      solvedNums: new Array(q.answer.length).fill(null)
+    };
+
+    const cluesHtml = q.clues.map(c => `
+      <div class="adv-crypto-clue-row">
+        <span>${c.word}</span>
+        <span>➜</span>
+        <span style="letter-spacing: 2px; color: #4F46E5;">${c.code}</span>
+      </div>
+    `).join('');
+
+    const targetChars = q.targetWord.replace(/\s+/g, '').split('');
+    const targetSlotsHtml = targetChars.map((ch, idx) => `
+      <div class="adv-crypto-slot" id="advSlot_${idx}">
+        <span class="adv-crypto-slot-label">${ch}</span>
+        <span class="adv-crypto-slot-val empty" id="advVal_${idx}">?</span>
+      </div>
+    `).join('');
+
+    const keypadHtml = q.keypad.map(k => `
+      <button class="crypto-key-btn" data-val="${k}" type="button">${k}</button>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="adv-crypto-stage">
+        <div class="adv-crypto-clues">
+          <div style="font-size: 0.82rem; font-weight: 800; color: #64748B; margin-bottom: 4px;">🔍 BİLSEM ŞİFRE TABLOSU:</div>
+          ${cluesHtml}
+        </div>
+        <div style="text-align: center; font-size: 0.95rem; font-weight: 900; color: #1E1B4B; margin-top: 6px;">
+          🎯 Hedef Kelime: <span style="color: #6366F1; font-size: 1.15rem;">${q.targetWord}</span>
+        </div>
+        <div class="adv-crypto-target-wrap">
+          ${targetSlotsHtml}
+        </div>
+        <div class="crypto-keypad">
+          ${keypadHtml}
+        </div>
+      </div>
+    `;
+
+    stage.querySelectorAll('.crypto-key-btn').forEach(btn => {
+      btn.onclick = () => {
+        if (this.isLocked) return;
+        const val = btn.getAttribute('data-val');
+        const expected = this.cryptoState.targetSeq[this.cryptoState.currentIndex];
+
+        if (val === expected) {
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+          const valEl = document.getElementById(`advVal_${this.cryptoState.currentIndex}`);
+          if (valEl) {
+            valEl.textContent = val;
+            valEl.classList.remove('empty');
+          }
+          this.cryptoState.currentIndex++;
+
+          if (this.cryptoState.currentIndex >= this.cryptoState.targetSeq.length) {
+            this.celebrateSuccess(`Şifre Çözüldü! "${q.targetWord}" = ${q.answer.join('')}! 🕵️‍♂️✨`);
+          }
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          btn.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { btn.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 14. OYUN: İŞLEM KARESİ (math_operator_puzzle) - 4. Sınıf
+  // =============================================================
+  renderMathOperatorPuzzle(stage, q) {
+    this.setPrompt(q.prompt, 'İşlem önceliğine dikkat ederek eşitliği sağla!');
+
+    let eqHtml = '';
+    q.equation.forEach((item, idx) => {
+      if (item === '?') {
+        eqHtml += `<div class="math-op-item target-slot" id="mathOpSlot_${idx}">❓</div>`;
+      } else if (['+', '-', 'x', '÷', '='].includes(item)) {
+        eqHtml += `<div class="math-op-item op-symbol">${item}</div>`;
+      } else {
+        eqHtml += `<div class="math-op-item">${item}</div>`;
+      }
+    });
+
+    const optionsShuffled = [...q.options].sort(() => 0.5 - Math.random());
+    const optionsHtml = optionsShuffled.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}"><span>${opt}</span></div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="math-op-stage">
+        <div class="math-op-equation">
+          ${eqHtml}
+        </div>
+        <div class="mind-choice-tray" id="mathOpChoiceTray">
+          ${optionsHtml}
+        </div>
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = tile.getAttribute('data-val');
+        const expected = q.answer[0];
+
+        if (val === expected) {
+          const slot = stage.querySelector('.math-op-item.target-slot');
+          if (slot) {
+            slot.textContent = val;
+            slot.classList.remove('target-slot');
+            slot.style.border = '2px solid #10B981';
+            slot.style.background = '#ECFDF5';
+            slot.style.color = '#065F46';
+          }
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Mükemmel eşitlik! Sonuç doğru sağlandı! 🧮✨`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 15. OYUN: KÜP AÇINIMI VE DÖNDÜRME (cube_net_rotation) - 4. Sınıf
+  // =============================================================
+  renderCubeNetRotation(stage, q) {
+    this.setPrompt(q.prompt, 'Küp katlandığında zıt yüzeylerin arasında 1 yüzey boşluk kalır!');
+
+    const n = q.net;
+    const isHL = (sym) => (sym === q.targetFace ? 'highlight-face' : '');
+
+    stage.innerHTML = `
+      <div class="cube-net-stage">
+        <div class="cube-net-grid">
+          <div class="cube-net-cell"></div>
+          <div class="cube-net-cell active-face ${isHL(n.top)}">${n.top}</div>
+          <div class="cube-net-cell"></div>
+          <div class="cube-net-cell"></div>
+
+          <div class="cube-net-cell active-face ${isHL(n.row[0])}">${n.row[0]}</div>
+          <div class="cube-net-cell active-face ${isHL(n.row[1])}">${n.row[1]}</div>
+          <div class="cube-net-cell active-face ${isHL(n.row[2])}">${n.row[2]}</div>
+          <div class="cube-net-cell active-face ${isHL(n.row[3])}">${n.row[3]}</div>
+
+          <div class="cube-net-cell"></div>
+          <div class="cube-net-cell active-face ${isHL(n.bottom)}">${n.bottom}</div>
+          <div class="cube-net-cell"></div>
+          <div class="cube-net-cell"></div>
+        </div>
+        <div style="font-size: 0.95rem; font-weight: 800; color: #4338CA; margin-bottom: 8px;">
+          🎯 Hedef Yüz: <span style="font-size: 1.3rem;">${q.targetFace}</span>
+        </div>
+        <div class="mind-choice-tray" id="cubeNetChoiceTray">
+          ${q.options.map(opt => `
+            <div class="mind-choice-tile" data-val="${opt}"><span>${opt}</span></div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = tile.getAttribute('data-val');
+        if (val === q.answer) {
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Müthiş uzamsal canlandırma! "${q.targetFace}" yüzünün tam karşısına "${q.answer}" gelir! 🔄📦`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 16. OYUN: 4x4 KENKEN / TOPLAM IZGARASI (kenken_grid) - 4. Sınıf
+  // =============================================================
+  renderKenkenGrid(stage, q) {
+    this.setPrompt(q.prompt, 'Satırın sağındaki hedef toplama ulaşmak için soru işaretine hangi sayı gelmeli?');
+
+    let cellsHtml = '';
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 4; c++) {
+        const idx = r * 4 + c;
+        const val = q.grid[idx];
+        if (val === null) {
+          cellsHtml += `<div class="kenken-cell target-slot active-slot" id="kenkenSlot_${idx}">❓</div>`;
+        } else {
+          cellsHtml += `<div class="kenken-cell">${val}</div>`;
+        }
+      }
+      cellsHtml += `<div class="kenken-row-target">🎯 ${q.rowTargets[r]}</div>`;
+    }
+
+    const optionsHtml = q.options.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}"><span>${opt}</span></div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="kenken-stage">
+        <div class="kenken-board-wrap">
+          ${cellsHtml}
+        </div>
+        <div class="mind-choice-tray" id="kenkenChoiceTray">
+          ${optionsHtml}
+        </div>
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = parseInt(tile.getAttribute('data-val'), 10);
+        if (val === q.answer) {
+          const slot = document.getElementById(`kenkenSlot_${q.targetIdx}`);
+          if (slot) {
+            slot.textContent = val;
+            slot.classList.remove('target-slot', 'active-slot');
+            slot.style.background = '#ECFDF5';
+            slot.style.color = '#065F46';
+            slot.style.border = '2px solid #10B981';
+          }
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Tebrikler! Satır hedef toplamı tam tutturuldu! 👑🎯`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
   }
+
 };
 
 window.MindGamesEngine = MindGamesEngine;
