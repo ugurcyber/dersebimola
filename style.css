@@ -33691,3 +33691,167 @@ body.is-game-active .universal-game-bgm-fab {
     gap: 10px !important;
   }
 }
+
+/* ==========================================================================
+   ⚔️ ÇARPMA SAVAŞI: TEK KİŞİLİK (ÖĞRENCİ VS. MOLİ) STİLLERİ (V9.7.0)
+   ========================================================================== */
+.arc-tug-single-arena {
+  width: 100% !important;
+  max-width: 760px !important;
+  margin: 0 auto !important;
+  padding: 12px 16px !important;
+  gap: 10px !important;
+  box-sizing: border-box !important;
+  background: #FFFFFF !important;
+  border: 2.5px solid #E2E8F0 !important;
+  border-radius: 24px !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+}
+
+.tug-single-scoreboard {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  padding: 8px 14px !important;
+  border-radius: 16px !important;
+  background: #F8FAFC !important;
+  border: 1.5px solid #E2E8F0 !important;
+}
+
+.tug-single-canvas-wrap {
+  padding: 10px 14px !important;
+  min-height: 105px !important;
+  border-radius: 18px !important;
+  background: #F8FAFC !important;
+  border: 1.5px solid #E2E8F0 !important;
+}
+
+.tug-single-card {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #FFFFFF !important;
+  border: 2px solid #E2E8F0 !important;
+  border-radius: 20px !important;
+  padding: 14px 18px !important;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05) !important;
+  text-align: center !important;
+}
+
+.tug-single-q-box {
+  margin-bottom: 12px !important;
+}
+
+.tug-q-label {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.tug-single-math-text {
+  font-size: clamp(2.2rem, 5vw, 3rem) !important;
+  font-weight: 900 !important;
+  color: #0F172A !important;
+  line-height: 1.2 !important;
+  margin-top: 4px !important;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+}
+
+.tug-single-options-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+.tug-single-opt-btn {
+  width: 100% !important;
+  min-height: 62px !important;
+  background: #FFFFFF !important;
+  border: 3px solid #6366F1 !important;
+  border-bottom: 5px solid #4F46E5 !important;
+  border-radius: 18px !important;
+  font-size: 1.85rem !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15) !important;
+  transition: transform 0.12s ease, background 0.15s ease !important;
+  font-family: inherit !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.tug-single-opt-btn:hover {
+  transform: translateY(-2px) !important;
+  border-color: #4F46E5 !important;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25) !important;
+}
+
+.tug-single-opt-btn:active {
+  transform: translateY(2px) !important;
+  border-bottom-width: 3px !important;
+}
+
+.tug-single-opt-btn.correct {
+  background: #DCFCE7 !important;
+  border-color: #22C55E !important;
+  border-bottom-color: #16A34A !important;
+  color: #15803D !important;
+  transform: scale(1.03) !important;
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.45) !important;
+}
+
+.tug-single-opt-btn.wrong {
+  background: #FEE2E2 !important;
+  border-color: #EF4444 !important;
+  border-bottom-color: #DC2626 !important;
+  color: #B91C1C !important;
+  animation: shakeOpt 0.4s ease !important;
+}
+
+@media (max-width: 768px) {
+  .arc-tug-single-arena {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    border-radius: 18px !important;
+  }
+  .tug-single-scoreboard {
+    padding: 6px 10px !important;
+  }
+  .tug-single-canvas-wrap {
+    padding: 6px 8px !important;
+    min-height: 90px !important;
+  }
+  .tug-single-card {
+    padding: 10px 12px !important;
+    border-radius: 16px !important;
+  }
+  .tug-single-math-text {
+    font-size: 2.1rem !important;
+  }
+  .tug-single-options-grid {
+    gap: 10px !important;
+  }
+  .tug-single-opt-btn {
+    min-height: 52px !important;
+    font-size: 1.6rem !important;
+    border-radius: 14px !important;
+  }
+  .tug-puller .puller-avatar-box {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 1.3rem !important;
+  }
+  .tug-braided-rope-body {
+    height: 18px !important;
+  }
+}

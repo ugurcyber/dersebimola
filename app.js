@@ -15609,7 +15609,7 @@
     }
 
     const optsSet = new Set([ans]);
-    while (optsSet.size < 3) {
+    while (optsSet.size < 4) {
       const delta = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
       const cand = Math.max(1, ans + delta);
       if (cand !== ans) optsSet.add(cand);
@@ -15622,19 +15622,20 @@
     };
   }
 
+  // =========================================================================
+  // OYUN 1: ⚔️ ÇARPMA SAVAŞI (TEK KİŞİLİK: ÖĞRENCİ VS. MOLİ)
+  // =========================================================================
   function initArcadeTugGame() {
     const iconEl = document.getElementById('arcadeStageIcon');
     const titleEl = document.getElementById('arcadeStageTitle');
     const toolbarEl = document.getElementById('arcadeStageToolbar');
     if (iconEl) iconEl.textContent = '⚔️';
-    if (titleEl) titleEl.textContent = 'Çarpma Savaşı: Halat Çekme Düellosu';
+    if (titleEl) titleEl.textContent = 'Çarpma Savaşı: Halat Çekme';
 
     const t = ArcadeHub.tug;
-    t.ropePos = 0;
-    t.p1Locked = false;
-    t.p2Locked = false;
-    t.p1Streak = 0;
-    t.p2Streak = 0;
+    t.ropePos = 0; // -5 (Sen kazandın) .. 0 (Orta) .. +5 (Moli kazandı)
+    t.isLocked = false;
+    t.streak = 0;
     t.lastPullText = '';
     t.lastPullSide = null;
     t.isOver = false;
@@ -15669,10 +15670,11 @@
     if (!canvas) return;
     const t = ArcadeHub.tug;
     const q = t.currentQ;
-    // ropePos: -5 (Blue wins on left) .. 0 (Center) .. +5 (Orange wins on right)
-    const pct = 50 + (t.ropePos * 8.6);
-    const blueSteps = Math.max(0, -Math.floor(t.ropePos));
-    const orangeSteps = Math.max(0, Math.floor(t.ropePos));
+
+    // ropePos: -5 (Öğrenci) .. 0 .. +5 (Moli/Rakip)
+    const pct = Math.max(14, Math.min(86, 50 + (t.ropePos * 7.2)));
+    const userSteps = Math.max(0, -Math.round(t.ropePos));
+    const rivalSteps = Math.max(0, Math.round(t.ropePos));
 
     let stepsHtml = '';
     for (let i = -5; i <= 5; i++) {
@@ -15693,231 +15695,177 @@
     }
 
     canvas.innerHTML = `
-      <div class="arc-tug-arena">
-        <!-- Üst Halat Çekme Sahnesi & Durum Çubuğu -->
-        <div class="tug-top-scoreboard">
+      <div class="arc-tug-arena arc-tug-single-arena">
+        <!-- 1. ÜSTTE HALAT ÇEKME VE SKOR SAHNESİ -->
+        <div class="tug-top-scoreboard tug-single-scoreboard">
           <div class="tug-team-pill team-blue">
             <span class="team-dot">🔵</span>
-            <span class="team-name">1. Oyuncu (Mavi)</span>
-            <span class="team-wins">Zafer: <strong>${t.p1Score}</strong></span>
+            <span class="team-name">SEN</span>
+            <span class="team-wins">${userSteps} / 5</span>
           </div>
 
           <div class="tug-match-info">
             <span class="tug-info-badge">
               ${t.isOver
-                ? (t.ropePos <= -5 ? '🏆 MAVİ TAKIM HALATI ÇEKTİ VE KAZANDI! 🎉' : '🏆 TURUNCU TAKIM HALATI ÇEKTİ VE KAZANDI! 🎉')
-                : (t.p1Streak >= 3 ? '🔥 MAVİ TAKIM ALEV ALDI (Combo x2)!' : (t.p2Streak >= 3 ? '🔥 TURUNCU TAKIM ALEV ALDI (Combo x2)!' : '🪢 Doğru cevaba ilk basan halatı 1 adım çeker!'))}
+                ? (t.ropePos <= -5 ? '🏆 HARİKA! HALATI ÇEKTİN VE KAZANDIN! 🎉' : '💪 RAKİP KAZANDI! TEKRAR DENE!')
+                : (t.lastPullText ? t.lastPullText : '🪢 Doğru bil halatı çek, 5 adımda kazan!')}
             </span>
           </div>
 
           <div class="tug-team-pill team-orange">
             <span class="team-dot">🟠</span>
-            <span class="team-name">2. Oyuncu (Turuncu)</span>
-            <span class="team-wins">Zafer: <strong>${t.p2Score}</strong></span>
+            <span class="team-name">MOLİ (RAKİP)</span>
+            <span class="team-wins">${rivalSteps} / 5</span>
           </div>
         </div>
 
-        <!-- Gerçek Halat Çekme Sahnesi (3D Maskotlar, Halat ve Düğüm) -->
-        <div class="tug-stage-canvas-wrap">
+        <!-- 2. HALAT, DÜĞÜM VE ÇEKİCİLER -->
+        <div class="tug-stage-canvas-wrap tug-single-canvas-wrap">
           <div class="tug-rope-scene-header">
-            <div class="tug-zone-target zone-left">⬅️ MAVİ HEDEF (+5)</div>
+            <div class="tug-zone-target zone-left">⬅️ HEDEFİN (+5)</div>
             <div class="tug-center-pin">📍 ORTA ÇİZGİ</div>
-            <div class="tug-zone-target zone-right">TURUNCU HEDEF (+5) ➡️</div>
+            <div class="tug-zone-target zone-right">RAKİP HEDEF (+5) ➡️</div>
           </div>
 
           <div class="tug-rope-arena-field">
-            <!-- Sol Çekici (Mavi Maskot) -->
+            <!-- Sol: Sen (Robot/Öğrenci) -->
             <div class="tug-puller puller-blue ${t.ropePos < 0 ? 'pulling-hard' : ''}">
               <div class="puller-avatar-box">
                 <span class="puller-emoji">🤖</span>
                 <span class="puller-flag">🔵</span>
               </div>
               <div class="puller-hands-rope"></div>
-              <span class="puller-score-tag">${blueSteps} / 5</span>
+              <span class="puller-score-tag">${userSteps}/5</span>
             </div>
 
             <!-- Kalın Dokulu Halat ve Hareketli Düğüm -->
             <div class="tug-braided-rope-body">
               <div class="tug-rope-texture-strip"></div>
-              
-              <!-- Orta Düğüm ve Moli Hakem -->
               <div class="tug-knot-carrier ${t.lastPullSide ? 'pull-active-' + t.lastPullSide : ''}" style="left: ${pct}%;">
                 <div class="tug-knot-ribbon">🎀</div>
                 <div class="tug-knot-referee">
-                  <img src="assets/mascot/moli.webp" alt="Hakem Moli" class="referee-moli-img" width="52" height="52">
+                  <img src="assets/mascot/moli.webp" alt="Hakem Moli" class="referee-moli-img" width="46" height="46">
                 </div>
                 <div class="tug-knot-needle"></div>
                 ${t.lastPullText ? `<div class="tug-floating-bubble float-${t.lastPullSide}">${t.lastPullText}</div>` : ''}
               </div>
             </div>
 
-            <!-- Sağ Çekici (Turuncu Maskot) -->
+            <!-- Sağ: Moli / Rakip (Tilki/Canavar) -->
             <div class="tug-puller puller-orange ${t.ropePos > 0 ? 'pulling-hard' : ''}">
               <div class="puller-hands-rope"></div>
               <div class="puller-avatar-box">
                 <span class="puller-emoji">🦊</span>
                 <span class="puller-flag">🟠</span>
               </div>
-              <span class="puller-score-tag">${orangeSteps} / 5</span>
+              <span class="puller-score-tag">${rivalSteps}/5</span>
             </div>
           </div>
 
-          <!-- Adım İşaretçileri Cetveli (-5 .. 0 .. +5) -->
+          <!-- Adım Cetveli -->
           <div class="tug-ruler-track">
             ${stepsHtml}
           </div>
         </div>
 
-        <!-- İkiye Bölünmüş 3D Dokunsal Oyuncu Panelleri -->
-        <div class="tug-split-players">
-          <!-- Sol: 1. Oyuncu (Mavi Köşe) -->
-          <div class="tug-player-card player-blue ${t.p1Locked ? 'is-locked' : ''} ${t.p1Streak >= 3 ? 'is-on-fire' : ''}" id="tugP1Card">
-            <div class="tug-card-top-bar">
-              <div class="player-corner-title">
-                <span class="corner-dot">🔵</span>
-                <span>1. Oyuncu (Mavi Köşe)</span>
-              </div>
-              ${t.p1Streak >= 3 ? '<div class="fire-combo-badge">🔥 ALEV ALDI (Combo x2)</div>' : (t.p1Streak > 1 ? `<div class="streak-badge">⭐ ${t.p1Streak}x Seri</div>` : '')}
-            </div>
-
-            <div class="tug-question-box">
-              <span class="q-label">Hemen Çöz:</span>
-              <span class="q-math-text">${q.text}</span>
-            </div>
-
-            <div class="tug-options-row">
-              ${q.options.map((opt) => `
-                <button class="tug-opt-btn btn-blue" data-tug-p="1" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>
-                  <span class="btn-opt-num">${opt}</span>
-                </button>
-              `).join('')}
-            </div>
-            <div class="tug-lock-msg">🔒 Yanlış cevap! 1.2 sn kilitlendi...</div>
+        <!-- 3. ALTTA TEK BİR SORU VE 2x2 CEVAP KUTUSU -->
+        <div class="tug-single-card" id="tugSingleCard">
+          <div class="tug-single-q-box">
+            <span class="tug-q-label">Hemen Çöz ve Halatı Çek:</span>
+            <div class="tug-single-math-text">${q.text} = ?</div>
           </div>
 
-          <!-- Sağ: 2. Oyuncu (Turuncu Köşe) -->
-          <div class="tug-player-card player-orange ${t.p2Locked ? 'is-locked' : ''} ${t.p2Streak >= 3 ? 'is-on-fire' : ''}" id="tugP2Card">
-            <div class="tug-card-top-bar">
-              <div class="player-corner-title">
-                <span class="corner-dot">🟠</span>
-                <span>2. Oyuncu (Turuncu Köşe)</span>
-              </div>
-              ${t.p2Streak >= 3 ? '<div class="fire-combo-badge">🔥 ALEV ALDI (Combo x2)</div>' : (t.p2Streak > 1 ? `<div class="streak-badge">⭐ ${t.p2Streak}x Seri</div>` : '')}
-            </div>
-
-            <div class="tug-question-box">
-              <span class="q-label">Hemen Çöz:</span>
-              <span class="q-math-text">${q.text}</span>
-            </div>
-
-            <div class="tug-options-row">
-              ${q.options.map((opt) => `
-                <button class="tug-opt-btn btn-orange" data-tug-p="2" data-tug-val="${opt}" type="button" ${t.isOver ? 'disabled' : ''}>
-                  <span class="btn-opt-num">${opt}</span>
-                </button>
-              `).join('')}
-            </div>
-            <div class="tug-lock-msg">🔒 Yanlış cevap! 1.2 sn kilitlendi...</div>
+          <div class="tug-single-options-grid">
+            ${q.options.map((opt) => `
+              <button class="tug-single-opt-btn" data-tug-val="${opt}" type="button" ${t.isOver || t.isLocked ? 'disabled' : ''}>
+                <span class="btn-opt-num">${opt}</span>
+              </button>
+            `).join('')}
           </div>
         </div>
       </div>
     `;
 
-    canvas.querySelectorAll('[data-tug-p]').forEach(btn => {
+    canvas.querySelectorAll('.tug-single-opt-btn').forEach(btn => {
       btn.addEventListener('pointerdown', (e) => {
         if (e.cancelable) e.preventDefault();
-        const p = parseInt(btn.getAttribute('data-tug-p'), 10);
         const val = parseInt(btn.getAttribute('data-tug-val'), 10);
-        handleTugAnswer(p, val);
+        handleSingleTugAnswer(btn, val);
       });
     });
   }
 
-  function handleTugAnswer(playerNum, val) {
+  function handleSingleTugAnswer(btnEl, val) {
     const t = ArcadeHub.tug;
-    if (t.isOver) return;
-    if (playerNum === 1 && t.p1Locked) return;
-    if (playerNum === 2 && t.p2Locked) return;
+    if (t.isOver || t.isLocked) return;
 
     if (val === t.currentQ.answer) {
+      // ✅ DOĞRU CEVAP: 1 Adım SOLA (Öğrenciye) çek
+      t.isLocked = true;
+      btnEl.classList.add('correct');
       audio.playCorrect();
       audio.playPop();
 
-      let pullDist = 1;
-      if (playerNum === 1) {
-        t.p1Streak += 1;
-        t.p2Streak = 0;
-        if (t.p1Streak >= 3) {
-          pullDist = 1.5;
-          t.lastPullText = '🔥 ALEV ALDI! COMBO x2! (+1.5 Çekiş)';
-        } else {
-          t.lastPullText = '+1 ÇEKİŞ! 💪';
-        }
-        t.lastPullSide = 'blue';
-        t.ropePos -= pullDist;
-      } else {
-        t.p2Streak += 1;
-        t.p1Streak = 0;
-        if (t.p2Streak >= 3) {
-          pullDist = 1.5;
-          t.lastPullText = '🔥 ALEV ALDI! COMBO x2! (+1.5 Çekiş)';
-        } else {
-          t.lastPullText = '+1 ÇEKİŞ! 💪';
-        }
-        t.lastPullSide = 'orange';
-        t.ropePos += pullDist;
-      }
-
+      t.streak += 1;
+      t.ropePos -= 1; // Sola çek
       t.ropePos = Math.max(-5, Math.min(5, t.ropePos));
-      t.p1Locked = false;
-      t.p2Locked = false;
+      t.lastPullSide = 'blue';
+      t.lastPullText = '+1 Adım Sana! 💪';
 
-      if (t.ropePos <= -5 || t.ropePos >= 5) {
+      if (t.ropePos <= -5) {
         t.isOver = true;
-        if (t.ropePos <= -5) t.p1Score += 1;
-        else t.p2Score += 1;
         renderArcadeTugStage();
         audio.playFanfare();
         if (typeof launchConfetti === 'function') launchConfetti();
         if (!state.isMuted && state.soundEnabled) {
-          const winnerText = t.ropePos <= -5 ? 'Tebrikler! 1. Oyuncu Mavi Takım halatı çekti ve kazandı!' : 'Tebrikler! 2. Oyuncu Turuncu Takım halatı çekti ve kazandı!';
-          audio.speakTurkishText(winnerText);
+          audio.speakTurkishText('Tebrikler! Halatı çektin ve kazandın!');
         }
-        const winnerTitle = t.ropePos <= -5 ? '1. OYUNCU (MAVİ) KAZANDI! 🏆' : '2. OYUNCU (TURUNCU) KAZANDI! 🏆';
         showArcadeVictoryModal({
-          title: winnerTitle,
-          subtitle: 'Çarpma düellosunda halatı kendi tarafına çekerek şampiyon oldun!',
+          title: '🏆 TEBRİKLER! Halatı Çektin ve Kazandın!',
+          subtitle: 'Çarpma savaşında tüm işlemleri doğru çözerek halatı kendi tarafına çektin ve şampiyon oldun!',
           badgeText: 'HALAT ŞAMPİYONU',
           icon: '⚔️',
           onRestart: () => initArcadeTugGame()
         });
       } else {
-        t.currentQ = generateTugQuestion(t.diff);
-        renderArcadeTugStage();
+        setTimeout(() => {
+          t.isLocked = false;
+          t.currentQ = generateTugQuestion(t.diff);
+          renderArcadeTugStage();
+        }, 800);
       }
     } else {
+      // ❌ YANLIŞ CEVAP: 1 Adım SAĞA (Moli / Rakibe) kaysın
+      t.isLocked = true;
+      btnEl.classList.add('wrong');
       audio.playWrong();
       if (typeof audio.playIceFreeze === 'function') audio.playIceFreeze();
-      if (playerNum === 1) {
-        t.p1Streak = 0;
-        t.p1Locked = true;
-        const c1 = document.getElementById('tugP1Card');
-        if (c1) c1.classList.add('is-locked');
-        setTimeout(() => {
-          t.p1Locked = false;
-          const el = document.getElementById('tugP1Card');
-          if (el) el.classList.remove('is-locked');
-        }, 1200);
+
+      t.streak = 0;
+      t.ropePos += 1; // Sağa kay
+      t.ropePos = Math.max(-5, Math.min(5, t.ropePos));
+      t.lastPullSide = 'orange';
+      t.lastPullText = 'Moli Çekti! 😮';
+
+      if (t.ropePos >= 5) {
+        t.isOver = true;
+        renderArcadeTugStage();
+        if (!state.isMuted && state.soundEnabled) {
+          audio.speakTurkishText('Rakip kazandı! Tekrar dene!');
+        }
+        showArcadeVictoryModal({
+          title: '💪 Rakip Kazandı! Tekrar Dene!',
+          subtitle: 'Halat rakibin tarafına geçti. Biraz daha pratik yapıp tekrar meydan oku!',
+          badgeText: 'TEKRAR DENE',
+          icon: '🔄',
+          onRestart: () => initArcadeTugGame()
+        });
       } else {
-        t.p2Streak = 0;
-        t.p2Locked = true;
-        const c2 = document.getElementById('tugP2Card');
-        if (c2) c2.classList.add('is-locked');
         setTimeout(() => {
-          t.p2Locked = false;
-          const el = document.getElementById('tugP2Card');
-          if (el) el.classList.remove('is-locked');
-        }, 1200);
+          t.isLocked = false;
+          t.currentQ = generateTugQuestion(t.diff);
+          renderArcadeTugStage();
+        }, 800);
       }
     }
   }
