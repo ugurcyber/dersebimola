@@ -27954,3 +27954,1136 @@ body.is-game-active .universal-game-bgm-fab {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+
+
+/* ==========================================================================
+   🌍 ENGLISH FUN LAB (İNGİLİZCE EĞLENCE ATÖLYESİ) STİLLERİ
+   ========================================================================== */
+
+/* 1. ANA SAYFA VİTRİNİ HERO KARTI */
+.home-funlab-hero-card {
+  margin-top: 18px;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #1e3a8a 100%);
+  border: 2px solid rgba(165, 180, 252, 0.4);
+  border-radius: 20px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 10px 25px -5px rgba(30, 27, 75, 0.35), 0 0 20px rgba(99, 102, 241, 0.2);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.home-funlab-hero-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  animation: funlabGlowRotate 12s linear infinite;
+}
+@keyframes funlabGlowRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.home-funlab-hero-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 16px 32px -6px rgba(30, 27, 75, 0.45), 0 0 28px rgba(99, 102, 241, 0.35);
+  border-color: #a5b4fc;
+}
+.funlab-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 2;
+}
+.funlab-flag-badge {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  background: #ffffff;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+.funlab-flag-badge .pulse-sparkle {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 16px;
+  animation: sparklePop 2s infinite ease-in-out;
+}
+@keyframes sparklePop {
+  0%, 100% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.25); opacity: 1; }
+}
+.funlab-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.funlab-hero-tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #fbbf24;
+  text-transform: uppercase;
+}
+.funlab-hero-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+}
+.funlab-hero-desc {
+  margin: 0;
+  font-size: 13px;
+  color: #e0e7ff;
+  line-height: 1.35;
+}
+.funlab-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.funlab-play-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.funlab-play-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
+  filter: brightness(1.1);
+}
+.funlab-share-btn {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.funlab-share-btn:hover {
+  background: #25d366;
+  border-color: #25d366;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* 2. POPÜLER OYUNLAR KARTI (theme-english-funlab) */
+.arcade-game-card.theme-english-funlab {
+  border-color: rgba(99, 102, 241, 0.3);
+}
+.arcade-game-card.theme-english-funlab:hover {
+  border-color: #6366f1;
+  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.22);
+}
+.banner-english-funlab {
+  background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 60%, #e11d48 100%) !important;
+}
+.scene-english-funlab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.mini-funlab-flag-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 32px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+.mini-funlab-spark {
+  animation: sparklePop 1.6s infinite ease-in-out;
+}
+.arcade-card-actions-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+.arcade-card-actions-group .arcade-card-play-btn {
+  flex: 1;
+}
+.arcade-card-share-btn {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  color: #166534;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.arcade-card-share-btn:hover {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #25d366;
+}
+
+/* ==========================================================================
+   3. ENGLISH FUN LAB ANA SAHNESİ (#englishFunLabSection)
+   ========================================================================== */
+.english-funlab-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px 20px 40px;
+  box-sizing: border-box;
+}
+
+/* Üst Bar (Topbar) */
+.funlab-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  flex-wrap: wrap;
+}
+.funlab-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.funlab-btn-back {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.funlab-btn-back:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+.funlab-brand-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.funlab-flag-icon {
+  font-size: 28px;
+}
+.funlab-title-text {
+  display: flex;
+  flex-direction: column;
+}
+.funlab-title-main {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1b4b;
+  line-height: 1.2;
+}
+.funlab-title-sub {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Seviye Seçici (Level Selector) */
+.funlab-level-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+.funlab-level-btn {
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  padding: 7px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.funlab-level-btn:hover {
+  color: #1e293b;
+  background: #e2e8f0;
+}
+.funlab-level-btn.active {
+  background: #ffffff;
+  color: #1e1b4b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.funlab-level-btn.level-1.active {
+  color: #15803d;
+  border: 1.5px solid #86efac;
+}
+.funlab-level-btn.level-2.active {
+  color: #b45309;
+  border: 1.5px solid #fde047;
+}
+.funlab-level-btn.level-3.active {
+  color: #c2410c;
+  border: 1.5px solid #fdba74;
+}
+
+/* Sağ HUD */
+.funlab-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.funlab-score-badge {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1.5px solid #f59e0b;
+  color: #92400e;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 7px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2);
+}
+.funlab-btn-wa-share {
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  color: #15803d;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.funlab-btn-wa-share:hover {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #25d366;
+}
+.funlab-btn-sound {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  font-size: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Oyun Sekmeleri (Tabs) */
+.funlab-game-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+.funlab-tab {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+.funlab-tab .tab-emoji {
+  font-size: 20px;
+}
+.funlab-tab .tab-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: #475569;
+}
+.funlab-tab:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+}
+.funlab-tab.active {
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+  border-color: #6366f1;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.2);
+}
+.funlab-tab.active .tab-name {
+  color: #3730a3;
+}
+
+/* Moli Prompt Kartı */
+.funlab-moli-card {
+  margin-top: 14px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1.5px solid #e0e7ff;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.08);
+}
+.funlab-moli-avatar {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+.funlab-moli-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #f8fafc;
+}
+.funlab-moli-avatar .moli-crown {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font-size: 18px;
+}
+.funlab-prompt-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.funlab-speech-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.funlab-speech-quote {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1b4b;
+  font-family: inherit;
+}
+.funlab-btn-speak {
+  background: #4f46e5;
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+}
+.funlab-btn-speak:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+.funlab-hint-row {
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Sahne Görüntüleyici (Stage Viewport) */
+.funlab-stage-viewport {
+  margin-top: 14px;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  min-height: 480px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   4. OYUN 1: KELİME AVI VE SESLİ EŞLEŞTİRME (WORD & AUDIO MATCH)
+   ========================================================================== */
+.en-word-match-stage {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.en-card-display-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+}
+.en-big-vocab-card {
+  width: 220px;
+  height: 220px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+  border: 3px solid #67e8f9;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(6, 182, 212, 0.18);
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: cardFloating 4s ease-in-out infinite;
+}
+@keyframes cardFloating {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.en-vocab-emoji {
+  font-size: 96px;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12));
+}
+.en-vocab-tr-hint {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0369a1;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 3px 10px;
+  border-radius: 8px;
+}
+
+/* Sepet Alanı */
+.en-correct-basket-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.en-correct-basket {
+  width: 130px;
+  height: 130px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 3px dashed #f59e0b;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.en-correct-basket.highlight {
+  transform: scale(1.1);
+  border-color: #10b981;
+  background: #dcfce7;
+}
+.basket-icon {
+  font-size: 54px;
+}
+.basket-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #b45309;
+}
+
+/* 3 Kelime Taşı */
+.en-vocab-stones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+.en-vocab-stone-btn {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 2.5px solid #cbd5e1;
+  border-radius: 18px;
+  padding: 18px 14px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  user-select: none;
+}
+.en-vocab-stone-btn:hover {
+  transform: translateY(-3px);
+  border-color: #6366f1;
+  color: #4338ca;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
+}
+.en-vocab-stone-btn.correct {
+  background: #dcfce7 !important;
+  border-color: #22c55e !important;
+  color: #15803d !important;
+  animation: pulseCorrect 0.6s ease;
+}
+.en-vocab-stone-btn.wrong {
+  background: #fee2e2 !important;
+  border-color: #ef4444 !important;
+  color: #b91c1c !important;
+  animation: shakeWrong 0.4s ease;
+}
+@keyframes pulseCorrect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+@keyframes shakeWrong {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ==========================================================================
+   5. OYUN 2: UÇAN BALONLARLA İNGİLİZCE ÇEVİRİ (BALLOON TRANSLATION)
+   ========================================================================== */
+.en-balloon-arena {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.en-target-card {
+  background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+  border: 2px solid #f97316;
+  border-radius: 18px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15);
+}
+.en-target-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #9a3412;
+}
+.en-target-title strong {
+  color: #c2410c;
+  background: #ffffff;
+  padding: 3px 10px;
+  border-radius: 8px;
+}
+.en-target-counter {
+  font-size: 13px;
+  font-weight: 700;
+  color: #b45309;
+}
+
+/* Gökyüzü Sahnesi */
+.en-sky-viewport {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 60%, #e0f2fe 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid #38bdf8;
+  box-shadow: inset 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+.en-cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 40px;
+  pointer-events: none;
+  animation: floatCloud linear infinite;
+}
+@keyframes floatCloud {
+  from { transform: translateX(-150px); }
+  to { transform: translateX(1100px); }
+}
+.en-balloons-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 30px;
+  box-sizing: border-box;
+}
+.en-balloon {
+  width: 105px;
+  height: 135px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  position: relative;
+  box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.2), 0 8px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+  user-select: none;
+  animation: balloonBob 3s ease-in-out infinite alternate;
+}
+.en-balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.3);
+}
+.en-balloon:hover {
+  transform: scale(1.1) translateY(-6px);
+}
+@keyframes balloonBob {
+  0% { transform: translateY(0px) rotate(-2deg); }
+  100% { transform: translateY(-16px) rotate(2deg); }
+}
+.en-balloon.b-red { background: linear-gradient(135deg, #f87171 0%, #dc2626 100%); }
+.en-balloon.b-blue { background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%); }
+.en-balloon.b-green { background: linear-gradient(135deg, #4ade80 0%, #16a34a 100%); }
+.en-balloon.b-yellow { background: linear-gradient(135deg, #fde047 0%, #ca8a04 100%); color: #713f12; }
+.en-balloon.b-purple { background: linear-gradient(135deg, #c084fc 0%, #7e22ce 100%); }
+.en-balloon.b-orange { background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%); }
+
+/* Patlama Efekti */
+.en-balloon.popping {
+  animation: balloonPopAnim 0.35s ease forwards;
+  pointer-events: none;
+}
+@keyframes balloonPopAnim {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* ==========================================================================
+   6. OYUN 3: RESİMLİ ODA VE EŞYA YERLEŞTİRME (ROOM VOCABULARY)
+   ========================================================================== */
+.en-room-arena {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.en-room-banner {
+  background: linear-gradient(135deg, #ede9fe 0%, #f3e8ff 100%);
+  border: 2px solid #a855f7;
+  border-radius: 18px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.en-room-task-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #6b21a8;
+}
+.en-room-layout {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Çocuk Odası Sahnesi */
+.en-room-stage {
+  position: relative;
+  height: 380px;
+  background: linear-gradient(180deg, #fef9c3 0%, #fef08a 65%, #cbd5e1 65%, #94a3b8 100%);
+  border-radius: 20px;
+  border: 2px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.en-room-window {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  width: 80px;
+  height: 90px;
+  background: #bae6fd;
+  border: 4px solid #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+/* Hedef Yerleşim Bölgeleri */
+.en-room-zone {
+  position: absolute;
+  border: 2.5px dashed #6366f1;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  backdrop-filter: blur(4px);
+}
+.en-room-zone:hover, .en-room-zone.active-target {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: #4f46e5;
+  transform: scale(1.03);
+}
+.en-room-zone.placed {
+  border-style: solid;
+  border-color: #22c55e;
+  background: rgba(220, 252, 231, 0.8);
+}
+.zone-tag {
+  font-size: 11px;
+  font-weight: 800;
+  color: #4338ca;
+  background: #ffffff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+.zone-item-view {
+  font-size: 36px;
+  line-height: 1;
+}
+
+/* Oda Bölge Konumları */
+.zone-bed {
+  bottom: 25px;
+  left: 20px;
+  width: 140px;
+  height: 100px;
+}
+.zone-desk {
+  bottom: 30px;
+  right: 25px;
+  width: 140px;
+  height: 110px;
+}
+.zone-chair {
+  bottom: 40px;
+  right: 175px;
+  width: 85px;
+  height: 95px;
+}
+.zone-rug {
+  bottom: 15px;
+  left: 175px;
+  width: 140px;
+  height: 80px;
+}
+.zone-shelf {
+  top: 30px;
+  right: 35px;
+  width: 130px;
+  height: 80px;
+}
+
+/* Eşya Çekmecesi */
+.en-items-drawer {
+  background: #f8fafc;
+  border-radius: 20px;
+  border: 1.5px solid #e2e8f0;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.drawer-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #334155;
+  text-align: center;
+}
+.en-drawer-items-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.en-drawer-item {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.en-drawer-item:hover {
+  transform: translateY(-2px);
+  border-color: #6366f1;
+}
+.en-drawer-item.selected {
+  border-color: #4f46e5;
+  background: #eef2ff;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+  transform: scale(1.05);
+}
+.en-drawer-item.used {
+  opacity: 0.35;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+.item-emoji { font-size: 28px; }
+.item-name { font-size: 11px; font-weight: 800; color: #1e293b; }
+
+/* ==========================================================================
+   7. OYUN 4: İNGİLİZCE HAFIZA KARTLARI (MEMORY CARD MATCH)
+   ========================================================================== */
+.en-memory-arena {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.en-memory-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: #f8fafc;
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+.en-memory-stat {
+  font-size: 14px;
+  font-weight: 700;
+  color: #475569;
+}
+.en-btn-reset-memory {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.en-btn-reset-memory:hover {
+  background: #f1f5f9;
+}
+
+/* Kartlar Grid */
+.en-memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+.en-memory-card {
+  height: 140px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.en-memory-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  border-radius: 18px;
+}
+.en-memory-card.flipped .en-memory-card-inner,
+.en-memory-card.matched .en-memory-card-inner {
+  transform: rotateY(180deg);
+}
+.en-card-front, .en-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+/* Arka Yüz (Kapalı) */
+.en-card-back {
+  background: linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%);
+  border: 2.5px solid #6366f1;
+  color: #ffffff;
+}
+.en-back-pattern {
+  font-size: 32px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+.en-back-flag {
+  font-size: 12px;
+  font-weight: 800;
+  color: #a5b4fc;
+  margin-top: 4px;
+}
+/* Ön Yüz (Açık) */
+.en-card-front {
+  background: #ffffff;
+  border: 2.5px solid #93c5fd;
+  transform: rotateY(180deg);
+}
+.en-memory-card.matched .en-card-front {
+  background: #dcfce7;
+  border-color: #22c55e;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
+}
+.en-card-emoji {
+  font-size: 48px;
+  line-height: 1;
+}
+.en-card-word {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1e1b4b;
+  margin-top: 6px;
+}
+
+/* Kutlama Kartı */
+.en-celebrate-box {
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border: 2px solid #34d399;
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: pulseCorrect 0.6s ease;
+}
+.en-celebrate-box h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #065f46;
+}
+.en-celebrate-box p {
+  margin: 0;
+  font-size: 14px;
+  color: #047857;
+}
+
+/* ==========================================================================
+   RESPONSİVE UYUMLULUK (TABLET VE MOBİL)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .home-funlab-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .funlab-hero-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .funlab-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .funlab-level-selector {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .funlab-game-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .en-room-layout {
+    grid-template-columns: 1fr;
+  }
+  .en-memory-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .funlab-game-tabs {
+    grid-template-columns: 1fr;
+  }
+  .en-vocab-stones-grid {
+    grid-template-columns: 1fr;
+  }
+  .en-card-display-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .en-memory-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

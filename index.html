@@ -489,6 +489,28 @@
                     </button>
                   </div>
                 </div>
+
+                <!-- 🌍 ENGLISH FUN LAB (İngilizce Atölyesi) ANA SAYFA KARTI -->
+                <div class="home-funlab-hero-card" id="cardHomeEnglishFunLab" role="button" tabindex="0" title="English Fun Lab - İngilizce Eğlence Atölyesi">
+                  <div class="funlab-hero-left">
+                    <div class="funlab-flag-badge">
+                      <span class="flag-icon" aria-hidden="true">🇬🇧</span>
+                      <span class="pulse-sparkle">✨</span>
+                    </div>
+                    <div class="funlab-hero-text">
+                      <div class="funlab-hero-tag">🌍 YENİ ATÖLYE &bull; 4 OYUN &bull; 3 SEVİYE</div>
+                      <h3 class="funlab-hero-title">English Fun Lab (İngilizce Atölyesi)</h3>
+                      <p class="funlab-hero-desc">Kelime Avı, Uçan Balonlar, Resimli Oda ve Hafıza Kartları ile İngilizce öğren!</p>
+                    </div>
+                  </div>
+                  <div class="funlab-hero-actions">
+                    <button class="funlab-play-btn" id="btnPlayFunLabHome" type="button">Atölyeye Gir ›</button>
+                    <button class="funlab-share-btn" id="btnShareFunLabHome" type="button" title="WhatsApp ile Paylaş">
+                      <span class="share-icon" aria-hidden="true">📲</span>
+                      <span>WhatsApp Paylaş</span>
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <!-- SAĞ SÜTUN: MOLI SAHNE PORTALI VE SADE ETKİLEŞİM ROZETLERİ -->
@@ -864,6 +886,106 @@
             </div>
           </section>
 
+          <!-- ============================================================== -->
+          <!-- 🌍 İNGİLİZCE EĞLENCE ATÖLYESİ (ENGLISH FUN LAB)                -->
+          <!-- 4 İnteraktif Oyun & 3 Seviye: Kelime Avı, Uçan Balonlar,      -->
+          <!-- Resimli Oda & Eşya Yerleştirme, İngilizce Hafıza Kartları     -->
+          <!-- ============================================================== -->
+          <section class="english-funlab-section hide" id="englishFunLabSection" aria-label="İngilizce Eğlence Atölyesi">
+            <!-- Üst Kontrol & Navigasyon Barı -->
+            <div class="funlab-topbar">
+              <div class="funlab-topbar-left">
+                <button class="funlab-btn-back" id="btnBackFromEnglishFunLab" type="button" title="Ana Sayfaya Dön">
+                  <span class="back-icon" aria-hidden="true">‹</span>
+                  <span>Ana Sayfa</span>
+                </button>
+                <div class="funlab-brand-title">
+                  <span class="funlab-flag-icon" aria-hidden="true">🇬🇧</span>
+                  <div class="funlab-title-text">
+                    <h2 class="funlab-title-main">English Fun Lab</h2>
+                    <span class="funlab-title-sub">İngilizce Eğlence Atölyesi</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Üst Barda Seviye Seçimi (Kullanıcı Talebi 1) -->
+              <div class="funlab-level-selector" id="enLabLevelSelector" role="tablist" aria-label="İngilizce Seviye Seçimi">
+                <button class="funlab-level-btn level-1 active" data-level="1" type="button" role="tab" title="Level 1: Renkler, Sayılar & Hayvanlar">
+                  <span class="lvl-dot dot-green"></span>
+                  <span class="lvl-label">🟢 Level 1: Renkler, Sayılar &amp; Hayvanlar</span>
+                </button>
+                <button class="funlab-level-btn level-2" data-level="2" type="button" role="tab" title="Level 2: Okul Eşyaları, Aile & Meyveler">
+                  <span class="lvl-dot dot-yellow"></span>
+                  <span class="lvl-label">🟡 Level 2: Okul Eşyaları, Aile &amp; Meyveler</span>
+                </button>
+                <button class="funlab-level-btn level-3" data-level="3" type="button" role="tab" title="Level 3: Eylemler, Hava Durumu & Günlük Yaşam">
+                  <span class="lvl-dot dot-orange"></span>
+                  <span class="lvl-label">🟠 Level 3: Eylemler, Hava Durumu &amp; Günlük Yaşam</span>
+                </button>
+              </div>
+
+              <!-- Sağ HUD: Skor, WhatsApp Paylaş & Müzik -->
+              <div class="funlab-topbar-right">
+                <div class="funlab-score-badge" title="Toplam Puan">
+                  <span class="star-icon">⭐</span>
+                  <span class="score-val" id="enLabScoreVal">0 Puan</span>
+                </div>
+                <button class="funlab-btn-wa-share" id="btnEnLabShareWA" type="button" title="WhatsApp ile Paylaş">
+                  <span class="wa-icon">📲</span>
+                  <span>Paylaş</span>
+                </button>
+                <button class="funlab-btn-sound btn-game-music-toggle" id="btnEnLabSoundToggle" type="button" title="Fon Müziğini Aç / Kapat">
+                  <span class="game-music-icon">🎵</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 Oyun Seçim Sekmeleri (Tabs) -->
+            <div class="funlab-game-tabs" id="enLabGameTabs" role="tablist" aria-label="Oyun Seçimi">
+              <button class="funlab-tab active" data-game="wordMatch" type="button" role="tab">
+                <span class="tab-emoji">🧩</span>
+                <span class="tab-name">1. Kelime Avı (Word Match)</span>
+              </button>
+              <button class="funlab-tab" data-game="balloon" type="button" role="tab">
+                <span class="tab-emoji">🎈</span>
+                <span class="tab-name">2. Uçan Balonlar (Balloon Pop)</span>
+              </button>
+              <button class="funlab-tab" data-game="room" type="button" role="tab">
+                <span class="tab-emoji">🏠</span>
+                <span class="tab-name">3. Resimli Oda (Room Vocab)</span>
+              </button>
+              <button class="funlab-tab" data-game="memory" type="button" role="tab">
+                <span class="tab-emoji">🃏</span>
+                <span class="tab-name">4. Hafıza Kartları (Memory Match)</span>
+              </button>
+            </div>
+
+            <!-- Moli Prompt & Yönerge Kartı -->
+            <div class="funlab-moli-card" id="enLabMoliCard">
+              <div class="funlab-moli-avatar">
+                <img src="assets/mascot/moli.webp" alt="Moli English" width="56" height="56" loading="lazy">
+                <span class="moli-crown" aria-hidden="true">👑</span>
+              </div>
+              <div class="funlab-prompt-body">
+                <div class="funlab-speech-row">
+                  <span class="funlab-speech-quote" id="enLabSpeechText">"Welcome to English Fun Lab!"</span>
+                  <button class="funlab-btn-speak" id="btnEnLabRepeatVoice" type="button" title="Doğal İngilizce ile Dinle">
+                    <span class="speak-icon">🔊</span>
+                    <span>Tekrar Dinle</span>
+                  </button>
+                </div>
+                <div class="funlab-hint-row" id="enLabHintText">
+                  💡 İpucu: Doğru kelimeye bas, telaffuzunu dinle ve puanları topla!
+                </div>
+              </div>
+            </div>
+
+            <!-- 4 Oyun Sahne Konteyneri -->
+            <div class="funlab-stage-viewport" id="enLabStageViewport">
+              <!-- Oyunlar dinamik olarak render edilecek -->
+            </div>
+          </section>
+
           <!-- ============================================== -->
           <!-- 1. KADEME: DERS SEÇİM EKRANI (SUBJECTS GRID)   -->
           <!-- ============================================== -->
@@ -1060,6 +1182,35 @@
           </div>
 
           <div class="arcade-games-grid">
+            
+            <!-- Oyun: 🌍 English Fun Lab (İngilizce Atölyesi) -->
+            <div class="arcade-game-card theme-english-funlab" data-arcade-game="english" role="button" tabindex="0">
+              <div class="arcade-card-hero-banner banner-english-funlab" aria-hidden="true">
+                <div class="banner-scene scene-english-funlab">
+                  <div class="mini-funlab-flag-wrap">
+                    <span class="mini-funlab-flag">🇬🇧</span>
+                    <span class="mini-funlab-globe">🌍</span>
+                    <span class="mini-funlab-spark">✨</span>
+                  </div>
+                  <span class="mini-flame-tag">⭐ Level 1-2-3</span>
+                </div>
+              </div>
+              <div class="arcade-card-top">
+                <span class="arcade-card-tag">🇬🇧 Doğal Ses &amp; 4 Oyun</span>
+                <span class="arcade-card-chip chip-indigo">🌍 İngilizce Atölyesi</span>
+              </div>
+              <h3 class="arcade-card-title">English Fun Lab: İngilizce Atölyesi</h3>
+              <p class="arcade-card-desc">Kelime Avı, Uçan Balonlar, Resimli Oda ve Hafıza Kartları ile İngilizce kelimeleri keşfet!</p>
+              <div class="arcade-card-badges">
+                <span>🔊 Natural English TTS</span>
+                <span>🎈 4 İnteraktif Oyun</span>
+              </div>
+              <div class="arcade-card-actions-group">
+                <button class="arcade-card-play-btn" type="button">Hemen Oyna ›</button>
+                <button class="arcade-card-share-btn" type="button" title="WhatsApp'ta Paylaş" onclick="event.stopPropagation(); if(window.EnglishFunLab){window.EnglishFunLab.shareWhatsApp();}else if(window.shareDeepLinkWhatsApp){window.shareDeepLinkWhatsApp({oyun:'english', title:'English Fun Lab'});}">📲 Paylaş</button>
+              </div>
+            </div>
+
             <!-- Oyun 1: ⚔️ Çarpma Savaşı (Halat Çekme Düellosu) -->
             <div class="arcade-game-card theme-tug duel-mode-desktop-only" data-arcade-game="tug" role="button" tabindex="0">
               <div class="arcade-card-hero-banner banner-tug" aria-hidden="true">

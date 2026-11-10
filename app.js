@@ -15444,7 +15444,8 @@
       GameMusicEngine.play(cat);
     }
 
-    if (gameId === 'tug') initArcadeTugGame();
+    if (gameId === 'english' || gameId === 'englishfunlab') { if (typeof openEnglishFunLab === 'function') openEnglishFunLab(); return; }
+    else if (gameId === 'tug') initArcadeTugGame();
     else if (gameId === 'sudoku') initArcadeSudokuGame();
     else if (gameId === 'xox') initArcadeXoxGame();
     else if (gameId === 'connect4' || gameId === 'hedef4') initArcadeConnect4Game();
@@ -25435,6 +25436,7 @@
     const enHub = document.getElementById('englishHubSection'); if (enHub) enHub.classList.add('hide');
     const kidsAr = document.getElementById('englishKidsArena'); if (kidsAr) kidsAr.classList.add('hide');
     const advAr = document.getElementById('englishAdvancedArena'); if (advAr) advAr.classList.add('hide');
+    const enLab = document.getElementById('englishFunLabSection'); if (enLab) enLab.classList.add('hide');
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.remove('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -33125,7 +33127,14 @@
       }
       closeMobileSidebar();
       const clean = (route || '').replace(/^#\/?/, '').replace(/^\//, '').toLowerCase();
-      if (clean === 'populer-oyunlar' || clean === 'oyunlar') {
+      if (clean === 'english' || clean === 'englishlab' || clean === 'english-fun-lab') {
+        if (typeof openEnglishFunLab === 'function') {
+          openEnglishFunLab();
+        }
+        if (window.location.hash !== '#english') {
+          window.location.hash = '#english';
+        }
+      } else if (clean === 'populer-oyunlar' || clean === 'oyunlar') {
         if (typeof openArcadeHub === 'function') {
           openArcadeHub();
         }
@@ -34609,6 +34618,7 @@
     }
 
     initHomeBackgroundMusic();
+    if (typeof EnglishFunLab !== 'undefined' && EnglishFunLab.init) EnglishFunLab.init();
 
     console.log("🎯 Derse Bi' Mola başarıyla başlatıldı. MEB Fatih & ETAP uyumlu.");
   }
@@ -34633,6 +34643,748 @@
   window.loadSpeechIndex = loadSpeechIndex;
   window.GRADE_SUBJECTS_CONFIG = GRADE_SUBJECTS_CONFIG;
   window.QuestionEngine = QuestionEngine;
+
+
+  /* ==========================================================================
+     🌍 ENGLISH FUN LAB (İNGİLİZCE EĞLENCE ATÖLYESİ)
+     4 İnteraktif Oyun & 3 Seviye:
+     1. Kelime Avı ve Sesli Eşleştirme (Word & Audio Match)
+     2. Uçan Balonlarla İngilizce Çeviri (Balloon Translation)
+     3. Resimli Oda ve Eşya Yerleştirme (Room Vocabulary)
+     4. İngilizce Hafıza Kartları (Memory Card Match)
+     ========================================================================== */
+  const EnglishFunLab = {
+    currentLevel: 1,
+    currentGame: 'wordMatch',
+    score: 0,
+    currentSpeech: "Welcome to English Fun Lab!",
+    isAudioPlaying: false,
+    
+    // Kelime Havuzları (3 Seviye)
+    vocab: {
+      1: [ // Level 1: Colors, Numbers & Animals
+        { id: 'red', en: 'Red', tr: 'Kırmızı', emoji: '🔴', sentence: "It's red!" },
+        { id: 'blue', en: 'Blue', tr: 'Mavi', emoji: '🔵', sentence: "It's blue!" },
+        { id: 'green', en: 'Green', tr: 'Yeşil', emoji: '🟢', sentence: "It's green!" },
+        { id: 'yellow', en: 'Yellow', tr: 'Sarı', emoji: '🟡', sentence: "It's yellow!" },
+        { id: 'pink', en: 'Pink', tr: 'Pembe', emoji: '🌸', sentence: "It's pink!" },
+        { id: 'purple', en: 'Purple', tr: 'Mor', emoji: '🟣', sentence: "It's purple!" },
+        { id: 'orange', en: 'Orange', tr: 'Turuncu', emoji: '🟠', sentence: "It's orange!" },
+        { id: 'one', en: 'One', tr: 'Bir', emoji: '1️⃣', sentence: "It's number one!" },
+        { id: 'two', en: 'Two', tr: 'İki', emoji: '2️⃣', sentence: "It's number two!" },
+        { id: 'three', en: 'Three', tr: 'Üç', emoji: '3️⃣', sentence: "It's number three!" },
+        { id: 'four', en: 'Four', tr: 'Dört', emoji: '4️⃣', sentence: "It's number four!" },
+        { id: 'five', en: 'Five', tr: 'Beş', emoji: '5️⃣', sentence: "It's number five!" },
+        { id: 'cat', en: 'Cat', tr: 'Kedi', emoji: '🐱', sentence: "It's a cute cat!" },
+        { id: 'dog', en: 'Dog', tr: 'Köpek', emoji: '🐶', sentence: "It's a lovely dog!" },
+        { id: 'bird', en: 'Bird', tr: 'Kuş', emoji: '🐦', sentence: "It's a singing bird!" },
+        { id: 'rabbit', en: 'Rabbit', tr: 'Tavşan', emoji: '🐰', sentence: "It's a fast rabbit!" },
+        { id: 'fish', en: 'Fish', tr: 'Balık', emoji: '🐟', sentence: "It's a little fish!" },
+        { id: 'lion', en: 'Lion', tr: 'Aslan', emoji: '🦁', sentence: "It's a strong lion!" }
+      ],
+      2: [ // Level 2: School, Family & Fruits
+        { id: 'apple', en: 'Apple', tr: 'Elma', emoji: '🍎', sentence: "It's a red apple!" },
+        { id: 'banana', en: 'Banana', tr: 'Muz', emoji: '🍌', sentence: "It's a sweet banana!" },
+        { id: 'strawberry', en: 'Strawberry', tr: 'Çilek', emoji: '🍓', sentence: "It's a strawberry!" },
+        { id: 'book', en: 'Book', tr: 'Kitap', emoji: '📖', sentence: "It's an interesting book!" },
+        { id: 'pencil', en: 'Pencil', tr: 'Kurşun Kalem', emoji: '✏️', sentence: "It's a pencil!" },
+        { id: 'bag', en: 'School Bag', tr: 'Okul Çantası', emoji: '🎒', sentence: "It's my school bag!" },
+        { id: 'desk', en: 'Desk', tr: 'Çalışma Masası', emoji: '🖥️', sentence: "It's a study desk!" },
+        { id: 'eraser', en: 'Eraser', tr: 'Silgi', emoji: '🧼', sentence: "It's a soft eraser!" },
+        { id: 'mother', en: 'Mother', tr: 'Anne', emoji: '👩', sentence: "This is my mother!" },
+        { id: 'father', en: 'Father', tr: 'Baba', emoji: '👨', sentence: "This is my father!" },
+        { id: 'sister', en: 'Sister', tr: 'Kız Kardeş', emoji: '👧', sentence: "She is my sister!" },
+        { id: 'brother', en: 'Brother', tr: 'Erkek Kardeş', emoji: '👦', sentence: "He is my brother!" },
+        { id: 'baby', en: 'Baby', tr: 'Bebek', emoji: '👶', sentence: "It's a sweet baby!" }
+      ],
+      3: [ // Level 3: Actions, Weather & Daily Life
+        { id: 'run', en: 'Run', tr: 'Koşmak', emoji: '🏃', sentence: "I can run fast!" },
+        { id: 'jump', en: 'Jump', tr: 'Zıplamak', emoji: '🦘', sentence: "Jump high into the sky!" },
+        { id: 'swim', en: 'Swim', tr: 'Yüzmek', emoji: '🏊', sentence: "I like to swim!" },
+        { id: 'dance', en: 'Dance', tr: 'Dans Etmek', emoji: '💃', sentence: "Dance to the music!" },
+        { id: 'sleep', en: 'Sleep', tr: 'Uyumak', emoji: '😴', sentence: "Time to sleep!" },
+        { id: 'sunny', en: 'Sunny', tr: 'Güneşli', emoji: '☀️', sentence: "Today is sunny!" },
+        { id: 'rainy', en: 'Rainy', tr: 'Yağmurlu', emoji: '🌧️', sentence: "It is rainy today!" },
+        { id: 'snowy', en: 'Snowy', tr: 'Karlı', emoji: '❄️', sentence: "It is cold and snowy!" },
+        { id: 'clock', en: 'Clock', tr: 'Saat', emoji: '⏰', sentence: "Look at the clock!" },
+        { id: 'bed', en: 'Bed', tr: 'Yatak', emoji: '🛏️', sentence: "This is my bed!" },
+        { id: 'car', en: 'Car', tr: 'Araba', emoji: '🚗', sentence: "It's a fast car!" },
+        { id: 'bus', en: 'Bus', tr: 'Otobüs', emoji: '🚌', sentence: "The school bus is coming!" }
+      ]
+    },
+
+    // Resimli Oda Yönergeleri (Oyun 3)
+    roomTasks: [
+      { id: 'ball_bed', textEn: "Put the ball under the bed!", hintTr: "Topu yatağın altına yerleştir!", itemKey: 'ball', itemEmoji: '⚽', itemName: 'Ball', zoneKey: 'rug', feedback: "Great! The ball is under the bed!" },
+      { id: 'book_desk', textEn: "Put the book on the desk!", hintTr: "Kitabı çalışma masasına yerleştir!", itemKey: 'book', itemEmoji: '📖', itemName: 'Book', zoneKey: 'desk', feedback: "Awesome! The book is on the desk!" },
+      { id: 'teddy_chair', textEn: "Put the teddy bear on the chair!", hintTr: "Sevimli ayıcığı sandalyeye yerleştir!", itemKey: 'teddy', itemEmoji: '🧸', itemName: 'Teddy Bear', zoneKey: 'chair', feedback: "Well done! The teddy bear is on the chair!" },
+      { id: 'clock_shelf', textEn: "Put the clock on the shelf!", hintTr: "Saati kitaplık rafına yerleştir!", itemKey: 'clock', itemEmoji: '⏰', itemName: 'Clock', zoneKey: 'shelf', feedback: "Super! The clock is on the shelf!" },
+      { id: 'pencil_desk', textEn: "Put the pencil on the desk!", hintTr: "Kalemi çalışma masasına yerleştir!", itemKey: 'pencil', itemEmoji: '✏️', itemName: 'Pencil', zoneKey: 'desk', feedback: "Nice job! The pencil is on the desk!" },
+      { id: 'bag_bed', textEn: "Put the school bag under the bed!", hintTr: "Okul çantasını yatağın altına yerleştir!", itemKey: 'bag', itemEmoji: '🎒', itemName: 'School Bag', zoneKey: 'rug', feedback: "Fantastic! The school bag is under the bed!" }
+    ],
+
+    // Moli Seslendirme (Natural English TTS)
+    speak(text, onEnded) {
+      this.currentSpeech = text;
+      const speechQuote = document.getElementById('enLabSpeechText');
+      if (speechQuote) speechQuote.textContent = `"${text}"`;
+
+      // Mevcut ses motoru
+      if (typeof audio !== 'undefined' && audio.speakEnglishText) {
+        audio.speakEnglishText(text, onEnded);
+      } else if ('speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+          const u = new SpeechSynthesisUtterance(text);
+          u.lang = 'en-US';
+          u.rate = 0.95;
+          u.pitch = 1.05;
+          if (onEnded) u.onended = onEnded;
+          window.speechSynthesis.speak(u);
+        } catch (e) {
+          if (onEnded) onEnded();
+        }
+      } else {
+        if (onEnded) onEnded();
+      }
+    },
+
+    // Puan Ekleme
+    addScore(pts = 10) {
+      this.score += pts;
+      const scoreEl = document.getElementById('enLabScoreVal');
+      if (scoreEl) {
+        scoreEl.textContent = `${this.score} Puan`;
+        scoreEl.classList.remove('pulse-sparkle');
+        void scoreEl.offsetWidth;
+        scoreEl.classList.add('pulse-sparkle');
+      }
+      if (typeof audio !== 'undefined' && audio.playCorrect) {
+        audio.playCorrect();
+      }
+    },
+
+    // Seviye Değiştirme
+    setLevel(lvl) {
+      this.currentLevel = parseInt(lvl, 10) || 1;
+      const levelBtns = document.querySelectorAll('#enLabLevelSelector .funlab-level-btn');
+      levelBtns.forEach(btn => {
+        const bLvl = parseInt(btn.getAttribute('data-level'), 10);
+        btn.classList.toggle('active', bLvl === this.currentLevel);
+      });
+      if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+      this.renderCurrentGame();
+    },
+
+    // Oyun Değiştirme
+    setGame(gameKey) {
+      this.currentGame = gameKey;
+      const tabs = document.querySelectorAll('#enLabGameTabs .funlab-tab');
+      tabs.forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-game') === gameKey);
+      });
+      if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+      this.renderCurrentGame();
+    },
+
+    // Seçili Oyunu Render Et
+    renderCurrentGame() {
+      if (this.currentGame === 'wordMatch') {
+        this.initWordMatch();
+      } else if (this.currentGame === 'balloon') {
+        this.initBalloonGame();
+      } else if (this.currentGame === 'room') {
+        this.initRoomGame();
+      } else if (this.currentGame === 'memory') {
+        this.initMemoryGame();
+      }
+    },
+
+    // 1. OYUN: Kelime Avı ve Sesli Eşleştirme (Word & Audio Match)
+    initWordMatch() {
+      const stage = document.getElementById('enLabStageViewport');
+      if (!stage) return;
+
+      const pool = this.vocab[this.currentLevel] || this.vocab[1];
+      const targetItem = pool[Math.floor(Math.random() * pool.length)];
+
+      // 2 farklı çeldirici
+      const otherItems = pool.filter(i => i.id !== targetItem.id);
+      const shuffledOthers = [...otherItems].sort(() => Math.random() - 0.5);
+      const distractors = shuffledOthers.slice(0, 2);
+
+      const options = [targetItem, ...distractors].sort(() => Math.random() - 0.5);
+
+      stage.innerHTML = `
+        <div class="en-word-match-stage">
+          <div class="en-card-display-row">
+            <div class="en-big-vocab-card" id="enBigVocabCard">
+              <span class="en-vocab-emoji">${targetItem.emoji}</span>
+              <span class="en-vocab-tr-hint">${targetItem.tr}</span>
+            </div>
+            <div class="en-correct-basket-wrap">
+              <div class="en-correct-basket" id="enCorrectBasket">
+                <span class="basket-icon">🧺</span>
+                <span class="basket-label">Correct Basket</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="en-vocab-stones-grid" id="enVocabStonesGrid">
+            ${options.map(opt => `
+              <button class="en-vocab-stone-btn" data-word-id="${opt.id}" data-is-correct="${opt.id === targetItem.id ? 'true' : 'false'}" type="button">
+                <span>🔤</span>
+                <span>${opt.en}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      // Prompt & Ses
+      const hintEl = document.getElementById('enLabHintText');
+      if (hintEl) hintEl.textContent = `💡 İpucu: Görseldeki nesnenin (${targetItem.tr}) İngilizce karşılığı olan taşa dokun!`;
+      this.speak(`What is this? It is ${targetItem.en}!`);
+
+      // Taşlara tıklama
+      const stoneBtns = stage.querySelectorAll('.en-vocab-stone-btn');
+      stoneBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const isCorrect = btn.getAttribute('data-is-correct') === 'true';
+          if (isCorrect) {
+            btn.classList.add('correct');
+            const basket = document.getElementById('enCorrectBasket');
+            if (basket) basket.classList.add('highlight');
+            this.addScore(10);
+            this.speak(targetItem.sentence || `It's an ${targetItem.en}!`, () => {
+              setTimeout(() => {
+                this.initWordMatch();
+              }, 600);
+            });
+          } else {
+            btn.classList.add('wrong');
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            this.speak("Oops! Try again!");
+            setTimeout(() => {
+              btn.classList.remove('wrong');
+            }, 500);
+          }
+        });
+      });
+    },
+
+    // 2. OYUN: Uçan Balonlarla İngilizce Çeviri (Balloon Translation)
+    initBalloonGame() {
+      const stage = document.getElementById('enLabStageViewport');
+      if (!stage) return;
+
+      const pool = this.vocab[this.currentLevel] || this.vocab[1];
+      const targetItem = pool[Math.floor(Math.random() * pool.length)];
+
+      // 4 çeldirici balon
+      const others = pool.filter(i => i.id !== targetItem.id).sort(() => Math.random() - 0.5).slice(0, 4);
+      const balloonItems = [targetItem, ...others].sort(() => Math.random() - 0.5);
+
+      const balloonColors = ['b-red', 'b-blue', 'b-green', 'b-yellow', 'b-purple', 'b-orange'];
+
+      stage.innerHTML = `
+        <div class="en-balloon-arena">
+          <div class="en-target-card">
+            <span class="en-target-title">🎯 HEDEF: <strong>"${targetItem.tr}"</strong> anlamına gelen balonu patlat!</span>
+            <span class="en-target-counter">Seviye ${this.currentLevel} &bull; +10 Puan</span>
+          </div>
+
+          <div class="en-sky-viewport" id="enSkyViewport">
+            <div class="en-cloud" style="top:20px; width:120px; height:45px; animation-duration:24s;"></div>
+            <div class="en-cloud" style="top:80px; width:160px; height:55px; animation-duration:18s; animation-delay:-8s;"></div>
+            <div class="en-cloud" style="top:180px; width:100px; height:38px; animation-duration:28s; animation-delay:-14s;"></div>
+
+            <div class="en-balloons-container" id="enBalloonsContainer">
+              ${balloonItems.map((item, idx) => `
+                <div class="en-balloon ${balloonColors[idx % balloonColors.length]}" data-word-id="${item.id}" data-is-correct="${item.id === targetItem.id ? 'true' : 'false'}" style="animation-delay: -${idx * 0.7}s;">
+                  <span>${item.emoji}</span>
+                  <span>${item.en}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      const hintEl = document.getElementById('enLabHintText');
+      if (hintEl) hintEl.textContent = `💡 İpucu: "${targetItem.tr}" kelimesinin İngilizcesini gökyüzündeki balonlarda bul ve patlat!`;
+      this.speak(`Pop the balloon for ${targetItem.en}!`);
+
+      // Balon tıklama
+      const balloons = stage.querySelectorAll('.en-balloon');
+      balloons.forEach(bal => {
+        bal.addEventListener('click', () => {
+          const isCorrect = bal.getAttribute('data-is-correct') === 'true';
+          if (isCorrect) {
+            bal.classList.add('popping');
+            if (typeof audio !== 'undefined' && audio.playPop) audio.playPop();
+            this.addScore(10);
+            this.speak(`Great! ${targetItem.en}!`, () => {
+              setTimeout(() => {
+                this.initBalloonGame();
+              }, 500);
+            });
+          } else {
+            bal.style.transform = 'scale(0.9) rotate(-10deg)';
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            setTimeout(() => {
+              bal.style.transform = '';
+            }, 300);
+          }
+        });
+      });
+    },
+
+    // 3. OYUN: Resimli Oda ve Eşya Yerleştirme (Room Vocabulary)
+    initRoomGame() {
+      const stage = document.getElementById('enLabStageViewport');
+      if (!stage) return;
+
+      const task = this.roomTasks[Math.floor(Math.random() * this.roomTasks.length)];
+      let selectedItem = null;
+
+      // Eşyalar listesi
+      const allItems = [
+        { key: 'ball', emoji: '⚽', name: 'Ball' },
+        { key: 'book', emoji: '📖', name: 'Book' },
+        { key: 'teddy', emoji: '🧸', name: 'Teddy Bear' },
+        { key: 'clock', emoji: '⏰', name: 'Clock' },
+        { key: 'pencil', emoji: '✏️', name: 'Pencil' },
+        { key: 'bag', emoji: '🎒', name: 'School Bag' }
+      ];
+
+      stage.innerHTML = `
+        <div class="en-room-arena">
+          <div class="en-room-banner">
+            <span class="en-room-task-title">🏠 YÖNERGE: "${task.textEn}"</span>
+            <span class="en-target-counter">Resimli Oda &bull; +10 Puan</span>
+          </div>
+
+          <div class="en-room-layout">
+            <!-- Oda Sahnesi -->
+            <div class="en-room-stage" id="enRoomStage">
+              <div class="en-room-window">☀️</div>
+
+              <!-- Hedef Bölgeler -->
+              <div class="en-room-zone zone-shelf" data-zone="shelf">
+                <span class="zone-tag">📚 Shelf (Raf)</span>
+                <span class="zone-item-view" id="zoneView_shelf"></span>
+              </div>
+              <div class="en-room-zone zone-bed" data-zone="bed">
+                <span class="zone-tag">🛏️ Bed (Yatak)</span>
+                <span class="zone-item-view" id="zoneView_bed"></span>
+              </div>
+              <div class="en-room-zone zone-rug" data-zone="rug">
+                <span class="zone-tag">🧶 Rug (Yatak Altı / Halı)</span>
+                <span class="zone-item-view" id="zoneView_rug"></span>
+              </div>
+              <div class="en-room-zone zone-chair" data-zone="chair">
+                <span class="zone-tag">🪑 Chair (Sandalye)</span>
+                <span class="zone-item-view" id="zoneView_chair"></span>
+              </div>
+              <div class="en-room-zone zone-desk" data-zone="desk">
+                <span class="zone-tag">🖥️ Desk (Çalışma Masası)</span>
+                <span class="zone-item-view" id="zoneView_desk"></span>
+              </div>
+            </div>
+
+            <!-- Sağ Çekmece: Eşya Seçici -->
+            <div class="en-items-drawer">
+              <div class="drawer-title">🎒 EŞYA ÇEKMECESİ</div>
+              <div class="en-drawer-items-list" id="enDrawerItemsList">
+                ${allItems.map(it => `
+                  <div class="en-drawer-item ${it.key === task.itemKey ? 'target-item' : ''}" data-item-key="${it.key}" draggable="true">
+                    <span class="item-emoji">${it.emoji}</span>
+                    <span class="item-name">${it.name}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const hintEl = document.getElementById('enLabHintText');
+      if (hintEl) hintEl.textContent = `💡 İpucu: ${task.hintTr} Sağdaki çekmeceden eşyaya dokun, ardından odadaki hedefe dokun!`;
+      this.speak(task.textEn);
+
+      // Etkileşimler: Dokunarak Seç veya Drag-Drop
+      const drawerItems = stage.querySelectorAll('.en-drawer-item');
+      drawerItems.forEach(itemEl => {
+        itemEl.addEventListener('click', () => {
+          drawerItems.forEach(d => d.classList.remove('selected'));
+          itemEl.classList.add('selected');
+          selectedItem = itemEl.getAttribute('data-item-key');
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+        });
+
+        // HTML5 drag start
+        itemEl.addEventListener('dragstart', (e) => {
+          selectedItem = itemEl.getAttribute('data-item-key');
+          if (e.dataTransfer) {
+            e.dataTransfer.setData('text/plain', selectedItem);
+          }
+        });
+      });
+
+      const zones = stage.querySelectorAll('.en-room-zone');
+      zones.forEach(zone => {
+        const handlePlacement = (targetZoneKey) => {
+          if (!selectedItem) {
+            this.speak("First choose an item from the drawer!");
+            return;
+          }
+          if (selectedItem === task.itemKey && targetZoneKey === task.zoneKey) {
+            zone.classList.add('placed');
+            const viewEl = document.getElementById(`zoneView_${targetZoneKey}`);
+            if (viewEl) viewEl.textContent = task.itemEmoji;
+
+            const usedItem = stage.querySelector(`.en-drawer-item[data-item-key="${selectedItem}"]`);
+            if (usedItem) usedItem.classList.add('used');
+
+            this.addScore(10);
+            this.speak(task.feedback, () => {
+              setTimeout(() => {
+                this.initRoomGame();
+              }, 1200);
+            });
+          } else {
+            zone.style.animation = 'shakeWrong 0.4s ease';
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            this.speak("Try placing it in the correct spot!");
+            setTimeout(() => {
+              zone.style.animation = '';
+            }, 400);
+          }
+        };
+
+        zone.addEventListener('click', () => {
+          handlePlacement(zone.getAttribute('data-zone'));
+        });
+
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          zone.classList.add('active-target');
+        });
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('active-target');
+        });
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('active-target');
+          handlePlacement(zone.getAttribute('data-zone'));
+        });
+      });
+    },
+
+    // 4. OYUN: İngilizce Hafıza Kartları (Memory Card Match)
+    initMemoryGame() {
+      const stage = document.getElementById('enLabStageViewport');
+      if (!stage) return;
+
+      const pool = this.vocab[this.currentLevel] || this.vocab[1];
+      // 4 farklı kelime seç (8 kart)
+      const selectedWords = [...pool].sort(() => Math.random() - 0.5).slice(0, 4);
+
+      // Kart listesi: Her kelime için 1 Resim kartı + 1 İngilizce kelime kartı
+      const cardPairs = [];
+      selectedWords.forEach((word, index) => {
+        cardPairs.push({
+          pairId: index,
+          type: 'image',
+          emoji: word.emoji,
+          wordEn: word.en,
+          label: word.emoji
+        });
+        cardPairs.push({
+          pairId: index,
+          type: 'text',
+          emoji: word.emoji,
+          wordEn: word.en,
+          label: word.en
+        });
+      });
+
+      // Kartları karıştır
+      const shuffledCards = cardPairs.sort(() => Math.random() - 0.5);
+
+      stage.innerHTML = `
+        <div class="en-memory-arena">
+          <div class="en-memory-hud">
+            <span class="en-memory-stat" id="enMemoryPairsStat">Eşleşen: 0 / 4 Çift</span>
+            <span class="en-memory-stat">Kartları çevir, resmi İngilizce kelimesiyle eşleştir!</span>
+            <button class="en-btn-reset-memory" id="btnResetMemoryGame" type="button">🔄 Yeniden Karıştır</button>
+          </div>
+
+          <div class="en-memory-grid" id="enMemoryGrid">
+            ${shuffledCards.map((c, idx) => `
+              <div class="en-memory-card" data-card-idx="${idx}" data-pair-id="${c.pairId}" data-type="${c.type}" data-word="${c.wordEn}">
+                <div class="en-memory-card-inner">
+                  <div class="en-card-back">
+                    <span class="en-back-pattern">❓</span>
+                    <span class="en-back-flag">🇬🇧 FUN LAB</span>
+                  </div>
+                  <div class="en-card-front">
+                    ${c.type === 'image' 
+                      ? `<span class="en-card-emoji">${c.emoji}</span>` 
+                      : `<span class="en-card-word">${c.wordEn}</span>`}
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      const hintEl = document.getElementById('enLabHintText');
+      if (hintEl) hintEl.textContent = `💡 İpucu: Kartların birinde resim, diğerinde İngilizce kelime var. İkisini bularak eşleştir!`;
+      this.speak("Find the matching pairs!");
+
+      // Yeniden karıştır butonu
+      const resetBtn = document.getElementById('btnResetMemoryGame');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+          this.initMemoryGame();
+        });
+      }
+
+      // Hafıza Mekaniği
+      let flippedCards = [];
+      let matchedCount = 0;
+      let lockBoard = false;
+
+      const cardEls = stage.querySelectorAll('.en-memory-card');
+      cardEls.forEach(card => {
+        card.addEventListener('click', () => {
+          if (lockBoard) return;
+          if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+          card.classList.add('flipped');
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+
+          const word = card.getAttribute('data-word');
+          this.speak(word);
+
+          flippedCards.push(card);
+
+          if (flippedCards.length === 2) {
+            lockBoard = true;
+            const [c1, c2] = flippedCards;
+            const pair1 = c1.getAttribute('data-pair-id');
+            const pair2 = c2.getAttribute('data-pair-id');
+
+            if (pair1 === pair2) {
+              // Eşleşti!
+              setTimeout(() => {
+                c1.classList.add('matched');
+                c2.classList.add('matched');
+                matchedCount++;
+                const statEl = document.getElementById('enMemoryPairsStat');
+                if (statEl) statEl.textContent = `Eşleşen: ${matchedCount} / 4 Çift`;
+
+                this.addScore(10);
+                this.speak(`Match! ${word}!`);
+                flippedCards = [];
+                lockBoard = false;
+
+                if (matchedCount === 4) {
+                  setTimeout(() => {
+                    this.speak("Awesome! All cards matched!", () => {
+                      const gridEl = document.getElementById('enMemoryGrid');
+                      if (gridEl) {
+                        gridEl.innerHTML = `
+                          <div class="en-celebrate-box" style="grid-column: 1 / -1;">
+                            <h3>🎉 TEBRİKLER! TÜM KARTLARI EŞLEŞTİRDİN!</h3>
+                            <p>İngilizce hafıza şampiyonusun! +40 Puan kazandın.</p>
+                            <button class="funlab-play-btn" id="btnMemoryPlayAgain" type="button">Yeni Kartlarla Oyna ›</button>
+                          </div>
+                        `;
+                        const againBtn = document.getElementById('btnMemoryPlayAgain');
+                        if (againBtn) {
+                          againBtn.addEventListener('click', () => this.initMemoryGame());
+                        }
+                      }
+                    });
+                  }, 800);
+                }
+              }, 400);
+            } else {
+              // Eşleşmedi, geri kapat
+              setTimeout(() => {
+                c1.classList.remove('flipped');
+                c2.classList.remove('flipped');
+                flippedCards = [];
+                lockBoard = false;
+              }, 900);
+            }
+          }
+        });
+      });
+    },
+
+    // WhatsApp Paylaşımı (Deep Link ?oyun=english)
+    shareWhatsApp() {
+      if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+      const baseUrl = (typeof getProductionOrCurrentBaseUrl === 'function') 
+        ? getProductionOrCurrentBaseUrl() 
+        : (window.location.origin + window.location.pathname);
+      const deepUrl = `${baseUrl}?oyun=english`;
+      const msg = `🌍 Derse Bi' Mola'da yeni "English Fun Lab (İngilizce Eğlence Atölyesi)" modülü açıldı! Kelime Avı, Uçan Balonlar ve Hafıza Oyunları ile İngilizce öğrenmek çok eğlenceli. Hemen tıkla ve oyna: ${deepUrl}`;
+
+      if (typeof copyTextToClipboard === 'function') {
+        copyTextToClipboard(deepUrl).then(() => {
+          if (typeof showShareToast === 'function') {
+            showShareToast('✅ English Fun Lab bağlantısı kopyalandı! WhatsApp grubuna yapıştırabilirsiniz.');
+          }
+        }).catch(() => {});
+      }
+
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    },
+
+    // Modülü Aç
+    open() {
+      if (typeof lockInteractions === 'function') lockInteractions(300);
+      state.currentSection = 'english_fun_lab';
+
+      // Müzik kontrolü
+      if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+      if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.play('puzzle');
+
+      // Diğer bölümleri gizle
+      if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+      if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+      if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+      if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
+      const arcadeSec = document.getElementById('arcadeHubSection');
+      if (arcadeSec) arcadeSec.classList.add('hide');
+      const enHub = document.getElementById('englishHubSection');
+      if (enHub) enHub.classList.add('hide');
+      const kidsAr = document.getElementById('englishKidsArena');
+      if (kidsAr) kidsAr.classList.add('hide');
+      const advAr = document.getElementById('englishAdvancedArena');
+      if (advAr) advAr.classList.add('hide');
+
+      const labSec = document.getElementById('englishFunLabSection');
+      if (labSec) labSec.classList.remove('hide');
+
+      // Sol menü ve üst bar aktiflikleri
+      if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
+      if (DOM.gradeChips) DOM.gradeChips.forEach(c => c.classList.remove('active'));
+      const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
+      if (btnSidebarEnglish) btnSidebarEnglish.classList.add('active');
+
+      if (typeof changeMoliExpression === 'function') changeMoliExpression('happy');
+
+      // URL Senkronizasyonu
+      try {
+        if (window.location.hash !== '#english') {
+          history.pushState({ route: 'english' }, '', '#english');
+        }
+      } catch (e) {}
+
+      this.renderCurrentGame();
+    },
+
+    // Modülü Kapat ve Ana Sayfaya Dön
+    close() {
+      const labSec = document.getElementById('englishFunLabSection');
+      if (labSec) labSec.classList.add('hide');
+      if (typeof openHomePage === 'function') {
+        openHomePage();
+      }
+    },
+
+    // Tüm Dinleyicileri Başlat
+    init() {
+      // 1) Geri Dön Butonu
+      const btnBack = document.getElementById('btnBackFromEnglishFunLab');
+      if (btnBack) {
+        btnBack.addEventListener('click', () => {
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+          this.close();
+        });
+      }
+
+      // 2) Seviye Seçim Butonları (Level 1, Level 2, Level 3)
+      const levelBtns = document.querySelectorAll('#enLabLevelSelector .funlab-level-btn');
+      levelBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lvl = btn.getAttribute('data-level');
+          this.setLevel(lvl);
+        });
+      });
+
+      // 3) Oyun Seçim Sekmeleri (Tabs)
+      const tabs = document.querySelectorAll('#enLabGameTabs .funlab-tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const gKey = tab.getAttribute('data-game');
+          this.setGame(gKey);
+        });
+      });
+
+      // 4) Moli Ses Tekrar Dinle Butonu
+      const btnRepeat = document.getElementById('btnEnLabRepeatVoice');
+      if (btnRepeat) {
+        btnRepeat.addEventListener('click', () => {
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+          this.speak(this.currentSpeech);
+        });
+      }
+
+      // 5) WhatsApp Paylaşım Butonu
+      const btnWa = document.getElementById('btnEnLabShareWA');
+      if (btnWa) {
+        btnWa.addEventListener('click', () => {
+          this.shareWhatsApp();
+        });
+      }
+
+      // 6) Ana Sayfa Hero Kartı Dinleyicileri
+      const cardHome = document.getElementById('cardHomeEnglishFunLab');
+      if (cardHome) {
+        cardHome.addEventListener('click', (e) => {
+          if (e.target && e.target.closest('#btnShareFunLabHome')) return;
+          this.open();
+        });
+      }
+      const btnPlayHome = document.getElementById('btnPlayFunLabHome');
+      if (btnPlayHome) {
+        btnPlayHome.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.open();
+        });
+      }
+      const btnShareHome = document.getElementById('btnShareFunLabHome');
+      if (btnShareHome) {
+        btnShareHome.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.shareWhatsApp();
+        });
+      }
+
+      // 7) Popüler Oyunlar Gridindeki Kart
+      const arcadeCard = document.querySelector('.arcade-game-card[data-arcade-game="english"]');
+      if (arcadeCard) {
+        arcadeCard.addEventListener('click', (e) => {
+          if (e.target && e.target.closest('.arcade-card-share-btn')) return;
+          this.open();
+        });
+      }
+    }
+  };
+
+  window.EnglishFunLab = EnglishFunLab;
+  window.openEnglishFunLab = () => EnglishFunLab.open();
+
 
   // 4. SINIF FEN BİLİMLERİ & SOSYAL BİLGİLER 2026 MAARİF MODELİ EKSTRA KAZANIM SORULARI
   try {
@@ -36439,7 +37191,12 @@
       // 5. Oyun / Etkinlik parametresi varsa doğrudan oyun sahnesini aç!
       if (rawOyun) {
         const oyunNorm = rawOyun.toLocaleLowerCase('tr-TR').trim();
-        if (oyunNorm === 'hedef4' || oyunNorm === 'connect4') {
+        if (oyunNorm === 'english' || oyunNorm === 'ingilizce' || oyunNorm === 'englishlab' || oyunNorm === 'englishfunlab') {
+          interactionLockUntil = 0;
+          if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+          if (typeof openEnglishFunLab === 'function') openEnglishFunLab();
+          return true;
+        } else if (oyunNorm === 'hedef4' || oyunNorm === 'connect4') {
           interactionLockUntil = 0;
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
           openArcadeHub();
