@@ -15434,6 +15434,14 @@
     if (typeof stopMoleGameEngine === 'function') stopMoleGameEngine();
     if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.stop(true);
 
+    // Üstte boşluk bırakan diğer sahneleri tamamen gizle ve en üste kaydır
+    ['englishFunLabSection', 'bilsemExamArena', 'mindGamesArena', 'englishKidsArena', 'englishAdvancedArena'].forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hide');
+    });
+    if (arcadeSec) arcadeSec.scrollTop = 0;
+    window.scrollTo(0, 0);
+
     try {
       if (window.location.hash !== '#populer-oyunlar' && window.location.hash !== '#oyunlar') {
         history.pushState({ route: 'populer-oyunlar' }, '', '#populer-oyunlar');

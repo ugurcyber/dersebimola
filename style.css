@@ -33541,3 +33541,44 @@ body.is-game-active .universal-game-bgm-fab {
   #bilsemExamArena .bilsem-tab-btn { padding: 8px 13px; font-size: 0.85rem; flex: 0 0 auto; }
   #bilsemExamArena .clue-symbols, #bilsemExamArena .clue-code { font-size: 1.25rem !important; letter-spacing: 2px; padding: 4px 10px; }
 }
+
+/* ==========================================================================
+   POPÜLER OYUNLAR EKRANI HİZALAMA (V9.6.0)
+   ========================================================================== */
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)) {
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+}
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .home-showcase-section,
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .bilsem-hub-section,
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .bilsem-exam-arena,
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .english-funlab-section,
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .subjects-section,
+.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .games-section {
+  display: none !important;
+}
+#arcadeHubSection:not(.hide) {
+  margin: 12px auto 0 auto !important;
+  padding-top: 10px !important;
+  align-self: flex-start !important;
+  justify-content: flex-start !important;
+  width: 96% !important;
+  max-width: 1240px !important;
+  box-sizing: border-box !important;
+  flex: 1 1 auto;
+}
+#arcadeHubSection .arcade-cards-view { margin: 0 auto !important; width: 100%; }
+#arcadeHubSection .arcade-games-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)) !important;
+  gap: 14px !important;
+  margin: 10px auto !important;
+  width: 100%;
+  box-sizing: border-box;
+  align-content: start;
+  overflow: visible !important;
+}
+@media (max-width: 768px) {
+  #arcadeHubSection:not(.hide) { width: 100% !important; margin: 8px auto 0 auto !important; padding: 8px 8px 24px !important; }
+  #arcadeHubSection .arcade-games-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+}
