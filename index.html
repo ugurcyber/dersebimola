@@ -866,6 +866,66 @@
           </section>
 
           <!-- ============================================================== -->
+          <!-- 🧠 AKIL VE ZEKA OYUNLARI BİLSEM İNTERAKTİF ATÖLYESİ            -->
+          <!-- 1. Aşama: Anasınıfı, 1. Sınıf ve 2. Sınıf Şıksız BİLSEM Oyunları -->
+          <!-- (Örüntü Treni, Farkı Yakala, 2x2 Matris, Hafıza, Şifre, Simetri, Sudoku, Algoritma) -->
+          <!-- ============================================================== -->
+          <section class="mind-games-arena hide" id="mindGamesArena" aria-label="Akıl ve Zeka Oyunları BİLSEM Arenası">
+            <!-- Üst Kontrol & Navigasyon Barı -->
+            <div class="mind-arena-header">
+              <button class="btn-back-to-subject" id="btnBackFromMindGames" type="button" title="Derslere Dön">
+                <span class="back-icon" aria-hidden="true">‹</span>
+                <span>Derslere Dön</span>
+              </button>
+
+              <div class="mind-arena-title-wrap">
+                <span class="mind-grade-badge" id="mindArenaGradeBadge">1. Sınıf BİLSEM</span>
+                <h2 class="mind-game-title" id="mindArenaTitle">Görsel Örüntü Treni</h2>
+              </div>
+
+              <!-- Oyun Sekmeleri (Sınıfa göre JS ile dinamik doldurulur) -->
+              <div class="mind-game-tabs" id="mindGameTabs" role="tablist">
+                <!-- JS tarafından dinamik doldurulacak -->
+              </div>
+
+              <!-- Skor & Müzik HUD -->
+              <div class="mind-hud-right">
+                <div class="mind-star-score" id="mindStarScore" title="Kazanılan Başarı Puanı">
+                  <span class="star-icon">⭐</span>
+                  <span class="score-text" id="mindScoreText">0 Puan</span>
+                </div>
+                <button class="mind-sound-btn btn-game-music-toggle" id="btnMindSoundToggle" type="button" title="Müzik Aç / Kapat">
+                  <span class="game-music-icon">🎵</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Moli Türkçe Sesli Yönerge Bandı -->
+            <div class="mind-moli-prompt-card">
+              <div class="mind-moli-avatar-box">
+                <img src="assets/mascot/moli.webp" class="mind-moli-img" alt="Moli Akıl Oyunları" width="56" height="56" loading="lazy">
+                <span class="mind-moli-hat" aria-hidden="true">🧠</span>
+              </div>
+              <div class="mind-prompt-content">
+                <div class="mind-speech-bubble">
+                  <span class="mind-speech-text" id="mindSpeechText">"Vagondaki soru işaretine hangi parça gelmeli?"</span>
+                  <button class="btn-repeat-voice mind-repeat-voice" id="btnMindRepeatVoice" type="button" title="Türkçe Seslendir">
+                    <span class="voice-wave-icon">🔊</span>
+                    <span>Yönergeyi Dinle</span>
+                  </button>
+                </div>
+                <div class="mind-hint-text" id="mindHintText">💡 İpucu: Örüntünün tekrar eden kuralını dikkatlice incele!</div>
+              </div>
+            </div>
+
+            <!-- İnteraktif Şıksız Oyun Sahnesi (Stage Container) -->
+            <div class="mind-stage-container" id="mindStageContainer">
+              <!-- Oyun sahneleri MindGamesEngine tarafından dinamik render edilir -->
+            </div>
+          </section>
+
+
+          <!-- ============================================================== -->
           <!-- 🌍 İNGİLİZCE EĞLENCE ATÖLYESİ (ENGLISH FUN LAB)                -->
           <!-- 4 İnteraktif Oyun & 3 Seviye: Kelime Avı, Uçan Balonlar,      -->
           <!-- Resimli Oda & Eşya Yerleştirme, İngilizce Hafıza Kartları     -->

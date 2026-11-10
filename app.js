@@ -21416,88 +21416,64 @@
         name: 'Akıl ve Zeka Oyunları',
         icon: '🧠',
         colorTheme: 'theme-brain',
-        tagline: 'Görsel Dikkat & Hız',
-        description: 'Fark bulma, renk tuzakları, süper hafıza ve şimşek refleks! ⚡🎯',
-        badge: 'Dikkat Gelişimi',
+        tagline: 'BİLSEM & Somut Görsel Algı',
+        description: 'Örüntü treni, farklı olanı yakalama, 2x2 matris ve görsel hafıza kartları! 🧠✨',
+        badge: '1. Sınıf BİLSEM',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'oddone', label: '👀 Fark Bulma' },
-          { id: 'stroop', label: '🎯 Renk Tuzağı' },
-          { id: 'memory', label: '🧠 Hafıza' },
-          { id: 'reflex', label: '⚡ Hızlı Refleks' }
+          { id: 'pattern_train', label: '🔁 Örüntü Treni' },
+          { id: 'odd_one_out', label: '🕵️ Farkı Yakala' },
+          { id: 'matrix_2x2', label: '🧩 2x2 Matris' },
+          { id: 'memory_match', label: '🃏 Görsel Hafıza' }
         ],
         games: [
           {
-            id: 'oddone',
+            id: 'pattern_train',
+            active: true,
+            title: 'Görsel Örüntü Treni',
+            icon: '🔁',
+            badge: '🌱 Örüntü & Mantık',
+            featureTag: '🚂 Sıradaki Ne?',
+            description: 'Lokomotifin arkasındaki renk ve şekil örüntüsünü çöz, sıradaki parçayı trene tak! 🚂',
+            tags: ['🔁 Renk & Şekil', '🚂 Vagon Tamamla', '⭐ Şıksız BİLSEM'],
+            btnText: 'Atölyeye Başla',
+            topic: 'pattern_train'
+          },
+          {
+            id: 'odd_one_out',
             active: true,
             title: 'Farklı Olanı Yakala',
-            icon: '👀',
-            badge: '🌱 Gözlem & Odak',
-            featureTag: '🔍 Dedektif Gözler',
-            description: 'Gözünü dört aç! Benzer emojiler arasındaki tek farkı anında yakala! 🔍',
-            tags: ['🔍 Benzer Emojiler', '🎯 İnce Farklar', '⚡ Hızlı Gözlem'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'oddone'
+            icon: '🕵️',
+            badge: '🌱 Görsel Dikkat',
+            featureTag: '🔍 Keskin Gözler',
+            description: 'Gözlerini dört aç! Kuralı bozan, diğerlerinden farklı tek nesneye doğrudan dokun! 🕵️',
+            tags: ['🔍 Görsel Dikkat', '🎯 Kuralı Bozanı Bul', '⚡ Hızlı Dokun'],
+            btnText: 'Atölyeye Başla',
+            topic: 'odd_one_out'
           },
           {
-            id: 'stroop',
+            id: 'matrix_2x2',
             active: true,
-            title: 'Göz ve Renk Düellosu',
-            icon: '🎯',
-            badge: '🌱 Renk & Dikkat',
-            featureTag: '🎯 Hızlı Seçim',
-            description: 'Gözlerin mi daha hızlı yoksa aklın mı? Rengine göre bas! 🎯',
-            tags: ['🎯 Renk Eşleştirme', '⚡ Hızlı Seçim', '🌈 Renkler'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'stroop'
-          },
-          {
-            id: 'memory',
-            active: true,
-            title: 'Süper Hafıza: Sırayı Hatırla',
-            icon: '🧠',
-            badge: '🌱 Sıralı Hafıza',
-            featureTag: '🧠 Zihin Belleği',
-            description: 'Sırayı aklına kazı! İlk hangisi çıktı, kim kayboldu? 🧠',
-            tags: ['🧠 Sıralama Belleği', '👀 Görsel Dikkat', '⚡ Hızlı Hatırla'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'memory'
-          },
-          {
-            id: 'reflex',
-            active: true,
-            title: 'Şimşek Refleks: Hedef Avı',
-            icon: '⚡',
-            badge: '🌱 Saf Hız',
-            featureTag: '⚡ Şimşek Hız',
-            description: 'Yıldıza bas (⭐), bombadan kaç (💣)! Yanlış basan kilitlenir! ⚡',
-            tags: ['⭐ Yıldız Avı', '💣 Bombadan Kaç', '⚡ Şimşek Hız'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'true_false',
-            active: true,
-            title: 'Doğru mu Yanlış mı? (Refleks)',
-            icon: '⚡',
-            badge: '✅❌ Hızlı Karar',
-            featureTag: '⚡ 2x Hızlı Süre',
-            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
-            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'matching',
-            active: true,
-            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
+            title: '2x2 Gölge ve Matris',
             icon: '🧩',
-            badge: '🧩 Ardışık Dokunma',
-            featureTag: '⭐ Kart Eşleştirme',
-            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
-            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
+            badge: '🌱 Matris & Soyutlama',
+            featureTag: '🧩 İlişkiyi Keşfet',
+            description: 'Üst satırdaki değişimi incele, sol alttaki nesneye uygun doğru parçayı boşluğa yerleştir! 🧩',
+            tags: ['🧩 2x2 Tablo', '🐈‍⬛ Gölge & Renk', '🧠 BİLSEM Matris'],
+            btnText: 'Atölyeye Başla',
+            topic: 'matrix_2x2'
+          },
+          {
+            id: 'memory_match',
+            active: true,
+            title: 'Görsel Hafıza Eşleştirme',
+            icon: '🃏',
+            badge: '🌱 Nöro-Hafıza',
+            featureTag: '🧠 Foto-Hafıza',
+            description: 'Kısa süre açılan kartların yerini aklında tut ve çiftleri tek tek bul! 🧠✨',
+            tags: ['🧠 3x2 Kartlar', '👀 Görsel Bellek', '🎉 Çiftleri Yakala'],
+            btnText: 'Atölyeye Başla',
+            topic: 'memory_match'
           }
         ]
       }
@@ -21915,88 +21891,64 @@
         name: 'Akıl ve Zeka Oyunları',
         icon: '🧠',
         colorTheme: 'theme-brain',
-        tagline: 'Zeka & Nöro-Dikkat',
-        description: 'Stroop renk tuzakları, 9\'lu sembol tarama ve foto-hafıza! ⚡🎯',
-        badge: 'Zeka Düelloları',
+        tagline: 'BİLSEM Şifre & Mantık',
+        description: 'Kriptoloji şifre çözücü, ayna simetrisi, 4x4 Shidoku ve algoritma yön bulma! ⚡🎯',
+        badge: '2. Sınıf BİLSEM',
         topics: [
           { id: 'all', label: '🌟 Tümü' },
-          { id: 'oddone', label: '👀 Fark Bulma' },
-          { id: 'stroop', label: '🎯 Stroop Testi' },
-          { id: 'memory', label: '🧠 Süper Hafıza' },
-          { id: 'reflex', label: '⚡ Şimşek Refleks' }
+          { id: 'crypto_code', label: '🔐 Şifre Çözücü' },
+          { id: 'mirror_symmetry', label: '🪞 Ayna Simetrisi' },
+          { id: 'shidoku_4x4', label: '🔢 4x4 Sudoku' },
+          { id: 'arrow_algorithm', label: '🧭 Algoritma & Yön' }
         ],
         games: [
           {
-            id: 'oddone',
+            id: 'crypto_code',
             active: true,
-            title: 'Farklı Olanı Yakala',
-            icon: '👀',
-            badge: '🚀 Gözlem Gücü',
-            featureTag: '⚡ Hızlı Tarama',
-            description: '9 emoji arasından gizlice saklanan yabancı sembolü avla! ⚡',
-            tags: ['⚡ 9\'lu Dizi', '👀 Keskin Gözler', '⏱️ Hızlı Tepki'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'oddone'
+            title: 'Resimli Şifre Çözücü',
+            icon: '🔐',
+            badge: '🚀 Kriptoloji Giriş',
+            featureTag: '🔢 Sembol ve Sayı',
+            description: 'Sembol anahtarındaki gizli sayıları incele, sorulan dizinin şifresini tuşlayarak kasayı aç! 🔐',
+            tags: ['🔐 BİLSEM Kriptoloji', '⭐ Sembol Eşleme', '💡 Analitik Zeka'],
+            btnText: 'Atölyeye Başla',
+            topic: 'crypto_code'
           },
           {
-            id: 'stroop',
+            id: 'mirror_symmetry',
             active: true,
-            title: 'Renk Tuzakları (Stroop)',
-            icon: '🎯',
-            badge: '🚀 Stroop Testi',
-            featureTag: '🧠 Beyin Fırtınası',
-            description: 'Dikkat tuzak! Renge aldanma, kelimenin gerçek rengini bil! 🧠',
-            tags: ['🧠 Renk Tuzağı', '⚡ Beyin Jimnastiği', '🎯 Odaklanma'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'stroop'
+            title: 'Ayna Simetrisi',
+            icon: '🪞',
+            badge: '🚀 Mekansal Algı',
+            featureTag: '🪞 Yansıma Bulmacası',
+            description: 'Aynanın solundaki desenin tam simetrik yansımasını sağdaki ızgarada oluştur! 🪞',
+            tags: ['🪞 Dikey Ayna', '🟦 3x3 Simetri', '🎯 Mekansal Zeka'],
+            btnText: 'Atölyeye Başla',
+            topic: 'mirror_symmetry'
           },
           {
-            id: 'memory',
+            id: 'shidoku_4x4',
             active: true,
-            title: 'Süper Hafıza: Sırayı Hatırla',
-            icon: '🧠',
-            badge: '🚀 Sıralı Hafıza',
-            featureTag: '⚡ Hızlı Hatırla',
-            description: 'Sembolleri hızlıca tara! Sorulan sembolü ilk dokunan bulsun! 🚀',
-            tags: ['🚀 3-4 Sembol', '⚡ Hızlı Kodlama', '🧠 Canlandırma'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'memory'
+            title: 'Mini Resimli Sudoku (4x4)',
+            icon: '🔢',
+            badge: '🚀 Mantık & Strateji',
+            featureTag: '🧩 4x4 Shidoku',
+            description: 'Her satır, sütun ve 2x2 bölgede 4 farklı nesne birer kez bulunsun! Boşlukları tamamla! 🧩',
+            tags: ['🔢 4x4 Sudoku', '🍎 Resimli Mantık', '⚡ Çakışmasız Yerleşim'],
+            btnText: 'Atölyeye Başla',
+            topic: 'shidoku_4x4'
           },
           {
-            id: 'reflex',
+            id: 'arrow_algorithm',
             active: true,
-            title: 'Şimşek Refleks: Hedef Avı',
-            icon: '⚡',
-            badge: '🚀 Hızlı Tepki',
-            featureTag: '🚀 Saliselik Tepki',
-            description: 'Saf hız ve konsantrasyon! Hedefi ilk yakalayan puanı kapar! 🚀',
-            tags: ['🚀 Saliselik Tepki', '⚡ Hızlı Dokunuş', '🔒 Kilit Cezası'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'true_false',
-            active: true,
-            title: 'Doğru mu Yanlış mı? (Refleks)',
-            icon: '⚡',
-            badge: '✅❌ Hızlı Karar',
-            featureTag: '⚡ 2x Hızlı Süre',
-            description: 'Dev butonlar, 2 kat hızlı eriyen süre! Doğru mu yoksa yanlış mı? ⚡',
-            tags: ['✅ Dev Butonlar', '⚡ 2x Hızlı Süre', '🔥 Anlık Refleks'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
-          },
-          {
-            id: 'matching',
-            active: true,
-            title: 'Dokun ve Eşleştir (Zihin Çiftleri)',
-            icon: '🧩',
-            badge: '🧩 Ardışık Dokunma',
-            featureTag: '⭐ Kart Eşleştirme',
-            description: 'Sol ve sağ sütundaki doğru çiftlere ardışık dokun ve birleştir! 🧩',
-            tags: ['🧩 Akıllı Dokunma', '🎯 Hızlı Eşleştir', '✨ Parıltılı Birleşme'],
-            btnText: 'Düelloyu Başlat',
-            topic: 'reflex'
+            title: 'Okları Takip Et (Algoritma)',
+            icon: '🧭',
+            badge: '🚀 Kodlama & Yön',
+            featureTag: '🤖 Robot & Rota',
+            description: 'Moli ve robotun yön komutlarını adım adım takip et, doğru hedefe ve hazineye ulaş! 🧭',
+            tags: ['🧭 Algoritma', '➡️ Yön Takibi', '🏆 Hazine Avı'],
+            btnText: 'Atölyeye Başla',
+            topic: 'arrow_algorithm'
           }
         ]
       }
@@ -24699,6 +24651,12 @@
         return;
       }
     }
+    if (subjectId === 'brain' && (state.currentGrade === 1 || state.currentGrade === 2 || state.currentGrade === 0)) {
+      if (typeof MindGamesEngine !== 'undefined' && MindGamesEngine.open) {
+        MindGamesEngine.open({ grade: state.currentGrade || 1 });
+        return;
+      }
+    }
     const g = state.currentGrade;
     const subjects = GRADE_SUBJECTS_CONFIG[g] || GRADE_SUBJECTS_CONFIG[1];
     const subject = subjects.find(s => s.id === subjectId) || subjects[0];
@@ -26726,6 +26684,13 @@
   }
 
   function startDuel(gameType) {
+    const mindGamesKeys = ['pattern_train', 'odd_one_out', 'matrix_2x2', 'memory_match', 'crypto_code', 'mirror_symmetry', 'shidoku_4x4', 'arrow_algorithm'];
+    if (mindGamesKeys.includes(gameType)) {
+      if (typeof MindGamesEngine !== 'undefined' && MindGamesEngine.open) {
+        MindGamesEngine.open({ grade: state.currentGrade || 1, gameKey: gameType });
+        return;
+      }
+    }
     if (window.innerWidth <= 768) state.gameMode = 'solo';
     lockInteractions(500);
     state.currentGameType = gameType;
@@ -38082,3 +38047,1965 @@
   }
 
 })();
+
+
+/* ==========================================================================
+   🧠 AKIL VE ZEKA OYUNLARI BİLSEM İNTERAKTİF ATÖLYESİ (MIND GAMES ENGINE)
+   1. Aşama: Anasınıfı, 1. Sınıf ve 2. Sınıf Şıksız BİLSEM Oyunları
+   ========================================================================== */
+
+const MindGamesEngine = {
+  currentGrade: 1,
+  currentGame: 'pattern_train',
+  score: 0,
+  activePromptText: '',
+  isLocked: false,
+  bags: {},
+  currentItem: null,
+
+  // Hafıza oyunu durumu
+  memoryState: {
+    cards: [],
+    flippedCards: [],
+    matchedCount: 0,
+    totalPairs: 3,
+    isLocked: false
+  },
+
+  // Kripto şifre çözücü durumu
+  cryptoState: {
+    targetSeq: [],
+    currentIndex: 0,
+    solvedNums: []
+  },
+
+  // Ayna simetrisi durumu
+  mirrorState: {
+    expectedCells: [],
+    paintedCells: []
+  },
+
+  // Shidoku durumu
+  shidokuState: {
+    board: [],
+    selectedSlot: null,
+    totalSlots: 0,
+    solvedSlots: 0
+  },
+
+  // Algoritma durumu
+  algoState: {
+    startPos: [0, 0],
+    currentPos: [0, 0],
+    targetItem: null,
+    isMoving: false
+  },
+
+  // -------------------------------------------------------------
+  // ZENGİN BULMACA & BİLSEM SORU HAVUZLARI (35-40'ar Kombinasyon)
+  // -------------------------------------------------------------
+  dataPools: {
+    // 1. OYUN: GÖRSEL ÖRÜNTÜ TRENİ (Anasınıfı & 1. Sınıf)
+    pattern_train: [
+      { id: 'pt1', items: ['🔴', '🔵', '🔴', '🔵'], answer: '🔴', options: ['🔴', '🔵', '🟢'], prompt: 'Örüntüyü tamamlamak için sıradaki vagon ne olmalı?', name: 'Kırmızı Daire' },
+      { id: 'pt2', items: ['🟡', '🟢', '🟡', '🟢'], answer: '🟡', options: ['🟡', '🟢', '🟣'], prompt: 'Sıradaki vagona hangi renk gelmeli?', name: 'Sarı Daire' },
+      { id: 'pt3', items: ['🔺', '🟦', '🔺', '🟦'], answer: '🔺', options: ['🔺', '🟦', '🟡'], prompt: 'Sıradaki geometrik şekil hangisi?', name: 'Kırmızı Üçgen' },
+      { id: 'pt4', items: ['⭐', '🌙', '⭐', '🌙'], answer: '⭐', options: ['⭐', '🌙', '☀️'], prompt: 'Gökyüzü örüntüsünde sıradaki sembol nedir?', name: 'Yıldız' },
+      { id: 'pt5', items: ['🍎', '🍌', '🍎', '🍌'], answer: '🍎', options: ['🍎', '🍌', '🍇'], prompt: 'Meyve treninde sıradaki vagon hangisidir?', name: 'Elma' },
+      { id: 'pt6', items: ['🍓', '🍊', '🍓', '🍊'], answer: '🍓', options: ['🍓', '🍊', '🍋'], prompt: 'Sıradaki lezzetli meyveyi trene koy!', name: 'Çilek' },
+      { id: 'pt7', items: ['🚗', '🚀', '🚗', '🚀'], answer: '🚗', options: ['🚗', '🚀', '⛵'], prompt: 'Taşıt örüntüsünde sıradaki araç nedir?', name: 'Araba' },
+      { id: 'pt8', items: ['🐶', '🐱', '🐶', '🐱'], answer: '🐶', options: ['🐶', '🐱', '🐰'], prompt: 'Sevimli hayvan treninde sıradaki kim?', name: 'Köpekçik' },
+      { id: 'pt9', items: ['🦁', '🐘', '🦁', '🐘'], answer: '🦁', options: ['🦁', '🐘', '🦒'], prompt: 'Orman treninde sıradaki hayvan hangisi?', name: 'Aslan' },
+      { id: 'pt10', items: ['⬆️', '➡️', '⬆️', '➡️'], answer: '⬆️', options: ['⬆️', '➡️', '⬇️'], prompt: 'Yön okları örüntüsünde sıradaki ok hangisi?', name: 'Yukarı Ok' },
+      { id: 'pt11', items: ['⬅️', '➡️', '⬅️', '➡️'], answer: '⬅️', options: ['⬅️', '➡️', '⬆️'], prompt: 'Sıradaki yön oku hangisi olmalı?', name: 'Sola Ok' },
+      { id: 'pt12', items: ['🌞', '🌙', '🌞', '🌙'], answer: '🌞', options: ['🌞', '🌙', '⭐'], prompt: 'Gece ve gündüz örüntüsünde sıradaki nedir?', name: 'Güneş' },
+      { id: 'pt13', items: ['⚽', '🏀', '⚽', '🏀'], answer: '⚽', options: ['⚽', '🏀', '🎾'], prompt: 'Toplar örüntüsünde sıradaki top hangisi?', name: 'Futbol Topu' },
+      { id: 'pt14', items: ['🎈', '🎁', '🎈', '🎁'], answer: '🎈', options: ['🎈', '🎁', '🎂'], prompt: 'Kutlama treninde sıradaki vagon ne?', name: 'Balon' },
+      { id: 'pt15', items: ['🥕', '🌽', '🥕', '🌽'], answer: '🥕', options: ['🥕', '🌽', '🥦'], prompt: 'Sebze bahçesinde sıradaki nedir?', name: 'Havuç' },
+      { id: 'pt16', items: ['🔴', '🔴', '🔵', '🔴', '🔴'], answer: '🔵', options: ['🔵', '🔴', '🟡'], prompt: 'İki kırmızıdan sonra sıradaki vagon ne?', name: 'Mavi Daire' },
+      { id: 'pt17', items: ['🟡', '🟡', '🟢', '🟡', '🟡'], answer: '🟢', options: ['🟢', '🟡', '🔴'], prompt: 'Örüntüye dikkat et! Sıradaki renk ne?', name: 'Yeşil Daire' },
+      { id: 'pt18', items: ['🟦', '🟦', '🟧', '🟦', '🟦'], answer: '🟧', options: ['🟧', '🟦', '🟨'], prompt: 'Sıradaki renkli kare hangisidir?', name: 'Turuncu Kare' },
+      { id: 'pt19', items: ['🍎', '🍎', '🍌', '🍎', '🍎'], answer: '🍌', options: ['🍌', '🍎', '🍇'], prompt: 'Meyve kuralına göre sıradaki vagon ne?', name: 'Muz' },
+      { id: 'pt20', items: ['⭐', '⭐', '🌙', '⭐', '⭐'], answer: '🌙', options: ['🌙', '⭐', '☀️'], prompt: 'İki yıldız bir aydan sonra sıradaki ne?', name: 'Ay' },
+      { id: 'pt21', items: ['🚗', '🚗', '✈️', '🚗', '🚗'], answer: '✈️', options: ['✈️', '🚗', '🚀'], prompt: 'Sıradaki taşıt hangisi olmalıdır?', name: 'Uçak' },
+      { id: 'pt22', items: ['🐶', '🐶', '🐱', '🐶', '🐶'], answer: '🐱', options: ['🐱', '🐶', '🐭'], prompt: 'Sıradaki sevimli dostumuz kim?', name: 'Kedi' },
+      { id: 'pt23', items: ['🔺', '🔺', '🟡', '🔺', '🔺'], answer: '🟡', options: ['🟡', '🔺', '🟦'], prompt: 'Sıradaki şekil hangisidir?', name: 'Sarı Daire' },
+      { id: 'pt24', items: ['🔴', '🔵', '🟢', '🔴', '🔵'], answer: '🟢', options: ['🟢', '🔴', '🔵'], prompt: 'Üç renkli örüntüde sıradaki renk nedir?', name: 'Yeşil Daire' },
+      { id: 'pt25', items: ['🍎', '🍌', '🍇', '🍎', '🍌'], answer: '🍇', options: ['🍇', '🍎', '🍌'], prompt: 'Elma, muz, üzüm! Sıradaki meyve hangisi?', name: 'Üzüm' },
+      { id: 'pt26', items: ['🚗', '🚀', '⛵', '🚗', '🚀'], answer: '⛵', options: ['⛵', '🚗', '🚀'], prompt: 'Araba, roket, yelkenli! Sıradaki hangisi?', name: 'Yelkenli' },
+      { id: 'pt27', items: ['🐶', '🐱', '🐰', '🐶', '🐱'], answer: '🐰', options: ['🐰', '🐶', '🐱'], prompt: 'Köpek, kedi, tavşan! Sıradaki kim?', name: 'Tavşan' },
+      { id: 'pt28', items: ['🦁', '🐻', '🦊', '🦁', '🐻'], answer: '🦊', options: ['🦊', '🦁', '🐻'], prompt: 'Sıradaki orman sakini hangisi?', name: 'Tilki' },
+      { id: 'pt29', items: ['⭐', '🌙', '☀️', '⭐', '🌙'], answer: '☀️', options: ['☀️', '⭐', '🌙'], prompt: 'Yıldız, ay ve güneş! Sıradaki nedir?', name: 'Güneş' },
+      { id: 'pt30', items: ['⬆️', '➡️', '⬇️', '⬆️', '➡️'], answer: '⬇️', options: ['⬇️', '⬆️', '➡️'], prompt: 'Yukarı, sağa, aşağı! Sıradaki yön oku ne?', name: 'Aşağı Ok' },
+      { id: 'pt31', items: ['🍓', '🍊', '🍋', '🍓', '🍊'], answer: '🍋', options: ['🍋', '🍓', '🍊'], prompt: 'Sıradaki ekşi meyve hangisi?', name: 'Limon' },
+      { id: 'pt32', items: ['🍉', '🍇', '🍒', '🍉', '🍇'], answer: '🍒', options: ['🍒', '🍉', '🍇'], prompt: 'Sıradaki tatlı meyve hangisi?', name: 'Kiraz' },
+      { id: 'pt33', items: ['🔺', '🟦', '🟢', '🔺', '🟦'], answer: '🟢', options: ['🟢', '🔺', '🟦'], prompt: 'Üçgen, kare, daire! Sıradaki şekil ne?', name: 'Yeşil Daire' },
+      { id: 'pt34', items: ['🐟', '🐙', '🦀', '🐟', '🐙'], answer: '🦀', options: ['🦀', '🐟', '🐙'], prompt: 'Deniz treninde sıradaki canlı hangisi?', name: 'Yengeç' },
+      { id: 'pt35', items: ['⚽', '🏀', '🎾', '⚽', '🏀'], answer: '🎾', options: ['🎾', '⚽', '🏀'], prompt: 'Sıradaki spor topu hangisidir?', name: 'Tenis Topu' },
+      { id: 'pt36', items: ['🐸', '🦆', '🐝', '🐸', '🦆'], answer: '🐝', options: ['🐝', '🐸', '🦆'], prompt: 'Kurbağa, ördek ve arı! Sıradaki kim?', name: 'Arı' },
+      { id: 'pt37', items: ['🔵', '🔴', '🔵', '🔴'], answer: '🔵', options: ['🔵', '🔴', '🟡'], prompt: 'Mavi, kırmızı, mavi! Sıradaki renk ne?', name: 'Mavi Daire' },
+      { id: 'pt38', items: ['🍌', '🍎', '🍌', '🍎'], answer: '🍌', options: ['🍌', '🍎', '🍐'], prompt: 'Muz, elma, muz! Sıradaki meyve ne?', name: 'Muz' },
+      { id: 'pt39', items: ['🐱', '🐶', '🐱', '🐶'], answer: '🐱', options: ['🐱', '🐶', '🐹'], prompt: 'Kedi, köpek, kedi! Sıradaki dostumuz kim?', name: 'Kedi' },
+      { id: 'pt40', items: ['🌙', '⭐', '🌙', '⭐'], answer: '🌙', options: ['🌙', '⭐', '🪐'], prompt: 'Ay, yıldız, ay! Sıradaki gök cismi nedir?', name: 'Ay' }
+    ],
+
+    // 2. OYUN: FARKLI OLANI YAKALA (Anasınıfı & 1. Sınıf)
+    odd_one_out: [
+      { id: 'ooo1', items: ['🦅', '🦉', '🦜', '🐟'], odd: '🐟', prompt: 'Kuralı bozan, diğerlerinden farklı tek nesneye dokun!', reason: 'Balık yüzebilir, kuşlar uçabilir!' },
+      { id: 'ooo2', items: ['🍎', '🍌', '🍇', '🥕'], odd: '🥕', prompt: 'Farklı olan tek nesneyi yakala!', reason: 'Havuç bir sebzedir, diğerleri meyve!' },
+      { id: 'ooo3', items: ['🚗', '🚌', '🚓', '🐶'], odd: '🐶', prompt: 'Diğerlerine uymayan tek canlıyı bul!', reason: 'Köpek canlı bir hayvandır, diğerleri araç!' },
+      { id: 'ooo4', items: ['🐬', '🦈', '🐙', '🦁'], odd: '🦁', prompt: 'Grubu bozan farklı hayvanı seç!', reason: 'Aslan karada yaşar, diğerleri denizde!' },
+      { id: 'ooo5', items: ['👕', '👗', '👖', '🛋️'], odd: '🛋️', prompt: 'Farklı olan tek eşyaya dokun!', reason: 'Koltuk mobilyadır, diğerleri giysi!' },
+      { id: 'ooo6', items: ['✏️', '📏', '🎒', '🍔'], odd: '🍔', prompt: 'Okul çantasına ait olmayan hangisi?', reason: 'Hamburger yiyecektir, diğerleri kırtasiye!' },
+      { id: 'ooo7', items: ['🌙', '⭐', '🪐', '☀️'], odd: '☀️', prompt: 'Gece gökyüzüne uymayan hangisi?', reason: 'Güneş gündüz açar, diğerleri gece parlar!' },
+      { id: 'ooo8', items: ['🍎', '🍎', '🍎', '🍏'], odd: '🍏', prompt: 'Renk kuralını bozan elmaya dokun!', reason: 'Yeşil elma, diğerleri kırmızı!' },
+      { id: 'ooo9', items: ['🔵', '🔵', '🔵', '🔴'], odd: '🔴', prompt: 'Farklı renkteki daireye dokun!', reason: 'Kırmızı daire, diğerleri mavi!' },
+      { id: 'ooo10', items: ['💛', '💛', '💛', '💜'], odd: '💜', prompt: 'Farklı renkteki kalbi yakala!', reason: 'Mor kalp, diğerleri sarı!' },
+      { id: 'ooo11', items: ['🍃', '🍃', '🍃', '🍂'], odd: '🍂', prompt: 'Mevsimi bozan farklı yaprağa dokun!', reason: 'Sonbahar yaprağı, diğerleri taze yeşil!' },
+      { id: 'ooo12', items: ['⬆️', '⬆️', '⬆️', '⬇️'], odd: '⬇️', prompt: 'Yönü farklı olan oka dokun!', reason: 'Aşağı ok, diğerleri yukarı!' },
+      { id: 'ooo13', items: ['➡️', '➡️', '➡️', '⬅️'], odd: '⬅️', prompt: 'Ters yöne bakan oku bul!', reason: 'Sola ok, diğerleri sağa bakıyor!' },
+      { id: 'ooo14', items: ['😊', '😊', '😊', '😢'], odd: '😢', prompt: 'Duygusu farklı olan yüze dokun!', reason: 'Üzgün yüz, diğerleri mutlu!' },
+      { id: 'ooo15', items: ['🌸', '🌸', '🌸', '🥀'], odd: '🥀', prompt: 'Solmuş olan farklı çiçeği yakala!', reason: 'Solmuş çiçek, diğerleri taze!' },
+      { id: 'ooo16', items: ['🐶', '🐱', '🐰', '✈️'], odd: '✈️', prompt: 'Kuralı bozan farklı nesneye dokun!', reason: 'Uçak bir makinedir, diğerleri hayvan!' },
+      { id: 'ooo17', items: ['🥛', '🧃', '☕', '🍕'], odd: '🍕', prompt: 'İçecekler arasına karışan yiyeceği bul!', reason: 'Pizza katı yiyecektir, diğerleri içecek!' },
+      { id: 'ooo18', items: ['🎸', '🎹', '🥁', '⚽'], odd: '⚽', prompt: 'Müzik odasına ait olmayan nesne hangisi?', reason: 'Top spor aletidir, diğerleri enstrüman!' },
+      { id: 'ooo19', items: ['👟', '👞', '👠', '👒'], odd: '👒', prompt: 'Ayakkabılar arasına karışan nesneyi bul!', reason: 'Şapka başa takılır, diğerleri ayakkabı!' },
+      { id: 'ooo20', items: ['🦁', '🐯', '🐆', '🐮'], odd: '🐮', prompt: 'Vahşi kediler arasında farklı olanı bul!', reason: 'İnek çiftlik hayvanıdır, diğerleri vahşi kedi!' },
+      { id: 'ooo21', items: ['🔺', '🔺', '🔺', '🟦'], odd: '🟦', prompt: 'Şekli farklı olan nesneye dokun!', reason: 'Mavi kare, diğerleri kırmızı üçgen!' },
+      { id: 'ooo22', items: ['🟢', '🟢', '🟢', '🟡'], odd: '🟡', prompt: 'Renk kuralını bozan daireyi bul!', reason: 'Sarı daire, diğerleri yeşil!' },
+      { id: 'ooo23', items: ['⚽', '🏀', '🎾', '🚗'], odd: '🚗', prompt: 'Spor topları arasında farklı olan ne?', reason: 'Araba taşıttır, diğerleri top!' },
+      { id: 'ooo24', items: ['🍓', '🍒', '🍎', '🍌'], odd: '🍌', prompt: 'Kırmızı meyveler arasında farklı olanı seç!', reason: 'Muz sarıdır, diğerleri kırmızı!' },
+      { id: 'ooo25', items: ['🦊', '🐺', '🐻', '🐧'], odd: '🐧', prompt: 'Orman memelileri arasında farklı olan kim?', reason: 'Penguen kuştur, diğerleri memeli!' },
+      { id: 'ooo26', items: ['🚲', '🛵', '🏍️', '🚁'], odd: '🚁', prompt: 'Karayolu araçları arasında farklı olan ne?', reason: 'Helikopter havada uçar!' },
+      { id: 'ooo27', items: ['🥄', '🍴', '🥢', '📱'], odd: '📱', prompt: 'Yemek masasına ait olmayan nesneyi bul!', reason: 'Telefon cihazdır, diğerleri yemek aleti!' },
+      { id: 'ooo28', items: ['🦷', '👁️', '👂', '👟'], odd: '👟', prompt: 'Duyu organları arasında farklı olan ne?', reason: 'Ayakkabı giysidir, diğerleri organ!' },
+      { id: 'ooo29', items: ['❄️', '⛄', '🧊', '🔥'], odd: '🔥', prompt: 'Kış soğukları arasında farklı olan hangisi?', reason: 'Ateş sıcaktır, diğerleri buz gibi soğuk!' },
+      { id: 'ooo30', items: ['🐝', '🦋', '🐞', '🐢'], odd: '🐢', prompt: 'Uçan böcekler arasında farklı olan canlı kim?', reason: 'Kaplumbağa sürüngendir, kanatları yoktur!' },
+      { id: 'ooo31', items: ['🍇', '🍇', '🍇', '🍉'], odd: '🍉', prompt: 'Farklı meyveye dokun!', reason: 'Karpuz, diğerleri üzüm salkımı!' },
+      { id: 'ooo32', items: ['⛵', '🚢', '🚤', '🚂'], odd: '🚂', prompt: 'Deniz taşıtları arasında farklı olan ne?', reason: 'Tren karada raylarda gider!' },
+      { id: 'ooo33', items: ['🍞', '🥐', '🥖', '🥛'], odd: '🥛', prompt: 'Ekmek fırınına ait olmayan içeceği bul!', reason: 'Süt içecektir, diğerleri fırın ekmeği!' },
+      { id: 'ooo34', items: ['🌷', '🌹', '🌻', '🌲'], odd: '🌲', prompt: 'Çiçekler arasında farklı olanı bul!', reason: 'Çam büyük bir ağaçtır, diğerleri çiçek!' },
+      { id: 'ooo35', items: ['🎈', '🎈', '🎈', '⚽'], odd: '⚽', prompt: 'Uçan balonlar arasında farklı olan ne?', reason: 'Futbol topu, diğerleri uçan balon!' },
+      { id: 'ooo36', items: ['☀️', '☀️', '☀️', '🌧️'], odd: '🌧️', prompt: 'Hava durumunu bozan farklı buluta dokun!', reason: 'Yağmur bulutu, diğerleri güneşli!' },
+      { id: 'ooo37', items: ['🍦', '🍨', '🍧', '🍲'], odd: '🍲', prompt: 'Soğuk tatlılar arasında farklı olan ne?', reason: 'Sıcak çorba, diğerleri dondurma!' },
+      { id: 'ooo38', items: ['🚀', '🛸', '🛰️', '🚜'], odd: '🚜', prompt: 'Uzay araçları arasında farklı olan ne?', reason: 'Traktör tarla aracıdır, diğerleri uzayda!' },
+      { id: 'ooo39', items: ['🐵', '🦍', '🦧', '🐟'], odd: '🐟', prompt: 'Primatlar arasında farklı canlı kim?', reason: 'Balık suda yaşar, diğerleri maymun!' },
+      { id: 'ooo40', items: ['👑', '💍', '💎', '🧹'], odd: '🧹', prompt: 'Saray mücevherleri arasında farklı olan ne?', reason: 'Süpürge temizlik aletidir!' }
+    ],
+
+    // 3. OYUN: 2x2 GÖLGE VE MATRİS (Anasınıfı & 1. Sınıf)
+    matrix_2x2: [
+      { id: 'm1', tl: '🔴', tr: '🔵', bl: '🔺', answer: '🔷', options: ['🔷', '🔴', '🟩'], prompt: 'Kırmızı maviye döndüyse, üçgen neye dönüşür?', name: 'Mavi Üçgen' },
+      { id: 'm2', tl: '🟡', tr: '🟢', bl: '⭐', answer: '✳️', options: ['✳️', '⭐', '🔴'], prompt: 'Sarı yeşile döndüyse, yıldız ne renk olur?', name: 'Yeşil Yıldız' },
+      { id: 'm3', tl: '🟥', tr: '🟧', bl: '🔴', answer: '🟠', options: ['🟠', '🟥', '🟦'], prompt: 'Kırmızı turuncuya döndüyse, kırmızı daire ne olur?', name: 'Turuncu Daire' },
+      { id: 'm4', tl: '🐱', tr: '🐈‍⬛', bl: '🐘', answer: '🐘', answerSil: true, options: ['🐘', '🐱', '🦁'], prompt: 'Kedinin gölgesi geldiyse, filin yanına ne gelir?', name: 'Fil Gölgesi' },
+      { id: 'm5', tl: '🍎', tr: '🍎', trSil: true, bl: '🍌', answer: '🍌', answerSil: true, options: ['🍌', '🍎', '🍇'], prompt: 'Elmanın silueti varsa, muzun silueti hangisi?', name: 'Muz Silueti' },
+      { id: 'm6', tl: '🚗', tr: '🚗', trSil: true, bl: '✈️', answer: '✈️', answerSil: true, options: ['✈️', '🚗', '🚀'], prompt: 'Arabanın gölgesi çıktıysa, uçağın gölgesi nedir?', name: 'Uçak Silueti' },
+      { id: 'm7', tl: '🐦', tr: '🪹', bl: '🐝', answer: '🍯', options: ['🍯', '🪹', '🕸️'], prompt: 'Kuş yuvaya giderse, arı nereye gider?', name: 'Kovan / Bal' },
+      { id: 'm8', tl: '☀️', tr: '🏙️', bl: '🌙', answer: '🌌', options: ['🌌', '🏙️', '🏖️'], prompt: 'Güneş gündüz şehriyse, ay ne getirir?', name: 'Gece Gökyüzü' },
+      { id: 'm9', tl: '🖌️', tr: '🎨', bl: '✏️', answer: '📝', options: ['📝', '🎨', '📐'], prompt: 'Fırça tablo yaparsa, kalem neye yazar?', name: 'Defter / Yazı' },
+      { id: 'm10', tl: '🌧️', tr: '☂️', bl: '☀️', answer: '🕶️', options: ['🕶️', '☂️', '🧤'], prompt: 'Yağmurda şemsiye varsa, güneşte ne takılır?', name: 'Güneş Gözlüğü' },
+      { id: 'm11', tl: '⭕', tr: '⚪', bl: '🟥', answer: '⬜', options: ['⬜', '⭕', '⬛'], prompt: 'İçi boşaldıysa, kırmızı karenin içi ne olur?', name: 'Beyaz Kare' },
+      { id: 'm12', tl: '❤️', tr: '❣️', bl: '🌟', answer: '⭐', options: ['⭐', '🌟', '🌕'], prompt: 'Kalp küçüldüyse, büyük yıldız neye dönüşür?', name: 'Küçük Yıldız' },
+      { id: 'm13', tl: '⬆️', tr: '⬇️', bl: '➡️', answer: '⬅️', options: ['⬅️', '➡️', '⬆️'], prompt: 'Ok tersine döndüyse, sağ ok nereye döner?', name: 'Sola Ok' },
+      { id: 'm14', tl: '🐶', tr: '🦴', bl: '🐱', answer: '🐟', options: ['🐟', '🦴', '🥕'], prompt: 'Köpek kemik severse, kedi ne sever?', name: 'Balık' },
+      { id: 'm15', tl: '🐰', tr: '🥕', bl: '🐵', answer: '🍌', options: ['🍌', '🥕', '🧀'], prompt: 'Tavşan havuç yerse, maymun ne yer?', name: 'Muz' },
+      { id: 'm16', tl: '🐛', tr: '🦋', bl: '🐣', answer: '🐔', options: ['🐔', '🦋', '🦆'], prompt: 'Tırtıl kelebek olursa, civciv ne olur?', name: 'Tavuk' },
+      { id: 'm17', tl: '🪵', tr: '🔥', bl: '🧊', answer: '💧', options: ['💧', '🔥', '🪨'], prompt: 'Odun ateşe dönerse, eriyen buz neye döner?', name: 'Su Damlası' },
+      { id: 'm18', tl: '⚽', tr: '🥅', bl: '🏀', answer: '🗑️', options: ['🗑️', '🥅', '⛳'], prompt: 'Futbol kale istiyorsa, basketbol nereye atılır?', name: 'Pota / Çember' },
+      { id: 'm19', tl: '👨‍⚕️', tr: '🏥', bl: '👨‍🏫', answer: '🏫', options: ['🏫', '🏥', '🚒'], prompt: 'Doktor hastanedeyse, öğretmen nerededir?', name: 'Okul' },
+      { id: 'm20', tl: '🐟', tr: '🌊', bl: '🐦', answer: '☁️', options: ['☁️', '🌊', '🕳️'], prompt: 'Balık denizde yüzerse, kuş nerede uçar?', name: 'Gökyüzü' },
+      { id: 'm21', tl: '🔵', tr: '🔴', bl: '🔷', answer: '🔺', options: ['🔺', '🔷', '🟩'], prompt: 'Mavi kırmızı olduysa, mavi eşkenar ne olur?', name: 'Kırmızı Üçgen' },
+      { id: 'm22', tl: '🟩', tr: '🟨', bl: '🟢', answer: '🟡', options: ['🟡', '🟢', '🔴'], prompt: 'Yeşil sarıya döndüyse, yeşil daire ne olur?', name: 'Sarı Daire' },
+      { id: 'm23', tl: '🚗', tr: '⛽', bl: '📱', answer: '🔋', options: ['🔋', '⛽', '💡'], prompt: 'Araba benzin alıyorsa, telefon ne ile dolar?', name: 'Şarj / Pil' },
+      { id: 'm24', tl: '👶', tr: '🧑', bl: '🌱', answer: '🌳', options: ['🌳', '🌱', '🍂'], prompt: 'Bebek büyüyüp genç olduysa, fidan neye dönüşür?', name: 'Büyük Ağaç' },
+      { id: 'm25', tl: '🍇', tr: '🧃', bl: '🍊', answer: '🧃', options: ['🧃', '🍇', '☕'], prompt: 'Üzümden meyve suyu olursa, portakaldan ne olur?', name: 'Meyve Suyu' },
+      { id: 'm26', tl: '🔒', tr: '🔑', bl: '🚪', answer: '🗝️', options: ['🗝️', '🚪', '🪟'], prompt: 'Kilit anahtarla açılırsa, kapı neyle açılır?', name: 'Kapı Anahtarı' },
+      { id: 'm27', tl: '🐄', tr: '🥛', bl: '🐝', answer: '🍯', options: ['🍯', '🥛', '🧀'], prompt: 'İnek süt verirse, arı ne üretir?', name: 'Tatlı Bal' },
+      { id: 'm28', tl: '🐔', tr: '🥚', bl: '🌳', answer: '🍎', options: ['🍎', '🥚', '🌽'], prompt: 'Tavuk yumurtlarsa, elma ağacı ne verir?', name: 'Elma' },
+      { id: 'm29', tl: '🧵', tr: '🪡', bl: '🔨', answer: '🔩', options: ['🔩', '🪡', '🪚'], prompt: 'İplik iğneyle eşleşirse, çekiç neyle eşleşir?', name: 'Çivi / Vida' },
+      { id: 'm30', tl: '⛵', tr: '🌊', bl: '🚂', answer: '🛤️', options: ['🛤️', '🌊', '🛣️'], prompt: 'Gemi denizde giderse, tren nerede gider?', name: 'Demiryolu' },
+      { id: 'm31', tl: '💡', tr: '🔌', bl: '🏮', answer: '🕯️', options: ['🕯️', '🔌', '🔦'], prompt: 'Lamba prize bağlıysa, fener neyle yanar?', name: 'Mum' },
+      { id: 'm32', tl: '❄️', tr: '⛄', bl: '🏖️', answer: '🏰', options: ['🏰', '⛄', '🏕️'], prompt: 'Karda kardan adam yapılırsa, kumsalda ne yapılır?', name: 'Kumdan Kale' },
+      { id: 'm33', tl: '🔴', tr: '🔺', bl: '🔵', answer: '🔷', options: ['🔷', '🔴', '⭐'], prompt: 'Daire üçgene dönüştüyse, mavi daire neye döner?', name: 'Mavi Şekil' },
+      { id: 'm34', tl: '🚗', tr: '🏎️', bl: '⛵', answer: '🚤', options: ['🚤', '🏎️', '🚢'], prompt: 'Araba yarış arabası olduysa, yelkenli ne olur?', name: 'Hızlı Sürat Teknesi' },
+      { id: 'm35', tl: '🌕', tr: '🌗', bl: '🔴', answer: '🌓', options: ['🌓', '🌕', '⚪'], prompt: 'Dolunay yarım aya dönüştüyse, daire neye dönüşür?', name: 'Yarım Daire' }
+    ],
+
+    // 4. OYUN: GÖRSEL HAFIZA EŞLEŞTİRME TEMALARI
+    memory_themes: [
+      { id: 't1', name: 'Sevimli Hayvanlar', icons: ['🐶', '🐱', '🐰', '🐼', '🦁', '🦊', '🐸', '🐵'] },
+      { id: 't2', name: 'Renkli Meyveler', icons: ['🍎', '🍓', '🍌', '🍉', '🍇', '🍊', '🍍', '🥝'] },
+      { id: 't3', name: 'Uzay ve Taşıtlar', icons: ['🚀', '🛸', '🚗', '✈️', '⛵', '🚂', '🚁', '🚜'] },
+      { id: 't4', name: 'Deniz Canlıları', icons: ['🐬', '🦈', '🐙', '🦀', '🐠', '🐢', '🐳', '🐡'] },
+      { id: 't5', name: 'Geometrik Şekiller', icons: ['🔴', '🔵', '🟡', '🟢', '🔺', '🟦', '⭐', '🌙'] },
+      { id: 't6', name: 'Yumuşak Dostlar', icons: ['🐨', '🐧', '🦄', '🐻', '🦔', '🐿️', '🦥', '🦘'] },
+      { id: 't7', name: 'Yaz Lezzetleri', icons: ['🍦', '🍧', '🍨', '🧁', '🍩', '🍪', '🍫', '🍬'] },
+      { id: 't8', name: 'Doğa ve Çiçekler', icons: ['🌸', '🌻', '🌹', '🌷', '🌺', '🍀', '🍁', '🍄'] }
+    ],
+
+    // 5. OYUN: RESİMLİ ŞİFRE ÇÖZÜCÜ (2. Sınıf Kriptoloji)
+    crypto_code: [
+      { id: 'c1', key: { '⭐': 3, '🌙': 7, '☀️': 1, '⚡': 9 }, seq: ['🌙', '⭐', '☀️'], prompt: 'Sembol anahtarını incele, şifreyi tuşlayarak çöz!' },
+      { id: 'c2', key: { '🍎': 4, '🍌': 2, '🍇': 8, '🍓': 5 }, seq: ['🍇', '🍎', '🍌'], prompt: 'Meyve şifresini çözerek kasayı aç!' },
+      { id: 'c3', key: { '🔴': 6, '🔵': 1, '🟡': 9, '🟢': 3 }, seq: ['🔵', '🟡', '🔴'], prompt: 'Renk kodlarını doğru sırayla gir!' },
+      { id: 'c4', key: { '🚗': 5, '🚀': 2, '⛵': 7, '✈️': 4 }, seq: ['🚀', '🚗', '✈️'], prompt: 'Araç şifresini tuşla!' },
+      { id: 'c5', key: { '🐶': 8, '🐱': 3, '🐰': 6, '🦁': 1 }, seq: ['🦁', '🐰', '🐱'], prompt: 'Sevimli dostlar şifresini gir!' },
+      { id: 'c6', key: { '💎': 9, '👑': 4, '💍': 2, '🏆': 7 }, seq: ['💎', '🏆', '👑'], prompt: 'Hazine şifresini tuşlayarak ödülü aç!' },
+      { id: 'c7', key: { '🔺': 1, '🟦': 5, '🟢': 8, '⭐': 4 }, seq: ['🟦', '⭐', '🔺'], prompt: 'Geometrik şifreyi çöz!' },
+      { id: 'c8', key: { '🎈': 2, '🎁': 6, '🎂': 9, '🎉': 3 }, seq: ['🎂', '🎈', '🎁'], prompt: 'Parti şifresini gir!' },
+      { id: 'c9', key: { '⚡': 4, '🔥': 8, '💧': 1, '🌪️': 6 }, seq: ['🔥', '⚡', '💧'], prompt: 'Elementler şifresini tuşla!' },
+      { id: 'c10', key: { '🌙': 5, '⭐': 2, '☀️': 9, '🪐': 7 }, seq: ['🪐', '🌙', '⭐'], prompt: 'Uzay şifresini tamamla!' },
+      { id: 'c11', key: { '🌸': 3, '🌻': 7, '🌹': 1, '🌷': 8 }, seq: ['🌻', '🌷', '🌸'], prompt: 'Çiçek bahçesi kodunu gir!' },
+      { id: 'c12', key: { '🦁': 6, '🐯': 2, '🐻': 9, '🦊': 4 }, seq: ['🐻', '🦁', '🦊'], prompt: 'Orman kodunu çöz!' },
+      { id: 'c13', key: { '⚽': 7, '🏀': 3, '🎾': 5, '🏐': 1 }, seq: ['⚽', '🎾', '🏀'], prompt: 'Spor şifresini tamamla!' },
+      { id: 'c14', key: { '🍎': 9, '🍊': 4, '🍋': 2, '🍉': 6 }, seq: ['🍉', '🍎', '🍊'], prompt: 'Vitamin şifresini tuşla!' },
+      { id: 'c15', key: { '⭐': 1, '🌙': 8, '☀️': 4, '⚡': 5 }, seq: ['☀️', '⚡', '🌙', '⭐'], prompt: '4 haneli yıldız şifresini çöz!' },
+      { id: 'c16', key: { '🚗': 3, '✈️': 7, '🚀': 9, '⛵': 2 }, seq: ['🚀', '✈️', '🚗', '⛵'], prompt: '4 haneli filo kodunu tuşla!' },
+      { id: 'c17', key: { '🐶': 5, '🐱': 1, '🐰': 8, '🐼': 4 }, seq: ['🐼', '🐰', '🐶', '🐱'], prompt: '4 haneli hayvan şifresini çöz!' },
+      { id: 'c18', key: { '🔴': 2, '🔵': 6, '🟡': 4, '🟢': 7 }, seq: ['🟢', '🟡', '🔵', '🔴'], prompt: '4 haneli renk kodunu tuşla!' },
+      { id: 'c19', key: { '💎': 8, '🏆': 3, '👑': 5, '⭐': 1 }, seq: ['👑', '💎', '🏆', '⭐'], prompt: 'Sarayın büyük şifresini çöz!' },
+      { id: 'c20', key: { '🍕': 4, '🍔': 7, '🍟': 1, '🌭': 9 }, seq: ['🍔', '🍕', '🌭'], prompt: 'Lezzet şifresini gir!' },
+      { id: 'c21', key: { '🍓': 6, '🍒': 2, '🍉': 8, '🍇': 3 }, seq: ['🍒', '🍉', '🍓'], prompt: 'Kırmızı meyve şifresini çöz!' },
+      { id: 'c22', key: { '🔔': 5, '⏰': 1, '⏳': 9, '⏱️': 4 }, seq: ['⏳', '🔔', '⏱️'], prompt: 'Zaman şifresini tamamla!' },
+      { id: 'c23', key: { '🎸': 3, '🎹': 8, '🥁': 6, '🎺': 2 }, seq: ['🎹', '🎸', '🎺'], prompt: 'Müzik anahtarını çöz!' },
+      { id: 'c24', key: { '✏️': 7, '📏': 4, '📐': 1, '🖍️': 5 }, seq: ['✏️', '🖍️', '📏'], prompt: 'Kırtasiye şifresini gir!' },
+      { id: 'c25', key: { '🐬': 9, '🦈': 2, '🐙': 6, '🦀': 3 }, seq: ['🐬', '🐙', '🦀'], prompt: 'Okyanus şifresini tamamla!' },
+      { id: 'c26', key: { '☀️': 6, '☁️': 3, '🌧️': 8, '❄️': 1 }, seq: ['🌧️', '☀️', '❄️'], prompt: 'Hava durumu şifresini gir!' },
+      { id: 'c27', key: { '🟩': 4, '🟨': 9, '🟧': 2, '🟪': 7 }, seq: ['🟪', '🟨', '🟩'], prompt: 'Kare renkler şifresini tuşla!' },
+      { id: 'c28', key: { '🐝': 5, '🦋': 8, '🐞': 1, '🐜': 4 }, seq: ['🦋', '🐝', '🐞'], prompt: 'Minik dostlar şifresini çöz!' },
+      { id: 'c29', key: { '🚲': 2, '🛴': 7, '🛹': 5, '🛼': 9 }, seq: ['🛹', '🚲', '🛴'], prompt: 'Tekerlek şifresini tamamla!' },
+      { id: 'c30', key: { '🍦': 1, '🍩': 6, '🧁': 8, '🍪': 3 }, seq: ['🧁', '🍩', '🍪'], prompt: 'Tatlı şifresini tuşla!' },
+      { id: 'c31', key: { '⭐': 9, '🌙': 4, '☀️': 7, '⚡': 2 }, seq: ['⭐', '☀️', '🌙'], prompt: 'Işık şifresini gir!' },
+      { id: 'c32', key: { '🚗': 8, '🚌': 3, '🚕': 6, '🚓': 1 }, seq: ['🚕', '🚗', '🚌'], prompt: 'Trafik şifresini çöz!' },
+      { id: 'c33', key: { '🦁': 7, '🐯': 1, '🐆': 5, '🐺': 9 }, seq: ['🐺', '🦁', '🐆'], prompt: 'Orman krallığı şifresini gir!' },
+      { id: 'c34', key: { '🍎': 5, '🍌': 9, '🍇': 1, '🍊': 4 }, seq: ['🍇', '🍌', '🍊', '🍎'], prompt: '4 haneli meyve sepeti kodunu çöz!' },
+      { id: 'c35', key: { '💎': 4, '🏆': 8, '👑': 2, '💍': 6 }, seq: ['💍', '💎', '🏆', '👑'], prompt: '4 haneli mücevher şifresini tuşla!' }
+    ],
+
+    // 6. OYUN: AYNA SİMETRİSİ (2. Sınıf Mekansal Yansıma)
+    // 3x3 ızgara: sol ızgara desenine göre sağ ızgara dikey simetri (ayna) deseni oluşturulur.
+    mirror_symmetry: [
+      { id: 'ms1', leftFilled: [0, 3], expectedRight: [2, 5], prompt: 'Aynanın solundaki şeklin simetriğini sağdaki ızgarada boya!' },
+      { id: 'ms2', leftFilled: [0, 1], expectedRight: [1, 2], prompt: 'Dikey aynadaki yansımayı sağ kutuda oluştur!' },
+      { id: 'ms3', leftFilled: [2, 5], expectedRight: [0, 3], prompt: 'Sağ kutuyu solun tam ayna yansıması yap!' },
+      { id: 'ms4', leftFilled: [1, 4, 7], expectedRight: [1, 4, 7], prompt: 'Ortadaki dikey çizginin aynadaki karşılığını boya!' },
+      { id: 'ms5', leftFilled: [0, 4, 8], expectedRight: [2, 4, 6], prompt: 'Çapraz çizginin ayna yansımasını oluştur!' },
+      { id: 'ms6', leftFilled: [2, 4, 6], expectedRight: [0, 4, 8], prompt: 'Simetrik köşeleri sağ kutuda yakala!' },
+      { id: 'ms7', leftFilled: [0, 3, 6], expectedRight: [2, 5, 8], prompt: 'Sol sütunun ayna yansıması hangi sütundur?' },
+      { id: 'ms8', leftFilled: [2, 5, 8], expectedRight: [0, 3, 6], prompt: 'Sağ sütunun aynadaki simetriğini boya!' },
+      { id: 'ms9', leftFilled: [0, 1, 3], expectedRight: [1, 2, 5], prompt: 'Köşeli L şeklinin simetriğini oluştur!' },
+      { id: 'ms10', leftFilled: [1, 2, 5], expectedRight: [0, 1, 3], prompt: 'Ters L şeklinin ayna yansımasını boya!' },
+      { id: 'ms11', leftFilled: [3, 4], expectedRight: [4, 5], prompt: 'Orta satırdaki şeklin yansımasını yap!' },
+      { id: 'ms12', leftFilled: [4, 5], expectedRight: [3, 4], prompt: 'Sağa dayalı orta parçanın simetriğini boya!' },
+      { id: 'ms13', leftFilled: [6, 7], expectedRight: [7, 8], prompt: 'Alt satırdaki parçanın yansımasını oluştur!' },
+      { id: 'ms14', leftFilled: [7, 8], expectedRight: [6, 7], prompt: 'Alt sağ parçanın ayna simetriğini boya!' },
+      { id: 'ms15', leftFilled: [0, 6], expectedRight: [2, 8], prompt: 'Sol iki köşenin ayna yansımasını boya!' },
+      { id: 'ms16', leftFilled: [2, 8], expectedRight: [0, 6], prompt: 'Köşelerin simetriğini sağda yakala!' },
+      { id: 'ms17', leftFilled: [0, 2, 4], expectedRight: [0, 2, 4], prompt: 'Simetrik V şeklinin yansımasını boya!' },
+      { id: 'ms18', leftFilled: [6, 8, 4], expectedRight: [6, 8, 4], prompt: 'Ters üçgen tepelerinin simetriğini boya!' },
+      { id: 'ms19', leftFilled: [1, 3, 5], expectedRight: [1, 3, 5], prompt: 'Simetrik artı desenini tamamla!' },
+      { id: 'ms20', leftFilled: [0, 1, 4], expectedRight: [1, 2, 4], prompt: 'Üst L deseninin simetriğini oluştur!' },
+      { id: 'ms21', leftFilled: [3, 6, 7], expectedRight: [5, 7, 8], prompt: 'Alt sol L şeklinin simetriğini boya!' },
+      { id: 'ms22', leftFilled: [5, 7, 8], expectedRight: [3, 6, 7], prompt: 'Aynadaki tam simetriyi karelere dokunarak yap!' },
+      { id: 'ms23', leftFilled: [0, 4, 7], expectedRight: [2, 4, 7], prompt: 'Zikzak parçanın ayna yansımasını oluştur!' },
+      { id: 'ms24', leftFilled: [2, 4, 7], expectedRight: [0, 4, 7], prompt: 'Sağ zikzağın sol yansımasını tamamla!' },
+      { id: 'ms25', leftFilled: [1, 3, 7], expectedRight: [1, 5, 7], prompt: 'Sola bakan yayın simetriğini sağda boya!' },
+      { id: 'ms26', leftFilled: [1, 5, 7], expectedRight: [1, 3, 7], prompt: 'Sağa bakan yayın ayna simetriğini yap!' },
+      { id: 'ms27', leftFilled: [0, 1, 2], expectedRight: [0, 1, 2], prompt: 'Üst yatay çizginin ayna yansımasını boya!' },
+      { id: 'ms28', leftFilled: [6, 7, 8], expectedRight: [6, 7, 8], prompt: 'Alt yatay çizginin ayna yansımasını oluştur!' },
+      { id: 'ms29', leftFilled: [3, 4, 5], expectedRight: [3, 4, 5], prompt: 'Tam orta satırın simetriğini boya!' },
+      { id: 'ms30', leftFilled: [0, 7], expectedRight: [2, 7], prompt: 'Üst köşe ve alt parçanın simetriğini yap!' },
+      { id: 'ms31', leftFilled: [2, 7], expectedRight: [0, 7], prompt: 'Simetriyi yakala ve doğru kareleri boya!' },
+      { id: 'ms32', leftFilled: [0, 5], expectedRight: [2, 3], prompt: 'Çapraz parçaların ayna yansımasını boya!' },
+      { id: 'ms33', leftFilled: [2, 3], expectedRight: [0, 5], prompt: 'Ayna eksenine göre simetrik karelere dokun!' },
+      { id: 'ms34', leftFilled: [6, 1], expectedRight: [8, 1], prompt: 'Alt köşe ve üst noktanın yansımasını yap!' },
+      { id: 'ms35', leftFilled: [8, 1], expectedRight: [6, 1], prompt: 'Mükemmel yansımayı sağ kutuda boya!' }
+    ],
+
+    // 7. OYUN: 4x4 SHIDOKU (2. Sınıf Mini Sudoku)
+    // 4 eleman: '🍎', '🍌', '🍇', '🍓' (veya 1, 2, 3, 4)
+    shidoku_4x4: [
+      {
+        id: 's1',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        // 0: boş, diğerleri dolu
+        grid: [
+          '🍎', '🍌', '🍇', '🍓',
+          '🍇', '🍓', '🍎', '🍌',
+          '🍌', '🍎', '🍓', null,
+          '🍓', '🍇', '🍌', '🍎'
+        ],
+        solution: { 11: '🍇' },
+        prompt: 'Her satır ve sütunda 4 meyve birer kez olmalı! Soru işaretini tamamla!'
+      },
+      {
+        id: 's2',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        grid: [
+          '🍎', null, '🍇', '🍓',
+          '🍇', '🍓', '🍎', '🍌',
+          '🍌', '🍎', '🍓', '🍇',
+          '🍓', '🍇', '🍌', '🍎'
+        ],
+        solution: { 1: '🍌' },
+        prompt: 'Boş kutuya hangi lezzetli meyve gelmeli?'
+      },
+      {
+        id: 's3',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '1', '2', '3', '4',
+          '3', '4', '1', '2',
+          '2', '1', null, '3',
+          '4', '3', '2', '1'
+        ],
+        solution: { 10: '4' },
+        prompt: '1, 2, 3, 4 sayılarını çakışmayacak şekilde tamamla!'
+      },
+      {
+        id: 's4',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '1', '2', '3', '4',
+          null, '4', '1', '2',
+          '2', '1', '4', '3',
+          '4', '3', '2', '1'
+        ],
+        solution: { 4: '3' },
+        prompt: 'Satır ve sütunu kontrol et! Eksik sayıyı koy!'
+      },
+      {
+        id: 's5',
+        theme: ['🔺', '🟦', '🟡', '⭐'],
+        grid: [
+          '🔺', '🟦', '🟡', '⭐',
+          '🟡', '⭐', '🔺', '🟦',
+          '🟦', '🔺', '⭐', null,
+          '⭐', '🟡', '🟦', '🔺'
+        ],
+        solution: { 11: '🟡' },
+        prompt: 'Şekilli Sudoku! Eksik geometrik sembolü bul!'
+      },
+      {
+        id: 's6',
+        theme: ['🔺', '🟦', '🟡', '⭐'],
+        grid: [
+          '🔺', '🟦', '🟡', '⭐',
+          '🟡', null, '🔺', '🟦',
+          '🟦', '🔺', '⭐', '🟡',
+          '⭐', '🟡', '🟦', '🔺'
+        ],
+        solution: { 5: '⭐' },
+        prompt: 'Boş kareye hangi şekil gelmelidir?'
+      },
+      {
+        id: 's7',
+        theme: ['🐶', '🐱', '🐰', '🐼'],
+        grid: [
+          '🐶', '🐱', '🐰', '🐼',
+          '🐰', '🐼', '🐶', '🐱',
+          '🐱', '🐶', '🐼', null,
+          '🐼', '🐰', '🐱', '🐶'
+        ],
+        solution: { 11: '🐰' },
+        prompt: 'Sevimli hayvanlar Sudokusu! Soru işaretini tamamla!'
+      },
+      {
+        id: 's8',
+        theme: ['🐶', '🐱', '🐰', '🐼'],
+        grid: [
+          null, '🐱', '🐰', '🐼',
+          '🐰', '🐼', '🐶', '🐱',
+          '🐱', '🐶', '🐼', '🐰',
+          '🐼', '🐰', '🐱', '🐶'
+        ],
+        solution: { 0: '🐶' },
+        prompt: 'İlk kutudaki eksik sevimli dostumuz kim?'
+      },
+      {
+        id: 's9',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        grid: [
+          '🍇', '🍓', '🍎', '🍌',
+          '🍎', '🍌', '🍇', '🍓',
+          '🍓', null, '🍌', '🍎',
+          '🍌', '🍎', '🍓', '🍇'
+        ],
+        solution: { 9: '🍇' },
+        prompt: 'Sütun ve satırı incele! Hangi meyve eksik?'
+      },
+      {
+        id: 's10',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '4', '3', '2', '1',
+          '2', '1', '4', '3',
+          '3', '4', '1', null,
+          '1', '2', '3', '4'
+        ],
+        solution: { 11: '2' },
+        prompt: 'Eksik sayıyı doğru kutuya yerleştir!'
+      },
+      {
+        id: 's11',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '2', '1', '4', '3',
+          '4', '3', null, '1',
+          '1', '2', '3', '4',
+          '3', '4', '1', '2'
+        ],
+        solution: { 6: '2' },
+        prompt: 'Sudoku kuralına göre eksik sayıyı tamamla!'
+      },
+      {
+        id: 's12',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        grid: [
+          '🍌', '🍎', '🍓', '🍇',
+          '🍓', '🍇', '🍌', '🍎',
+          '🍎', '🍌', null, '🍓',
+          '🍇', '🍓', '🍎', '🍌'
+        ],
+        solution: { 10: '🍇' },
+        prompt: 'Boşluğu dolduracak meyveyi seç!'
+      },
+      {
+        id: 's13',
+        theme: ['🔺', '🟦', '🟡', '⭐'],
+        grid: [
+          '⭐', '🟡', '🟦', '🔺',
+          '🟦', '🔺', '⭐', '🟡',
+          '🟡', null, '🔺', '🟦',
+          '🔺', '🟦', '🟡', '⭐'
+        ],
+        solution: { 9: '⭐' },
+        prompt: 'Şekiller Sudokusunda eksik parçayı bul!'
+      },
+      {
+        id: 's14',
+        theme: ['🐶', '🐱', '🐰', '🐼'],
+        grid: [
+          '🐼', '🐰', '🐱', '🐶',
+          '🐱', '🐶', '🐼', '🐰',
+          '🐰', '🐼', null, '🐱',
+          '🐶', '🐱', '🐰', '🐼'
+        ],
+        solution: { 10: '🐶' },
+        prompt: 'Hangi hayvan bu kutuya gelmelidir?'
+      },
+      {
+        id: 's15',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '3', '4', '1', '2',
+          '1', '2', '3', '4',
+          '4', '3', '2', '1',
+          '2', '1', '4', null
+        ],
+        solution: { 15: '3' },
+        prompt: 'Son kutudaki eksik sayıyı tamamla!'
+      },
+      {
+        id: 's16',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        grid: [
+          '🍓', '🍇', '🍌', '🍎',
+          '🍌', '🍎', '🍓', '🍇',
+          '🍇', '🍓', '🍎', null,
+          '🍎', '🍌', '🍇', '🍓'
+        ],
+        solution: { 11: '🍌' },
+        prompt: 'Satırda eksik olan meyveyi dokunarak yerleştir!'
+      },
+      {
+        id: 's17',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '4', null, '1', '2',
+          '1', '2', '3', '4',
+          '2', '1', '4', '3',
+          '3', '4', '2', '1'
+        ],
+        solution: { 1: '3' },
+        prompt: 'Üst satırda eksik olan sayıyı bul!'
+      },
+      {
+        id: 's18',
+        theme: ['🔺', '🟦', '🟡', '⭐'],
+        grid: [
+          '🟦', '🔺', '⭐', '🟡',
+          '⭐', '🟡', '🟦', '🔺',
+          '🔺', '🟦', null, '⭐',
+          '🟡', '⭐', '🔺', '🟦'
+        ],
+        solution: { 10: '🟡' },
+        prompt: 'Eksik şekli bularak Sudokuyu tamamla!'
+      },
+      {
+        id: 's19',
+        theme: ['🐶', '🐱', '🐰', '🐼'],
+        grid: [
+          '🐰', '🐼', '🐶', '🐱',
+          '🐶', '🐱', '🐰', '🐼',
+          '🐼', null, '🐱', '🐶',
+          '🐱', '🐶', '🐼', '🐰'
+        ],
+        solution: { 9: '🐰' },
+        prompt: 'Boş kutudaki hayvan dostumuzu seç!'
+      },
+      {
+        id: 's20',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '1', '3', '2', '4',
+          '2', '4', '1', '3',
+          '3', '1', '4', '2',
+          '4', '2', '3', null
+        ],
+        solution: { 15: '1' },
+        prompt: 'Son karedeki eksik rakamı tamamla!'
+      },
+      {
+        id: 's21',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        grid: [
+          '🍎', '🍇', '🍓', '🍌',
+          '🍓', '🍌', '🍎', '🍇',
+          '🍌', '🍎', '🍇', null,
+          '🍇', '🍓', '🍌', '🍎'
+        ],
+        solution: { 11: '🍓' },
+        prompt: 'Çakışma yapmadan eksik meyveyi yerleştir!'
+      },
+      {
+        id: 's22',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          null, '2', '4', '1',
+          '4', '1', '3', '2',
+          '2', '4', '1', '3',
+          '1', '3', '2', '4'
+        ],
+        solution: { 0: '3' },
+        prompt: 'İlk kutudaki eksik sayıyı tamamla!'
+      },
+      {
+        id: 's23',
+        theme: ['🔺', '🟦', '🟡', '⭐'],
+        grid: [
+          '🟡', '⭐', '🔺', '🟦',
+          '🔺', '🟦', '🟡', '⭐',
+          '⭐', '🟡', null, '🔺',
+          '🟦', '🔺', '⭐', '🟡'
+        ],
+        solution: { 10: '🟦' },
+        prompt: 'Karedeki eksik sembolü bul!'
+      },
+      {
+        id: 's24',
+        theme: ['🐶', '🐱', '🐰', '🐼'],
+        grid: [
+          '🐱', '🐶', '🐼', '🐰',
+          '🐼', '🐰', '🐱', '🐶',
+          '🐶', '🐱', '🐰', null,
+          '🐰', '🐼', '🐶', '🐱'
+        ],
+        solution: { 11: '🐼' },
+        prompt: 'Soru işaretli kutuyu doğru tamamla!'
+      },
+      {
+        id: 's25',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '2', '3', '1', '4',
+          '1', '4', '2', '3',
+          '3', '2', '4', '1',
+          '4', '1', '3', null
+        ],
+        solution: { 15: '2' },
+        prompt: 'Sudoku bulmacasını tamamlayacak sayıyı seç!'
+      },
+      {
+        id: 's26',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        grid: [
+          '🍇', '🍎', '🍌', '🍓',
+          '🍌', '🍓', '🍇', '🍎',
+          '🍎', null, '🍓', '🍌',
+          '🍓', '🍌', '🍎', '🍇'
+        ],
+        solution: { 9: '🍇' },
+        prompt: 'Eksik meyveyi bularak kutuyu doldur!'
+      },
+      {
+        id: 's27',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '3', '1', '4', '2',
+          '4', '2', '3', '1',
+          '1', '3', '2', '4',
+          '2', null, '1', '3'
+        ],
+        solution: { 13: '4' },
+        prompt: 'Eksik rakamı bul ve tıkla!'
+      },
+      {
+        id: 's28',
+        theme: ['🔺', '🟦', '🟡', '⭐'],
+        grid: [
+          '⭐', '🔺', '🟦', '🟡',
+          '🟦', '🟡', '⭐', '🔺',
+          '🔺', '⭐', '🟡', null,
+          '🟡', '🟦', '🔺', '⭐'
+        ],
+        solution: { 11: '🟦' },
+        prompt: 'Sıradaki doğru geometrik şekli seç!'
+      },
+      {
+        id: 's29',
+        theme: ['🐶', '🐱', '🐰', '🐼'],
+        grid: [
+          '🐶', '🐰', '🐱', '🐼',
+          '🐱', '🐼', '🐶', '🐰',
+          '🐰', '🐶', null, '🐱',
+          '🐼', '🐱', '🐰', '🐶'
+        ],
+        solution: { 10: '🐼' },
+        prompt: 'Doğru hayvanı seçerek bulmacayı bitir!'
+      },
+      {
+        id: 's30',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '4', '2', '1', '3',
+          '1', '3', '4', '2',
+          '3', '1', '2', '4',
+          '2', '4', '3', null
+        ],
+        solution: { 15: '1' },
+        prompt: '4x4 Shidoku son hamle! Eksik sayıyı koy!'
+      },
+      {
+        id: 's31',
+        theme: ['🍎', '🍌', '🍇', '🍓'],
+        grid: [
+          '🍌', '🍓', '🍎', '🍇',
+          '🍎', '🍇', '🍌', '🍓',
+          '🍓', '🍌', '🍇', '🍎',
+          '🍇', null, '🍓', '🍌'
+        ],
+        solution: { 13: '🍎' },
+        prompt: 'Eksik meyveyi yerine koy!'
+      },
+      {
+        id: 's32',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '2', '4', '3', '1',
+          '3', '1', '2', '4',
+          '4', '2', '1', '3',
+          '1', '3', '4', null
+        ],
+        solution: { 15: '2' },
+        prompt: 'Sudoku ustası! Eksik rakamı tuşla!'
+      },
+      {
+        id: 's33',
+        theme: ['🔺', '🟦', '🟡', '⭐'],
+        grid: [
+          '🔺', '🟡', '⭐', '🟦',
+          '⭐', '🟦', '🔺', '🟡',
+          '🟡', '🔺', '🟦', null,
+          '🟦', '⭐', '🟡', '🔺'
+        ],
+        solution: { 11: '⭐' },
+        prompt: 'Eksik şekli doğru yerleştir!'
+      },
+      {
+        id: 's34',
+        theme: ['🐶', '🐱', '🐰', '🐼'],
+        grid: [
+          '🐼', '🐱', '🐰', '🐶',
+          '🐰', '🐶', '🐼', '🐱',
+          '🐱', '🐼', '🐶', null,
+          '🐶', '🐰', '🐱', '🐼'
+        ],
+        solution: { 11: '🐰' },
+        prompt: 'Sevimli dostumuz nerede saklanıyor?'
+      },
+      {
+        id: 's35',
+        theme: ['1', '2', '3', '4'],
+        grid: [
+          '1', '4', '2', '3',
+          '2', '3', '1', '4',
+          '3', '2', '4', '1',
+          '4', '1', '3', null
+        ],
+        solution: { 15: '2' },
+        prompt: 'Shidoku zaferi! Son kutuyu tamamla!'
+      }
+    ],
+
+    // 8. OYUN: OKLARI TAKİP ET (2. Sınıf Algoritma ve Yön Bulma)
+    // 4x4 Izgara (0,0 sol üst, 3,3 sağ alt)
+    arrow_algorithm: [
+      {
+        id: 'a1',
+        start: [0, 0],
+        commands: ['➡️', '➡️', '⬇️', '⬇️'],
+        targets: [
+          { pos: [2, 2], icon: '💎', name: 'Elmas' },
+          { pos: [0, 2], icon: '⭐', name: 'Yıldız' },
+          { pos: [3, 1], icon: '🏆', name: 'Kupa' },
+          { pos: [1, 3], icon: '🍎', name: 'Elma' }
+        ],
+        answer: '💎',
+        prompt: 'Robotun ok komutlarını takip et! Hangi hedefe ulaşacak?'
+      },
+      {
+        id: 'a2',
+        start: [0, 0],
+        commands: ['➡️', '➡️', '➡️'],
+        targets: [
+          { pos: [0, 3], icon: '⭐', name: 'Yıldız' },
+          { pos: [1, 2], icon: '💎', name: 'Elmas' },
+          { pos: [2, 0], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '⭐',
+        prompt: '3 adım sağa giden robot hangi ödüle ulaşır?'
+      },
+      {
+        id: 'a3',
+        start: [0, 0],
+        commands: ['⬇️', '⬇️', '➡️'],
+        targets: [
+          { pos: [2, 1], icon: '🏆', name: 'Kupa' },
+          { pos: [1, 2], icon: '💎', name: 'Elmas' },
+          { pos: [3, 0], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '🏆',
+        prompt: 'Komutları adım adım izle! Hedef hangisi?'
+      },
+      {
+        id: 'a4',
+        start: [1, 1],
+        commands: ['➡️', '⬇️', '➡️', '⬇️'],
+        targets: [
+          { pos: [3, 3], icon: '🎁', name: 'Hediye Paketi' },
+          { pos: [2, 3], icon: '⭐', name: 'Yıldız' },
+          { pos: [3, 2], icon: '💎', name: 'Elmas' }
+        ],
+        answer: '🎁',
+        prompt: 'Zikzak komutlarını takip et! Moli neye ulaşır?'
+      },
+      {
+        id: 'a5',
+        start: [3, 0],
+        commands: ['⬆️', '⬆️', '➡️', '➡️'],
+        targets: [
+          { pos: [1, 2], icon: '🚀', name: 'Roket' },
+          { pos: [0, 2], icon: '⭐', name: 'Yıldız' },
+          { pos: [2, 1], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '🚀',
+        prompt: 'Aşağıdan yukarı yön adımlarını takip et!'
+      },
+      {
+        id: 'a6',
+        start: [3, 3],
+        commands: ['⬅️', '⬅️', '⬆️', '⬆️'],
+        targets: [
+          { pos: [1, 1], icon: '🍎', name: 'Sihirli Elma' },
+          { pos: [0, 1], icon: '⭐', name: 'Yıldız' },
+          { pos: [1, 0], icon: '💎', name: 'Elmas' }
+        ],
+        answer: '🍎',
+        prompt: 'Geriye doğru adımları izle! Hangi meyveye varacak?'
+      },
+      {
+        id: 'a7',
+        start: [0, 3],
+        commands: ['⬇️', '⬇️', '⬅️', '⬅️'],
+        targets: [
+          { pos: [2, 1], icon: '👑', name: 'Kral Tacı' },
+          { pos: [3, 1], icon: '🏆', name: 'Kupa' },
+          { pos: [2, 0], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '👑',
+        prompt: 'Okları dikkatle takip et! Tacı bulabilecek misin?'
+      },
+      {
+        id: 'a8',
+        start: [0, 0],
+        commands: ['⬇️', '➡️', '⬇️', '➡️', '⬇️'],
+        targets: [
+          { pos: [3, 2], icon: '💎', name: 'Büyük Elmas' },
+          { pos: [2, 3], icon: '⭐', name: 'Yıldız' },
+          { pos: [3, 3], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '💎',
+        prompt: 'Adım adım rotayı takip et! Robot nereye varır?'
+      },
+      {
+        id: 'a9',
+        start: [2, 0],
+        commands: ['⬆️', '➡️', '➡️', '⬇️'],
+        targets: [
+          { pos: [2, 2], icon: '🍕', name: 'Pizza' },
+          { pos: [1, 2], icon: '🍔', name: 'Hamburger' },
+          { pos: [3, 2], icon: '🍟', name: 'Patates' }
+        ],
+        answer: '🍕',
+        prompt: 'Lezzet rotasını izle! Hangi yiyeceğe ulaşacak?'
+      },
+      {
+        id: 'a10',
+        start: [0, 2],
+        commands: ['⬇️', '⬅️', '⬇️', '➡️'],
+        targets: [
+          { pos: [2, 2], icon: '🎈', name: 'Uçan Balon' },
+          { pos: [2, 1], icon: '⭐', name: 'Yıldız' },
+          { pos: [3, 2], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '🎈',
+        prompt: 'Dönemeçli algoritmayı takip et!'
+      },
+      {
+        id: 'a11',
+        start: [1, 0],
+        commands: ['➡️', '➡️', '⬆️'],
+        targets: [
+          { pos: [0, 2], icon: '🚗', name: 'Araba' },
+          { pos: [1, 2], icon: '🚀', name: 'Roket' },
+          { pos: [0, 3], icon: '⛵', name: 'Yelkenli' }
+        ],
+        answer: '🚗',
+        prompt: 'Taşıt haritasında hangi araca varır?'
+      },
+      {
+        id: 'a12',
+        start: [3, 1],
+        commands: ['⬆️', '⬆️', '➡️'],
+        targets: [
+          { pos: [1, 2], icon: '🦄', name: 'Tekboynuz' },
+          { pos: [2, 2], icon: '🦁', name: 'Aslan' },
+          { pos: [0, 2], icon: '🐼', name: 'Panda' }
+        ],
+        answer: '🦄',
+        prompt: 'Sihirli yaratık rotasını takip et!'
+      },
+      {
+        id: 'a13',
+        start: [0, 1],
+        commands: ['⬇️', '⬇️', '⬇️'],
+        targets: [
+          { pos: [3, 1], icon: '🍉', name: 'Karpuz' },
+          { pos: [2, 1], icon: '🍎', name: 'Elma' },
+          { pos: [3, 2], icon: '🍇', name: 'Üzüm' }
+        ],
+        answer: '🍉',
+        prompt: '3 adım aşağı inen Moli hangi meyveye ulaşır?'
+      },
+      {
+        id: 'a14',
+        start: [2, 3],
+        commands: ['⬅️', '⬅️', '⬆️'],
+        targets: [
+          { pos: [1, 1], icon: '⭐', name: 'Altın Yıldız' },
+          { pos: [2, 1], icon: '💎', name: 'Elmas' },
+          { pos: [1, 0], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '⭐',
+        prompt: 'Yıldız avcısı! Adımları doğru say!'
+      },
+      {
+        id: 'a15',
+        start: [0, 0],
+        commands: ['➡️', '⬇️', '➡️', '⬇️', '➡️'],
+        targets: [
+          { pos: [2, 3], icon: '🏆', name: 'Şampiyonluk Kupası' },
+          { pos: [3, 2], icon: '💎', name: 'Elmas' },
+          { pos: [3, 3], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '🏆',
+        prompt: 'Şampiyonluk rotasını takip et! Kupayı yakala!'
+      },
+      {
+        id: 'a16',
+        start: [3, 2],
+        commands: ['⬆️', '⬅️', '⬆️', '⬅️'],
+        targets: [
+          { pos: [1, 0], icon: '💎', name: 'Elmas' },
+          { pos: [2, 0], icon: '⭐', name: 'Yıldız' },
+          { pos: [1, 1], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '💎',
+        prompt: 'Labirentte doğru adımları izle!'
+      },
+      {
+        id: 'a17',
+        start: [1, 3],
+        commands: ['⬅️', '⬅️', '⬇️'],
+        targets: [
+          { pos: [2, 1], icon: '🔔', name: 'Zil' },
+          { pos: [2, 2], icon: '⏰', name: 'Saat' },
+          { pos: [1, 1], icon: '⏳', name: 'Kum Saati' }
+        ],
+        answer: '🔔',
+        prompt: 'Okları izleyerek hedefe var!'
+      },
+      {
+        id: 'a18',
+        start: [0, 0],
+        commands: ['⬇️', '⬇️', '➡️', '➡️', '➡️'],
+        targets: [
+          { pos: [2, 3], icon: '🎂', name: 'Pasta' },
+          { pos: [3, 2], icon: '🍪', name: 'Kurabiye' },
+          { pos: [1, 3], icon: '🧁', name: 'Kek' }
+        ],
+        answer: '🎂',
+        prompt: 'Doğum günü rotasını takip et!'
+      },
+      {
+        id: 'a19',
+        start: [2, 2],
+        commands: ['⬆️', '⬅️', '⬅️'],
+        targets: [
+          { pos: [1, 0], icon: '🌸', name: 'Çiçek' },
+          { pos: [0, 1], icon: '🌻', name: 'Ayçiçeği' },
+          { pos: [1, 1], icon: '🌹', name: 'Gül' }
+        ],
+        answer: '🌸',
+        prompt: 'Çiçek bahçesinde robot nereye gider?'
+      },
+      {
+        id: 'a20',
+        start: [0, 3],
+        commands: ['⬅️', '⬇️', '⬅️', '⬇️'],
+        targets: [
+          { pos: [2, 1], icon: '🚀', name: 'Uzay Roketi' },
+          { pos: [1, 1], icon: '🛸', name: 'UFO' },
+          { pos: [2, 0], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '🚀',
+        prompt: 'Uzay rotasını doğru çöz!'
+      },
+      {
+        id: 'a21',
+        start: [3, 0],
+        commands: ['➡️', '⬆️', '➡️', '⬆️'],
+        targets: [
+          { pos: [1, 2], icon: '💎', name: 'Elmas' },
+          { pos: [2, 2], icon: '⭐', name: 'Yıldız' },
+          { pos: [1, 1], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '💎',
+        prompt: 'Hazineye giden algoritmayı adım adım izle!'
+      },
+      {
+        id: 'a22',
+        start: [1, 1],
+        commands: ['⬆️', '➡️', '➡️'],
+        targets: [
+          { pos: [0, 3], icon: '🦁', name: 'Aslan' },
+          { pos: [1, 3], icon: '🐯', name: 'Kaplan' },
+          { pos: [0, 2], icon: '🐻', name: 'Ayı' }
+        ],
+        answer: '🦁',
+        prompt: 'Orman haritasında hangi hayvana ulaşır?'
+      },
+      {
+        id: 'a23',
+        start: [2, 1],
+        commands: ['⬇️', '➡️', '➡️'],
+        targets: [
+          { pos: [3, 3], icon: '👑', name: 'Altın Taç' },
+          { pos: [3, 2], icon: '💎', name: 'Elmas' },
+          { pos: [2, 3], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '👑',
+        prompt: 'Köşedeki hazineyi bul!'
+      },
+      {
+        id: 'a24',
+        start: [0, 2],
+        commands: ['⬇️', '⬇️', '⬅️'],
+        targets: [
+          { pos: [2, 1], icon: '🍎', name: 'Kırmızı Elma' },
+          { pos: [2, 2], icon: '🍌', name: 'Muz' },
+          { pos: [3, 1], icon: '🍇', name: 'Üzüm' }
+        ],
+        answer: '🍎',
+        prompt: 'Meyve haritasında nereye varacak?'
+      },
+      {
+        id: 'a25',
+        start: [3, 3],
+        commands: ['⬆️', '⬅️', '⬆️', '⬅️'],
+        targets: [
+          { pos: [1, 1], icon: '🏆', name: 'Şampiyon Kupası' },
+          { pos: [2, 1], icon: '⭐', name: 'Yıldız' },
+          { pos: [1, 2], icon: '💎', name: 'Elmas' }
+        ],
+        answer: '🏆',
+        prompt: 'Zikzak rotayı takip et!'
+      },
+      {
+        id: 'a26',
+        start: [1, 2],
+        commands: ['⬅️', '⬇️', '⬇️'],
+        targets: [
+          { pos: [3, 1], icon: '🎁', name: 'Sürpriz Kutu' },
+          { pos: [2, 1], icon: '🎈', name: 'Balon' },
+          { pos: [3, 2], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '🎁',
+        prompt: 'Hediye paketine giden yolu bul!'
+      },
+      {
+        id: 'a27',
+        start: [0, 1],
+        commands: ['➡️', '➡️', '⬇️', '⬇️'],
+        targets: [
+          { pos: [2, 3], icon: '💎', name: 'Elmas' },
+          { pos: [1, 3], icon: '⭐', name: 'Yıldız' },
+          { pos: [2, 2], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '💎',
+        prompt: 'Robotun rotasını adım adım takip et!'
+      },
+      {
+        id: 'a28',
+        start: [2, 0],
+        commands: ['⬆️', '⬆️', '➡️'],
+        targets: [
+          { pos: [0, 1], icon: '⚽', name: 'Futbol Topu' },
+          { pos: [1, 1], icon: '🏀', name: 'Basketbol' },
+          { pos: [0, 2], icon: '🎾', name: 'Tenis' }
+        ],
+        answer: '⚽',
+        prompt: 'Spor alanında topu yakala!'
+      },
+      {
+        id: 'a29',
+        start: [3, 1],
+        commands: ['⬅️', '⬆️', '⬆️'],
+        targets: [
+          { pos: [1, 0], icon: '🌟', name: 'Kutup Yıldızı' },
+          { pos: [2, 0], icon: '🌙', name: 'Ay' },
+          { pos: [1, 1], icon: '☀️', name: 'Güneş' }
+        ],
+        answer: '🌟',
+        prompt: 'Kutup yıldızına ulaşan rotayı izle!'
+      },
+      {
+        id: 'a30',
+        start: [1, 0],
+        commands: ['⬇️', '⬇️', '➡️', '➡️'],
+        targets: [
+          { pos: [3, 2], icon: '🏆', name: 'Altın Kupa' },
+          { pos: [2, 2], icon: '💎', name: 'Elmas' },
+          { pos: [3, 1], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '🏆',
+        prompt: 'Kupayı kazanmak için rotayı bil!'
+      },
+      {
+        id: 'a31',
+        start: [0, 0],
+        commands: ['➡️', '➡️', '⬇️', '➡️', '⬇️'],
+        targets: [
+          { pos: [2, 3], icon: '💎', name: 'Mavi Elmas' },
+          { pos: [1, 3], icon: '⭐', name: 'Yıldız' },
+          { pos: [2, 2], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '💎',
+        prompt: 'Algoritma haritasında hangi hedef parıldıyor?'
+      },
+      {
+        id: 'a32',
+        start: [3, 2],
+        commands: ['⬆️', '⬆️', '⬅️', '⬅️'],
+        targets: [
+          { pos: [1, 0], icon: '🍎', name: 'Tatlı Elma' },
+          { pos: [0, 1], icon: '🍌', name: 'Muz' },
+          { pos: [1, 1], icon: '🍓', name: 'Çilek' }
+        ],
+        answer: '🍎',
+        prompt: 'Lezzet sepetine ulaşan adımları çöz!'
+      },
+      {
+        id: 'a33',
+        start: [0, 3],
+        commands: ['⬇️', '⬅️', '⬇️', '⬅️', '⬇️'],
+        targets: [
+          { pos: [3, 1], icon: '👑', name: 'Kral Tacı' },
+          { pos: [2, 1], icon: '💎', name: 'Elmas' },
+          { pos: [3, 0], icon: '🏆', name: 'Kupa' }
+        ],
+        answer: '👑',
+        prompt: 'Zorlu zikzak komutlarını izle!'
+      },
+      {
+        id: 'a34',
+        start: [2, 3],
+        commands: ['⬅️', '⬅️', '⬆️', '⬆️'],
+        targets: [
+          { pos: [0, 1], icon: '🚀', name: 'Uzay Mekiği' },
+          { pos: [1, 1], icon: '⭐', name: 'Yıldız' },
+          { pos: [0, 2], icon: '🛸', name: 'UFO' }
+        ],
+        answer: '🚀',
+        prompt: 'Rokete binmek için adımları takip et!'
+      },
+      {
+        id: 'a35',
+        start: [0, 0],
+        commands: ['⬇️', '➡️', '⬇️', '➡️', '⬇️', '➡️'],
+        targets: [
+          { pos: [3, 3], icon: '🏆', name: 'Büyük BİLSEM Kupası' },
+          { pos: [2, 3], icon: '💎', name: 'Elmas' },
+          { pos: [3, 2], icon: '⭐', name: 'Yıldız' }
+        ],
+        answer: '🏆',
+        prompt: 'Tam çapraz merdiven rotası! Hangi büyük kupaya ulaşırsın?'
+      }
+    ]
+  },
+
+  // -------------------------------------------------------------
+  // SHUFFLE BAG ALGORİTMASI (getUniqueNextItem)
+  // Aynı bulmaca asla üst üste gelmez!
+  // -------------------------------------------------------------
+  getUniqueNextItem(gameKey) {
+    if (!this.bags[gameKey] || this.bags[gameKey].length === 0) {
+      const originalPool = this.dataPools[gameKey] || [];
+      // Fisher-Yates Karıştırma
+      const shuffled = [...originalPool];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      this.bags[gameKey] = shuffled;
+    }
+    return this.bags[gameKey].pop();
+  },
+
+  // -------------------------------------------------------------
+  // TÜRKÇE SES MOTORU VE YÖNERGE OKUMA
+  // -------------------------------------------------------------
+  speak(text) {
+    if (!text) return;
+    if (typeof audio !== 'undefined' && audio.speakTurkishText) {
+      audio.speakTurkishText(text);
+    } else if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'tr-TR';
+        u.rate = 0.92;
+        window.speechSynthesis.speak(u);
+      } catch (err) {}
+    }
+  },
+
+  repeatVoice() {
+    this.speak(this.activePromptText);
+  },
+
+  // -------------------------------------------------------------
+  // ATÖLYEYİ AÇMA VE BAŞLATMA (open)
+  // -------------------------------------------------------------
+  open({ grade = 1, gameKey = null } = {}) {
+    // 0 Anasınıfı ise 1. sınıf oyun havuzunu okumasız kullanır
+    this.currentGrade = (grade === 0 || grade === 1) ? 1 : 2;
+    
+    // Varsayılan ilk oyun
+    if (!gameKey) {
+      gameKey = (this.currentGrade === 1) ? 'pattern_train' : 'crypto_code';
+    }
+    this.currentGame = gameKey;
+    this.score = 0;
+
+    // Diğer ekranları gizle
+    if (typeof DOM !== 'undefined') {
+      if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+      if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+      if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+    }
+    const enHub = document.getElementById('englishHubSection');
+    if (enHub) enHub.classList.add('hide');
+    const enKids = document.getElementById('englishKidsArena');
+    if (enKids) enKids.classList.add('hide');
+    const enAdv = document.getElementById('englishAdvancedArena');
+    if (enAdv) enAdv.classList.add('hide');
+    const enLab = document.getElementById('englishFunLabSection');
+    if (enLab) enLab.classList.add('hide');
+
+    const arena = document.getElementById('mindGamesArena');
+    if (arena) arena.classList.remove('hide');
+
+    // Müzik Başlat (Eğer zeka modu müziği varsa)
+    if (typeof GameMusicEngine !== 'undefined') {
+      GameMusicEngine.play('puzzle');
+    }
+
+    // Başlık ve Rozetleri Güncelle
+    const gradeBadge = document.getElementById('mindArenaGradeBadge');
+    if (gradeBadge) {
+      gradeBadge.textContent = (this.currentGrade === 1) ? '1. Sınıf & Anasınıfı BİLSEM' : '2. Sınıf BİLSEM & Mantık';
+    }
+
+    // Skor Sıfırla
+    this.updateScoreHud();
+
+    // Sekmeleri (Tabs) Kur
+    this.renderTabs();
+
+    // Dinleyicileri Bağla
+    this.bindEvents();
+
+    // İlk Oyunu Başlat
+    this.switchGame(gameKey);
+
+    // Sayfa Başına Kaydır
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+  // -------------------------------------------------------------
+  // OYUN SEKMELERİNİ RENDER ET
+  // -------------------------------------------------------------
+  renderTabs() {
+    const tabsContainer = document.getElementById('mindGameTabs');
+    if (!tabsContainer) return;
+
+    let tabs = [];
+    if (this.currentGrade === 1) {
+      tabs = [
+        { key: 'pattern_train', icon: '🔁', title: 'Örüntü Treni' },
+        { key: 'odd_one_out', icon: '🕵️', title: 'Farkı Yakala' },
+        { key: 'matrix_2x2', icon: '🧩', title: '2x2 Matris' },
+        { key: 'memory_match', icon: '🃏', title: 'Hafıza Kartları' }
+      ];
+    } else {
+      tabs = [
+        { key: 'crypto_code', icon: '🔐', title: 'Şifre Çözücü' },
+        { key: 'mirror_symmetry', icon: '🪞', title: 'Ayna Simetrisi' },
+        { key: 'shidoku_4x4', icon: '🔢', title: '4x4 Sudoku' },
+        { key: 'arrow_algorithm', icon: '🧭', title: 'Okları Takip Et' }
+      ];
+    }
+
+    tabsContainer.innerHTML = tabs.map(t => `
+      <button class="mind-tab-btn ${this.currentGame === t.key ? 'active' : ''}" data-game="${t.key}" type="button" role="tab" title="${t.title}">
+        <span class="mind-tab-icon">${t.icon}</span>
+        <span class="mind-tab-text">${t.title}</span>
+      </button>
+    `).join('');
+
+    tabsContainer.querySelectorAll('.mind-tab-btn').forEach(btn => {
+      btn.onclick = () => {
+        if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+        const gKey = btn.getAttribute('data-game');
+        this.switchGame(gKey);
+      };
+    });
+  },
+
+  // -------------------------------------------------------------
+  // DİNLİYİCİLERİ BAĞLA (Geri Butonu, Ses, vb.)
+  // -------------------------------------------------------------
+  bindEvents() {
+    const btnBack = document.getElementById('btnBackFromMindGames');
+    if (btnBack) {
+      btnBack.onclick = () => {
+        if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+        const arena = document.getElementById('mindGamesArena');
+        if (arena) arena.classList.add('hide');
+
+        // Sınıfın dersler ekranına veya oyunlarına dön
+        if (typeof DOM !== 'undefined') {
+          if (DOM.gamesSection && state.currentSubject === 'brain') {
+            DOM.gamesSection.classList.remove('hide');
+          } else if (DOM.subjectsSection) {
+            DOM.subjectsSection.classList.remove('hide');
+          } else if (DOM.homeShowcaseSection) {
+            DOM.homeShowcaseSection.classList.remove('hide');
+          }
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    }
+
+    const btnRepeatVoice = document.getElementById('btnMindRepeatVoice');
+    if (btnRepeatVoice) {
+      btnRepeatVoice.onclick = () => {
+        this.repeatVoice();
+      };
+    }
+
+    const btnSoundToggle = document.getElementById('btnMindSoundToggle');
+    if (btnSoundToggle) {
+      btnSoundToggle.onclick = () => {
+        if (typeof GameMusicEngine !== 'undefined') {
+          GameMusicEngine.toggle();
+        }
+      };
+    }
+  },
+
+  // -------------------------------------------------------------
+  // OYUN DEĞİŞTİRME (switchGame)
+  // -------------------------------------------------------------
+  switchGame(gameKey) {
+    this.currentGame = gameKey;
+    this.isLocked = false;
+
+    // Aktif Sekmeyi Güncelle
+    document.querySelectorAll('.mind-tab-btn').forEach(btn => {
+      if (btn.getAttribute('data-game') === gameKey) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Başlık Güncelle
+    const titles = {
+      pattern_train: '🔁 Görsel Örüntü Treni (Sıradaki Ne?)',
+      odd_one_out: '🕵️ Farklı Olanı Yakala (Görsel Dikkat)',
+      matrix_2x2: '🧩 2x2 Gölge ve Matris Tamamlama',
+      memory_match: '🃏 Görsel Hafıza Eşleştirme',
+      crypto_code: '🔐 Resimli Şifre Çözücü (BİLSEM Kriptoloji)',
+      mirror_symmetry: '🪞 Ayna Simetrisi (Yansıma Bulmacası)',
+      shidoku_4x4: '🔢 Mini Resimli Sudoku (4x4 Shidoku)',
+      arrow_algorithm: '🧭 Okları Takip Et (Algoritma ve Yön Bulma)'
+    };
+    const titleEl = document.getElementById('mindArenaTitle');
+    if (titleEl) titleEl.textContent = titles[gameKey] || 'Akıl ve Zeka Oyunları';
+
+    // Sıradaki Soruyu Getir
+    this.nextQuestion();
+  },
+
+  // -------------------------------------------------------------
+  // SIRADAKİ SORUYU YÜKLE
+  // -------------------------------------------------------------
+  nextQuestion() {
+    this.isLocked = false;
+    const stage = document.getElementById('mindStageContainer');
+    if (!stage) return;
+
+    if (this.currentGame === 'pattern_train') {
+      const q = this.getUniqueNextItem('pattern_train');
+      this.currentItem = q;
+      this.renderPatternTrain(stage, q);
+    } else if (this.currentGame === 'odd_one_out') {
+      const q = this.getUniqueNextItem('odd_one_out');
+      this.currentItem = q;
+      this.renderOddOneOut(stage, q);
+    } else if (this.currentGame === 'matrix_2x2') {
+      const q = this.getUniqueNextItem('matrix_2x2');
+      this.currentItem = q;
+      this.renderMatrix2x2(stage, q);
+    } else if (this.currentGame === 'memory_match') {
+      this.renderMemoryMatch(stage);
+    } else if (this.currentGame === 'crypto_code') {
+      const q = this.getUniqueNextItem('crypto_code');
+      this.currentItem = q;
+      this.renderCryptoCode(stage, q);
+    } else if (this.currentGame === 'mirror_symmetry') {
+      const q = this.getUniqueNextItem('mirror_symmetry');
+      this.currentItem = q;
+      this.renderMirrorSymmetry(stage, q);
+    } else if (this.currentGame === 'shidoku_4x4') {
+      const q = this.getUniqueNextItem('shidoku_4x4');
+      this.currentItem = q;
+      this.renderShidoku4x4(stage, q);
+    } else if (this.currentGame === 'arrow_algorithm') {
+      const q = this.getUniqueNextItem('arrow_algorithm');
+      this.currentItem = q;
+      this.renderArrowAlgorithm(stage, q);
+    }
+  },
+
+  // -------------------------------------------------------------
+  // YÖNERGE METNİNİ VE SESİNİ GÜNCELLE
+  // -------------------------------------------------------------
+  setPrompt(text, hint = '') {
+    this.activePromptText = text;
+    const speechEl = document.getElementById('mindSpeechText');
+    if (speechEl) speechEl.textContent = `"${text}"`;
+    const hintEl = document.getElementById('mindHintText');
+    if (hintEl) hintEl.textContent = hint ? `💡 İpucu: ${hint}` : '';
+    this.speak(text);
+  },
+
+  // -------------------------------------------------------------
+  // SKOR HUD GÜNCELLEMESİ
+  // -------------------------------------------------------------
+  updateScoreHud() {
+    const scoreEl = document.getElementById('mindScoreText');
+    if (scoreEl) scoreEl.textContent = `${this.score} Puan`;
+  },
+
+  // -------------------------------------------------------------
+  // DOĞRU CEVAP TEBRİK VE 1.3 SANİYE OTOMATİK GEÇİŞ
+  // -------------------------------------------------------------
+  celebrateSuccess(cheerText = 'Harika! Tebrikler!') {
+    this.isLocked = true;
+    this.score += 10;
+    this.updateScoreHud();
+
+    if (typeof audio !== 'undefined' && audio.playSuccess) audio.playSuccess();
+    this.speak(cheerText);
+
+    // 1.3 saniye sonra otomatik bir sonraki soruya geçiş
+    setTimeout(() => {
+      this.nextQuestion();
+    }, 1300);
+  },
+
+  // =============================================================
+  // 1. OYUN: GÖRSEL ÖRÜNTÜ TRENİ (pattern_train)
+  // =============================================================
+  renderPatternTrain(stage, q) {
+    this.setPrompt(q.prompt, 'Trenin vagonlarındaki renk ve şekil sırasına dikkat et!');
+
+    const itemsHtml = q.items.map(item => `
+      <div class="train-car">${item}</div>
+    `).join('');
+
+    const optionsShuffled = [...q.options];
+    for (let i = optionsShuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [optionsShuffled[i], optionsShuffled[j]] = [optionsShuffled[j], optionsShuffled[i]];
+    }
+
+    const optionsHtml = optionsShuffled.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}">${opt}</div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="train-track-wrap">
+        <div class="train-line">
+          <div class="train-loco" title="Moli Lokomotif">🚂</div>
+          ${itemsHtml}
+          <div class="train-car target-slot" id="trainTargetSlot">❓</div>
+        </div>
+        <div class="train-rails"></div>
+      </div>
+      <div class="mind-choice-tray" id="trainChoiceTray">
+        ${optionsHtml}
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = tile.getAttribute('data-val');
+        if (val === q.answer) {
+          const slot = document.getElementById('trainTargetSlot');
+          if (slot) {
+            slot.textContent = val;
+            slot.classList.remove('target-slot');
+            slot.style.border = '3px solid #10B981';
+            slot.style.background = '#ECFDF5';
+          }
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Müthiş! Sıradaki parça ${q.name}!`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 2. OYUN: FARKLI OLANI YAKALA (odd_one_out)
+  // =============================================================
+  renderOddOneOut(stage, q) {
+    this.setPrompt(q.prompt, 'Kuralı bozan, diğerlerine uymayan tek nesneye dokun!');
+
+    const itemsShuffled = [...q.items];
+    for (let i = itemsShuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [itemsShuffled[i], itemsShuffled[j]] = [itemsShuffled[j], itemsShuffled[i]];
+    }
+
+    const cardsHtml = itemsShuffled.map(item => `
+      <div class="oddone-card" data-val="${item}">
+        <span>${item}</span>
+      </div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="oddone-grid">
+        ${cardsHtml}
+      </div>
+    `;
+
+    stage.querySelectorAll('.oddone-card').forEach(card => {
+      card.onclick = () => {
+        if (this.isLocked) return;
+        const val = card.getAttribute('data-val');
+        if (val === q.odd) {
+          card.classList.add('correct');
+          this.celebrateSuccess(`Tebrikler! ${q.reason}`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          card.classList.add('wrong');
+          setTimeout(() => { card.classList.remove('wrong'); }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 3. OYUN: 2x2 GÖLGE VE MATRİS (matrix_2x2)
+  // =============================================================
+  renderMatrix2x2(stage, q) {
+    this.setPrompt(q.prompt, 'Üst satırdaki dönüşüm kuralını alt satıra uygula!');
+
+    const trSilStyle = q.trSil ? 'filter: brightness(0) opacity(0.85);' : '';
+    const answerSilStyle = q.answerSil ? 'filter: brightness(0) opacity(0.85);' : '';
+
+    const optionsShuffled = [...q.options];
+    for (let i = optionsShuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [optionsShuffled[i], optionsShuffled[j]] = [optionsShuffled[j], optionsShuffled[i]];
+    }
+
+    const optionsHtml = optionsShuffled.map(opt => `
+      <div class="mind-choice-tile" data-val="${opt}">
+        <span style="${(opt === q.answer && q.answerSil) ? answerSilStyle : ''}">${opt}</span>
+      </div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="matrix-wrapper">
+        <div class="matrix-grid-2x2">
+          <div class="matrix-cell"><span>${q.tl}</span></div>
+          <div class="matrix-cell"><span style="${trSilStyle}">${q.tr}</span></div>
+          <div class="matrix-cell"><span>${q.bl}</span></div>
+          <div class="matrix-cell target-slot" id="matrixTargetSlot">❓</div>
+        </div>
+      </div>
+      <div class="mind-choice-tray" id="matrixChoiceTray">
+        ${optionsHtml}
+      </div>
+    `;
+
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = tile.getAttribute('data-val');
+        if (val === q.answer) {
+          const slot = document.getElementById('matrixTargetSlot');
+          if (slot) {
+            slot.innerHTML = `<span style="${answerSilStyle}">${val}</span>`;
+            slot.classList.remove('target-slot');
+            slot.style.border = '2.5px solid #10B981';
+            slot.style.background = '#ECFDF5';
+          }
+          tile.style.borderColor = '#10B981';
+          tile.style.background = '#ECFDF5';
+          this.celebrateSuccess(`Mükemmel matris çözümü! ${q.name}!`);
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 4. OYUN: GÖRSEL HAFIZA EŞLEŞTİRME (memory_match)
+  // =============================================================
+  renderMemoryMatch(stage) {
+    const theme = this.dataPools.memory_themes[Math.floor(Math.random() * this.dataPools.memory_themes.length)];
+    const pairCount = 3; // 3x2 = 6 kart
+    const selectedIcons = [...theme.icons].sort(() => 0.5 - Math.random()).slice(0, pairCount);
+    const cardDeck = [...selectedIcons, ...selectedIcons].sort(() => 0.5 - Math.random());
+
+    this.memoryState = {
+      cards: cardDeck,
+      flippedCards: [],
+      matchedCount: 0,
+      totalPairs: pairCount,
+      isLocked: false
+    };
+
+    this.setPrompt('Kartları aklında tut! Birazdan kapanacaklar!', 'Aynı olan kart çiftlerini bul!');
+
+    const cardsHtml = cardDeck.map((icon, idx) => `
+      <div class="memory-card flipped" data-index="${idx}" data-val="${icon}">
+        <div class="memory-card-inner">
+          <div class="memory-card-front">❓</div>
+          <div class="memory-card-back">${icon}</div>
+        </div>
+      </div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="memory-grid grid-3x2" id="memoryCardsGrid">
+        ${cardsHtml}
+      </div>
+    `;
+
+    // 2.2 saniye boyunca açık göster, sonra kapat
+    setTimeout(() => {
+      stage.querySelectorAll('.memory-card').forEach(c => {
+        c.classList.remove('flipped');
+      });
+      this.setPrompt('Şimdi eşleşen çiftleri dokunarak aç!', 'Aklında kalan yerleri hatırla!');
+    }, 2200);
+
+    stage.querySelectorAll('.memory-card').forEach(card => {
+      card.onclick = () => {
+        if (this.memoryState.isLocked) return;
+        if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+
+        if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+        card.classList.add('flipped');
+        this.memoryState.flippedCards.push(card);
+
+        if (this.memoryState.flippedCards.length === 2) {
+          const [card1, card2] = this.memoryState.flippedCards;
+          const val1 = card1.getAttribute('data-val');
+          const val2 = card2.getAttribute('data-val');
+
+          if (val1 === val2) {
+            // Eşleşti
+            card1.classList.add('matched');
+            card2.classList.add('matched');
+            this.memoryState.flippedCards = [];
+            this.memoryState.matchedCount++;
+
+            if (typeof audio !== 'undefined' && audio.playSuccess) audio.playSuccess();
+
+            if (this.memoryState.matchedCount === this.memoryState.totalPairs) {
+              this.celebrateSuccess('Süper Hafıza! Tüm kartları doğru eşleştirdin!');
+            }
+          } else {
+            // Eşleşmedi, 0.8 sn sonra kapat
+            this.memoryState.isLocked = true;
+            if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+            setTimeout(() => {
+              card1.classList.remove('flipped');
+              card2.classList.remove('flipped');
+              this.memoryState.flippedCards = [];
+              this.memoryState.isLocked = false;
+            }, 800);
+          }
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 5. OYUN: RESİMLİ ŞİFRE ÇÖZÜCÜ (crypto_code) - 2. Sınıf
+  // =============================================================
+  renderCryptoCode(stage, q) {
+    this.setPrompt(q.prompt, 'Yukarıdaki anahtar tablosundaki sembol-sayı eşleşmelerine bak!');
+
+    this.cryptoState = {
+      targetSeq: q.seq,
+      currentIndex: 0,
+      solvedNums: new Array(q.seq.length).fill(null)
+    };
+
+    const keyItemsHtml = Object.entries(q.key).map(([sym, num]) => `
+      <div class="crypto-key-item">
+        <span class="crypto-key-symbol">${sym}</span>
+        <span class="crypto-key-val">${num}</span>
+      </div>
+    `).join('');
+
+    const targetSlotsHtml = q.seq.map((sym, idx) => `
+      <div class="crypto-target-slot" id="cryptoSlot_${idx}">
+        <span class="crypto-slot-sym">${sym}</span>
+        <span class="crypto-slot-num empty" id="cryptoVal_${idx}">?</span>
+      </div>
+    `).join('');
+
+    const keypadNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+    const keypadHtml = keypadNumbers.map(n => `
+      <button class="crypto-key-btn" data-num="${n}" type="button">${n}</button>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="crypto-wrapper">
+        <div class="crypto-table-wrap">
+          <div class="crypto-key-grid">
+            ${keyItemsHtml}
+          </div>
+        </div>
+        <div class="crypto-target-seq">
+          ${targetSlotsHtml}
+        </div>
+        <div class="crypto-keypad">
+          ${keypadHtml}
+        </div>
+      </div>
+    `;
+
+    stage.querySelectorAll('.crypto-key-btn').forEach(btn => {
+      btn.onclick = () => {
+        if (this.isLocked) return;
+        const num = parseInt(btn.getAttribute('data-num'), 10);
+        const curSym = this.cryptoState.targetSeq[this.cryptoState.currentIndex];
+        const expectedNum = q.key[curSym];
+
+        if (num === expectedNum) {
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+          const valEl = document.getElementById(`cryptoVal_${this.cryptoState.currentIndex}`);
+          if (valEl) {
+            valEl.textContent = num;
+            valEl.classList.remove('empty');
+          }
+          this.cryptoState.solvedNums[this.cryptoState.currentIndex] = num;
+          this.cryptoState.currentIndex++;
+
+          // Şifre bitti mi?
+          if (this.cryptoState.currentIndex >= this.cryptoState.targetSeq.length) {
+            this.celebrateSuccess('Kasa Açıldı! Şifreyi başarıyla çözdün! 🔓✨');
+          }
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          btn.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { btn.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 6. OYUN: AYNA SİMETRİSİ (mirror_symmetry) - 2. Sınıf
+  // =============================================================
+  renderMirrorSymmetry(stage, q) {
+    this.setPrompt(q.prompt, 'Sağdaki ızgara karelerine dokunarak solun ayna simetrisini boya!');
+
+    this.mirrorState = {
+      expectedCells: [...q.expectedRight].sort((a,b)=>a-b),
+      paintedCells: []
+    };
+
+    // Sol ızgara (3x3 = 9 hücre)
+    let leftCellsHtml = '';
+    for (let i = 0; i < 9; i++) {
+      const isFilled = q.leftFilled.includes(i);
+      leftCellsHtml += `<div class="mirror-cell ${isFilled ? 'filled' : ''}"></div>`;
+    }
+
+    // Sağ ızgara (dokunulabilir)
+    let rightCellsHtml = '';
+    for (let i = 0; i < 9; i++) {
+      rightCellsHtml += `<div class="mirror-cell right-cell" data-idx="${i}"></div>`;
+    }
+
+    stage.innerHTML = `
+      <div class="mirror-stage">
+        <div class="mirror-panel">
+          <span class="mirror-label">Sol Desen</span>
+          <div class="mirror-grid-box">${leftCellsHtml}</div>
+        </div>
+        <div class="mirror-divider" title="Ayna Ekseni"></div>
+        <div class="mirror-panel">
+          <span class="mirror-label">Aynadaki Yansıma (Dokun-Boya)</span>
+          <div class="mirror-grid-box" id="mirrorRightGrid">${rightCellsHtml}</div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 8px;">
+        <span style="font-size: 0.85rem; font-weight: 700; color: #6D28D9;">💡 Sağ kutudaki karelere dokunarak aynadaki görüntüyü oluştur!</span>
+      </div>
+    `;
+
+    stage.querySelectorAll('.right-cell').forEach(cell => {
+      cell.onclick = () => {
+        if (this.isLocked) return;
+        const idx = parseInt(cell.getAttribute('data-idx'), 10);
+
+        if (cell.classList.contains('filled')) {
+          cell.classList.remove('filled');
+          this.mirrorState.paintedCells = this.mirrorState.paintedCells.filter(x => x !== idx);
+        } else {
+          cell.classList.add('filled');
+          this.mirrorState.paintedCells.push(idx);
+        }
+
+        if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+
+        // Kontrol et
+        const curPainted = [...this.mirrorState.paintedCells].sort((a,b)=>a-b);
+        if (curPainted.length === this.mirrorState.expectedCells.length &&
+            curPainted.every((val, i) => val === this.mirrorState.expectedCells[i])) {
+          this.celebrateSuccess('Mükemmel Yansıma! Ayna simetrisini tam doğru oluşturdun! 🪞✨');
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 7. OYUN: 4x4 SHIDOKU (shidoku_4x4) - 2. Sınıf
+  // =============================================================
+  renderShidoku4x4(stage, q) {
+    this.setPrompt(q.prompt, 'Her satır, sütun ve 2x2 bölgede tüm semboller bir kez bulunmalı!');
+
+    const slotIndices = Object.keys(q.solution).map(x => parseInt(x, 10));
+    this.shidokuState = {
+      board: [...q.grid],
+      selectedSlot: slotIndices[0],
+      totalSlots: slotIndices.length,
+      solvedSlots: 0
+    };
+
+    let cellsHtml = '';
+    for (let i = 0; i < 16; i++) {
+      const val = q.grid[i];
+      if (val !== null) {
+        cellsHtml += `<div class="shidoku-cell filled-cell">${val}</div>`;
+      } else {
+        const isSelected = (i === this.shidokuState.selectedSlot);
+        cellsHtml += `<div class="shidoku-cell target-slot ${isSelected ? 'active-slot' : ''}" data-idx="${i}" id="shidokuSlot_${i}">❓</div>`;
+      }
+    }
+
+    const trayHtml = q.theme.map(item => `
+      <div class="mind-choice-tile" data-val="${item}">${item}</div>
+    `).join('');
+
+    stage.innerHTML = `
+      <div class="shidoku-wrapper">
+        <div class="shidoku-grid">
+          ${cellsHtml}
+        </div>
+      </div>
+      <div class="mind-choice-tray" id="shidokuChoiceTray">
+        ${trayHtml}
+      </div>
+    `;
+
+    // Boş kutuya tıklama (seçme)
+    stage.querySelectorAll('.shidoku-cell.target-slot').forEach(slot => {
+      slot.onclick = () => {
+        if (this.isLocked) return;
+        stage.querySelectorAll('.shidoku-cell.target-slot').forEach(s => s.classList.remove('active-slot'));
+        slot.classList.add('active-slot');
+        this.shidokuState.selectedSlot = parseInt(slot.getAttribute('data-idx'), 10);
+      };
+    });
+
+    // Taş seçme
+    stage.querySelectorAll('.mind-choice-tile').forEach(tile => {
+      tile.onclick = () => {
+        if (this.isLocked) return;
+        const val = tile.getAttribute('data-val');
+        const activeIdx = this.shidokuState.selectedSlot;
+        const expected = q.solution[activeIdx];
+
+        if (val === expected) {
+          const slot = document.getElementById(`shidokuSlot_${activeIdx}`);
+          if (slot) {
+            slot.textContent = val;
+            slot.classList.remove('target-slot', 'active-slot');
+            slot.style.border = '2px solid #10B981';
+            slot.style.background = '#ECFDF5';
+          }
+          this.shidokuState.solvedSlots++;
+
+          if (this.shidokuState.solvedSlots >= this.shidokuState.totalSlots) {
+            this.celebrateSuccess('Harika Mantık! Sudoku bulmacasını çözdün! 🧩🎯');
+          } else {
+            // Sıradaki boşluğu seç
+            const remainSlot = slotIndices.find(idx => idx !== activeIdx && !document.getElementById(`shidokuSlot_${idx}`).textContent !== '❓');
+            if (remainSlot !== undefined) {
+              this.shidokuState.selectedSlot = remainSlot;
+              const nextSlot = document.getElementById(`shidokuSlot_${remainSlot}`);
+              if (nextSlot) nextSlot.classList.add('active-slot');
+            }
+          }
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          tile.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { tile.style.animation = ''; }, 400);
+        }
+      };
+    });
+  },
+
+  // =============================================================
+  // 8. OYUN: OKLARI TAKİP ET (arrow_algorithm) - 2. Sınıf
+  // =============================================================
+  renderArrowAlgorithm(stage, q) {
+    this.setPrompt(q.prompt, 'Moli robotunun komutlarını adım adım takip et ve hedefi bul!');
+
+    const cmdsHtml = q.commands.map((cmd, i) => `
+      <span class="algo-cmd-arrow" id="algoCmd_${i}">${cmd}</span>
+    `).join('');
+
+    // 4x4 Izgara oluştur
+    let cellsHtml = '';
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 4; c++) {
+        const isStart = (r === q.start[0] && c === q.start[1]);
+        const targetObj = q.targets.find(t => t.pos[0] === r && t.pos[1] === c);
+
+        let cellContent = '';
+        let cellClass = 'algo-cell';
+
+        if (isStart) {
+          cellContent = '🤖';
+          cellClass += ' robot-pos';
+        } else if (targetObj) {
+          cellContent = targetObj.icon;
+          cellClass += ' target-item';
+        }
+
+        cellsHtml += `
+          <div class="${cellClass}" data-r="${r}" data-c="${c}" data-icon="${targetObj ? targetObj.icon : ''}">
+            <span>${cellContent}</span>
+          </div>
+        `;
+      }
+    }
+
+    stage.innerHTML = `
+      <div class="algo-stage-wrap">
+        <div class="algo-commands-bar">
+          <span style="font-size: 0.88rem; font-weight: 800; color: #6D28D9; margin-right: 4px;">KOMUT:</span>
+          ${cmdsHtml}
+        </div>
+        <div class="algo-grid-4x4">
+          ${cellsHtml}
+        </div>
+      </div>
+    `;
+
+    stage.querySelectorAll('.algo-cell.target-item').forEach(cell => {
+      cell.onclick = () => {
+        if (this.isLocked) return;
+        const icon = cell.getAttribute('data-icon');
+        if (icon === q.answer) {
+          cell.style.border = '2.5px solid #10B981';
+          cell.style.background = '#ECFDF5';
+          cell.style.transform = 'scale(1.15)';
+          this.celebrateSuccess('Tebrikler! Algoritmayı eksiksiz takip edip hedefe ulaştın! 🧭🎉');
+        } else {
+          if (typeof audio !== 'undefined' && audio.playMismatch) audio.playMismatch();
+          cell.style.animation = 'shakeCard 0.4s ease-in-out';
+          setTimeout(() => { cell.style.animation = ''; }, 400);
+        }
+      };
+    });
+  }
+};
+
+window.MindGamesEngine = MindGamesEngine;
