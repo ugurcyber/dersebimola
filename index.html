@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=9.3.0">
+  <link rel="stylesheet" href="style.css?v=9.4.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -1066,6 +1066,7 @@
               </div>
             </div>
 
+            <div class="bilsem-stage-card" id="bilsemStageCard">
             <!-- Moli Türkçe Sesli Yönerge Bandı -->
             <div class="mind-moli-prompt-card">
               <div class="mind-moli-avatar-box">
@@ -1077,7 +1078,7 @@
                   <span class="mind-speech-text" id="mindSpeechText">"Vagondaki soru işaretine hangi parça gelmeli?"</span>
                   <button class="btn-repeat-voice mind-repeat-voice" id="btnMindRepeatVoice" type="button" title="Türkçe Seslendir">
                     <span class="voice-wave-icon">🔊</span>
-                    <span>Yönergeyi Dinle</span>
+                    <span>Soruyu Dinle</span>
                   </button>
                 </div>
                 <div class="mind-hint-text" id="mindHintText">💡 İpucu: Örüntünün tekrar eden kuralını dikkatlice incele!</div>
@@ -1174,7 +1175,7 @@
                   <span class="bilsem-speech-text" id="bilsemSpeechText">"Soru işaretli kutuya hangi parça gelmelidir?"</span>
                   <button class="btn-repeat-voice bilsem-repeat-voice" id="btnBilsemRepeatVoice" type="button" title="Yönergeyi Seslendir">
                     <span class="voice-wave-icon">🔊</span>
-                    <span>Yönergeyi Dinle</span>
+                    <span>Soruyu Dinle</span>
                   </button>
                 </div>
                 <div class="bilsem-hint-text" id="bilsemHintText">💡 İpucu: Şeklin renk ve yön kuralını dikkatlice incele!</div>
@@ -1184,6 +1185,7 @@
             <!-- İnteraktif Şıksız Sınav Sahnesi (Stage Container) -->
             <div class="bilsem-stage-container" id="bilsemStageContainer">
               <!-- BilsemExamEngine tarafından dinamik render edilir -->
+            </div>
             </div>
           </section>
 
@@ -3554,6 +3556,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=9.3.0" defer></script>
+  <script src="app.js?v=9.4.0" defer></script>
 </body>
 </html>

@@ -33399,3 +33399,145 @@ body.is-game-active .universal-game-bgm-fab {
   .bilsem-hub-section .bilsem-showcase-header { flex-direction: column; align-items: flex-start; gap: 8px; }
   .bilsem-hub-section .bilsem-section-title { font-size: 1.15rem !important; }
 }
+
+/* ==========================================================================
+   BİLSEM SORU SAHNESİ OKUNABİLİRLİK & DÜZEN (V9.4.0)
+   ========================================================================== */
+#bilsemExamArena { color: #0f172a; }
+
+/* Standart sınav kartı */
+#bilsemExamArena .bilsem-stage-card {
+  width: 100%; max-width: 850px; margin: 14px auto 24px auto; box-sizing: border-box;
+  background: #ffffff; border: 2px solid #e2e8f0; border-radius: 22px;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.10); padding: 16px 18px 22px 18px;
+}
+
+/* ÜST: yönerge & ipucu */
+#bilsemExamArena .bilsem-moli-prompt-card {
+  display: flex !important; align-items: center; gap: 14px; width: 100%; box-sizing: border-box;
+  background: #f0f9ff !important; border: 2px solid #bae6fd !important; border-radius: 16px !important;
+  padding: 14px 20px !important; margin: 0 !important; box-shadow: none !important;
+}
+#bilsemExamArena .bilsem-prompt-content { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 8px; background: transparent !important; }
+#bilsemExamArena .bilsem-speech-bubble {
+  display: flex !important; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  background: transparent !important; border: 0 !important; box-shadow: none !important; padding: 0 !important;
+}
+#bilsemExamArena .bilsem-speech-text {
+  flex: 1 1 260px; font-size: 1.25rem !important; font-weight: 800 !important; line-height: 1.4;
+  color: #0f172a !important;
+}
+#bilsemExamArena .bilsem-repeat-voice {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  padding: 12px 20px; min-height: 46px; border: 0; border-radius: 999px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; color: #ffffff !important;
+  font-family: inherit; font-size: 1rem; font-weight: 800;
+  box-shadow: 0 4px 0 #4338ca, 0 8px 18px rgba(99, 102, 241, 0.35);
+}
+#bilsemExamArena .bilsem-repeat-voice span { color: #ffffff !important; }
+#bilsemExamArena .bilsem-repeat-voice:active { transform: translateY(2px); box-shadow: 0 2px 0 #4338ca; }
+#bilsemExamArena .bilsem-hint-text { color: #0f172a !important; font-size: 1rem !important; font-weight: 700 !important; }
+
+/* ORTA: soru sahnesi */
+#bilsemExamArena .bilsem-stage-container {
+  background: #f8fafc !important; border: 2px dashed #cbd5e1 !important; border-radius: 20px !important;
+  padding: 20px !important; margin: 16px auto !important; width: 100%; box-sizing: border-box;
+  min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+#bilsemExamArena .bilsem-stage-container,
+#bilsemExamArena .bilsem-stage-container .bilsem-options-title,
+#bilsemExamArena .bilsem-stage-container .bilsem-hint-text,
+#bilsemExamArena .bilsem-stage-container .bilsem-target-label { color: #0f172a !important; }
+#bilsemExamArena .bilsem-stage-container .bilsem-options-title { font-size: 0.95rem; font-weight: 800; }
+
+/* Matris / hafıza ızgaraları */
+#bilsemExamArena .bilsem-matrix-2x2,
+#bilsemExamArena .bilsem-matrix-3x3,
+#bilsemExamArena .bilsem-spatial-grid-3x3 {
+  display: grid !important; gap: 12px !important; justify-content: center !important; align-items: center !important;
+  padding: 14px; background: #ffffff; border-radius: 20px; border: 2.5px solid #6366f1;
+}
+#bilsemExamArena .bilsem-matrix-2x2 { grid-template-columns: repeat(2, 75px) !important; grid-template-rows: none !important; grid-auto-rows: 75px; }
+#bilsemExamArena .bilsem-matrix-3x3,
+#bilsemExamArena .bilsem-spatial-grid-3x3 { grid-template-columns: repeat(3, 75px) !important; grid-template-rows: none !important; grid-auto-rows: 75px; }
+#bilsemExamArena .matrix-2x2-cell,
+#bilsemExamArena .matrix-3x3-cell,
+#bilsemExamArena .spatial-grid-cell {
+  width: 75px !important; height: 75px !important; min-width: 75px; min-height: 75px; box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center;
+  background: #ffffff !important; border: 2px solid #94a3b8 !important; border-radius: 14px !important;
+  font-size: 2rem !important; font-weight: 800 !important; color: #1e293b !important; overflow: hidden;
+}
+#bilsemExamArena .matrix-2x2-cell.empty-slot,
+#bilsemExamArena .matrix-3x3-cell.empty-slot {
+  background: #fef3c7 !important; border: 3px dashed #f59e0b !important; color: #d97706 !important;
+}
+
+/* Şifre / terazi / piramit / işlem: büyük rozetler */
+#bilsemExamArena .bilsem-clue-row {
+  display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+  background: #ffffff; border: 2px solid #cbd5e1; border-radius: 14px; padding: 10px 14px; margin-bottom: 8px;
+}
+#bilsemExamArena .clue-symbols, #bilsemExamArena .clue-code,
+#bilsemExamArena .bilsem-op-eq, #bilsemExamArena .bilsem-op-eq span,
+#bilsemExamArena .bilsem-pyr-cell, #bilsemExamArena .bilsem-scale-row .scale-pan {
+  font-size: 1.5rem !important; font-weight: 800 !important; color: #0f172a !important;
+}
+#bilsemExamArena .clue-symbols, #bilsemExamArena .clue-code {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 4px 14px;
+  background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 12px; letter-spacing: 3px;
+}
+#bilsemExamArena .clue-arrow { color: #6366f1 !important; font-size: 1.5rem; font-weight: 900; }
+#bilsemExamArena .bilsem-op-eq .op-slot { color: #d97706 !important; }
+#bilsemExamArena .bilsem-pyr-cell { background: #ffffff; }
+#bilsemExamArena .bilsem-pyr-cell.pyr-missing { color: #d97706 !important; }
+#bilsemExamArena .analogy-item, #bilsemExamArena .bilsem-odd-card { color: #0f172a !important; }
+
+/* ALT: cevap taşları */
+#bilsemExamArena .bilsem-options-wrap { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 10px; margin-top: 18px; }
+#bilsemExamArena .bilsem-options-grid {
+  display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 14px !important; margin-top: 18px; width: 100%;
+}
+#bilsemExamArena .bilsem-opt-card,
+#bilsemExamArena .bilsem-odd-card {
+  min-width: 80px !important; min-height: 70px !important; width: auto !important; height: auto !important;
+  padding: 8px 14px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.7rem !important; font-weight: 800 !important; color: #0f172a !important;
+  background: #ffffff !important; border: 3px solid #6366f1 !important; border-radius: 16px !important;
+  box-shadow: 0 4px 0 #c7d2fe, 0 8px 16px rgba(99, 102, 241, 0.15);
+}
+#bilsemExamArena .bilsem-opt-card.correct { background: #dcfce7 !important; border-color: #22c55e !important; }
+#bilsemExamArena .bilsem-opt-card.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; }
+#bilsemExamArena .opt-silhouette .silhouette-emoji { color: #0f172a; }
+
+/* Kategori sekmeleri: hap butonlar */
+#bilsemExamArena .bilsem-exam-tabs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+#bilsemExamArena .bilsem-tab-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 999px; border: 0; cursor: pointer;
+  background: #e2e8f0 !important; color: #1e293b !important; font-weight: 700 !important; font-size: 0.92rem; font-family: inherit; white-space: nowrap;
+}
+#bilsemExamArena .bilsem-tab-btn .tab-txt, #bilsemExamArena .bilsem-tab-btn .tab-icon { color: inherit !important; }
+#bilsemExamArena .bilsem-tab-btn:hover { background: #cbd5e1 !important; }
+#bilsemExamArena .bilsem-tab-btn.active { background: #6366f1 !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); }
+#bilsemExamArena .bilsem-tab-btn.active .tab-txt, #bilsemExamArena .bilsem-tab-btn.active .tab-icon { color: #ffffff !important; }
+
+/* Mobil */
+@media (max-width: 768px) {
+  #bilsemExamArena .bilsem-stage-card { padding: 10px 10px 16px 10px; border-radius: 16px; margin: 8px auto 16px auto; }
+  #bilsemExamArena .bilsem-moli-prompt-card { padding: 10px 12px !important; gap: 8px; }
+  #bilsemExamArena .bilsem-moli-avatar-box { display: none; }
+  #bilsemExamArena .bilsem-speech-text { font-size: 1.1rem !important; flex-basis: 100%; }
+  #bilsemExamArena .bilsem-repeat-voice { width: 100%; justify-content: center; }
+  #bilsemExamArena .bilsem-stage-container { padding: 12px !important; min-height: 240px; }
+  #bilsemExamArena .bilsem-matrix-2x2 { grid-template-columns: repeat(2, 62px) !important; grid-auto-rows: 62px; gap: 10px !important; }
+  #bilsemExamArena .bilsem-matrix-3x3,
+  #bilsemExamArena .bilsem-spatial-grid-3x3 { grid-template-columns: repeat(3, 62px) !important; grid-auto-rows: 62px; gap: 8px !important; }
+  #bilsemExamArena .matrix-2x2-cell, #bilsemExamArena .matrix-3x3-cell, #bilsemExamArena .spatial-grid-cell {
+    width: 62px !important; height: 62px !important; min-width: 62px; min-height: 62px; font-size: 1.6rem !important;
+  }
+  #bilsemExamArena .bilsem-opt-card, #bilsemExamArena .bilsem-odd-card { min-width: 70px !important; font-size: 1.5rem !important; }
+  #bilsemExamArena .bilsem-options-grid { gap: 10px !important; }
+  #bilsemExamArena .bilsem-exam-tabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+  #bilsemExamArena .bilsem-tab-btn { padding: 8px 13px; font-size: 0.85rem; flex: 0 0 auto; }
+  #bilsemExamArena .clue-symbols, #bilsemExamArena .clue-code { font-size: 1.25rem !important; letter-spacing: 2px; padding: 4px 10px; }
+}
