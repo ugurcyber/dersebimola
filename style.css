@@ -33543,31 +33543,52 @@ body.is-game-active .universal-game-bgm-fab {
 }
 
 /* ==========================================================================
-   POPÜLER OYUNLAR EKRANI HİZALAMA (V9.6.0)
+   POPÜLER OYUNLAR & TÜM SAHNELER TAM EKRAN DÜZENİ (V9.6.1)
    ========================================================================== */
-.app-main-wrapper:has(#arcadeHubSection:not(.hide)) {
-  justify-content: flex-start !important;
-  align-items: stretch !important;
-}
-.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .home-showcase-section,
-.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .bilsem-hub-section,
-.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .bilsem-exam-arena,
-.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .english-funlab-section,
-.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .subjects-section,
-.app-main-wrapper:has(#arcadeHubSection:not(.hide)) > .games-section {
+/* 1. Popüler Oyunlar aktifken diğer TÜM kardeş sahneleri sıfırla ve gizle (üstteki boşluğu yok et!) */
+.lobby-content:has(#arcadeHubSection:not(.hide)) > *:not(#arcadeHubSection),
+#viewLobby:has(#arcadeHubSection:not(.hide)) .home-showcase-section,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #homeShowcaseSection,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #bilsemHubSection,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #englishHubSection,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #englishKidsArena,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #englishAdvancedArena,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #mindGamesArena,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #bilsemExamArena,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #englishFunLabSection,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #subjectsSection,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #gamesSection,
+#viewLobby:has(#arcadeHubSection:not(.hide)) #adminPanelSection {
   display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
 }
+
+/* 2. Popüler Oyunlar Ana Kapsayıcısı: En baştan başlasın, tüm ekranı kullansın */
 #arcadeHubSection:not(.hide) {
-  margin: 12px auto 0 auto !important;
-  padding-top: 10px !important;
+  margin: 4px auto 0 auto !important;
+  padding: 4px clamp(10px, 1.6vw, 24px) 24px clamp(10px, 1.6vw, 24px) !important;
+  width: 98% !important;
+  max-width: 1380px !important;
+  height: calc(100vh - 76px) !important;
+  max-height: calc(100vh - 76px) !important;
+  overflow-y: auto !important;
   align-self: flex-start !important;
   justify-content: flex-start !important;
-  width: 96% !important;
-  max-width: 1240px !important;
   box-sizing: border-box !important;
   flex: 1 1 auto;
 }
-#arcadeHubSection .arcade-cards-view { margin: 0 auto !important; width: 100%; }
+
+/* 3. Oyun Kartları Vitrini */
+#arcadeHubSection .arcade-cards-view {
+  margin: 0 auto !important;
+  width: 100%;
+}
 #arcadeHubSection .arcade-games-grid {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)) !important;
@@ -33578,7 +33599,95 @@ body.is-game-active .universal-game-bgm-fab {
   align-content: start;
   overflow: visible !important;
 }
+
+/* 4. Aktif Oyun Sahnesi: Ekranın tam genişliğini kullansın, tek ekrana sığsın */
+#arcadeStageView:not(.hide),
+.arcade-stage-view:not(.hide) {
+  width: 100% !important;
+  max-width: 1340px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  box-sizing: border-box !important;
+}
+
+.arcade-stage-topbar {
+  margin-bottom: 8px !important;
+  padding: 8px 16px !important;
+  border-radius: 16px !important;
+}
+
+/* 5. ⚔️ Çarpma Savaşı / Halat Çekme: Ekranın tamamını kullanan ferah ve nizami düzen */
+.arc-tug-arena {
+  width: 100% !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+  padding: 10px 18px !important;
+  gap: 8px !important;
+  box-sizing: border-box !important;
+}
+
+.tug-top-scoreboard {
+  padding: 6px 14px !important;
+}
+
+.tug-stage-canvas-wrap {
+  padding: 8px 12px !important;
+  min-height: 115px !important;
+}
+
+.tug-split-players {
+  width: 100% !important;
+  gap: 14px !important;
+  margin-top: 4px !important;
+}
+
+.tug-player-card {
+  padding: 12px 16px !important;
+  border-radius: 20px !important;
+}
+
+.tug-player-card .tug-question-box {
+  margin: 6px 0 !important;
+  padding: 6px 12px !important;
+}
+
+.tug-player-card .q-math-text {
+  font-size: 1.8rem !important;
+}
+
+.tug-player-card .tug-options-row {
+  gap: 8px !important;
+}
+
+.tug-player-card .tug-opt-btn {
+  min-height: 48px !important;
+  padding: 6px 12px !important;
+  font-size: 1.25rem !important;
+}
+
+/* 6. Diğer Popüler Oyun Sahneleri Geniş Ekran Uyumu */
+.c4-arena-wrap,
+.arc-sudoku-arena,
+.arc-bomb-arena,
+.arc-mole-arena,
+.arc-wheel-arena,
+.xox-arena-wrap {
+  width: 100% !important;
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+}
+
 @media (max-width: 768px) {
-  #arcadeHubSection:not(.hide) { width: 100% !important; margin: 8px auto 0 auto !important; padding: 8px 8px 24px !important; }
-  #arcadeHubSection .arcade-games-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  #arcadeHubSection:not(.hide) {
+    width: 100% !important;
+    margin: 4px auto 0 auto !important;
+    padding: 6px 8px 24px !important;
+  }
+  #arcadeHubSection .arcade-games-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
 }

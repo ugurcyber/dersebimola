@@ -15435,7 +15435,7 @@
     if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.stop(true);
 
     // Üstte boşluk bırakan diğer sahneleri tamamen gizle ve en üste kaydır
-    ['englishFunLabSection', 'bilsemExamArena', 'mindGamesArena', 'englishKidsArena', 'englishAdvancedArena'].forEach(function(id) {
+    ['homeShowcaseSection', 'bilsemHubSection', 'englishHubSection', 'englishFunLabSection', 'bilsemExamArena', 'mindGamesArena', 'englishKidsArena', 'englishAdvancedArena', 'subjectsSection', 'gamesSection', 'adminPanelSection'].forEach(function(id) {
       const el = document.getElementById(id);
       if (el) el.classList.add('hide');
     });
@@ -15526,6 +15526,17 @@
     const stageView = document.getElementById('arcadeStageView');
     if (cardsView) cardsView.classList.add('hide');
     if (stageView) stageView.classList.remove('hide');
+
+    // 🚀 OYUN AÇILDIĞINDA ANINDA EN ÜSTE SIFIRLA (Yarım ekran / boşluk hatasını önle)
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    if (arcadeSec) arcadeSec.scrollTop = 0;
+    if (stageView) stageView.scrollTop = 0;
+    const viewLobby = document.getElementById('viewLobby');
+    if (viewLobby) viewLobby.scrollTop = 0;
+    const lobbyContent = document.querySelector('.lobby-content');
+    if (lobbyContent) lobbyContent.scrollTop = 0;
+    window.scrollTo(0, 0);
+    try { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; } catch (e) {}
     // Oyuna Özel Fon Müziği Seçimi (Zeka, Aksiyon veya Mini Oyun)
     if (typeof GameMusicEngine !== 'undefined') {
       const puzzleGames = ['sudoku', 'memory', 'tangram', 'craft', 'flower', 'xox'];
