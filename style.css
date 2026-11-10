@@ -31739,3 +31739,948 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 24px;
   }
 }
+
+
+/* ==========================================================================
+   🧠 BİLSEM HAZIRLIK AKADEMİSİ & MEB TABLET SINAVI MODÜLÜ (1-4. SINIF)
+   ========================================================================== */
+
+/* 1. Yanıp Sönen Kırmızı "🔴 YENİ" Rozeti */
+@keyframes blinkPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 23, 68, 0.75);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(0.95);
+    box-shadow: 0 0 3px rgba(255, 23, 68, 0.35);
+  }
+}
+
+.badge-blinking-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, #ff1744, #d50000);
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  animation: blinkPulse 1.3s ease-in-out infinite;
+  box-shadow: 0 2px 8px rgba(255, 23, 68, 0.4);
+  line-height: 1.2;
+  user-select: none;
+}
+
+/* 2. Ana Sayfa BİLSEM Vitrini (Showcase Section) */
+.bilsem-showcase-section {
+  margin: 32px 0 24px 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 45%, #2e1065 100%);
+  border: 2px solid rgba(168, 85, 247, 0.38);
+  border-radius: 26px;
+  padding: 24px 28px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.45);
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.bilsem-showcase-section::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.bilsem-showcase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bilsem-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bilsem-header-icon {
+  font-size: 2.8rem;
+  filter: drop-shadow(0 4px 12px rgba(168, 85, 247, 0.5));
+  animation: floatBounce 3s ease-in-out infinite;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.bilsem-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.bilsem-pill-tag {
+  background: rgba(168, 85, 247, 0.25);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  color: #e9d5ff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.bilsem-section-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.bilsem-section-desc {
+  margin: 4px 0 0 0;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.btn-bilsem-share-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(37, 211, 102, 0.18);
+  border: 1.5px solid #25d366;
+  color: #25d366;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-bilsem-share-all:hover {
+  background: #25d366;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+}
+
+/* 4 Seviye Kartları Responsive Grid (Mobilde 2x2) */
+.bilsem-levels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.bilsem-grade-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+  backdrop-filter: blur(8px);
+}
+
+.bilsem-grade-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168, 85, 247, 0.6);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.5), 0 0 20px rgba(168, 85, 247, 0.25);
+}
+
+.bilsem-card-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.bilsem-card-grade-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.card-bilsem-g1 .bilsem-card-grade-badge { background: rgba(59, 130, 246, 0.3); color: #93c5fd; }
+.card-bilsem-g2 .bilsem-card-grade-badge { background: rgba(16, 185, 129, 0.3); color: #6ee7b7; }
+.card-bilsem-g3 .bilsem-card-grade-badge { background: rgba(245, 158, 11, 0.3); color: #fde68a; }
+.card-bilsem-g4 .bilsem-card-grade-badge { background: rgba(236, 72, 153, 0.3); color: #fbcfe8; }
+
+.bilsem-card-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 64px;
+  margin-bottom: 8px;
+}
+
+.bilsem-card-emoji {
+  font-size: 2.8rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.bilsem-card-subemoji {
+  position: absolute;
+  right: 18%;
+  bottom: 0;
+  font-size: 1.4rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.bilsem-card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+}
+
+.bilsem-card-subtitle {
+  margin: 4px 0 10px 0;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  text-align: center;
+  min-height: 32px;
+}
+
+.bilsem-card-features {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.bilsem-card-features span {
+  font-size: 0.74rem;
+  color: #cbd5e1;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.bilsem-card-action {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.btn-bilsem-card-start {
+  flex: 1;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  color: #ffffff;
+  border: none;
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.35);
+}
+
+.btn-bilsem-card-start:hover {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  transform: translateY(-1px);
+}
+
+.btn-bilsem-card-share {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #94a3b8;
+  padding: 0 9px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-bilsem-card-share:hover {
+  background: #25d366;
+  border-color: #25d366;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   🎒 1. SINIF BİLSEM MEB TABLET SINAVI ARENASI
+   ========================================================================== */
+.bilsem-exam-arena {
+  margin: 20px 0;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px 24px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+  border: 2px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bilsem-exam-arena.hide {
+  display: none !important;
+}
+
+.bilsem-arena-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.bilsem-arena-title-wrap {
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+}
+
+.bilsem-arena-title-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.bilsem-exam-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #4f46e5;
+  background: #eef2ff;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.bilsem-exam-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+/* Kategori Sekmeleri */
+.bilsem-exam-tabs {
+  display: flex;
+  gap: 6px;
+  background: #f8fafc;
+  padding: 4px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.bilsem-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.bilsem-tab-btn:hover {
+  color: #4f46e5;
+  background: rgba(79, 70, 229, 0.08);
+}
+
+.bilsem-tab-btn.active {
+  background: #4f46e5;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+.bilsem-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bilsem-score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef3c7;
+  border: 1.5px solid #f59e0b;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  color: #92400e;
+  font-size: 0.95rem;
+}
+
+.bilsem-sound-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+/* 4 Saniyelik MEB Tablet Geri Sayım Barı */
+.bilsem-countdown-container {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bilsem-countdown-container.hide {
+  display: none !important;
+}
+
+.bilsem-countdown-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.countdown-seconds {
+  color: #e11d48;
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.bilsem-countdown-track {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.bilsem-countdown-progress {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #10b981, #f59e0b, #ef4444);
+  border-radius: 999px;
+  transition: width 0.1s linear;
+}
+
+/* Moli Yönerge Bandı */
+.bilsem-moli-prompt-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f0fdf4;
+  border: 1.5px solid #86efac;
+  border-radius: 16px;
+  padding: 10px 16px;
+}
+
+.bilsem-moli-avatar-box {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.bilsem-moli-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #22c55e;
+}
+
+.bilsem-moli-hat {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font-size: 1.25rem;
+}
+
+.bilsem-prompt-content {
+  flex: 1;
+}
+
+.bilsem-speech-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bilsem-speech-text {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #14532d;
+}
+
+.bilsem-repeat-voice {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #22c55e;
+  color: #ffffff;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bilsem-repeat-voice:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+.bilsem-hint-text {
+  font-size: 0.8rem;
+  color: #166534;
+  margin-top: 3px;
+}
+
+/* Sınav Sahne Alanı */
+.bilsem-stage-container {
+  min-height: 380px;
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Kategori 1: 2x2 Matris Alanı */
+.bilsem-matrix-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.bilsem-matrix-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 110px);
+  grid-template-rows: repeat(2, 110px);
+  gap: 12px;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 20px;
+  border: 2.5px solid #4f46e5;
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.12);
+}
+
+.matrix-2x2-cell {
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.matrix-2x2-cell.empty-slot {
+  border: 2.5px dashed #f59e0b;
+  background: #fffbeb;
+  color: #b45309;
+  font-size: 2.2rem;
+  font-weight: 800;
+  animation: pulseSlot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseSlot {
+  0%, 100% { border-color: #f59e0b; background: #fffbeb; }
+  50% { border-color: #d97706; background: #fef3c7; }
+}
+
+/* Seçenekler Izgarası (Alttaki Taşlar) */
+.bilsem-options-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.bilsem-options-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bilsem-options-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+.bilsem-opt-card {
+  width: 80px;
+  height: 80px;
+  background: #ffffff;
+  border: 2.5px solid #cbd5e1;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.3rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  user-select: none;
+}
+
+.bilsem-opt-card:hover {
+  transform: translateY(-4px) scale(1.05);
+  border-color: #4f46e5;
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.25);
+}
+
+.bilsem-opt-card:active {
+  transform: scale(0.95);
+}
+
+.bilsem-opt-card.correct {
+  border-color: #22c55e !important;
+  background: #dcfce7 !important;
+  transform: scale(1.08) !important;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.5) !important;
+}
+
+.bilsem-opt-card.wrong {
+  border-color: #ef4444 !important;
+  background: #fee2e2 !important;
+  animation: shakeOpt 0.4s ease;
+}
+
+@keyframes shakeOpt {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* Kategori 2: 4 Saniyelik Hafıza Kartı */
+.bilsem-memory-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.bilsem-memory-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: #ffffff;
+  border: 3px solid #6366f1;
+  border-radius: 20px;
+  padding: 24px 32px;
+  min-height: 120px;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+  width: 100%;
+}
+
+.memory-display-item {
+  font-size: 3.2rem;
+  animation: popInItem 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popInItem {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.memory-curtain-hidden {
+  font-size: 3rem;
+  color: #6366f1;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Kategori 3: Gölge & Parça Analizi */
+.bilsem-shadow-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.bilsem-shadow-target {
+  background: #ffffff;
+  border: 3px solid #0ea5e9;
+  border-radius: 20px;
+  padding: 20px 30px;
+  font-size: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.15);
+}
+
+.bilsem-target-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0369a1;
+  background: #e0f2fe;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+/* Gölge efekti */
+.opt-silhouette {
+  filter: brightness(0) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Kategori 4: Analoji ve Örüntü */
+.bilsem-analogy-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.bilsem-analogy-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 14px 20px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.analogy-item {
+  width: 70px;
+  height: 70px;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+}
+
+.analogy-rel-arrow {
+  font-size: 1.5rem;
+  color: #64748b;
+  font-weight: 800;
+}
+
+/* Kategori 5: Farklı Olanı Yakalama */
+.bilsem-odd-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.bilsem-odd-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 20px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.bilsem-odd-card {
+  width: 86px;
+  height: 86px;
+  background: #f8fafc;
+  border: 2.5px solid #cbd5e1;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.bilsem-odd-card:hover {
+  transform: translateY(-4px) scale(1.06);
+  border-color: #ef4444;
+  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.25);
+}
+
+.bilsem-odd-card.correct {
+  border-color: #22c55e !important;
+  background: #dcfce7 !important;
+  transform: scale(1.08) !important;
+}
+
+.bilsem-odd-card.wrong {
+  border-color: #ef4444 !important;
+  background: #fee2e2 !important;
+  animation: shakeOpt 0.4s ease;
+}
+
+/* Responsive Uyum (Mobil max-width: 768px) */
+@media (max-width: 768px) {
+  .bilsem-showcase-section {
+    padding: 16px 14px;
+    margin: 20px 0 16px 0;
+    border-radius: 18px;
+  }
+  
+  .bilsem-section-title {
+    font-size: 1.15rem;
+  }
+  
+  .bilsem-header-icon {
+    font-size: 2.2rem;
+  }
+  
+  .bilsem-levels-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .bilsem-grade-card {
+    padding: 12px 10px;
+    border-radius: 14px;
+  }
+
+  .bilsem-card-emoji {
+    font-size: 2.2rem;
+  }
+
+  .bilsem-card-title {
+    font-size: 0.92rem;
+  }
+
+  .bilsem-card-subtitle {
+    font-size: 0.72rem;
+    min-height: auto;
+    margin-bottom: 6px;
+  }
+
+  .bilsem-card-features {
+    display: none; /* Mobilde kartların sığması için kompakt tutulur */
+  }
+
+  .btn-bilsem-card-start {
+    font-size: 0.76rem;
+    padding: 6px 6px;
+  }
+
+  .bilsem-exam-arena {
+    padding: 14px 12px;
+    border-radius: 18px;
+  }
+
+  .bilsem-exam-title {
+    font-size: 1.1rem;
+  }
+
+  .bilsem-matrix-2x2 {
+    grid-template-columns: repeat(2, 85px);
+    grid-template-rows: repeat(2, 85px);
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .matrix-2x2-cell {
+    font-size: 2.1rem;
+  }
+
+  .bilsem-opt-card {
+    width: 64px;
+    height: 64px;
+    font-size: 1.8rem;
+    border-radius: 12px;
+  }
+
+  .bilsem-odd-card {
+    width: 68px;
+    height: 68px;
+    font-size: 2rem;
+  }
+
+  .analogy-item {
+    width: 54px;
+    height: 54px;
+    font-size: 1.7rem;
+  }
+}

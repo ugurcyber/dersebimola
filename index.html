@@ -924,6 +924,104 @@
             </div>
           </section>
 
+          <!-- ============================================================== -->
+          <!-- 🎒 1. SINIF BİLSEM TABLET SINAVI ARENASI (MEB FORMATI)         -->
+          <!-- 5 Kategori: 2x2 Matris, 4s Foto-Hafıza, Gölge/Silüet,          -->
+          <!-- Örüntü & Analoji, Farklı Olanı Bulma                           -->
+          <!-- ============================================================== -->
+          <section class="bilsem-exam-arena hide" id="bilsemExamArena" aria-label="1. Sınıf BİLSEM Tablet Sınavı Arenası">
+            <!-- Üst Kontrol & Navigasyon Barı -->
+            <div class="bilsem-arena-header">
+              <button class="btn-back-to-home" id="btnBackFromBilsemExam" type="button" title="Ana Sayfaya Dön">
+                <span class="back-home-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
+                </span>
+                <span>Ana Sayfa</span>
+              </button>
+
+              <div class="bilsem-arena-title-wrap">
+                <div class="bilsem-arena-title-top">
+                  <span class="bilsem-exam-badge">🎒 1. Sınıf MEB Tablet Sınavı</span>
+                  <span class="badge-blinking-new">🔴 YENİ</span>
+                </div>
+                <h2 class="bilsem-exam-title" id="bilsemExamTitle">Desen &amp; Matris Tamamlama</h2>
+              </div>
+
+              <!-- 5 Sınav Kategorisi Sekmesi -->
+              <div class="bilsem-exam-tabs" id="bilsemExamTabs" role="tablist">
+                <button class="bilsem-tab-btn active" data-cat="matrix" type="button" role="tab" title="Desen ve 2x2 Matris Tamamlama">
+                  <span class="tab-icon">🧩</span>
+                  <span class="tab-txt">2x2 Matris</span>
+                </button>
+                <button class="bilsem-tab-btn" data-cat="flash_memory" type="button" role="tab" title="4 Saniye Kısa Süreli Foto-Hafıza">
+                  <span class="tab-icon">⏱️</span>
+                  <span class="tab-txt">Foto-Hafıza</span>
+                </button>
+                <button class="bilsem-tab-btn" data-cat="shadow_part" type="button" role="tab" title="Gölge ve Silüet Analizi">
+                  <span class="tab-icon">🔍</span>
+                  <span class="tab-txt">Gölge &amp; Parça</span>
+                </button>
+                <button class="bilsem-tab-btn" data-cat="analogy" type="button" role="tab" title="Örüntü ve Görsel Analoji">
+                  <span class="tab-icon">🔁</span>
+                  <span class="tab-txt">Örüntü &amp; Analoji</span>
+                </button>
+                <button class="bilsem-tab-btn" data-cat="odd_detail" type="button" role="tab" title="Farklı Olanı Yakalama">
+                  <span class="tab-icon">🕵️</span>
+                  <span class="tab-txt">Farkı Yakala</span>
+                </button>
+              </div>
+
+              <!-- Skor & Müzik HUD -->
+              <div class="bilsem-hud-right">
+                <div class="bilsem-score-badge" id="bilsemScoreBadge" title="BİLSEM Başarı Puanı">
+                  <span class="star-icon">⭐</span>
+                  <span class="score-text" id="bilsemScoreText">0 Puan</span>
+                </div>
+                <button class="bilsem-sound-btn btn-game-music-toggle" id="btnBilsemSoundToggle" type="button" title="Müzik Aç / Kapat">
+                  <span class="game-music-icon">🎵</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 Saniyelik MEB Tablet Sınavı Geri Sayım Çubuğu -->
+            <div class="bilsem-countdown-container hide" id="bilsemCountdownContainer">
+              <div class="bilsem-countdown-info">
+                <span class="countdown-label">⏱️ Görseli Aklında Tut:</span>
+                <span class="countdown-seconds" id="bilsemCountdownSeconds">4.0s</span>
+              </div>
+              <div class="bilsem-countdown-track">
+                <div class="bilsem-countdown-progress" id="bilsemCountdownProgress"></div>
+              </div>
+            </div>
+
+            <!-- Moli Türkçe Sesli Yönerge Bandı -->
+            <div class="bilsem-moli-prompt-card">
+              <div class="bilsem-moli-avatar-box">
+                <img src="assets/mascot/moli.webp" class="bilsem-moli-img" alt="Moli BİLSEM" width="56" height="56" loading="lazy">
+                <span class="bilsem-moli-hat" aria-hidden="true">🎓</span>
+              </div>
+              <div class="bilsem-prompt-content">
+                <div class="bilsem-speech-bubble">
+                  <span class="bilsem-speech-text" id="bilsemSpeechText">"Soru işaretli kutuya hangi parça gelmelidir?"</span>
+                  <button class="btn-repeat-voice bilsem-repeat-voice" id="btnBilsemRepeatVoice" type="button" title="Yönergeyi Seslendir">
+                    <span class="voice-wave-icon">🔊</span>
+                    <span>Yönergeyi Dinle</span>
+                  </button>
+                </div>
+                <div class="bilsem-hint-text" id="bilsemHintText">💡 İpucu: Şeklin renk ve yön kuralını dikkatlice incele!</div>
+              </div>
+            </div>
+
+            <!-- İnteraktif Şıksız Sınav Sahnesi (Stage Container) -->
+            <div class="bilsem-stage-container" id="bilsemStageContainer">
+              <!-- BilsemExamEngine tarafından dinamik render edilir -->
+            </div>
+          </section>
+
+
 
           <!-- ============================================================== -->
           <!-- 🌍 İNGİLİZCE EĞLENCE ATÖLYESİ (ENGLISH FUN LAB)                -->
@@ -1692,6 +1790,135 @@
                 <span class="game-music-label">Müzik</span>
               </button>
             </div>
+
+          <!-- ============================================================== -->
+          <!-- 🧠 BİLSEM HAZIRLIK AKADEMİSİ (1-4. SINIF MEB TABLET SINAVI)    -->
+          <!-- ============================================================== -->
+          <div class="bilsem-showcase-section" id="bilsemShowcaseSection">
+            <div class="bilsem-showcase-header">
+              <div class="bilsem-header-left">
+                <span class="bilsem-header-icon" aria-hidden="true">🧠</span>
+                <div class="bilsem-title-wrap">
+                  <div class="bilsem-ribbon">
+                    <span class="bilsem-pill-tag">⚡ MEB TABLET SINAVI UYUMLU</span>
+                    <span class="badge-blinking-new">🔴 YENİ</span>
+                  </div>
+                  <h2 class="bilsem-section-title">🧠 BİLSEM Hazırlık Akademisi (1-4. Sınıf)</h2>
+                  <p class="bilsem-section-desc">Görsel algı, 2x2 matris, kısa süreli hafıza, küp sayma, şifreleme ve mantık atölyesi!</p>
+                </div>
+              </div>
+              <div class="bilsem-header-actions">
+                <button class="btn-bilsem-share-all" id="btnShareBilsemAcademy" type="button" title="BİLSEM Akademisini Paylaş (WhatsApp)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                  <span>WhatsApp Paylaş</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 ANA SEVİYE KARTI (2x2 MOBİL RESPONSIVE GRID) -->
+            <div class="bilsem-levels-grid">
+              <!-- 1. Sınıf BİLSEM Kartı -->
+              <div class="bilsem-grade-card card-bilsem-g1" data-bilsem-grade="1" role="button" tabindex="0">
+                <div class="bilsem-card-top-bar">
+                  <span class="bilsem-card-grade-badge">🎒 1. Sınıf</span>
+                  <span class="badge-blinking-new">🔴 YENİ</span>
+                </div>
+                <div class="bilsem-card-visual">
+                  <span class="bilsem-card-emoji">🎒</span>
+                  <span class="bilsem-card-subemoji">🧩</span>
+                </div>
+                <h3 class="bilsem-card-title">1. Sınıf BİLSEM</h3>
+                <p class="bilsem-card-subtitle">Görsel Algı, Dikkat &amp; Hafıza</p>
+                <div class="bilsem-card-features">
+                  <span>🧩 2x2 Matris</span>
+                  <span>⏱️ 4s Foto-Hafıza</span>
+                  <span>🔍 Gölge &amp; Analoji</span>
+                </div>
+                <div class="bilsem-card-action">
+                  <button class="btn-bilsem-card-start" type="button">Sınava Başla ›</button>
+                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="1">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 2. Sınıf BİLSEM Kartı -->
+              <div class="bilsem-grade-card card-bilsem-g2" data-bilsem-grade="2" role="button" tabindex="0">
+                <div class="bilsem-card-top-bar">
+                  <span class="bilsem-card-grade-badge">📗 2. Sınıf</span>
+                  <span class="badge-blinking-new">🔴 YENİ</span>
+                </div>
+                <div class="bilsem-card-visual">
+                  <span class="bilsem-card-emoji">📗</span>
+                  <span class="bilsem-card-subemoji">🔐</span>
+                </div>
+                <h3 class="bilsem-card-title">2. Sınıf BİLSEM</h3>
+                <p class="bilsem-card-subtitle">Matris, Şifreleme &amp; Simetri</p>
+                <div class="bilsem-card-features">
+                  <span>🔐 Şifre Çözücü</span>
+                  <span>🪞 Ayna Simetrisi</span>
+                  <span>🔢 4x4 Shidoku</span>
+                </div>
+                <div class="bilsem-card-action">
+                  <button class="btn-bilsem-card-start" type="button">Sınava Başla ›</button>
+                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="2">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 3. Sınıf BİLSEM Kartı -->
+              <div class="bilsem-grade-card card-bilsem-g3" data-bilsem-grade="3" role="button" tabindex="0">
+                <div class="bilsem-card-top-bar">
+                  <span class="bilsem-card-grade-badge">📘 3. Sınıf</span>
+                  <span class="badge-blinking-new">🔴 YENİ</span>
+                </div>
+                <div class="bilsem-card-visual">
+                  <span class="bilsem-card-emoji">📘</span>
+                  <span class="bilsem-card-subemoji">🧊</span>
+                </div>
+                <h3 class="bilsem-card-title">3. Sınıf BİLSEM</h3>
+                <p class="bilsem-card-subtitle">Küp Sayma, Terazi &amp; Mantık</p>
+                <div class="bilsem-card-features">
+                  <span>🔺 Sayı Piramidi</span>
+                  <span>🧊 3D Birim Küp</span>
+                  <span>⚖️ Eşit Terazi</span>
+                </div>
+                <div class="bilsem-card-action">
+                  <button class="btn-bilsem-card-start" type="button">Sınava Başla ›</button>
+                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="3">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 4. Sınıf BİLSEM Kartı -->
+              <div class="bilsem-grade-card card-bilsem-g4" data-bilsem-grade="4" role="button" tabindex="0">
+                <div class="bilsem-card-top-bar">
+                  <span class="bilsem-card-grade-badge">📙 4. Sınıf</span>
+                  <span class="badge-blinking-new">🔴 YENİ</span>
+                </div>
+                <div class="bilsem-card-visual">
+                  <span class="bilsem-card-emoji">📙</span>
+                  <span class="bilsem-card-subemoji">👑</span>
+                </div>
+                <h3 class="bilsem-card-title">4. Sınıf İleri BİLSEM &amp; Olimpiyat</h3>
+                <p class="bilsem-card-subtitle">Algoritma, Kripto &amp; Muhakeme</p>
+                <div class="bilsem-card-features">
+                  <span>🕵️ İleri Kripto</span>
+                  <span>🧮 İşlem Karesi</span>
+                  <span>👑 4x4 KenKen</span>
+                </div>
+                <div class="bilsem-card-action">
+                  <button class="btn-bilsem-card-start" type="button">Sınava Başla ›</button>
+                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="4">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           </div>
 
           <div class="arcade-stage-canvas" id="arcadeStageCanvas">
