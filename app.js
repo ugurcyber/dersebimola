@@ -48548,13 +48548,13 @@ matrix: [
     renderTabsForGrade(activeGrade);
 
     // Ana lobi ve diğer ekranları gizle
-    const lobbyView = document.getElementById('lobbyView');
-    const arcadeView = document.getElementById('arcadeView');
+    const homeShowcase = document.getElementById('homeShowcaseSection');
+    const arcadeView = document.getElementById('arcadeHubSection') || document.getElementById('arcadeView');
     const englishArena = document.getElementById('englishFunLabSection');
     const mindGamesArena = document.getElementById('mindGamesArena');
     const examArena = document.getElementById('bilsemExamArena');
 
-    if (lobbyView) lobbyView.classList.add('hide');
+    if (homeShowcase) homeShowcase.classList.add('hide');
     if (arcadeView) arcadeView.classList.add('hide');
     if (englishArena) englishArena.classList.add('hide');
     if (mindGamesArena) mindGamesArena.classList.add('hide');
@@ -48593,11 +48593,11 @@ matrix: [
     if (examArena) examArena.classList.add('hide');
 
     // Ana lobiye dön
-    if (typeof showView === 'function') {
-      showView('lobby');
+    if (typeof openHomePage === 'function') {
+      openHomePage();
     } else {
-      const lobbyView = document.getElementById('lobbyView');
-      if (lobbyView) lobbyView.classList.remove('hide');
+      const homeShowcase = document.getElementById('homeShowcaseSection');
+      if (homeShowcase) homeShowcase.classList.remove('hide');
     }
 
     // URL'yi temizle (history.replaceState)

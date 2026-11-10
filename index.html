@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=8.9.29">
+  <link rel="stylesheet" href="style.css?v=9.0.1">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -579,6 +579,134 @@
               </span>
               <span class="music-label-text" id="homeMusicLabel">Ses Açık</span>
             </button>
+
+            <!-- ============================================================== -->
+            <!-- 🧠 BİLSEM HAZIRLIK AKADEMİSİ (1-4. SINIF MEB TABLET SINAVI)    -->
+            <!-- ============================================================== -->
+            <div class="bilsem-showcase-section" id="bilsemShowcaseSection">
+              <div class="bilsem-showcase-header">
+                <div class="bilsem-header-left">
+                  <span class="bilsem-header-icon" aria-hidden="true">🧠</span>
+                  <div class="bilsem-title-wrap">
+                    <div class="bilsem-ribbon">
+                      <span class="bilsem-pill-tag">⚡ MEB TABLET SINAVI UYUMLU</span>
+                      <span class="badge-blinking-new">🔴 YENİ</span>
+                    </div>
+                    <h2 class="bilsem-section-title">🧠 BİLSEM Hazırlık Akademisi (1-4. Sınıf)</h2>
+                    <p class="bilsem-section-desc">Görsel algı, 2x2 matris, kısa süreli hafıza, küp sayma, şifreleme ve mantık atölyesi!</p>
+                  </div>
+                </div>
+                <div class="bilsem-header-actions">
+                  <button class="btn-bilsem-share-all" id="btnShareBilsemAcademy" type="button" title="BİLSEM Akademisini Paylaş (WhatsApp)">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    <span>WhatsApp Paylaş</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 4 ANA SEVİYE KARTI (2x2 MOBİL RESPONSIVE GRID) -->
+              <div class="bilsem-levels-grid">
+                <!-- 1. Sınıf BİLSEM Kartı -->
+                <div class="bilsem-grade-card card-bilsem-g1" data-bilsem-grade="1" role="button" tabindex="0" onclick="window.openBilsem(1)">
+                  <div class="bilsem-card-top-bar">
+                    <span class="bilsem-card-grade-badge">🎒 1. Sınıf</span>
+                    <span class="badge-blinking-new">🔴 YENİ</span>
+                  </div>
+                  <div class="bilsem-card-visual">
+                    <span class="bilsem-card-emoji">🎒</span>
+                    <span class="bilsem-card-subemoji">🧩</span>
+                  </div>
+                  <h3 class="bilsem-card-title">1. Sınıf BİLSEM</h3>
+                  <p class="bilsem-card-subtitle">Görsel Algı, Dikkat &amp; Hafıza</p>
+                  <div class="bilsem-card-features">
+                    <span>🧩 2x2 Matris</span>
+                    <span>⏱️ 4s Foto-Hafıza</span>
+                    <span>🔍 Gölge &amp; Analoji</span>
+                  </div>
+                  <div class="bilsem-card-action">
+                    <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
+                    <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="1">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 2. Sınıf BİLSEM Kartı -->
+                <div class="bilsem-grade-card card-bilsem-g2" data-bilsem-grade="2" role="button" tabindex="0" onclick="window.openBilsem(2)">
+                  <div class="bilsem-card-top-bar">
+                    <span class="bilsem-card-grade-badge">📗 2. Sınıf</span>
+                    <span class="badge-blinking-new">🔴 YENİ</span>
+                  </div>
+                  <div class="bilsem-card-visual">
+                    <span class="bilsem-card-emoji">📗</span>
+                    <span class="bilsem-card-subemoji">🔐</span>
+                  </div>
+                  <h3 class="bilsem-card-title">2. Sınıf BİLSEM</h3>
+                  <p class="bilsem-card-subtitle">Matris, Şifreleme &amp; Simetri</p>
+                  <div class="bilsem-card-features">
+                    <span>🔐 Şifre Çözücü</span>
+                    <span>🪞 Ayna Simetrisi</span>
+                    <span>🔢 4x4 Shidoku</span>
+                  </div>
+                  <div class="bilsem-card-action">
+                    <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
+                    <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="2">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 3. Sınıf BİLSEM Kartı -->
+                <div class="bilsem-grade-card card-bilsem-g3" data-bilsem-grade="3" role="button" tabindex="0" onclick="window.openBilsem(3)">
+                  <div class="bilsem-card-top-bar">
+                    <span class="bilsem-card-grade-badge">📘 3. Sınıf</span>
+                    <span class="badge-blinking-new">🔴 YENİ</span>
+                  </div>
+                  <div class="bilsem-card-visual">
+                    <span class="bilsem-card-emoji">📘</span>
+                    <span class="bilsem-card-subemoji">🧊</span>
+                  </div>
+                  <h3 class="bilsem-card-title">3. Sınıf BİLSEM</h3>
+                  <p class="bilsem-card-subtitle">Küp Sayma, Terazi &amp; Mantık</p>
+                  <div class="bilsem-card-features">
+                    <span>🔺 Sayı Piramidi</span>
+                    <span>🧊 3D Birim Küp</span>
+                    <span>⚖️ Eşit Terazi</span>
+                  </div>
+                  <div class="bilsem-card-action">
+                    <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
+                    <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="3">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- 4. Sınıf BİLSEM Kartı -->
+                <div class="bilsem-grade-card card-bilsem-g4" data-bilsem-grade="4" role="button" tabindex="0" onclick="window.openBilsem(4)">
+                  <div class="bilsem-card-top-bar">
+                    <span class="bilsem-card-grade-badge">📙 4. Sınıf</span>
+                    <span class="badge-blinking-new">🔴 YENİ</span>
+                  </div>
+                  <div class="bilsem-card-visual">
+                    <span class="bilsem-card-emoji">📙</span>
+                    <span class="bilsem-card-subemoji">👑</span>
+                  </div>
+                  <h3 class="bilsem-card-title">4. Sınıf İleri BİLSEM &amp; Olimpiyat</h3>
+                  <p class="bilsem-card-subtitle">Algoritma, Kripto &amp; Muhakeme</p>
+                  <div class="bilsem-card-features">
+                    <span>🕵️ İleri Kripto</span>
+                    <span>🧮 İşlem Karesi</span>
+                    <span>👑 4x4 KenKen</span>
+                  </div>
+                  <div class="bilsem-card-action">
+                    <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
+                    <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="4">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- ALT ORTALANMIŞ SADE KURUMSAL GÜVENCE BANDI -->
             <div class="widescreen-floating-trust-card" id="widescreenTrustCard">
@@ -1790,135 +1918,6 @@
                 <span class="game-music-label">Müzik</span>
               </button>
             </div>
-
-          <!-- ============================================================== -->
-          <!-- 🧠 BİLSEM HAZIRLIK AKADEMİSİ (1-4. SINIF MEB TABLET SINAVI)    -->
-          <!-- ============================================================== -->
-          <div class="bilsem-showcase-section" id="bilsemShowcaseSection">
-            <div class="bilsem-showcase-header">
-              <div class="bilsem-header-left">
-                <span class="bilsem-header-icon" aria-hidden="true">🧠</span>
-                <div class="bilsem-title-wrap">
-                  <div class="bilsem-ribbon">
-                    <span class="bilsem-pill-tag">⚡ MEB TABLET SINAVI UYUMLU</span>
-                    <span class="badge-blinking-new">🔴 YENİ</span>
-                  </div>
-                  <h2 class="bilsem-section-title">🧠 BİLSEM Hazırlık Akademisi (1-4. Sınıf)</h2>
-                  <p class="bilsem-section-desc">Görsel algı, 2x2 matris, kısa süreli hafıza, küp sayma, şifreleme ve mantık atölyesi!</p>
-                </div>
-              </div>
-              <div class="bilsem-header-actions">
-                <button class="btn-bilsem-share-all" id="btnShareBilsemAcademy" type="button" title="BİLSEM Akademisini Paylaş (WhatsApp)">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                  <span>WhatsApp Paylaş</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- 4 ANA SEVİYE KARTI (2x2 MOBİL RESPONSIVE GRID) -->
-            <div class="bilsem-levels-grid">
-              <!-- 1. Sınıf BİLSEM Kartı -->
-              <div class="bilsem-grade-card card-bilsem-g1" data-bilsem-grade="1" role="button" tabindex="0" onclick="window.openBilsem(1)">
-                <div class="bilsem-card-top-bar">
-                  <span class="bilsem-card-grade-badge">🎒 1. Sınıf</span>
-                  <span class="badge-blinking-new">🔴 YENİ</span>
-                </div>
-                <div class="bilsem-card-visual">
-                  <span class="bilsem-card-emoji">🎒</span>
-                  <span class="bilsem-card-subemoji">🧩</span>
-                </div>
-                <h3 class="bilsem-card-title">1. Sınıf BİLSEM</h3>
-                <p class="bilsem-card-subtitle">Görsel Algı, Dikkat &amp; Hafıza</p>
-                <div class="bilsem-card-features">
-                  <span>🧩 2x2 Matris</span>
-                  <span>⏱️ 4s Foto-Hafıza</span>
-                  <span>🔍 Gölge &amp; Analoji</span>
-                </div>
-                <div class="bilsem-card-action">
-                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
-                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="1">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 2. Sınıf BİLSEM Kartı -->
-              <div class="bilsem-grade-card card-bilsem-g2" data-bilsem-grade="2" role="button" tabindex="0" onclick="window.openBilsem(2)">
-                <div class="bilsem-card-top-bar">
-                  <span class="bilsem-card-grade-badge">📗 2. Sınıf</span>
-                  <span class="badge-blinking-new">🔴 YENİ</span>
-                </div>
-                <div class="bilsem-card-visual">
-                  <span class="bilsem-card-emoji">📗</span>
-                  <span class="bilsem-card-subemoji">🔐</span>
-                </div>
-                <h3 class="bilsem-card-title">2. Sınıf BİLSEM</h3>
-                <p class="bilsem-card-subtitle">Matris, Şifreleme &amp; Simetri</p>
-                <div class="bilsem-card-features">
-                  <span>🔐 Şifre Çözücü</span>
-                  <span>🪞 Ayna Simetrisi</span>
-                  <span>🔢 4x4 Shidoku</span>
-                </div>
-                <div class="bilsem-card-action">
-                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
-                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="2">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 3. Sınıf BİLSEM Kartı -->
-              <div class="bilsem-grade-card card-bilsem-g3" data-bilsem-grade="3" role="button" tabindex="0" onclick="window.openBilsem(3)">
-                <div class="bilsem-card-top-bar">
-                  <span class="bilsem-card-grade-badge">📘 3. Sınıf</span>
-                  <span class="badge-blinking-new">🔴 YENİ</span>
-                </div>
-                <div class="bilsem-card-visual">
-                  <span class="bilsem-card-emoji">📘</span>
-                  <span class="bilsem-card-subemoji">🧊</span>
-                </div>
-                <h3 class="bilsem-card-title">3. Sınıf BİLSEM</h3>
-                <p class="bilsem-card-subtitle">Küp Sayma, Terazi &amp; Mantık</p>
-                <div class="bilsem-card-features">
-                  <span>🔺 Sayı Piramidi</span>
-                  <span>🧊 3D Birim Küp</span>
-                  <span>⚖️ Eşit Terazi</span>
-                </div>
-                <div class="bilsem-card-action">
-                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
-                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="3">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 4. Sınıf BİLSEM Kartı -->
-              <div class="bilsem-grade-card card-bilsem-g4" data-bilsem-grade="4" role="button" tabindex="0" onclick="window.openBilsem(4)">
-                <div class="bilsem-card-top-bar">
-                  <span class="bilsem-card-grade-badge">📙 4. Sınıf</span>
-                  <span class="badge-blinking-new">🔴 YENİ</span>
-                </div>
-                <div class="bilsem-card-visual">
-                  <span class="bilsem-card-emoji">📙</span>
-                  <span class="bilsem-card-subemoji">👑</span>
-                </div>
-                <h3 class="bilsem-card-title">4. Sınıf İleri BİLSEM &amp; Olimpiyat</h3>
-                <p class="bilsem-card-subtitle">Algoritma, Kripto &amp; Muhakeme</p>
-                <div class="bilsem-card-features">
-                  <span>🕵️ İleri Kripto</span>
-                  <span>🧮 İşlem Karesi</span>
-                  <span>👑 4x4 KenKen</span>
-                </div>
-                <div class="bilsem-card-action">
-                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
-                  <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="4">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
           </div>
 
           <div class="arcade-stage-canvas" id="arcadeStageCanvas">
@@ -3493,6 +3492,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=9.0.0" defer></script>
+  <script src="app.js?v=9.0.1" defer></script>
 </body>
 </html>
