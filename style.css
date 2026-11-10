@@ -33132,3 +33132,128 @@ body.is-game-active .universal-game-bgm-fab {
   pointer-events: auto !important;
   cursor: pointer !important;
 }
+
+/* ==========================================================================
+   🧠 BİLSEM AKADEMİSİ AYRI HUB EKRANI & MENÜ BUTONLARI (V9.1.0)
+   ========================================================================== */
+
+/* 1. BİLSEM Hub Ekranı Kapsayıcısı */
+.bilsem-hub-section {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 16px 20px 48px 20px;
+  box-sizing: border-box;
+  animation: fadeInBilsemHub 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInBilsemHub {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bilsem-hub-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.bilsem-hub-header .btn-back-to-home {
+  align-self: flex-start;
+  margin-bottom: 4px;
+}
+
+/* 2. Sol Menü Masaüstü/Tahta Kartı (card-bilsem) */
+.stage-grade-card.card-bilsem {
+  background: linear-gradient(135deg, #7C3AED 0%, #9333EA 50%, #A855F7 100%) !important;
+  border: 2px solid #C084FC !important;
+  border-bottom: 4px solid #6B21A8 !important;
+  box-shadow: 0 6px 16px rgba(147, 51, 234, 0.28) !important;
+  position: relative !important;
+}
+
+.stage-grade-card.card-bilsem:hover {
+  background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%) !important;
+  border-color: #E9D5FF !important;
+  transform: translateY(-2px);
+}
+
+.stage-grade-card.card-bilsem .grade-icon-cube {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-grade-card.card-bilsem .grade-card-label {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+.stage-grade-card.card-bilsem .grade-card-chevron {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* 3. Sol Sidebar Nav Çipi (chip-bilsem) */
+.sidebar-grade-nav .grade-chip.chip-bilsem,
+#btnSidebarBilsem {
+  background: linear-gradient(135deg, #581C87 0%, #7E22CE 50%, #9333EA 100%) !important;
+  border: 2px solid #C084FC !important;
+  box-shadow: 0 4px 14px rgba(126, 34, 206, 0.4) !important;
+  color: #FFFFFF !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.sidebar-grade-nav .grade-chip.chip-bilsem:hover,
+#btnSidebarBilsem:hover {
+  background: linear-gradient(135deg, #6B21A8 0%, #9333EA 50%, #A855F7 100%) !important;
+  border-color: #E9D5FF !important;
+  box-shadow: 0 6px 18px rgba(147, 51, 234, 0.55) !important;
+  transform: translateY(-2px);
+}
+
+.sidebar-grade-nav .grade-chip.chip-bilsem .grade-chip-name,
+#btnSidebarBilsem .grade-chip-name {
+  color: #FFFFFF !important;
+  font-weight: 850;
+}
+
+/* Yanıp sönen mini rozet */
+.badge-blinking-new.mini-badge {
+  font-size: 0.68rem !important;
+  padding: 2px 6px !important;
+  border-radius: 9999px !important;
+  background: #EF4444 !important;
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.6) !important;
+  animation: pulseBlinkBadge 1.2s infinite ease-in-out !important;
+}
+
+@keyframes pulseBlinkBadge {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(0.92); }
+}
+
+/* 4. Popüler Oyunlar Kart Vitrini (theme-bilsem) */
+.arcade-game-card.theme-bilsem {
+  border-color: #C084FC !important;
+}
+
+.arcade-game-card.theme-bilsem:hover {
+  border-color: #A855F7 !important;
+  box-shadow: 0 12px 28px rgba(147, 51, 234, 0.22) !important;
+}
+
+.banner-bilsem {
+  background: linear-gradient(135deg, #1e1b4b 0%, #2e1065 60%, #4c1d95 100%) !important;
+}
+
+.mini-bilsem-icon {
+  font-size: 2.2rem;
+}

@@ -13985,6 +13985,10 @@
 
     const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
     if (btnSidebarEnglish) btnSidebarEnglish.classList.remove('active');
+    const bilsemHub = document.getElementById('bilsemHubSection');
+    if (bilsemHub) bilsemHub.classList.add('hide');
+    const btnSidebarBilsem = document.getElementById('btnSidebarBilsem');
+    if (btnSidebarBilsem) btnSidebarBilsem.classList.remove('active');
 
     const btnSidebarDuels = document.getElementById('btnSidebarDuels');
     if (btnSidebarDuels) btnSidebarDuels.classList.remove('active');
@@ -15326,6 +15330,10 @@
 
     const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
     if (btnSidebarEnglish) btnSidebarEnglish.classList.remove('active');
+    const bilsemHub = document.getElementById('bilsemHubSection');
+    if (bilsemHub) bilsemHub.classList.add('hide');
+    const btnSidebarBilsem = document.getElementById('btnSidebarBilsem');
+    if (btnSidebarBilsem) btnSidebarBilsem.classList.remove('active');
 
     const btnSidebarDuels = document.getElementById('btnSidebarDuels');
     if (btnSidebarDuels) btnSidebarDuels.classList.add('active');
@@ -24521,6 +24529,70 @@
   }
   window.openEnglishHub = openEnglishHub;
 
+  /**
+   * 🧠 BİLSEM Hazırlık Akademisi Seviye Seçim Ekranını (Hub) Açar
+   */
+  function openBilsemHub(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+    if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
+
+    const modalSelectGrade = document.getElementById('modalSelectGrade');
+    if (modalSelectGrade && typeof closeModal === 'function') closeModal(modalSelectGrade);
+
+    // Müzik kontrolü: Ana sayfa ve oyun müziklerini durdur
+    if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+    if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.stop(true);
+
+    state.currentSection = 'bilsem_hub';
+    state.isDirectEnglishMode = false;
+
+    // Tüm diğer bölümleri gizle, sadece BİLSEM Hub'ı aç!
+    if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
+    if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
+    if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
+    if (DOM.maarifReadingContainer) DOM.maarifReadingContainer.classList.add('hide');
+    const arcadeSec = document.getElementById('arcadeHubSection');
+    if (arcadeSec) arcadeSec.classList.add('hide');
+    const adminSec = document.getElementById('adminPanelSection');
+    if (adminSec) adminSec.classList.add('hide');
+    const enHub = document.getElementById('englishHubSection');
+    if (enHub) enHub.classList.add('hide');
+    const enKids = document.getElementById('englishKidsArena');
+    if (enKids) enKids.classList.add('hide');
+    const enAdv = document.getElementById('englishAdvancedArena');
+    if (enAdv) enAdv.classList.add('hide');
+    const enLab = document.getElementById('englishFunLabSection');
+    if (enLab) enLab.classList.add('hide');
+    const examArena = document.getElementById('bilsemExamArena');
+    if (examArena) examArena.classList.add('hide');
+    const mindArena = document.getElementById('mindGamesArena');
+    if (mindArena) mindArena.classList.add('hide');
+
+    const bilsemHub = document.getElementById('bilsemHubSection');
+    if (bilsemHub) bilsemHub.classList.remove('hide');
+
+    // Sol panel aktifliği
+    if (DOM.btnNavHome) DOM.btnNavHome.classList.remove('active');
+    if (DOM.gradeChips) DOM.gradeChips.forEach(c => c.classList.remove('active'));
+    const btnSidebarBilsem = document.getElementById('btnSidebarBilsem');
+    if (btnSidebarBilsem) btnSidebarBilsem.classList.add('active');
+
+    // Moli ifadesi
+    if (typeof changeMoliExpression === 'function') changeMoliExpression('happy');
+
+    // URL senkronizasyonu
+    try {
+      if (window.location.hash !== '#bilsem') {
+        history.pushState({ route: 'bilsem' }, '', '#bilsem');
+      }
+    } catch (err) {}
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.openBilsemHub = openBilsemHub;
+
   // Geriye dönük uyumluluk
   function openEnglishModule(e) {
     openEnglishHub(e);
@@ -25363,6 +25435,10 @@
     const kidsAr = document.getElementById('englishKidsArena'); if (kidsAr) kidsAr.classList.add('hide');
     const advAr = document.getElementById('englishAdvancedArena'); if (advAr) advAr.classList.add('hide');
     const enLab = document.getElementById('englishFunLabSection'); if (enLab) enLab.classList.add('hide');
+    const bilsemHub = document.getElementById('bilsemHubSection'); if (bilsemHub) bilsemHub.classList.add('hide');
+    const examArena = document.getElementById('bilsemExamArena'); if (examArena) examArena.classList.add('hide');
+    const mindArena = document.getElementById('mindGamesArena'); if (mindArena) mindArena.classList.add('hide');
+    const btnSidebarBilsem = document.getElementById('btnSidebarBilsem'); if (btnSidebarBilsem) btnSidebarBilsem.classList.remove('active');
     if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.remove('hide');
     if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
     if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -25387,6 +25463,10 @@
     if (adminSec) adminSec.classList.add('hide');
     const btnSidebarEnglish = document.getElementById('btnSidebarEnglish');
     if (btnSidebarEnglish) btnSidebarEnglish.classList.remove('active');
+    const bilsemHub = document.getElementById('bilsemHubSection');
+    if (bilsemHub) bilsemHub.classList.add('hide');
+    const btnSidebarBilsem = document.getElementById('btnSidebarBilsem');
+    if (btnSidebarBilsem) btnSidebarBilsem.classList.remove('active');
     state.currentGrade = parseInt(gradeNumber, 10);
     state.currentSubject = null;
     state.currentCategory = 'all';
@@ -33090,6 +33170,13 @@
         if (window.location.hash !== '#ingilizce') {
           window.location.hash = '#ingilizce';
         }
+      } else if (clean === 'bilsem' || clean === 'bilsem-akademisi') {
+        if (typeof openBilsemHub === 'function') {
+          openBilsemHub();
+        }
+        if (window.location.hash !== '#bilsem') {
+          window.location.hash = '#bilsem';
+        }
       } else if (/^ingilizce[-\/]/.test(clean)) {
         const gMatch = clean.match(/([1-4])(?:-sinif)?/);
         const grade = gMatch ? parseInt(gMatch[1], 10) : 2;
@@ -33835,6 +33922,25 @@
     if (btnStageQuickEnglish) {
       addTapListener(btnStageQuickEnglish, () => navigateTo('ingilizce'));
     }
+
+    // 🧠 BİLSEM Akademisi Dinleyicileri
+    const btnSidebarBilsem = document.getElementById('btnSidebarBilsem');
+    if (btnSidebarBilsem) {
+      addTapListener(btnSidebarBilsem, (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        navigateTo('bilsem');
+      });
+    }
+
+    const btnStageQuickBilsem = document.getElementById('btnStageQuickBilsem');
+    if (btnStageQuickBilsem) {
+      addTapListener(btnStageQuickBilsem, () => navigateTo('bilsem'));
+    }
+
+    const btnBilsemHubBackHome = document.getElementById('btnBilsemHubBackHome');
+    if (btnBilsemHubBackHome) {
+      addTapListener(btnBilsemHubBackHome, () => openHomePage());
+    }
     // 🇬🇧 İngilizce Hub & Sınıf Kartları Dinleyicileri
     
     // 🇬🇧 1. & 2. Sınıf İngilizce Çocuk Oyunları Dinleyicileri
@@ -34044,6 +34150,10 @@
     } else if (hash === '#ingilizce' || hash === '#/ingilizce' || path.endsWith('/ingilizce')) {
       setTimeout(() => {
         if (typeof openEnglishHub === 'function') openEnglishHub();
+      }, 100);
+    } else if (hash === '#bilsem' || hash === '#/bilsem' || path.endsWith('/bilsem') || hash === '#bilsem-hub' || hash === '#/bilsem-hub') {
+      setTimeout(() => {
+        if (typeof openBilsemHub === 'function') openBilsemHub();
       }, 100);
     }
   }
@@ -48592,8 +48702,10 @@ matrix: [
     const examArena = document.getElementById('bilsemExamArena');
     if (examArena) examArena.classList.add('hide');
 
-    // Ana lobiye dön
-    if (typeof openHomePage === 'function') {
+    // BİLSEM Hub'a dön (yoksa ana sayfaya dön)
+    if (typeof openBilsemHub === 'function') {
+      openBilsemHub();
+    } else if (typeof openHomePage === 'function') {
       openHomePage();
     } else {
       const homeShowcase = document.getElementById('homeShowcaseSection');
@@ -48602,7 +48714,7 @@ matrix: [
 
     // URL'yi temizle (history.replaceState)
     try {
-      history.replaceState(null, '', window.location.pathname);
+      history.replaceState(null, '', window.location.pathname + '#bilsem');
     } catch (e) {}
   }
 
