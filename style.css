@@ -33257,3 +33257,34 @@ body.is-game-active .universal-game-bgm-fab {
 .mini-bilsem-icon {
   font-size: 2.2rem;
 }
+
+/* ==========================================================================
+   BİLSEM HUB OKUNAKLILIK & GEÇİŞ DÜZELTMESİ (V9.1.1)
+   ========================================================================== */
+.bilsem-hub-section.hide { display: none !important; }
+
+.bilsem-hub-section .bilsem-section-title,
+.bilsem-hub-section .bilsem-section-desc,
+.bilsem-hub-section .bilsem-card-title,
+.bilsem-hub-section .bilsem-card-subtitle,
+.bilsem-hub-section .bilsem-card-grade-badge {
+  color: #1e293b !important;
+}
+.bilsem-hub-section .bilsem-card-title,
+.bilsem-hub-section .bilsem-section-title { font-weight: 800 !important; }
+.bilsem-hub-section .bilsem-card-subtitle { color: #475569 !important; font-weight: 600; }
+
+.bilsem-hub-section .bilsem-grade-card {
+  background: #ffffff !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06) !important;
+}
+.bilsem-hub-section .bilsem-card-features span {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+.bilsem-hub-section .bilsem-card-grade-badge {
+  background: #f1f5f9 !important;
+}

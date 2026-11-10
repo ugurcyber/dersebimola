@@ -48668,10 +48668,12 @@ matrix: [
     if (arcadeView) arcadeView.classList.add('hide');
     if (englishArena) englishArena.classList.add('hide');
     if (mindGamesArena) mindGamesArena.classList.add('hide');
+    const bilsemHubEl = document.getElementById('bilsemHubSection');
+    if (bilsemHubEl) bilsemHubEl.classList.add('hide');
 
     if (examArena) {
       examArena.classList.remove('hide');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     }
 
     updateTabButtons();
