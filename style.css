@@ -33044,3 +33044,88 @@ body.is-game-active .universal-game-bgm-fab {
     font-size: 1.4rem;
   }
 }
+
+
+/* ==========================================================================
+   🚨 ACİL ONARIM: GÖRÜNMEZ KATMAN (OVERLAY / Z-INDEX / POINTER-EVENTS) ENGELİNİ KALDIR
+   ========================================================================== */
+
+/* 1. Aktif olmayan ve gizli duran tüm ekranlar, modallar ve overlay'ler */
+.hide,
+.modal-backdrop.hide,
+.modal-backdrop:not(.active):not(:not(.hide)),
+.bilsem-exam-arena.hide,
+.mind-games-arena.hide,
+.english-fun-lab-section.hide,
+.arcade-hub-section.hide,
+.arcade-victory-overlay.hide,
+.victory-overlay.hide,
+.penalty-lockout-overlay.hide,
+[aria-hidden="true"].hide {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  z-index: -9999 !important;
+}
+
+/* 2. Ana sayfadaki tüm sınıf kartları, BİLSEM kartları, dersler ve menü butonları */
+.stage-grades-sidebar {
+  position: relative !important;
+  z-index: 100 !important;
+  pointer-events: auto !important;
+}
+
+.stage-grade-card,
+.home-grade-card,
+.bilsem-grade-card,
+.subject-card,
+.game-card,
+.arcade-card,
+.grade-chip,
+.stage-btn-start-3d {
+  position: relative !important;
+  z-index: 101 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  user-select: none;
+}
+
+.bilsem-showcase-section {
+  position: relative !important;
+  z-index: 90 !important;
+  pointer-events: auto !important;
+}
+
+.bilsem-levels-grid {
+  position: relative !important;
+  z-index: 95 !important;
+  pointer-events: auto !important;
+}
+
+.bilsem-grade-card {
+  position: relative !important;
+  z-index: 96 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.btn-bilsem-card-start,
+.btn-bilsem-card-share,
+.btn-bilsem-share-all {
+  position: relative !important;
+  z-index: 98 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Navigasyon barı butonları */
+.nav-btn,
+.nav-logo,
+.hero-center-brand-logo,
+.btn-back-to-home,
+.top-action-btn {
+  position: relative !important;
+  z-index: 110 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}

@@ -34589,6 +34589,28 @@
   window.renderSubjects = renderSubjects;
   window.openHomePage = openHomePage;
   window.setGrade = setGrade;
+
+  function selectGrade(gradeNumber) {
+    if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+    setGrade(gradeNumber);
+  }
+  window.selectGrade = selectGrade;
+  window.openGrade = selectGrade;
+
+  function openBilsem(gradeNumber) {
+    const g = parseInt(gradeNumber || 1, 10);
+    if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+    if (g === 1 || g === 2) {
+      if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.open === 'function') {
+        BilsemExamEngine.open({ grade: g });
+      }
+    } else {
+      if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
+        MindGamesEngine.open({ grade: g });
+      }
+    }
+  }
+  window.openBilsem = openBilsem;
   window.shareContent = shareContent;
   window.shareActivity = shareActivity;
   window.showShareToast = showShareToast;
@@ -49303,4 +49325,77 @@ matrix: [
 })();
 
 window.BilsemExamEngine = BilsemExamEngine;
+
+// ============================================================================
+// 🚨 KÜRESEL ERİŞİM & ACİL ETKİLEŞİM GARANTİSİ (GLOBAL DISPATCHER)
+// ============================================================================
+window.openBilsem = window.openBilsem || function(gradeNumber) {
+  const g = parseInt(gradeNumber || 1, 10);
+  if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
+  if (g === 1 || g === 2) {
+    if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.open === 'function') {
+      BilsemExamEngine.open({ grade: g });
+    }
+  } else {
+    if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
+      MindGamesEngine.open({ grade: g });
+    }
+  }
+};
+
+window.selectGrade = window.selectGrade || function(g) {
+  if (typeof window.setGrade === 'function') {
+    window.setGrade(g);
+  }
+};
+window.openGrade = window.openGrade || window.selectGrade;
+
+// Sayfa yüklendiğinde ve anında BİLSEM & Akıl Oyunları init garantisi
+try {
+  if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.init === 'function') {
+    BilsemExamEngine.init();
+  }
+} catch (e) { console.error('BilsemExamEngine immediate init error:', e); }
+
+try {
+  if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.init === 'function') {
+    MindGamesEngine.init();
+  }
+} catch (e) { console.error('MindGamesEngine immediate init error:', e); }
+
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.init === 'function') {
+      BilsemExamEngine.init();
+    }
+  } catch (e) {}
+
+  try {
+    if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.init === 'function') {
+      MindGamesEngine.init();
+    }
+  } catch (e) {}
+
+  // Sınıf ve BİLSEM kartlarını hem click hem de pointerup ile garantiye al
+  document.querySelectorAll('.stage-grade-card[data-grade]').forEach(function(card) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(e) {
+      const g = this.getAttribute('data-grade');
+      if (g !== null && g !== undefined && typeof window.selectGrade === 'function') {
+        window.selectGrade(g);
+      }
+    });
+  });
+
+  document.querySelectorAll('.bilsem-grade-card[data-bilsem-grade]').forEach(function(card) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('.btn-bilsem-card-share')) return;
+      const g = this.getAttribute('data-bilsem-grade');
+      if (g !== null && g !== undefined && typeof window.openBilsem === 'function') {
+        window.openBilsem(g);
+      }
+    });
+  });
+});
 
