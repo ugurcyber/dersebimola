@@ -34664,192 +34664,192 @@
      4. İngilizce Hafıza Kartları (Memory Card Match)
      ========================================================================== */
   /* ==========================================================================
-     🌍 YENİ: ENGLISH FUN LAB & MÜFREDAT SENKRONİZASYON MOTORU
-     (1-4. Sınıf MEB Maarif Modeli Şıksız İnteraktif İngilizce Portalı)
+     🌍 ENGLISH FUN LAB & MÜFREDAT SENKRONİZASYON MOTORU (AŞAMA 2)
+     (1-4. Sınıf MEB Maarif Modeli %100 İngilizce Şıksız İnteraktif Portalı)
      ========================================================================== */
 
   const ENGLISH_CURRICULUM = {
     1: {
       grade: 1,
-      title: "Anasınıfı & 1. Sınıf İngilizce",
+      title: "Kindergarten & Grade 1 English",
       badge: "Starters & MEB Maarif",
       units: [
-        { id: 'u1', name: 'Unit 1: Words & Colors 🎨', desc: 'Renkler & İlk Kelimeler' },
-        { id: 'u2', name: 'Unit 2: Animals 🐶', desc: 'Sevimli Hayvanlar' },
-        { id: 'u3', name: 'Unit 3: Numbers 1-10 🔢', desc: 'Sayıları Sayıyoruz' },
-        { id: 'u4', name: 'Unit 4: Fruits 🍎', desc: 'Lezzetli Meyveler' }
+        { id: 'u1', name: 'Unit 1: Words & Colors 🎨', desc: 'Colors & First Words' },
+        { id: 'u2', name: 'Unit 2: Animals 🐶', desc: 'Cute Animals' },
+        { id: 'u3', name: 'Unit 3: Numbers 1-10 🔢', desc: 'Counting Numbers' },
+        { id: 'u4', name: 'Unit 4: Fruits 🍎', desc: 'Delicious Fruits' }
       ],
       games: [
         {
           id: 'paint_color',
           gameKey: 'paint',
           engine: 'kids',
-          title: 'Renklerle Boya',
-          enTitle: 'Paint & Color',
+          title: 'Color & Paint Lab',
+          enTitle: 'Paint & Color Quest',
           icon: '🎨',
-          badge: 'Şıksız Boyama',
-          desc: 'Sihirli boya kovasıyla rengi dinle, doğru bölgeyi İngilizce dokunarak boya!',
-          actionText: 'Hemen Boya ▶'
+          badge: 'Interactive Coloring',
+          desc: 'Listen to the color and tap the correct area to paint with the magic bucket!',
+          actionText: 'Paint Now ▶'
         },
         {
           id: 'listen_tap',
           gameKey: 'wordMatch',
           engine: 'funlab',
-          title: 'Sesli Dokun-Bul',
+          title: 'Listen & Tap Words',
           enTitle: 'Listen & Tap Animals/Fruits',
           icon: '👆',
-          badge: 'Sesli Eşleştirme',
-          desc: 'Moli İngilizce telaffuz etsin, doğru sevimli hayvan veya meyve kartına dokun!',
-          actionText: 'Dinle & Dokun ▶'
+          badge: 'Audio Match',
+          desc: 'Listen to Moli pronounce words in English and tap the matching animal or fruit!',
+          actionText: 'Listen & Tap ▶'
         },
         {
           id: 'balloon_hunt',
           gameKey: 'balloon',
           engine: 'funlab',
-          title: 'Uçan Balon Kelime Avı',
-          enTitle: 'Balloon Pop Word Hunt',
+          title: 'Balloon Pop Word Hunt',
+          enTitle: 'Flying Balloon Pop',
           icon: '🎈',
-          badge: 'Hızlı Refleks',
-          desc: 'Gökyüzünde süzülen renkli balonlardan hedef kelimeyi yakala ve patlat!',
-          actionText: 'Balon Patlat ▶'
+          badge: 'Quick Reflex',
+          desc: 'Float through the sky and pop the balloon with the target English word!',
+          actionText: 'Pop Balloons ▶'
         }
       ]
     },
     2: {
       grade: 2,
-      title: "2. Sınıf İngilizce",
-      badge: "MEB 2. Sınıf Müfredatı",
+      title: "Grade 2 English",
+      badge: "MEB Grade 2 Curriculum",
       units: [
-        { id: 'u1', name: 'Unit 1: Classroom Items 🎒', desc: 'Okul Eşyaları' },
-        { id: 'u2', name: 'Unit 2: Numbers 1-20 🔢', desc: 'Sayılar ve Renkler' },
-        { id: 'u3', name: 'Unit 3: In the House 🏠', desc: 'Evimiz ve Odalar' },
-        { id: 'u4', name: 'Unit 4: Body & Clothes 👕', desc: 'Vücudumuz ve Giysiler' }
+        { id: 'u1', name: 'Unit 1: Classroom Items 🎒', desc: 'School & Stationery' },
+        { id: 'u2', name: 'Unit 2: Numbers 1-20 🔢', desc: 'Numbers & Counting' },
+        { id: 'u3', name: 'Unit 3: In the House 🏠', desc: 'Home & Rooms' },
+        { id: 'u4', name: 'Unit 4: Body & Clothes 👕', desc: 'Body Parts & Dressing Up' }
       ],
       games: [
         {
           id: 'room_vocab',
           gameKey: 'room',
           engine: 'funlab',
-          title: 'Eşyaları Odaya Yerleştir',
-          enTitle: 'in / on / under Sürükle-Bırak',
+          title: 'Room Vocabulary Quest',
+          enTitle: 'in / on / under Placement',
           icon: '🏠',
-          badge: 'Sürükle-Bırak',
-          desc: 'Eşyaları odada tarif edilen doğru yere (in, on, under) sürükleyip bırak!',
-          actionText: 'Odayı Düzenle ▶'
+          badge: 'Drag & Place',
+          desc: 'Listen to instructions and place items in the room (in, on, under)!',
+          actionText: 'Arrange Room ▶'
         },
         {
           id: 'sentence_train',
           gameKey: 'train',
           engine: 'advanced',
-          title: 'İngilizce Kelime Treni',
+          title: 'English Sentence Train',
           enTitle: 'This is a... Sentence Train',
           icon: '🚂',
-          badge: 'Cümle Kurmaca',
-          desc: 'Vagonlardaki İngilizce kelimeleri doğru sırayla dizip treni neşeyle hareket ettir!',
-          actionText: 'Treni Yürüt ▶'
+          badge: 'Sentence Builder',
+          desc: 'Assemble train wagons with words in the correct order to drive the train!',
+          actionText: 'Drive Train ▶'
         },
         {
           id: 'body_dressup',
           gameKey: 'body',
           engine: 'kids',
-          title: 'Kıyafet Giydirme & Vücudumuz',
-          enTitle: 'Dress Up & Our Body',
+          title: 'Dress Up & Our Body',
+          enTitle: 'Body Parts & Clothes',
           icon: '✋',
-          badge: 'Karakter Giydir',
-          desc: 'Karakterimize İngilizce söylenen şapka, ayakkabı ve giysileri giydir!',
-          actionText: 'Kıyafet Giydir ▶'
+          badge: 'Dress the Character',
+          desc: 'Put on hats, shoes and clothes according to spoken English cues!',
+          actionText: 'Dress Up ▶'
         }
       ]
     },
     3: {
       grade: 3,
-      title: "3. Sınıf İngilizce",
-      badge: "MEB 3. Sınıf Müfredatı",
+      title: "Grade 3 English",
+      badge: "MEB Grade 3 Curriculum",
       units: [
-        { id: 'u1', name: 'Unit 1: My Family 👨‍👩‍👦', desc: 'Aile Bireylerimiz' },
-        { id: 'u2', name: 'Unit 2: Food & Drinks 🍳', desc: 'Yiyecekler & İçecekler' },
-        { id: 'u3', name: 'Unit 3: Feelings & Weather 🎈', desc: 'Duygular & Hava Durumu' },
-        { id: 'u4', name: 'Unit 4: My Abilities 🏃', desc: 'Eylemler (can / can\'t)' }
+        { id: 'u1', name: 'Unit 1: My Family & Abilities 🦸', desc: 'Family & can / can\'t' },
+        { id: 'u2', name: 'Unit 2: Food & Drinks 🍳', desc: 'Yummy Food & Kitchen' },
+        { id: 'u3', name: 'Unit 3: Feelings & Weather 😊', desc: 'Emotions & Weather' },
+        { id: 'u4', name: 'Unit 4: Spelling Lab 🔤', desc: 'Vocabulary & Spelling' }
       ],
       games: [
         {
-          id: 'recipe_basket',
-          gameKey: 'recipe',
+          id: 'can_cant_magnet',
+          gameKey: 'magnet',
           engine: 'funlab',
-          title: 'Tarif ve Malzeme Sepeti',
-          enTitle: 'Food & Drinks Sürükle-Bırak',
-          icon: '🍳',
-          badge: 'Malzeme Topla',
-          desc: 'Tarifte istenen İngilizce yiyecek ve içecekleri sepete topla, tarifi tamamla!',
-          actionText: 'Tarifi Yap ▶'
-        },
-        {
-          id: 'actions_memory',
-          gameKey: 'memory',
-          engine: 'funlab',
-          title: 'Eylemler Hafıza Kartları',
-          enTitle: 'can / can\'t Memory Match',
-          icon: '🃏',
-          badge: 'Hafıza Eşleştirme',
-          desc: 'Eylem görselleriyle (run, swim, jump) İngilizce kelimeleri hafıza oyunuyla eşleştir!',
-          actionText: 'Kartları Çevir ▶'
+          title: "Can / Can't Sorting Magnet",
+          enTitle: 'Ability Sorting Quest',
+          icon: '🦸',
+          badge: 'Magnet Sort',
+          desc: "Sort actions into CAN or CAN'T! Can a bird fly? Can a fish walk?",
+          actionText: 'Play Now ▶'
         },
         {
           id: 'feelings_weather',
           gameKey: 'weather',
           engine: 'funlab',
-          title: 'Duygular ve Hava Durumu Avı',
-          enTitle: 'Feelings & Weather Hunt',
-          icon: '🎈',
-          badge: 'Hızlı Keşif',
-          desc: 'Bugün hava nasıl? Moli\'nin hissettiği duyguyu ve hava durumunu doğru yakala!',
-          actionText: 'Hemen Başla ▶'
+          title: 'Feelings & Weather Match',
+          enTitle: 'How Do You Feel?',
+          icon: '😊',
+          badge: 'Touch & Match',
+          desc: 'Complete the sentence with the right weather or feeling card!',
+          actionText: 'Play Now ▶'
+        },
+        {
+          id: 'spelling_bee',
+          gameKey: 'spelling',
+          engine: 'funlab',
+          title: 'Spelling Bee Workshop',
+          enTitle: 'Word Code Lab',
+          icon: '🔤',
+          badge: 'Letter Builder',
+          desc: 'Listen to the word and tap letters in the correct order to spell it!',
+          actionText: 'Play Now ▶'
         }
       ]
     },
     4: {
       grade: 4,
-      title: "4. Sınıf İngilizce",
-      badge: "MEB 4. Sınıf Müfredatı",
+      title: "Grade 4 English",
+      badge: "MEB Grade 4 Curriculum",
       units: [
-        { id: 'u1', name: 'Unit 1: Classroom Rules & Directions 🗺️', desc: 'Yönler ve Kurallar' },
-        { id: 'u2', name: 'Unit 2: My Day & Clock 🕒', desc: 'Saatler ve Günlük Rutin' },
-        { id: 'u3', name: 'Unit 3: Free Time & Jobs 🧩', desc: 'Meslekler & Hobiler' },
-        { id: 'u4', name: 'Unit 4: Countries & Flags 🌍', desc: 'Ülkeler ve Milletler' }
+        { id: 'u1', name: 'Unit 1: Classroom Rules & Directions 🗺️', desc: 'Directions & Map' },
+        { id: 'u2', name: 'Unit 2: My Day & Clock 🕒', desc: 'Time & Daily Routines' },
+        { id: 'u3', name: 'Unit 3: Free Time & Jobs 🌍', desc: 'Professions & Nationalities' },
+        { id: 'u4', name: 'Unit 4: Countries & Flags 🎌', desc: 'World Flags & Cultures' }
       ],
       games: [
         {
-          id: 'city_directions',
-          gameKey: 'city',
-          engine: 'advanced',
-          title: 'Şehirde Yön Bulma',
-          enTitle: 'Directions Harita Oyunu',
-          icon: '🗺️',
-          badge: 'Harita Görevi',
-          desc: 'Turn left, turn right, go straight yönergelerini takip ederek hedefe ulaş!',
-          actionText: 'Haritayı Keşfet ▶'
-        },
-        {
-          id: 'clock_routine',
-          gameKey: 'clock',
-          engine: 'advanced',
-          title: 'Saatler ve Günlük Rutin Sıralama',
-          enTitle: 'Time & Daily Routine Sequencing',
-          icon: '🕒',
-          badge: 'Zaman & Sıralama',
-          desc: 'Günün saatleriyle günlük rutin kartlarını (wake up, brush teeth) doğru sırala!',
-          actionText: 'Saatleri Ayarla ▶'
-        },
-        {
-          id: 'jobs_tools',
-          gameKey: 'jobs',
+          id: 'town_map_explorer',
+          gameKey: 'townMap',
           engine: 'funlab',
-          title: 'Meslekler ve Eşyaları Eşleştirme',
-          enTitle: 'Jobs & Tools Matching Quest',
-          icon: '🧩',
-          badge: 'Meslekler Bulmaca',
-          desc: 'Doktor, itfaiyeci, öğretmen ve pilot gibi meslekleri kullandıkları araçlarla birleştir!',
-          actionText: 'Meslekleri Eşle ▶'
+          title: 'Town Map Explorer',
+          enTitle: 'Directions & Places',
+          icon: '🗺️',
+          badge: 'Map Quest',
+          desc: 'Listen to directions like "next to", "between" and touch the right building!',
+          actionText: 'Play Now ▶'
+        },
+        {
+          id: 'time_routines',
+          gameKey: 'timeRoutines',
+          engine: 'funlab',
+          title: 'What Time Is It? & Daily Routines',
+          enTitle: 'Time & Daily Habits',
+          icon: '🕒',
+          badge: 'Clock & Routine',
+          desc: 'Match English time phrases with clocks and daily routine moments!',
+          actionText: 'Play Now ▶'
+        },
+        {
+          id: 'jobs_countries',
+          gameKey: 'jobsCountries',
+          engine: 'funlab',
+          title: 'Jobs & Countries Match',
+          enTitle: 'Professions & Flags',
+          icon: '🌍',
+          badge: 'Role Match',
+          desc: 'Help doctors, pilots and firefighters find their tools and countries!',
+          actionText: 'Play Now ▶'
         }
       ]
     }
@@ -34863,10 +34863,12 @@
     currentSpeech: "Welcome to English Fun Lab!",
     isAudioPlaying: false,
     fromClass: false,
-    
-    // Kelime Havuzları (3 Seviye)
+    _initialized: false,
+    lastItems: {},
+
+    // 1 & 2. Sınıf Kelime Havuzları (Korunan)
     vocab: {
-      1: [ // Level 1: Colors, Numbers & Animals
+      1: [
         { id: 'red', en: 'Red', tr: 'Kırmızı', emoji: '🔴', sentence: "It's red!" },
         { id: 'blue', en: 'Blue', tr: 'Mavi', emoji: '🔵', sentence: "It's blue!" },
         { id: 'green', en: 'Green', tr: 'Yeşil', emoji: '🟢', sentence: "It's green!" },
@@ -34886,7 +34888,7 @@
         { id: 'fish', en: 'Fish', tr: 'Balık', emoji: '🐟', sentence: "It's a little fish!" },
         { id: 'lion', en: 'Lion', tr: 'Aslan', emoji: '🦁', sentence: "It's a strong lion!" }
       ],
-      2: [ // Level 2: School, Family & Fruits
+      2: [
         { id: 'apple', en: 'Apple', tr: 'Elma', emoji: '🍎', sentence: "It's a red apple!" },
         { id: 'banana', en: 'Banana', tr: 'Muz', emoji: '🍌', sentence: "It's a sweet banana!" },
         { id: 'strawberry', en: 'Strawberry', tr: 'Çilek', emoji: '🍓', sentence: "It's a strawberry!" },
@@ -34900,47 +34902,133 @@
         { id: 'sister', en: 'Sister', tr: 'Kız Kardeş', emoji: '👧', sentence: "She is my sister!" },
         { id: 'brother', en: 'Brother', tr: 'Erkek Kardeş', emoji: '👦', sentence: "He is my brother!" },
         { id: 'baby', en: 'Baby', tr: 'Bebek', emoji: '👶', sentence: "It's a sweet baby!" }
-      ],
-      3: [ // Level 3: Actions, Weather & Daily Life
-        { id: 'run', en: 'Run', tr: 'Koşmak', emoji: '🏃', sentence: "I can run fast!" },
-        { id: 'jump', en: 'Jump', tr: 'Zıplamak', emoji: '🦘', sentence: "Jump high into the sky!" },
-        { id: 'swim', en: 'Swim', tr: 'Yüzmek', emoji: '🏊', sentence: "I like to swim!" },
-        { id: 'dance', en: 'Dance', tr: 'Dans Etmek', emoji: '💃', sentence: "Dance to the music!" },
-        { id: 'sleep', en: 'Sleep', tr: 'Uyumak', emoji: '😴', sentence: "Time to sleep!" },
-        { id: 'sunny', en: 'Sunny', tr: 'Güneşli', emoji: '☀️', sentence: "Today is sunny!" },
-        { id: 'rainy', en: 'Rainy', tr: 'Yağmurlu', emoji: '🌧️', sentence: "It is rainy today!" },
-        { id: 'snowy', en: 'Snowy', tr: 'Karlı', emoji: '❄️', sentence: "It is cold and snowy!" },
-        { id: 'clock', en: 'Clock', tr: 'Saat', emoji: '⏰', sentence: "Look at the clock!" },
-        { id: 'bed', en: 'Bed', tr: 'Yatak', emoji: '🛏️', sentence: "This is my bed!" },
-        { id: 'car', en: 'Car', tr: 'Araba', emoji: '🚗', sentence: "It's a fast car!" },
-        { id: 'bus', en: 'Bus', tr: 'Otobüs', emoji: '🚌', sentence: "The school bus is coming!" }
       ]
     },
 
-    // Resimli Oda Yönergeleri (Oyun 3)
+    // 1-2. Sınıf Resimli Oda Yönergeleri
     roomTasks: [
-      { id: 'ball_bed', textEn: "Put the ball under the bed!", hintTr: "Topu yatağın altına yerleştir!", itemKey: 'ball', itemEmoji: '⚽', itemName: 'Ball', zoneKey: 'rug', feedback: "Great! The ball is under the bed!" },
-      { id: 'book_desk', textEn: "Put the book on the desk!", hintTr: "Kitabı çalışma masasına yerleştir!", itemKey: 'book', itemEmoji: '📖', itemName: 'Book', zoneKey: 'desk', feedback: "Awesome! The book is on the desk!" },
-      { id: 'teddy_chair', textEn: "Put the teddy bear on the chair!", hintTr: "Sevimli ayıcığı sandalyeye yerleştir!", itemKey: 'teddy', itemEmoji: '🧸', itemName: 'Teddy Bear', zoneKey: 'chair', feedback: "Well done! The teddy bear is on the chair!" },
-      { id: 'clock_shelf', textEn: "Put the clock on the shelf!", hintTr: "Saati kitaplık rafına yerleştir!", itemKey: 'clock', itemEmoji: '⏰', itemName: 'Clock', zoneKey: 'shelf', feedback: "Super! The clock is on the shelf!" },
-      { id: 'pencil_desk', textEn: "Put the pencil on the desk!", hintTr: "Kalemi çalışma masasına yerleştir!", itemKey: 'pencil', itemEmoji: '✏️', itemName: 'Pencil', zoneKey: 'desk', feedback: "Nice job! The pencil is on the desk!" },
-      { id: 'bag_bed', textEn: "Put the school bag under the bed!", hintTr: "Okul çantasını yatağın altına yerleştir!", itemKey: 'bag', itemEmoji: '🎒', itemName: 'School Bag', zoneKey: 'rug', feedback: "Fantastic! The school bag is under the bed!" }
+      { id: 'ball_bed', textEn: "Put the ball under the bed!", itemKey: 'ball', itemEmoji: '⚽', itemName: 'Ball', zoneKey: 'rug', feedback: "Great! The ball is under the bed!" },
+      { id: 'book_desk', textEn: "Put the book on the desk!", itemKey: 'book', itemEmoji: '📖', itemName: 'Book', zoneKey: 'desk', feedback: "Awesome! The book is on the desk!" },
+      { id: 'teddy_chair', textEn: "Put the teddy bear on the chair!", itemKey: 'teddy', itemEmoji: '🧸', itemName: 'Teddy Bear', zoneKey: 'chair', feedback: "Well done! The teddy bear is on the chair!" },
+      { id: 'clock_shelf', textEn: "Put the clock on the shelf!", itemKey: 'clock', itemEmoji: '⏰', itemName: 'Clock', zoneKey: 'shelf', feedback: "Super! The clock is on the shelf!" },
+      { id: 'pencil_desk', textEn: "Put the pencil on the desk!", itemKey: 'pencil', itemEmoji: '✏️', itemName: 'Pencil', zoneKey: 'desk', feedback: "Nice job! The pencil is on the desk!" },
+      { id: 'bag_bed', textEn: "Put the school bag under the bed!", itemKey: 'bag', itemEmoji: '🎒', itemName: 'School Bag', zoneKey: 'rug', feedback: "Fantastic! The school bag is under the bed!" }
     ],
 
-    // Moli Seslendirme (Natural English TTS)
+    // 🦸 3. SINIF: Can / Can't Yetenek Mıknatısı Havuzu
+    canCantPool: [
+      { id: 'bird_fly', subject: 'A bird', action: 'FLY', can: true, emoji: '🐦', fullSentence: 'A bird CAN fly!' },
+      { id: 'fish_walk', subject: 'A fish', action: 'WALK', can: false, emoji: '🐟', fullSentence: "A fish CAN'T walk!" },
+      { id: 'frog_jump', subject: 'A frog', action: 'JUMP', can: true, emoji: '🐸', fullSentence: 'A frog CAN jump!' },
+      { id: 'elephant_climb', subject: 'An elephant', action: 'CLIMB TREES', can: false, emoji: '🐘', fullSentence: "An elephant CAN'T climb trees!" },
+      { id: 'horse_run', subject: 'A horse', action: 'RUN FAST', can: true, emoji: '🐎', fullSentence: 'A horse CAN run fast!' },
+      { id: 'cat_climb', subject: 'A cat', action: 'CLIMB TREES', can: true, emoji: '🐱', fullSentence: 'A cat CAN climb trees!' },
+      { id: 'penguin_fly', subject: 'A penguin', action: 'FLY IN THE SKY', can: false, emoji: '🐧', fullSentence: "A penguin CAN'T fly in the sky!" },
+      { id: 'monkey_swing', subject: 'A monkey', action: 'SWING ON TREES', can: true, emoji: '🐵', fullSentence: 'A monkey CAN swing on trees!' },
+      { id: 'snake_run', subject: 'A snake', action: 'RUN ON FEET', can: false, emoji: '🐍', fullSentence: "A snake CAN'T run on feet!" },
+      { id: 'dolphin_swim', subject: 'A dolphin', action: 'SWIM FAST', can: true, emoji: '🐬', fullSentence: 'A dolphin CAN swim fast!' },
+      { id: 'kangaroo_jump', subject: 'A kangaroo', action: 'JUMP HIGH', can: true, emoji: '🦘', fullSentence: 'A kangaroo CAN jump high!' },
+      { id: 'dog_speak', subject: 'A dog', action: 'SPEAK ENGLISH', can: false, emoji: '🐶', fullSentence: "A dog CAN'T speak English!" }
+    ],
+
+    // 😊 3. SINIF: Duygular ve Hava Durumu Havuzu
+    feelingsWeatherPool: [
+      { id: 'sunny', word: 'Sunny', emoji: '☀️', sentence: 'Today it is sunny and bright!', template: 'Today it is [ ___ ] ☀️' },
+      { id: 'rainy', word: 'Rainy', emoji: '🌧️', sentence: 'Take your umbrella, it is rainy!', template: 'Today it is [ ___ ] 🌧️' },
+      { id: 'snowy', word: 'Snowy', emoji: '❄️', sentence: 'It is snowy and cold outside!', template: 'Today it is [ ___ ] ❄️' },
+      { id: 'windy', word: 'Windy', emoji: '💨', sentence: 'Hold your hat! It is very windy!', template: 'Today it is [ ___ ] 💨' },
+      { id: 'hot', word: 'Hot', emoji: '🥵', sentence: 'It is very hot today, drink water!', template: 'Today it is [ ___ ] 🥵' },
+      { id: 'cold', word: 'Cold', emoji: '🥶', sentence: 'Brrr! It is freezing cold today!', template: 'Today it is [ ___ ] 🥶' },
+      { id: 'happy', word: 'Happy', emoji: '😊', sentence: 'I feel very happy today!', template: 'I feel [ ___ ] 😊' },
+      { id: 'sad', word: 'Sad', emoji: '😢', sentence: 'I feel a little sad today.', template: 'I feel [ ___ ] 😢' },
+      { id: 'angry', word: 'Angry', emoji: '😠', sentence: 'Take a deep breath when angry!', template: 'I feel [ ___ ] 😠' },
+      { id: 'tired', word: 'Tired', emoji: '😴', sentence: 'I feel tired, time to rest!', template: 'I feel [ ___ ] 😴' },
+      { id: 'energetic', word: 'Energetic', emoji: '⚡', sentence: 'I feel energetic and full of power!', template: 'I feel [ ___ ] ⚡' },
+      { id: 'surprised', word: 'Surprised', emoji: '😲', sentence: 'Wow! I am really surprised!', template: 'I feel [ ___ ] 😲' }
+    ],
+
+    // 🔤 3. SINIF: Spelling Bee (Kelime Kodlama) Havuzu
+    spellingPool: [
+      { word: 'MOTHER', emoji: '👩', category: 'Family', sentence: 'This is my lovely mother!' },
+      { word: 'FATHER', emoji: '👨', category: 'Family', sentence: 'This is my kind father!' },
+      { word: 'SCHOOL', emoji: '🏫', category: 'Places', sentence: 'I learn English at school!' },
+      { word: 'LIBRARY', emoji: '📚', category: 'Places', sentence: 'We read silent books in the library!' },
+      { word: 'HOSPITAL', emoji: '🏥', category: 'Places', sentence: 'Doctors work at the hospital!' },
+      { word: 'KITCHEN', emoji: '🍳', category: 'House', sentence: 'We prepare meals in the kitchen!' },
+      { word: 'BEDROOM', emoji: '🛏️', category: 'House', sentence: 'I sleep soundly in my bedroom!' },
+      { word: 'GARDEN', emoji: '🌻', category: 'House', sentence: 'Colorful flowers grow in the garden!' },
+      { word: 'DOCTOR', emoji: '🩺', category: 'Jobs', sentence: 'A doctor helps people stay healthy!' },
+      { word: 'PENCIL', emoji: '✏️', category: 'Classroom', sentence: 'I write my homework with a pencil!' },
+      { word: 'APPLE', emoji: '🍎', category: 'Fruits', sentence: 'An apple is healthy and delicious!' },
+      { word: 'SISTER', emoji: '👧', category: 'Family', sentence: 'She is my caring sister!' }
+    ],
+
+    // 🗺️ 4. SINIF: Şehir Haritası ve Yönler Havuzu
+    townMapBldgs: [
+      { id: 'hospital', name: 'Hospital', icon: '🏥', hint: 'Doctors & Nurses' },
+      { id: 'bakery', name: 'Bakery', icon: '🥐', hint: 'Fresh Bread' },
+      { id: 'library', name: 'Library', icon: '📚', hint: 'Read Books' },
+      { id: 'police', name: 'Police Station', icon: '🚓', hint: 'City Safety' },
+      { id: 'park', name: 'Park', icon: '🌳', hint: 'Play & Trees' },
+      { id: 'cinema', name: 'Cinema', icon: '🍿', hint: 'Watch Movies' }
+    ],
+
+    townMapTasks: [
+      { targetId: 'bakery', prompt: 'You smell fresh bread. Touch the BAKERY!', spoken: 'You smell fresh bread. Touch the Bakery!', exp: 'Great! The bakery sells delicious bread!' },
+      { targetId: 'library', prompt: 'It is NEXT TO the Bakery. Quiet please! Touch the LIBRARY!', spoken: 'It is next to the Bakery. Quiet please! Touch the Library!', exp: 'Super! The library is next to the bakery!' },
+      { targetId: 'hospital', prompt: 'Doctors work here to help patients. Touch the HOSPITAL!', spoken: 'Doctors work here. Touch the Hospital!', exp: 'Well done! The hospital is on the corner!' },
+      { targetId: 'park', prompt: 'It is BETWEEN the Police Station and the Cinema. Touch the PARK!', spoken: 'It is between the Police Station and the Cinema. Touch the Park!', exp: 'Awesome! Children have fun in the park!' },
+      { targetId: 'cinema', prompt: 'Watch a fun movie and eat popcorn. Touch the CINEMA!', spoken: 'Watch a fun movie and eat popcorn. Touch the Cinema!', exp: 'Fantastic! The cinema is next to the park!' },
+      { targetId: 'police', prompt: 'Police officers work here to protect our town. Touch the POLICE STATION!', spoken: 'Police officers work here. Touch the Police Station!', exp: 'Nice job! The police station keeps town safe!' },
+      { targetId: 'bakery', prompt: 'It is BETWEEN the Hospital and the Library. Touch the BAKERY!', spoken: 'It is between the Hospital and the Library. Touch the Bakery!', exp: 'Correct! The bakery is right between them!' },
+      { targetId: 'cinema', prompt: 'It is OPPOSITE the Library. Touch the CINEMA!', spoken: 'It is opposite the Library. Touch the Cinema!', exp: 'Great! The cinema is opposite the library!' },
+      { targetId: 'hospital', prompt: 'It is OPPOSITE the Police Station. Touch the HOSPITAL!', spoken: 'It is opposite the Police Station. Touch the Hospital!', exp: 'Well done! The hospital is opposite the police station!' },
+      { targetId: 'park', prompt: 'It is IN FRONT OF the Bakery, with green trees. Touch the PARK!', spoken: 'It is in front of the Bakery, with green trees. Touch the Park!', exp: 'Super! The park is in front of the bakery!' }
+    ],
+
+    // 🕒 4. SINIF: Saatler ve Günlük Rutin Havuzu
+    timeRoutinesPool: [
+      { id: 't_0700', timeStr: '07:00', phrase: "seven o'clock", routine: 'Wake up', routineEmoji: '⏰', sentence: "It is seven o'clock! Time to wake up!" },
+      { id: 't_0730', timeStr: '07:30', phrase: 'half past seven', routine: 'Have breakfast', routineEmoji: '🍳', sentence: 'It is half past seven! Time to have breakfast!' },
+      { id: 't_0800', timeStr: '08:00', phrase: "eight o'clock", routine: 'Go to school', routineEmoji: '🎒', sentence: "It is eight o'clock! Time to go to school!" },
+      { id: 't_0830', timeStr: '08:30', phrase: 'half past eight', routine: 'Start class', routineEmoji: '🏫', sentence: 'It is half past eight! Our English lesson begins!' },
+      { id: 't_1230', timeStr: '12:30', phrase: 'half past twelve', routine: 'Eat lunch', routineEmoji: '🥪', sentence: 'It is half past twelve! Time to eat lunch!' },
+      { id: 't_1500', timeStr: '15:00', phrase: "three o'clock", routine: 'Come home', routineEmoji: '🏠', sentence: "It is three o'clock! School is over, come home!" },
+      { id: 't_1630', timeStr: '16:30', phrase: 'half past four', routine: 'Do homework', routineEmoji: '📝', sentence: 'It is half past four! Time to do homework!' },
+      { id: 't_1930', timeStr: '19:30', phrase: 'half past seven', routine: 'Have dinner', routineEmoji: '🍲', sentence: 'It is half past seven! Time for dinner with family!' },
+      { id: 't_2030', timeStr: '20:30', phrase: 'half past eight', routine: 'Brush teeth', routineEmoji: '🪥', sentence: 'It is half past eight! Brush your teeth clean!' },
+      { id: 't_2100', timeStr: '21:00', phrase: "nine o'clock", routine: 'Read a book', routineEmoji: '📖', sentence: "It is nine o'clock! Read a bedtime story!" },
+      { id: 't_2130', timeStr: '21:30', phrase: 'half past nine', routine: 'Go to bed', routineEmoji: '😴', sentence: 'It is half past nine! Good night and sweet dreams!' }
+    ],
+
+    // 🌍 4. SINIF: Meslekler ve Ülkeler Havuzu
+    jobsCountriesPool: [
+      { id: 'doc', role: 'Doctor', roleEmoji: '🩺', clue: 'I work at a hospital and help sick people.', tool: 'Stethoscope 🩺', country: 'Britain', flag: '🇬🇧', nat: 'British', sentence: 'A doctor helps sick people at the hospital!' },
+      { id: 'pilot', role: 'Pilot', roleEmoji: '👨‍✈️', clue: 'I fly airplanes across the sky to different countries.', tool: 'Airplane ✈️', country: 'Turkey', flag: '🇹🇷', nat: 'Turkish', sentence: 'A pilot flies airplanes across the world!' },
+      { id: 'chef', role: 'Chef', roleEmoji: '👨‍🍳', clue: 'I cook delicious meals at a famous restaurant.', tool: 'Cooking Pot 🍲', country: 'Italy', flag: '🇮🇹', nat: 'Italian', sentence: 'A chef prepares delicious pizza and pasta!' },
+      { id: 'fire', role: 'Firefighter', roleEmoji: '🧑‍🚒', clue: 'I put out fires and rescue people and animals.', tool: 'Fire Hose 🧯', country: 'Britain', flag: '🇬🇧', nat: 'British', sentence: 'A firefighter is brave and puts out fires!' },
+      { id: 'teach', role: 'Teacher', roleEmoji: '👩‍🏫', clue: 'I teach interesting lessons to students at school.', tool: 'Book & Board 📚', country: 'Japan', flag: '🇯🇵', nat: 'Japanese', sentence: 'A teacher teaches curious students in the classroom!' },
+      { id: 'vet', role: 'Vet', roleEmoji: '🐾', clue: 'I care for cute puppies, cats and little birds.', tool: 'Pet Medicine 💉', country: 'Germany', flag: '🇩🇪', nat: 'German', sentence: 'A vet takes good care of sick animals!' },
+      { id: 'astro', role: 'Astronaut', roleEmoji: '🚀', clue: 'I travel into space and explore planets and stars.', tool: 'Rocket Ship 🚀', country: 'USA', flag: '🇺🇸', nat: 'American', sentence: 'An astronaut explores the planets in outer space!' },
+      { id: 'artist', role: 'Artist', roleEmoji: '🎨', clue: 'I paint beautiful pictures with bright colorful brushes.', tool: 'Paintbrush 🖌️', country: 'France', flag: '🇫🇷', nat: 'French', sentence: 'An artist paints creative pictures with colors!' }
+    ],
+
+    // %100 İngilizce Doğal TTS
     speak(text, onEnded) {
       this.currentSpeech = text;
       const speechQuote = document.getElementById('enLabSpeechText');
       if (speechQuote) speechQuote.textContent = `"${text}"`;
 
-      if (typeof audio !== 'undefined' && audio.speakEnglishText) {
+      if (typeof window.speakEnglish === 'function') {
+        window.speakEnglish(text, onEnded);
+      } else if (typeof audio !== 'undefined' && audio.speakEnglishText) {
         audio.speakEnglishText(text, onEnded);
       } else if ('speechSynthesis' in window) {
         try {
           window.speechSynthesis.cancel();
           const u = new SpeechSynthesisUtterance(text);
           u.lang = 'en-US';
-          u.rate = 0.95;
+          u.rate = 0.88;
           u.pitch = 1.05;
           if (onEnded) u.onended = onEnded;
           window.speechSynthesis.speak(u);
@@ -34952,15 +35040,30 @@
       }
     },
 
+    // Tekrarsız Öğe Seçici (getUniqueNextItem)
+    getUniqueNextItem(pool, gameKey) {
+      if (!pool || pool.length === 0) return null;
+      if (pool.length === 1) return pool[0];
+      const lastId = this.lastItems[gameKey];
+      let next;
+      let attempts = 0;
+      do {
+        next = pool[Math.floor(Math.random() * pool.length)];
+        attempts++;
+      } while (next && (next.id || next.word || next.targetId) === lastId && attempts < 10);
+      this.lastItems[gameKey] = next.id || next.word || next.targetId;
+      return next;
+    },
+
     // Puan Ekleme
     addScore(points) {
       this.score += points;
       const el = document.getElementById('enLabScoreVal');
-      if (el) el.textContent = `${this.score} Puan`;
+      if (el) el.textContent = `${this.score} Pts`;
       if (typeof audio !== 'undefined' && audio.playSuccess) audio.playSuccess();
     },
 
-    // Atölyeyi Açma (Portal Girişi)
+    // Portal Açılışı
     open(options) {
       const opts = options || {};
       const targetGrade = parseInt(opts.grade, 10) || (state && state.currentGrade) || 1;
@@ -34969,11 +35072,10 @@
       if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
       if (typeof closeMobileSidebar === 'function') closeMobileSidebar();
 
-      // Müzik kontrolü
       if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
       if (typeof GameMusicEngine !== 'undefined') GameMusicEngine.play('puzzle');
 
-      // Ekranları Gizle
+      // Ekran Gizlemeleri
       if (DOM.homeShowcaseSection) DOM.homeShowcaseSection.classList.add('hide');
       if (DOM.subjectsSection) DOM.subjectsSection.classList.add('hide');
       if (DOM.gamesSection) DOM.gamesSection.classList.add('hide');
@@ -34994,16 +35096,14 @@
       const btnBack = document.getElementById('btnBackFromEnglishFunLab');
       if (btnBack) {
         if (this.fromClass && state && state.currentGrade) {
-          btnBack.innerHTML = `<span class="back-icon" aria-hidden="true">‹</span><span>${state.currentGrade}. Sınıfa Dön</span>`;
+          btnBack.innerHTML = `<span class="back-icon" aria-hidden="true">‹</span><span>Grade ${state.currentGrade}</span>`;
         } else {
-          btnBack.innerHTML = `<span class="back-icon" aria-hidden="true">‹</span><span>Sınıf Seçimi</span>`;
+          btnBack.innerHTML = `<span class="back-icon" aria-hidden="true">‹</span><span>Choose Grade</span>`;
         }
       }
 
-      // Sınıfı Ayarla ve Müfredatı Yükle
       this.setGrade(targetGrade);
 
-      // Deep Linking ve URL Senkronizasyonu
       try {
         const hash = `#ingilizce-${targetGrade}`;
         if (window.location.hash !== hash) {
@@ -35014,7 +35114,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
 
-    // Atölyeden Çıkış
     close() {
       if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
       const funLabSec = document.getElementById('englishFunLabSection');
@@ -35029,13 +35128,11 @@
       }
     },
 
-    // Sınıf Sekmesi Değişimi & Müfredat Yükleme (Kullanıcı Kuralı 1 & 2)
     setGrade(grade) {
       const g = parseInt(grade, 10) || 1;
       this.currentGrade = g;
       if (state) state.currentGrade = g;
 
-      // Sekme Butonlarının Aktifliğini Güncelle
       document.querySelectorAll('#enGradeTabs .funlab-grade-tab').forEach(tab => {
         const tabGrade = parseInt(tab.getAttribute('data-grade'), 10);
         if (tabGrade === g) {
@@ -35047,25 +35144,20 @@
         }
       });
 
-      // Seviye Seçimini Otomatik Eşle (1. sınıf->Level 1, 2. sınıf->Level 2, 3-4->Level 3)
       const mappedLevel = g === 1 ? 1 : (g === 2 ? 2 : 3);
       this.setLevel(mappedLevel, false);
 
-      // Müfredat ve 3 Şıksız Oyun Vitrinini Render Et
       this.renderCurriculum(g);
     },
 
-    // Müfredat ve 3 Şıksız Kartın Dinamik Render'ı (Kullanıcı Kuralı 3)
     renderCurriculum(grade) {
       const data = ENGLISH_CURRICULUM[grade] || ENGLISH_CURRICULUM[1];
 
-      // Rozet ve Başlık
       const badgeEl = document.getElementById('enCurrGradeBadge');
       if (badgeEl) badgeEl.textContent = data.badge;
       const headingEl = document.getElementById('enCurrHeading');
-      if (headingEl) headingEl.textContent = `${data.title} - Şıksız & İnteraktif Etkinlikler`;
+      if (headingEl) headingEl.textContent = `${data.title} - Interactive Workshop`;
 
-      // Ünite Hapları (Rail)
       const railEl = document.getElementById('enCurrUnitsRail');
       if (railEl && Array.isArray(data.units)) {
         railEl.innerHTML = data.units.map(u => `
@@ -35075,7 +35167,6 @@
         `).join('');
       }
 
-      // 3 Adet Şıksız Oyun Kartı Grid'i (Mobilde 2 sütunlu kompakt grid)
       const gridEl = document.getElementById('enCurriculumGrid');
       if (gridEl && Array.isArray(data.games)) {
         gridEl.innerHTML = data.games.map(game => `
@@ -35090,13 +35181,12 @@
               <p class="en-card-game-desc">${game.desc}</p>
             </div>
             <div class="en-card-play-action">
-              <span>${game.actionText || 'Hemen Oyna ▶'}</span>
+              <span>${game.actionText || 'Play Now ▶'}</span>
               <span class="play-arrow">›</span>
             </div>
           </div>
         `).join('');
 
-        // Kart Tıklama Dinleyicileri
         gridEl.querySelectorAll('.en-curr-game-card').forEach(card => {
           card.addEventListener('click', () => {
             const gameId = card.getAttribute('data-curriculum-game-id');
@@ -35105,14 +35195,19 @@
             this.launchCurriculumGame(this.currentGrade, gameId, engine, gameKey);
           });
         });
+
+        // Varsayılan olarak ilk oyunu sahneye hazırla
+        if (data.games.length > 0) {
+          const firstGame = data.games[0];
+          this.currentGame = firstGame.gameKey;
+          this.renderCurrentGame();
+        }
       }
     },
 
-    // Şıksız Müfredat Oyununu Başlatma
     launchCurriculumGame(grade, gameId, engine, gameKey) {
       if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
 
-      // 1. KidsEngine Oyunu İse (Boya, Canavar Giydirme/Vücut)
       if (engine === 'kids' && typeof EnglishKidsEngine !== 'undefined') {
         const funLabSec = document.getElementById('englishFunLabSection');
         if (funLabSec) funLabSec.classList.add('hide');
@@ -35120,11 +35215,10 @@
         if (kidsArena) kidsArena.classList.remove('hide');
 
         const gradeBadge = document.getElementById('kidsArenaGradeBadge');
-        if (gradeBadge) gradeBadge.textContent = `${grade}. Sınıf`;
+        if (gradeBadge) gradeBadge.textContent = `Grade ${grade}`;
 
         EnglishKidsEngine.switchGame(gameKey || 'paint', grade);
 
-        // Kids Arena'dan geri dönüldüğünde tekrar FunLab'a dönsün
         const btnBackKids = document.getElementById('btnBackToEnglishHub');
         if (btnBackKids) {
           btnBackKids.onclick = () => {
@@ -35136,7 +35230,6 @@
         return;
       }
 
-      // 2. AdvancedEngine Oyunu İse (Kelime Treni, Şehir/Yönler, Saatler)
       if (engine === 'advanced' && typeof EnglishAdvancedEngine !== 'undefined') {
         const funLabSec = document.getElementById('englishFunLabSection');
         if (funLabSec) funLabSec.classList.add('hide');
@@ -35144,11 +35237,10 @@
         if (advArena) advArena.classList.remove('hide');
 
         const gradeBadge = document.getElementById('advArenaGradeBadge');
-        if (gradeBadge) gradeBadge.textContent = `${grade}. Sınıf`;
+        if (gradeBadge) gradeBadge.textContent = `Grade ${grade}`;
 
         EnglishAdvancedEngine.switchGame(gameKey || 'room', grade);
 
-        // Advanced Arena'dan geri dönüldüğünde tekrar FunLab'a dönsün
         const btnBackAdv = document.getElementById('btnBackToEnHubFromAdv');
         if (btnBackAdv) {
           btnBackAdv.onclick = () => {
@@ -35160,21 +35252,17 @@
         return;
       }
 
-      // 3. FunLab Dahili Oyunu İse (wordMatch, balloon, room, memory, recipe, weather, jobs)
       this.switchGame(gameKey);
 
-      // Sahneye Yumuşak Kaydır
       const stage = document.getElementById('enLabStageViewport');
       if (stage) {
         stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     },
 
-    // Seviye Değişimi (1, 2, 3)
     setLevel(level, reInitGame = true) {
       this.currentLevel = parseInt(level, 10) || 1;
       
-      // UI Seviye Butonları
       document.querySelectorAll('#enLabLevelSelector .funlab-level-btn').forEach(btn => {
         const lvl = parseInt(btn.getAttribute('data-level'), 10);
         if (lvl === this.currentLevel) {
@@ -35191,11 +35279,9 @@
       }
     },
 
-    // Oyun Sekmesi Değişimi
     setGame(gameKey) {
       this.currentGame = gameKey;
       
-      // UI Oyun Sekmeleri
       document.querySelectorAll('#enLabGameTabs .funlab-tab').forEach(tab => {
         const gk = tab.getAttribute('data-game');
         if (gk === gameKey) {
@@ -35214,12 +35300,12 @@
       this.setGame(gameKey);
     },
 
-    // Mevcut Oyunu Sahneye Bas
     renderCurrentGame() {
       const stage = document.getElementById('enLabStageViewport');
       if (!stage) return;
       stage.innerHTML = '';
 
+      // 1-2. Sınıf Oyunları
       if (this.currentGame === 'wordMatch') {
         this.renderWordMatch(stage);
       } else if (this.currentGame === 'balloon') {
@@ -35228,19 +35314,34 @@
         this.renderRoom(stage);
       } else if (this.currentGame === 'memory') {
         this.renderMemory(stage);
-      } else if (this.currentGame === 'recipe') {
-        this.renderRecipe(stage);
+      }
+      // 3. Sınıf Şıksız Oyunları
+      else if (this.currentGame === 'magnet') {
+        this.renderCanCantMagnet(stage);
       } else if (this.currentGame === 'weather') {
-        this.renderWeather(stage);
-      } else if (this.currentGame === 'jobs') {
-        this.renderJobs(stage);
+        this.renderFeelingsWeather(stage);
+      } else if (this.currentGame === 'spelling') {
+        this.renderSpellingBee(stage);
+      }
+      // 4. Sınıf Şıksız Oyunları
+      else if (this.currentGame === 'townMap') {
+        this.renderTownMap(stage);
+      } else if (this.currentGame === 'timeRoutines') {
+        this.renderTimeRoutines(stage);
+      } else if (this.currentGame === 'jobsCountries' || this.currentGame === 'jobs') {
+        this.renderJobsCountries(stage);
+      } else {
+        // Varsayılan seviyeye göre seç
+        if (this.currentGrade === 3) this.renderCanCantMagnet(stage);
+        else if (this.currentGrade === 4) this.renderTownMap(stage);
+        else this.renderWordMatch(stage);
       }
     },
 
-    // 🧩 1. OYUN: Kelime Avı ve Sesli Eşleştirme (Word & Audio Match)
+    // 🧩 1. OYUN: Kelime Avı ve Sesli Eşleştirme (Word & Audio Match - 1. Sınıf)
     renderWordMatch(container) {
       const pool = this.vocab[this.currentLevel] || this.vocab[1];
-      const target = pool[Math.floor(Math.random() * pool.length)];
+      const target = this.getUniqueNextItem(pool, 'wordMatch') || pool[0];
 
       const distractors = pool.filter(i => i.id !== target.id);
       distractors.sort(() => Math.random() - 0.5);
@@ -35252,7 +35353,7 @@
             <div class="wm-target-visual">
               <span class="wm-emoji-big">${target.emoji}</span>
             </div>
-            <div class="wm-target-tr-label">${target.tr}</div>
+            <div class="wm-target-tr-label">${target.en}</div>
           </div>
 
           <div class="wm-options-container" id="wmOptionsContainer">
@@ -35266,18 +35367,16 @@
 
           <div class="wm-basket-zone" id="wmBasketZone">
             <span class="basket-icon">🧺</span>
-            <span class="basket-text">Doğru kelime taşını buraya dokunarak sepete yerleştir!</span>
+            <span class="basket-text">Listen and touch the matching word stone!</span>
           </div>
         </div>
       `;
       container.innerHTML = html;
 
-      // Moli Doğal İngilizce Seslendirmesi
       this.speak(target.sentence);
       const hint = document.getElementById('enLabHintText');
-      if (hint) hint.innerHTML = `🎯 HEDEF: <b>${target.tr} (${target.emoji})</b> anlamına gelen İngilizce kelime taşını seç!`;
+      if (hint) hint.innerHTML = `🎯 TARGET: Find the word <b>"${target.en}"</b>!`;
 
-      // Seçim Dinleyicileri
       container.querySelectorAll('.wm-word-stone').forEach(stone => {
         stone.addEventListener('click', () => {
           const optId = stone.getAttribute('data-id');
@@ -35285,12 +35384,12 @@
             stone.classList.add('correct');
             this.addScore(10);
             this.speak(`Awesome! ${target.sentence}`, () => {
-              setTimeout(() => this.renderWordMatch(container), 900);
+              setTimeout(() => this.renderWordMatch(container), 1300);
             });
             const basket = document.getElementById('wmBasketZone');
             if (basket) {
               basket.classList.add('basket-celebrate');
-              basket.innerHTML = `<span class="basket-icon">🎉</span><span class="basket-text">Harika! "${target.en}" sepete yerleşti! +10 Puan</span>`;
+              basket.innerHTML = `<span class="basket-icon">🎉</span><span class="basket-text">Awesome! "${target.en}" is in the basket! +10 Pts</span>`;
             }
           } else {
             stone.classList.add('wrong');
@@ -35301,22 +35400,21 @@
       });
     },
 
-    // 🎈 2. OYUN: Uçan Balonlarla İngilizce Çeviri (Balloon Pop)
+    // 🎈 2. OYUN: Uçan Balonlarla İngilizce Çeviri (Balloon Pop - 1-2. Sınıf)
     renderBalloon(container) {
       const pool = this.vocab[this.currentLevel] || this.vocab[1];
-      const target = pool[Math.floor(Math.random() * pool.length)];
+      const target = this.getUniqueNextItem(pool, 'balloon') || pool[0];
 
       const distractors = pool.filter(i => i.id !== target.id);
       distractors.sort(() => Math.random() - 0.5);
       const options = [target, distractors[0], distractors[1], distractors[2] || pool[0]].sort(() => Math.random() - 0.5);
-
       const balloonColors = ['balloon-coral', 'balloon-amber', 'balloon-emerald', 'balloon-purple'];
 
       const html = `
         <div class="funlab-game-arena balloon-arena">
           <div class="balloon-prompt-banner">
-            <div class="balloon-target-badge">🎯 GÖREV HEDEFİ:</div>
-            <div class="balloon-target-text">"${target.tr}" anlamına gelen balonu patlat!</div>
+            <div class="balloon-target-badge">🎯 TARGET:</div>
+            <div class="balloon-target-text">Pop the balloon for: "${target.en} ${target.emoji}"</div>
           </div>
 
           <div class="balloon-sky-viewport" id="balloonSkyViewport">
@@ -35333,19 +35431,18 @@
       `;
       container.innerHTML = html;
 
-      this.speak(`Pop the balloon for: ${target.tr}! ${target.en}!`);
+      this.speak(`Pop the balloon for: ${target.en}!`);
       const hint = document.getElementById('enLabHintText');
-      if (hint) hint.innerHTML = `🎈 HEDEF: Gökyüzünde uçan balonlardan <b>"${target.tr}"</b> yazanı patlat!`;
+      if (hint) hint.innerHTML = `🎈 TARGET: Pop the flying balloon with <b>"${target.en}"</b>!`;
 
-      // Balon Tıklama Dinleyicileri
       container.querySelectorAll('.floating-balloon-item').forEach(b => {
         b.addEventListener('click', () => {
           const bId = b.getAttribute('data-id');
           if (bId === target.id) {
             b.classList.add('popped');
             this.addScore(10);
-            this.speak(`Good job! It is ${target.en}!`, () => {
-              setTimeout(() => this.renderBalloon(container), 900);
+            this.speak(`Great job! It is ${target.en}!`, () => {
+              setTimeout(() => this.renderBalloon(container), 1300);
             });
           } else {
             b.classList.add('shake-wrong');
@@ -35356,50 +35453,47 @@
       });
     },
 
-    // 🏠 3. OYUN: Resimli Oda ve Eşya Yerleştirme (Room Vocabulary)
+    // 🏠 3. OYUN: Resimli Oda ve Eşya Yerleştirme (Room Vocab - 2. Sınıf)
     renderRoom(container) {
-      const task = this.roomTasks[Math.floor(Math.random() * this.roomTasks.length)];
+      const task = this.getUniqueNextItem(this.roomTasks, 'room') || this.roomTasks[0];
 
       const html = `
         <div class="funlab-game-arena room-arena">
           <div class="room-prompt-box">
             <span class="room-task-en">"${task.textEn}"</span>
-            <span class="room-task-tr">${task.hintTr}</span>
           </div>
 
           <div class="room-stage-graphic">
-            <!-- Oda Arka Planı -->
             <div class="room-graphic-wall">
               <div class="room-window">
                 <span class="window-sky">☀️</span>
               </div>
               <div class="room-zone zone-shelf" data-zone="shelf">
-                <span class="zone-label">Shelf (Raf)</span>
+                <span class="zone-label">Shelf</span>
               </div>
             </div>
 
             <div class="room-graphic-floor">
               <div class="room-zone zone-bed" data-zone="bed">
-                <span class="zone-label">Bed (Yatak)</span>
+                <span class="zone-label">Bed</span>
               </div>
               <div class="room-zone zone-rug" data-zone="rug">
-                <span class="zone-label">Under the Bed / Rug (Halı)</span>
+                <span class="zone-label">Under Bed / Rug</span>
               </div>
               <div class="room-zone zone-desk" data-zone="desk">
-                <span class="zone-label">Desk (Masa)</span>
+                <span class="zone-label">Desk</span>
               </div>
               <div class="room-zone zone-chair" data-zone="chair">
-                <span class="zone-label">Chair (Sandalye)</span>
+                <span class="zone-label">Chair</span>
               </div>
             </div>
           </div>
 
-          <!-- Sürüklenebilir / Dokunulabilir Eşya Kartları -->
           <div class="room-inventory-bar" id="roomInventoryBar">
             <div class="room-item-card target-item" data-item="${task.itemKey}" role="button" tabindex="0">
               <span class="item-emoji">${task.itemEmoji}</span>
               <span class="item-name">${task.itemName}</span>
-              <span class="item-tap-hint">Dokun & Yerleştir</span>
+              <span class="item-tap-hint">Tap & Place</span>
             </div>
           </div>
         </div>
@@ -35408,14 +35502,11 @@
 
       this.speak(task.textEn);
       const hint = document.getElementById('enLabHintText');
-      if (hint) hint.innerHTML = `🏠 YÖNERGE: <b>${task.textEn}</b> (${task.hintTr})`;
+      if (hint) hint.innerHTML = `🏠 MISSION: <b>${task.textEn}</b>`;
 
       const itemCard = container.querySelector('.room-item-card');
-      let itemSelected = false;
-
       if (itemCard) {
         itemCard.addEventListener('click', () => {
-          itemSelected = true;
           itemCard.classList.add('selected');
           if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
           this.speak(task.itemName);
@@ -35427,11 +35518,11 @@
           const zoneKey = zone.getAttribute('data-zone');
           if (zoneKey === task.zoneKey) {
             zone.classList.add('zone-success');
-            zone.innerHTML = `<span class="placed-emoji">${task.itemEmoji}</span><span class="zone-label-success">✓ Doğru Yer!</span>`;
+            zone.innerHTML = `<span class="placed-emoji">${task.itemEmoji}</span><span class="zone-label-success">✓ Perfect Place!</span>`;
             if (itemCard) itemCard.style.display = 'none';
             this.addScore(10);
             this.speak(task.feedback, () => {
-              setTimeout(() => this.renderRoom(container), 1100);
+              setTimeout(() => this.renderRoom(container), 1300);
             });
           } else {
             zone.classList.add('zone-wrong');
@@ -35442,15 +35533,15 @@
       });
     },
 
-    // 🃏 4. OYUN: İngilizce Hafıza Kartları (Memory Card Match)
+    // 🃏 4. OYUN: İngilizce Hafıza Kartları (Memory Match - 1-2. Sınıf)
     renderMemory(container) {
       const pool = this.vocab[this.currentLevel] || this.vocab[1];
       const shuffledVocab = [...pool].sort(() => Math.random() - 0.5).slice(0, 4);
 
       const cards = [];
       shuffledVocab.forEach((item, idx) => {
-        cards.push({ id: idx, pairId: item.id, type: 'image', content: item.emoji, label: item.tr, sentence: item.sentence });
-        cards.push({ id: idx + 10, pairId: item.id, type: 'word', content: item.en, label: 'English Word', sentence: item.sentence });
+        cards.push({ id: idx, pairId: item.id, type: 'image', content: item.emoji, label: item.en, sentence: item.sentence });
+        cards.push({ id: idx + 10, pairId: item.id, type: 'word', content: item.en, label: 'Word', sentence: item.sentence });
       });
       cards.sort(() => Math.random() - 0.5);
 
@@ -35476,9 +35567,9 @@
       `;
       container.innerHTML = html;
 
-      this.speak("Find matching pairs! Match the picture with the English word!");
+      this.speak("Find matching pairs! Match pictures with English words!");
       const hint = document.getElementById('enLabHintText');
-      if (hint) hint.innerHTML = `🃏 HEDEF: Resim ile İngilizce kelime kartlarını eşleştir!`;
+      if (hint) hint.innerHTML = `🃏 MISSION: Match the picture with the English word!`;
 
       let flippedCards = [];
       let lockBoard = false;
@@ -35514,7 +35605,7 @@
                   this.speak("Congratulations! You matched all pairs!", () => {
                     this.renderMemory(container);
                   });
-                }, 1000);
+                }, 1300);
               }
             } else {
               setTimeout(() => {
@@ -35529,93 +35620,99 @@
       });
     },
 
-    // 🍳 3. Sınıf Şıksız Oyun: Tarif ve Malzeme Sepeti (Food & Drinks Sürükle-Bırak)
-    renderRecipe(container) {
-      const recipes = [
-        { name: "Fruit Salad (Meyve Salatası)", targets: [{ en: "Apple", emoji: "🍎" }, { en: "Banana", emoji: "🍌" }, { en: "Strawberry", emoji: "🍓" }], distractors: [{ en: "Pizza", emoji: "🍕" }, { en: "Milk", emoji: "🥛" }] },
-        { name: "Healthy Breakfast (Sağlıklı Kahvaltı)", targets: [{ en: "Milk", emoji: "🥛" }, { en: "Egg", emoji: "🥚" }, { en: "Bread", emoji: "🍞" }], distractors: [{ en: "Burger", emoji: "🍔" }, { en: "Ice Cream", emoji: "🍦" }] }
-      ];
-      const curRecipe = recipes[Math.floor(Math.random() * recipes.length)];
-      const allItems = [...curRecipe.targets, ...curRecipe.distractors].sort(() => Math.random() - 0.5);
+    // =========================================================================
+    // 📘 GRADE 3 (3. SINIF) 3 ŞIKSIZ INTERAKTİF OYUN
+    // =========================================================================
+
+    // 🦸 1) Can / Can't Sorting Magnet (Yetenek Mıknatısı)
+    renderCanCantMagnet(container) {
+      const target = this.getUniqueNextItem(this.canCantPool, 'magnet') || this.canCantPool[0];
 
       const html = `
-        <div class="funlab-game-arena recipe-arena">
+        <div class="funlab-game-arena magnet-arena">
           <div class="balloon-prompt-banner">
-            <div class="balloon-target-badge">🍳 ŞIKSIZ TARİF GÖREVİ:</div>
-            <div class="balloon-target-text">${curRecipe.name} için malzemeleri sepete dokunarak topla!</div>
+            <div class="balloon-target-badge">🦸 ABILITY MAGNET:</div>
+            <div class="balloon-target-text">Can it do this? Touch CAN or CAN'T!</div>
           </div>
-          <div class="recipe-basket-display" id="recipeBasketDisplay" style="text-align:center; padding:14px; background:#fff; border-radius:16px; margin:10px 0; border:2px dashed #6366f1;">
-            <span style="font-size:32px;">🧺</span>
-            <div style="font-weight:700; color:#334155; margin-top:4px;">Toplanan Malzemeler: <span id="recipeCollectedCount">0</span> / ${curRecipe.targets.length}</div>
+
+          <div class="magnet-target-card" id="magnetTargetCard">
+            <span class="magnet-target-emoji">${target.emoji}</span>
+            <span class="magnet-target-text">${target.subject} ➔ ${target.action}</span>
           </div>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(110px, 1fr)); gap:10px; margin-top:12px;" id="recipeItemsGrid">
-            ${allItems.map(it => `
-              <button class="wm-word-stone" data-en="${it.en}" type="button" style="padding:14px 8px; flex-direction:column; text-align:center;">
-                <span style="font-size:28px;">${it.emoji}</span>
-                <span style="font-size:14px; font-weight:800; color:#1e1b4b; margin-top:4px;">${it.en}</span>
-              </button>
-            `).join('')}
+
+          <div class="magnet-boxes-row">
+            <div class="magnet-box box-can" id="boxCan" role="button" tabindex="0">
+              <span class="magnet-icon">🧲</span>
+              <span class="magnet-title">✅ CAN</span>
+              <span class="magnet-subtext">Yes, it can!</span>
+            </div>
+
+            <div class="magnet-box box-cant" id="boxCant" role="button" tabindex="0">
+              <span class="magnet-icon">🧲</span>
+              <span class="magnet-title">❌ CAN'T</span>
+              <span class="magnet-subtext">No, it cannot!</span>
+            </div>
           </div>
         </div>
       `;
       container.innerHTML = html;
 
-      this.speak(`Let's prepare: ${curRecipe.name}!`);
+      this.speak(`Can ${target.subject} ${target.action.toLowerCase()}?`);
       const hint = document.getElementById('enLabHintText');
-      if (hint) hint.innerHTML = `🍳 YÖNERGE: ${curRecipe.name} için doğru malzemelere dokunup sepete at!`;
+      if (hint) hint.innerHTML = `🦸 QUESTION: <b>Can ${target.subject} ${target.action.toLowerCase()}?</b>`;
 
-      let collected = 0;
-      container.querySelectorAll('#recipeItemsGrid button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const itemEn = btn.getAttribute('data-en');
-          const isTarget = curRecipe.targets.some(t => t.en === itemEn);
-          if (isTarget && !btn.classList.contains('correct')) {
-            btn.classList.add('correct');
-            collected++;
-            const cntEl = document.getElementById('recipeCollectedCount');
-            if (cntEl) cntEl.textContent = collected;
-            this.addScore(10);
-            this.speak(`Great! ${itemEn} is in the basket!`);
-            if (collected === curRecipe.targets.length) {
-              setTimeout(() => {
-                this.speak("Recipe completed! Delicious!", () => {
-                  this.renderRecipe(container);
-                });
-              }, 1000);
-            }
-          } else if (!isTarget) {
-            btn.classList.add('wrong');
-            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
-            setTimeout(() => btn.classList.remove('wrong'), 600);
+      const targetCard = container.querySelector('#magnetTargetCard');
+
+      const handleChoice = (chosenCan) => {
+        if (chosenCan === target.can) {
+          const chosenBox = chosenCan ? container.querySelector('#boxCan') : container.querySelector('#boxCant');
+          if (chosenBox) chosenBox.classList.add('active-hover');
+          if (targetCard) {
+            targetCard.style.transform = 'scale(1.1)';
+            targetCard.style.borderColor = chosenCan ? '#10b981' : '#ef4444';
           }
-        });
-      });
+          this.addScore(10);
+          this.speak(`Awesome! ${target.fullSentence}`, () => {
+            setTimeout(() => this.renderCanCantMagnet(container), 1300);
+          });
+        } else {
+          if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+          if (targetCard) {
+            targetCard.classList.add('shake-wrong');
+            setTimeout(() => targetCard.classList.remove('shake-wrong'), 600);
+          }
+          this.speak(`Try again! Can ${target.subject} ${target.action.toLowerCase()}?`);
+        }
+      };
+
+      const btnCan = container.querySelector('#boxCan');
+      const btnCant = container.querySelector('#boxCant');
+      if (btnCan) btnCan.addEventListener('click', () => handleChoice(true));
+      if (btnCant) btnCant.addEventListener('click', () => handleChoice(false));
     },
 
-    // 🎈 3. Sınıf Şıksız Oyun: Duygular ve Hava Durumu Avı
-    renderWeather(container) {
-      const items = [
-        { en: "Sunny", tr: "Güneşli", emoji: "☀️", sentence: "It is hot and sunny today!" },
-        { en: "Rainy", tr: "Yağmurlu", emoji: "🌧️", sentence: "Take your umbrella, it is rainy!" },
-        { en: "Windy", tr: "Rüzgarlı", emoji: "💨", sentence: "The wind is blowing, it is windy!" },
-        { en: "Happy", tr: "Mutlu", emoji: "😃", sentence: "I feel very happy today!" },
-        { en: "Tired", tr: "Yorgun", emoji: "😴", sentence: "I need to rest, I feel tired!" }
-      ];
-      const target = items[Math.floor(Math.random() * items.length)];
-      const distractors = items.filter(i => i.en !== target.en).sort(() => Math.random() - 0.5).slice(0, 2);
-      const options = [target, ...distractors].sort(() => Math.random() - 0.5);
+    // 😊 2) Feelings & Weather Match (Duygular ve Hava Durumu)
+    renderFeelingsWeather(container) {
+      const target = this.getUniqueNextItem(this.feelingsWeatherPool, 'weather') || this.feelingsWeatherPool[0];
+
+      const distractors = this.feelingsWeatherPool.filter(i => i.id !== target.id);
+      distractors.sort(() => Math.random() - 0.5);
+      const options = [target, distractors[0], distractors[1]].sort(() => Math.random() - 0.5);
 
       const html = `
-        <div class="funlab-game-arena weather-arena">
-          <div class="balloon-prompt-banner">
-            <div class="balloon-target-badge">🎈 HAVA DURUMU & DUYGULAR:</div>
-            <div class="balloon-target-text">Moli soruyor: "${target.tr}" hangisi?</div>
+        <div class="funlab-game-arena feelings-weather-arena">
+          <div class="weather-scene-display">
+            <span class="weather-big-emoji">${target.emoji}</span>
+            <div class="weather-template-sentence" id="weatherSentence">
+              ${target.template.replace('[ ___ ]', `<span class="weather-slot-box" id="weatherSlotBox">?</span>`)}
+            </div>
           </div>
-          <div style="display:flex; justify-content:center; gap:16px; margin:24px 0; flex-wrap:wrap;">
+
+          <div class="weather-options-row">
             ${options.map(opt => `
-              <button class="wm-word-stone" data-en="${opt.en}" type="button" style="padding:16px 20px; font-size:16px;">
-                <span style="font-size:32px; margin-right:8px;">${opt.emoji}</span>
-                <span>${opt.en}</span>
+              <button class="wm-word-stone" data-word="${opt.word}" type="button" style="padding:14px 20px; font-size:16px;">
+                <span class="stone-icon">${opt.emoji}</span>
+                <span class="stone-en-text">${opt.word}</span>
               </button>
             `).join('')}
           </div>
@@ -35625,54 +35722,218 @@
 
       this.speak(target.sentence);
       const hint = document.getElementById('enLabHintText');
-      if (hint) hint.innerHTML = `🎈 Moli'yi dinle: <b>"${target.tr}"</b> anlamına gelen kartı seç!`;
+      if (hint) hint.innerHTML = `😊 MISSION: Complete with <b>"${target.word}"</b>!`;
 
-      container.querySelectorAll('button[data-en]').forEach(btn => {
+      container.querySelectorAll('button[data-word]').forEach(btn => {
         btn.addEventListener('click', () => {
-          if (btn.getAttribute('data-en') === target.en) {
+          const w = btn.getAttribute('data-word');
+          if (w === target.word) {
             btn.classList.add('correct');
+            const slot = container.querySelector('#weatherSlotBox');
+            if (slot) {
+              slot.textContent = target.word;
+              slot.classList.add('filled');
+            }
             this.addScore(10);
-            this.speak(`Super! ${target.sentence}`, () => {
-              setTimeout(() => this.renderWeather(container), 900);
+            this.speak(`Well done! ${target.sentence}`, () => {
+              setTimeout(() => this.renderFeelingsWeather(container), 1300);
             });
           } else {
             btn.classList.add('wrong');
             if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
-            setTimeout(() => btn.classList.remove('wrong'), 500);
+            setTimeout(() => btn.classList.remove('wrong'), 600);
           }
         });
       });
     },
 
-    // 🧩 4. Sınıf Şıksız Oyun: Meslekler ve Eşyaları Eşleştirme (Jobs & Tools)
-    renderJobs(container) {
-      const pairs = [
-        { job: "Doctor", jobEmoji: "🩺", tool: "Stethoscope", toolEmoji: "🩺", exp: "A doctor helps sick people!" },
-        { job: "Teacher", jobEmoji: "👩‍🏫", tool: "Book & Board", toolEmoji: "📚", exp: "A teacher teaches lessons!" },
-        { job: "Firefighter", jobEmoji: "🧑‍🚒", tool: "Fire Hose", toolEmoji: "🧯", exp: "A firefighter puts out fire!" },
-        { job: "Pilot", jobEmoji: "👨‍✈️", tool: "Airplane", toolEmoji: "✈️", exp: "A pilot flies planes!" }
-      ];
-      const target = pairs[Math.floor(Math.random() * pairs.length)];
-      const distractors = pairs.filter(p => p.job !== target.job).sort(() => Math.random() - 0.5).slice(0, 2);
-      const options = [target, ...distractors].sort(() => Math.random() - 0.5);
+    // 🔤 3) Spelling Bee Workshop (Kelime Kodlama Atölyesi)
+    renderSpellingBee(container) {
+      const target = this.getUniqueNextItem(this.spellingPool, 'spelling') || this.spellingPool[0];
+      const letters = target.word.split('');
+      const scrambled = [...letters].sort(() => Math.random() - 0.5);
 
       const html = `
-        <div class="funlab-game-arena jobs-arena">
-          <div class="wm-card-hero">
-            <div class="wm-target-visual">
-              <span class="wm-emoji-big">${target.jobEmoji}</span>
+        <div class="funlab-game-arena spelling-bee-arena">
+          <div class="spelling-hero-card">
+            <span class="spelling-hero-emoji">${target.emoji}</span>
+            <div class="spelling-hero-info">
+              <span class="spelling-category-pill">${target.category}</span>
+              <span class="spelling-prompt-text">Spell the word: <b>${target.word}</b></span>
             </div>
-            <div class="wm-target-tr-label">${target.job} (Meslek)</div>
           </div>
-          <div class="balloon-prompt-banner" style="margin:14px 0;">
-            <div class="balloon-target-badge">🧩 MESLEK & ARAÇ EŞLEŞTİRME:</div>
-            <div class="balloon-target-text">${target.job} hangi aracı kullanır?</div>
+
+          <div class="spelling-slots-row" id="spellSlotsRow">
+            ${letters.map((_, idx) => `<div class="spelling-slot" data-slot="${idx}">_</div>`).join('')}
           </div>
-          <div class="wm-options-container">
+
+          <div class="spelling-tiles-row" id="spellTilesRow">
+            ${scrambled.map((lt, idx) => `
+              <button class="spell-letter-tile" data-letter="${lt}" data-tile-idx="${idx}" type="button">${lt}</button>
+            `).join('')}
+          </div>
+
+          <div class="spell-actions-row">
+            <button class="spell-btn-action" id="btnSpellBackspace" type="button">⌫ Backspace</button>
+            <button class="spell-btn-action" id="btnSpellReset" type="button">🔄 Reset</button>
+            <button class="spell-btn-action" id="btnSpellListen" type="button">🔊 Listen</button>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+
+      this.speak(`Spell the word: ${target.word}!`);
+      const hint = document.getElementById('enLabHintText');
+      if (hint) hint.innerHTML = `🔤 MISSION: Tap letters to spell <b>"${target.word}"</b>!`;
+
+      let typedLetters = [];
+
+      const updateSlots = () => {
+        container.querySelectorAll('#spellSlotsRow .spelling-slot').forEach((slot, idx) => {
+          if (idx < typedLetters.length) {
+            slot.textContent = typedLetters[idx].letter;
+            slot.classList.add('filled');
+          } else {
+            slot.textContent = '_';
+            slot.classList.remove('filled');
+          }
+        });
+
+        // Tüm harfler doldu mu?
+        if (typedLetters.length === letters.length) {
+          const formedWord = typedLetters.map(t => t.letter).join('');
+          if (formedWord === target.word) {
+            container.querySelectorAll('#spellSlotsRow .spelling-slot').forEach(s => s.classList.add('correct'));
+            this.addScore(10);
+            this.speak(`Awesome! ${target.word.split('').join('-')}! ${target.sentence}`, () => {
+              setTimeout(() => this.renderSpellingBee(container), 1300);
+            });
+          } else {
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            container.querySelectorAll('#spellSlotsRow .spelling-slot').forEach(s => {
+              s.classList.add('shake-wrong');
+              setTimeout(() => s.classList.remove('shake-wrong'), 600);
+            });
+            this.speak("Oops! Try again!");
+            setTimeout(() => resetSpelling(), 700);
+          }
+        }
+      };
+
+      const resetSpelling = () => {
+        typedLetters = [];
+        container.querySelectorAll('.spell-letter-tile').forEach(t => t.classList.remove('used'));
+        updateSlots();
+      };
+
+      container.querySelectorAll('.spell-letter-tile').forEach(tile => {
+        tile.addEventListener('click', () => {
+          if (tile.classList.contains('used') || typedLetters.length >= letters.length) return;
+          tile.classList.add('used');
+          const lt = tile.getAttribute('data-letter');
+          typedLetters.push({ letter: lt, tileEl: tile });
+          if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+          updateSlots();
+        });
+      });
+
+      const btnBack = container.querySelector('#btnSpellBackspace');
+      if (btnBack) {
+        btnBack.addEventListener('click', () => {
+          if (typedLetters.length > 0) {
+            const popped = typedLetters.pop();
+            popped.tileEl.classList.remove('used');
+            if (typeof audio !== 'undefined' && audio.playClick) audio.playClick();
+            updateSlots();
+          }
+        });
+      }
+
+      const btnRst = container.querySelector('#btnSpellReset');
+      if (btnRst) btnRst.addEventListener('click', resetSpelling);
+
+      const btnLst = container.querySelector('#btnSpellListen');
+      if (btnLst) btnLst.addEventListener('click', () => this.speak(target.word));
+    },
+
+    // =========================================================================
+    // 📙 GRADE 4 (4. SINIF) 3 ŞIKSIZ INTERAKTİF OYUN
+    // =========================================================================
+
+    // 🗺️ 1) Town Map Explorer (Şehir Haritası ve Yönler)
+    renderTownMap(container) {
+      const task = this.getUniqueNextItem(this.townMapTasks, 'townMap') || this.townMapTasks[0];
+
+      const html = `
+        <div class="funlab-game-arena town-map-arena">
+          <div class="balloon-prompt-banner">
+            <div class="balloon-target-badge">🗺️ TOWN MAP MISSION:</div>
+            <div class="balloon-target-text">${task.prompt}</div>
+          </div>
+
+          <div class="town-map-viewport">
+            ${this.townMapBldgs.map(bldg => `
+              <div class="town-bldg-card" data-bldg="${bldg.id}" role="button" tabindex="0">
+                <span class="town-bldg-icon">${bldg.icon}</span>
+                <span class="town-bldg-name">${bldg.name}</span>
+                <span class="town-bldg-hint">${bldg.hint}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+
+      this.speak(task.spoken);
+      const hint = document.getElementById('enLabHintText');
+      if (hint) hint.innerHTML = `🗺️ MISSION: <b>${task.prompt}</b>`;
+
+      container.querySelectorAll('.town-bldg-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const bid = card.getAttribute('data-bldg');
+          if (bid === task.targetId) {
+            card.classList.add('matched');
+            this.addScore(10);
+            this.speak(`Awesome! ${task.exp}`, () => {
+              setTimeout(() => this.renderTownMap(container), 1300);
+            });
+          } else {
+            card.classList.add('shake-wrong');
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            setTimeout(() => card.classList.remove('shake-wrong'), 600);
+            this.speak("Try again! Follow the directions!");
+          }
+        });
+      });
+    },
+
+    // 🕒 2) What Time Is It? & Daily Routines (Saatler ve Günlük Rutin)
+    renderTimeRoutines(container) {
+      const target = this.getUniqueNextItem(this.timeRoutinesPool, 'timeRoutines') || this.timeRoutinesPool[0];
+
+      const distractors = this.timeRoutinesPool.filter(i => i.id !== target.id);
+      distractors.sort(() => Math.random() - 0.5);
+      const options = [target, distractors[0], distractors[1]].sort(() => Math.random() - 0.5);
+
+      const html = `
+        <div class="funlab-game-arena time-routines-arena">
+          <div class="time-hero-panel">
+            <div class="digital-clock-display">
+              <div class="clock-icon-bubble">⏰</div>
+              <span class="clock-digital-digits">${target.timeStr}</span>
+            </div>
+
+            <div class="routine-badge-box">
+              <span class="routine-badge-emoji">${target.routineEmoji}</span>
+              <span class="routine-badge-text">${target.routine}</span>
+            </div>
+          </div>
+
+          <div class="time-options-grid">
             ${options.map(opt => `
-              <button class="wm-word-stone" data-job="${opt.job}" type="button">
-                <span class="stone-icon">${opt.toolEmoji}</span>
-                <span class="stone-en-text">${opt.tool}</span>
+              <button class="wm-word-stone" data-id="${opt.id}" type="button" style="padding:16px 14px; font-size:15px; text-align:center; justify-content:center;">
+                <span class="stone-icon">🕒</span>
+                <span class="stone-en-text">It is ${opt.phrase}</span>
               </button>
             `).join('')}
           </div>
@@ -35680,46 +35941,98 @@
       `;
       container.innerHTML = html;
 
-      this.speak(`Who uses this? What does a ${target.job} use?`);
+      this.speak(`What time is it? It is ${target.timeStr}!`);
       const hint = document.getElementById('enLabHintText');
-      if (hint) hint.innerHTML = `🧩 ${target.job} hangi aracı kullanır? Doğru kartı seç!`;
+      if (hint) hint.innerHTML = `🕒 MISSION: Match the time <b>"${target.timeStr}"</b> (${target.routine})!`;
 
-      container.querySelectorAll('button[data-job]').forEach(btn => {
+      container.querySelectorAll('button[data-id]').forEach(btn => {
         btn.addEventListener('click', () => {
-          if (btn.getAttribute('data-job') === target.job) {
+          const bid = btn.getAttribute('data-id');
+          if (bid === target.id) {
             btn.classList.add('correct');
             this.addScore(10);
-            this.speak(`Correct! ${target.exp}`, () => {
-              setTimeout(() => this.renderJobs(container), 900);
+            this.speak(`Awesome! ${target.sentence}`, () => {
+              setTimeout(() => this.renderTimeRoutines(container), 1300);
             });
           } else {
             btn.classList.add('wrong');
             if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
-            setTimeout(() => btn.classList.remove('wrong'), 500);
+            setTimeout(() => btn.classList.remove('wrong'), 600);
+            this.speak("Try again! What time is it?");
           }
         });
       });
     },
 
-    // WhatsApp Paylaşım
+    // 🌍 3) Jobs & Countries Match (Meslekler ve Ülkeler)
+    renderJobsCountries(container) {
+      const target = this.getUniqueNextItem(this.jobsCountriesPool, 'jobsCountries') || this.jobsCountriesPool[0];
+
+      const distractors = this.jobsCountriesPool.filter(i => i.id !== target.id);
+      distractors.sort(() => Math.random() - 0.5);
+      const options = [target, distractors[0], distractors[1]].sort(() => Math.random() - 0.5);
+
+      const html = `
+        <div class="funlab-game-arena jobs-countries-arena">
+          <div class="job-clue-card">
+            <span class="job-clue-emoji">${target.roleEmoji}</span>
+            <div class="job-clue-body">
+              <span class="job-clue-country-tag">🌍 Nationality: ${target.country} (${target.nat} ${target.flag})</span>
+              <span class="job-clue-quote">"${target.clue}"</span>
+            </div>
+          </div>
+
+          <div class="jobs-options-row">
+            ${options.map(opt => `
+              <button class="wm-word-stone" data-role="${opt.role}" type="button" style="padding:16px 12px; font-size:15px; text-align:center; justify-content:center;">
+                <span class="stone-icon">${opt.roleEmoji}</span>
+                <span class="stone-en-text">${opt.role}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+
+      this.speak(target.clue);
+      const hint = document.getElementById('enLabHintText');
+      if (hint) hint.innerHTML = `🌍 MISSION: <b>${target.clue}</b> Who am I?`;
+
+      container.querySelectorAll('button[data-role]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const r = btn.getAttribute('data-role');
+          if (r === target.role) {
+            btn.classList.add('correct');
+            this.addScore(10);
+            this.speak(`Well done! ${target.sentence}`, () => {
+              setTimeout(() => this.renderJobsCountries(container), 1300);
+            });
+          } else {
+            btn.classList.add('wrong');
+            if (typeof audio !== 'undefined' && audio.playWrong) audio.playWrong();
+            setTimeout(() => btn.classList.remove('wrong'), 600);
+            this.speak("Try again! Who am I?");
+          }
+        });
+      });
+    },
+
     shareWhatsApp() {
       const shareUrl = `${window.location.origin}${window.location.pathname}?oyun=english`;
-      const shareText = `🇬🇧 English Fun Lab - Derse Bi' Mola'da İngilizce Oyun Atölyesi!\n\nSevimli dostumuz Moli ile resimli kelime avı, uçan balonlar, oda düzenleme ve hafıza oyunlarıyla İngilizce çok eğlenceli!\n\nSen de hemen katıl: ${shareUrl}`;
+      const shareText = `🇬🇧 English Fun Lab - Fun Interactive English Workshop on Derse Bi' Mola!\n\nJoin Moli with Can/Can't Magnet, Feelings & Weather, Spelling Bee, Town Map and Daily Routines!\n\nPlay now: ${shareUrl}`;
       const waLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
       window.open(waLink, '_blank');
     },
 
-    // Dinleyicileri Bağlama (Init)
     init() {
       if (this._initialized) return;
       this._initialized = true;
-      // 1) Geri Dönüş Butonu
+
       const btnBack = document.getElementById('btnBackFromEnglishFunLab');
       if (btnBack) {
         btnBack.addEventListener('click', () => this.close());
       }
 
-      // 2) Sınıf Sekmeleri Dinleyicileri (1, 2, 3, 4. Sınıf)
       document.querySelectorAll('#enGradeTabs .funlab-grade-tab').forEach(tab => {
         tab.addEventListener('click', () => {
           const g = parseInt(tab.getAttribute('data-grade'), 10);
@@ -35728,7 +36041,6 @@
         });
       });
 
-      // 3) Seviye Seçim Butonları Dinleyicileri
       document.querySelectorAll('#enLabLevelSelector .funlab-level-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const lvl = parseInt(btn.getAttribute('data-level'), 10);
@@ -35737,7 +36049,6 @@
         });
       });
 
-      // 4) Oyun Sekmeleri Dinleyicileri
       document.querySelectorAll('#enLabGameTabs .funlab-tab').forEach(tab => {
         tab.addEventListener('click', () => {
           const gKey = tab.getAttribute('data-game');
@@ -35746,7 +36057,6 @@
         });
       });
 
-      // 5) Moli Ses Tekrar Dinle Butonu
       const btnRepeat = document.getElementById('btnEnLabRepeatVoice');
       if (btnRepeat) {
         btnRepeat.addEventListener('click', () => {
@@ -35755,7 +36065,6 @@
         });
       }
 
-      // 6) WhatsApp Paylaşım Butonu
       const btnWa = document.getElementById('btnEnLabShareWA');
       if (btnWa) {
         btnWa.addEventListener('click', () => {
@@ -35763,30 +36072,6 @@
         });
       }
 
-      // 7) Ana Sayfa Hero Kartı Dinleyicileri
-      const cardHome = document.getElementById('cardHomeEnglishFunLab');
-      if (cardHome) {
-        cardHome.addEventListener('click', (e) => {
-          if (e.target && e.target.closest('#btnShareFunLabHome')) return;
-          this.open({ grade: 1, fromClass: false });
-        });
-      }
-      const btnPlayHome = document.getElementById('btnPlayFunLabHome');
-      if (btnPlayHome) {
-        btnPlayHome.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.open({ grade: 1, fromClass: false });
-        });
-      }
-      const btnShareHome = document.getElementById('btnShareFunLabHome');
-      if (btnShareHome) {
-        btnShareHome.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.shareWhatsApp();
-        });
-      }
-
-      // 8) Popüler Oyunlar Gridindeki Kart
       const arcadeCard = document.querySelector('.arcade-game-card[data-arcade-game="english"]');
       if (arcadeCard) {
         arcadeCard.addEventListener('click', (e) => {
@@ -35800,6 +36085,7 @@
   window.ENGLISH_CURRICULUM = ENGLISH_CURRICULUM;
   window.EnglishFunLab = EnglishFunLab;
   window.openEnglishFunLab = (options) => EnglishFunLab.open(options);
+
 
 
 
