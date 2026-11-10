@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=9.1.1">
+  <link rel="stylesheet" href="style.css?v=9.2.0">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -705,7 +705,7 @@
               </div>
 
               <!-- 3. Sınıf BİLSEM Kartı -->
-              <div class="bilsem-grade-card card-bilsem-g3" data-bilsem-grade="3" role="button" tabindex="0" onclick="window.openBilsem(3)">
+              <div class="bilsem-grade-card card-bilsem-g3" data-bilsem-grade="3" role="button" tabindex="0" onclick="window.BilsemExamEngine.startGrade(3)">
                 <div class="bilsem-card-top-bar">
                   <span class="bilsem-card-grade-badge">📘 3. Sınıf</span>
                   <span class="badge-blinking-new">🔴 YENİ</span>
@@ -722,7 +722,7 @@
                   <span>⚖️ Eşit Terazi</span>
                 </div>
                 <div class="bilsem-card-action">
-                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
+                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); window.BilsemExamEngine.startGrade(3);">Sınava Başla ›</button>
                   <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="3">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                   </button>
@@ -730,7 +730,7 @@
               </div>
 
               <!-- 4. Sınıf BİLSEM Kartı -->
-              <div class="bilsem-grade-card card-bilsem-g4" data-bilsem-grade="4" role="button" tabindex="0" onclick="window.openBilsem(4)">
+              <div class="bilsem-grade-card card-bilsem-g4" data-bilsem-grade="4" role="button" tabindex="0" onclick="window.BilsemExamEngine.startGrade(4)">
                 <div class="bilsem-card-top-bar">
                   <span class="bilsem-card-grade-badge">📙 4. Sınıf</span>
                   <span class="badge-blinking-new">🔴 YENİ</span>
@@ -747,7 +747,7 @@
                   <span>👑 4x4 KenKen</span>
                 </div>
                 <div class="bilsem-card-action">
-                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); this.closest('.bilsem-grade-card').click();">Sınava Başla ›</button>
+                  <button class="btn-bilsem-card-start" type="button" onclick="event.stopPropagation(); window.BilsemExamEngine.startGrade(4);">Sınava Başla ›</button>
                   <button class="btn-bilsem-card-share" type="button" title="WhatsApp'ta Paylaş" data-grade="4">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                   </button>
@@ -1099,7 +1099,7 @@
                     <polyline points="12 19 5 12 12 5"></polyline>
                   </svg>
                 </span>
-                <span>Ana Sayfa</span>
+                <span>← BİLSEM Sınıflarına Dön</span>
               </button>
 
               <div class="bilsem-arena-title-wrap">
@@ -3548,6 +3548,6 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=9.1.1" defer></script>
+  <script src="app.js?v=9.2.0" defer></script>
 </body>
 </html>

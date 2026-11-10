@@ -34710,7 +34710,7 @@
   function openBilsem(gradeNumber) {
     const g = parseInt(gradeNumber || 1, 10);
     if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
-    if (g === 1 || g === 2) {
+    if (g >= 1 && g <= 4) {
       if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.open === 'function') {
         window.BilsemExamEngine.open({ grade: g });
       }
@@ -37989,15 +37989,15 @@
         } else if (oyunNorm === 'bilsem-3' || oyunNorm === 'bilsem3') {
           interactionLockUntil = 0;
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
-          if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
-            MindGamesEngine.open({ grade: 3 });
+          if (window.BilsemExamEngine && typeof window.BilsemExamEngine.startGrade === 'function') {
+            window.BilsemExamEngine.startGrade(3);
           }
           return true;
         } else if (oyunNorm === 'bilsem-4' || oyunNorm === 'bilsem4') {
           interactionLockUntil = 0;
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
-          if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
-            MindGamesEngine.open({ grade: 4 });
+          if (window.BilsemExamEngine && typeof window.BilsemExamEngine.startGrade === 'function') {
+            window.BilsemExamEngine.startGrade(4);
           }
           return true;
         } else if (oyunNorm === 'english' || oyunNorm === 'ingilizce' || oyunNorm === 'englishlab' || oyunNorm === 'englishfunlab') {
@@ -48156,6 +48156,7 @@ var BilsemExamEngine = window.BilsemExamEngine = (function() {
   let countdownRemaining = 4.0;
   let memoryPhase = 'preview'; // 'preview' | 'hidden'
   const shuffleBags = {};
+  let lastExtOpenTs = 0;
 
   const GRADE_CONFIG = {
     1: {
@@ -48629,6 +48630,580 @@ matrix: [
 
   };
 
+  // ==========================================================================
+  // 🧠 3. & 4. SINIF BİLSEM MODÜLÜ (Üretken, tekrarsız soru bankaları)
+  // ==========================================================================
+  const EXT_RENDERERS = {};
+  const rnd = (n) => Math.floor(Math.random() * n);
+  const pick = (arr) => arr[rnd(arr.length)];
+  const shuffleArr = (arr) => {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = rnd(i + 1);
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
+  function buildBank(count, gen) {
+    const out = [];
+    const seen = new Set();
+    let guard = 0;
+    while (out.length < count && guard < count * 60) {
+      guard++;
+      const q = gen();
+      if (!q || seen.has(q.key)) continue;
+      seen.add(q.key);
+      q.id = q.key;
+      out.push(q);
+    }
+    return out;
+  }
+
+  function numOptions(correct) {
+    const set = new Set([correct]);
+    const deltas = shuffleArr([-3, -2, -1, 1, 2, 3, 4, -4]);
+    for (const d of deltas) {
+      if (set.size >= 4) break;
+      const v = correct + d;
+      if (v > 0) set.add(v);
+    }
+    return [...set].map(v => ({ val: String(v), html: String(v) }));
+  }
+
+  // ---------- 3. SINIF 1: 3D BİRİM KÜP SAYMA ----------
+  function isoCubesSvg(h) {
+    const a = 22, k = 0.866;
+    const ox = 3 * a * k + 8, oy = 3 * a + 8;
+    const P = (X, Y, Z) => `${((X - Y) * a * k + ox).toFixed(1)},${((X + Y) * a * 0.5 - Z * a + oy).toFixed(1)}`;
+    const cubes = [];
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) for (let z = 0; z < h[r][c]; z++) cubes.push({ r, c, z });
+    cubes.sort((p, q) => (p.r + p.c) - (q.r + q.c) || p.z - q.z);
+    const faces = cubes.map(({ r, c, z }) => `
+      <polygon points="${P(c, r + 1, z)} ${P(c + 1, r + 1, z)} ${P(c + 1, r + 1, z + 1)} ${P(c, r + 1, z + 1)}" fill="#f59e0b" stroke="#78350f" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="${P(c + 1, r, z)} ${P(c + 1, r + 1, z)} ${P(c + 1, r + 1, z + 1)} ${P(c + 1, r, z + 1)}" fill="#d97706" stroke="#78350f" stroke-width="1.2" stroke-linejoin="round"/>
+      <polygon points="${P(c, r, z + 1)} ${P(c + 1, r, z + 1)} ${P(c + 1, r + 1, z + 1)} ${P(c, r + 1, z + 1)}" fill="#fde68a" stroke="#78350f" stroke-width="1.2" stroke-linejoin="round"/>`).join('');
+    const w = Math.round(6 * a * k + 16), hh = Math.round(6 * a + 16);
+    return `<svg viewBox="0 0 ${w} ${hh}" width="${w}" height="${hh}" role="img" aria-label="Küp yapısı">${faces}</svg>`;
+  }
+
+  function genCubeCount() {
+    const h = [];
+    let total = 0;
+    for (let r = 0; r < 3; r++) {
+      h.push([]);
+      for (let c = 0; c < 3; c++) {
+        const v = rnd(4);
+        h[r].push(v);
+        total += v;
+      }
+    }
+    if (total < 6 || total > 17) return null;
+    return {
+      key: 'cube|' + h.flat().join(''),
+      prompt: 'Şekildeki yapı kaç tane birim küpten oluşmaktadır? Görünmeyen küpleri de say!',
+      hint: 'Arkada ve altta kalan küpler de var. Her sütun yerden yukarıya kadar doludur.',
+      visual: isoCubesSvg(h),
+      optionsTitle: 'Toplam küp sayısını seç:',
+      options: numOptions(total),
+      correct: String(total)
+    };
+  }
+
+  // ---------- 3. SINIF 2: KAĞIT KATLAMA & DELME ----------
+  function holeSvg(shape, cx, cy, s) {
+    if (shape === 'square') return `<rect x="${(cx - s).toFixed(1)}" y="${(cy - s).toFixed(1)}" width="${2 * s}" height="${2 * s}" fill="#1e293b"/>`;
+    if (shape === 'triangle') return `<polygon points="${cx.toFixed(1)},${(cy - s).toFixed(1)} ${(cx + s).toFixed(1)},${(cy + s).toFixed(1)} ${(cx - s).toFixed(1)},${(cy + s).toFixed(1)}" fill="#1e293b"/>`;
+    return `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${s}" fill="#1e293b"/>`;
+  }
+  const foldPos = (n) => 2 + 96 * n;
+  function openPaperSvg(points, shape, size) {
+    const holes = points.map(p => holeSvg(shape, foldPos(p[0]), foldPos(p[1]), 6)).join('');
+    return `<svg viewBox="0 0 100 100" width="${size}" height="${size}"><rect x="2" y="2" width="96" height="96" rx="4" fill="#fef3c7" stroke="#b45309" stroke-width="3"/>${holes}</svg>`;
+  }
+  function foldedPaperSvg(fold, dir, hole, shape) {
+    let rect, line;
+    if (fold === 'half') {
+      if (dir === 'v') { rect = [50, 2, 48, 96]; line = [50, 2, 50, 98]; }
+      else { rect = [2, 50, 96, 48]; line = [2, 50, 98, 50]; }
+    } else {
+      rect = [50, 50, 48, 48];
+    }
+    const ghost = `<rect x="2" y="2" width="96" height="96" rx="4" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>`;
+    const body = `<rect x="${rect[0]}" y="${rect[1]}" width="${rect[2]}" height="${rect[3]}" fill="#fde68a" stroke="#b45309" stroke-width="3"/>`;
+    let lines = '';
+    if (fold === 'half') {
+      lines = `<line x1="${line[0]}" y1="${line[1]}" x2="${line[2]}" y2="${line[3]}" stroke="#7c2d12" stroke-width="3" stroke-dasharray="5 3"/>`;
+    } else {
+      lines = `<line x1="50" y1="50" x2="50" y2="98" stroke="#7c2d12" stroke-width="3" stroke-dasharray="5 3"/><line x1="50" y1="50" x2="98" y2="50" stroke="#7c2d12" stroke-width="3" stroke-dasharray="5 3"/>`;
+    }
+    const hl = holeSvg(shape, foldPos(hole[0]), foldPos(hole[1]), 6);
+    return `<svg viewBox="0 0 100 100" width="170" height="170">${ghost}${body}${lines}${hl}</svg>`;
+  }
+  function genPaperFold() {
+    const shape = pick(['circle', 'square', 'triangle']);
+    const fold = pick(['half', 'half', 'quarter']);
+    let dir = 'v', x, y, correctPts, cands;
+    if (fold === 'half') {
+      dir = pick(['v', 'h']);
+      const free = pick([0.2, 0.5, 0.8]);
+      const folded = pick([0.65, 0.85]);
+      x = dir === 'v' ? folded : free;
+      y = dir === 'v' ? free : folded;
+      correctPts = dir === 'v' ? [[x, y], [1 - x, y]] : [[x, y], [x, 1 - y]];
+      const wrongMirror = dir === 'v' ? [[x, y], [x, 1 - y]] : [[x, y], [1 - x, y]];
+      cands = [
+        [[x, y]],
+        wrongMirror,
+        [[x, y], [1 - x, y], [x, 1 - y], [1 - x, 1 - y]],
+        [[x, y], [1 - x, 1 - y]],
+        dir === 'v' ? [[x, y], [Math.max(0.08, 1 - x - 0.2), y]] : [[x, y], [x, Math.max(0.08, 1 - y - 0.2)]]
+      ];
+    } else {
+      x = pick([0.65, 0.85]);
+      y = pick([0.65, 0.85]);
+      correctPts = [[x, y], [1 - x, y], [x, 1 - y], [1 - x, 1 - y]];
+      cands = [
+        [[x, y]],
+        [[x, y], [1 - x, y]],
+        [[x, y], [x, 1 - y]],
+        [[x, y], [1 - x, 1 - y]],
+        [[x, y], [1 - x, y], [x, 1 - y]]
+      ];
+    }
+    const canon = (pts) => pts.map(p => p[0].toFixed(2) + ',' + p[1].toFixed(2)).sort().join('|');
+    const correctKey = canon(correctPts);
+    const used = new Set([correctKey]);
+    const wrongs = [];
+    shuffleArr(cands).forEach(c => {
+      const k = canon(c);
+      if (!used.has(k) && wrongs.length < 3) { used.add(k); wrongs.push(c); }
+    });
+    if (wrongs.length < 3) return null;
+    const options = [{ val: 'ok', html: openPaperSvg(correctPts, shape, 78) }]
+      .concat(wrongs.map((w, i) => ({ val: 'x' + i, html: openPaperSvg(w, shape, 78) })));
+    const how = fold === 'half'
+      ? (dir === 'v' ? 'Kare kağıt dikey olarak ortadan ikiye katlandı' : 'Kare kağıt yatay olarak ortadan ikiye katlandı')
+      : 'Kare kağıt önce dikey, sonra yatay olarak ortadan katlanıp dörde katlandı';
+    return {
+      key: `fold|${fold}|${dir}|${shape}|${x}|${y}`,
+      prompt: `${how} ve katlı haldeyken bir yerinden delindi. Kağıt açılınca nasıl görünür?`,
+      hint: 'Katlanan her kat, delikle birlikte katlama çizgisine göre ayna görüntüsü verir.',
+      visual: `<div class="bilsem-fold-visual">${foldedPaperSvg(fold, dir, [x, y], shape)}<div class="bilsem-fold-caption">Katlanmış kağıt (kesikli çizgi = katlama yeri)</div></div>`,
+      optionsTitle: 'Açılmış kağıdı seç:',
+      options,
+      correct: 'ok'
+    };
+  }
+
+  // ---------- 3. SINIF 3: EŞİT TERAZİ ----------
+  function genBalance() {
+    const [big, mid, small] = shuffleArr(['🍉', '🍍', '🍎', '🍊', '🍐', '🍓', '🥥', '🍌', '🍇', '🍒']).slice(0, 3);
+    const a = 2 + rnd(3), b = 2 + rnd(3), n = 1 + rnd(3);
+    const ans = n * a * b;
+    if (ans > 30) return null;
+    const rep = (e, k) => e.repeat(k);
+    const row = (l, r) => `<div class="bilsem-scale-row"><div class="scale-pan">${l}</div><div class="scale-beam">⚖️</div><div class="scale-pan">${r}</div></div>`;
+    return {
+      key: `bal|${big}${mid}${small}|${a}|${b}|${n}`,
+      prompt: 'Teraziler dengede. Üçüncü terazinin dengede kalması için soru işaretli yere kaç tane meyve konmalıdır?',
+      hint: `1 ${big} = ${a} ${mid} ve 1 ${mid} = ${b} ${small}. Önce ${big} kaç ${small} eder, onu bul!`,
+      visual: `<div class="bilsem-scale-box">${row(big, rep(mid, a))}${row(mid, rep(small, b))}${row(rep(big, n), '❓ ' + small)}</div>`,
+      optionsTitle: `❓ yerine kaç ${small} gelmeli?`,
+      options: numOptions(ans),
+      correct: String(ans)
+    };
+  }
+
+  // ---------- 3. SINIF 4: SAYI PİRAMİDİ ----------
+  function genPyramid() {
+    const levels = Math.random() < 0.6 ? 3 : 4;
+    const maxv = levels === 3 ? 9 : 6;
+    const bottom = Array.from({ length: levels }, () => 1 + rnd(maxv));
+    const rows = [bottom];
+    for (let l = 1; l < levels; l++) {
+      const prev = rows[l - 1];
+      rows.push(prev.slice(0, -1).map((v, i) => v + prev[i + 1]));
+    }
+    rows.reverse();
+    const mr = rnd(levels), mc = rnd(rows[mr].length);
+    const correct = rows[mr][mc];
+    const html = rows.map((r, ri) => `<div class="bilsem-pyr-row">${r.map((v, ci) => `<div class="bilsem-pyr-cell${ri === mr && ci === mc ? ' pyr-missing' : ''}">${ri === mr && ci === mc ? '?' : v}</div>`).join('')}</div>`).join('');
+    return {
+      key: `pyr|${rows.flat().join(',')}|${mr}${mc}`,
+      prompt: 'Her kutudaki sayı, hemen altındaki iki kutunun toplamıdır. Soru işareti yerine hangi sayı gelmelidir?',
+      hint: 'Üstteki sayı, altındaki iki sayının toplamıdır. Eksik kutu için çıkarma da yapabilirsin.',
+      visual: `<div class="bilsem-pyr-box">${html}</div>`,
+      optionsTitle: 'Eksik sayıyı seç:',
+      options: numOptions(correct),
+      correct: String(correct)
+    };
+  }
+
+  // ---------- 3. SINIF 5: 3x3 İLERİ MATRİS (DÖNDÜRME & BİRLEŞTİRME) ----------
+  const ROT_SHAPES = [
+    '8,6 18,6 18,24 32,24 32,34 8,34',
+    '8,34 8,6 34,34',
+    '10,6 30,14 14,20 14,34 10,34'
+  ];
+  const ROT_COLORS = ['#4f46e5', '#e11d48', '#059669'];
+  function rotShapeSvg(si, angle, size) {
+    return `<svg viewBox="0 0 40 40" width="${size}" height="${size}"><polygon points="${ROT_SHAPES[si]}" fill="${ROT_COLORS[si]}" transform="rotate(${angle} 20 20)"/></svg>`;
+  }
+  function maskSvg(mask, size) {
+    const sq = [[6, 6, 1], [22, 6, 2], [6, 22, 4], [22, 22, 8]].map(([x, y, bit]) =>
+      `<rect x="${x}" y="${y}" width="12" height="12" rx="2" fill="${(mask & bit) ? '#7c3aed' : '#e2e8f0'}"/>`).join('');
+    return `<svg viewBox="0 0 40 40" width="${size}" height="${size}">${sq}</svg>`;
+  }
+  function matrixGridHtml(cells) {
+    return `<div class="bilsem-matrix-3x3">${cells.map(c => c === '?' ? '<div class="matrix-3x3-cell empty-slot">?</div>' : `<div class="matrix-3x3-cell">${c}</div>`).join('')}</div>`;
+  }
+  function genMatrixAdv() {
+    if (Math.random() < 0.5) {
+      const order = shuffleArr([0, 1, 2]);
+      const starts = [0, 1, 2].map(() => 90 * rnd(4));
+      const step = pick([90, 180, 270]);
+      const ang = (r, c) => (starts[r] + c * step) % 360;
+      const cells = [];
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) cells.push((r === 2 && c === 2) ? '?' : rotShapeSvg(order[r], ang(r, c), 44));
+      const correct = ang(2, 2);
+      const options = [0, 90, 180, 270].map(a => ({ val: String(a), html: rotShapeSvg(order[2], a, 52) }));
+      return {
+        key: `rot|${order.join('')}|${starts.join('')}|${step}`,
+        prompt: 'Her satırda şekil belli bir kurala göre dönüyor. Soru işaretli yere hangi şekil gelmelidir?',
+        hint: 'Soldan sağa giderken şeklin kaç derece döndüğüne bak.',
+        visual: matrixGridHtml(cells),
+        optionsTitle: 'Eksik parçayı seç:',
+        options,
+        correct: String(correct)
+      };
+    }
+    const op = pick(['or', 'xor']);
+    const rows = [];
+    for (let r = 0; r < 3; r++) {
+      let a, b;
+      let guard = 0;
+      do { a = 1 + rnd(15); b = 1 + rnd(15); guard++; } while ((((a & b) === 0) || a === b) && guard < 50);
+      rows.push([a, b, op === 'or' ? (a | b) : (a ^ b)]);
+    }
+    if (rows.some(r => (r[0] & r[1]) === 0 || r[0] === r[1])) return null;
+    const cells = [];
+    rows.forEach((r, ri) => r.forEach((m, ci) => cells.push((ri === 2 && ci === 2) ? '?' : maskSvg(m, 44))));
+    const correct = rows[2][2];
+    const other = op === 'or' ? (rows[2][0] ^ rows[2][1]) : (rows[2][0] | rows[2][1]);
+    const set = new Set([correct, other]);
+    while (set.size < 4) set.add(1 + rnd(15));
+    const options = [...set].map(m => ({ val: String(m), html: maskSvg(m, 52) }));
+    return {
+      key: `ov|${op}|${rows.flat().join(',')}`,
+      prompt: 'Her satırda ilk iki şekil birleştirilerek (üst üste bindirilerek) üçüncü şekil oluşuyor. Eksik şekil hangisidir?',
+      hint: 'Boyalı kareler üst üste gelince hangi kareler boyalı kalıyor? Kuralı ilk iki satırdan bul.',
+      visual: matrixGridHtml(cells),
+      optionsTitle: 'Eksik parçayı seç:',
+      options,
+      correct: String(correct)
+    };
+  }
+
+  // ---------- 4. SINIF 1: İLERİ KRİPTOLOJİ ----------
+  const CRYPTO_POOL = ['KALE', 'ELMA', 'KEDİ', 'LALE', 'KOLA', 'ALAN', 'MASA', 'KASA', 'ARMA', 'KAYA', 'ORMAN', 'KİLİM', 'DOLAP', 'KALEM', 'ELMAS', 'MASAL', 'KARA', 'LİMON', 'MERAK', 'KOLAY', 'DERMAN', 'KİLO', 'MİLLET', 'ALEM', 'SOLAK', 'YOLCU', 'MAYA', 'ELİF', 'DAL', 'OKAL'];
+  function genAdvCrypto() {
+    const clue = shuffleArr(CRYPTO_POOL).slice(0, 3);
+    const letters = [...new Set(Array.from(clue.join('')))];
+    if (letters.length > 9 || letters.length < 6) return null;
+    const digits = shuffleArr([1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, letters.length);
+    const map = {};
+    letters.forEach((l, i) => { map[l] = digits[i]; });
+    const code = (w) => Array.from(w).map(ch => map[ch]).join('');
+    let target = shuffleArr(CRYPTO_POOL).find(w => !clue.includes(w) && Array.from(w).every(ch => map[ch] !== undefined));
+    if (!target) {
+      target = Array.from({ length: 4 }, () => pick(letters)).join('');
+      if (clue.includes(target)) return null;
+    }
+    const correct = code(target);
+    const set = new Set([correct]);
+    const arr = correct.split('');
+    for (let i = 0; i < arr.length - 1 && set.size < 4; i++) {
+      const sw = [...arr];
+      [sw[i], sw[i + 1]] = [sw[i + 1], sw[i]];
+      set.add(sw.join(''));
+    }
+    set.add(arr.slice().reverse().join(''));
+    let guard = 0;
+    while (set.size < 4 && guard++ < 30) {
+      const m = [...arr];
+      m[rnd(m.length)] = String(1 + rnd(9));
+      set.add(m.join(''));
+    }
+    if (set.size < 4) return null;
+    const options = [...set].slice(0, 4);
+    if (!options.includes(correct)) options[0] = correct;
+    const rows = clue.map(w => `<div class="bilsem-clue-row"><div class="clue-symbols">${Array.from(w).join(' ')}</div><span class="clue-arrow">➔</span><div class="clue-code">${Array.from(code(w)).join(' ')}</div></div>`).join('');
+    return {
+      key: `crypt|${clue.join('-')}|${target}|${digits.join('')}`,
+      prompt: 'Şifre tablosunu incele. Hedef kelimenin şifresi hangisidir?',
+      hint: 'Her harfin bir sayı karşılığı var. Aynı harf hep aynı sayıyla şifrelenir.',
+      visual: `<div class="bilsem-ext-crypto">${rows}<div class="bilsem-clue-row clue-target"><div class="clue-symbols">${Array.from(target).join(' ')}</div><span class="clue-arrow">➔</span><div class="clue-code">❓</div></div></div>`,
+      optionsTitle: 'Hedef kelimenin şifresini seç:',
+      options: options.map(o => ({ val: o, html: `<span class="bilsem-code-opt">${o.split('').join(' ')}</span>` })),
+      correct
+    };
+  }
+
+  // ---------- 4. SINIF 2: KÜP AÇINIMI ----------
+  const NET_SYMS = ['⭐', '🌙', '☀️', '❤️', '🔺', '🟢', '🔷', '🍀', '🔔', '🍎'];
+  function cubeViewSvg(top, left, right) {
+    return `<svg viewBox="0 0 100 100" width="88" height="88">
+      <polygon points="50,8 88,28 50,48 12,28" fill="#fef9c3" stroke="#475569" stroke-width="2" stroke-linejoin="round"/>
+      <polygon points="12,28 50,48 50,92 12,70" fill="#e0f2fe" stroke="#475569" stroke-width="2" stroke-linejoin="round"/>
+      <polygon points="50,48 88,28 88,70 50,92" fill="#fce7f3" stroke="#475569" stroke-width="2" stroke-linejoin="round"/>
+      <text x="50" y="35" font-size="20" text-anchor="middle" dominant-baseline="middle">${top}</text>
+      <text x="31" y="62" font-size="20" text-anchor="middle" dominant-baseline="middle">${left}</text>
+      <text x="69" y="62" font-size="20" text-anchor="middle" dominant-baseline="middle">${right}</text>
+    </svg>`;
+  }
+  function genCubeNet() {
+    const s = shuffleArr(NET_SYMS).slice(0, 6);
+    const F = { T: s[0], L: s[1], F: s[2], R: s[3], B: s[4], D: s[5] };
+    const cycle = ['L', 'F', 'R', 'B'];
+    const opp = { L: 'R', R: 'L', F: 'B', B: 'F', T: 'D', D: 'T' };
+    const ci = rnd(4);
+    const X = cycle[ci], Y = cycle[(ci + 1) % 4];
+    const view = (t, l, r) => cubeViewSvg(F[t], F[l], F[r]);
+    const wrongList = shuffleArr([
+      view('T', Y, X),
+      view('D', X, Y),
+      view('T', X, opp[X]),
+      view('T', X, opp[Y])
+    ]).slice(0, 3);
+    const options = [{ val: 'ok', html: view('T', X, Y) }].concat(wrongList.map((h, i) => ({ val: 'x' + i, html: h })));
+    const cell = (sym, col, row) => `<div class="net-cell" style="grid-column:${col};grid-row:${row}">${sym}</div>`;
+    const net = `<div class="bilsem-net-grid">${cell(F.T, 2, 1)}${cell(F.L, 1, 2)}${cell(F.F, 2, 2)}${cell(F.R, 3, 2)}${cell(F.B, 4, 2)}${cell(F.D, 2, 3)}</div>`;
+    return {
+      key: `net|${s.join('')}|${ci}`,
+      prompt: 'Açık küp katlanıp kapatıldığında, aşağıdaki küp görünümlerinden hangisi oluşur?',
+      hint: 'Karşılıklı yüzler aynı anda görünemez. Yüzlerin sırasına (sol–sağ) dikkat et!',
+      visual: net,
+      optionsTitle: 'Doğru küp görünümünü seç:',
+      options,
+      correct: 'ok'
+    };
+  }
+
+  // ---------- 4. SINIF 3: İŞLEM KARESİ (EKSİK İŞARETLER) ----------
+  const OPS = ['+', '-', '×', '÷'];
+  const applyOp = (x, o, y) => o === '+' ? x + y : o === '-' ? x - y : o === '×' ? x * y : x / y;
+  function evalOps(a, o1, b, o2, c) {
+    const hi = (o) => o === '×' || o === '÷';
+    if (hi(o2) && !hi(o1)) return applyOp(a, o1, applyOp(b, o2, c));
+    return applyOp(applyOp(a, o1, b), o2, c);
+  }
+  function genOpSquare() {
+    const a = 2 + rnd(22), b = 2 + rnd(11), c = 2 + rnd(11);
+    const o1 = pick(OPS), o2 = pick(OPS);
+    const res = evalOps(a, o1, b, o2, c);
+    if (!Number.isInteger(res) || res < 1 || res > 99) return null;
+    const sols = [];
+    const combos = [];
+    OPS.forEach(p => OPS.forEach(q => {
+      combos.push([p, q]);
+      if (Math.abs(evalOps(a, p, b, q, c) - res) < 1e-9) sols.push(p + q);
+    }));
+    if (sols.length !== 1) return null;
+    const wrongs = shuffleArr(combos.filter(([p, q]) => p + q !== o1 + o2)).slice(0, 3);
+    const mk = (p, q) => `<span class="bilsem-code-opt">[ ${p} ] [ ${q} ]</span>`;
+    const options = [{ val: 'ok', html: mk(o1, o2) }].concat(wrongs.map(([p, q], i) => ({ val: 'x' + i, html: mk(p, q) })));
+    return {
+      key: `ops|${a}|${b}|${c}|${o1}${o2}`,
+      prompt: 'Eşitliğin doğru olması için boş kutulara hangi işlem işaretleri gelmelidir?',
+      hint: 'İşlem önceliğini unutma: önce çarpma ve bölme yapılır!',
+      visual: `<div class="bilsem-op-eq"><span>${a}</span><span class="op-slot">?</span><span>${b}</span><span class="op-slot">?</span><span>${c}</span><span>=</span><span class="op-res">${res}</span></div>`,
+      optionsTitle: 'Doğru işaret çiftini seç (sırayla):',
+      options,
+      correct: 'ok'
+    };
+  }
+
+  // ---------- 4. SINIF 4: 4x4 YILDIZ YERLEŞTİRME (KENKEN) ----------
+  const STAR_SOLS = [[1, 3, 0, 2], [2, 0, 3, 1]];
+  function genStarGrid() {
+    const si = rnd(2), sol = STAR_SOLS[si];
+    const r0 = rnd(4);
+    let r1 = rnd(4);
+    if (r1 === r0) r1 = (r1 + 1 + rnd(3)) % 4;
+    const cellsHtml = [];
+    for (let r = 0; r < 4; r++) {
+      for (let c = 0; c < 4; c++) {
+        let inner = '', cls = 'star-cell';
+        if (r === r0 && c === sol[r0]) { inner = '⭐'; cls += ' star-given'; }
+        else if (r === r1) { inner = '?'; cls += ' star-ask'; }
+        cellsHtml.push(`<div class="${cls}">${inner}</div>`);
+      }
+    }
+    const col = Array.from({ length: 4 }, () => '<div class="star-target">1⭐</div>').join('');
+    const rowT = Array.from({ length: 4 }, () => '<div class="star-target">1⭐</div>');
+    let grid = `<div class="bilsem-star-wrap"><div></div>${col}`;
+    for (let r = 0; r < 4; r++) {
+      grid += rowT[r] + cellsHtml.slice(r * 4, r * 4 + 4).join('');
+    }
+    grid += '</div>';
+    const correct = sol[r1] + 1;
+    return {
+      key: `star|${si}|${r0}|${r1}`,
+      prompt: `4x4 tabloda her satırda ve her sütunda tam 1 yıldız var. Yıldızlar birbirine yan yana ya da çapraz olarak değmiyor. ${r1 + 1}. satırdaki yıldız kaçıncı sütundadır?`,
+      hint: 'Hedefler: her satır ve her sütunda 1 yıldız. Verilen yıldızın etrafındaki kutular boştur.',
+      visual: grid,
+      optionsTitle: `${r1 + 1}. satırdaki yıldız kaçıncı sütunda?`,
+      options: [1, 2, 3, 4].map(n => ({ val: String(n), html: `${n}. sütun` })),
+      correct: String(correct)
+    };
+  }
+
+  // ---------- 4. SINIF 5: İLERİ GÖRSEL-SAYISAL HAFIZA (5 sn) ----------
+  function genAdvMemory() {
+    const shapes = shuffleArr(['🔺', '🟦', '⭐', '🟢', '🔶', '💜']);
+    const seq = shapes.slice(0, 4).map(s => s + (1 + rnd(9)));
+    const tray = new Set(seq);
+    seq.slice(0, 2).forEach(t => {
+      const sh = Array.from(t)[0];
+      const num = t.slice(sh.length);
+      let n2 = 1 + rnd(9);
+      while (String(n2) === num) n2 = 1 + rnd(9);
+      tray.add(sh + n2);
+    });
+    shapes.slice(4).forEach(s => tray.add(s + (1 + rnd(9))));
+    return {
+      key: 'mem|' + seq.join(','),
+      prompt: '5 saniye boyunca gösterilen şekil ve sayı kodlarını aklında tut. Sonra gördüğün sırayla dokun!',
+      hint: 'Şekil ve sayıyı birlikte hatırla. Sıra çok önemli!',
+      seq,
+      tray: [...tray]
+    };
+  }
+
+  EXT_RENDERERS.adv_memory = function(container, q) {
+    memoryPhase = 'preview';
+    const cdWrap = document.getElementById('bilsemCountdownContainer');
+    const cdSec = document.getElementById('bilsemCountdownSeconds');
+    const cdBar = document.getElementById('bilsemCountdownProgress');
+    if (cdWrap) cdWrap.classList.remove('hide');
+    if (cdBar) cdBar.style.width = '100%';
+    const trayHtml = shuffleArr(q.tray).map(t => `<button class="bilsem-opt-card bilsem-ext-opt" data-val="${t}" type="button">${t}</button>`).join('');
+    container.innerHTML = `
+      <div class="bilsem-memory-box bilsem-seq-box">
+        <div class="bilsem-seq-display" id="bilsemSeqDisplay">${q.seq.map(t => `<span class="seq-token">${t}</span>`).join('')}</div>
+        <div class="bilsem-hint-text" id="bilsemMemoryStatusText" style="text-align:center; font-weight:700; color:#4f46e5;">⏱️ Kodları ve sırasını aklında tut! Süre bitince kapanacak...</div>
+        <div class="bilsem-options-wrap hide" id="bilsemSeqTrayWrap">
+          <div class="bilsem-seq-slots" id="bilsemSeqSlots">${q.seq.map((_, i) => `<span class="seq-slot">${i + 1}</span>`).join('')}</div>
+          <div class="bilsem-options-grid" id="bilsemSeqTray">${trayHtml}</div>
+        </div>
+      </div>`;
+    countdownRemaining = 5.0;
+    const interval = 100;
+    countdownTimer = setInterval(() => {
+      countdownRemaining -= interval / 1000;
+      if (countdownRemaining <= 0) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+        if (cdWrap) cdWrap.classList.add('hide');
+        memoryPhase = 'hidden';
+        const disp = document.getElementById('bilsemSeqDisplay');
+        if (disp) disp.innerHTML = q.seq.map(() => '<span class="seq-token seq-hidden">❓</span>').join('');
+        const st = document.getElementById('bilsemMemoryStatusText');
+        if (st) { st.textContent = '🎯 Şimdi gördüğün sırayla kodlara dokun!'; st.style.color = '#e11d48'; }
+        const wrap = document.getElementById('bilsemSeqTrayWrap');
+        if (wrap) wrap.classList.remove('hide');
+        let idx = 0;
+        const slots = container.querySelectorAll('.seq-slot');
+        container.querySelectorAll('#bilsemSeqTray .bilsem-opt-card').forEach(btn => {
+          btn.addEventListener('click', function() {
+            if (isAnswerLocked || this.disabled) return;
+            const val = this.getAttribute('data-val');
+            if (val === q.seq[idx]) {
+              this.classList.add('correct');
+              this.disabled = true;
+              if (slots[idx]) { slots[idx].textContent = val; slots[idx].classList.add('filled'); }
+              idx++;
+              if (idx >= q.seq.length) handleOptionClick(this, 'ok', 'ok');
+            } else {
+              this.classList.add('wrong');
+              try {
+                if (typeof audio !== 'undefined') {
+                  if (typeof audio.playWrong === 'function') audio.playWrong();
+                  else if (typeof audio.playError === 'function') audio.playError();
+                }
+              } catch (e) {}
+              setTimeout(() => this.classList.remove('wrong'), 600);
+            }
+          });
+        });
+      } else {
+        if (cdSec) cdSec.textContent = `${countdownRemaining.toFixed(1)}s`;
+        if (cdBar) cdBar.style.width = `${(countdownRemaining / 5.0) * 100}%`;
+      }
+    }, interval);
+  };
+
+  function renderGenericStage(container, q) {
+    const opts = shuffleArr(q.options);
+    container.innerHTML = `
+      <div class="bilsem-matrix-wrap bilsem-ext-wrap">
+        <div class="bilsem-ext-visual">${q.visual}</div>
+        <div class="bilsem-options-wrap">
+          <div class="bilsem-options-title">${q.optionsTitle}</div>
+          <div class="bilsem-options-grid">
+            ${opts.map(o => `<button class="bilsem-opt-card bilsem-ext-opt" data-val="${o.val}" type="button">${o.html}</button>`).join('')}
+          </div>
+        </div>
+      </div>`;
+    container.querySelectorAll('.bilsem-opt-card').forEach(btn => {
+      btn.addEventListener('click', function() {
+        handleOptionClick(this, this.getAttribute('data-val'), q.correct);
+      });
+    });
+  }
+
+  GRADE_CONFIG[3] = {
+    title: '📘 3. Sınıf BİLSEM Sınavı',
+    defaultCategory: 'cube_count',
+    tabs: [
+      { cat: 'cube_count', icon: '🧊', txt: '3D Birim Küp Sayma', title: '3D Birim Küp Sayma' },
+      { cat: 'paper_fold', icon: '📄', txt: 'Kağıt Katlama & Delme', title: 'Kağıt Katlama & Delme (BİLSEM Klasik)' },
+      { cat: 'balance_scale', icon: '⚖️', txt: 'Eşit Terazi Muhakeme', title: 'Eşit Terazi Muhakeme' },
+      { cat: 'number_pyramid', icon: '🔺', txt: 'Sayı Piramidi', title: 'Sayı Piramidi & Sayısal Örüntü' },
+      { cat: 'matrix_adv', icon: '🕸️', txt: '3x3 İleri Matris', title: '3x3 İleri Matris (Döndürme & Birleştirme)' }
+    ]
+  };
+  GRADE_CONFIG[4] = {
+    title: '📙 4. Sınıf İleri BİLSEM & Olimpiyat',
+    defaultCategory: 'adv_crypto',
+    tabs: [
+      { cat: 'adv_crypto', icon: '🕵️‍♂️', txt: 'İleri Kriptoloji', title: 'İleri Kriptoloji (Kelime - Sayı Şifreleme)' },
+      { cat: 'cube_net', icon: '🔄', txt: 'Küp Açınımı', title: 'Küp Açınımı (Kapalı Küpü Bul)' },
+      { cat: 'op_square', icon: '🧮', txt: 'İşlem Karesi', title: 'İşlem Karesi (Eksik İşaretler)' },
+      { cat: 'star_grid', icon: '👑', txt: '4x4 KenKen / Yıldız', title: '4x4 KenKen / Yıldız Yerleştirme' },
+      { cat: 'adv_memory', icon: '⏱️', txt: 'İleri Hafıza (5sn)', title: 'İleri Görsel-Sayısal Hafıza (5sn)' }
+    ]
+  };
+
+  QUESTION_BANK.cube_count = buildBank(40, genCubeCount);
+  QUESTION_BANK.paper_fold = buildBank(40, genPaperFold);
+  QUESTION_BANK.balance_scale = buildBank(40, genBalance);
+  QUESTION_BANK.number_pyramid = buildBank(40, genPyramid);
+  QUESTION_BANK.matrix_adv = buildBank(40, genMatrixAdv);
+  QUESTION_BANK.adv_crypto = buildBank(40, genAdvCrypto);
+  QUESTION_BANK.cube_net = buildBank(40, genCubeNet);
+  QUESTION_BANK.op_square = buildBank(40, genOpSquare);
+  QUESTION_BANK.star_grid = buildBank(24, genStarGrid);
+  QUESTION_BANK.adv_memory = buildBank(40, genAdvMemory);
+
+  ['cube_count', 'paper_fold', 'balance_scale', 'number_pyramid', 'matrix_adv', 'adv_crypto', 'cube_net', 'op_square', 'star_grid'].forEach(cat => {
+    EXT_RENDERERS[cat] = renderGenericStage;
+  });
+
+  // getUniqueNextItem: tekrarsız (shuffle-bag) soru seçici
+  const getUniqueNextItem = (category) => getUniqueNextQuestion(category);
+
   // 2. SHUFFLE BAG (Aynı Sorunun Üst Üste Gelmesini Engelleyen Algoritma)
   function getUniqueNextQuestion(category) {
     if (!shuffleBags[category] || shuffleBags[category].length === 0) {
@@ -48645,7 +49220,13 @@ matrix: [
   // 3. ARENA AÇMA VE KAPAMA
   function open(options = {}) {
     const grade = options.grade || 1;
-    activeGrade = (grade === 2) ? 2 : 1;
+    // 3. ve 4. sınıf kartlarında çoklu tetiklenmeyi (onclick + dinleyici) tek açılışa indir
+    if (grade >= 3) {
+      const nowTs = Date.now();
+      if (nowTs - lastExtOpenTs < 500 && activeGrade === grade) return;
+      lastExtOpenTs = nowTs;
+    }
+    activeGrade = (grade >= 1 && grade <= 4) ? grade : 1;
 
     const cfg = GRADE_CONFIG[activeGrade];
     activeCategory = options.category || cfg.defaultCategory;
@@ -48678,6 +49259,14 @@ matrix: [
 
     updateTabButtons();
     nextQuestion();
+  }
+
+  // Vitrini gizleyip seçilen sınıfın sınav sahnesini tam ekran açar (1-4. sınıf)
+  function startGrade(g) {
+    const grade = parseInt(g || 1, 10);
+    const cfg = GRADE_CONFIG[grade] || GRADE_CONFIG[1];
+    open({ grade: grade, category: cfg.defaultCategory });
+    window.scrollTo(0, 0);
   }
 
   function renderTabsForGrade(grade) {
@@ -48755,7 +49344,9 @@ matrix: [
         spatial_memory_5s: '5 Saniye Konumsal Hafıza',
         spatial_navigation: 'Ok Komutları & Uzamsal Algı'
       };
-      titleEl.textContent = titles[activeCategory] || 'MEB Tablet Sınavı';
+      const gTabs = (GRADE_CONFIG[activeGrade] || {}).tabs || [];
+      const curTab = gTabs.find(tb => tb.cat === activeCategory);
+      titleEl.textContent = titles[activeCategory] || (curTab && curTab.title) || 'MEB Tablet Sınavı';
     }
   }
 
@@ -48811,6 +49402,10 @@ matrix: [
       renderSpatialMemoryStage(stage, currentQuestion);
     } else if (activeCategory === 'spatial_navigation') {
       renderSpatialNavigationStage(stage, currentQuestion);
+    }
+    // 3. ve 4. Sınıf Motorları
+    else if (EXT_RENDERERS[activeCategory]) {
+      EXT_RENDERERS[activeCategory](stage, currentQuestion);
     }
   }
 
@@ -49372,9 +49967,7 @@ matrix: [
         } else if (grade === 2) {
           open({ grade: 2, category: 'matrix_3x3' });
         } else {
-          if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
-            MindGamesEngine.open({ grade: grade });
-          }
+          open({ grade: grade });
         }
       });
     });
@@ -49429,6 +50022,7 @@ matrix: [
   return {
     init: init,
     open: open,
+    startGrade: startGrade,
     close: close,
     switchCategory: switchCategory,
     nextQuestion: nextQuestion,
@@ -49444,7 +50038,7 @@ window.BilsemExamEngine = BilsemExamEngine;
 window.openBilsem = window.openBilsem || function(gradeNumber) {
   const g = parseInt(gradeNumber || 1, 10);
   if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
-  if (g === 1 || g === 2) {
+  if (g >= 1 && g <= 4) {
     if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.open === 'function') {
       window.BilsemExamEngine.open({ grade: g });
     }
