@@ -34601,8 +34601,8 @@
     const g = parseInt(gradeNumber || 1, 10);
     if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
     if (g === 1 || g === 2) {
-      if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.open === 'function') {
-        BilsemExamEngine.open({ grade: g });
+      if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.open === 'function') {
+        window.BilsemExamEngine.open({ grade: g });
       }
     } else {
       if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
@@ -37865,15 +37865,15 @@
                 if (oyunNorm === 'bilsem' || oyunNorm === 'bilsem-1' || oyunNorm === 'bilsem1' || oyunNorm === 'bilsemakademi') {
           interactionLockUntil = 0;
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
-          if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.open === 'function') {
-            BilsemExamEngine.open({ grade: 1 });
+          if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.open === 'function') {
+            window.BilsemExamEngine.open({ grade: 1 });
           }
           return true;
         } else if (oyunNorm === 'bilsem-2' || oyunNorm === 'bilsem2') {
           interactionLockUntil = 0;
           if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
-          if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.open === 'function') {
-            BilsemExamEngine.open({ grade: 2 });
+          if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.open === 'function') {
+            window.BilsemExamEngine.open({ grade: 2 });
           }
           return true;
         } else if (oyunNorm === 'bilsem-3' || oyunNorm === 'bilsem3') {
@@ -38043,8 +38043,6 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', installSecurityShield);
   } else {
-    if (typeof BilsemExamEngine !== 'undefined') BilsemExamEngine.init();
-
     installSecurityShield();
   }
 
@@ -38063,7 +38061,7 @@
    1. Aşama: Anasınıfı, 1. Sınıf ve 2. Sınıf Şıksız BİLSEM Oyunları
    ========================================================================== */
 
-const MindGamesEngine = {
+var MindGamesEngine = window.MindGamesEngine = {
   currentGrade: 1,
   currentGame: 'pattern_train',
   score: 0,
@@ -48038,7 +48036,7 @@ window.MindGamesEngine = MindGamesEngine;
 // ============================================================================
 // 🧠 BİLSEM HAZIRLIK AKADEMİSİ - 1. SINIF TABLET SINAVI MOTORU (MEB FORMATI)
 // ============================================================================
-const BilsemExamEngine = (function() {
+var BilsemExamEngine = window.BilsemExamEngine = (function() {
   let activeGrade = 1;
   let activeCategory = 'matrix';
   let currentScore = 0;
@@ -49333,8 +49331,8 @@ window.openBilsem = window.openBilsem || function(gradeNumber) {
   const g = parseInt(gradeNumber || 1, 10);
   if (typeof stopHomeMusic === 'function') stopHomeMusic(true);
   if (g === 1 || g === 2) {
-    if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.open === 'function') {
-      BilsemExamEngine.open({ grade: g });
+    if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.open === 'function') {
+      window.BilsemExamEngine.open({ grade: g });
     }
   } else {
     if (typeof MindGamesEngine !== 'undefined' && typeof MindGamesEngine.open === 'function') {
@@ -49352,7 +49350,7 @@ window.openGrade = window.openGrade || window.selectGrade;
 
 // Sayfa yüklendiğinde ve anında BİLSEM & Akıl Oyunları init garantisi
 try {
-  if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.init === 'function') {
+  if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.init === 'function') {
     BilsemExamEngine.init();
   }
 } catch (e) { console.error('BilsemExamEngine immediate init error:', e); }
@@ -49365,7 +49363,7 @@ try {
 
 document.addEventListener('DOMContentLoaded', function() {
   try {
-    if (typeof BilsemExamEngine !== 'undefined' && typeof BilsemExamEngine.init === 'function') {
+    if (typeof window.BilsemExamEngine !== 'undefined' && window.BilsemExamEngine && typeof BilsemExamEngine.init === 'function') {
       BilsemExamEngine.init();
     }
   } catch (e) {}
