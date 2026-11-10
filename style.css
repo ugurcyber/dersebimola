@@ -33333,3 +33333,23 @@ body.is-game-active .universal-game-bgm-fab {
 .bilsem-seq-slots .seq-slot.filled { border-style: solid; border-color: #22c55e; background: #dcfce7; color: #166534; }
 
 .opt-silhouette.correct .silhouette-emoji { filter: none; }
+
+/* BİLSEM Örüntü & Analoji: yazılı kutular taşmasın (V9.2.2) */
+.bilsem-analogy-row { flex-wrap: wrap; row-gap: 12px; }
+.bilsem-analogy-box .analogy-item {
+  width: auto !important;
+  height: auto !important;
+  min-width: 84px;
+  min-height: 70px;
+  padding: 8px 12px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  text-align: center;
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  max-width: 150px;
+}
+.bilsem-analogy-box .analogy-item.empty-slot { min-width: 70px; font-size: 1.6rem; }
+.bilsem-analogy-box .bilsem-opt-card { color: #1e293b; font-weight: 800; height: auto; min-height: 56px; }
