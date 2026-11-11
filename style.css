@@ -33895,3 +33895,72 @@ body.is-game-active .universal-game-bgm-fab {
     height: 18px !important;
   }
 }
+
+/* ==========================================================================
+   V9.7.2: ÇARPMA SAVAŞI MOD SEÇİCİ (GENİŞ EKRAN) & MOBİLDE DÜELLO GİZLEME
+   ========================================================================== */
+.tug-mode-desktop-only {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .tug-mode-switcher.tug-mode-desktop-only {
+    display: inline-flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 3px;
+    background: #F1F5F9;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 14px;
+  }
+
+  .tug-mode-btn {
+    padding: 5px 11px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    transition: all 0.16s ease;
+    white-space: nowrap;
+  }
+
+  #btnTugModeSingle.active {
+    background: linear-gradient(135deg, #0EA5E9 0%, #2563EB 100%);
+    border-color: #1D4ED8;
+    border-bottom-color: #1E40AF;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+  }
+
+  #btnTugModeDuel.active {
+    background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+    border-color: #EA580C;
+    border-bottom-color: #C2410C;
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Üst menüdeki "⚡ Düello Modu" butonu ve desktop düello kontrolleri */
+  #btnDesktopGameMode,
+  .topbar-action-pill.pill-gamemode,
+  .duel-mode-desktop-only,
+  #modeSwitchContainer,
+  #btnModeDuel,
+  #btnPickerModeDuel,
+  /* Oyunların içindeki "👥 2 Kişilik" ve düello mod butonları */
+  .tug-mode-desktop-only,
+  .tug-mode-switcher,
+  #btnTugModeSingle,
+  #btnTugModeDuel,
+  [data-tug-mode="duel"],
+  #btnXox2P,
+  #btnC42P,
+  [data-mem-p="2"],
+  [data-mole-mode="duel"],
+  [data-wheel-mode="duel"],
+  #btnMqsModeDuel {
+    display: none !important;
+  }
+}

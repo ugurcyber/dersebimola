@@ -15203,6 +15203,10 @@
   /* ==========================================================================
      8.7. 🔥 POPÜLER OYUNLAR & DÜELLOLAR (6 TAM KAPSAMLI ZEKA & REKABET OYUNU)
      ========================================================================== */
+  // Çarpma Savaşı (Halat Çekme) Mod Durumu: 'single' | 'duel'
+  let tugOfWarMode = 'single';
+  window.tugOfWarMode = tugOfWarMode;
+
   const ArcadeHub = {
     activeGame: null,
 
@@ -15639,6 +15643,10 @@
     if (titleEl) titleEl.textContent = 'Çarpma Savaşı: Halat Çekme';
 
     const t = ArcadeHub.tug;
+    if (window.innerWidth <= 768) {
+      tugOfWarMode = 'single';
+      window.tugOfWarMode = 'single';
+    }
     t.ropePos = 0; // -5 (Sen kazandın) .. 0 (Orta) .. +5 (Moli kazandı)
     t.isLocked = false;
     t.streak = 0;
@@ -15654,6 +15662,10 @@
           <button class="arc-pill-btn ${t.diff === 'medium' ? 'active' : ''}" data-tug-diff="medium" type="button">Orta (6-9'lar)</button>
           <button class="arc-pill-btn ${t.diff === 'hard' ? 'active' : ''}" data-tug-diff="hard" type="button">Zor (Tüm Tablo)</button>
           <button class="arc-pill-btn ${t.diff === 'mixed' ? 'active' : ''}" data-tug-diff="mixed" type="button">4 İşlem Karma</button>
+          <div class="tug-mode-switcher tug-mode-desktop-only" id="tugModeSwitcher" role="group" aria-label="Çarpma Savaşı Mod Seçimi">
+            <button class="arc-pill-btn tug-mode-btn ${tugOfWarMode === 'single' ? 'active' : ''}" id="btnTugModeSingle" data-tug-mode="single" type="button">🤖 Tek Kişilik (Moli'ye Karşı)</button>
+            <button class="arc-pill-btn tug-mode-btn tug-mode-duel-btn ${tugOfWarMode === 'duel' ? 'active' : ''}" id="btnTugModeDuel" data-tug-mode="duel" type="button">👥 2 Kişilik Düello (Akıllı Tahta)</button>
+          </div>
           <button class="arc-pill-btn arc-btn-restart" id="btnTugRestart" type="button">🔄 Yeni Maç</button>
         </div>
       `;
@@ -15662,6 +15674,18 @@
           ArcadeHub.tug.diff = btn.getAttribute('data-tug-diff');
           audio.playClick();
           initArcadeTugGame();
+        });
+      });
+      toolbarEl.querySelectorAll('[data-tug-mode]').forEach(btn => {
+        addTapListener(btn, () => {
+          const nextMode = btn.getAttribute('data-tug-mode');
+          if (nextMode !== 'single' && nextMode !== 'duel') return;
+          tugOfWarMode = nextMode;
+          window.tugOfWarMode = tugOfWarMode;
+          audio.playClick();
+          toolbarEl.querySelectorAll('[data-tug-mode]').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-tug-mode') === tugOfWarMode);
+          });
         });
       });
       const btnRestart = document.getElementById('btnTugRestart');
