@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=9.7.4">
+  <link rel="stylesheet" href="style.css?v=9.7.5">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -298,6 +298,16 @@
             </span>
             <span class="pill-text">Paylaş</span>
           </button>
+          <a class="topbar-action-pill pill-instagram" id="btnTopbarInstagram" href="https://www.instagram.com/dersebimola" target="_blank" rel="noopener noreferrer" aria-label="Instagram: @dersebimola" title="Instagram'da Takip Et: @dersebimola">
+            <span class="pill-icon ig-icon-wrap" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </span>
+            <span class="pill-text ig-handle-text">@dersebimola</span>
+          </a>
           <button class="topbar-action-pill pill-teacher-tools" id="btnTopbarTeacherTools" type="button" aria-label="Öğretmen Araçları" title="Zamanlayıcı, Kura ve Sessizlik Oyunu" onclick="window.openTeacherToolsModal ? window.openTeacherToolsModal() : (document.getElementById('modalTeacherTools') && document.getElementById('modalTeacherTools').classList.remove('hide'))">
             <span class="pill-icon" aria-hidden="true">🧰</span>
             <span class="pill-text">Öğretmen Araçları</span>
@@ -618,6 +628,10 @@
                 <div class="trust-right-tag">
                   <span class="trust-check-mark">✓</span> GÜVENLİ &amp; PARDUS UYUMLU
                 </div>
+                <a class="trust-instagram-badge" id="btnTrustInstagram" href="https://www.instagram.com/dersebimola" target="_blank" rel="noopener noreferrer" aria-label="Instagram'da Takip Et: @dersebimola" title="Instagram'da Takip Et: @dersebimola">
+                  <span aria-hidden="true">📸</span>
+                  <span>Instagram'da Takip Et: <strong>@dersebimola</strong></span>
+                </a>
               </div>
             </div>
           </section>

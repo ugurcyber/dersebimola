@@ -34146,3 +34146,133 @@ body.is-game-active .universal-game-bgm-fab {
     display: none !important;
   }
 }
+
+/* ==========================================================================
+   V9.7.5: INSTAGRAM (@dersebimola) ÜST MENÜ & ANA SAYFA ROZET STİLLERİ
+   ========================================================================== */
+.topbar-action-pill.pill-instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 8px 14px;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(220, 39, 67, 0.25) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.topbar-action-pill.pill-instagram:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 16px rgba(220, 39, 67, 0.36) !important;
+  color: #ffffff !important;
+}
+
+.topbar-action-pill.pill-instagram:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.trust-instagram-badge {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
+  color: #ffffff !important;
+  font-family: 'Fredoka', 'Nunito', sans-serif !important;
+  font-size: clamp(0.75rem, 0.84vw, 0.85rem);
+  font-weight: 800;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(220, 39, 67, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.trust-instagram-badge:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(220, 39, 67, 0.38);
+  color: #ffffff !important;
+}
+
+@media (max-width: 1024px) {
+  .widescreen-floating-trust-card {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  .trust-badges-group {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .topbar-action-pill.pill-instagram,
+  #btnTopbarInstagram {
+    display: inline-flex !important;
+    padding: 5px 9px !important;
+    font-size: 0.7rem !important;
+    gap: 4px !important;
+    border-radius: 999px !important;
+    flex-shrink: 0 !important;
+  }
+
+  #btnTopbarInstagram .ig-handle-text {
+    display: inline !important;
+  }
+
+  .topbar-action-pill.pill-instagram .pill-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .widescreen-floating-trust-card {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .trust-badges-group {
+    width: 100%;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  .trust-instagram-badge {
+    font-size: 0.78rem !important;
+    padding: 6px 13px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .topbar-unified-actions {
+    gap: 3px !important;
+  }
+
+  .topbar-action-pill.pill-instagram,
+  #btnTopbarInstagram {
+    padding: 5px 7px !important;
+    font-size: 0.64rem !important;
+    gap: 3px !important;
+  }
+}
+
+@media (max-width: 355px) {
+  #btnTopbarInstagram .ig-handle-text {
+    display: none !important;
+  }
+
+  #btnTopbarInstagram {
+    width: 32px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+}
