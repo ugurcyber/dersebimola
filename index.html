@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=9.7.5">
+  <link rel="stylesheet" href="style.css?v=9.7.6">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -211,6 +211,10 @@
             <span class="tool-icon" aria-hidden="true">🧰</span>
             <span class="tool-label">Öğretmen Araçları</span>
           </button>
+          <button class="sidebar-tool-btn btn-sidebar-story-workshop" id="btnSidebarStoryWorkshop" title="Hikaye ve Bilmece Atölyesi">
+            <span class="tool-icon" aria-hidden="true">🪄</span>
+            <span class="tool-label">Hikaye &amp; Bilmece</span>
+          </button>
           <button class="sidebar-tool-btn" id="btnOpenLeaderboard" title="Sınıf Ligi Puan Tablosu">
             <span class="tool-icon"><img src="assets/icons/3d/trophy.webp" class="chip-3d-icon" alt="Sınıf Ligi" width="20" height="20" loading="lazy" decoding="async"></span>
             <span class="tool-label">Sınıf Ligi</span>
@@ -311,6 +315,10 @@
           <button class="topbar-action-pill pill-teacher-tools" id="btnTopbarTeacherTools" type="button" aria-label="Öğretmen Araçları" title="Zamanlayıcı, Kura ve Sessizlik Oyunu" onclick="window.openTeacherToolsModal ? window.openTeacherToolsModal() : (document.getElementById('modalTeacherTools') && document.getElementById('modalTeacherTools').classList.remove('hide'))">
             <span class="pill-icon" aria-hidden="true">🧰</span>
             <span class="pill-text">Öğretmen Araçları</span>
+          </button>
+          <button class="topbar-action-pill pill-story-workshop" id="btnTopbarStoryWorkshop" type="button" aria-label="Hikaye ve Bilmece Atölyesi" title="Hikaye &amp; Bilmece Üretici">
+            <span class="pill-icon" aria-hidden="true">🪄</span>
+            <span class="pill-text">Hikaye &amp; Bilmece</span>
           </button>
           <button class="topbar-action-pill pill-addquiz" id="btnDesktopAddQuiz" type="button" aria-label="Soru Ekle">
             <span class="pill-icon">
@@ -3571,5 +3579,6 @@
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
   <script src="app.js?v=9.7.4" defer></script>
+  <script src="story_workshop.js?v=1"></script>
 </body>
 </html>

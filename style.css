@@ -34276,3 +34276,51 @@ body.is-game-active .universal-game-bgm-fab {
     justify-content: center !important;
   }
 }
+
+/* ==========================================================================
+   V9.7.6: 🪄 HİKAYE & BİLMECE ATÖLYESİ TETİKLEYİCİ BUTON STİLLERİ
+   ========================================================================== */
+.topbar-action-pill.pill-story-workshop {
+  background: linear-gradient(180deg, #F5F3FF 0%, #EDE9FE 100%) !important;
+  border: 1.5px solid #A78BFA !important;
+  border-bottom: 4px solid #7C3AED !important;
+  color: #5B21B6 !important;
+  box-shadow: 0 3px 10px rgba(124, 58, 237, 0.16) !important;
+}
+
+.topbar-action-pill.pill-story-workshop:hover {
+  background: linear-gradient(180deg, #EDE9FE 0%, #DDD6FE 100%) !important;
+  color: #4C1D95 !important;
+  transform: translateY(-2px);
+}
+
+.btn-sidebar-story-workshop {
+  background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%) !important;
+  border: 1.5px solid #A78BFA !important;
+  border-bottom: 3.5px solid #7C3AED !important;
+  color: #5B21B6 !important;
+  font-weight: 800 !important;
+}
+
+@media (max-width: 768px) {
+  .topbar-action-pill.pill-story-workshop .pill-text {
+    display: none !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .topbar-action-pill.pill-share,
+  .topbar-action-pill.pill-teacher-tools,
+  .topbar-action-pill.pill-story-workshop,
+  .topbar-action-pill.pill-addquiz,
+  .topbar-action-pill.pill-settings {
+    padding: 4px 5px !important;
+  }
+
+  .topbar-sound-btn,
+  .topbar-btn-menu {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+  }
+}
