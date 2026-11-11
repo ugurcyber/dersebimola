@@ -33854,6 +33854,16 @@
       });
     }
 
+    const btnSidebarAddQuiz = document.getElementById('btnSidebarAddQuiz');
+    if (btnSidebarAddQuiz) {
+      addTapListener(btnSidebarAddQuiz, (e) => {
+        if (e && e.cancelable) e.preventDefault();
+        audio.playClick();
+        closeMobileSidebar();
+        openCustomQModal();
+      });
+    }
+
     // 🧰 Öğretmen Araçları Giriş Butonları ve Sekme Kontrolleri
     const btnTopbarTeacherTools = document.getElementById('btnTopbarTeacherTools');
     if (btnTopbarTeacherTools) {

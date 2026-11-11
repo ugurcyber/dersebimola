@@ -102,7 +102,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700;800&subset=latin-ext&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/background/sky-hills-bg.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=9.7.6">
+  <link rel="stylesheet" href="style.css?v=9.7.7">
 </head>
 <body>
   <!-- ============================================================== -->
@@ -207,9 +207,13 @@
       <div class="sidebar-footer">
         <div class="sidebar-nav-title">ÖĞRETMEN VE ARAÇLAR</div>
         <div class="sidebar-tools-list">
-          <button class="sidebar-tool-btn btn-sidebar-teacher-tools" id="btnSidebarTeacherTools" title="Zamanlayıcı, Kura ve Sessizlik Oyunu">
-            <span class="tool-icon" aria-hidden="true">🧰</span>
+          <button class="sidebar-tool-btn btn-sidebar-teacher-tools" id="btnSidebarTeacherTools" title="Zamanlayıcı, Kura ve Sessizlik Oyunu" onclick="if(window.openTeacherToolsModal){window.openTeacherToolsModal();} else if(document.getElementById('modalTeacherTools')){document.getElementById('modalTeacherTools').classList.remove('hide');}">
+            <span class="tool-icon" aria-hidden="true">🎒</span>
             <span class="tool-label">Öğretmen Araçları</span>
+          </button>
+          <button class="sidebar-tool-btn btn-sidebar-add-quiz" id="btnSidebarAddQuiz" title="Özel Sınav Oluştur &amp; Soru Ekle" onclick="if(window.openCustomQModal){window.openCustomQModal();} else if(window.openQuestionModal){window.openQuestionModal();}">
+            <span class="tool-icon" aria-hidden="true">➕</span>
+            <span class="tool-label">Soru Ekle</span>
           </button>
           <button class="sidebar-tool-btn btn-sidebar-story-workshop" id="btnSidebarStoryWorkshop" title="Hikaye ve Bilmece Atölyesi">
             <span class="tool-icon" aria-hidden="true">🪄</span>
@@ -312,22 +316,9 @@
             </span>
             <span class="pill-text ig-handle-text">@dersebimola</span>
           </a>
-          <button class="topbar-action-pill pill-teacher-tools" id="btnTopbarTeacherTools" type="button" aria-label="Öğretmen Araçları" title="Zamanlayıcı, Kura ve Sessizlik Oyunu" onclick="window.openTeacherToolsModal ? window.openTeacherToolsModal() : (document.getElementById('modalTeacherTools') && document.getElementById('modalTeacherTools').classList.remove('hide'))">
-            <span class="pill-icon" aria-hidden="true">🧰</span>
-            <span class="pill-text">Öğretmen Araçları</span>
-          </button>
           <button class="topbar-action-pill pill-story-workshop" id="btnTopbarStoryWorkshop" type="button" aria-label="Hikaye ve Bilmece Atölyesi" title="Hikaye &amp; Bilmece Üretici">
             <span class="pill-icon" aria-hidden="true">🪄</span>
             <span class="pill-text">Hikaye &amp; Bilmece</span>
-          </button>
-          <button class="topbar-action-pill pill-addquiz" id="btnDesktopAddQuiz" type="button" aria-label="Soru Ekle">
-            <span class="pill-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </span>
-            <span class="pill-text">Soru Ekle</span>
           </button>
           <button class="topbar-sound-btn" id="btnTopbarMute" type="button" aria-label="Tüm Sesleri Aç / Kapat" aria-pressed="false" title="Tüm Sesleri Aç / Kapat (Hızlı Sessize Alma)">
             <span class="topbar-sound-icon" id="topbarMuteIcon" aria-hidden="true">🔊</span>
@@ -498,11 +489,6 @@
                       </svg>
                     </span>
                     <span class="btn-text">Hemen Başla</span>
-                  </button>
-                  <button class="stage-btn-bilsem-hero" id="btnHeroBilsem" type="button" aria-label="BİLSEM Hazırlık" onclick="if(window.navigateTo){window.navigateTo('bilsem');}else if(window.openBilsemHub){window.openBilsemHub();}">
-                    <span class="bilsem-hero-emoji" aria-hidden="true">🧠</span>
-                    <span class="bilsem-hero-text">BİLSEM Hazırlık</span>
-                    <span class="badge-blinking-new mini-badge" aria-hidden="true">🔴 YENİ</span>
                   </button>
                 </div>
 
@@ -3578,7 +3564,7 @@
   <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
 
   <!-- Uygulama Mantığı (Sıfır Harici Kütüphane, Defer ile Hızlı İlk Boyama) -->
-  <script src="app.js?v=9.7.4" defer></script>
+  <script src="app.js?v=9.7.5" defer></script>
   <script src="story_workshop.js?v=3"></script>
 </body>
 </html>

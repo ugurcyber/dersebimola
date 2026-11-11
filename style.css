@@ -34302,6 +34302,19 @@ body.is-game-active .universal-game-bgm-fab {
   font-weight: 800 !important;
 }
 
+.btn-sidebar-add-quiz {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%) !important;
+  border: 1.5px solid #22C55E !important;
+  border-bottom: 3.5px solid #16A34A !important;
+  color: #15803D !important;
+  font-weight: 800 !important;
+}
+.btn-sidebar-add-quiz:hover {
+  background: linear-gradient(135deg, #DCFCE7 0%, #BBF7D0 100%) !important;
+  color: #14532D !important;
+  transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
   .topbar-action-pill.pill-story-workshop .pill-text {
     display: none !important;
