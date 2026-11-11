@@ -1,6 +1,7 @@
 /**
  * ==========================================================================
  * DERSE Bİ' MOLA - BAĞIMSIZ HİKAYE & BİLMECE ATÖLYESİ (story_workshop.js)
+ * 2. Aşama: 12 Hikaye, 15 Bilmece, Sınıfça Düşünelim, İpucu & Alkış/Konfeti
  * app.js ve mevcut oyun motorlarından tamamen bağımsız çalışır.
  * ==========================================================================
  */
@@ -9,6 +10,7 @@
 
   const MODAL_ID = 'moli-story-modal';
   const STYLE_ID = 'moli-story-workshop-styles';
+  const CONFETTI_CANVAS_ID = 'moli-story-confetti-canvas';
 
   const WORD_CARDS = [
     {
@@ -17,6 +19,7 @@
       emoji: '🐱',
       bg: '#FFF7ED',
       border: '#FDBA74',
+      featureHint: 'Bıyıklı, yumuşak patili ve mırıldamayı çok seven sevimli dostumuzdur.',
       riddleLines: [
         'Bıyıkları uzundur, mırıl mırıl ses çıkarır,',
         'Pamuk gibi patisiyle her oyuna hemen katılır.'
@@ -28,6 +31,7 @@
       emoji: '🤖',
       bg: '#EFF6FF',
       border: '#93C5FD',
+      featureHint: 'Derse Bi\' Mola sınıfının ışıklı gözlü, yıldız antenli akıllı maskotudur.',
       riddleLines: [
         'Mavi gözlü robot dostum, anteninde yıldız parlar,',
         'Bilgi dolu sorularda bütün sınıfı neşe sarar.'
@@ -39,6 +43,7 @@
       emoji: '🌲',
       bg: '#ECFDF5',
       border: '#6EE7B7',
+      featureHint: 'Yüzlerce ağacın, kuşun ve temiz havanın bir arada olduğu yeşil dünyadır.',
       riddleLines: [
         'Yüzlerce yeşil ağacı gökyüzüne doğru uzanır,',
         'Kuşlar dallarında öter, rüzgar yaprakta uyanır.'
@@ -50,9 +55,10 @@
       emoji: '🚀',
       bg: '#F5F3FF',
       border: '#C4B5FD',
+      featureHint: 'Yıldızların, Ay\'ın ve gezegenlerin içinde süzüldüğü sonsuz boşluktur.',
       riddleLines: [
         'Milyonlarca yıldız parlar, gezegenler sessiz döner,',
-        'Roketlerle yol alınır, karanlıkta ışıklar söner.'
+        'Roketlerle yol alınır, ışıklar orada söner.'
       ]
     },
     {
@@ -61,6 +67,7 @@
       emoji: '🗝️',
       bg: '#FEFCE8',
       border: '#FDE047',
+      featureHint: 'Sapsarı parlar ve kilitli kapılarla gizli sandıkları açmaya yarar.',
       riddleLines: [
         'Sapsarıdır, ışıl ışıl, kilitleri hemen açar,',
         'Gizli sandık açılınca etrafına neşe saçar.'
@@ -72,6 +79,7 @@
       emoji: '🎈',
       bg: '#FFF1F2',
       border: '#FDA4AF',
+      featureHint: 'İpinden tutmazsan hafifliğiyle gökyüzüne doğru yükseliverir.',
       riddleLines: [
         'Renk renktir, hafifçedir, gökyüzüne süzülür,',
         'İpini sıkı tutmazsan bulutlara doğru üzülür.'
@@ -83,6 +91,7 @@
       emoji: '🦖',
       bg: '#F0FDF4',
       border: '#86EFAC',
+      featureHint: 'Milyonlarca yıl önce yaşamış, kocaman ayaklı ama gülümseyen dev dosttur.',
       riddleLines: [
         'Çok eski çağlardan gelir, kocaman ama pek şirin,',
         'Ayak izi dev olsa da kalbi yumuşaktır derin.'
@@ -94,6 +103,7 @@
       emoji: '🏰',
       bg: '#F0F9FF',
       border: '#7DD3FC',
+      featureHint: 'Masallarda gökyüzünün tepesinde bembeyaz bulutlardan kurulan kaledir.',
       riddleLines: [
         'Pamuk beyaz kuleleri gökyüzünde yükselir,',
         'Masallara kapı açar, rüyalardan seslenir.'
@@ -105,6 +115,7 @@
       emoji: '🦋',
       bg: '#FDF4FF',
       border: '#F0ABFC',
+      featureHint: 'Tırtıldan dönüşür ve desenli iki kanadıyla çiçeklere konar.',
       riddleLines: [
         'İncecik iki kanatta gökkuşağı renkleri var,',
         'Çiçekten çiçeğe konar, bahar gelince uçar.'
@@ -116,6 +127,7 @@
       emoji: '🧭',
       bg: '#FFFBEB',
       border: '#FCD34D',
+      featureHint: 'Yolları, yönleri ve hazinenin saklandığı yeri gösteren rehber kağıttır.',
       riddleLines: [
         'Üzerinde yollar çizili, çarpı işareti saklar,',
         'Defineyi bulmak için ipucunu tek tek aktar.'
@@ -127,6 +139,7 @@
       emoji: '🐬',
       bg: '#ECFEFF',
       border: '#67E8F9',
+      featureHint: 'Denizlerde akıllı oyunlar yapan, dalgaların üzerinden sıçrayan dosttur.',
       riddleLines: [
         'Masmavi dalgalar içinde zıplar durur neşeyle,',
         'Gülümseyen yüzüyle selam verir herkese böyle.'
@@ -138,6 +151,7 @@
       emoji: '⭐',
       bg: '#FEF9C3',
       border: '#FACC15',
+      featureHint: 'Geceleri karanlık gökyüzünde beş köşesiyle pırıl pırıl ışıldar.',
       riddleLines: [
         'Gece olunca gökyüzünde tek tek göz kırpar bize,',
         'Işıl ışıl parıltısıyla yol gösterir gecemize.'
@@ -147,57 +161,197 @@
 
   const STORY_TEMPLATES = [
     {
-      title: (w1, w2, w3) => `✨ ${w1} ve ${w3} Macerası`,
+      theme: '🗺️ Macera',
+      title: (w1, w2, w3) => `🗺️ ${w1} ve ${w3} Adası Macerası`,
       build: (w1, w2, w3) =>
-        `Güneşli bir sabah ${w1} neşeyle uyanıp pencereden dışarı baktı. Bahçede karşısına birden ${w2} çıktı ve ikisi gülüşerek yeni bir oyun başlattı. Çok geçmeden çimenlerin arasında parlayan bir ${w3} buldular! Gün boyu ${w1}, ${w2} ve ${w3} sayesinde unutulmaz bir macera yaşayıp eve mutlu döndüler.`
+        `Güneşli bir sabah ${w1} neşeyle uyanıp büyük bir macera haritası çıkardı. Bahçede karşısına birden ${w2} çıktı ve ikisi gülüşerek gizemli patikaya doğru yola koyuldu. Çok geçmeden büyük bir ağacın kovuğunda parlayan bir ${w3} buldular! Gün boyu ${w1}, ${w2} ve ${w3} sayesinde unutulmaz bir keşif yaşayıp eve mutlu döndüler.`,
+      discussion: (w1, w2, w3) =>
+        `Kahramanımız ${w1} ile ${w2}, buldukları ${w3} ile sınıf arkadaşlarına nasıl bir sürpriz hazırlayabilirdi? Hikayenin sonunu siz olsanız nasıl bitirirdiniz?`
     },
     {
-      title: (w1, w2, w3) => `🌟 ${w2} Yolculuğu`,
+      theme: '🚀 Uzay',
+      title: (w1, w2, w3) => `🚀 Yıldızlararası ${w2} Yolculuğu`,
       build: (w1, w2, w3) =>
-        `Bir varmış bir yokmuş, meraklı ${w1} bir gün büyük bir keşfe çıkmaya karar vermiş. Yol boyunca karşısına çıkan ${w2} ona tatlı bir gülümsemeyle eşlik etmiş. Tam dinlenirken ikisinin de aradığı ${w3} birden karşılarında belirmiş! O gün ${w1} ile ${w2}, paylaşmanın en güzel hazine olduğunu anlamış.`
+        `Uzay istasyonunda geri sayım başladığında kaptan ${w1}, roketin penceresinden parlayan gezegenlere baktı. Yan koltukta oturan yardımcı pilot ${w2}, kontrol panelinde yanıp sönen ${w3} işaretini fark etti. İkisi el ele verip rotayı Ay'ın parlak kraterine çevirdi ve herkesin hayran kaldığı bir keşif yaptı. Böylece ${w1}, ${w2} ve ${w3} uzayın en neşeli ekibi oldu!`,
+      discussion: (w1, w2, w3) =>
+        `Siz ${w1} ve ${w2} ile birlikte uzay gemisine binseydiniz, yanınıza ${w3} dışında hangi eşyayı alırdınız ve hangi gezegene inerdiniz?`
     },
     {
-      title: (w1, w2, w3) => `🎈 ${w1} ile ${w2} Dostluğu`,
+      theme: '🌲 Orman',
+      title: (w1, w2, w3) => `🌲 Fısıldayan Ormanda ${w3}`,
       build: (w1, w2, w3) =>
-        `Okulun en neşeli kahramanı ${w1}, teneffüste sıra arkadaşı ${w2} ile harika bir plan yaptı. Masanın üzerinde duran ${w3} ile tüm arkadaşlarını şaşırtacak eğlenceli bir gösteri hazırladılar. Bütün sınıf alkışlarla bu oyuna katılınca etraf kahkahalarla doldu. ${w1}, ${w2} ve ${w3} bir araya gelince her mola şenliğe dönüştü!`
+        `Kuş sesleriyle dolu yeşil ormanda yürüyüşe çıkan ${w1}, dev çam ağaçlarının arasında kaybolan bir iz gördü. İzleri takip edince yanına neşeyle zıplayarak gelen ${w2} ile karşılaştı. İkisi yaprakların altında saklanan ${w3} görünce sevinçten havalara uçtu! O günden sonra ${w1}, ${w2} ve ${w3} doğayı koruyan en iyi arkadaşlar oldu.`,
+      discussion: (w1, w2, w3) =>
+        `Ormanda yaşayan canlıları korumak için ${w1} ve ${w2} nasıl kurallar koyabilir? Doğa yürüyüşünde nelere dikkat etmeliyiz?`
     },
     {
-      title: (w1, w2, w3) => `🧭 ${w3} Sırrı`,
+      theme: '🏫 Okul',
+      title: (w1, w2, w3) => `🏫 Akıllı Tahta ve ${w1} Şenliği`,
       build: (w1, w2, w3) =>
-        `Rüzgarlı bir öğleden sonra ${w1}, defterinin arasında küçük ve renkli bir not buldu. Notta "Eğer ${w2} ile el ele verirseniz, sizi harika bir ${w3} bekliyor!" yazıyordu. Hemen yola koyulan ${w1} ve ${w2}, bilmeceleri tek tek çözerek hedefe ulaştı. Birlikte düşününce en zor görünen yollar bile neşeli bir oyuna dönüştü!`
+        `Teneffüs zili çaldığında sınıfın en meraklı öğrencisi ${w1}, öğretmeninin masasında parlayan bir not buldu. Sıra arkadaşı ${w2} ile birlikte akıllı tahtadaki bilmeceyi çözünce ödül kutusundan ${w3} çıktı! Bütün sınıf alkışlarla bu başarıyı kutladı ve günün yıldızı seçildi. İşte ${w1}, ${w2} ve ${w3} sayesinde okulda her ders oyuna dönüştü!`,
+      discussion: (w1, w2, w3) =>
+        `Sınıfımızda ${w1}, ${w2} ve ${w3} ile oynanacak yeni bir mola oyunu tasarlasaydınız kuralları neler olurdu?`
     },
     {
-      title: (w1, w2, w3) => `🌙 Yıldızlı ${w1} Masalı`,
+      theme: '🌊 Denizaltı',
+      title: (w1, w2, w3) => `🌊 Mavi Denizaltıda ${w3} Keşfi`,
       build: (w1, w2, w3) =>
-        `Ay ışığının parladığı sakin bir akşamda ${w1}, tatlı rüyalar diyarına doğru hayaller kurmaya başladı. Tam o sırada ${w2} kapıyı çalıp yanına geldi ve birlikte ${w3} etrafında ışıl ışıl bir oyun oynadılar. Gökyüzündeki yıldızlar bile bu sevimli dostluğu izleyip gülümsedi. ${w1} ile ${w2}, yarınki yeni maceralar için huzurla dinlendi.`
+        `Masmavi okyanusun derinliklerine dalan sarı denizaltıda kaptan ${w1} dürbünden mercanları izliyordu. Tam o sırada camın dışında ona el sallayan ${w2} belirdi ve deniz kabuklarının yanındaki ${w3} işaret etti. Denizaltının ışıklarını açıp birlikte okyanusun en renkli sırrını çözdüler. Su altındaki ${w1}, ${w2} ve ${w3} macerası balıkların dansıyla son buldu!`,
+      discussion: (w1, w2, w3) =>
+        `Denizlerin temiz kalması için ${w1} ve ${w2} denizaltından yüzeye nasıl bir mesaj göndermeli?`
     },
     {
-      title: (w1, w2, w3) => `🏆 En Güzel Takım: ${w1} & ${w2}`,
+      theme: '⏳ Zaman Yolculuğu',
+      title: (w1, w2, w3) => `⏳ Zaman Makinesi ve ${w2}`,
       build: (w1, w2, w3) =>
-        `Büyük sınıf şenliği başlamak üzereydi ama sahnedeki ${w3} bir türlü yerine yerleşmiyordu. Hemen yardıma koşan ${w1} ve ${w2}, fikirlerini birleştirerek akıllıca bir çözüm buldu. Kısa sürede ${w3} parlamaya başladı ve tüm öğrenciler onları coşkuyla alkışladı. Çünkü iş birliği yapan ${w1} ile ${w2} için hiçbir iş zor değildi!`
+        `Eski saat kulesinin kapısını açan ${w1}, tıkır tıkır çalışan parlak bir zaman makinesiyle karşılaştı. Makinenin kolunu çevirince yanına birden ${w2} ışınlandı ve ikisi geçmişle gelecek arasında eğlenceli bir yolculuğa çıktı. Gittikleri her çağda yanlarındaki ${w3} sayesinde insanlara yardım ettiler. Sonunda ${w1}, ${w2} ve ${w3} tam zamanında sınıfına geri döndü!`,
+      discussion: (w1, w2, w3) =>
+        `Zaman makinesine binme şansınız olsaydı ${w1} ile geçmişe mi yoksa geleceğe mi gitmek isterdiniz? Neden?`
+    },
+    {
+      theme: '🔬 Bilim',
+      title: (w1, w2, w3) => `🔬 Mucit ${w1} Laboratuvarda`,
+      build: (w1, w2, w3) =>
+        `Renkli deney tüplerinin arasında çalışan mucit ${w1}, bugün çok ilginç bir icat deniyordu. Yardımcı olarak laboratuvara gelen ${w2}, masanın köşesinde duran ${w3} ile eksik parçayı hemen tamamladı. Küçük bir kıvılcım sonrası odanın içi gökkuşağı ışıklarıyla doldu! Bilim meraklısı ${w1}, ${w2} ve ${w3} ile harika bir icada imza attı.`,
+      discussion: (w1, w2, w3) =>
+        `Siz bir icat yapacak olsaydınız ${w3} kullanarak okulda veya evde hangi işi kolaylaştırırdınız?`
+    },
+    {
+      theme: '🚂 Yolculuk',
+      title: (w1, w2, w3) => `🚂 Bulut Ekspresi ve ${w3}`,
+      build: (w1, w2, w3) =>
+        `Çuf çuf diye öten renkli tren Bulut Ekspresi'ne binen ${w1}, cam kenarındaki koltuğa yerleşti. Karşısına oturan ${w2} çantasından çıkardığı ${w3} ile bütün vagonu neşelendiren bir oyun başlattı. Tren dağları aşıp gökkuşağının altından geçerken tüm yolcular şarkılar söyledi. Bu yolculukta ${w1}, ${w2} ve ${w3} ömürlük bir dostluk kurdu!`,
+      discussion: (w1, w2, w3) =>
+        `Uzun bir tren yolculuğunda yanınızda ${w1} ve ${w2} olsaydı sıkılmamak için birlikte hangi oyunu oynardınız?`
+    },
+    {
+      theme: '🏰 Masal',
+      title: (w1, w2, w3) => `🏰 Masal Tepesinde ${w1} Şöleni`,
+      build: (w1, w2, w3) =>
+        `Pamuk bulutların üzerindeki şatoda büyük bir bahar şöleni hazırlanıyordu. Kapıda misafirleri karşılayan ${w1}, gökyüzünden süzülerek gelen ${w2} ile kucaklaştı. İkisi şatonun bahçesindeki ${w3} ışığını yakınca bütün diyar müzikle doldu! Masalın sonunda ${w1}, ${w2} ve ${w3} herkese gülümseyerek iyi dilekler dağıttı.`,
+      discussion: (w1, w2, w3) =>
+        `Bu masaldaki kahramanımız ${w1} yerinde siz olsaydınız şölene başka kimleri davet ederdiniz?`
+    },
+    {
+      theme: '🎨 Sanat',
+      title: (w1, w2, w3) => `🎨 Gökkuşağı Boyası ve ${w2}`,
+      build: (w1, w2, w3) =>
+        `Resim dersinde fırçalarını hazırlayan ${w1}, bembeyaz tuvalin üzerine büyük bir hayal çizmeye başladı. Yanına yaklaşan ${w2}, hayal gücünü kullanarak resmin tam ortasına parlayan bir ${w3} ekledi. İki arkadaşın tablosu o kadar canlı oldu ki herkes merakla etraflarına toplandı. Böylece ${w1}, ${w2} ve ${w3} sanat sergimizin yıldızı oldu!`,
+      discussion: (w1, w2, w3) =>
+        `Bu hikayeyi bir resme dönüştürseydiniz en çok hangi renkleri kullanırdınız ve resmin ortasına ne çizerdiniz?`
+    },
+    {
+      theme: '🏕️ Doğa & Kamp',
+      title: (w1, w2, w3) => `🏕️ Yıldızlı Gecede ${w1} Kampı`,
+      build: (w1, w2, w3) =>
+        `Akşam serinliğinde çadırlarını kuran ${w1} ile ${w2}, gökyüzünde beliren ilk yıldızları saymaya başladı. Çimenlerin üzerinde hafifçe parlayan ${w3} onlara gece lambası gibi yol gösterdi. Ateş böcekleri etraflarında dans ederken ikisi birbirine en güzel anılarını anlattı. Doğada geçirilen bu gecede ${w1}, ${w2} ve ${w3} huzurla parladı.`,
+      discussion: (w1, w2, w3) =>
+        `Kamp yaparken arkadaşımız ${w2} biraz korksaydı, ${w1} onu rahatlatmak için ne söyleyebilirdi?`
+    },
+    {
+      theme: '🌱 Dayanışma',
+      title: (w1, w2, w3) => `🌱 Okul Bahçesinde ${w3} Sürprizi`,
+      build: (w1, w2, w3) =>
+        `Bahçe temizliği gününde eldivenlerini takan ${w1}, toprağın kenarında tek başına duran bir fidan gördü. Hemen yardıma gelen ${w2}, su kovasını taşırken çantadaki ${w3} sayesinde bahçeye neşe kattı. Kısa sürede okul bahçesi çiçeklerle dolup pırıl pırıl oldu. Birlikte çalışan ${w1}, ${w2} ve ${w3} herkese dayanışmanın gücünü gösterdi!`,
+      discussion: (w1, w2, w3) =>
+        `Okulumuzu ve sınıfımızı güzelleştirmek için ${w1} ile ${w2} gibi biz de bugün hangi küçük iyiliği yapabiliriz?`
     }
   ];
 
-  const RIDDLE_INTROS = [
-    (a, b) => `${a} ile ${b} fısıldaşır yan yana,`,
-    (a, b) => `${a} sormuş ${b} dinlemiş merakla,`,
-    (a, b) => `${a} ve ${b} saklamış bir sır oyunda,`
+  const EXTRA_DISCUSSIONS = [
+    (w1, w2, w3) => `Kahramanımız ${w1} bu durumda başka ne yapabilirdi? Hikayenin sonunu siz olsanız nasıl bitirirdiniz?`,
+    (w1, w2, w3) => `Sizce bu hikayede en önemli rolü ${w1}, ${w2} yoksa ${w3} mü üstlendi? Nedenini sınıfça paylaşalım!`,
+    (w1, w2, w3) => `Hikayeye 4. bir kahraman daha eklemek isteseydiniz bu kim olurdu ve ${w3} ile ne yapardı?`,
+    (w1, w2, w3) => `Bu hikayeden öğrendiğimiz en güzel ders veya mesaj nedir? Tek cümleyle özetleyebilir misiniz?`
   ];
 
-  const RIDDLE_OUTROS = [
-    'Bil bakalım bu gizli şey nedir bana?',
-    'Hadi düşün, bu bilmecenin cevabı nedir?',
-    'Tahmin et bakalım, saklanan kelime hangisidir?'
+  const RIDDLE_TEMPLATES = [
+    {
+      theme: '🎈 Kafiyeli Bilmece',
+      intro: (a, b) => `${a} ile ${b} fısıldaşır yan yana,`,
+      outro: 'Bil bakalım bu gizli şey nedir bana?'
+    },
+    {
+      theme: '🔍 Meraklı Soru',
+      intro: (a, b) => `${a} sormuş, ${b} dinlemiş merakla,`,
+      outro: 'Hadi düşün, bu bilmecenin cevabı nedir acaba?'
+    },
+    {
+      theme: '🗝️ Sır Kutusu',
+      intro: (a, b) => `${a} ve ${b} saklamış bir sır oyunda,`,
+      outro: 'Tahmin et bakalım, saklanan kelime hangisidir?'
+    },
+    {
+      theme: '🌟 Yıldız İpucu',
+      intro: (a, b) => `${a} yukarı baktı, ${b} gülümsedi sessizce,`,
+      outro: 'Kim ilk önce bulacak bu cevabı gizlice?'
+    },
+    {
+      theme: '🏫 Sınıf Yarışı',
+      intro: (a, b) => `Tahtada ${a} durur, yanında ise ${b},`,
+      outro: 'El kaldırıp söyle bakalım, bu gizemli şey ne?'
+    },
+    {
+      theme: '🎵 Neşeli Tekerleme',
+      intro: (a, b) => `Bir yanda ${a} oynar, bir yanda ${b} zıplar,`,
+      outro: 'Şimdi sıra sende, cevabı yüksek sesle aktar!'
+    },
+    {
+      theme: '🧭 Kaşif İzleri',
+      intro: (a, b) => `Kaşif ${a} haritayı açtı, ${b} baktı dikkatle,`,
+      outro: 'İşte ipucu önünde, doğru cevabı hemen söyle!'
+    },
+    {
+      theme: '🎨 Renkli İpucu',
+      intro: (a, b) => `${a} bir resim çizmiş, ${b} renkleri seçmiş,`,
+      outro: 'Resimde gizli kalan o güzel şey neymiş?'
+    },
+    {
+      theme: '🚀 Uzay Sinyali',
+      intro: (a, b) => `Roketten ${a} seslendi, ${b} mesajı kaptı,`,
+      outro: 'Sinyalde saklı duran doğru kelimeyi kim buldu?'
+    },
+    {
+      theme: '🌲 Orman Fısıltısı',
+      intro: (a, b) => `Rüzgar ${a} üzerinden esti, ${b} yaprağına kondu,`,
+      outro: 'Doğanın bize sorduğu bu bilmece ne oldu?'
+    },
+    {
+      theme: '🎁 Sürpriz Paket',
+      intro: (a, b) => `Kurdeleli kutuda ${a} ile ${b} buluşmuş,`,
+      outro: 'Kutunun tam ortasındaki sürpriz neymiş?'
+    },
+    {
+      theme: '🤖 Moli Soruyor',
+      intro: (a, b) => `Moli dedi ki: "${a} ve ${b} çok iyi dosttur,`,
+      outro: 'Üçüncü arkadaşları kimdir, haydi sınıfça buldur!"'
+    },
+    {
+      theme: '🌊 Dalga Sesi',
+      intro: (a, b) => `Mavi dalgalar ${a} kıyısına vurdu, ${b} parladı,`,
+      outro: 'Suların fısıldadığı bu gizemli yanıt neydi?'
+    },
+    {
+      theme: '⏰ Zaman İpucu',
+      intro: (a, b) => `Saatler tik tak çaldı, ${a} ile ${b} bekledi,`,
+      outro: 'Zaman dolmadan önce doğru cevabı kim söyledi?'
+    },
+    {
+      theme: '🏆 Şampiyon Sorusu',
+      intro: (a, b) => `Büyük finalde ${a} hazırlandı, ${b} alkışladı,`,
+      outro: 'Alkışı hak eden o gizli cevap nedir şimdi?'
+    }
   ];
 
   const workshopState = {
     activeTab: 'story', // 'story' | 'riddle'
     words: ['Kedi', 'Robot Moli', 'Altın Anahtar'],
     nextSlot: 0,
-    lastStoryIdx: -1,
-    lastRiddleIdx: -1,
+    storyBag: [],
+    riddleBag: [],
     riddleAnswerCursor: 2,
-    currentOutput: null, // { type, title, text, words, riddleAnswer, answerEmoji, answerRevealed }
+    discussionVariantIdx: 0,
+    currentOutput: null,
     isSpeaking: false
   };
 
@@ -214,16 +368,50 @@
     return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
+  function drawFromBag(bagKey, totalCount) {
+    if (!Array.isArray(workshopState[bagKey]) || workshopState[bagKey].length === 0) {
+      const fresh = Array.from({ length: totalCount }, (_, i) => i);
+      for (let i = fresh.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = fresh[i];
+        fresh[i] = fresh[j];
+        fresh[j] = tmp;
+      }
+      workshopState[bagKey] = fresh;
+    }
+    return workshopState[bagKey].pop();
+  }
+
   function highlightWordsHtml(text, words) {
-    let html = escapeHtml(text);
-    const uniqueWords = Array.from(new Set(words.filter(Boolean)))
-      .sort((a, b) => b.length - a.length);
-    uniqueWords.forEach((word) => {
-      const escapedWord = escapeHtml(word);
-      const regex = new RegExp(`(${escapeRegExp(escapedWord)})`, 'gi');
-      html = html.replace(regex, '<mark class="msw-highlight">$1</mark>');
+    const cleanWords = [];
+    const slotByLower = {};
+    words.forEach((w, idx) => {
+      const trimmed = String(w || '').trim();
+      if (!trimmed) return;
+      const low = trimmed.toLocaleLowerCase('tr-TR');
+      if (slotByLower[low] === undefined) {
+        slotByLower[low] = idx % 3;
+        cleanWords.push(trimmed);
+      }
     });
-    return html.replace(/\n/g, '<br>');
+
+    const escapedText = escapeHtml(text);
+    if (cleanWords.length === 0) return escapedText.replace(/\n/g, '<br>');
+
+    const pattern = cleanWords
+      .slice()
+      .sort((a, b) => b.length - a.length)
+      .map((w) => escapeRegExp(escapeHtml(w)))
+      .join('|');
+    const combinedRegex = new RegExp(`(${pattern})`, 'gi');
+
+    const highlighted = escapedText.replace(combinedRegex, (match) => {
+      const slot = slotByLower[match.toLocaleLowerCase('tr-TR')];
+      const badgeCls = slot !== undefined ? `msw-word-badge msw-badge-${slot}` : 'msw-word-badge msw-badge-0';
+      return `<mark class="${badgeCls}">${match}</mark>`;
+    });
+
+    return highlighted.replace(/\n/g, '<br>');
   }
 
   function findPresetCard(word) {
@@ -306,6 +494,140 @@
     }
 
     onDone();
+  }
+
+  function playWorkshopApplauseAndFanfare() {
+    if (window.isMuted === true) return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+
+    try {
+      const ctx = new AudioCtx();
+      if (ctx.state === 'suspended') ctx.resume();
+      const now = ctx.currentTime;
+
+      // 1) Neşeli kutlama akoru (C5 - E5 - G5 - C6)
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        gain.gain.setValueAtTime(0.001, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.14, now + idx * 0.08 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.36);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.38);
+      });
+
+      // 2) Sınıf alkışı (filtreli kısa beyaz gürültü darbeleri)
+      const clapCount = 9;
+      for (let i = 0; i < clapCount; i++) {
+        const start = now + 0.06 + i * 0.085 + (Math.random() * 0.025);
+        const bufLen = Math.floor(ctx.sampleRate * 0.065);
+        const buffer = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let k = 0; k < bufLen; k++) {
+          data[k] = (Math.random() * 2 - 1) * Math.exp(-k / (bufLen * 0.25));
+        }
+
+        const noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1100 + Math.random() * 700, start);
+        filter.Q.setValueAtTime(1.4, start);
+
+        const clapGain = ctx.createGain();
+        clapGain.gain.setValueAtTime(0.16, start);
+        clapGain.gain.exponentialRampToValueAtTime(0.001, start + 0.065);
+
+        noise.connect(filter);
+        filter.connect(clapGain);
+        clapGain.connect(ctx.destination);
+        noise.start(start);
+        noise.stop(start + 0.068);
+      }
+
+      setTimeout(() => {
+        try { ctx.close(); } catch (e) {}
+      }, 1500);
+    } catch (e) {}
+  }
+
+  function launchWorkshopConfetti() {
+    let canvas = document.getElementById(CONFETTI_CANVAS_ID);
+    if (canvas) canvas.remove();
+
+    canvas = document.createElement('canvas');
+    canvas.id = CONFETTI_CANVAS_ID;
+    canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:100005;';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      canvas.remove();
+      return;
+    }
+
+    const colors = ['#F97316', '#3B82F6', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6'];
+    const cx = canvas.width * 0.5;
+    const cy = canvas.height * 0.52;
+    const particles = Array.from({ length: 85 }, () => {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 5 + Math.random() * 11;
+      return {
+        x: cx + (Math.random() - 0.5) * 140,
+        y: cy + (Math.random() - 0.5) * 50,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 5,
+        size: 6 + Math.random() * 7,
+        rot: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.28,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 1
+      };
+    });
+
+    let frame = 0;
+    function tick() {
+      frame += 1;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.32;
+        p.vx *= 0.985;
+        p.rot += p.vRot;
+        p.life -= 0.014;
+        if (p.life <= 0) continue;
+
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.65);
+        ctx.restore();
+      }
+
+      if (alive && frame < 110) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.remove();
+      }
+    }
+
+    requestAnimationFrame(tick);
   }
 
   function injectStyles() {
@@ -647,6 +969,20 @@
         gap: 10px;
         margin-bottom: 12px;
       }
+      #${MODAL_ID} .msw-output-title-group {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      #${MODAL_ID} .msw-theme-pill {
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #E0E7FF;
+        color: #3730A3;
+        font-size: 0.78rem;
+        font-weight: 900;
+      }
       #${MODAL_ID} .msw-output-title {
         margin: 0;
         font-family: 'Fredoka', 'Nunito', sans-serif;
@@ -669,7 +1005,7 @@
       }
       #${MODAL_ID} .msw-output-body {
         font-size: clamp(1.08rem, 1.65vw, 1.32rem);
-        line-height: 1.68;
+        line-height: 1.78;
         font-weight: 700;
         color: #1E293B;
         background: #FFFFFF;
@@ -677,12 +1013,87 @@
         border-radius: 16px;
         padding: 16px 18px;
       }
-      #${MODAL_ID} .msw-highlight {
-        background: #FEF08A;
-        color: #78350F;
-        padding: 1px 6px;
-        border-radius: 7px;
-        font-weight: 900;
+      /* Hikaye & Bilmece içi parlayan büyük renkli kelime rozetleri */
+      #${MODAL_ID} .msw-word-badge {
+        display: inline-block;
+        padding: 2px 11px;
+        margin: 0 2px;
+        border-radius: 12px;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 1.04em;
+        font-weight: 700;
+        line-height: 1.35;
+        vertical-align: baseline;
+        box-shadow: 0 3px 10px rgba(15, 23, 42, 0.12);
+      }
+      #${MODAL_ID} .msw-badge-0 {
+        background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+        color: #1E3A8A;
+        border: 2px solid #3B82F6;
+      }
+      #${MODAL_ID} .msw-badge-1 {
+        background: linear-gradient(135deg, #FFEDD5 0%, #FED7AA 100%);
+        color: #9A3412;
+        border: 2px solid #F97316;
+      }
+      #${MODAL_ID} .msw-badge-2 {
+        background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+        color: #065F46;
+        border: 2px solid #10B981;
+      }
+      /* Hikaye Sonu "Sınıfça Düşünelim" Kutusu */
+      #${MODAL_ID} .msw-discussion-box {
+        margin-top: 14px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #F0F9FF 0%, #EEF2FF 100%);
+        border: 2px solid #93C5FD;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.08);
+      }
+      #${MODAL_ID} .msw-discussion-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 6px;
+      }
+      #${MODAL_ID} .msw-discussion-heading {
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 1.02rem;
+        font-weight: 700;
+        color: #1E40AF;
+      }
+      #${MODAL_ID} .msw-btn-next-discussion {
+        padding: 5px 11px;
+        border-radius: 10px;
+        border: 1.5px solid #93C5FD;
+        background: #FFFFFF;
+        color: #1D4ED8;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      #${MODAL_ID} .msw-discussion-text {
+        margin: 0;
+        font-size: clamp(0.98rem, 1.35vw, 1.12rem);
+        font-weight: 800;
+        color: #1E293B;
+        line-height: 1.5;
+      }
+      /* Bilmece İpucu ve Büyük Cevap Kutusu */
+      #${MODAL_ID} .msw-riddle-hint-box {
+        margin-top: 12px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: #FEFCE8;
+        border: 2px solid #FDE047;
+        color: #854D0E;
+        font-size: 0.98rem;
+        font-weight: 800;
+        line-height: 1.45;
       }
       #${MODAL_ID} .msw-riddle-answer-box {
         margin-top: 12px;
@@ -692,15 +1103,49 @@
         flex-wrap: wrap;
         gap: 10px;
         padding: 12px 16px;
-        border-radius: 14px;
+        border-radius: 16px;
         background: #FFF7ED;
         border: 2px dashed #FB923C;
+      }
+      #${MODAL_ID} .msw-riddle-answer-box.is-revealed {
+        background: linear-gradient(135deg, #ECFDF5 0%, #FEFCE8 100%);
+        border: 2.5px solid #22C55E;
+        box-shadow: 0 8px 22px rgba(34, 197, 94, 0.2);
       }
       #${MODAL_ID} .msw-riddle-secret {
         font-family: 'Fredoka', 'Nunito', sans-serif;
         font-size: 1.05rem;
         font-weight: 700;
         color: #9A3412;
+      }
+      #${MODAL_ID} .msw-riddle-answer-box.is-revealed .msw-riddle-secret {
+        font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+        color: #15803D;
+        letter-spacing: 0.03em;
+        animation: mswAnswerPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes mswAnswerPop {
+        0% { transform: scale(0.84); opacity: 0.4; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      #${MODAL_ID} .msw-riddle-actions {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      #${MODAL_ID} .msw-btn-hint {
+        padding: 8px 14px;
+        border-radius: 12px;
+        border: 2px solid #F59E0B;
+        border-bottom: 3px solid #D97706;
+        background: #FFFBEB;
+        color: #92400E;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.92rem;
+        font-weight: 700;
+        cursor: pointer;
+        touch-action: manipulation;
       }
       #${MODAL_ID} .msw-btn-reveal {
         padding: 8px 14px;
@@ -876,16 +1321,20 @@
   }
 
   function buildStoryOutput(words) {
-    let idx = Math.floor(Math.random() * STORY_TEMPLATES.length);
-    if (STORY_TEMPLATES.length > 1 && idx === workshopState.lastStoryIdx) {
-      idx = (idx + 1) % STORY_TEMPLATES.length;
-    }
-    workshopState.lastStoryIdx = idx;
+    const idx = drawFromBag('storyBag', STORY_TEMPLATES.length);
     const tpl = STORY_TEMPLATES[idx];
+    workshopState.discussionVariantIdx = 0;
+
     return {
       type: 'story',
+      theme: tpl.theme,
       title: tpl.title(words[0], words[1], words[2]),
       text: tpl.build(words[0], words[1], words[2]),
+      discussionPool: [
+        tpl.discussion(words[0], words[1], words[2]),
+        ...EXTRA_DISCUSSIONS.map((fn) => fn(words[0], words[1], words[2]))
+      ],
+      discussionIdx: 0,
       words: words.slice()
     };
   }
@@ -899,36 +1348,43 @@
     const otherB = others[1] || 'Yıldız';
 
     const preset = findPresetCard(answerWord);
-    let introIdx = Math.floor(Math.random() * RIDDLE_INTROS.length);
-    if (RIDDLE_INTROS.length > 1 && introIdx === workshopState.lastRiddleIdx) {
-      introIdx = (introIdx + 1) % RIDDLE_INTROS.length;
-    }
-    workshopState.lastRiddleIdx = introIdx;
+    const riddleIdx = drawFromBag('riddleBag', RIDDLE_TEMPLATES.length);
+    const tpl = RIDDLE_TEMPLATES[riddleIdx];
 
-    const introLine = RIDDLE_INTROS[introIdx](otherA, otherB);
-    const outroLine = RIDDLE_OUTROS[introIdx % RIDDLE_OUTROS.length];
+    const cleanAnswer = answerWord.trim();
+    const firstChar = cleanAnswer.charAt(0).toLocaleUpperCase('tr-TR');
+    const letterLen = cleanAnswer.replace(/\s+/g, '').length;
+    const wordCount = cleanAnswer.split(/\s+/).filter(Boolean).length;
 
     let bodyLines;
     if (preset) {
       bodyLines = preset.riddleLines;
     } else {
-      const cleanAnswer = answerWord.trim();
-      const firstChar = cleanAnswer.charAt(0).toLocaleUpperCase('tr-TR');
-      const letterLen = cleanAnswer.replace(/\s+/g, '').length;
       bodyLines = [
         `Tam ${letterLen} harfli adı "${firstChar}" ile başlar,`,
         'Masalımızda saklanır, bilenleri neşe sarar!'
       ];
     }
 
+    const hint1 = wordCount > 1
+      ? `Cevap ${wordCount} kelimeden (toplam ${letterLen} harf) oluşuyor ve "${firstChar}" harfiyle başlıyor!`
+      : `Cevap ${letterLen} harfli bir kelime ve "${firstChar}" harfiyle başlıyor!`;
+
+    const hint2 = preset
+      ? preset.featureHint
+      : `Seçtiğiniz 3 kelimeden biri (${otherA} ve ${otherB} dışındaki) gizli cevabımız!`;
+
     return {
       type: 'riddle',
+      theme: tpl.theme,
       title: '🧩 Bil Bakalım Bu Nedir?',
-      text: `${introLine}\n${bodyLines[0]}\n${bodyLines[1]}\n${outroLine}`,
+      text: `${tpl.intro(otherA, otherB)}\n${bodyLines[0]}\n${bodyLines[1]}\n${tpl.outro}`,
       words: [otherA, otherB],
       allWords: words.slice(),
       riddleAnswer: answerWord,
       answerEmoji: preset ? preset.emoji : '✨',
+      hints: [hint1, hint2],
+      hintLevel: 0,
       answerRevealed: false
     };
   }
@@ -951,27 +1407,57 @@
     }
 
     const chipsHtml = out.words
-      .map((w) => `<span class="msw-used-chip">${escapeHtml(w)}</span>`)
+      .map((w, idx) => `<span class="msw-used-chip">${idx + 1}. ${escapeHtml(w)}</span>`)
       .join('');
+
+    const storyDiscussionHtml = out.type === 'story'
+      ? `
+        <div class="msw-discussion-box">
+          <div class="msw-discussion-top">
+            <span class="msw-discussion-heading">🤔 Sınıfça Düşünelim:</span>
+            <button class="msw-btn-next-discussion" id="moliNextDiscussionBtn" type="button">💬 Başka Soru</button>
+          </div>
+          <p class="msw-discussion-text">${escapeHtml(out.discussionPool[out.discussionIdx])}</p>
+        </div>
+      `
+      : '';
+
+    const riddleHintHtml = (out.type === 'riddle' && out.hintLevel > 0)
+      ? `
+        <div class="msw-riddle-hint-box" id="moliRiddleHintBox">
+          <div><strong>💡 İpucu 1:</strong> ${escapeHtml(out.hints[0])}</div>
+          ${out.hintLevel >= 2 ? `<div style="margin-top:4px;"><strong>🔎 İpucu 2:</strong> ${escapeHtml(out.hints[1])}</div>` : ''}
+        </div>
+      `
+      : '';
 
     const riddleExtraHtml = out.type === 'riddle'
       ? `
-        <div class="msw-riddle-answer-box">
+        ${riddleHintHtml}
+        <div class="msw-riddle-answer-box ${out.answerRevealed ? 'is-revealed' : ''}">
           <span class="msw-riddle-secret" id="moliRiddleSecretText">
             ${out.answerRevealed
-              ? `🎉 Cevap: <strong>${escapeHtml(out.answerEmoji)} ${escapeHtml(out.riddleAnswer)}</strong>`
+              ? `🎉 CEVAP: <strong>${escapeHtml(out.answerEmoji)} ${escapeHtml(out.riddleAnswer.toLocaleUpperCase('tr-TR'))}</strong>`
               : '❓ Cevap gizli tutuluyor — önce sınıfça tahmin edin!'}
           </span>
-          <button class="msw-btn-reveal" id="moliRiddleRevealBtn" type="button">
-            ${out.answerRevealed ? '🙈 Cevabı Gizle' : '👀 Cevabı Göster'}
-          </button>
+          <div class="msw-riddle-actions">
+            <button class="msw-btn-hint" id="moliRiddleHintBtn" type="button">
+              ${out.hintLevel === 0 ? '💡 İpucu Ver' : (out.hintLevel === 1 ? '💡 2. İpucunu Ver' : '💡 İpucu Açık')}
+            </button>
+            <button class="msw-btn-reveal" id="moliRiddleRevealBtn" type="button">
+              ${out.answerRevealed ? '🙈 Cevabı Gizle' : '👁️ Cevabı Göster'}
+            </button>
+          </div>
         </div>
       `
       : '';
 
     card.innerHTML = `
       <div class="msw-output-header">
-        <h3 class="msw-output-title">${escapeHtml(out.title)}</h3>
+        <div class="msw-output-title-group">
+          ${out.theme ? `<span class="msw-theme-pill">${escapeHtml(out.theme)}</span>` : ''}
+          <h3 class="msw-output-title">${escapeHtml(out.title)}</h3>
+        </div>
         <div class="msw-used-chips">
           ${out.type === 'riddle' ? '<span class="msw-used-chip">🔒 1 Gizli Cevap</span>' : ''}
           ${chipsHtml}
@@ -980,6 +1466,7 @@
       <div class="msw-output-body">
         ${highlightWordsHtml(out.text, out.words)}
       </div>
+      ${storyDiscussionHtml}
       ${riddleExtraHtml}
       <div class="msw-output-footer">
         <button class="msw-btn-speak ${workshopState.isSpeaking ? 'is-speaking' : ''}" id="moliStorySpeakBtn" type="button">
@@ -994,12 +1481,36 @@
       speakBtn.addEventListener('click', speakCurrentOutput);
     }
 
-    const revealBtn = document.getElementById('moliRiddleRevealBtn');
-    if (revealBtn) {
-      revealBtn.addEventListener('click', () => {
-        if (!workshopState.currentOutput) return;
-        workshopState.currentOutput.answerRevealed = !workshopState.currentOutput.answerRevealed;
+    const nextDiscussionBtn = document.getElementById('moliNextDiscussionBtn');
+    if (nextDiscussionBtn && out.type === 'story') {
+      nextDiscussionBtn.addEventListener('click', () => {
+        out.discussionIdx = (out.discussionIdx + 1) % out.discussionPool.length;
         renderOutputCard();
+      });
+    }
+
+    const hintBtn = document.getElementById('moliRiddleHintBtn');
+    if (hintBtn && out.type === 'riddle') {
+      hintBtn.addEventListener('click', () => {
+        if (out.hintLevel < 2) {
+          out.hintLevel += 1;
+        } else {
+          out.hintLevel = 1;
+        }
+        renderOutputCard();
+      });
+    }
+
+    const revealBtn = document.getElementById('moliRiddleRevealBtn');
+    if (revealBtn && out.type === 'riddle') {
+      revealBtn.addEventListener('click', () => {
+        const wasRevealed = !!out.answerRevealed;
+        out.answerRevealed = !wasRevealed;
+        renderOutputCard();
+        if (!wasRevealed) {
+          launchWorkshopConfetti();
+          playWorkshopApplauseAndFanfare();
+        }
       });
     }
   }
@@ -1108,7 +1619,6 @@
 
     document.body.appendChild(modal);
 
-    // Kapatma dinleyicileri
     document.getElementById('moliStoryCloseBtn').addEventListener('click', closeWorkshop);
     modal.addEventListener('click', (e) => {
       if (e.target === modal) closeWorkshop();
@@ -1119,7 +1629,6 @@
       }
     });
 
-    // Sekme dinleyicileri
     modal.querySelectorAll('.msw-tab-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         const nextTab = btn.getAttribute('data-msw-tab');
@@ -1130,14 +1639,12 @@
       });
     });
 
-    // Kelime kartları dinleyicileri
     modal.querySelectorAll('.msw-word-card').forEach((cardEl) => {
       cardEl.addEventListener('click', () => {
         handleWordCardClick(cardEl.getAttribute('data-word'));
       });
     });
 
-    // Serbest yazım kutuları
     for (let i = 0; i < 3; i++) {
       const inp = document.getElementById(`moliWordInput${i}`);
       if (inp) {
@@ -1148,7 +1655,6 @@
       }
     }
 
-    // Rastgele Seç & Temizle & Oluştur
     document.getElementById('moliRandomWordsBtn').addEventListener('click', () => {
       setWordsToInputs(pickThreeRandomWords());
       generateCurrentOutput();
@@ -1177,6 +1683,8 @@
 
   function closeWorkshop() {
     stopVoicePlayback();
+    const confetti = document.getElementById(CONFETTI_CANVAS_ID);
+    if (confetti) confetti.remove();
     const modal = document.getElementById(MODAL_ID);
     if (modal) modal.classList.remove('is-open');
   }
