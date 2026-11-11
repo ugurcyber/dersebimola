@@ -15204,7 +15204,8 @@
      8.7. 🔥 POPÜLER OYUNLAR & DÜELLOLAR (6 TAM KAPSAMLI ZEKA & REKABET OYUNU)
      ========================================================================== */
   // Çarpma Savaşı (Halat Çekme) Mod Durumu: 'single' | 'duel'
-  let tugOfWarMode = 'single';
+  let tugOfWarMode = (typeof window !== 'undefined' && window.innerWidth > 768) ? 'duel' : 'single';
+  let tugModeUserChosen = false;
   window.tugOfWarMode = tugOfWarMode;
 
   const ArcadeHub = {
@@ -15223,7 +15224,10 @@
       lastPullText: '',
       lastPullSide: null,
       isOver: false,
-      currentQ: null
+      roundToken: 0,
+      currentQ: null,
+      p1Q: null,
+      p2Q: null
     },
 
     // 2) 🧩 Çocuk Sudokusu
@@ -15633,8 +15637,43 @@
   }
 
   // =========================================================================
-  // OYUN 1: ⚔️ ÇARPMA SAVAŞI (TEK KİŞİLİK: ÖĞRENCİ VS. MOLİ)
+  // OYUN 1: ⚔️ ÇARPMA SAVAŞI (TEK KİŞİLİK & 2 KİŞİLİK DÜELLO)
   // =========================================================================
+  function isTugDuelActive() {
+    return typeof window !== 'undefined' && window.innerWidth > 768 && tugOfWarMode === 'duel';
+  }
+
+  function generateUniqueTugQuestion(diff, avoidText = '') {
+    let q = generateTugQuestion(diff);
+    let tries = 0;
+    while (avoidText && q.text === avoidText && tries < 6) {
+      q = generateTugQuestion(diff);
+      tries += 1;
+    }
+    return q;
+  }
+
+  function buildTugRulerStepsHtml(ropePos) {
+    let stepsHtml = '';
+    for (let i = -5; i <= 5; i++) {
+      const isBlue = i < 0;
+      const isOrange = i > 0;
+      const isCenter = i === 0;
+      let activeCls = '';
+      if (isBlue && ropePos <= i) activeCls = 'filled-blue';
+      else if (isOrange && ropePos >= i) activeCls = 'filled-orange';
+      else if (isCenter && Math.abs(ropePos) < 0.5) activeCls = 'active-center';
+
+      stepsHtml += `
+        <div class="ruler-step-tick ${isBlue ? 'tick-blue' : (isOrange ? 'tick-orange' : 'tick-center')} ${activeCls}">
+          <span class="tick-num">${i === 0 ? '0' : Math.abs(i)}</span>
+          <span class="tick-dot"></span>
+        </div>
+      `;
+    }
+    return stepsHtml;
+  }
+
   function initArcadeTugGame() {
     const iconEl = document.getElementById('arcadeStageIcon');
     const titleEl = document.getElementById('arcadeStageTitle');
@@ -15646,14 +15685,24 @@
     if (window.innerWidth <= 768) {
       tugOfWarMode = 'single';
       window.tugOfWarMode = 'single';
+    } else if (!tugModeUserChosen) {
+      tugOfWarMode = 'duel';
+      window.tugOfWarMode = 'duel';
     }
-    t.ropePos = 0; // -5 (Sen kazandın) .. 0 (Orta) .. +5 (Moli kazandı)
+    t.roundToken = (t.roundToken || 0) + 1;
+    t.ropePos = 0; // -5 (Sen / Mavi) .. 0 (Orta) .. +5 (Moli / Turuncu)
     t.isLocked = false;
     t.streak = 0;
+    t.p1Locked = false;
+    t.p2Locked = false;
+    t.p1Streak = 0;
+    t.p2Streak = 0;
     t.lastPullText = '';
     t.lastPullSide = null;
     t.isOver = false;
     t.currentQ = generateTugQuestion(t.diff);
+    t.p1Q = generateTugQuestion(t.diff);
+    t.p2Q = generateUniqueTugQuestion(t.diff, t.p1Q.text);
 
     if (toolbarEl) {
       toolbarEl.innerHTML = `
@@ -15680,12 +15729,11 @@
         addTapListener(btn, () => {
           const nextMode = btn.getAttribute('data-tug-mode');
           if (nextMode !== 'single' && nextMode !== 'duel') return;
-          tugOfWarMode = nextMode;
+          tugModeUserChosen = true;
+          tugOfWarMode = (window.innerWidth <= 768) ? 'single' : nextMode;
           window.tugOfWarMode = tugOfWarMode;
           audio.playClick();
-          toolbarEl.querySelectorAll('[data-tug-mode]').forEach(b => {
-            b.classList.toggle('active', b.getAttribute('data-tug-mode') === tugOfWarMode);
-          });
+          initArcadeTugGame();
         });
       });
       const btnRestart = document.getElementById('btnTugRestart');
@@ -15698,6 +15746,11 @@
   function renderArcadeTugStage() {
     const canvas = document.getElementById('arcadeStageCanvas');
     if (!canvas) return;
+    if (isTugDuelActive()) {
+      renderArcadeTugDuelStage();
+      return;
+    }
+
     const t = ArcadeHub.tug;
     const q = t.currentQ;
 
@@ -15705,24 +15758,7 @@
     const pct = Math.max(14, Math.min(86, 50 + (t.ropePos * 7.2)));
     const userSteps = Math.max(0, -Math.round(t.ropePos));
     const rivalSteps = Math.max(0, Math.round(t.ropePos));
-
-    let stepsHtml = '';
-    for (let i = -5; i <= 5; i++) {
-      const isBlue = i < 0;
-      const isOrange = i > 0;
-      const isCenter = i === 0;
-      let activeCls = '';
-      if (isBlue && t.ropePos <= i) activeCls = 'filled-blue';
-      else if (isOrange && t.ropePos >= i) activeCls = 'filled-orange';
-      else if (isCenter && Math.abs(t.ropePos) < 0.5) activeCls = 'active-center';
-
-      stepsHtml += `
-        <div class="ruler-step-tick ${isBlue ? 'tick-blue' : (isOrange ? 'tick-orange' : 'tick-center')} ${activeCls}">
-          <span class="tick-num">${i === 0 ? '0' : Math.abs(i)}</span>
-          <span class="tick-dot"></span>
-        </div>
-      `;
-    }
+    const stepsHtml = buildTugRulerStepsHtml(t.ropePos);
 
     canvas.innerHTML = `
       <div class="arc-tug-arena arc-tug-single-arena">
@@ -15897,6 +15933,322 @@
           renderArcadeTugStage();
         }, 800);
       }
+    }
+  }
+
+  // =========================================================================
+  // ÇARPMA SAVAŞI: 2 KİŞİLİK YAN YANA AKILLI TAHTA DÜELLO MOTORU
+  // =========================================================================
+  function buildDuelPlayerCardInner(playerNum) {
+    const t = ArcadeHub.tug;
+    const isBlue = playerNum === 1;
+    const q = isBlue ? t.p1Q : t.p2Q;
+    const isLocked = isBlue ? t.p1Locked : t.p2Locked;
+    const streak = isBlue ? t.p1Streak : t.p2Streak;
+    const score = isBlue ? t.p1Score : t.p2Score;
+    const title = isBlue ? '🔵 1. Oyuncu - Mavi Köşe' : '🟠 2. Oyuncu - Turuncu Köşe';
+
+    return `
+      <div class="tug-card-top-bar">
+        <div class="player-corner-title">
+          <span>${title}</span>
+        </div>
+        <div class="tug-duel-card-badges">
+          ${streak >= 2 ? `<span class="streak-badge">🔥 ${streak}x Seri</span>` : ''}
+          <span class="tug-win-chip ${isBlue ? 'chip-blue' : 'chip-orange'}">🏆 ${score}</span>
+        </div>
+      </div>
+
+      <div class="tug-duel-q-box">
+        <span class="tug-q-label">Hemen Çöz ve Halatı Çek:</span>
+        <div class="tug-duel-math-text">${q ? q.text : ''}</div>
+      </div>
+
+      <div class="tug-duel-options-grid">
+        ${(q ? q.options : []).map((opt) => `
+          <button class="tug-duel-opt-btn ${isBlue ? 'btn-blue' : 'btn-orange'}" data-tug-duel-p="${playerNum}" data-tug-val="${opt}" type="button" ${t.isOver || isLocked ? 'disabled' : ''}>
+            <span class="btn-opt-num">${opt}</span>
+          </button>
+        `).join('')}
+      </div>
+      <div class="tug-lock-msg">🔒 Yanlış cevap! 1.2 sn kilitlendi...</div>
+    `;
+  }
+
+  function bindDuelCardButtons(cardEl, playerNum) {
+    if (!cardEl) return;
+    cardEl.querySelectorAll('.tug-duel-opt-btn').forEach(btn => {
+      btn.addEventListener('pointerdown', (e) => {
+        if (e.cancelable) e.preventDefault();
+        const val = parseInt(btn.getAttribute('data-tug-val'), 10);
+        handleDuelTugAnswer(playerNum, btn, val);
+      });
+    });
+  }
+
+  function updateDuelPlayerCard(playerNum) {
+    const t = ArcadeHub.tug;
+    const cardEl = document.getElementById(playerNum === 1 ? 'tugDuelP1Card' : 'tugDuelP2Card');
+    if (!cardEl) return;
+    const isLocked = playerNum === 1 ? t.p1Locked : t.p2Locked;
+    cardEl.classList.toggle('is-locked', !!isLocked);
+    cardEl.innerHTML = buildDuelPlayerCardInner(playerNum);
+    bindDuelCardButtons(cardEl, playerNum);
+  }
+
+  function updateDuelRopeUI() {
+    const t = ArcadeHub.tug;
+    const pct = Math.max(14, Math.min(86, 50 + (t.ropePos * 7.2)));
+    const blueSteps = Math.max(0, -Math.round(t.ropePos));
+    const orangeSteps = Math.max(0, Math.round(t.ropePos));
+
+    const blueStepsEl = document.getElementById('tugDuelBlueSteps');
+    const orangeStepsEl = document.getElementById('tugDuelOrangeSteps');
+    const infoBadgeEl = document.getElementById('tugDuelInfoBadge');
+    const pullerBlueEl = document.getElementById('tugDuelPullerBlue');
+    const pullerOrangeEl = document.getElementById('tugDuelPullerOrange');
+    const knotEl = document.getElementById('tugDuelKnotCarrier');
+    const rulerEl = document.getElementById('tugDuelRulerTrack');
+
+    if (blueStepsEl) blueStepsEl.textContent = `${blueSteps} / 5`;
+    if (orangeStepsEl) orangeStepsEl.textContent = `${orangeSteps} / 5`;
+
+    if (infoBadgeEl) {
+      infoBadgeEl.textContent = t.isOver
+        ? (t.ropePos <= -5
+          ? '🏆 1. OYUNCU (MAVİ) HALATI ÇEKTİ VE KAZANDI! 🎉'
+          : '🏆 2. OYUNCU (TURUNCU) HALATI ÇEKTİ VE KAZANDI! 🎉')
+        : (t.lastPullText || '🪢 Soruyu doğru bilen kendi tarafına 1 adım çeker!');
+    }
+
+    if (pullerBlueEl) {
+      pullerBlueEl.classList.toggle('pulling-hard', t.ropePos < 0);
+      const tag = pullerBlueEl.querySelector('.puller-score-tag');
+      if (tag) tag.textContent = `${blueSteps}/5`;
+    }
+    if (pullerOrangeEl) {
+      pullerOrangeEl.classList.toggle('pulling-hard', t.ropePos > 0);
+      const tag = pullerOrangeEl.querySelector('.puller-score-tag');
+      if (tag) tag.textContent = `${orangeSteps}/5`;
+    }
+
+    if (knotEl) {
+      knotEl.style.left = `${pct}%`;
+      knotEl.classList.remove('pull-active-blue', 'pull-active-orange');
+      if (t.lastPullSide) knotEl.classList.add(`pull-active-${t.lastPullSide}`);
+      const oldBubble = knotEl.querySelector('.tug-floating-bubble');
+      if (oldBubble) oldBubble.remove();
+      if (t.lastPullText) {
+        const bubble = document.createElement('div');
+        bubble.className = `tug-floating-bubble float-${t.lastPullSide}`;
+        bubble.textContent = t.lastPullText;
+        knotEl.appendChild(bubble);
+      }
+    }
+
+    if (rulerEl) {
+      rulerEl.innerHTML = buildTugRulerStepsHtml(t.ropePos);
+    }
+  }
+
+  function renderArcadeTugDuelStage() {
+    const canvas = document.getElementById('arcadeStageCanvas');
+    if (!canvas) return;
+    const t = ArcadeHub.tug;
+    const pct = Math.max(14, Math.min(86, 50 + (t.ropePos * 7.2)));
+    const blueSteps = Math.max(0, -Math.round(t.ropePos));
+    const orangeSteps = Math.max(0, Math.round(t.ropePos));
+    const stepsHtml = buildTugRulerStepsHtml(t.ropePos);
+
+    canvas.innerHTML = `
+      <div class="arc-tug-arena arc-tug-duel-arena">
+        <!-- 1. ÜSTTE ORTAK HALAT ÇEKME VE SKOR SAHNESİ -->
+        <div class="tug-top-scoreboard">
+          <div class="tug-team-pill team-blue">
+            <span class="team-dot">🔵</span>
+            <span class="team-name">1. Oyuncu (Mavi)</span>
+            <span class="team-wins" id="tugDuelBlueSteps">${blueSteps} / 5</span>
+          </div>
+
+          <div class="tug-match-info">
+            <span class="tug-info-badge" id="tugDuelInfoBadge">
+              ${t.isOver
+                ? (t.ropePos <= -5 ? '🏆 1. OYUNCU (MAVİ) HALATI ÇEKTİ VE KAZANDI! 🎉' : '🏆 2. OYUNCU (TURUNCU) HALATI ÇEKTİ VE KAZANDI! 🎉')
+                : (t.lastPullText ? t.lastPullText : '🪢 Soruyu doğru bilen kendi tarafına 1 adım çeker!')}
+            </span>
+          </div>
+
+          <div class="tug-team-pill team-orange">
+            <span class="team-dot">🟠</span>
+            <span class="team-name">2. Oyuncu (Turuncu)</span>
+            <span class="team-wins" id="tugDuelOrangeSteps">${orangeSteps} / 5</span>
+          </div>
+        </div>
+
+        <!-- 2. ORTAK HALAT, DÜĞÜM VE ÇEKİCİLER -->
+        <div class="tug-stage-canvas-wrap">
+          <div class="tug-rope-scene-header">
+            <div class="tug-zone-target zone-left">⬅️ 🔵 1. Oyuncu (Mavi) +5</div>
+            <div class="tug-center-pin">📍 ORTA ÇİZGİ</div>
+            <div class="tug-zone-target zone-right">🟠 2. Oyuncu (Turuncu) +5 ➡️</div>
+          </div>
+
+          <div class="tug-rope-arena-field">
+            <!-- Sol Çekici (Mavi) -->
+            <div class="tug-puller puller-blue ${t.ropePos < 0 ? 'pulling-hard' : ''}" id="tugDuelPullerBlue">
+              <div class="puller-avatar-box">
+                <span class="puller-emoji">🤖</span>
+                <span class="puller-flag">🔵</span>
+              </div>
+              <div class="puller-hands-rope"></div>
+              <span class="puller-score-tag">${blueSteps}/5</span>
+            </div>
+
+            <!-- Kalın Dokulu Halat ve Hareketli Düğüm -->
+            <div class="tug-braided-rope-body">
+              <div class="tug-rope-texture-strip"></div>
+              <div class="tug-knot-carrier ${t.lastPullSide ? 'pull-active-' + t.lastPullSide : ''}" id="tugDuelKnotCarrier" style="left: ${pct}%;">
+                <div class="tug-knot-ribbon">🎀</div>
+                <div class="tug-knot-referee">
+                  <img src="assets/mascot/moli.webp" alt="Hakem Moli" class="referee-moli-img" width="46" height="46">
+                </div>
+                <div class="tug-knot-needle"></div>
+                ${t.lastPullText ? `<div class="tug-floating-bubble float-${t.lastPullSide}">${t.lastPullText}</div>` : ''}
+              </div>
+            </div>
+
+            <!-- Sağ Çekici (Turuncu) -->
+            <div class="tug-puller puller-orange ${t.ropePos > 0 ? 'pulling-hard' : ''}" id="tugDuelPullerOrange">
+              <div class="puller-hands-rope"></div>
+              <div class="puller-avatar-box">
+                <span class="puller-emoji">🦊</span>
+                <span class="puller-flag">🟠</span>
+              </div>
+              <span class="puller-score-tag">${orangeSteps}/5</span>
+            </div>
+          </div>
+
+          <!-- Adım Cetveli -->
+          <div class="tug-ruler-track" id="tugDuelRulerTrack">
+            ${stepsHtml}
+          </div>
+        </div>
+
+        <!-- 3. HALATIN HEMEN ALTINDA 2 SÜTUNLU YAN YANA DÜELLO PANELİ -->
+        <div class="tug-duel-grid" id="tugDuelGrid">
+          <div class="tug-duel-card player-blue ${t.p1Locked ? 'is-locked' : ''}" id="tugDuelP1Card">
+            ${buildDuelPlayerCardInner(1)}
+          </div>
+          <div class="tug-duel-card player-orange ${t.p2Locked ? 'is-locked' : ''}" id="tugDuelP2Card">
+            ${buildDuelPlayerCardInner(2)}
+          </div>
+        </div>
+      </div>
+    `;
+
+    bindDuelCardButtons(document.getElementById('tugDuelP1Card'), 1);
+    bindDuelCardButtons(document.getElementById('tugDuelP2Card'), 2);
+  }
+
+  function scheduleDuelPlayerNextQuestion(playerNum, delayMs, expectedToken) {
+    const t = ArcadeHub.tug;
+    const isBlue = playerNum === 1;
+    setTimeout(() => {
+      if (t.roundToken !== expectedToken || t.isOver || !isTugDuelActive()) return;
+      const currentOtherQ = isBlue ? t.p2Q : t.p1Q;
+      const nextQ = generateUniqueTugQuestion(t.diff, currentOtherQ ? currentOtherQ.text : '');
+      if (isBlue) {
+        t.p1Q = nextQ;
+        t.p1Locked = false;
+      } else {
+        t.p2Q = nextQ;
+        t.p2Locked = false;
+      }
+      updateDuelPlayerCard(playerNum);
+    }, delayMs);
+  }
+
+  function handleDuelTugAnswer(playerNum, btnEl, val) {
+    const t = ArcadeHub.tug;
+    if (t.isOver || !isTugDuelActive()) return;
+    if (playerNum === 1 && t.p1Locked) return;
+    if (playerNum === 2 && t.p2Locked) return;
+
+    const currentToken = t.roundToken;
+    const isBlue = playerNum === 1;
+    const playerQ = isBlue ? t.p1Q : t.p2Q;
+    if (!playerQ) return;
+
+    if (val === playerQ.answer) {
+      if (isBlue) {
+        t.p1Locked = true;
+        t.p1Streak += 1;
+        t.ropePos = Math.max(-5, Math.min(5, t.ropePos - 1));
+        t.lastPullSide = 'blue';
+        t.lastPullText = '🔵 +1 Mavi Çekti! 💪';
+      } else {
+        t.p2Locked = true;
+        t.p2Streak += 1;
+        t.ropePos = Math.max(-5, Math.min(5, t.ropePos + 1));
+        t.lastPullSide = 'orange';
+        t.lastPullText = '🟠 +1 Turuncu Çekti! 💪';
+      }
+
+      if (btnEl) btnEl.classList.add('correct');
+      audio.playCorrect();
+      audio.playPop();
+
+      const won = t.ropePos <= -5 || t.ropePos >= 5;
+      if (won) {
+        t.isOver = true;
+        const blueWon = t.ropePos <= -5;
+        if (blueWon) t.p1Score += 1;
+        else t.p2Score += 1;
+
+        const gridEl = document.getElementById('tugDuelGrid');
+        if (gridEl) {
+          gridEl.querySelectorAll('.tug-duel-opt-btn').forEach(b => { b.disabled = true; });
+        }
+        updateDuelRopeUI();
+
+        if (!state.isMuted && state.soundEnabled) {
+          audio.speakTurkishText(blueWon
+            ? 'Tebrikler! Birinci oyuncu halatı çekti ve kazandı!'
+            : 'Tebrikler! İkinci oyuncu halatı çekti ve kazandı!');
+        }
+        showArcadeVictoryModal({
+          title: blueWon ? '🏆 1. OYUNCU (MAVİ) KAZANDI!' : '🏆 2. OYUNCU (TURUNCU) KAZANDI!',
+          subtitle: blueWon
+            ? 'Mavi köşe işlemleri hızla çözdü ve halatı kendi tarafına çekti!'
+            : 'Turuncu köşe işlemleri hızla çözdü ve halatı kendi tarafına çekti!',
+          badgeText: blueWon ? 'MAVİ KÖŞE ŞAMPİYONU' : 'TURUNCU KÖŞE ŞAMPİYONU',
+          icon: blueWon ? '🔵' : '🟠',
+          onRestart: () => initArcadeTugGame()
+        });
+        return;
+      }
+
+      updateDuelRopeUI();
+      scheduleDuelPlayerNextQuestion(playerNum, 450, currentToken);
+    } else {
+      if (isBlue) {
+        t.p1Locked = true;
+        t.p1Streak = 0;
+      } else {
+        t.p2Locked = true;
+        t.p2Streak = 0;
+      }
+
+      if (btnEl) btnEl.classList.add('wrong');
+      const cardEl = document.getElementById(isBlue ? 'tugDuelP1Card' : 'tugDuelP2Card');
+      if (cardEl) {
+        cardEl.classList.add('is-locked');
+        cardEl.querySelectorAll('.tug-duel-opt-btn').forEach(b => { b.disabled = true; });
+      }
+      audio.playWrong();
+      if (typeof audio.playIceFreeze === 'function') audio.playIceFreeze();
+
+      scheduleDuelPlayerNextQuestion(playerNum, 1200, currentToken);
     }
   }
 
@@ -34733,6 +35085,19 @@
         if (state.gameMode !== 'solo') {
           state.gameMode = 'solo';
           if (typeof updateGameModeUI === 'function') updateGameModeUI();
+        }
+        if (tugOfWarMode !== 'single') {
+          tugOfWarMode = 'single';
+          window.tugOfWarMode = 'single';
+          if (ArcadeHub && ArcadeHub.activeGame === 'tug') {
+            initArcadeTugGame();
+          }
+        }
+      } else if (!tugModeUserChosen && tugOfWarMode !== 'duel') {
+        tugOfWarMode = 'duel';
+        window.tugOfWarMode = 'duel';
+        if (ArcadeHub && ArcadeHub.activeGame === 'tug') {
+          initArcadeTugGame();
         }
       }
     }

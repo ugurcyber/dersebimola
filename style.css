@@ -33939,6 +33939,182 @@ body.is-game-active .universal-game-bgm-fab {
     color: #FFFFFF;
     box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
   }
+
+  /* ========================================================================
+     V9.7.3: ÇARPMA SAVAŞI 2 KİŞİLİK YAN YANA AKILLI TAHTA DÜELLO PANELİ
+     ======================================================================== */
+  .arc-tug-duel-arena {
+    width: 100% !important;
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+    padding: 12px 18px !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+    background: #FFFFFF !important;
+    border: 2.5px solid #E2E8F0 !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+  }
+
+  .tug-duel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 1050px;
+    margin: 12px auto;
+    box-sizing: border-box;
+  }
+
+  .tug-duel-card {
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+    touch-action: manipulation;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+
+  .tug-duel-card.player-blue {
+    border: 3px solid #3b82f6;
+    border-radius: 18px;
+    background: #eff6ff;
+    padding: 16px;
+    box-shadow: 0 8px 22px rgba(59, 130, 246, 0.14);
+  }
+
+  .tug-duel-card.player-orange {
+    border: 3px solid #f97316;
+    border-radius: 18px;
+    background: #fff7ed;
+    padding: 16px;
+    box-shadow: 0 8px 22px rgba(249, 115, 22, 0.14);
+  }
+
+  .tug-duel-card-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tug-win-chip {
+    font-family: 'Fredoka', 'Nunito', sans-serif !important;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #FFFFFF;
+  }
+
+  .tug-win-chip.chip-blue {
+    color: #1D4ED8;
+    border: 1.5px solid #93C5FD;
+  }
+
+  .tug-win-chip.chip-orange {
+    color: #C2410C;
+    border: 1.5px solid #FDBA74;
+  }
+
+  .tug-duel-q-box {
+    background: #FFFFFF;
+    border: 2px solid rgba(15, 23, 42, 0.08);
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+  }
+
+  .tug-duel-math-text {
+    font-family: 'Fredoka', 'Nunito', sans-serif !important;
+    font-size: clamp(2rem, 3.4vw, 2.85rem);
+    font-weight: 900;
+    color: #0F172A;
+    line-height: 1.15;
+    margin-top: 4px;
+  }
+
+  .tug-duel-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tug-duel-opt-btn {
+    width: 100%;
+    min-height: 68px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    font-family: 'Fredoka', 'Nunito', sans-serif !important;
+    font-size: clamp(1.55rem, 2.4vw, 2rem);
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: transform 0.1s ease, background 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+  }
+
+  .tug-duel-opt-btn.btn-blue {
+    border: 3px solid #3B82F6;
+    border-bottom: 5px solid #1D4ED8;
+    color: #1E3A8A;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.16);
+  }
+
+  .tug-duel-opt-btn.btn-blue:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #F8FAFF;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.24);
+  }
+
+  .tug-duel-opt-btn.btn-orange {
+    border: 3px solid #F97316;
+    border-bottom: 5px solid #C2410C;
+    color: #9A3412;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.16);
+  }
+
+  .tug-duel-opt-btn.btn-orange:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #FFFAF5;
+    box-shadow: 0 6px 16px rgba(234, 88, 12, 0.24);
+  }
+
+  .tug-duel-opt-btn:active:not(:disabled) {
+    transform: translateY(2px);
+    border-bottom-width: 3px;
+  }
+
+  .tug-duel-opt-btn.correct {
+    background: #DCFCE7 !important;
+    border-color: #22C55E !important;
+    border-bottom-color: #16A34A !important;
+    color: #15803D !important;
+    transform: scale(1.03);
+    box-shadow: 0 0 18px rgba(34, 197, 94, 0.45) !important;
+  }
+
+  .tug-duel-opt-btn.wrong {
+    background: #FEE2E2 !important;
+    border-color: #EF4444 !important;
+    border-bottom-color: #DC2626 !important;
+    color: #B91C1C !important;
+    animation: shakeOpt 0.4s ease;
+  }
+
+  .tug-duel-card.is-locked .tug-lock-msg {
+    display: block;
+  }
+
+  .tug-duel-card.is-locked .tug-duel-opt-btn {
+    opacity: 0.45;
+    pointer-events: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -33960,7 +34136,8 @@ body.is-game-active .universal-game-bgm-fab {
   [data-mem-p="2"],
   [data-mole-mode="duel"],
   [data-wheel-mode="duel"],
-  #btnMqsModeDuel {
+  #btnMqsModeDuel,
+  .tug-duel-grid {
     display: none !important;
   }
 }
