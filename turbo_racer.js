@@ -1,0 +1,1824 @@
+/**
+ * ==========================================================================
+ * DERSE Bİ' MOLA - BAĞIMSIZ TURBO OTOBAN YARIŞI (turbo_racer.js)
+ * 3. Adım: 5 Sınıf/Konu Sekmesi, 3 Şeritli Canlı Otoban (HTML5 Canvas),
+ * Yanlarda Akan Ağaçlar ve Evler, Sarı/Turuncu Yarış Arabası,
+ * İlkokul Seviyesine Uygun Okunaklı Kapılar, Doğrudan Şeride Dokunma & Klavye,
+ * 🔥 TURBO Butonu + Alev Efekti, 8 Doğruda Damalı Bitiş Çizgisi & Zafer!
+ * app.js ve mevcut oyun motorlarından tamamen bağımsız çalışır.
+ * ==========================================================================
+ */
+(function () {
+  'use strict';
+
+  const MODAL_ID = 'moli-turbo-modal';
+  const STYLE_ID = 'moli-turbo-racer-styles';
+  const CONFETTI_CANVAS_ID = 'moli-turbo-confetti-canvas';
+  const TARGET_CORRECT = 8;
+  const MAX_LIVES = 3;
+
+  // 5 SINIF SEVİYESİ VE KONU HAVUZU
+  const TURBO_TOPICS = {
+    reading1: {
+      id: 'reading1',
+      tabLabel: '📖 1. Sınıf Okuma',
+      badge: '📖 1. Sınıf Dinle & Doğru Kelime Şeridine Geç',
+      isListeningPrompt: true,
+      questions: [
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Onu! O, nu.', answer: 'ONU', distractors: ['ONA', 'UNU'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Okul! O, kul.', answer: 'OKUL', distractors: ['OLUK', 'OKUR'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Kule! Ku, le.', answer: 'KULE', distractors: ['KALE', 'KÜRE'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Koku! Ko, ku.', answer: 'KOKU', distractors: ['KOYU', 'KONU'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Tatlı! Tat, lı.', answer: 'TATLI', distractors: ['TAKLA', 'KATIL'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Takla! Tak, la.', answer: 'TAKLA', distractors: ['TATLI', 'TARLA'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Kukla! Kuk, la.', answer: 'KUKLA', distractors: ['KULAK', 'KUKA'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Kulak! Ku, lak.', answer: 'KULAK', distractors: ['KUKLA', 'KURAK'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Kalem! Ka, lem.', answer: 'KALEM', distractors: ['KALE', 'KELAM'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Elma! El, ma.', answer: 'ELMA', distractors: ['ELA', 'ELMAS'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Kutu! Ku, tu.', answer: 'KUTU', distractors: ['KURU', 'KUZU'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Orman! Or, man.', answer: 'ORMAN', distractors: ['ORTAM', 'ORGAN'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Güneş! Gü, neş.', answer: 'GÜNEŞ', distractors: ['GÜMÜŞ', 'GÜREŞ'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Kitap! Ki, tap.', answer: 'KİTAP', distractors: ['KİRAZ', 'KİLİT'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Çiçek! Çi, çek.', answer: 'ÇİÇEK', distractors: ['ÇİLEK', 'ÇEYREK'] },
+        { promptText: '🎧 Dinle ve Doğru Şeritten Geç!', spokenText: 'Balık! Ba, lık.', answer: 'BALIK', distractors: ['BAKIŞ', 'KAŞIK'] }
+      ]
+    },
+    addsub12: {
+      id: 'addsub12',
+      tabLabel: '➕ 1-2. Sınıf Toplama/Çıkarma',
+      badge: '➕ 1-2. Sınıf Hızlı İşlem Otobanı',
+      isListeningPrompt: false,
+      questions: [
+        { promptText: '8 + 7 = ?', spokenText: 'Sekiz artı yedi kaç eder?', answer: '15', distractors: ['14', '16'] },
+        { promptText: '15 - 6 = ?', spokenText: 'On beş eksi altı kaç eder?', answer: '9', distractors: ['8', '11'] },
+        { promptText: '24 + 9 = ?', spokenText: 'Yirmi dört artı dokuz kaç eder?', answer: '33', distractors: ['31', '35'] },
+        { promptText: '30 - 12 = ?', spokenText: 'Otuz eksi on iki kaç eder?', answer: '18', distractors: ['16', '22'] },
+        { promptText: '18 - 9 = ?', spokenText: 'On sekiz eksi dokuz kaç eder?', answer: '9', distractors: ['7', '11'] },
+        { promptText: '14 + 8 = ?', spokenText: 'On dört artı sekiz kaç eder?', answer: '22', distractors: ['20', '24'] },
+        { promptText: '25 - 7 = ?', spokenText: 'Yirmi beş eksi yedi kaç eder?', answer: '18', distractors: ['17', '19'] },
+        { promptText: '17 + 13 = ?', spokenText: 'On yedi artı on üç kaç eder?', answer: '30', distractors: ['28', '32'] },
+        { promptText: '40 - 15 = ?', spokenText: 'Kırk eksi on beş kaç eder?', answer: '25', distractors: ['20', '35'] },
+        { promptText: '19 + 6 = ?', spokenText: 'On dokuz artı altı kaç eder?', answer: '25', distractors: ['24', '27'] },
+        { promptText: '22 - 8 = ?', spokenText: 'Yirmi iki eksi sekiz kaç eder?', answer: '14', distractors: ['12', '16'] },
+        { promptText: '27 + 8 = ?', spokenText: 'Yirmi yedi artı sekiz kaç eder?', answer: '35', distractors: ['33', '37'] },
+        { promptText: '36 - 14 = ?', spokenText: 'Otuz altı eksi on dört kaç eder?', answer: '22', distractors: ['20', '24'] },
+        { promptText: '16 + 16 = ?', spokenText: 'On altı artı on altı kaç eder?', answer: '32', distractors: ['30', '34'] }
+      ]
+    },
+    mult24: {
+      id: 'mult24',
+      tabLabel: '✖️ 2-4. Sınıf Çarpma',
+      badge: '✖️ 2-4. Sınıf Çarpım Tablosu Otobanı',
+      isListeningPrompt: false,
+      questions: [
+        { promptText: '3 × 4 = ?', spokenText: 'Üç kere dört kaç eder?', answer: '12', distractors: ['9', '16'] },
+        { promptText: '6 × 7 = ?', spokenText: 'Altı kere yedi kaç eder?', answer: '42', distractors: ['36', '48'] },
+        { promptText: '8 × 9 = ?', spokenText: 'Sekiz kere dokuz kaç eder?', answer: '72', distractors: ['64', '81'] },
+        { promptText: '7 × 6 = ?', spokenText: 'Yedi kere altı kaç eder?', answer: '42', distractors: ['45', '49'] },
+        { promptText: '4 × 8 = ?', spokenText: 'Dört kere sekiz kaç eder?', answer: '32', distractors: ['28', '36'] },
+        { promptText: '9 × 6 = ?', spokenText: 'Dokuz kere altı kaç eder?', answer: '54', distractors: ['48', '56'] },
+        { promptText: '7 × 8 = ?', spokenText: 'Yedi kere sekiz kaç eder?', answer: '56', distractors: ['54', '63'] },
+        { promptText: '5 × 9 = ?', spokenText: 'Beş kere dokuz kaç eder?', answer: '45', distractors: ['40', '50'] },
+        { promptText: '6 × 8 = ?', spokenText: 'Altı kere sekiz kaç eder?', answer: '48', distractors: ['42', '54'] },
+        { promptText: '9 × 9 = ?', spokenText: 'Dokuz kere dokuz kaç eder?', answer: '81', distractors: ['72', '90'] },
+        { promptText: '4 × 7 = ?', spokenText: 'Dört kere yedi kaç eder?', answer: '28', distractors: ['24', '32'] },
+        { promptText: '8 × 8 = ?', spokenText: 'Sekiz kere sekiz kaç eder?', answer: '64', distractors: ['56', '72'] },
+        { promptText: '7 × 7 = ?', spokenText: 'Yedi kere yedi kaç eder?', answer: '49', distractors: ['42', '56'] },
+        { promptText: '6 × 6 = ?', spokenText: 'Altı kere altı kaç eder?', answer: '36', distractors: ['30', '42'] }
+      ]
+    },
+    clock23: {
+      id: 'clock23',
+      tabLabel: '🕒 2-3. Sınıf Saatler',
+      badge: '🕒 2-3. Sınıf Dijital Saat Otobanı',
+      isListeningPrompt: false,
+      questions: [
+        { promptText: 'Saat üç buçuk', spokenText: 'Saat üç buçuk', answer: '03:30', distractors: ['03:15', '03:45'] },
+        { promptText: 'Yediyi çeyrek geçiyor', spokenText: 'Yediyi çeyrek geçiyor', answer: '07:15', distractors: ['07:30', '06:45'] },
+        { promptText: 'Ona çeyrek var', spokenText: 'Ona çeyrek var', answer: '09:45', distractors: ['10:15', '10:45'] },
+        { promptText: 'Saat tam sekiz', spokenText: 'Saat tam sekiz', answer: '08:00', distractors: ['08:30', '08:15'] },
+        { promptText: 'Saat on buçuk', spokenText: 'Saat on buçuk', answer: '10:30', distractors: ['10:15', '09:30'] },
+        { promptText: 'Dördü çeyrek geçiyor', spokenText: 'Dördü çeyrek geçiyor', answer: '04:15', distractors: ['03:45', '04:30'] },
+        { promptText: 'Yediye çeyrek var', spokenText: 'Yediye çeyrek var', answer: '06:45', distractors: ['07:15', '07:45'] },
+        { promptText: 'Saat tam on iki', spokenText: 'Saat tam on iki', answer: '12:00', distractors: ['12:30', '11:45'] },
+        { promptText: 'Saat iki buçuk', spokenText: 'Saat iki buçuk', answer: '02:30', distractors: ['02:15', '02:45'] },
+        { promptText: 'Beşi çeyrek geçiyor', spokenText: 'Beşi çeyrek geçiyor', answer: '05:15', distractors: ['04:45', '05:30'] },
+        { promptText: 'On ikiye çeyrek var', spokenText: 'On ikiye çeyrek var', answer: '11:45', distractors: ['12:15', '12:45'] },
+        { promptText: 'Saat bir buçuk', spokenText: 'Saat bir buçuk', answer: '01:30', distractors: ['01:15', '01:00'] }
+      ]
+    },
+    fractions34: {
+      id: 'fractions34',
+      tabLabel: '🍕 3-4. Sınıf Kesirler',
+      badge: '🍕 3-4. Sınıf Kesir Otobanı',
+      isListeningPrompt: false,
+      questions: [
+        { promptText: 'İkide bir (Yarım)', spokenText: 'İkide bir, yani yarım', answer: '1/2', distractors: ['1/4', '2/3'] },
+        { promptText: 'Dörtte üç', spokenText: 'Dörtte üç', answer: '3/4', distractors: ['4/3', '1/4'] },
+        { promptText: 'Beşte iki', spokenText: 'Beşte iki', answer: '2/5', distractors: ['5/2', '3/5'] },
+        { promptText: 'Sekizde beş', spokenText: 'Sekizde beş', answer: '5/8', distractors: ['3/8', '8/5'] },
+        { promptText: 'Dörtte bir (Çeyrek)', spokenText: 'Dörtte bir, yani çeyrek', answer: '1/4', distractors: ['1/2', '3/4'] },
+        { promptText: 'Üçte bir', spokenText: 'Üçte bir', answer: '1/3', distractors: ['3/1', '2/3'] },
+        { promptText: 'Yedi bölü dört', spokenText: 'Yedi bölü dört', answer: '7/4', distractors: ['4/7', '3/4'] },
+        { promptText: 'Altıda dört', spokenText: 'Altıda dört', answer: '4/6', distractors: ['6/4', '2/6'] },
+        { promptText: 'Beşte beş (Bir Tam)', spokenText: 'Beşte beş, yani bir tam', answer: '5/5', distractors: ['1/5', '4/5'] },
+        { promptText: 'Sekizde üç', spokenText: 'Sekizde üç', answer: '3/8', distractors: ['5/8', '8/3'] },
+        { promptText: 'Dokuz bölü beş', spokenText: 'Dokuz bölü beş', answer: '9/5', distractors: ['5/9', '4/5'] },
+        { promptText: 'Onda yedi', spokenText: 'Onda yedi', answer: '7/10', distractors: ['3/10', '10/7'] }
+      ]
+    }
+  };
+
+  // OYUN DURUMU
+  const state = {
+    isOpen: false,
+    activeTopicId: 'reading1',
+    bagByTopic: {},
+    currentQuestion: null,
+    gateOptions: ['A', 'B', 'C'], // 0: Sol şerit, 1: Orta şerit, 2: Sağ şerit
+    correctLane: 1,
+    carLane: 1,                  // Hedef şerit (0, 1, 2)
+    carVisualX: 0.5,             // Yumuşak geçiş için 0..1 arası normalize X
+    carForwardBoostY: 0,         // Turbo sırasında ileri atılma ofseti
+    gateY: -90,                  // Kapının Y konumu (Canvas yüksekliğine göre)
+    gateEvaluated: false,
+    gateResultType: null,        // 'correct' | 'wrong' | null
+    gateHitLane: -1,
+    finishLineActive: false,     // 8 doğruya ulaşıldığında damalı bitiş çizgisi
+    finishLineY: -120,
+    turboActiveUntil: 0,         // 🔥 TURBO butonu veya doğru kapı alev süresi
+    flashGreenAlpha: 0,
+    flashRedAlpha: 0,
+    shakeFrames: 0,
+    roadOffset: 0,
+    sceneryItems: [],
+    correctCount: 0,
+    lives: MAX_LIVES,
+    elapsedSeconds: 0,
+    clockTimer: null,
+    speakTimer: null,
+    animFrameId: null,
+    lastFrameTs: 0,
+    gameOverType: null,          // 'win' | 'lose' | null
+    audioCtx: null
+  };
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function shuffleArray(arr) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = copy[i];
+      copy[i] = copy[j];
+      copy[j] = tmp;
+    }
+    return copy;
+  }
+
+  function formatDuration(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function getAudioContext() {
+    if (window.isMuted === true) return null;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return null;
+    try {
+      if (!state.audioCtx || state.audioCtx.state === 'closed') {
+        state.audioCtx = new AudioCtx();
+      }
+      if (state.audioCtx.state === 'suspended') {
+        state.audioCtx.resume();
+      }
+      return state.audioCtx;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Şerit değiştirme hafif swoosh sesi
+  function playLaneSwitchSound() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(420, now + 0.07);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.085);
+    } catch (e) {}
+  }
+
+  // 🔥 TURBO Motor Kükreme Sesi
+  function playTurboBoostSound() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(130, now);
+      osc.frequency.exponentialRampToValueAtTime(340, now + 0.32);
+      gain.gain.setValueAtTime(0.11, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.36);
+    } catch (e) {}
+  }
+
+  // Doğru kapıdan geçiş: Motor + Alkış + Zafer Notaları
+  function playCorrectGateSound(isGrandFinish) {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const notes = isGrandFinish
+        ? [523.25, 659.25, 783.99, 1046.5, 1318.5]
+        : [523.25, 659.25, 783.99];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.065);
+        gain.gain.setValueAtTime(0.001, now + idx * 0.065);
+        gain.gain.exponentialRampToValueAtTime(0.14, now + idx * 0.065 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.065 + 0.32);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.065);
+        osc.stop(now + idx * 0.065 + 0.34);
+      });
+
+      const clapCount = isGrandFinish ? 10 : 5;
+      for (let i = 0; i < clapCount; i++) {
+        const start = now + 0.04 + i * 0.075;
+        const bufLen = Math.floor(ctx.sampleRate * 0.05);
+        const buffer = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let k = 0; k < bufLen; k++) {
+          data[k] = (Math.random() * 2 - 1) * Math.exp(-k / (bufLen * 0.25));
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1200 + Math.random() * 500, start);
+        const clapGain = ctx.createGain();
+        clapGain.gain.setValueAtTime(0.14, start);
+        clapGain.gain.exponentialRampToValueAtTime(0.001, start + 0.05);
+        noise.connect(filter);
+        filter.connect(clapGain);
+        clapGain.connect(ctx.destination);
+        noise.start(start);
+        noise.stop(start + 0.055);
+      }
+    } catch (e) {}
+  }
+
+  // Yanlış kapıdan geçiş: Fren / Çarpma Sesi
+  function playWrongCrashSound() {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(185, now);
+      osc.frequency.exponentialRampToValueAtTime(92, now + 0.28);
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.31);
+    } catch (e) {}
+  }
+
+  function launchTurboConfetti() {
+    let canvas = document.getElementById(CONFETTI_CANVAS_ID);
+    if (canvas) canvas.remove();
+
+    canvas = document.createElement('canvas');
+    canvas.id = CONFETTI_CANVAS_ID;
+    canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:100005;';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      canvas.remove();
+      return;
+    }
+
+    const colors = ['#F59E0B', '#10B981', '#EF4444', '#0EA5E9', '#FACC15', '#EC4899'];
+    const cx = canvas.width * 0.55;
+    const cy = canvas.height * 0.45;
+    const particles = Array.from({ length: 105 }, () => {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 5 + Math.random() * 11;
+      return {
+        x: cx + (Math.random() - 0.5) * 140,
+        y: cy + (Math.random() - 0.5) * 70,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 4,
+        size: 6 + Math.random() * 7,
+        rot: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.25,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 1
+      };
+    });
+
+    let frame = 0;
+    function tick() {
+      frame += 1;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.28;
+        p.vx *= 0.985;
+        p.rot += p.vRot;
+        p.life -= 0.012;
+        if (p.life <= 0) continue;
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.65);
+        ctx.restore();
+      }
+      if (alive && frame < 115) {
+        requestAnimationFrame(tick);
+      } else {
+        canvas.remove();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function stopVoice() {
+    if (state.speakTimer) {
+      clearTimeout(state.speakTimer);
+      state.speakTimer = null;
+    }
+    try {
+      if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.stop === 'function') {
+        window.MoliVoiceEngine.stop();
+      }
+    } catch (e) {}
+    try {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    } catch (e) {}
+  }
+
+  function speakText(text) {
+    if (!text || !state.isOpen) return;
+    stopVoice();
+    if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.speak === 'function') {
+      try {
+        window.MoliVoiceEngine.speak(text);
+        return;
+      } catch (e) {}
+    }
+    if ('speechSynthesis' in window) {
+      try {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'tr-TR';
+        utter.rate = 0.95;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {}
+    }
+  }
+
+  function initScenery() {
+    const types = ['tree', 'house', 'pine', 'tree', 'house', 'bush'];
+    const houseColors = ['#EF4444', '#F59E0B', '#3B82F6', '#8B5CF6', '#EC4899'];
+    const items = [];
+    for (let i = 0; i < 8; i++) {
+      items.push({
+        side: 'left',
+        yRatio: i / 8,
+        type: types[i % types.length],
+        roofColor: houseColors[i % houseColors.length]
+      });
+      items.push({
+        side: 'right',
+        yRatio: ((i / 8) + 0.06) % 1,
+        type: types[(i + 2) % types.length],
+        roofColor: houseColors[(i + 3) % houseColors.length]
+      });
+    }
+    state.sceneryItems = items;
+  }
+
+  function drawNextQuestionFromBag(topicId) {
+    const topic = TURBO_TOPICS[topicId] || TURBO_TOPICS.reading1;
+    let bag = state.bagByTopic[topicId];
+    if (!bag || bag.length === 0) {
+      bag = shuffleArray(topic.questions.map((_, idx) => idx));
+      state.bagByTopic[topicId] = bag;
+    }
+    const qIdx = bag.pop();
+    return topic.questions[qIdx];
+  }
+
+  function spawnNextGate(autoSpeak) {
+    if (state.finishLineActive || state.gameOverType) return;
+
+    const q = drawNextQuestionFromBag(state.activeTopicId);
+    state.currentQuestion = q;
+
+    const choices = shuffleArray([q.answer, q.distractors[0], q.distractors[1]]);
+    state.gateOptions = choices;
+    state.correctLane = choices.indexOf(q.answer);
+    state.gateY = -75;
+    state.gateEvaluated = false;
+    state.gateResultType = null;
+    state.gateHitLane = -1;
+
+    renderTargetQuestionPanel();
+
+    if (autoSpeak) {
+      state.speakTimer = setTimeout(() => {
+        if (state.isOpen && !state.gameOverType && state.currentQuestion) {
+          speakText(state.currentQuestion.spokenText);
+        }
+      }, 150);
+    }
+  }
+
+  function updateHudBar() {
+    const correctEl = document.getElementById('moliTurboHudCorrect');
+    const livesEl = document.getElementById('moliTurboHudLives');
+    const timeEl = document.getElementById('moliTurboHudTime');
+
+    if (correctEl) {
+      correctEl.innerHTML = `✅ Doğru: <strong>${state.correctCount} / ${TARGET_CORRECT}</strong>`;
+    }
+    if (livesEl) {
+      const fullHearts = '❤️'.repeat(Math.max(0, state.lives));
+      const emptyHearts = '🖤'.repeat(Math.max(0, MAX_LIVES - state.lives));
+      livesEl.innerHTML = `${fullHearts}${emptyHearts} <span>(${state.lives} Can)</span>`;
+    }
+    if (timeEl) {
+      timeEl.innerHTML = `⏱️ Süre: <strong>${formatDuration(state.elapsedSeconds)}</strong>`;
+    }
+  }
+
+  function renderTargetQuestionPanel() {
+    const panel = document.getElementById('moliTurboQuestionBox');
+    if (!panel || !state.currentQuestion) return;
+
+    const topic = TURBO_TOPICS[state.activeTopicId] || TURBO_TOPICS.reading1;
+    const q = state.currentQuestion;
+
+    panel.innerHTML = `
+      <div class="mtr-topic-badge">${escapeHtml(topic.badge)}</div>
+      <div class="mtr-moli-coach-row">
+        <img src="assets/mascot/moli.webp" class="mtr-moli-avatar" alt="Pilot Moli" width="56" height="56">
+        <div class="mtr-coach-tip">
+          ${topic.isListeningPrompt
+            ? 'Sesi dinle, doğru kelimenin olduğu şeride dokun!'
+            : 'Doğru cevabın olduğu şeride dokun veya ok tuşlarıyla geç!'}
+        </div>
+      </div>
+
+      <div class="mtr-target-display ${topic.isListeningPrompt ? 'is-listening-mode' : ''}">
+        <div class="mtr-target-label">🎯 HEDEF SORU / KELİME</div>
+        <div class="mtr-target-value">${escapeHtml(q.promptText)}</div>
+      </div>
+
+      <button class="mtr-listen-btn" id="moliTurboListenBtn" type="button">
+        <span aria-hidden="true">🔊</span>
+        <span>Dinle</span>
+      </button>
+
+      <div class="mtr-lane-quick-btns" aria-label="Şerit Seçim Butonları">
+        <button class="mtr-lane-btn ${state.carLane === 0 ? 'is-selected' : ''}" type="button" data-pick-lane="0">⬅️ 1. Şerit</button>
+        <button class="mtr-lane-btn ${state.carLane === 1 ? 'is-selected' : ''}" type="button" data-pick-lane="1">⬆️ 2. Şerit</button>
+        <button class="mtr-lane-btn ${state.carLane === 2 ? 'is-selected' : ''}" type="button" data-pick-lane="2">➡️ 3. Şerit</button>
+      </div>
+    `;
+
+    const listenBtn = document.getElementById('moliTurboListenBtn');
+    if (listenBtn) {
+      listenBtn.addEventListener('click', () => {
+        if (state.currentQuestion) {
+          speakText(state.currentQuestion.spokenText);
+        }
+      });
+    }
+
+    panel.querySelectorAll('[data-pick-lane]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const lane = parseInt(btn.getAttribute('data-pick-lane'), 10);
+        setCarLane(lane);
+      });
+    });
+  }
+
+  function syncLaneQuickButtons() {
+    document.querySelectorAll(`#${MODAL_ID} [data-pick-lane]`).forEach((btn) => {
+      const lane = parseInt(btn.getAttribute('data-pick-lane'), 10);
+      btn.classList.toggle('is-selected', lane === state.carLane);
+    });
+  }
+
+  function setCarLane(newLane) {
+    if (!state.isOpen || state.gameOverType) return;
+    const clamped = Math.max(0, Math.min(2, newLane));
+    if (clamped !== state.carLane) {
+      state.carLane = clamped;
+      playLaneSwitchSound();
+      syncLaneQuickButtons();
+    }
+  }
+
+  function triggerTurboButton() {
+    if (!state.isOpen || state.gameOverType || state.finishLineActive) return;
+    state.turboActiveUntil = performance.now() + 950;
+    playTurboBoostSound();
+
+    const turboBtn = document.getElementById('moliTurboBoostBtn');
+    if (turboBtn) {
+      turboBtn.classList.add('is-boosting');
+      setTimeout(() => turboBtn.classList.remove('is-boosting'), 750);
+    }
+  }
+
+  function startNewRace(topicId) {
+    if (topicId && TURBO_TOPICS[topicId]) {
+      state.activeTopicId = topicId;
+    }
+
+    stopVoice();
+    if (state.clockTimer) clearInterval(state.clockTimer);
+
+    state.correctCount = 0;
+    state.lives = MAX_LIVES;
+    state.elapsedSeconds = 0;
+    state.carLane = 1;
+    state.carVisualX = 0.5;
+    state.carForwardBoostY = 0;
+    state.finishLineActive = false;
+    state.finishLineY = -120;
+    state.turboActiveUntil = 0;
+    state.flashGreenAlpha = 0;
+    state.flashRedAlpha = 0;
+    state.shakeFrames = 0;
+    state.gameOverType = null;
+
+    initScenery();
+    updateHudBar();
+    renderOverlayModal();
+
+    document.querySelectorAll(`#${MODAL_ID} .mtr-topic-tab`).forEach((btn) => {
+      const active = btn.getAttribute('data-topic-id') === state.activeTopicId;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    spawnNextGate(true);
+
+    state.clockTimer = setInterval(() => {
+      if (state.isOpen && !state.gameOverType) {
+        state.elapsedSeconds += 1;
+        updateHudBar();
+      }
+    }, 1000);
+
+    if (!state.animFrameId) {
+      state.lastFrameTs = performance.now();
+      state.animFrameId = requestAnimationFrame(gameLoop);
+    }
+  }
+
+  function evaluateGateCrossing() {
+    if (state.gateEvaluated || state.gameOverType) return;
+    state.gateEvaluated = true;
+    state.gateHitLane = state.carLane;
+
+    const isCorrect = state.carLane === state.correctLane;
+    if (isCorrect) {
+      state.gateResultType = 'correct';
+      state.correctCount += 1;
+      state.flashGreenAlpha = 0.45;
+      // Doğru kapıdan geçince araba alev efektiyle ileri fırlasın
+      state.turboActiveUntil = performance.now() + 900;
+      updateHudBar();
+
+      const reachedTarget = state.correctCount >= TARGET_CORRECT;
+      playCorrectGateSound(reachedTarget);
+
+      if (reachedTarget) {
+        // 8 doğruya ulaşıldı -> Damalı Bitiş Çizgisi gelsin!
+        state.finishLineActive = true;
+        state.finishLineY = -110;
+      }
+    } else {
+      state.gateResultType = 'wrong';
+      state.lives = Math.max(0, state.lives - 1);
+      state.flashRedAlpha = 0.5;
+      state.shakeFrames = 18;
+      playWrongCrashSound();
+      updateHudBar();
+
+      if (state.lives <= 0) {
+        state.gameOverType = 'lose';
+        setTimeout(() => {
+          renderOverlayModal();
+          speakText('Canların bitti ama harika yarıştın! Tekrar denemeye ne dersin?');
+        }, 450);
+      }
+    }
+  }
+
+  function onFinishLineCrossed() {
+    if (state.gameOverType === 'win') return;
+    state.gameOverType = 'win';
+    playCorrectGateSound(true);
+    launchTurboConfetti();
+    renderOverlayModal();
+    speakText('Şampiyon! Sekiz soruyu da doğru bildin ve yarışı kazandın!');
+  }
+
+  function renderOverlayModal() {
+    const overlay = document.getElementById('moliTurboEndOverlay');
+    if (!overlay) return;
+
+    if (!state.gameOverType) {
+      overlay.className = 'mtr-end-overlay';
+      overlay.innerHTML = '';
+      return;
+    }
+
+    const isWin = state.gameOverType === 'win';
+    overlay.className = `mtr-end-overlay is-open ${isWin ? 'is-win' : 'is-lose'}`;
+    overlay.innerHTML = `
+      <div class="mtr-end-card">
+        <div class="mtr-end-icon" aria-hidden="true">${isWin ? '🏆🏁🏎️' : '🛠️🏎️'}</div>
+        <h3 class="mtr-end-title">
+          ${isWin ? '🏆 ŞAMPİYON! Yarışı Kazandın!' : '⛽ Yarış Tamamlandı!'}
+        </h3>
+        <p class="mtr-end-desc">
+          ${isWin
+            ? `Tebrikler! <strong>${TARGET_CORRECT}/${TARGET_CORRECT}</strong> doğru kapıdan geçerek damalı bayrağa ulaştın!`
+            : `Toplam <strong>${state.correctCount} / ${TARGET_CORRECT}</strong> doğru kapıdan geçtin. Hemen yeni yarışa başlayabilirsin!`}
+        </p>
+        <div class="mtr-end-stats">
+          <span>✅ Doğru: <strong>${state.correctCount}/${TARGET_CORRECT}</strong></span>
+          <span>⏱️ Süre: <strong>${formatDuration(state.elapsedSeconds)}</strong></span>
+        </div>
+        <div class="mtr-end-actions">
+          <button class="mtr-btn-replay" id="moliTurboReplayBtn" type="button">🔄 Tekrar Yarış</button>
+          <button class="mtr-btn-exit" id="moliTurboExitBtn" type="button">✕ Kapat</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('moliTurboReplayBtn').addEventListener('click', () => startNewRace());
+    document.getElementById('moliTurboExitBtn').addEventListener('click', closeTurboRacer);
+  }
+
+  // HTML5 CANVAS OTOBAN, AĞAÇLAR/EVLER, KAPILAR, BİTİŞ ÇİZGİSİ VE TURBO ARABA ÇİZİMİ
+  function gameLoop(ts) {
+    if (!state.isOpen) {
+      state.animFrameId = null;
+      return;
+    }
+
+    const dt = Math.min(0.05, Math.max(0.008, (ts - state.lastFrameTs) / 1000));
+    state.lastFrameTs = ts;
+
+    updatePhysics(dt, ts);
+    drawHighwayCanvas(ts);
+
+    state.animFrameId = requestAnimationFrame(gameLoop);
+  }
+
+  function updatePhysics(dt, nowTs) {
+    if (state.gameOverType) return;
+
+    const canvas = document.getElementById('moliTurboCanvas');
+    const h = canvas ? (canvas.clientHeight || 540) : 540;
+    const carBaseY = h - 105;
+
+    const isTurboTime = nowTs < state.turboActiveUntil;
+    const isCorrectLane = state.carLane === state.correctLane;
+    // Araba doğru şeritteyken TURBO basılırsa veya doğru kapıdan geçildiyse hızlanır
+    const turboMultiplier = isTurboTime ? (isCorrectLane || state.gateEvaluated ? 2.25 : 1.55) : 1;
+
+    // İlkokul seviyesine uygun, çocukların rahatça okuyup karar verebileceği hız
+    const baseGateSpeed = h * 0.21; // ~5 saniyede yukarıdan arabaya ulaşır
+    const gateSpeed = baseGateSpeed * turboMultiplier;
+    const roadSpeed = 195 * turboMultiplier;
+
+    state.roadOffset = (state.roadOffset + roadSpeed * dt) % 80;
+
+    // Yanlardaki ağaçlar ve evler aşağı doğru aksın
+    const scenerySpeed = (roadSpeed / h) * dt;
+    for (let i = 0; i < state.sceneryItems.length; i++) {
+      state.sceneryItems[i].yRatio = (state.sceneryItems[i].yRatio + scenerySpeed) % 1;
+    }
+
+    // Arabanın yatay şerit kayması (yumuşak interpolasyon)
+    const targetNormX = (state.carLane + 0.5) / 3;
+    state.carVisualX += (targetNormX - state.carVisualX) * Math.min(1, dt * 13);
+
+    // Turbo ileri atılma efekti
+    const targetBoostY = isTurboTime ? -24 : 0;
+    state.carForwardBoostY += (targetBoostY - state.carForwardBoostY) * Math.min(1, dt * 10);
+
+    // Parlama ve sarsıntı sönümlemesi
+    if (state.flashGreenAlpha > 0) state.flashGreenAlpha = Math.max(0, state.flashGreenAlpha - dt * 1.1);
+    if (state.flashRedAlpha > 0) state.flashRedAlpha = Math.max(0, state.flashRedAlpha - dt * 1.1);
+    if (state.shakeFrames > 0) state.shakeFrames -= 1;
+
+    // 8 Doğru tamamlandıysa Damalı Bitiş Çizgisi arabaya doğru gelsin
+    if (state.finishLineActive) {
+      state.finishLineY += baseGateSpeed * 1.85 * dt;
+      if (state.finishLineY >= carBaseY - 25) {
+        onFinishLineCrossed();
+      }
+      return;
+    }
+
+    // Cevap Kapısı Hareketi
+    state.gateY += gateSpeed * dt;
+
+    // Kapı arabaya ulaştı mı?
+    const triggerY = carBaseY - 38;
+    if (!state.gateEvaluated && state.gateY >= triggerY) {
+      evaluateGateCrossing();
+    }
+
+    // Kapı ekranın altından çıktıysa yeni soru kapısını gönder
+    if (state.gateY > h + 75 && !state.finishLineActive && !state.gameOverType) {
+      spawnNextGate(true);
+    }
+  }
+
+  function drawHighwayCanvas(nowTs) {
+    const canvas = document.getElementById('moliTurboCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cssW = canvas.clientWidth || 640;
+    const cssH = canvas.clientHeight || 540;
+    if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+    }
+
+    ctx.save();
+    ctx.scale(dpr, dpr);
+
+    // Yanlış kapıda kırmızı titreme efekti
+    if (state.shakeFrames > 0) {
+      const dx = (Math.random() - 0.5) * 12;
+      const dy = (Math.random() - 0.5) * 8;
+      ctx.translate(dx, dy);
+    }
+
+    // 1) ÇİM KENARLAR (SOL VE SAĞ YEŞİL ALAN)
+    ctx.fillStyle = '#15803D';
+    ctx.fillRect(0, 0, cssW, cssH);
+
+    const sideMargin = Math.max(46, Math.min(92, cssW * 0.13));
+    const roadX = sideMargin;
+    const roadW = cssW - sideMargin * 2;
+    const laneW = roadW / 3;
+
+    // Çim şerit dokusu
+    ctx.fillStyle = '#166534';
+    for (let y = -80 + (state.roadOffset % 80); y < cssH; y += 80) {
+      ctx.fillRect(0, y, sideMargin, 38);
+      ctx.fillRect(roadX + roadW, y, sideMargin, 38);
+    }
+
+    // 2) YANLARDA AKAN AĞAÇLAR VE EVLER
+    drawSideScenery(ctx, cssW, cssH, sideMargin, roadX + roadW);
+
+    // 3) ASFALT OTOBAN VE KIRMIZI-BEYAZ BORDÜRLER
+    ctx.fillStyle = '#334155';
+    ctx.fillRect(roadX, 0, roadW, cssH);
+
+    // Yol kenarı kırmızı-beyaz yarış bordürleri
+    const curbW = 10;
+    for (let y = -40 + (state.roadOffset % 40); y < cssH; y += 40) {
+      ctx.fillStyle = '#EF4444';
+      ctx.fillRect(roadX - curbW, y, curbW, 20);
+      ctx.fillRect(roadX + roadW, y, curbW, 20);
+      ctx.fillStyle = '#F8FAFC';
+      ctx.fillRect(roadX - curbW, y + 20, curbW, 20);
+      ctx.fillRect(roadX + roadW, y + 20, curbW, 20);
+    }
+
+    // Şerit numarası filigranları (Öğrencinin kolayca dokunması için)
+    ctx.save();
+    ctx.font = '800 15px "Fredoka", "Nunito", sans-serif';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.24)';
+    ctx.textAlign = 'center';
+    for (let lane = 0; lane < 3; lane++) {
+      const lx = roadX + lane * laneW + laneW / 2;
+      ctx.fillText(`${lane + 1}. ŞERİT`, lx, cssH - 16);
+    }
+    ctx.restore();
+
+    // 3 Şerit Ayırıcı Kesikli Beyaz Çizgiler
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.78)';
+    ctx.lineWidth = 5;
+    ctx.setLineDash([32, 28]);
+    ctx.lineDashOffset = -state.roadOffset;
+    for (let i = 1; i <= 2; i++) {
+      const dividerX = roadX + laneW * i;
+      ctx.beginPath();
+      ctx.moveTo(dividerX, 0);
+      ctx.lineTo(dividerX, cssH);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    // 4) DAMALI BİTİŞ ÇİZGİSİ VEYA 3 ŞERİTLİ CEVAP KAPISI
+    if (state.finishLineActive) {
+      drawCheckeredFinishLine(ctx, roadX, roadW, state.finishLineY);
+    } else {
+      drawAnswerGates(ctx, roadX, laneW, state.gateY);
+    }
+
+    // 5) SARI/TURUNCU YARIŞ ARABASI + TURBO ALEV EFEKTİ
+    const carCenterX = roadX + state.carVisualX * roadW;
+    const carCenterY = cssH - 102 + state.carForwardBoostY;
+    const isTurbo = nowTs < state.turboActiveUntil;
+    drawRaceCar(ctx, carCenterX, carCenterY, isTurbo);
+
+    // 6) DOĞRU (YEŞİL PARILTI) / YANLIŞ (KIRMIZI FLAŞ) EKRAN EFEKTLERİ
+    if (state.flashGreenAlpha > 0) {
+      ctx.fillStyle = `rgba(34, 197, 94, ${state.flashGreenAlpha})`;
+      ctx.fillRect(0, 0, cssW, cssH);
+    }
+    if (state.flashRedAlpha > 0) {
+      ctx.fillStyle = `rgba(239, 68, 68, ${state.flashRedAlpha})`;
+      ctx.fillRect(0, 0, cssW, cssH);
+    }
+
+    ctx.restore();
+  }
+
+  function drawSideScenery(ctx, cssW, cssH, leftWidth, rightStart) {
+    for (let i = 0; i < state.sceneryItems.length; i++) {
+      const item = state.sceneryItems[i];
+      const y = item.yRatio * (cssH + 90) - 45;
+      const cx = item.side === 'left' ? leftWidth * 0.46 : rightStart + (cssW - rightStart) * 0.54;
+
+      ctx.save();
+      ctx.translate(cx, y);
+
+      if (item.type === 'house') {
+        // Şirin Ev
+        ctx.fillStyle = '#FEF3C7';
+        ctx.fillRect(-16, -8, 32, 24);
+        ctx.strokeStyle = '#D97706';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(-16, -8, 32, 24);
+        // Çatı
+        ctx.beginPath();
+        ctx.moveTo(-20, -8);
+        ctx.lineTo(0, -24);
+        ctx.lineTo(20, -8);
+        ctx.closePath();
+        ctx.fillStyle = item.roofColor || '#EF4444';
+        ctx.fill();
+        // Kapı & Pencere
+        ctx.fillStyle = '#78350F';
+        ctx.fillRect(-4, 4, 8, 12);
+        ctx.fillStyle = '#38BDF8';
+        ctx.fillRect(-12, -3, 6, 6);
+        ctx.fillRect(6, -3, 6, 6);
+      } else if (item.type === 'pine') {
+        // Çam Ağacı
+        ctx.fillStyle = '#78350F';
+        ctx.fillRect(-4, 8, 8, 12);
+        ctx.fillStyle = '#22C55E';
+        ctx.beginPath();
+        ctx.moveTo(0, -22);
+        ctx.lineTo(-17, 10);
+        ctx.lineTo(17, 10);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        // Yuvarlak Yeşil Ağaç
+        ctx.fillStyle = '#78350F';
+        ctx.fillRect(-4, 6, 8, 13);
+        ctx.beginPath();
+        ctx.arc(0, -4, 16, 0, Math.PI * 2);
+        ctx.fillStyle = '#4ADE80';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(-5, -8, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#86EFAC';
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+  }
+
+  function drawRoundedRect(ctx, x, y, w, h, r) {
+    const radius = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + w, y, x + w, y + h, radius);
+    ctx.arcTo(x + w, y + h, x, y + h, radius);
+    ctx.arcTo(x, y + h, x, y, radius);
+    ctx.arcTo(x, y, x + w, y, radius);
+    ctx.closePath();
+  }
+
+  function drawAnswerGates(ctx, roadX, laneW, gateY) {
+    const gateH = 74;
+    for (let lane = 0; lane < 3; lane++) {
+      const pad = 10;
+      const gx = roadX + lane * laneW + pad;
+      const gw = laneW - pad * 2;
+      const gy = gateY - gateH / 2;
+      const text = String(state.gateOptions[lane] || '');
+
+      let bgGradTop = '#FFFFFF';
+      let bgGradBot = '#FEF9C3';
+      let borderCol = '#F59E0B';
+      let textCol = '#0F172A';
+
+      if (state.gateEvaluated && lane === state.gateHitLane) {
+        if (state.gateResultType === 'correct') {
+          bgGradTop = '#DCFCE7';
+          bgGradBot = '#86EFAC';
+          borderCol = '#16A34A';
+          textCol = '#14532D';
+        } else if (state.gateResultType === 'wrong') {
+          bgGradTop = '#FEE2E2';
+          bgGradBot = '#FCA5A5';
+          borderCol = '#DC2626';
+          textCol = '#7F1D1D';
+        }
+      }
+
+      ctx.save();
+      // Kapı Gölgesi
+      ctx.shadowColor = 'rgba(15, 23, 42, 0.35)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 5;
+
+      const grad = ctx.createLinearGradient(gx, gy, gx, gy + gateH);
+      grad.addColorStop(0, bgGradTop);
+      grad.addColorStop(1, bgGradBot);
+
+      drawRoundedRect(ctx, gx, gy, gw, gateH, 16);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = borderCol;
+      ctx.stroke();
+      ctx.restore();
+
+      // Kapı Üst Şerit Numarası Küçük Etiket
+      ctx.save();
+      ctx.font = '800 12px "Nunito", sans-serif';
+      ctx.fillStyle = '#64748B';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${lane + 1}. Şerit`, gx + gw / 2, gy + 16);
+
+      // Büyük Okunaklı Cevap Metni
+      let fontSize = 27;
+      if (text.length >= 6) fontSize = 22;
+      if (text.length >= 8) fontSize = 19;
+      ctx.font = `800 ${fontSize}px "Fredoka", "Nunito", sans-serif`;
+      ctx.fillStyle = textCol;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, gx + gw / 2, gy + gateH / 2 + 6);
+      ctx.restore();
+    }
+  }
+
+  function drawCheckeredFinishLine(ctx, roadX, roadW, finishY) {
+    const rows = 3;
+    const cols = 12;
+    const cellW = roadW / cols;
+    const cellH = 22;
+    const startY = finishY - (rows * cellH) / 2;
+
+    ctx.save();
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        ctx.fillStyle = (r + c) % 2 === 0 ? '#FFFFFF' : '#0F172A';
+        ctx.fillRect(roadX + c * cellW, startY + r * cellH, cellW + 0.5, cellH + 0.5);
+      }
+    }
+    ctx.strokeStyle = '#FACC15';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(roadX, startY, roadW, rows * cellH);
+
+    // BİTİŞ yazısı
+    ctx.fillStyle = '#FACC15';
+    ctx.font = '800 22px "Fredoka", "Nunito", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🏁 BİTİŞ ÇİZGİSİ 🏁', roadX + roadW / 2, startY - 12);
+    ctx.restore();
+  }
+
+  function drawRaceCar(ctx, cx, cy, isTurbo) {
+    const carW = 58;
+    const carH = 96;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+
+    // 🔥 TURBO ALEV EFEKTİ (Arabanın arkasından çıkan ikili egzoz alevi)
+    if (isTurbo) {
+      const flicker = 16 + Math.random() * 18;
+      [-12, 12].forEach((offsetX) => {
+        ctx.beginPath();
+        ctx.moveTo(offsetX - 8, carH / 2 - 4);
+        ctx.lineTo(offsetX, carH / 2 + flicker + 14);
+        ctx.lineTo(offsetX + 8, carH / 2 - 4);
+        ctx.closePath();
+        ctx.fillStyle = '#EF4444';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(offsetX - 4, carH / 2 - 4);
+        ctx.lineTo(offsetX, carH / 2 + flicker);
+        ctx.lineTo(offsetX + 4, carH / 2 - 4);
+        ctx.closePath();
+        ctx.fillStyle = '#FACC15';
+        ctx.fill();
+      });
+    }
+
+    // Tekerlekler (4 adet siyah lastik)
+    ctx.fillStyle = '#0F172A';
+    drawRoundedRect(ctx, -carW / 2 - 6, -carH / 2 + 12, 8, 22, 4);
+    ctx.fill();
+    drawRoundedRect(ctx, carW / 2 - 2, -carH / 2 + 12, 8, 22, 4);
+    ctx.fill();
+    drawRoundedRect(ctx, -carW / 2 - 6, carH / 2 - 34, 8, 22, 4);
+    ctx.fill();
+    drawRoundedRect(ctx, carW / 2 - 2, carH / 2 - 34, 8, 22, 4);
+    ctx.fill();
+
+    // Araba Gövdesi (Sarı / Turuncu Yarış Arabası Gradyanı)
+    ctx.save();
+    ctx.shadowColor = 'rgba(15, 23, 42, 0.45)';
+    ctx.shadowBlur = 14;
+    ctx.shadowOffsetY = 6;
+
+    const bodyGrad = ctx.createLinearGradient(0, -carH / 2, 0, carH / 2);
+    bodyGrad.addColorStop(0, '#FACC15');
+    bodyGrad.addColorStop(0.55, '#F59E0B');
+    bodyGrad.addColorStop(1, '#EA580C');
+
+    drawRoundedRect(ctx, -carW / 2, -carH / 2, carW, carH, 18);
+    ctx.fillStyle = bodyGrad;
+    ctx.fill();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.stroke();
+    ctx.restore();
+
+    // Ortadaki Beyaz Yarış Şeridi
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
+    ctx.fillRect(-5, -carH / 2 + 6, 10, carH - 12);
+
+    // Ön Cam / Kokpit
+    drawRoundedRect(ctx, -carW / 2 + 9, -16, carW - 18, 34, 10);
+    ctx.fillStyle = '#1E293B';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#38BDF8';
+    ctx.stroke();
+
+    // Ön Farlar
+    ctx.fillStyle = '#FEF08A';
+    ctx.fillRect(-carW / 2 + 8, -carH / 2 + 2, 10, 5);
+    ctx.fillRect(carW / 2 - 18, -carH / 2 + 2, 10, 5);
+
+    // Arka Spoiler
+    drawRoundedRect(ctx, -carW / 2 + 4, carH / 2 - 10, carW - 8, 7, 3);
+    ctx.fillStyle = '#B91C1C';
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function handleCanvasLanePointer(e) {
+    if (!state.isOpen || state.gameOverType) return;
+    const canvas = document.getElementById('moliTurboCanvas');
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const w = rect.width || 640;
+    const sideMargin = Math.max(46, Math.min(92, w * 0.13));
+    const roadW = w - sideMargin * 2;
+
+    const relX = clickX - sideMargin;
+    let pickedLane = Math.floor((relX / roadW) * 3);
+    pickedLane = Math.max(0, Math.min(2, pickedLane));
+    setCarLane(pickedLane);
+  }
+
+  function injectStyles() {
+    if (document.getElementById(STYLE_ID)) return;
+    const style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = `
+      #${MODAL_ID} {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: none;
+        flex-direction: column;
+        background: linear-gradient(145deg, #0F172A 0%, #1E293B 55%, #064E3B 100%);
+        color: #0F172A;
+        font-family: 'Nunito', 'Fredoka', sans-serif;
+        overflow-y: auto;
+        box-sizing: border-box;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+      #${MODAL_ID}.is-open {
+        display: flex;
+      }
+      #${MODAL_ID} * {
+        box-sizing: border-box;
+      }
+
+      /* Üst Başlık Barı */
+      #${MODAL_ID} .mtr-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.97);
+        border-bottom: 4px solid #CBD5E1;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mtr-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      #${MODAL_ID} .mtr-brand-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.55rem;
+        box-shadow: 0 5px 14px rgba(234, 88, 12, 0.35);
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mtr-brand-title {
+        margin: 0;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: clamp(1.1rem, 2vw, 1.45rem);
+        font-weight: 700;
+        color: #0F172A;
+      }
+      #${MODAL_ID} .mtr-brand-sub {
+        margin: 0;
+        font-size: 0.84rem;
+        font-weight: 800;
+        color: #64748B;
+      }
+      #${MODAL_ID} .mtr-close-btn {
+        background: #FEF2F2;
+        border: 2px solid #FCA5A5;
+        border-bottom: 4px solid #EF4444;
+        color: #B91C1C;
+        border-radius: 14px;
+        padding: 9px 18px;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.98rem;
+        font-weight: 700;
+        cursor: pointer;
+        flex-shrink: 0;
+        touch-action: manipulation;
+      }
+
+      /* 5 Konu Sekmesi Barı */
+      #${MODAL_ID} .mtr-topics-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 9px 16px;
+        background: rgba(15, 23, 42, 0.55);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mtr-topic-tab {
+        padding: 8px 15px;
+        border-radius: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.24);
+        border-bottom: 4px solid rgba(15, 23, 42, 0.35);
+        background: rgba(255, 255, 255, 0.94);
+        color: #1E293B;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: clamp(0.84rem, 1.2vw, 1rem);
+        font-weight: 700;
+        cursor: pointer;
+        touch-action: manipulation;
+        transition: all 0.14s ease;
+      }
+      #${MODAL_ID} .mtr-topic-tab.is-active {
+        background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
+        border-color: #FDE047;
+        border-bottom-color: #9A3412;
+        color: #FFFFFF;
+        box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45);
+        transform: translateY(-1px);
+      }
+
+      /* Üst Bilgi Barı (Doğru: 0/8, 3 Can, Süre) */
+      #${MODAL_ID} .mtr-hud-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        max-width: 1240px;
+        width: 100%;
+        margin: 10px auto 0;
+        padding: 0 20px;
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mtr-hud-pill {
+        padding: 8px 18px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.95);
+        border: 2px solid #E2E8F0;
+        border-bottom: 4px solid #CBD5E1;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+        font-weight: 700;
+        color: #0F172A;
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22);
+      }
+
+      /* Ana Sahne: Sol Hedef Kutu + Orta/Sağ 3 Şeritli Otoban */
+      #${MODAL_ID} .mtr-main-stage {
+        flex: 1;
+        display: grid;
+        grid-template-columns: minmax(280px, 370px) minmax(320px, 680px);
+        align-items: stretch;
+        justify-content: center;
+        gap: 20px;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 12px 20px 18px;
+        min-height: 0;
+      }
+
+      /* Sol Panel (Hedef Kutu) */
+      #${MODAL_ID} .mtr-left-panel {
+        background: #FFFFFF;
+        border: 4px solid #FCD34D;
+        border-bottom: 8px solid #F59E0B;
+        border-radius: 26px;
+        padding: 18px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      #${MODAL_ID} .mtr-topic-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #FEF3C7;
+        color: #92400E;
+        font-size: 0.84rem;
+        font-weight: 800;
+        text-align: center;
+      }
+      #${MODAL_ID} .mtr-moli-coach-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #F8FAFC;
+        border: 2px solid #E2E8F0;
+        border-radius: 16px;
+        padding: 10px 12px;
+      }
+      #${MODAL_ID} .mtr-moli-avatar {
+        width: 52px;
+        height: 52px;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mtr-coach-tip {
+        font-size: 0.9rem;
+        font-weight: 800;
+        color: #334155;
+        line-height: 1.35;
+      }
+      #${MODAL_ID} .mtr-target-display {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 18px 14px;
+        border-radius: 22px;
+        background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+        border: 3px solid #F59E0B;
+      }
+      #${MODAL_ID} .mtr-target-label {
+        font-size: 0.8rem;
+        font-weight: 800;
+        color: #B45309;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+      }
+      #${MODAL_ID} .mtr-target-value {
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: clamp(1.7rem, 3vw, 2.55rem);
+        font-weight: 700;
+        color: #0F172A;
+        line-height: 1.2;
+      }
+      #${MODAL_ID} .mtr-target-display.is-listening-mode .mtr-target-value {
+        font-size: clamp(1.2rem, 2vw, 1.55rem);
+        color: #0369A1;
+      }
+      #${MODAL_ID} .mtr-listen-btn {
+        width: 100%;
+        padding: 13px 16px;
+        border-radius: 16px;
+        border: 2px solid #0284C7;
+        border-bottom: 5px solid #0369A1;
+        background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%);
+        color: #FFFFFF;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 1.12rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        touch-action: manipulation;
+      }
+      #${MODAL_ID} .mtr-lane-quick-btns {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      #${MODAL_ID} .mtr-lane-btn {
+        padding: 10px 6px;
+        border-radius: 12px;
+        border: 2px solid #CBD5E1;
+        border-bottom: 4px solid #94A3B8;
+        background: #F8FAFC;
+        color: #1E293B;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      #${MODAL_ID} .mtr-lane-btn.is-selected {
+        background: #FEF3C7;
+        border-color: #F59E0B;
+        border-bottom-color: #D97706;
+        color: #92400E;
+      }
+
+      /* Orta Sahne: 3 Şeritli Otoban & Sağ Alt 🔥 TURBO Butonu */
+      #${MODAL_ID} .mtr-highway-wrap {
+        position: relative;
+        border-radius: 26px;
+        overflow: hidden;
+        border: 4px solid rgba(255, 255, 255, 0.85);
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+        background: #15803D;
+        min-height: 430px;
+        display: flex;
+      }
+      #${MODAL_ID} #moliTurboCanvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      #${MODAL_ID} .mtr-highway-hint {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.72);
+        color: #F8FAFC;
+        font-size: 0.82rem;
+        font-weight: 800;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      /* Sağ Alt 🔥 TURBO Butonu */
+      #${MODAL_ID} .mtr-turbo-btn {
+        position: absolute;
+        right: 16px;
+        bottom: 18px;
+        z-index: 8;
+        padding: 14px 20px;
+        border-radius: 20px;
+        border: 3px solid #FDE047;
+        border-bottom: 6px solid #B91C1C;
+        background: linear-gradient(180deg, #F97316 0%, #DC2626 100%);
+        color: #FFFFFF;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 10px 26px rgba(220, 38, 38, 0.55);
+        touch-action: manipulation;
+        transition: transform 0.12s ease;
+      }
+      #${MODAL_ID} .mtr-turbo-btn:active,
+      #${MODAL_ID} .mtr-turbo-btn.is-boosting {
+        transform: scale(1.08) translateY(-3px);
+        box-shadow: 0 0 0 5px rgba(250, 204, 21, 0.55), 0 14px 32px rgba(239, 68, 68, 0.75);
+      }
+
+      /* Bitiş / Zafer Overlay */
+      #${MODAL_ID} .mtr-end-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 100002;
+        background: rgba(15, 23, 42, 0.78);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      #${MODAL_ID} .mtr-end-overlay.is-open {
+        display: flex;
+      }
+      #${MODAL_ID} .mtr-end-card {
+        width: 100%;
+        max-width: 500px;
+        background: #FFFFFF;
+        border: 5px solid #22C55E;
+        border-bottom: 10px solid #15803D;
+        border-radius: 30px;
+        padding: 28px 24px;
+        text-align: center;
+        box-shadow: 0 28px 65px rgba(0, 0, 0, 0.45);
+      }
+      #${MODAL_ID} .mtr-end-overlay.is-lose .mtr-end-card {
+        border-color: #F59E0B;
+        border-bottom-color: #D97706;
+      }
+      #${MODAL_ID} .mtr-end-icon {
+        font-size: 3.8rem;
+        margin-bottom: 8px;
+      }
+      #${MODAL_ID} .mtr-end-title {
+        margin: 0 0 10px;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: clamp(1.45rem, 2.6vw, 2rem);
+        color: #14532D;
+      }
+      #${MODAL_ID} .mtr-end-overlay.is-lose .mtr-end-title {
+        color: #92400E;
+      }
+      #${MODAL_ID} .mtr-end-desc {
+        margin: 0 0 16px;
+        font-size: 1.02rem;
+        font-weight: 700;
+        color: #475569;
+        line-height: 1.45;
+      }
+      #${MODAL_ID} .mtr-end-stats {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-bottom: 20px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: #F8FAFC;
+        font-size: 0.98rem;
+        font-weight: 800;
+        color: #1E293B;
+      }
+      #${MODAL_ID} .mtr-end-actions {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 12px;
+      }
+      #${MODAL_ID} .mtr-btn-replay {
+        padding: 14px 18px;
+        border-radius: 16px;
+        border: 2px solid #10B981;
+        border-bottom: 5px solid #047857;
+        background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+        color: #FFFFFF;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      #${MODAL_ID} .mtr-btn-exit {
+        padding: 14px 18px;
+        border-radius: 16px;
+        border: 2px solid #CBD5E1;
+        border-bottom: 5px solid #94A3B8;
+        background: #F8FAFC;
+        color: #334155;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      /* Mobil Uyumluluk */
+      @media (max-width: 820px) {
+        #${MODAL_ID} .mtr-brand-sub {
+          display: none;
+        }
+        #${MODAL_ID} .mtr-main-stage {
+          grid-template-columns: 1fr;
+          padding: 10px 12px 16px;
+          gap: 12px;
+        }
+        #${MODAL_ID} .mtr-left-panel {
+          padding: 12px;
+          gap: 8px;
+        }
+        #${MODAL_ID} .mtr-moli-coach-row {
+          display: none;
+        }
+        #${MODAL_ID} .mtr-target-display {
+          padding: 10px 12px;
+        }
+        #${MODAL_ID} .mtr-highway-wrap {
+          min-height: 360px;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function buildModal() {
+    if (document.getElementById(MODAL_ID)) return;
+    injectStyles();
+
+    const modal = document.createElement('div');
+    modal.id = MODAL_ID;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Turbo Otoban Yarışı');
+
+    const tabsHtml = Object.values(TURBO_TOPICS).map((t) => `
+      <button class="mtr-topic-tab ${t.id === state.activeTopicId ? 'is-active' : ''}"
+              type="button"
+              role="tab"
+              data-topic-id="${t.id}"
+              aria-selected="${t.id === state.activeTopicId ? 'true' : 'false'}">
+        ${escapeHtml(t.tabLabel)}
+      </button>
+    `).join('');
+
+    modal.innerHTML = `
+      <header class="mtr-topbar">
+        <div class="mtr-brand">
+          <div class="mtr-brand-icon" aria-hidden="true">🏎️</div>
+          <div>
+            <h2 class="mtr-brand-title">🏎️ Turbo Otoban Yarışı</h2>
+            <p class="mtr-brand-sub">Doğru Şeride Dokun, 🔥 TURBO ile Hızlan ve 8 Doğruda Damalı Bayrağa Ulaş!</p>
+          </div>
+        </div>
+        <button class="mtr-close-btn" id="moliTurboCloseBtn" type="button" aria-label="Turbo Otoban Yarışını Kapat">✕ Kapat</button>
+      </header>
+
+      <nav class="mtr-topics-bar" role="tablist" aria-label="Sınıf ve Konu Seçimi">
+        ${tabsHtml}
+      </nav>
+
+      <!-- Üst Bilgi Barı -->
+      <div class="mtr-hud-bar">
+        <div class="mtr-hud-pill" id="moliTurboHudCorrect">✅ Doğru: <strong>0 / 8</strong></div>
+        <div class="mtr-hud-pill" id="moliTurboHudLives">❤️❤️❤️ <span>(3 Can)</span></div>
+        <div class="mtr-hud-pill" id="moliTurboHudTime">⏱️ Süre: <strong>00:00</strong></div>
+      </div>
+
+      <!-- Ana Sahne: Sol Hedef Kutu + Orta 3 Şeritli Otoban -->
+      <main class="mtr-main-stage">
+        <aside class="mtr-left-panel" id="moliTurboQuestionBox" aria-live="polite"></aside>
+
+        <section class="mtr-highway-wrap" aria-label="3 Şeritli Yarış Otobanı">
+          <div class="mtr-highway-hint">👆 Gitmek İstediğin Şeride Doğrudan Dokun veya ⬅️ ➡️ Ok Tuşlarını Kullan</div>
+          <canvas id="moliTurboCanvas" width="640" height="540"></canvas>
+          <button class="mtr-turbo-btn" id="moliTurboBoostBtn" type="button" title="Turbo Hızlanma!">
+            <span aria-hidden="true">🔥</span>
+            <span>TURBO</span>
+          </button>
+        </section>
+      </main>
+
+      <div class="mtr-end-overlay" id="moliTurboEndOverlay" aria-live="polite"></div>
+    `;
+
+    document.body.appendChild(modal);
+
+    document.getElementById('moliTurboCloseBtn').addEventListener('click', closeTurboRacer);
+
+    modal.querySelectorAll('.mtr-topic-tab').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const topicId = btn.getAttribute('data-topic-id');
+        startNewRace(topicId);
+      });
+    });
+
+    const canvas = document.getElementById('moliTurboCanvas');
+    if (canvas) {
+      canvas.addEventListener('pointerdown', (e) => {
+        if (e.button && e.button !== 0) return;
+        handleCanvasLanePointer(e);
+      });
+    }
+
+    const turboBtn = document.getElementById('moliTurboBoostBtn');
+    if (turboBtn) {
+      turboBtn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerTurboButton();
+      });
+      turboBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerTurboButton();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!state.isOpen) return;
+      if (e.key === 'Escape') {
+        closeTurboRacer();
+        return;
+      }
+      if (state.gameOverType) return;
+
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        setCarLane(state.carLane - 1);
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        setCarLane(state.carLane + 1);
+      } else if (e.key === 'ArrowUp' || e.key === ' ') {
+        e.preventDefault();
+        triggerTurboButton();
+      }
+    });
+  }
+
+  function openTurboRacer(initialTopicId) {
+    buildModal();
+    state.isOpen = true;
+    const modal = document.getElementById(MODAL_ID);
+    if (modal) modal.classList.add('is-open');
+    startNewRace(initialTopicId || state.activeTopicId);
+  }
+
+  function closeTurboRacer() {
+    state.isOpen = false;
+    stopVoice();
+    if (state.clockTimer) {
+      clearInterval(state.clockTimer);
+      state.clockTimer = null;
+    }
+    if (state.animFrameId) {
+      cancelAnimationFrame(state.animFrameId);
+      state.animFrameId = null;
+    }
+    const confetti = document.getElementById(CONFETTI_CANVAS_ID);
+    if (confetti) confetti.remove();
+    const modal = document.getElementById(MODAL_ID);
+    if (modal) modal.classList.remove('is-open');
+  }
+
+  window.openMoliTurboRacer = openTurboRacer;
+  window.closeMoliTurboRacer = closeTurboRacer;
+
+  function injectAndBindShowcaseCard() {
+    const arcadeGrid = document.querySelector('#arcadeHubSection .arcade-games-grid');
+    if (arcadeGrid && !document.getElementById('arcadeCardTurboRacer')) {
+      const card = document.createElement('div');
+      card.className = 'arcade-game-card theme-wheel';
+      card.id = 'arcadeCardTurboRacer';
+      card.setAttribute('data-open-moli-turbo', '1');
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.innerHTML = `
+        <div class="arcade-card-hero-banner banner-wheel" aria-hidden="true">
+          <div class="banner-scene scene-wheel">
+            <div class="mini-wheel-wrap">
+              <span class="mini-wheel-icon">🏎️</span>
+              <span class="mini-gift-icon">🏁</span>
+            </div>
+            <span class="badge-blinking-new">🔥 TURBO</span>
+          </div>
+        </div>
+        <div class="arcade-card-top">
+          <span class="arcade-card-tag">🏎️ 3 Şeritli Otoban</span>
+          <span class="arcade-card-chip chip-orange">🔥 Turbo &amp; 5 Konu</span>
+        </div>
+        <h3 class="arcade-card-title">🏎️ Turbo Otoban Yarışı</h3>
+        <p class="arcade-card-desc">Soruyu dinle, 3 şeritli otobanda doğru cevabın kapısına dokunarak geç! 🔥 TURBO ile alev saçarak bitiş çizgisine ulaş!</p>
+        <div class="arcade-card-badges">
+          <span>🛣️ 3 Şeritli Canlı Yol</span>
+          <span>🏁 8 Doğruda Şampiyonluk</span>
+        </div>
+        <button class="arcade-card-play-btn" type="button">Gaza Bas ›</button>
+      `;
+      const mendilCard = document.getElementById('arcadeCardMendilGame');
+      if (mendilCard && mendilCard.nextSibling) {
+        arcadeGrid.insertBefore(card, mendilCard.nextSibling);
+      } else {
+        arcadeGrid.insertBefore(card, arcadeGrid.firstChild);
+      }
+    }
+
+    document.querySelectorAll('[data-open-moli-turbo], #arcadeCardTurboRacer').forEach((el) => {
+      if (el.dataset.moliTurboBound) return;
+      el.dataset.moliTurboBound = '1';
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const topic = el.getAttribute('data-turbo-topic') || undefined;
+        openTurboRacer(topic);
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          const topic = el.getAttribute('data-turbo-topic') || undefined;
+          openTurboRacer(topic);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectAndBindShowcaseCard);
+  } else {
+    injectAndBindShowcaseCard();
+  }
+})();
