@@ -532,6 +532,140 @@
       .replace(/'/g, '&#39;');
   }
 
+  // CANLI ANALOG SAAT SVG ÇİZİMİ (Beyaz kadran, 1-12 rakamları, mavi kalın Akrep, kırmızı uzun Yelkovan)
+  function buildAnalogClockSvg(timeStr, sizePx) {
+    const parts = String(timeStr || '12:00').split(':');
+    const hours = parseInt(parts[0], 10) || 0;
+    const minutes = parseInt(parts[1], 10) || 0;
+    const h12 = hours % 12;
+
+    const minAngleDeg = minutes * 6;
+    const hourAngleDeg = h12 * 30 + minutes * 0.5;
+    const minRad = ((minAngleDeg - 90) * Math.PI) / 180;
+    const hourRad = ((hourAngleDeg - 90) * Math.PI) / 180;
+
+    const cx = 110;
+    const cy = 110;
+    const r = 96;
+
+    let ticksAndNums = '';
+    for (let i = 1; i <= 12; i++) {
+      const ang = ((i * 30 - 90) * Math.PI) / 180;
+      const tx1 = cx + Math.cos(ang) * (r - 10);
+      const ty1 = cy + Math.sin(ang) * (r - 10);
+      const tx2 = cx + Math.cos(ang) * (r - 3);
+      const ty2 = cy + Math.sin(ang) * (r - 3);
+      const nx = cx + Math.cos(ang) * (r - 24);
+      const ny = cy + Math.sin(ang) * (r - 24) + 1;
+      ticksAndNums += `
+        <line x1="${tx1.toFixed(1)}" y1="${ty1.toFixed(1)}" x2="${tx2.toFixed(1)}" y2="${ty2.toFixed(1)}" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="${nx.toFixed(1)}" y="${ny.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" fill="#0F172A" font-family="'Fredoka','Nunito',sans-serif" font-size="18" font-weight="800">${i}</text>
+      `;
+    }
+
+    const hourLen = 48;
+    const minLen = 70;
+    const hx = cx + Math.cos(hourRad) * hourLen;
+    const hy = cy + Math.sin(hourRad) * hourLen;
+    const mx = cx + Math.cos(minRad) * minLen;
+    const my = cy + Math.sin(minRad) * minLen;
+
+    const sz = sizePx || 210;
+    return `
+      <div class="moli-visual-clock-wrap" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+        <svg width="${sz}" height="${sz}" viewBox="0 0 220 220" role="img" aria-label="Analog Saat" style="filter:drop-shadow(0 10px 20px rgba(15,23,42,0.22));">
+          <circle cx="${cx}" cy="${cy}" r="${r + 6}" fill="#F59E0B"/>
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="#FFFFFF" stroke="#1E293B" stroke-width="5"/>
+          ${ticksAndNums}
+          <!-- Uzun Yelkovan (Kırmızı) -->
+          <line x1="${cx}" y1="${cy}" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}" stroke="#DC2626" stroke-width="6" stroke-linecap="round"/>
+          <!-- Kısa Kalın Akrep (Mavi) -->
+          <line x1="${cx}" y1="${cy}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="#2563EB" stroke-width="9" stroke-linecap="round"/>
+          <circle cx="${cx}" cy="${cy}" r="8" fill="#1E293B" stroke="#FFFFFF" stroke-width="2.5"/>
+        </svg>
+        <div style="display:flex;gap:12px;font-size:0.82rem;font-weight:800;">
+          <span style="color:#2563EB;">🔵 Kısa: Akrep (Saat)</span>
+          <span style="color:#DC2626;">🔴 Uzun: Yelkovan (Dakika)</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // RENKLİ ŞEKİLLİ KESİRLER SVG ÇİZİMİ (Pasta Daire Dilimleri + Kesir Çubuğu)
+  function buildSinglePieSvg(denom, filledSlices, fillCol, sizePx) {
+    const cx = 80;
+    const cy = 80;
+    const r = 68;
+    let paths = '';
+
+    if (denom <= 1) {
+      paths = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${filledSlices > 0 ? fillCol : '#F1F5F9'}" stroke="#1E293B" stroke-width="3.5"/>`;
+    } else {
+      for (let i = 0; i < denom; i++) {
+        const startAng = ((i * 360) / denom - 90) * (Math.PI / 180);
+        const endAng = (((i + 1) * 360) / denom - 90) * (Math.PI / 180);
+        const x1 = cx + r * Math.cos(startAng);
+        const y1 = cy + r * Math.sin(startAng);
+        const x2 = cx + r * Math.cos(endAng);
+        const y2 = cy + r * Math.sin(endAng);
+        const largeArc = 360 / denom > 180 ? 1 : 0;
+        const isFilled = i < filledSlices;
+        const d = `M ${cx} ${cy} L ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 ${largeArc} 1 ${x2.toFixed(2)} ${y2.toFixed(2)} Z`;
+        paths += `<path d="${d}" fill="${isFilled ? fillCol : '#F1F5F9'}" stroke="#1E293B" stroke-width="3" stroke-linejoin="round"/>`;
+      }
+    }
+
+    return `
+      <svg width="${sizePx}" height="${sizePx}" viewBox="0 0 160 160" role="img" aria-label="Kesir Pastası" style="filter:drop-shadow(0 8px 16px rgba(15,23,42,0.18));">
+        ${paths}
+      </svg>
+    `;
+  }
+
+  function buildFractionModelSvg(fractionStr, pieSizePx) {
+    const parts = String(fractionStr || '1/2').split('/');
+    const num = Math.max(1, parseInt(parts[0], 10) || 1);
+    const den = Math.max(1, parseInt(parts[1], 10) || 2);
+    const wholeCount = Math.max(1, Math.ceil(num / den));
+
+    const palette = ['#F97316', '#10B981', '#8B5CF6'];
+    const fillCol = palette[(num + den) % palette.length];
+    const singleSize = wholeCount > 1 ? Math.round((pieSizePx || 175) * 0.78) : (pieSizePx || 175);
+
+    let piesHtml = '';
+    let rem = num;
+    for (let w = 0; w < wholeCount; w++) {
+      const take = Math.min(den, rem);
+      rem = Math.max(0, rem - take);
+      piesHtml += buildSinglePieSvg(den, take, fillCol, singleSize);
+    }
+
+    // Altında eş parçalı Kesir Çubuğu modeli
+    const totalCells = wholeCount * den;
+    const barW = 240;
+    const barH = 26;
+    const cellW = barW / totalCells;
+    let barRects = '';
+    for (let i = 0; i < totalCells; i++) {
+      const isFilled = i < num;
+      barRects += `<rect x="${(i * cellW).toFixed(1)}" y="0" width="${cellW.toFixed(1)}" height="${barH}" fill="${isFilled ? fillCol : '#F1F5F9'}" stroke="#1E293B" stroke-width="2.2"/>`;
+    }
+
+    return `
+      <div class="moli-visual-fraction-wrap" style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;">
+          ${piesHtml}
+        </div>
+        <svg width="${barW}" height="${barH}" viewBox="0 0 ${barW} ${barH}" aria-hidden="true" style="border-radius:8px;overflow:hidden;box-shadow:0 4px 10px rgba(15,23,42,0.14);">
+          ${barRects}
+        </svg>
+        <div style="font-size:0.84rem;font-weight:800;color:#334155;">
+          🍕 ${den} eş parçadan <strong>${num}</strong> dilimi boyalı
+        </div>
+      </div>
+    `;
+  }
+
   function toTurkishUpper(str) {
     return String(str || '').toLocaleUpperCase('tr-TR');
   }
@@ -931,6 +1065,35 @@
       ? `<div class="mwg-removed-pill">🗑️ Bu soru bir sonraki çevirişte çarktan kaldırılacak</div>`
       : '';
 
+    let pickedDisplayInnerHtml = `<div class="mwg-picked-value">${formatWordWithHighlightHtml(item.label, wheelState.activeLetterFilter)}</div>`;
+    if (wheelState.activeTopicId === 'clock23') {
+      pickedDisplayInnerHtml = `
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          ${buildAnalogClockSvg(item.label, 210)}
+          ${wheelState.answerRevealed
+            ? `<div class="mwg-picked-value" style="font-size:2.2rem;margin-top:4px;">🕒 ${escapeHtml(item.label)}</div>`
+            : `<div style="font-size:1rem;font-weight:800;color:#475569;">Analog saate bakarak saatin kaç olduğunu söyle!</div>`
+          }
+        </div>
+      `;
+    } else if (wheelState.activeTopicId === 'fractions34') {
+      pickedDisplayInnerHtml = `
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          ${buildFractionModelSvg(item.label, 175)}
+          ${wheelState.answerRevealed
+            ? `<div class="mwg-picked-value" style="font-size:2.3rem;margin-top:4px;">🍕 ${escapeHtml(item.label)}</div>`
+            : `<div style="font-size:1rem;font-weight:800;color:#475569;">Boyalı kesir modelinin kaçta kaç olduğunu söyle!</div>`
+          }
+        </div>
+      `;
+    }
+
+    const answerTitleText = wheelState.activeTopicId === 'clock23'
+      ? `🎉 DİJİTAL: ${item.label} • OKUNUŞU:`
+      : (wheelState.activeTopicId === 'fractions34'
+        ? `🎉 KESİR: ${item.label} • OKUNUŞU VE TÜRÜ:`
+        : '🎉 DOĞRU CEVAP:');
+
     container.innerHTML = `
       <div class="mwg-result-inner ${animatePop ? 'is-popping' : ''}">
         <div class="mwg-result-top-row">
@@ -942,9 +1105,9 @@
 
         <p class="mwg-prompt-text">${escapeHtml(topic.prompt)}</p>
 
-        <!-- BÜYÜTÜLMÜŞ SONUÇ DİLİM KUTUSU -->
+        <!-- BÜYÜTÜLMÜŞ SONUÇ DİLİM KUTUSU (Analog Saat / Kesir Pastası / Kelime) -->
         <div class="mwg-picked-display" style="background:${pal.bg}; border-color:${pal.accent}; color:${pal.text};">
-          <div class="mwg-picked-value">${formatWordWithHighlightHtml(item.label, wheelState.activeLetterFilter)}</div>
+          ${pickedDisplayInnerHtml}
         </div>
 
         ${removedNoticeHtml}
@@ -953,7 +1116,7 @@
         <div class="mwg-answer-panel ${wheelState.answerRevealed ? 'is-revealed' : ''}" id="moliWheelAnswerPanel">
           ${wheelState.answerRevealed
             ? `
-              <div class="mwg-answer-title">🎉 DOĞRU CEVAP:</div>
+              <div class="mwg-answer-title">${escapeHtml(answerTitleText)}</div>
               <div class="mwg-answer-main">${formatWordWithHighlightHtml(item.answer, wheelState.activeLetterFilter)}</div>
               ${item.detail ? `<div class="mwg-answer-detail">${escapeHtml(item.detail)}</div>` : ''}
             `
