@@ -16,6 +16,89 @@
   const TARGET_SCORE = 5;
   const PENALTY_LOCK_MS = 1500;
 
+  // 1. SINIF MEB MAARİF MODELİ HARF GRUPLARI (ANETİL, OKURIM, ÜSÖYDZ, ÇBGCŞ, PHVĞFJ)
+  const READING1_LETTER_GROUPS = [
+    { id: 'g1', label: '1. Grup (ANETİL)' },
+    { id: 'g2', label: '2. Grup (OKURIM)' },
+    { id: 'g3', label: '3. Grup (ÜSÖYDZ)' },
+    { id: 'g4', label: '4. Grup (ÇBGCŞ)' },
+    { id: 'g5', label: '5. Grup (PHVĞFJ)' },
+    { id: 'all', label: '🌟 Tümü' }
+  ];
+
+  const READING1_GROUP_QUESTIONS = {
+    g1: [
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Anne! An, ne.', answer: 'ANNE', distractors: ['NANE', 'ALAN'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'El! Tek heceli kelime: El.', answer: 'EL', distractors: ['AL', 'ET'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Al! Tek heceli kelime: Al.', answer: 'AL', distractors: ['AT', 'EL'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'At! Tek heceli kelime: At.', answer: 'AT', distractors: ['AL', 'İT'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Nil! Tek heceli özel isim: Nil.', answer: 'NİL', distractors: ['TEN', 'LALE'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Talat! Ta, lat.', answer: 'TALAT', distractors: ['ALAN', 'LALE'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Nane! Na, ne.', answer: 'NANE', distractors: ['ANNE', 'LALE'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Et! Tek heceli kelime: Et.', answer: 'ET', distractors: ['İT', 'EL'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'İt! Tek heceli kelime: İt.', answer: 'İT', distractors: ['ET', 'AT'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'İnek! İ, nek.', answer: 'İNEK', distractors: ['NANE', 'TEN'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Alan! A, lan.', answer: 'ALAN', distractors: ['TALAT', 'ANNE'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ten! Tek heceli kelime: Ten.', answer: 'TEN', distractors: ['NİL', 'ET'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Lale! La, le.', answer: 'LALE', distractors: ['NANE', 'ANNE'] }
+    ],
+    g2: [
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Okul! O, kul.', answer: 'OKUL', distractors: ['KULE', 'KOL'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kule! Ku, le.', answer: 'KULE', distractors: ['OKUL', 'KUTU'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Koku! Ko, ku.', answer: 'KOKU', distractors: ['KUTU', 'KOL'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kukla! Kuk, la.', answer: 'KUKLA', distractors: ['KULAK', 'KULE'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kulak! Ku, lak.', answer: 'KULAK', distractors: ['KUKLA', 'KUTU'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kutu! Ku, tu.', answer: 'KUTU', distractors: ['KOKU', 'KULE'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kol! Tek heceli kelime: Kol.', answer: 'KOL', distractors: ['KAR', 'KUM'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kar! Tek heceli kelime: Kar.', answer: 'KAR', distractors: ['KOL', 'KUM'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kum! Tek heceli kelime: Kum.', answer: 'KUM', distractors: ['KOL', 'KAR'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Orman! Or, man.', answer: 'ORMAN', distractors: ['OKUL', 'MASA'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Elma! El, ma.', answer: 'ELMA', distractors: ['MASA', 'ARI'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Arı! A, rı.', answer: 'ARI', distractors: ['KAR', 'ELMA'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Masa! Ma, sa.', answer: 'MASA', distractors: ['ELMA', 'KASA'] }
+    ],
+    g3: [
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Süt! Tek heceli kelime: Süt.', answer: 'SÜT', distractors: ['SES', 'SÖZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Üzüm! Ü, züm.', answer: 'ÜZÜM', distractors: ['ÖRDEK', 'DÜZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ördek! Ör, dek.', answer: 'ÖRDEK', distractors: ['ÜZÜM', 'KEDİ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Yıldız! Yıl, dız.', answer: 'YILDIZ', distractors: ['DENİZ', 'YAZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Deniz! De, niz.', answer: 'DENİZ', distractors: ['YILDIZ', 'KEDİ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ses! Tek heceli kelime: Ses.', answer: 'SES', distractors: ['SÖZ', 'SÜT'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Yaz! Tek heceli kelime: Yaz.', answer: 'YAZ', distractors: ['DÜZ', 'SÖZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Söz! Tek heceli kelime: Söz.', answer: 'SÖZ', distractors: ['SES', 'DÜZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Düz! Tek heceli kelime: Düz.', answer: 'DÜZ', distractors: ['SÖZ', 'YAZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kedi! Ke, di.', answer: 'KEDİ', distractors: ['DENİZ', 'MASA'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Masa! Ma, sa.', answer: 'MASA', distractors: ['KEDİ', 'YAZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Su! Tek heceli kelime: Su.', answer: 'SU', distractors: ['SÜT', 'SES'] }
+    ],
+    g4: [
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Çiçek! Çi, çek.', answer: 'ÇİÇEK', distractors: ['ÇANTA', 'ŞEKER'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Balık! Ba, lık.', answer: 'BALIK', distractors: ['BULUT', 'ÇİÇEK'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Güneş! Gü, neş.', answer: 'GÜNEŞ', distractors: ['ŞEKER', 'GÖL'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Cam! Tek heceli kelime: Cam.', answer: 'CAM', distractors: ['GÖL', 'KUŞ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Şeker! Şe, ker.', answer: 'ŞEKER', distractors: ['ŞAPKA', 'GÜNEŞ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Çanta! Çan, ta.', answer: 'ÇANTA', distractors: ['ŞAPKA', 'ÇİÇEK'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Bulut! Bu, lut.', answer: 'BULUT', distractors: ['BALIK', 'CEVİZ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Göl! Tek heceli kelime: Göl.', answer: 'GÖL', distractors: ['KUŞ', 'CAM'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ceviz! Ce, viz.', answer: 'CEVİZ', distractors: ['ÇİÇEK', 'BULUT'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Şapka! Şap, ka.', answer: 'ŞAPKA', distractors: ['ÇANTA', 'ŞEKER'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kuş! Tek heceli kelime: Kuş.', answer: 'KUŞ', distractors: ['GÖL', 'CAM'] }
+    ],
+    g5: [
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Para! Pa, ra.', answer: 'PARA', distractors: ['HALI', 'VAZO'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Havuç! Ha, vuç.', answer: 'HAVUÇ', distractors: ['HALI', 'AĞAÇ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Vazo! Va, zo.', answer: 'VAZO', distractors: ['PARA', 'HALI'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Dağ! Tek heceli kelime: Dağ.', answer: 'DAĞ', distractors: ['TOP', 'FİL'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Fil! Tek heceli kelime: Fil.', answer: 'FİL', distractors: ['JET', 'TOP'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Jet! Tek heceli kelime: Jet.', answer: 'JET', distractors: ['FİL', 'TOP'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Pencere! Pen, ce, re.', answer: 'PENCERE', distractors: ['FENER', 'PARA'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Halı! Ha, lı.', answer: 'HALI', distractors: ['HAVUÇ', 'PARA'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ağaç! A, ğaç.', answer: 'AĞAÇ', distractors: ['HAVUÇ', 'DAĞ'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Fener! Fe, ner.', answer: 'FENER', distractors: ['PENCERE', 'VAZO'] },
+      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Top! Tek heceli kelime: Top.', answer: 'TOP', distractors: ['DAĞ', 'JET'] }
+    ]
+  };
+
   // 5 SINIF SEVİYESİ VE KONU HAVUZU
   const MENDIL_TOPICS = {
     reading1: {
@@ -24,24 +107,11 @@
       badge: '📖 1. Sınıf Dinle & Doğru Kelimeyi Kap',
       isListeningOnlyPrompt: true,
       questions: [
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Tatlı! Tat, lı.', answer: 'TATLI', distractors: ['TAKLA', 'KATIL'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Takla! Tak, la.', answer: 'TAKLA', distractors: ['TATLI', 'TARLA'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Katıl! Ka, tıl.', answer: 'KATIL', distractors: ['KALIN', 'KATIK'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Okul! O, kul.', answer: 'OKUL', distractors: ['OLUK', 'OKUR'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kule! Ku, le.', answer: 'KULE', distractors: ['KALE', 'KÜRE'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kalem! Ka, lem.', answer: 'KALEM', distractors: ['KALE', 'KELAM'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Elma! El, ma.', answer: 'ELMA', distractors: ['ELA', 'ELMAS'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Koku! Ko, ku.', answer: 'KOKU', distractors: ['KORKU', 'KOYU'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kukla! Kuk, la.', answer: 'KUKLA', distractors: ['KULAK', 'KUKA'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kulak! Ku, lak.', answer: 'KULAK', distractors: ['KUKLA', 'KURAK'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kutu! Ku, tu.', answer: 'KUTU', distractors: ['KURU', 'KUZU'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Orman! Or, man.', answer: 'ORMAN', distractors: ['ORTAM', 'ORGAN'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Güneş! Gü, neş.', answer: 'GÜNEŞ', distractors: ['GÜMÜŞ', 'GÜREŞ'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kitap! Ki, tap.', answer: 'KİTAP', distractors: ['KİRAZ', 'KİLİT'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Çiçek! Çi, çek.', answer: 'ÇİÇEK', distractors: ['ÇİLEK', 'ÇEYREK'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Balık! Ba, lık.', answer: 'BALIK', distractors: ['BAKIŞ', 'KAŞIK'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Yıldız! Yıl, dız.', answer: 'YILDIZ', distractors: ['YALDIZ', 'YALNIZ'] },
-        { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Bayrak! Bay, rak.', answer: 'BAYRAK', distractors: ['BARDAK', 'KAYNAK'] }
+        ...READING1_GROUP_QUESTIONS.g1,
+        ...READING1_GROUP_QUESTIONS.g2,
+        ...READING1_GROUP_QUESTIONS.g3,
+        ...READING1_GROUP_QUESTIONS.g4,
+        ...READING1_GROUP_QUESTIONS.g5
       ]
     },
     addsub12: {
@@ -141,6 +211,7 @@
   // OYUN DURUMU
   const state = {
     activeTopicId: 'reading1',
+    activeLetterGroupId: 'g1',
     bagByTopic: {},
     currentQuestion: null,
     leftOptions: [],
@@ -371,15 +442,28 @@
     }
   }
 
-  function drawNextQuestionFromBag(topicId) {
+  function getActiveTopicQuestions(topicId) {
     const topic = MENDIL_TOPICS[topicId] || MENDIL_TOPICS.reading1;
-    let bag = state.bagByTopic[topicId];
+    if (topicId === 'reading1') {
+      const grp = state.activeLetterGroupId || 'g1';
+      if (grp !== 'all' && READING1_GROUP_QUESTIONS[grp]) {
+        return READING1_GROUP_QUESTIONS[grp];
+      }
+      return topic.questions;
+    }
+    return topic.questions;
+  }
+
+  function drawNextQuestionFromBag(topicId) {
+    const pool = getActiveTopicQuestions(topicId);
+    const bagKey = topicId === 'reading1' ? `reading1_${state.activeLetterGroupId}` : topicId;
+    let bag = state.bagByTopic[bagKey];
     if (!bag || bag.length === 0) {
-      bag = shuffleArray(topic.questions.map((_, idx) => idx));
-      state.bagByTopic[topicId] = bag;
+      bag = shuffleArray(pool.map((_, idx) => idx));
+      state.bagByTopic[bagKey] = bag;
     }
     const qIdx = bag.pop();
-    return topic.questions[qIdx];
+    return pool[qIdx];
   }
 
   function clearRoundTimers() {
@@ -394,6 +478,26 @@
       }
       state.lockedUntil[team] = 0;
     });
+  }
+
+  function syncLetterGroupsBarUI() {
+    const bar = document.getElementById('moliMendilLetterGroupsBar');
+    if (bar) {
+      bar.style.display = state.activeTopicId === 'reading1' ? 'flex' : 'none';
+    }
+    document.querySelectorAll(`#${MODAL_ID} .mmg-letter-group-btn`).forEach((btn) => {
+      const active = btn.getAttribute('data-group-id') === state.activeLetterGroupId;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  function switchLetterGroup(groupId) {
+    if (!READING1_LETTER_GROUPS.some((g) => g.id === groupId)) return;
+    state.activeLetterGroupId = groupId;
+    state.bagByTopic[`reading1_${groupId}`] = [];
+    syncLetterGroupsBarUI();
+    startNewMatch('reading1');
   }
 
   function startNewMatch(topicId) {
@@ -412,6 +516,7 @@
       btn.setAttribute('aria-selected', active ? 'true' : 'false');
     });
 
+    syncLetterGroupsBarUI();
     loadNextRound();
   }
 
@@ -859,6 +964,50 @@
         color: #FFFFFF;
         box-shadow: 0 5px 15px rgba(16, 185, 129, 0.45);
         transform: translateY(-1px);
+      }
+
+      /* 1. Sınıf MEB Harf Grubu Seçici Alt Barı */
+      #${MODAL_ID} .mmg-letter-groups-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 6px;
+        padding: 5px 14px;
+        background: rgba(15, 23, 42, 0.72);
+        border-bottom: 1px solid rgba(110, 231, 183, 0.28);
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mmg-letter-group-label {
+        font-size: 0.78rem;
+        font-weight: 800;
+        color: #6EE7B7;
+        white-space: nowrap;
+        margin-right: 4px;
+      }
+      #${MODAL_ID} .mmg-letter-group-btn {
+        padding: 5px 11px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.12);
+        color: #F8FAFC;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        white-space: nowrap;
+        cursor: pointer;
+        touch-action: manipulation;
+        transition: all 0.14s ease;
+      }
+      #${MODAL_ID} .mmg-letter-group-btn:hover {
+        background: rgba(255, 255, 255, 0.24);
+      }
+      #${MODAL_ID} .mmg-letter-group-btn.is-active {
+        background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+        border-color: #BAE6FD;
+        color: #FFFFFF;
+        box-shadow: 0 3px 10px rgba(14, 165, 233, 0.45);
       }
 
       /* Skor Tabelası */
@@ -1318,6 +1467,15 @@
       </button>
     `).join('');
 
+    const letterGroupsHtml = READING1_LETTER_GROUPS.map((g) => `
+      <button class="mmg-letter-group-btn ${g.id === state.activeLetterGroupId ? 'is-active' : ''}"
+              type="button"
+              data-group-id="${g.id}"
+              aria-pressed="${g.id === state.activeLetterGroupId ? 'true' : 'false'}">
+        ${escapeHtml(g.label)}
+      </button>
+    `).join('');
+
     modal.innerHTML = `
       <header class="mmg-topbar">
         <div class="mmg-brand">
@@ -1333,6 +1491,11 @@
       <nav class="mmg-topics-bar" role="tablist" aria-label="Sınıf ve Konu Seçimi">
         ${tabsHtml}
       </nav>
+
+      <div class="mmg-letter-groups-bar" id="moliMendilLetterGroupsBar" role="toolbar" aria-label="1. Sınıf MEB Harf Grubu Seçimi">
+        <span class="mmg-letter-group-label">🔤 Harf Grubu:</span>
+        ${letterGroupsHtml}
+      </div>
 
       <div class="mmg-scoreboard" id="moliMendilScoreboard"></div>
 
@@ -1358,6 +1521,13 @@
       btn.addEventListener('click', () => {
         const topicId = btn.getAttribute('data-topic-id');
         startNewMatch(topicId);
+      });
+    });
+
+    modal.querySelectorAll('.mmg-letter-group-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const groupId = btn.getAttribute('data-group-id');
+        switchLetterGroup(groupId);
       });
     });
 

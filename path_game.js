@@ -16,28 +16,104 @@
   const CONFETTI_CANVAS_ID = 'moli-path-confetti-canvas';
   const TOTAL_STEPS = 8;
 
+  // 1. SINIF MEB MAARİF MODELİ HARF GRUPLARI (HECE TAMAMLAMA: an + [ne], ku + [tu], ba + [lık] vb.)
+  const READING1_LETTER_GROUPS = [
+    { id: 'g1', label: '1. Grup (ANETİL)' },
+    { id: 'g2', label: '2. Grup (OKURIM)' },
+    { id: 'g3', label: '3. Grup (ÜSÖYDZ)' },
+    { id: 'g4', label: '4. Grup (ÇBGCŞ)' },
+    { id: 'g5', label: '5. Grup (PHVĞFJ)' },
+    { id: 'all', label: '🌟 Tümü' }
+  ];
+
+  const READING1_GROUP_QUESTIONS = {
+    g1: [
+      { promptText: 'an + [ ? ] = anne', spokenText: 'Anne! An, ne. Eksik hece hangisi?', answer: 'ne', distractors: ['na', 'la'] },
+      { promptText: 'na + [ ? ] = nane', spokenText: 'Nane! Na, ne. Eksik hece hangisi?', answer: 'ne', distractors: ['la', 'ta'] },
+      { promptText: 'la + [ ? ] = lale', spokenText: 'Lale! La, le. Eksik hece hangisi?', answer: 'le', distractors: ['ne', 'na'] },
+      { promptText: 'ta + [ ? ] = talat', spokenText: 'Talat! Ta, lat. Eksik hece hangisi?', answer: 'lat', distractors: ['lan', 'la'] },
+      { promptText: 'a + [ ? ] = alan', spokenText: 'Alan! A, lan. Eksik hece hangisi?', answer: 'lan', distractors: ['lat', 'le'] },
+      { promptText: 'i + [ ? ] = inek', spokenText: 'İnek! İ, nek. Eksik hece hangisi?', answer: 'nek', distractors: ['nil', 'ten'] },
+      { promptText: '[ ? ] + ne = anne', spokenText: 'Anne! An, ne. Baştaki hece hangisi?', answer: 'an', distractors: ['al', 'at'] },
+      { promptText: '[ ? ] + le = lale', spokenText: 'Lale! La, le. Baştaki hece hangisi?', answer: 'la', distractors: ['na', 'ta'] },
+      { promptText: 'e + l = [ ? ]', spokenText: 'El! Tek heceli kelime: El.', answer: 'el', distractors: ['al', 'et'] },
+      { promptText: 'a + l = [ ? ]', spokenText: 'Al! Tek heceli kelime: Al.', answer: 'al', distractors: ['el', 'at'] },
+      { promptText: 'a + t = [ ? ]', spokenText: 'At! Tek heceli kelime: At.', answer: 'at', distractors: ['al', 'it'] },
+      { promptText: 'n + i + l = [ ? ]', spokenText: 'Nil! Tek heceli özel isim: Nil.', answer: 'nil', distractors: ['ten', 'el'] },
+      { promptText: 'e + t = [ ? ]', spokenText: 'Et! Tek heceli kelime: Et.', answer: 'et', distractors: ['it', 'el'] },
+      { promptText: 'i + t = [ ? ]', spokenText: 'İt! Tek heceli kelime: İt.', answer: 'it', distractors: ['et', 'at'] },
+      { promptText: 't + e + n = [ ? ]', spokenText: 'Ten! Tek heceli kelime: Ten.', answer: 'ten', distractors: ['nil', 'et'] }
+    ],
+    g2: [
+      { promptText: 'o + [ ? ] = okul', spokenText: 'Okul! O, kul. Eksik hece hangisi?', answer: 'kul', distractors: ['kol', 'kum'] },
+      { promptText: 'ku + [ ? ] = kule', spokenText: 'Kule! Ku, le. Eksik hece hangisi?', answer: 'le', distractors: ['tu', 'ku'] },
+      { promptText: 'ko + [ ? ] = koku', spokenText: 'Koku! Ko, ku. Eksik hece hangisi?', answer: 'ku', distractors: ['tu', 'la'] },
+      { promptText: 'kuk + [ ? ] = kukla', spokenText: 'Kukla! Kuk, la. Eksik hece hangisi?', answer: 'la', distractors: ['lak', 'le'] },
+      { promptText: 'ku + [ ? ] = kulak', spokenText: 'Kulak! Ku, lak. Eksik hece hangisi?', answer: 'lak', distractors: ['la', 'kul'] },
+      { promptText: 'ku + [ ? ] = kutu', spokenText: 'Kutu! Ku, tu. Eksik hece hangisi?', answer: 'tu', distractors: ['ku', 'le'] },
+      { promptText: 'or + [ ? ] = orman', spokenText: 'Orman! Or, man. Eksik hece hangisi?', answer: 'man', distractors: ['ma', 'sa'] },
+      { promptText: 'el + [ ? ] = elma', spokenText: 'Elma! El, ma. Eksik hece hangisi?', answer: 'ma', distractors: ['sa', 'la'] },
+      { promptText: 'a + [ ? ] = arı', spokenText: 'Arı! A, rı. Eksik hece hangisi?', answer: 'rı', distractors: ['ra', 'ma'] },
+      { promptText: 'ma + [ ? ] = masa', spokenText: 'Masa! Ma, sa. Eksik hece hangisi?', answer: 'sa', distractors: ['ma', 'la'] },
+      { promptText: 'k + o + l = [ ? ]', spokenText: 'Kol! Tek heceli kelime: Kol.', answer: 'kol', distractors: ['kar', 'kum'] },
+      { promptText: 'k + a + r = [ ? ]', spokenText: 'Kar! Tek heceli kelime: Kar.', answer: 'kar', distractors: ['kol', 'kum'] },
+      { promptText: 'k + u + m = [ ? ]', spokenText: 'Kum! Tek heceli kelime: Kum.', answer: 'kum', distractors: ['kol', 'kar'] }
+    ],
+    g3: [
+      { promptText: 'ü + [ ? ] = üzüm', spokenText: 'Üzüm! Ü, züm. Eksik hece hangisi?', answer: 'züm', distractors: ['dek', 'dız'] },
+      { promptText: 'ör + [ ? ] = ördek', spokenText: 'Ördek! Ör, dek. Eksik hece hangisi?', answer: 'dek', distractors: ['züm', 'niz'] },
+      { promptText: 'yıl + [ ? ] = yıldız', spokenText: 'Yıldız! Yıl, dız. Eksik hece hangisi?', answer: 'dız', distractors: ['niz', 'düz'] },
+      { promptText: 'de + [ ? ] = deniz', spokenText: 'Deniz! De, niz. Eksik hece hangisi?', answer: 'niz', distractors: ['dız', 'di'] },
+      { promptText: 'ke + [ ? ] = kedi', spokenText: 'Kedi! Ke, di. Eksik hece hangisi?', answer: 'di', distractors: ['sa', 'su'] },
+      { promptText: 'ma + [ ? ] = masa', spokenText: 'Masa! Ma, sa. Eksik hece hangisi?', answer: 'sa', distractors: ['di', 'su'] },
+      { promptText: 's + ü + t = [ ? ]', spokenText: 'Süt! Tek heceli kelime: Süt.', answer: 'süt', distractors: ['ses', 'söz'] },
+      { promptText: 's + e + s = [ ? ]', spokenText: 'Ses! Tek heceli kelime: Ses.', answer: 'ses', distractors: ['söz', 'süt'] },
+      { promptText: 'y + a + z = [ ? ]', spokenText: 'Yaz! Tek heceli kelime: Yaz.', answer: 'yaz', distractors: ['düz', 'söz'] },
+      { promptText: 's + ö + z = [ ? ]', spokenText: 'Söz! Tek heceli kelime: Söz.', answer: 'söz', distractors: ['ses', 'düz'] },
+      { promptText: 'd + ü + z = [ ? ]', spokenText: 'Düz! Tek heceli kelime: Düz.', answer: 'düz', distractors: ['söz', 'yaz'] },
+      { promptText: 's + u = [ ? ]', spokenText: 'Su! Tek heceli kelime: Su.', answer: 'su', distractors: ['süt', 'ses'] }
+    ],
+    g4: [
+      { promptText: 'çi + [ ? ] = çiçek', spokenText: 'Çiçek! Çi, çek. Eksik hece hangisi?', answer: 'çek', distractors: ['ker', 'viz'] },
+      { promptText: 'ba + [ ? ] = balık', spokenText: 'Balık! Ba, lık. Eksik hece hangisi?', answer: 'lık', distractors: ['lut', 'çek'] },
+      { promptText: 'gü + [ ? ] = güneş', spokenText: 'Güneş! Gü, neş. Eksik hece hangisi?', answer: 'neş', distractors: ['ker', 'kuş'] },
+      { promptText: 'şe + [ ? ] = şeker', spokenText: 'Şeker! Şe, ker. Eksik hece hangisi?', answer: 'ker', distractors: ['ka', 'neş'] },
+      { promptText: 'çan + [ ? ] = çanta', spokenText: 'Çanta! Çan, ta. Eksik hece hangisi?', answer: 'ta', distractors: ['ka', 'ba'] },
+      { promptText: 'bu + [ ? ] = bulut', spokenText: 'Bulut! Bu, lut. Eksik hece hangisi?', answer: 'lut', distractors: ['lık', 'viz'] },
+      { promptText: 'ce + [ ? ] = ceviz', spokenText: 'Ceviz! Ce, viz. Eksik hece hangisi?', answer: 'viz', distractors: ['lut', 'çek'] },
+      { promptText: 'şap + [ ? ] = şapka', spokenText: 'Şapka! Şap, ka. Eksik hece hangisi?', answer: 'ka', distractors: ['ta', 'ker'] },
+      { promptText: 'c + a + m = [ ? ]', spokenText: 'Cam! Tek heceli kelime: Cam.', answer: 'cam', distractors: ['göl', 'kuş'] },
+      { promptText: 'g + ö + l = [ ? ]', spokenText: 'Göl! Tek heceli kelime: Göl.', answer: 'göl', distractors: ['kuş', 'cam'] },
+      { promptText: 'k + u + ş = [ ? ]', spokenText: 'Kuş! Tek heceli kelime: Kuş.', answer: 'kuş', distractors: ['göl', 'cam'] }
+    ],
+    g5: [
+      { promptText: 'pa + [ ? ] = para', spokenText: 'Para! Pa, ra. Eksik hece hangisi?', answer: 'ra', distractors: ['zo', 'lı'] },
+      { promptText: 'ha + [ ? ] = havuç', spokenText: 'Havuç! Ha, vuç. Eksik hece hangisi?', answer: 'vuç', distractors: ['ğaç', 'lı'] },
+      { promptText: 'va + [ ? ] = vazo', spokenText: 'Vazo! Va, zo. Eksik hece hangisi?', answer: 'zo', distractors: ['ra', 'lı'] },
+      { promptText: 'pen + ce + [ ? ] = pencere', spokenText: 'Pencere! Pen, ce, re. Son hece hangisi?', answer: 're', distractors: ['ra', 'ner'] },
+      { promptText: 'ha + [ ? ] = halı', spokenText: 'Halı! Ha, lı. Eksik hece hangisi?', answer: 'lı', distractors: ['ra', 'zo'] },
+      { promptText: 'a + [ ? ] = ağaç', spokenText: 'Ağaç! A, ğaç. Eksik hece hangisi?', answer: 'ğaç', distractors: ['vuç', 'dağ'] },
+      { promptText: 'fe + [ ? ] = fener', spokenText: 'Fener! Fe, ner. Eksik hece hangisi?', answer: 'ner', distractors: ['re', 'vuç'] },
+      { promptText: 'd + a + ğ = [ ? ]', spokenText: 'Dağ! Tek heceli kelime: Dağ.', answer: 'dağ', distractors: ['top', 'fil'] },
+      { promptText: 'f + i + l = [ ? ]', spokenText: 'Fil! Tek heceli kelime: Fil.', answer: 'fil', distractors: ['jet', 'top'] },
+      { promptText: 'j + e + t = [ ? ]', spokenText: 'Jet! Tek heceli kelime: Jet.', answer: 'jet', distractors: ['fil', 'top'] },
+      { promptText: 't + o + p = [ ? ]', spokenText: 'Top! Tek heceli kelime: Top.', answer: 'top', distractors: ['dağ', 'jet'] }
+    ]
+  };
+
   // 5 SINIF SEVİYESİ VE KONU HAVUZU
   const PATH_TOPICS = {
     reading1: {
       id: 'reading1',
       tabLabel: '📖 1. Sınıf Okuma',
-      badge: '📖 1. Sınıf Dinle, Oku & Taştan Taşa Zıpla!',
+      badge: '📖 1. Sınıf Hece Tamamla & Taştan Taşa Zıpla!',
       isListeningPrompt: true,
       questions: [
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Okul! O, kul.', answer: 'OKUL', distractors: ['OLUK', 'OKUR'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Kule! Ku, le.', answer: 'KULE', distractors: ['KALE', 'KÜRE'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Tatlı! Tat, lı.', answer: 'TATLI', distractors: ['TAKLA', 'KATIL'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Takla! Tak, la.', answer: 'TAKLA', distractors: ['TATLI', 'TARLA'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Kukla! Kuk, la.', answer: 'KUKLA', distractors: ['KULAK', 'KUKA'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Kulak! Ku, lak.', answer: 'KULAK', distractors: ['KUKLA', 'KURAK'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Kalem! Ka, lem.', answer: 'KALEM', distractors: ['KALE', 'KELAM'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Elma! El, ma.', answer: 'ELMA', distractors: ['ELA', 'ELMAS'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Kutu! Ku, tu.', answer: 'KUTU', distractors: ['KURU', 'KUZU'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Orman! Or, man.', answer: 'ORMAN', distractors: ['ORTAM', 'ORGAN'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Güneş! Gü, neş.', answer: 'GÜNEŞ', distractors: ['GÜMÜŞ', 'GÜREŞ'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Kitap! Ki, tap.', answer: 'KİTAP', distractors: ['KİRAZ', 'KİLİT'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Çiçek! Çi, çek.', answer: 'ÇİÇEK', distractors: ['ÇİLEK', 'ÇEYREK'] },
-        { promptText: '🎧 Dinle ve Doğru Kelime Taşına Zıpla!', spokenText: 'Balık! Ba, lık.', answer: 'BALIK', distractors: ['BAKIŞ', 'KAŞIK'] }
+        ...READING1_GROUP_QUESTIONS.g1,
+        ...READING1_GROUP_QUESTIONS.g2,
+        ...READING1_GROUP_QUESTIONS.g3,
+        ...READING1_GROUP_QUESTIONS.g4,
+        ...READING1_GROUP_QUESTIONS.g5
       ]
     },
     addsub12: {
@@ -121,6 +197,7 @@
   const state = {
     isOpen: false,
     activeTopicId: 'reading1',
+    activeLetterGroupId: 'g1',
     bagByTopic: {},
     currentStep: 0, // 0..8
     stars: 0,
@@ -316,15 +393,48 @@
     }
   }
 
-  function drawNextQuestionFromBag(topicId) {
+  function getActiveTopicQuestions(topicId) {
     const topic = PATH_TOPICS[topicId] || PATH_TOPICS.reading1;
-    let bag = state.bagByTopic[topicId];
+    if (topicId === 'reading1') {
+      const grp = state.activeLetterGroupId || 'g1';
+      if (grp !== 'all' && READING1_GROUP_QUESTIONS[grp]) {
+        return READING1_GROUP_QUESTIONS[grp];
+      }
+      return topic.questions;
+    }
+    return topic.questions;
+  }
+
+  function drawNextQuestionFromBag(topicId) {
+    const pool = getActiveTopicQuestions(topicId);
+    const bagKey = topicId === 'reading1' ? `reading1_${state.activeLetterGroupId}` : topicId;
+    let bag = state.bagByTopic[bagKey];
     if (!bag || bag.length === 0) {
-      bag = shuffleArray(topic.questions.map((_, idx) => idx));
-      state.bagByTopic[topicId] = bag;
+      bag = shuffleArray(pool.map((_, idx) => idx));
+      state.bagByTopic[bagKey] = bag;
     }
     const qIdx = bag.pop();
-    return topic.questions[qIdx];
+    return pool[qIdx];
+  }
+
+  function syncLetterGroupsBarUI() {
+    const bar = document.getElementById('moliPathLetterGroupsBar');
+    if (bar) {
+      bar.style.display = state.activeTopicId === 'reading1' ? 'flex' : 'none';
+    }
+    document.querySelectorAll(`#${MODAL_ID} .mpg-letter-group-btn`).forEach((btn) => {
+      const active = btn.getAttribute('data-group-id') === state.activeLetterGroupId;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  function switchLetterGroup(groupId) {
+    if (!READING1_LETTER_GROUPS.some((g) => g.id === groupId)) return;
+    state.activeLetterGroupId = groupId;
+    state.bagByTopic[`reading1_${groupId}`] = [];
+    syncLetterGroupsBarUI();
+    startNewPathGame('reading1');
   }
 
   function startNewPathGame(topicId) {
@@ -345,6 +455,7 @@
       btn.setAttribute('aria-selected', active ? 'true' : 'false');
     });
 
+    syncLetterGroupsBarUI();
     loadNextStepQuestion();
   }
 
@@ -618,6 +729,50 @@
         border-bottom-color: #065F46;
         color: #FFFFFF;
         box-shadow: 0 5px 15px rgba(34, 197, 94, 0.45);
+      }
+
+      /* 1. Sınıf MEB Harf Grubu Seçici Alt Barı */
+      #${MODAL_ID} .mpg-letter-groups-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 6px;
+        padding: 5px 14px;
+        background: rgba(15, 23, 42, 0.72);
+        border-bottom: 1px solid rgba(134, 239, 172, 0.28);
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mpg-letter-group-label {
+        font-size: 0.78rem;
+        font-weight: 800;
+        color: #86EFAC;
+        white-space: nowrap;
+        margin-right: 4px;
+      }
+      #${MODAL_ID} .mpg-letter-group-btn {
+        padding: 5px 11px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.12);
+        color: #F8FAFC;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        white-space: nowrap;
+        cursor: pointer;
+        touch-action: manipulation;
+        transition: all 0.14s ease;
+      }
+      #${MODAL_ID} .mpg-letter-group-btn:hover {
+        background: rgba(255, 255, 255, 0.24);
+      }
+      #${MODAL_ID} .mpg-letter-group-btn.is-active {
+        background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+        border-color: #BAE6FD;
+        color: #FFFFFF;
+        box-shadow: 0 3px 10px rgba(14, 165, 233, 0.45);
       }
 
       /* Ana Sahne */
@@ -936,13 +1091,22 @@
       </button>
     `).join('');
 
+    const letterGroupsHtml = READING1_LETTER_GROUPS.map((g) => `
+      <button class="mpg-letter-group-btn ${g.id === state.activeLetterGroupId ? 'is-active' : ''}"
+              type="button"
+              data-group-id="${g.id}"
+              aria-pressed="${g.id === state.activeLetterGroupId ? 'true' : 'false'}">
+        ${escapeHtml(g.label)}
+      </button>
+    `).join('');
+
     modal.innerHTML = `
       <header class="mpg-topbar">
         <div class="mpg-brand">
           <div class="mpg-brand-icon" aria-hidden="true">🐸</div>
           <div>
-            <h2 class="mpg-brand-title">🐸 Neşeli Patika: Zıpla &amp; İlerle</h2>
-            <p class="mpg-brand-sub">Doğru Cevap Taşına Dokun, Moli Zıplayarak Hazine Kalesine Ulaşsın!</p>
+            <h2 class="mpg-brand-title">🐸 Neşeli Patika: Zıpla &amp; Tamamla</h2>
+            <p class="mpg-brand-sub">Eksik Hece veya Cevap Taşına Dokun, Moli Zıplayarak Hazine Kalesine Ulaşsın!</p>
           </div>
         </div>
         <button class="mpg-close-btn" id="moliPathCloseBtn" type="button" aria-label="Neşeli Patika Oyununu Kapat">✕ Kapat</button>
@@ -951,6 +1115,11 @@
       <nav class="mpg-topics-bar" role="tablist" aria-label="Sınıf ve Konu Seçimi">
         ${tabsHtml}
       </nav>
+
+      <div class="mpg-letter-groups-bar" id="moliPathLetterGroupsBar" role="toolbar" aria-label="1. Sınıf MEB Harf Grubu Seçimi">
+        <span class="mpg-letter-group-label">🔤 Harf Grubu:</span>
+        ${letterGroupsHtml}
+      </div>
 
       <main class="mpg-stage">
         <section class="mpg-path-track" aria-label="Moli Zıplama Patikası">
@@ -976,6 +1145,13 @@
       btn.addEventListener('click', () => {
         const topicId = btn.getAttribute('data-topic-id');
         startNewPathGame(topicId);
+      });
+    });
+
+    modal.querySelectorAll('.mpg-letter-group-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const groupId = btn.getAttribute('data-group-id');
+        switchLetterGroup(groupId);
       });
     });
   }

@@ -30,6 +30,89 @@
     { bg: '#D1FAE5', border: '#6EE7B7', text: '#065F46', accent: '#10B981' }
   ];
 
+  // 1. SINIF MEB MAARİF MODELİ HARF GRUPLARI (ANETİL, OKURIM, ÜSÖYDZ, ÇBGCŞ, PHVĞFJ)
+  const READING1_LETTER_GROUPS = [
+    { id: 'g1', label: '1. Grup (ANETİL)' },
+    { id: 'g2', label: '2. Grup (OKURIM)' },
+    { id: 'g3', label: '3. Grup (ÜSÖYDZ)' },
+    { id: 'g4', label: '4. Grup (ÇBGCŞ)' },
+    { id: 'g5', label: '5. Grup (PHVĞFJ)' },
+    { id: 'all', label: '🌟 Tümü' }
+  ];
+
+  const READING1_GROUP_POOLS = {
+    g1: [
+      { label: 'ANNE', spoken: 'Anne. An, ne.', answer: 'an - ne (2 Hece)', detail: '1. Grup (ANETİL) • Bizi sevgiyle büyüten annemiz 💛' },
+      { label: 'EL', spoken: 'El. Tek heceli kelime: El.', answer: 'el (1 Hece)', detail: '1. Grup (ANETİL) • Tutma ve yazma organımız ✋' },
+      { label: 'AL', spoken: 'Al. Tek heceli kelime: Al.', answer: 'al (1 Hece)', detail: '1. Grup (ANETİL) • Kırmızı renk, al bayrak 🇹🇷' },
+      { label: 'AT', spoken: 'At. Tek heceli kelime: At.', answer: 'at (1 Hece)', detail: '1. Grup (ANETİL) • Hızlı koşan binek hayvanı 🐎' },
+      { label: 'NİL', spoken: 'Nil. Tek heceli özel isim: Nil.', answer: 'Nil (1 Hece)', detail: '1. Grup (ANETİL) • Özel isim ve nehir adı 🌊' },
+      { label: 'TALAT', spoken: 'Talat. Ta, lat.', answer: 'Ta - lat (2 Hece)', detail: '1. Grup (ANETİL) • Özel insan ismi 👦' },
+      { label: 'NANE', spoken: 'Nane. Na, ne.', answer: 'na - ne (2 Hece)', detail: '1. Grup (ANETİL) • Mis kokulu yeşil bitki 🌿' },
+      { label: 'ET', spoken: 'Et. Tek heceli kelime: Et.', answer: 'et (1 Hece)', detail: '1. Grup (ANETİL) • Besleyici gıda 🥩' },
+      { label: 'İT', spoken: 'İt. Tek heceli kelime: İt.', answer: 'it (1 Hece)', detail: '1. Grup (ANETİL) • İleri doğru itmek hareketi 👐' },
+      { label: 'İNEK', spoken: 'İnek. İ, nek.', answer: 'i - nek (2 Hece)', detail: '1. Grup (ANETİL) • Bize süt veren çiftlik hayvanı 🐄' },
+      { label: 'ALAN', spoken: 'Alan. A, lan.', answer: 'a - lan (2 Hece)', detail: '1. Grup (ANETİL) • Geniş meydan, saha 🏞️' },
+      { label: 'TEN', spoken: 'Ten. Tek heceli kelime: Ten.', answer: 'ten (1 Hece)', detail: '1. Grup (ANETİL) • Cildimiz, derimiz 😊' },
+      { label: 'LALE', spoken: 'Lale. La, le.', answer: 'la - le (2 Hece)', detail: '1. Grup (ANETİL) • Baharda açan zarif çiçek 🌷' }
+    ],
+    g2: [
+      { label: 'OKUL', spoken: 'Okul. O, kul.', answer: 'o - kul (2 Hece)', detail: '2. Grup (OKURIM) • Eğitim gördüğümüz yer 🏫' },
+      { label: 'KULE', spoken: 'Kule. Ku, le.', answer: 'ku - le (2 Hece)', detail: '2. Grup (OKURIM) • Yüksek yapı 🏰' },
+      { label: 'KOKU', spoken: 'Koku. Ko, ku.', answer: 'ko - ku (2 Hece)', detail: '2. Grup (OKURIM) • Çiçeklerin güzel kokusu 🌸' },
+      { label: 'KUKLA', spoken: 'Kukla. Kuk, la.', answer: 'kuk - la (2 Hece)', detail: '2. Grup (OKURIM) • Oyun kuklası 🎭' },
+      { label: 'KULAK', spoken: 'Kulak. Ku, lak.', answer: 'ku - lak (2 Hece)', detail: '2. Grup (OKURIM) • Duyma organımız 👂' },
+      { label: 'KUTU', spoken: 'Kutu. Ku, tu.', answer: 'ku - tu (2 Hece)', detail: '2. Grup (OKURIM) • Hediye kutusu 🎁' },
+      { label: 'KOL', spoken: 'Kol. Tek heceli kelime: Kol.', answer: 'kol (1 Hece)', detail: '2. Grup (OKURIM) • Vücudumuzun bölümü 💪' },
+      { label: 'KAR', spoken: 'Kar. Tek heceli kelime: Kar.', answer: 'kar (1 Hece)', detail: '2. Grup (OKURIM) • Kışın yağan beyaz yağış ❄️' },
+      { label: 'KUM', spoken: 'Kum. Tek heceli kelime: Kum.', answer: 'kum (1 Hece)', detail: '2. Grup (OKURIM) • Deniz kıyısındaki ince taneler 🏖️' },
+      { label: 'ORMAN', spoken: 'Orman. Or, man.', answer: 'or - man (2 Hece)', detail: '2. Grup (OKURIM) • Ağaçlarla dolu yeşil alan 🌲' },
+      { label: 'ELMA', spoken: 'Elma. El, ma.', answer: 'el - ma (2 Hece)', detail: '2. Grup (OKURIM) • Kırmızı sulu meyve 🍎' },
+      { label: 'ARI', spoken: 'Arı. A, rı.', answer: 'a - rı (2 Hece)', detail: '2. Grup (OKURIM) • Bal yapan çalışkan böcek 🐝' },
+      { label: 'MASA', spoken: 'Masa. Ma, sa.', answer: 'ma - sa (2 Hece)', detail: '2. Grup (OKURIM) • Üzerinde ders çalıştığımız eşya 🪑' }
+    ],
+    g3: [
+      { label: 'SÜT', spoken: 'Süt. Tek heceli kelime: Süt.', answer: 'süt (1 Hece)', detail: '3. Grup (ÜSÖYDZ) • Kemikleri güçlendiren beyaz içecek 🥛' },
+      { label: 'ÜZÜM', spoken: 'Üzüm. Ü, züm.', answer: 'ü - züm (2 Hece)', detail: '3. Grup (ÜSÖYDZ) • Salkım salkım tatlı meyve 🍇' },
+      { label: 'ÖRDEK', spoken: 'Ördek. Ör, dek.', answer: 'ör - dek (2 Hece)', detail: '3. Grup (ÜSÖYDZ) • Suda yüzen sevimli kuş 🦆' },
+      { label: 'YILDIZ', spoken: 'Yıldız. Yıl, dız.', answer: 'yıl - dız (2 Hece)', detail: '3. Grup (ÜSÖYDZ) • Gece gökyüzünde parlar ⭐' },
+      { label: 'DENİZ', spoken: 'Deniz. De, niz.', answer: 'de - niz (2 Hece)', detail: '3. Grup (ÜSÖYDZ) • Mavi geniş su kütlesi 🌊' },
+      { label: 'SES', spoken: 'Ses. Tek heceli kelime: Ses.', answer: 'ses (1 Hece)', detail: '3. Grup (ÜSÖYDZ) • Kulağımızla duyduğumuz titreşim 🔊' },
+      { label: 'YAZ', spoken: 'Yaz. Tek heceli kelime: Yaz.', answer: 'yaz (1 Hece)', detail: '3. Grup (ÜSÖYDZ) • En sıcak mevsimimiz ☀️' },
+      { label: 'SÖZ', spoken: 'Söz. Tek heceli kelime: Söz.', answer: 'söz (1 Hece)', detail: '3. Grup (ÜSÖYDZ) • Anlamlı konuşma, kelime 💬' },
+      { label: 'DÜZ', spoken: 'Düz. Tek heceli kelime: Düz.', answer: 'düz (1 Hece)', detail: '3. Grup (ÜSÖYDZ) • Eğri olmayan, dümdüz 📏' },
+      { label: 'KEDİ', spoken: 'Kedi. Ke, di.', answer: 'ke - di (2 Hece)', detail: '3. Grup (ÜSÖYDZ) • Miyavlayan sevimli dostumuz 🐱' },
+      { label: 'MASA', spoken: 'Masa. Ma, sa.', answer: 'ma - sa (2 Hece)', detail: '3. Grup (ÜSÖYDZ) • Sınıf ve ev eşyası 🪑' },
+      { label: 'SU', spoken: 'Su. Tek heceli kelime: Su.', answer: 'su (1 Hece)', detail: '3. Grup (ÜSÖYDZ) • Yaşam kaynağımız 💧' }
+    ],
+    g4: [
+      { label: 'ÇİÇEK', spoken: 'Çiçek. Çi, çek.', answer: 'çi - çek (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Bahçenin renkli süsü 🌼' },
+      { label: 'BALIK', spoken: 'Balık. Ba, lık.', answer: 'ba - lık (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Denizde yüzen canlı 🐟' },
+      { label: 'GÜNEŞ', spoken: 'Güneş. Gü, neş.', answer: 'gü - neş (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Isı ve ışık kaynağımız ☀️' },
+      { label: 'CAM', spoken: 'Cam. Tek heceli kelime: Cam.', answer: 'cam (1 Hece)', detail: '4. Grup (ÇBGCŞ) • Penceredeki saydam madde 🪟' },
+      { label: 'ŞEKER', spoken: 'Şeker. Şe, ker.', answer: 'şe - ker (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Tatlı yiyecek 🍬' },
+      { label: 'ÇANTA', spoken: 'Çanta. Çan, ta.', answer: 'çan - ta (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Okul eşyalarımızı taşıdığımız çanta 🎒' },
+      { label: 'BULUT', spoken: 'Bulut. Bu, lut.', answer: 'bu - lut (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Gökyüzündeki beyaz pamuk kümesi ☁️' },
+      { label: 'GÖL', spoken: 'Göl. Tek heceli kelime: Göl.', answer: 'göl (1 Hece)', detail: '4. Grup (ÇBGCŞ) • Karalar içindeki durgun su 🏞️' },
+      { label: 'CEVİZ', spoken: 'Ceviz. Ce, viz.', answer: 'ce - viz (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Beyne faydalı sert kabuklu yemiş 🌰' },
+      { label: 'ŞAPKA', spoken: 'Şapka. Şap, ka.', answer: 'şap - ka (2 Hece)', detail: '4. Grup (ÇBGCŞ) • Başımıza taktığımız giysi 🧢' },
+      { label: 'KUŞ', spoken: 'Kuş. Tek heceli kelime: Kuş.', answer: 'kuş (1 Hece)', detail: '4. Grup (ÇBGCŞ) • Gökyüzünde uçan kanatlı canlı 🐦' }
+    ],
+    g5: [
+      { label: 'PARA', spoken: 'Para. Pa, ra.', answer: 'pa - ra (2 Hece)', detail: '5. Grup (PHVĞFJ) • Alışveriş aracı 🪙' },
+      { label: 'HAVUÇ', spoken: 'Havuç. Ha, vuç.', answer: 'ha - vuç (2 Hece)', detail: '5. Grup (PHVĞFJ) • Tavşanların sevdiği turuncu sebze 🥕' },
+      { label: 'VAZO', spoken: 'Vazo. Va, zo.', answer: 'va - zo (2 Hece)', detail: '5. Grup (PHVĞFJ) • Çiçek koyduğumuz kap 🏺' },
+      { label: 'DAĞ', spoken: 'Dağ. Tek heceli kelime: Dağ.', answer: 'dağ (1 Hece)', detail: '5. Grup (PHVĞFJ) • Yüksek yeryüzü şekli ⛰️' },
+      { label: 'FİL', spoken: 'Fil. Tek heceli kelime: Fil.', answer: 'fil (1 Hece)', detail: '5. Grup (PHVĞFJ) • Uzun hortumlu büyük hayvan 🐘' },
+      { label: 'JET', spoken: 'Jet. Tek heceli kelime: Jet.', answer: 'jet (1 Hece)', detail: '5. Grup (PHVĞFJ) • Çok hızlı uçak ✈️' },
+      { label: 'PENCERE', spoken: 'Pencere. Pen, ce, re.', answer: 'pen - ce - re (3 Hece)', detail: '5. Grup (PHVĞFJ) • Odamızı aydınlatan açıklık 🪟' },
+      { label: 'HALI', spoken: 'Halı. Ha, lı.', answer: 'ha - lı (2 Hece)', detail: '5. Grup (PHVĞFJ) • Yere serilen dokuma eşya 🧶' },
+      { label: 'AĞAÇ', spoken: 'Ağaç. A, ğaç.', answer: 'a - ğaç (2 Hece)', detail: '5. Grup (PHVĞFJ) • Doğanın yeşil akciğeri 🌳' },
+      { label: 'FENER', spoken: 'Fener. Fe, ner.', answer: 'fe - ner (2 Hece)', detail: '5. Grup (PHVĞFJ) • Karanlığı aydınlatan ışık 🔦' },
+      { label: 'TOP', spoken: 'Top. Tek heceli kelime: Top.', answer: 'top (1 Hece)', detail: '5. Grup (PHVĞFJ) • Oyun oynadığımız yuvarlak araç ⚽' }
+    ]
+  };
+
   // 5 SINIF SEVİYESİ VE KONU HAVUZU
   const WHEEL_TOPICS = {
     reading1: {
@@ -39,24 +122,11 @@
       prompt: 'Okun gösterdiği kelimeyi yüksek sesle oku ve hecele!',
       isReadingMode: true,
       items: [
-        { label: 'OKUL', spoken: 'Okul. O, kul.', answer: 'o - kul (2 Hece)', detail: 'Eğitim gördüğümüz yer 🏫' },
-        { label: 'KULE', spoken: 'Kule. Ku, le.', answer: 'ku - le (2 Hece)', detail: 'Yüksek yapı 🏰' },
-        { label: 'KOKU', spoken: 'Koku. Ko, ku.', answer: 'ko - ku (2 Hece)', detail: 'Çiçeklerin güzel kokusu 🌸' },
-        { label: 'KUKLA', spoken: 'Kukla. Kuk, la.', answer: 'kuk - la (2 Hece)', detail: 'Oyun kuklası 🎭' },
-        { label: 'KULAK', spoken: 'Kulak. Ku, lak.', answer: 'ku - lak (2 Hece)', detail: 'Duyma organımız 👂' },
-        { label: 'KUTU', spoken: 'Kutu. Ku, tu.', answer: 'ku - tu (2 Hece)', detail: 'Hediye kutusu 🎁' },
-        { label: 'TATLI', spoken: 'Tatlı. Tat, lı.', answer: 'tat - lı (2 Hece)', detail: 'Lezzetli tatlı 🍰' },
-        { label: 'TAKLA', spoken: 'Takla. Tak, la.', answer: 'tak - la (2 Hece)', detail: 'Oyun ve jimnastik hareketi 🤸' },
-        { label: 'KALEM', spoken: 'Kalem. Ka, lem.', answer: 'ka - lem (2 Hece)', detail: 'Yazı yazma aracımız ✏️' },
-        { label: 'ELMA', spoken: 'Elma. El, ma.', answer: 'el - ma (2 Hece)', detail: 'Kırmızı sulu meyve 🍎' },
-        { label: 'ORMAN', spoken: 'Orman. Or, man.', answer: 'or - man (2 Hece)', detail: 'Ağaçlarla dolu yeşil alan 🌲' },
-        { label: 'GÜNEŞ', spoken: 'Güneş. Gü, neş.', answer: 'gü - neş (2 Hece)', detail: 'Isı ve ışık kaynağımız ☀️' },
-        { label: 'KİTAP', spoken: 'Kitap. Ki, tap.', answer: 'ki - tap (2 Hece)', detail: 'Okuduğumuz bilgi hazinesi 📚' },
-        { label: 'KELEBEK', spoken: 'Kelebek. Ke, le, bek.', answer: 'ke - le - bek (3 Hece)', detail: 'Renkli kanatlı böcek 🦋' },
-        { label: 'ÇİÇEK', spoken: 'Çiçek. Çi, çek.', answer: 'çi - çek (2 Hece)', detail: 'Bahçenin süsü 🌼' },
-        { label: 'BAYRAK', spoken: 'Bayrak. Bay, rak.', answer: 'bay - rak (2 Hece)', detail: 'Ay yıldızlı al bayrağımız 🇹🇷' },
-        { label: 'YILDIZ', spoken: 'Yıldız. Yıl, dız.', answer: 'yıl - dız (2 Hece)', detail: 'Gece gökyüzünde parlar ⭐' },
-        { label: 'BALIK', spoken: 'Balık. Ba, lık.', answer: 'ba - lık (2 Hece)', detail: 'Denizde yüzen canlı 🐟' }
+        ...READING1_GROUP_POOLS.g1,
+        ...READING1_GROUP_POOLS.g2,
+        ...READING1_GROUP_POOLS.g3,
+        ...READING1_GROUP_POOLS.g4,
+        ...READING1_GROUP_POOLS.g5
       ]
     },
     addsub12: {
@@ -160,6 +230,7 @@
   // OYUN DURUMU (STATE)
   const wheelState = {
     activeTopicId: 'reading1',
+    activeLetterGroupId: 'g1',
     slices: [],               // Aktif çarktaki dilimler (başlangıçta 12 dilim)
     removedLabels: new Set(), // Çarktan kaldırılanlar
     removeOnLand: false,      // "🗑️ Çıkanı Çarktan Kaldır" kutucuğu
@@ -393,19 +464,30 @@
       .replace(/'/g, '&#39;');
   }
 
-  function buildTopicSlices(topicId, resetRemoved) {
+  function getActiveTopicPool(topicId) {
     const topic = WHEEL_TOPICS[topicId] || WHEEL_TOPICS.reading1;
+    if (topicId === 'reading1') {
+      const grp = wheelState.activeLetterGroupId || 'g1';
+      if (grp !== 'all' && READING1_GROUP_POOLS[grp]) {
+        return READING1_GROUP_POOLS[grp];
+      }
+      return topic.items;
+    }
+    return topic.items;
+  }
+
+  function buildTopicSlices(topicId, resetRemoved) {
+    const pool = getActiveTopicPool(topicId);
     if (resetRemoved) {
       wheelState.removedLabels.clear();
       wheelState.pendingRemovalLabel = null;
     }
 
-    const available = topic.items.filter((it) => !wheelState.removedLabels.has(it.label));
-    // Havuzda 12'den fazla varsa ilk 12'yi veya karıştırılmış 12'yi al; tümü bittiyse sıfırla
+    const available = pool.filter((it) => !wheelState.removedLabels.has(it.label));
     if (available.length === 0) {
       wheelState.removedLabels.clear();
       wheelState.pendingRemovalLabel = null;
-      return topic.items.slice(0, 12).map((item, idx) => ({
+      return pool.slice(0, 12).map((item, idx) => ({
         ...item,
         palette: SLICE_PALETTE[idx % SLICE_PALETTE.length]
       }));
@@ -787,6 +869,37 @@
     }
   }
 
+  function syncLetterGroupsBarUI() {
+    const bar = document.getElementById('moliWheelLetterGroupsBar');
+    if (bar) {
+      bar.style.display = wheelState.activeTopicId === 'reading1' ? 'flex' : 'none';
+    }
+    document.querySelectorAll(`#${MODAL_ID} .mwg-letter-group-btn`).forEach((btn) => {
+      const active = btn.getAttribute('data-group-id') === wheelState.activeLetterGroupId;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  function switchLetterGroup(groupId) {
+    if (!READING1_LETTER_GROUPS.some((g) => g.id === groupId)) return;
+    if (wheelState.isSpinning) {
+      wheelState.isSpinning = false;
+      if (wheelState.animFrameId) cancelAnimationFrame(wheelState.animFrameId);
+    }
+    wheelState.activeLetterGroupId = groupId;
+    wheelState.slices = buildTopicSlices('reading1', true);
+    wheelState.selectedItem = null;
+    wheelState.answerRevealed = false;
+    wheelState.rotation = 0;
+
+    syncLetterGroupsBarUI();
+    updateSpinButtonUI();
+    updateSliceCounterUI();
+    drawWheelCanvas();
+    renderResultCard(false);
+  }
+
   function switchTopic(topicId) {
     if (!WHEEL_TOPICS[topicId]) return;
     if (wheelState.isSpinning) {
@@ -806,6 +919,7 @@
       btn.setAttribute('aria-selected', active ? 'true' : 'false');
     });
 
+    syncLetterGroupsBarUI();
     updateSpinButtonUI();
     updateSliceCounterUI();
     drawWheelCanvas();
@@ -948,6 +1062,50 @@
         color: #FFFFFF;
         box-shadow: 0 5px 15px rgba(245, 158, 11, 0.45);
         transform: translateY(-1px);
+      }
+
+      /* 1. Sınıf MEB Harf Grubu Seçici Alt Barı */
+      #${MODAL_ID} .mwg-letter-groups-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 6px;
+        padding: 5px 14px;
+        background: rgba(15, 23, 42, 0.72);
+        border-bottom: 1px solid rgba(253, 224, 71, 0.25);
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mwg-letter-group-label {
+        font-size: 0.78rem;
+        font-weight: 800;
+        color: #FDE047;
+        white-space: nowrap;
+        margin-right: 4px;
+      }
+      #${MODAL_ID} .mwg-letter-group-btn {
+        padding: 5px 11px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.12);
+        color: #F8FAFC;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        white-space: nowrap;
+        cursor: pointer;
+        touch-action: manipulation;
+        transition: all 0.14s ease;
+      }
+      #${MODAL_ID} .mwg-letter-group-btn:hover {
+        background: rgba(255, 255, 255, 0.24);
+      }
+      #${MODAL_ID} .mwg-letter-group-btn.is-active {
+        background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+        border-color: #BAE6FD;
+        color: #FFFFFF;
+        box-shadow: 0 3px 10px rgba(14, 165, 233, 0.45);
       }
 
       /* Ana Sahne: Sol/Merkez Büyük Çark + Sağ Sonuç Kartı */
@@ -1316,6 +1474,15 @@
       </button>
     `).join('');
 
+    const letterGroupsHtml = READING1_LETTER_GROUPS.map((g) => `
+      <button class="mwg-letter-group-btn ${g.id === wheelState.activeLetterGroupId ? 'is-active' : ''}"
+              type="button"
+              data-group-id="${g.id}"
+              aria-pressed="${g.id === wheelState.activeLetterGroupId ? 'true' : 'false'}">
+        ${escapeHtml(g.label)}
+      </button>
+    `).join('');
+
     modal.innerHTML = `
       <header class="mwg-topbar">
         <div class="mwg-brand">
@@ -1331,6 +1498,11 @@
       <nav class="mwg-topics-bar" role="tablist" aria-label="Sınıf ve Konu Seçimi">
         ${tabsHtml}
       </nav>
+
+      <div class="mwg-letter-groups-bar" id="moliWheelLetterGroupsBar" role="toolbar" aria-label="1. Sınıf MEB Harf Grubu Seçimi">
+        <span class="mwg-letter-group-label">🔤 Harf Grubu:</span>
+        ${letterGroupsHtml}
+      </div>
 
       <div class="mwg-stage">
         <div class="mwg-wheel-column">
@@ -1382,6 +1554,13 @@
       btn.addEventListener('click', () => {
         const topicId = btn.getAttribute('data-topic-id');
         switchTopic(topicId);
+      });
+    });
+
+    modal.querySelectorAll('.mwg-letter-group-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const groupId = btn.getAttribute('data-group-id');
+        switchLetterGroup(groupId);
       });
     });
 
