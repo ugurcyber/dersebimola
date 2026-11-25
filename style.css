@@ -34397,3 +34397,83 @@ body.is-game-active .universal-game-bgm-fab {
     min-width: 28px !important;
   }
 }
+
+/* ==========================================================================
+   V9.7.9: VİTRİN SADELEŞTİRME & FERAH BÜYÜK OYUN IZGARASI (KOD SİLMEDEN GİZLEME)
+   ========================================================================== */
+
+/* 1) Kalabalık yapan eski oyun/etkinlik kartlarını DOM ve app.js bağlantılarını
+      hiç bozmadan CSS ile gizle (Sudoku, Hedef 4, Eski Şans Çarkı, Eski Eşleştirme /
+      Enerji Hattı, Tangram, Kavram Atölyesi, Senkronize Görev, Köstebek, Saatli Bomba, Hafıza) */
+.arcade-games-grid .arcade-game-card[data-arcade-game="sudoku"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="connect4"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="wheel"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="energy"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="tangram"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="craft"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="sync"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="bomb"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="mole"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="memory"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="flower"],
+.arcade-games-grid .arcade-game-card[data-arcade-game="buzzer"] {
+  display: none !important;
+}
+
+/* 2) Kalan en sevilen oyunları (Akıllı Çark, Mendil Kapmaca, Turbo Otoban,
+      Zıpla & İlerle, Çarpma Savaşı, BİLSEM, English Fun Lab) ferah, boşluklu ve büyük diz */
+#arcadeHubSection .arcade-games-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important;
+  gap: 26px !important;
+  margin-top: 20px !important;
+  padding-bottom: 28px !important;
+}
+
+#arcadeHubSection .arcade-game-card {
+  padding: 24px 26px !important;
+  border-radius: 28px !important;
+  gap: 14px !important;
+  border-width: 3px !important;
+  border-bottom-width: 8px !important;
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.1) !important;
+}
+
+#arcadeHubSection .arcade-game-card:hover {
+  transform: translateY(-6px) scale(1.01) !important;
+  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.16) !important;
+}
+
+#arcadeHubSection .arcade-card-hero-banner {
+  min-height: 120px !important;
+  border-radius: 22px !important;
+}
+
+#arcadeHubSection .arcade-card-title {
+  font-size: clamp(1.35rem, 2vw, 1.62rem) !important;
+  line-height: 1.25 !important;
+}
+
+#arcadeHubSection .arcade-card-desc {
+  font-size: 0.98rem !important;
+  line-height: 1.5 !important;
+}
+
+#arcadeHubSection .arcade-card-badges span {
+  font-size: 0.84rem !important;
+  padding: 6px 12px !important;
+}
+
+#arcadeHubSection .arcade-card-play-btn {
+  padding: 14px 20px !important;
+  font-size: 1.12rem !important;
+  border-radius: 18px !important;
+}
+
+@media (max-width: 768px) {
+  #arcadeHubSection .arcade-games-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+}
+
