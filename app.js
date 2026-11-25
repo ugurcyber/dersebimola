@@ -1441,10 +1441,14 @@
 
         const currentChunk = speechChunks[chunkIndex];
         const encodedQ = encodeURIComponent(currentChunk);
-        const cloudUrls = [
+        const cloudUrls = isEn ? [
           `https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&ttsspeed=0.85&q=${encodedQ}`,
           `https://translate.google.com/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&ttsspeed=0.85&q=${encodedQ}`,
           `https://translate.google.com.tr/translate_tts?ie=UTF-8&tl=${ttsLang}&client=tw-ob&ttsspeed=0.85&q=${encodedQ}`
+        ] : [
+          `https://api.streamelements.com/kappa/v2/speech?voice=Filiz&text=${encodedQ}`,
+          `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=tr&q=${encodedQ}`,
+          `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=tr&q=${encodedQ}`
         ];
 
         let urlAttempt = 0;
@@ -1593,6 +1597,10 @@
     }
 
     speakTurkishText(text, onEnded) {
+      if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.speak === 'function') {
+        window.MoliVoiceEngine.speak(text, onEnded);
+        return;
+      }
       this.speakText(text, 'tr', onEnded);
     }
 
@@ -1703,20 +1711,255 @@
     document.addEventListener(evt, () => unlockAudio(false), { once: false, passive: true, capture: true });
   });
 
+  // Uzun metinleri (>180 karakter) noktalama işaretlerinden 160 karakterlik parçalara bölen yardımcı
+  function splitTurkishTextIntoChunks(cleanText, maxLen = 160) {
+    const str = (cleanText || '').trim();
+    if (!str) return [];
+    if (str.length <= 180) return [str];
+
+    const sentences = str.split(/(?<=[.!?…;:,])\s+/);
+    const chunks = [];
+    let current = '';
+
+    for (const part of sentences) {
+      const trimmedPart = part.trim();
+      if (!trimmedPart) continue;
+      if (!current) {
+        if (trimmedPart.length <= maxLen) {
+          current = trimmedPart;
+        } else {
+          const words = trimmedPart.split(/\s+/);
+          for (const w of words) {
+            if ((current + ' ' + w).trim().length <= maxLen) {
+              current = (current + ' ' + w).trim();
+            } else {
+              if (current) chunks.push(current);
+              current = w;
+            }
+          }
+        }
+      } else if ((current + ' ' + trimmedPart).length <= maxLen) {
+        current = current + ' ' + trimmedPart;
+      } else {
+        chunks.push(current);
+        if (trimmedPart.length <= maxLen) {
+          current = trimmedPart;
+        } else {
+          current = '';
+          const words = trimmedPart.split(/\s+/);
+          for (const w of words) {
+            if ((current + ' ' + w).trim().length <= maxLen) {
+              current = (current + ' ' + w).trim();
+            } else {
+              if (current) chunks.push(current);
+              current = w;
+            }
+          }
+        }
+      }
+    }
+    if (current) chunks.push(current);
+    return chunks.length ? chunks : [str.slice(0, maxLen)];
+  }
+
+  let __moliVoiceSeq = 0;
+  let __moliActiveAudio = null;
+  let __moliWatchdogTimer = null;
+
   window.MoliVoiceEngine = {
     sanitize: sanitizeTurkishTTS,
     unlock: unlockAudio,
-    speak(text, onEnded) {
-      unlockAudio(true);
-      window.currentTTSAudio = null;
-      audio.speakTurkishText(sanitizeTurkishTTS(text), onEnded);
-    },
     stop() {
-      try { audio.stopQuestionAudio(); } catch (e) {}
+      __moliVoiceSeq += 1;
+      if (__moliWatchdogTimer) {
+        clearTimeout(__moliWatchdogTimer);
+        __moliWatchdogTimer = null;
+      }
+      if (__moliActiveAudio) {
+        try {
+          __moliActiveAudio.onended = null;
+          __moliActiveAudio.onerror = null;
+          __moliActiveAudio.onplaying = null;
+          __moliActiveAudio.pause();
+          __moliActiveAudio.currentTime = 0;
+        } catch (e) {}
+        __moliActiveAudio = null;
+      }
       if (window.currentTTSAudio) {
-        try { window.currentTTSAudio.pause(); window.currentTTSAudio.currentTime = 0; } catch (e) {}
+        try {
+          window.currentTTSAudio.onended = null;
+          window.currentTTSAudio.onerror = null;
+          window.currentTTSAudio.pause();
+          window.currentTTSAudio.currentTime = 0;
+        } catch (e) {}
         window.currentTTSAudio = null;
       }
+      try { audio.stopQuestionAudio(); } catch (e) {}
+    },
+    speak(text, onEnded) {
+      // Önceki Audio nesnesini anında durdur (pause())
+      this.stop();
+      unlockAudio(true);
+
+      let cleanText = sanitizeTurkishTTS(text);
+      if (cleanText.includes('=')) {
+        cleanText = cleanText
+          .replace(/\+/g, ' artı ')
+          .replace(/[-−–—]/g, ' eksi ')
+          .replace(/(\d+)\s*[*×xX]\s*(\d+)/g, '$1 çarpı $2')
+          .replace(/(^|\s)[*×xX](\s|$)/g, '$1 çarpı $2')
+          .replace(/[*×]/g, ' çarpı ')
+          .replace(/[\/÷]/g, ' bölü ')
+          .replace(/=/g, ' eşittir ')
+          .replace(/\b(kaç eder|kaçtır)\s*\?/gi, '$1')
+          .replace(/\?/g, ' kaçtır ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+      if (typeof state !== 'undefined' && parseInt(state.currentGrade, 10) <= 1) {
+        cleanText = applyGrade1WarmPhoneticFilter(cleanText);
+      }
+
+      if (!cleanText) {
+        if (onEnded) onEnded();
+        return;
+      }
+
+      const seq = ++__moliVoiceSeq;
+      let finished = false;
+      const done = () => {
+        if (seq !== __moliVoiceSeq || finished) return;
+        finished = true;
+        if (__moliWatchdogTimer) {
+          clearTimeout(__moliWatchdogTimer);
+          __moliWatchdogTimer = null;
+        }
+        __moliActiveAudio = null;
+        window.currentTTSAudio = null;
+        if (onEnded) onEnded();
+      };
+
+      const chunks = splitTurkishTextIntoChunks(cleanText, 160);
+
+      const playFallbackSynth = () => {
+        if (seq !== __moliVoiceSeq || finished) return;
+        const trVoice = getSystemTurkishVoice();
+        if (!trVoice && isLinuxOrPardus) {
+          done();
+          return;
+        }
+        if ('speechSynthesis' in window) {
+          try {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(cleanText);
+            u.lang = 'tr-TR';
+            u.rate = 0.94;
+            if (trVoice) u.voice = trVoice;
+            u.onend = done;
+            u.onerror = done;
+            window.speechSynthesis.speak(u);
+            return;
+          } catch (e) {}
+        }
+        done();
+      };
+
+      const playChunkAt = (chunkIdx) => {
+        if (seq !== __moliVoiceSeq || finished) return;
+        if (chunkIdx >= chunks.length) {
+          done();
+          return;
+        }
+
+        const chunkText = chunks[chunkIdx];
+        const encoded = encodeURIComponent(chunkText);
+
+        // 3 Katmanlı Kesintisiz Bulut MP3 Zinciri:
+        // 1. StreamElements - Doğal Türkçe "Filiz" Sesi
+        // 2. Google Cloud TTS (tw-ob)
+        // 3. Google Cloud TTS (gtx)
+        const sources = [
+          `https://api.streamelements.com/kappa/v2/speech?voice=Filiz&text=${encoded}`,
+          `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=tr&q=${encoded}`,
+          `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=tr&q=${encoded}`
+        ];
+
+        const trySource = (srcIdx) => {
+          if (seq !== __moliVoiceSeq || finished) return;
+          if (srcIdx >= sources.length) {
+            playFallbackSynth();
+            return;
+          }
+
+          if (__moliWatchdogTimer) {
+            clearTimeout(__moliWatchdogTimer);
+            __moliWatchdogTimer = null;
+          }
+          if (__moliActiveAudio) {
+            try {
+              __moliActiveAudio.onended = null;
+              __moliActiveAudio.onerror = null;
+              __moliActiveAudio.onplaying = null;
+              __moliActiveAudio.pause();
+            } catch (e) {}
+          }
+
+          try {
+            const audioEl = new Audio();
+            audioEl.referrerPolicy = 'no-referrer';
+            try { audioEl.setAttribute('referrerpolicy', 'no-referrer'); } catch (e) {}
+            audioEl.preload = 'auto';
+            audioEl.volume = 1.0;
+            audioEl.src = sources[srcIdx];
+
+            __moliActiveAudio = audioEl;
+            window.currentTTSAudio = audioEl;
+            audio.currentAudio = audioEl;
+
+            let advanced = false;
+            const nextSource = () => {
+              if (seq !== __moliVoiceSeq || finished || advanced) return;
+              advanced = true;
+              if (__moliWatchdogTimer) {
+                clearTimeout(__moliWatchdogTimer);
+                __moliWatchdogTimer = null;
+              }
+              trySource(srcIdx + 1);
+            };
+
+            __moliWatchdogTimer = setTimeout(nextSource, 3800);
+
+            audioEl.onplaying = () => {
+              if (seq === __moliVoiceSeq && __moliWatchdogTimer) {
+                clearTimeout(__moliWatchdogTimer);
+                __moliWatchdogTimer = null;
+              }
+            };
+
+            audioEl.onended = () => {
+              if (seq !== __moliVoiceSeq || finished) return;
+              if (__moliWatchdogTimer) {
+                clearTimeout(__moliWatchdogTimer);
+                __moliWatchdogTimer = null;
+              }
+              playChunkAt(chunkIdx + 1);
+            };
+
+            audioEl.onerror = nextSource;
+
+            const playPromise = audioEl.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(nextSource);
+            }
+          } catch (err) {
+            trySource(srcIdx + 1);
+          }
+        };
+
+        trySource(0);
+      };
+
+      playChunkAt(0);
     }
   };
 
@@ -1848,7 +2091,11 @@
       audio.speakEnglishText(enWord, finish);
     } else {
       const spoken = getSpokenTextForQuestion(state.currentQuestion);
-      audio.speakTurkishText(spoken, finish);
+      if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.speak === 'function') {
+        window.MoliVoiceEngine.speak(spoken, finish);
+      } else {
+        audio.speakTurkishText(spoken, finish);
+      }
     }
   }
 
@@ -3545,6 +3792,10 @@
   }
 
   window.derseBiMolaSpeakText = function(text, onEnded) {
+    if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.speak === 'function') {
+      window.MoliVoiceEngine.speak(text, onEnded);
+      return;
+    }
     if (window.__DERSE_BI_MOLA_AUDIO__ && typeof window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText === 'function') {
       window.__DERSE_BI_MOLA_AUDIO__.speakTurkishText(text, onEnded);
     } else {
@@ -3582,6 +3833,20 @@
   };
   window.speakText = window.derseBiMolaSpeakText;
   window.playTTS = window.derseBiMolaSpeakText;
+  window.speakTurkish = function(text, onEnded) {
+    if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.speak === 'function') {
+      window.MoliVoiceEngine.speak(text, onEnded);
+    } else {
+      window.derseBiMolaSpeakText(text, onEnded);
+    }
+  };
+  window.speakQuestion = function(text, onEnded) {
+    if (typeof text === 'string' && text.trim()) {
+      window.speakTurkish(text, onEnded);
+    } else {
+      readCurrentQuestion(true);
+    }
+  };
 
   /* ==========================================================================
      3. DİNAMİK SORU MOTORU (GRADE-BASED QUESTION ENGINE)
@@ -47228,6 +47493,10 @@ var MindGamesEngine = window.MindGamesEngine = {
   // -------------------------------------------------------------
   speak(text) {
     if (!text) return;
+    if (window.MoliVoiceEngine && typeof window.MoliVoiceEngine.speak === 'function') {
+      window.MoliVoiceEngine.speak(text);
+      return;
+    }
     if (typeof audio !== 'undefined' && audio.speakTurkishText) {
       audio.speakTurkishText(text);
     } else if ('speechSynthesis' in window) {
