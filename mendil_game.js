@@ -1378,7 +1378,55 @@
   window.openMoliMendilGame = openMendilGame;
   window.closeMoliMendilGame = closeMendilGame;
 
-  function bindShowcaseTriggers() {
+  function injectAndBindShowcaseCard() {
+    const arcadeGrid = document.querySelector('#arcadeHubSection .arcade-games-grid');
+    if (arcadeGrid && !document.getElementById('arcadeCardMendilGame')) {
+      const card = document.createElement('div');
+      card.className = 'arcade-game-card theme-tug';
+      card.id = 'arcadeCardMendilGame';
+      card.setAttribute('data-open-moli-mendil', '1');
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.innerHTML = `
+        <div class="arcade-card-hero-banner banner-tug" aria-hidden="true">
+          <div class="banner-scene scene-tug">
+            <div class="banner-tug-team team-blue">
+              <span class="mini-puller-icon">🟡</span>
+              <span class="mini-team-pill">1. Takım</span>
+            </div>
+            <div class="banner-tug-rope">
+              <div class="rope-line"></div>
+              <div class="rope-center-badge">
+                <span class="badge-shield">🧣</span>
+                <span class="badge-bolt">🤖</span>
+              </div>
+            </div>
+            <div class="banner-tug-team team-orange">
+              <span class="mini-puller-icon">🟠</span>
+              <span class="mini-team-pill">2. Takım</span>
+            </div>
+          </div>
+        </div>
+        <div class="arcade-card-top">
+          <span class="arcade-card-tag">🧣 2 Kişi &amp; 📱 Tek Kişi</span>
+          <span class="arcade-card-chip chip-green">⚡ Canlı Yarış</span>
+        </div>
+        <h3 class="arcade-card-title">🧣 Mendil Kapmaca: Canlı Yarış</h3>
+        <p class="arcade-card-desc">Moli'nin tuttuğu yeşil mendili kap! Doğru kelimeye, işleme, saate veya kesire ilk dokunan +1 puan alır!</p>
+        <div class="arcade-card-badges">
+          <span>🔊 Otomatik Sesli Soru</span>
+          <span>🔒 1.5s Yanlış Kilidi</span>
+        </div>
+        <button class="arcade-card-play-btn" type="button">Yarışı Başlat ›</button>
+      `;
+      const wheelCard = document.getElementById('arcadeCardSmartWheel');
+      if (wheelCard && wheelCard.nextSibling) {
+        arcadeGrid.insertBefore(card, wheelCard.nextSibling);
+      } else {
+        arcadeGrid.insertBefore(card, arcadeGrid.firstChild);
+      }
+    }
+
     document.querySelectorAll('[data-open-moli-mendil], #arcadeCardMendilGame').forEach((el) => {
       if (el.dataset.moliMendilBound) return;
       el.dataset.moliMendilBound = '1';
@@ -1400,8 +1448,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bindShowcaseTriggers);
+    document.addEventListener('DOMContentLoaded', injectAndBindShowcaseCard);
   } else {
-    bindShowcaseTriggers();
+    injectAndBindShowcaseCard();
   }
 })();
