@@ -561,12 +561,12 @@
       centerCol.innerHTML = `
         <div class="mmg-topic-pill">${escapeHtml(topic.badge)}</div>
 
-        <!-- Moli + Elinde Yeşil Mendil Sahnesi -->
+        <!-- Moli + Elinde Yeşil Mendil Sahnesi (%30 Büyütülmüş) -->
         <div class="mmg-moli-referee-box">
           <div class="mmg-moli-avatar-wrap">
-            <img src="assets/mascot/moli.webp" class="mmg-moli-img" alt="Hakem Moli" width="96" height="96">
+            <img src="assets/mascot/moli.webp" class="mmg-moli-img" alt="Hakem Moli" width="125" height="125">
             <div class="mmg-handkerchief-wrap" id="moliMendilCloth" aria-hidden="true">
-              <svg class="mmg-green-mendil-svg" width="66" height="58" viewBox="0 0 66 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg class="mmg-green-mendil-svg" width="86" height="76" viewBox="0 0 66 58" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14 10C26 5 46 7 58 18C52 33 43 44 26 52C17 41 10 27 14 10Z" fill="#22C55E" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round"/>
                 <path d="M22 18C30 22 38 28 43 38" stroke="#86EFAC" stroke-width="3" stroke-linecap="round"/>
                 <circle cx="15" cy="12" r="5" fill="#FACC15" stroke="#FFFFFF" stroke-width="2.5"/>
@@ -730,14 +730,23 @@
     style.textContent = `
       #${MODAL_ID} {
         position: fixed;
-        inset: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 96vw;
+        height: 94vh;
+        max-width: 1400px;
         z-index: 99999;
         display: none;
         flex-direction: column;
-        background: linear-gradient(145deg, #064E3B 0%, #0F172A 52%, #1E1B4B 100%);
+        background: linear-gradient(145deg, #064E3B 0%, #0F766E 42%, #0F172A 100%);
         color: #0F172A;
         font-family: 'Nunito', 'Fredoka', sans-serif;
+        border-radius: 28px;
+        border: 4px solid rgba(110, 231, 183, 0.35);
+        box-shadow: 0 0 0 100vmax rgba(2, 6, 23, 0.78), 0 32px 80px rgba(0, 0, 0, 0.75);
         overflow-y: auto;
+        overflow-x: hidden;
         box-sizing: border-box;
         user-select: none;
         -webkit-user-select: none;
@@ -749,45 +758,45 @@
         box-sizing: border-box;
       }
 
-      /* Üst Bar */
+      /* Üst Bar (İnce ve Tek Satır) */
       #${MODAL_ID} .mmg-topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        padding: 10px 20px;
+        padding: 8px 20px;
         background: rgba(255, 255, 255, 0.97);
-        border-bottom: 4px solid #CBD5E1;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+        border-bottom: 3px solid #CBD5E1;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mmg-brand {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
       #${MODAL_ID} .mmg-brand-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 14px;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
         background: linear-gradient(135deg, #10B981 0%, #059669 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.55rem;
-        box-shadow: 0 5px 14px rgba(5, 150, 105, 0.35);
+        font-size: 1.45rem;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mmg-brand-title {
         margin: 0;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.1rem, 2vw, 1.45rem);
+        font-size: clamp(1.08rem, 1.8vw, 1.38rem);
         font-weight: 700;
         color: #064E3B;
       }
       #${MODAL_ID} .mmg-brand-sub {
         margin: 0;
-        font-size: 0.84rem;
+        font-size: 0.8rem;
         font-weight: 800;
         color: #64748B;
       }
@@ -796,10 +805,10 @@
         border: 2px solid #FCA5A5;
         border-bottom: 4px solid #EF4444;
         color: #B91C1C;
-        border-radius: 14px;
-        padding: 9px 18px;
+        border-radius: 12px;
+        padding: 7px 16px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 0.98rem;
+        font-size: 0.95rem;
         font-weight: 700;
         cursor: pointer;
         flex-shrink: 0;
@@ -811,34 +820,36 @@
         transform: translateY(-1px);
       }
 
-      /* 5 Konu Sekmesi Barı */
+      /* 5 Konu Sekmesi Barı (İnce ve Tek Satır) */
       #${MODAL_ID} .mmg-topics-bar {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow-x: auto;
         gap: 8px;
-        padding: 10px 16px;
+        padding: 6px 16px;
         background: rgba(15, 23, 42, 0.52);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mmg-topic-tab {
-        padding: 9px 15px;
-        border-radius: 14px;
+        padding: 7px 14px;
+        border-radius: 12px;
         border: 2px solid rgba(255, 255, 255, 0.25);
-        border-bottom: 4px solid rgba(15, 23, 42, 0.35);
+        border-bottom: 3px solid rgba(15, 23, 42, 0.4);
         background: rgba(255, 255, 255, 0.94);
         color: #1E293B;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(0.86rem, 1.25vw, 1.02rem);
+        font-size: clamp(0.85rem, 1.15vw, 0.98rem);
         font-weight: 700;
+        white-space: nowrap;
         cursor: pointer;
         touch-action: manipulation;
         transition: all 0.14s ease;
       }
       #${MODAL_ID} .mmg-topic-tab:hover {
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         background: #FFFFFF;
       }
       #${MODAL_ID} .mmg-topic-tab.is-active {
@@ -846,8 +857,8 @@
         border-color: #6EE7B7;
         border-bottom-color: #065F46;
         color: #FFFFFF;
-        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.45);
-        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.45);
+        transform: translateY(-1px);
       }
 
       /* Skor Tabelası */
@@ -856,22 +867,22 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        max-width: 1240px;
+        max-width: 1360px;
         width: 100%;
-        margin: 14px auto 0;
-        padding: 0 22px;
+        margin: 10px auto 0;
+        padding: 0 24px;
         flex-shrink: 0;
       }
       #${MODAL_ID} .mmg-score-pill {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 10px 20px;
-        border-radius: 18px;
+        gap: 10px;
+        padding: 10px 24px;
+        border-radius: 20px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1rem, 1.6vw, 1.3rem);
+        font-size: clamp(1.15rem, 1.8vw, 1.45rem);
         font-weight: 700;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.28);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
         border: 3px solid #FFFFFF;
       }
       #${MODAL_ID} .mmg-pill-team1 {
@@ -887,42 +898,43 @@
         color: #0369A1;
       }
       #${MODAL_ID} .mmg-score-pill.is-leading {
-        transform: scale(1.04);
-        box-shadow: 0 0 0 3px #22C55E, 0 10px 24px rgba(34, 197, 94, 0.35);
+        transform: scale(1.05);
+        box-shadow: 0 0 0 4px #22C55E, 0 12px 28px rgba(34, 197, 94, 0.42);
       }
       #${MODAL_ID} .mmg-score-center-title {
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+        font-size: clamp(1.25rem, 2.1vw, 1.7rem);
         font-weight: 700;
         color: #FFFFFF;
-        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
         text-align: center;
       }
 
-      /* 3 Sütunlu Yarış Sahnesi */
+      /* 3 Sütunlu Yarış Sahnesi (%30 Büyütülmüş Elemanlar) */
       #${MODAL_ID} .mmg-arena {
         position: relative;
         flex: 1;
         display: grid;
-        grid-template-columns: 1fr minmax(280px, 380px) 1fr;
+        grid-template-columns: 1fr minmax(350px, 460px) 1fr;
         align-items: stretch;
-        gap: 20px;
-        max-width: 1280px;
+        gap: 24px;
+        max-width: 1360px;
         width: 100%;
         margin: 0 auto;
-        padding: 16px 22px 24px;
+        padding: 12px 24px 20px;
       }
 
       /* Takım Sütunları */
       #${MODAL_ID} .mmg-team-col {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        padding: 16px;
-        border-radius: 26px;
-        background: rgba(255, 255, 255, 0.12);
-        border: 2px solid rgba(255, 255, 255, 0.22);
-        backdrop-filter: blur(6px);
+        gap: 14px;
+        padding: 18px;
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
+        border: 2.5px solid rgba(255, 255, 255, 0.28);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.32);
+        backdrop-filter: blur(8px);
         transition: opacity 0.18s ease, filter 0.18s ease;
       }
       #${MODAL_ID} .mmg-team-col.is-locked {
@@ -934,29 +946,30 @@
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-        padding: 10px 14px;
-        border-radius: 16px;
+        padding: 12px 16px;
+        border-radius: 18px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1.05rem;
+        font-size: 1.2rem;
         font-weight: 700;
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22);
       }
       #${MODAL_ID} .mmg-team-header.mmg-team-yellow {
-        background: #FEF9C3;
+        background: linear-gradient(135deg, #FEF9C3 0%, #FEF08A 100%);
         color: #854D0E;
-        border: 2px solid #FACC15;
+        border: 2.5px solid #FACC15;
       }
       #${MODAL_ID} .mmg-team-header.mmg-team-orange {
-        background: #FFEDD5;
+        background: linear-gradient(135deg, #FFEDD5 0%, #FED7AA 100%);
         color: #9A3412;
-        border: 2px solid #FB923C;
+        border: 2.5px solid #FB923C;
       }
       #${MODAL_ID} .mmg-lock-badge {
         display: none;
-        padding: 4px 10px;
+        padding: 5px 12px;
         border-radius: 999px;
         background: #EF4444;
         color: #FFFFFF;
-        font-size: 0.82rem;
+        font-size: 0.88rem;
         font-weight: 800;
         animation: mmgShake 0.3s ease;
       }
@@ -969,25 +982,25 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 14px;
+        gap: 16px;
       }
       #${MODAL_ID} .mmg-answer-card {
         flex: 1;
-        min-height: 92px;
-        padding: 16px 14px;
-        border-radius: 22px;
-        border: 4px solid;
-        border-bottom-width: 8px;
+        min-height: 120px;
+        padding: 20px 18px;
+        border-radius: 26px;
+        border: 5px solid;
+        border-bottom-width: 10px;
         background: #FFFFFF;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.6rem, 2.9vw, 2.55rem);
+        font-size: clamp(2.1rem, 3.6vw, 3.3rem);
         font-weight: 700;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.24);
+        box-shadow: 0 14px 32px rgba(15, 23, 42, 0.34);
         touch-action: manipulation;
         transition: transform 0.1s ease, background 0.14s ease, border-color 0.14s ease;
       }
@@ -995,13 +1008,13 @@
         border-color: #FACC15;
         border-bottom-color: #CA8A04;
         color: #713F12;
-        background: linear-gradient(180deg, #FFFFFF 0%, #FEFCE8 100%);
+        background: linear-gradient(180deg, #FFFFFF 0%, #FEF9C3 100%);
       }
       #${MODAL_ID} .mmg-answer-card.mmg-team-orange {
         border-color: #FB923C;
         border-bottom-color: #C2410C;
         color: #7C2D12;
-        background: linear-gradient(180deg, #FFFFFF 0%, #FFF7ED 100%);
+        background: linear-gradient(180deg, #FFFFFF 0%, #FFEDD5 100%);
       }
       #${MODAL_ID} .mmg-answer-card:active:not(:disabled) {
         transform: scale(0.97) translateY(2px);
@@ -1011,8 +1024,8 @@
         border-color: #22C55E !important;
         border-bottom-color: #15803D !important;
         color: #14532D !important;
-        transform: scale(1.04);
-        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.45), 0 14px 30px rgba(22, 163, 74, 0.45);
+        transform: scale(1.05);
+        box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.5), 0 18px 36px rgba(22, 163, 74, 0.5);
       }
       #${MODAL_ID} .mmg-answer-card.is-wrong {
         background: linear-gradient(180deg, #FEE2E2 0%, #FECACA 100%) !important;
@@ -1032,54 +1045,55 @@
         75% { transform: translateX(-5px); }
       }
 
-      /* Orta Sütun: Hakem Moli + Yeşil Mendil + Soru Kutusu */
+      /* Orta Sütun: %30 Büyütülmüş Hakem Moli + Yeşil Mendil + Soru Kutusu */
       #${MODAL_ID} .mmg-center-col {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 14px;
+        gap: 16px;
         text-align: center;
       }
       #${MODAL_ID} .mmg-topic-pill {
-        padding: 7px 14px;
+        padding: 8px 18px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.94);
+        background: rgba(255, 255, 255, 0.96);
         color: #065F46;
-        font-size: 0.88rem;
+        font-size: 0.96rem;
         font-weight: 800;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.28);
       }
       #${MODAL_ID} .mmg-moli-referee-box {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         width: 100%;
       }
       #${MODAL_ID} .mmg-moli-avatar-wrap {
         position: relative;
-        width: 120px;
-        height: 112px;
+        width: 158px;
+        height: 148px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 28px;
-        background: radial-gradient(circle, rgba(255,255,255,0.96) 0%, rgba(209,250,229,0.92) 100%);
-        border: 4px solid #6EE7B7;
-        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.3);
+        border-radius: 36px;
+        background: radial-gradient(circle, #FFFFFF 0%, #A7F3D0 100%);
+        border: 5px solid #34D399;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.42);
       }
       #${MODAL_ID} .mmg-moli-img {
-        width: 84px;
-        height: 84px;
+        width: 118px;
+        height: 118px;
         object-fit: contain;
+        filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.25));
       }
       #${MODAL_ID} .mmg-handkerchief-wrap {
         position: absolute;
-        right: -24px;
-        bottom: -8px;
+        right: -30px;
+        bottom: -10px;
         z-index: 6;
-        filter: drop-shadow(0 6px 10px rgba(15, 23, 42, 0.35));
+        filter: drop-shadow(0 8px 14px rgba(15, 23, 42, 0.45));
         animation: mmgMendilWave 1.8s ease-in-out infinite;
         transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
@@ -1089,75 +1103,76 @@
       }
       #${MODAL_ID} .mmg-handkerchief-wrap.is-pulled-left {
         animation: none;
-        transform: translate(-185px, 16px) rotate(-26deg) scale(1.22);
+        transform: translate(-220px, 18px) rotate(-26deg) scale(1.28);
       }
       #${MODAL_ID} .mmg-handkerchief-wrap.is-pulled-right {
         animation: none;
-        transform: translate(165px, 16px) rotate(26deg) scale(1.22);
+        transform: translate(195px, 18px) rotate(26deg) scale(1.28);
       }
       #${MODAL_ID} .mmg-handkerchief-wrap.is-pulled-solo {
         animation: none;
-        transform: translate(-10px, 165px) rotate(12deg) scale(1.22);
+        transform: translate(-10px, 190px) rotate(12deg) scale(1.28);
       }
 
       #${MODAL_ID} .mmg-round-status-banner {
-        padding: 8px 14px;
-        border-radius: 14px;
-        background: rgba(15, 23, 42, 0.55);
-        color: #E2E8F0;
-        font-size: 0.9rem;
+        padding: 10px 16px;
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.65);
+        color: #F8FAFC;
+        font-size: 1rem;
         font-weight: 800;
-        border: 1.5px solid rgba(255, 255, 255, 0.18);
+        border: 2px solid rgba(255, 255, 255, 0.22);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
       }
       #${MODAL_ID} .mmg-round-status-banner.is-win-banner {
-        background: #22C55E;
+        background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
         color: #FFFFFF;
         border-color: #DCFCE7;
-        box-shadow: 0 6px 16px rgba(34, 197, 94, 0.45);
+        box-shadow: 0 10px 24px rgba(34, 197, 94, 0.55);
       }
 
-      /* Soru Kartı */
+      /* %30 Büyütülmüş Soru Kartı */
       #${MODAL_ID} .mmg-question-card {
         width: 100%;
-        background: #FFFFFF;
-        border: 4px solid #6EE7B7;
-        border-bottom: 8px solid #10B981;
-        border-radius: 26px;
-        padding: 20px 18px;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.32);
+        background: linear-gradient(180deg, #FFFFFF 0%, #ECFDF5 100%);
+        border: 5px solid #34D399;
+        border-bottom: 10px solid #059669;
+        border-radius: 30px;
+        padding: 28px 22px;
+        box-shadow: 0 24px 52px rgba(0, 0, 0, 0.44);
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 14px;
+        gap: 18px;
       }
       #${MODAL_ID} .mmg-question-text {
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.45rem, 2.8vw, 2.35rem);
+        font-size: clamp(1.95rem, 3.6vw, 3.1rem);
         font-weight: 700;
         color: #0F172A;
-        line-height: 1.25;
+        line-height: 1.2;
       }
       #${MODAL_ID} .mmg-question-card.is-listening-card .mmg-question-text {
-        font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+        font-size: clamp(1.45rem, 2.3vw, 1.9rem);
         color: #0369A1;
       }
       #${MODAL_ID} .mmg-btn-listen {
         width: 100%;
-        padding: 13px 18px;
-        border-radius: 16px;
-        border: 2px solid #0284C7;
-        border-bottom: 5px solid #0369A1;
+        padding: 16px 22px;
+        border-radius: 18px;
+        border: 2.5px solid #0284C7;
+        border-bottom: 6px solid #0369A1;
         background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%);
         color: #FFFFFF;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1.12rem;
+        font-size: 1.3rem;
         font-weight: 700;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
-        box-shadow: 0 8px 18px rgba(2, 132, 199, 0.3);
+        gap: 10px;
+        box-shadow: 0 10px 24px rgba(2, 132, 199, 0.38);
         touch-action: manipulation;
         transition: transform 0.12s ease;
       }

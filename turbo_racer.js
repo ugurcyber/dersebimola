@@ -502,7 +502,7 @@
     panel.innerHTML = `
       <div class="mtr-topic-badge">${escapeHtml(topic.badge)}</div>
       <div class="mtr-moli-coach-row">
-        <img src="assets/mascot/moli.webp" class="mtr-moli-avatar" alt="Pilot Moli" width="56" height="56">
+        <img src="assets/mascot/moli.webp" class="mtr-moli-avatar" alt="Pilot Moli" width="73" height="73">
         <div class="mtr-coach-tip">
           ${topic.isListeningPrompt
             ? 'Sesi dinle, doğru kelimenin olduğu şeride dokun!'
@@ -875,9 +875,9 @@
       drawAnswerGates(ctx, roadX, laneW, state.gateY);
     }
 
-    // 5) SARI/TURUNCU YARIŞ ARABASI + TURBO ALEV EFEKTİ
+    // 5) %30 BÜYÜTÜLMÜŞ SARI/TURUNCU YARIŞ ARABASI + TURBO ALEV EFEKTİ
     const carCenterX = roadX + state.carVisualX * roadW;
-    const carCenterY = cssH - 102 + state.carForwardBoostY;
+    const carCenterY = cssH - 122 + state.carForwardBoostY;
     const isTurbo = nowTs < state.turboActiveUntil;
     drawRaceCar(ctx, carCenterX, carCenterY, isTurbo);
 
@@ -965,7 +965,7 @@
   }
 
   function drawAnswerGates(ctx, roadX, laneW, gateY) {
-    const gateH = 74;
+    const gateH = 96;
     for (let lane = 0; lane < 3; lane++) {
       const pad = 10;
       const gx = roadX + lane * laneW + pad;
@@ -994,38 +994,38 @@
 
       ctx.save();
       // Kapı Gölgesi
-      ctx.shadowColor = 'rgba(15, 23, 42, 0.35)';
-      ctx.shadowBlur = 12;
-      ctx.shadowOffsetY = 5;
+      ctx.shadowColor = 'rgba(15, 23, 42, 0.45)';
+      ctx.shadowBlur = 16;
+      ctx.shadowOffsetY = 7;
 
       const grad = ctx.createLinearGradient(gx, gy, gx, gy + gateH);
       grad.addColorStop(0, bgGradTop);
       grad.addColorStop(1, bgGradBot);
 
-      drawRoundedRect(ctx, gx, gy, gw, gateH, 16);
+      drawRoundedRect(ctx, gx, gy, gw, gateH, 20);
       ctx.fillStyle = grad;
       ctx.fill();
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 5;
       ctx.strokeStyle = borderCol;
       ctx.stroke();
       ctx.restore();
 
       // Kapı Üst Şerit Numarası Küçük Etiket
       ctx.save();
-      ctx.font = '800 12px "Nunito", sans-serif';
+      ctx.font = '800 14px "Nunito", sans-serif';
       ctx.fillStyle = '#64748B';
       ctx.textAlign = 'center';
-      ctx.fillText(`${lane + 1}. Şerit`, gx + gw / 2, gy + 16);
+      ctx.fillText(`${lane + 1}. Şerit`, gx + gw / 2, gy + 20);
 
-      // Büyük Okunaklı Cevap Metni
-      let fontSize = 27;
-      if (text.length >= 6) fontSize = 22;
-      if (text.length >= 8) fontSize = 19;
-      ctx.font = `800 ${fontSize}px "Fredoka", "Nunito", sans-serif`;
+      // %30 Büyütülmüş Okunaklı Cevap Metni
+      let fontSize = 35;
+      if (text.length >= 6) fontSize = 28;
+      if (text.length >= 8) fontSize = 24;
+      ctx.font = `900 ${fontSize}px "Fredoka", "Nunito", sans-serif`;
       ctx.fillStyle = textCol;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(text, gx + gw / 2, gy + gateH / 2 + 6);
+      ctx.fillText(text, gx + gw / 2, gy + gateH / 2 + 8);
       ctx.restore();
     }
   }
@@ -1034,7 +1034,7 @@
     const rows = 3;
     const cols = 12;
     const cellW = roadW / cols;
-    const cellH = 22;
+    const cellH = 26;
     const startY = finishY - (rows * cellH) / 2;
 
     ctx.save();
@@ -1045,40 +1045,40 @@
       }
     }
     ctx.strokeStyle = '#FACC15';
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 5;
     ctx.strokeRect(roadX, startY, roadW, rows * cellH);
 
     // BİTİŞ yazısı
     ctx.fillStyle = '#FACC15';
-    ctx.font = '800 22px "Fredoka", "Nunito", sans-serif';
+    ctx.font = '900 26px "Fredoka", "Nunito", sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('🏁 BİTİŞ ÇİZGİSİ 🏁', roadX + roadW / 2, startY - 12);
+    ctx.fillText('🏁 BİTİŞ ÇİZGİSİ 🏁', roadX + roadW / 2, startY - 14);
     ctx.restore();
   }
 
   function drawRaceCar(ctx, cx, cy, isTurbo) {
-    const carW = 58;
-    const carH = 96;
+    const carW = 76;
+    const carH = 125;
 
     ctx.save();
     ctx.translate(cx, cy);
 
     // 🔥 TURBO ALEV EFEKTİ (Arabanın arkasından çıkan ikili egzoz alevi)
     if (isTurbo) {
-      const flicker = 16 + Math.random() * 18;
-      [-12, 12].forEach((offsetX) => {
+      const flicker = 22 + Math.random() * 24;
+      [-16, 16].forEach((offsetX) => {
         ctx.beginPath();
-        ctx.moveTo(offsetX - 8, carH / 2 - 4);
-        ctx.lineTo(offsetX, carH / 2 + flicker + 14);
-        ctx.lineTo(offsetX + 8, carH / 2 - 4);
+        ctx.moveTo(offsetX - 10, carH / 2 - 4);
+        ctx.lineTo(offsetX, carH / 2 + flicker + 18);
+        ctx.lineTo(offsetX + 10, carH / 2 - 4);
         ctx.closePath();
         ctx.fillStyle = '#EF4444';
         ctx.fill();
 
         ctx.beginPath();
-        ctx.moveTo(offsetX - 4, carH / 2 - 4);
+        ctx.moveTo(offsetX - 5, carH / 2 - 4);
         ctx.lineTo(offsetX, carH / 2 + flicker);
-        ctx.lineTo(offsetX + 4, carH / 2 - 4);
+        ctx.lineTo(offsetX + 5, carH / 2 - 4);
         ctx.closePath();
         ctx.fillStyle = '#FACC15';
         ctx.fill();
@@ -1087,53 +1087,53 @@
 
     // Tekerlekler (4 adet siyah lastik)
     ctx.fillStyle = '#0F172A';
-    drawRoundedRect(ctx, -carW / 2 - 6, -carH / 2 + 12, 8, 22, 4);
+    drawRoundedRect(ctx, -carW / 2 - 8, -carH / 2 + 16, 10, 28, 5);
     ctx.fill();
-    drawRoundedRect(ctx, carW / 2 - 2, -carH / 2 + 12, 8, 22, 4);
+    drawRoundedRect(ctx, carW / 2 - 2, -carH / 2 + 16, 10, 28, 5);
     ctx.fill();
-    drawRoundedRect(ctx, -carW / 2 - 6, carH / 2 - 34, 8, 22, 4);
+    drawRoundedRect(ctx, -carW / 2 - 8, carH / 2 - 44, 10, 28, 5);
     ctx.fill();
-    drawRoundedRect(ctx, carW / 2 - 2, carH / 2 - 34, 8, 22, 4);
+    drawRoundedRect(ctx, carW / 2 - 2, carH / 2 - 44, 10, 28, 5);
     ctx.fill();
 
-    // Araba Gövdesi (Sarı / Turuncu Yarış Arabası Gradyanı)
+    // Araba Gövdesi (Sarı / Turuncu Yarış Arabası Gradyanı + Belirgin Gölge)
     ctx.save();
-    ctx.shadowColor = 'rgba(15, 23, 42, 0.45)';
-    ctx.shadowBlur = 14;
-    ctx.shadowOffsetY = 6;
+    ctx.shadowColor = 'rgba(15, 23, 42, 0.55)';
+    ctx.shadowBlur = 20;
+    ctx.shadowOffsetY = 8;
 
     const bodyGrad = ctx.createLinearGradient(0, -carH / 2, 0, carH / 2);
     bodyGrad.addColorStop(0, '#FACC15');
     bodyGrad.addColorStop(0.55, '#F59E0B');
     bodyGrad.addColorStop(1, '#EA580C');
 
-    drawRoundedRect(ctx, -carW / 2, -carH / 2, carW, carH, 18);
+    drawRoundedRect(ctx, -carW / 2, -carH / 2, carW, carH, 22);
     ctx.fillStyle = bodyGrad;
     ctx.fill();
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 4;
     ctx.strokeStyle = '#FFFFFF';
     ctx.stroke();
     ctx.restore();
 
     // Ortadaki Beyaz Yarış Şeridi
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
-    ctx.fillRect(-5, -carH / 2 + 6, 10, carH - 12);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillRect(-7, -carH / 2 + 8, 14, carH - 16);
 
     // Ön Cam / Kokpit
-    drawRoundedRect(ctx, -carW / 2 + 9, -16, carW - 18, 34, 10);
+    drawRoundedRect(ctx, -carW / 2 + 12, -21, carW - 24, 44, 12);
     ctx.fillStyle = '#1E293B';
     ctx.fill();
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2.5;
     ctx.strokeStyle = '#38BDF8';
     ctx.stroke();
 
     // Ön Farlar
     ctx.fillStyle = '#FEF08A';
-    ctx.fillRect(-carW / 2 + 8, -carH / 2 + 2, 10, 5);
-    ctx.fillRect(carW / 2 - 18, -carH / 2 + 2, 10, 5);
+    ctx.fillRect(-carW / 2 + 10, -carH / 2 + 3, 13, 6);
+    ctx.fillRect(carW / 2 - 23, -carH / 2 + 3, 13, 6);
 
     // Arka Spoiler
-    drawRoundedRect(ctx, -carW / 2 + 4, carH / 2 - 10, carW - 8, 7, 3);
+    drawRoundedRect(ctx, -carW / 2 + 6, carH / 2 - 13, carW - 12, 9, 4);
     ctx.fillStyle = '#B91C1C';
     ctx.fill();
 
@@ -1163,14 +1163,23 @@
     style.textContent = `
       #${MODAL_ID} {
         position: fixed;
-        inset: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 96vw;
+        height: 94vh;
+        max-width: 1400px;
         z-index: 99999;
         display: none;
         flex-direction: column;
-        background: linear-gradient(145deg, #0F172A 0%, #1E293B 55%, #064E3B 100%);
+        background: linear-gradient(145deg, #0F172A 0%, #1E293B 48%, #064E3B 100%);
         color: #0F172A;
         font-family: 'Nunito', 'Fredoka', sans-serif;
+        border-radius: 28px;
+        border: 4px solid rgba(251, 191, 36, 0.35);
+        box-shadow: 0 0 0 100vmax rgba(2, 6, 23, 0.78), 0 32px 80px rgba(0, 0, 0, 0.75);
         overflow-y: auto;
+        overflow-x: hidden;
         box-sizing: border-box;
         user-select: none;
         -webkit-user-select: none;
@@ -1182,45 +1191,45 @@
         box-sizing: border-box;
       }
 
-      /* Üst Başlık Barı */
+      /* Üst Başlık Barı (İnce) */
       #${MODAL_ID} .mtr-topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        padding: 10px 20px;
+        padding: 8px 20px;
         background: rgba(255, 255, 255, 0.97);
-        border-bottom: 4px solid #CBD5E1;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+        border-bottom: 3px solid #CBD5E1;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mtr-brand {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
       #${MODAL_ID} .mtr-brand-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 14px;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
         background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.55rem;
-        box-shadow: 0 5px 14px rgba(234, 88, 12, 0.35);
+        font-size: 1.45rem;
+        box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mtr-brand-title {
         margin: 0;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.1rem, 2vw, 1.45rem);
+        font-size: clamp(1.08rem, 1.8vw, 1.38rem);
         font-weight: 700;
         color: #0F172A;
       }
       #${MODAL_ID} .mtr-brand-sub {
         margin: 0;
-        font-size: 0.84rem;
+        font-size: 0.8rem;
         font-weight: 800;
         color: #64748B;
       }
@@ -1229,38 +1238,40 @@
         border: 2px solid #FCA5A5;
         border-bottom: 4px solid #EF4444;
         color: #B91C1C;
-        border-radius: 14px;
-        padding: 9px 18px;
+        border-radius: 12px;
+        padding: 7px 16px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 0.98rem;
+        font-size: 0.95rem;
         font-weight: 700;
         cursor: pointer;
         flex-shrink: 0;
         touch-action: manipulation;
       }
 
-      /* 5 Konu Sekmesi Barı */
+      /* 5 Konu Sekmesi Barı (İnce ve Tek Satır) */
       #${MODAL_ID} .mtr-topics-bar {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow-x: auto;
         gap: 8px;
-        padding: 9px 16px;
+        padding: 6px 16px;
         background: rgba(15, 23, 42, 0.55);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mtr-topic-tab {
-        padding: 8px 15px;
-        border-radius: 14px;
+        padding: 7px 14px;
+        border-radius: 12px;
         border: 2px solid rgba(255, 255, 255, 0.24);
-        border-bottom: 4px solid rgba(15, 23, 42, 0.35);
+        border-bottom: 3px solid rgba(15, 23, 42, 0.4);
         background: rgba(255, 255, 255, 0.94);
         color: #1E293B;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(0.84rem, 1.2vw, 1rem);
+        font-size: clamp(0.84rem, 1.15vw, 0.98rem);
         font-weight: 700;
+        white-space: nowrap;
         cursor: pointer;
         touch-action: manipulation;
         transition: all 0.14s ease;
@@ -1270,7 +1281,7 @@
         border-color: #FDE047;
         border-bottom-color: #9A3412;
         color: #FFFFFF;
-        box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45);
+        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.45);
         transform: translateY(-1px);
       }
 
@@ -1281,80 +1292,82 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 14px;
-        max-width: 1240px;
+        max-width: 1360px;
         width: 100%;
-        margin: 10px auto 0;
-        padding: 0 20px;
+        margin: 8px auto 0;
+        padding: 0 22px;
         flex-shrink: 0;
       }
       #${MODAL_ID} .mtr-hud-pill {
-        padding: 8px 18px;
+        padding: 8px 20px;
         border-radius: 16px;
-        background: rgba(255, 255, 255, 0.95);
-        border: 2px solid #E2E8F0;
-        border-bottom: 4px solid #CBD5E1;
+        background: rgba(255, 255, 255, 0.96);
+        border: 2.5px solid #E2E8F0;
+        border-bottom: 5px solid #CBD5E1;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+        font-size: clamp(1rem, 1.5vw, 1.2rem);
         font-weight: 700;
         color: #0F172A;
-        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.22);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.28);
       }
 
-      /* Ana Sahne: Sol Hedef Kutu + Orta/Sağ 3 Şeritli Otoban */
+      /* Ana Sahne: %30 Büyütülmüş Sol Hedef Kutu + Orta/Sağ 3 Şeritli Otoban */
       #${MODAL_ID} .mtr-main-stage {
         flex: 1;
         display: grid;
-        grid-template-columns: minmax(280px, 370px) minmax(320px, 680px);
+        grid-template-columns: minmax(340px, 440px) minmax(420px, 820px);
         align-items: stretch;
         justify-content: center;
-        gap: 20px;
-        max-width: 1200px;
+        gap: 24px;
+        max-width: 1360px;
         width: 100%;
         margin: 0 auto;
-        padding: 12px 20px 18px;
+        padding: 10px 22px 16px;
         min-height: 0;
       }
 
-      /* Sol Panel (Hedef Kutu) */
+      /* Sol Panel (%30 Büyütülmüş Hedef Kutu) */
       #${MODAL_ID} .mtr-left-panel {
-        background: #FFFFFF;
-        border: 4px solid #FCD34D;
-        border-bottom: 8px solid #F59E0B;
-        border-radius: 26px;
-        padding: 18px;
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
+        background: linear-gradient(180deg, #FFFFFF 0%, #FFFBEB 100%);
+        border: 5px solid #FCD34D;
+        border-bottom: 10px solid #F59E0B;
+        border-radius: 30px;
+        padding: 22px;
+        box-shadow: 0 24px 54px rgba(0, 0, 0, 0.45);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 12px;
+        gap: 14px;
       }
       #${MODAL_ID} .mtr-topic-badge {
         display: inline-block;
-        padding: 6px 12px;
+        padding: 7px 14px;
         border-radius: 999px;
         background: #FEF3C7;
         color: #92400E;
-        font-size: 0.84rem;
+        font-size: 0.92rem;
         font-weight: 800;
         text-align: center;
       }
       #${MODAL_ID} .mtr-moli-coach-row {
         display: flex;
         align-items: center;
-        gap: 10px;
-        background: #F8FAFC;
-        border: 2px solid #E2E8F0;
-        border-radius: 16px;
-        padding: 10px 12px;
+        gap: 12px;
+        background: #FFFFFF;
+        border: 2.5px solid #FDE68A;
+        border-radius: 20px;
+        padding: 12px 14px;
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.14);
       }
       #${MODAL_ID} .mtr-moli-avatar {
-        width: 52px;
-        height: 52px;
+        width: 72px;
+        height: 72px;
         object-fit: contain;
         flex-shrink: 0;
+        filter: drop-shadow(0 4px 10px rgba(15, 23, 42, 0.22));
       }
       #${MODAL_ID} .mtr-coach-tip {
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: 800;
         color: #334155;
         line-height: 1.35;
@@ -1366,81 +1379,84 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 18px 14px;
-        border-radius: 22px;
-        background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
-        border: 3px solid #F59E0B;
+        padding: 24px 18px;
+        border-radius: 26px;
+        background: linear-gradient(180deg, #FFFBEB 0%, #FEF08A 100%);
+        border: 4px solid #F59E0B;
+        box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.8), 0 12px 28px rgba(245, 158, 11, 0.25);
       }
       #${MODAL_ID} .mtr-target-label {
-        font-size: 0.8rem;
+        font-size: 0.92rem;
         font-weight: 800;
         color: #B45309;
         letter-spacing: 0.05em;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
       }
       #${MODAL_ID} .mtr-target-value {
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.7rem, 3vw, 2.55rem);
+        font-size: clamp(2.2rem, 3.9vw, 3.35rem);
         font-weight: 700;
         color: #0F172A;
-        line-height: 1.2;
+        line-height: 1.18;
       }
       #${MODAL_ID} .mtr-target-display.is-listening-mode .mtr-target-value {
-        font-size: clamp(1.2rem, 2vw, 1.55rem);
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
         color: #0369A1;
       }
       #${MODAL_ID} .mtr-listen-btn {
         width: 100%;
-        padding: 13px 16px;
-        border-radius: 16px;
-        border: 2px solid #0284C7;
-        border-bottom: 5px solid #0369A1;
+        padding: 16px 20px;
+        border-radius: 18px;
+        border: 2.5px solid #0284C7;
+        border-bottom: 6px solid #0369A1;
         background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%);
         color: #FFFFFF;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1.12rem;
+        font-size: 1.28rem;
         font-weight: 700;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
+        box-shadow: 0 10px 24px rgba(2, 132, 199, 0.35);
         touch-action: manipulation;
       }
       #${MODAL_ID} .mtr-lane-quick-btns {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        gap: 10px;
       }
       #${MODAL_ID} .mtr-lane-btn {
-        padding: 10px 6px;
-        border-radius: 12px;
-        border: 2px solid #CBD5E1;
-        border-bottom: 4px solid #94A3B8;
+        padding: 13px 8px;
+        border-radius: 14px;
+        border: 2.5px solid #CBD5E1;
+        border-bottom: 5px solid #94A3B8;
         background: #F8FAFC;
         color: #1E293B;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 0.9rem;
+        font-size: 1.05rem;
         font-weight: 700;
         cursor: pointer;
         touch-action: manipulation;
       }
       #${MODAL_ID} .mtr-lane-btn.is-selected {
-        background: #FEF3C7;
+        background: linear-gradient(180deg, #FEF9C3 0%, #FDE047 100%);
         border-color: #F59E0B;
         border-bottom-color: #D97706;
-        color: #92400E;
+        color: #78350F;
+        box-shadow: 0 6px 14px rgba(245, 158, 11, 0.32);
       }
 
       /* Orta Sahne: 3 Şeritli Otoban & Sağ Alt 🔥 TURBO Butonu */
       #${MODAL_ID} .mtr-highway-wrap {
         position: relative;
-        border-radius: 26px;
+        border-radius: 30px;
         overflow: hidden;
-        border: 4px solid rgba(255, 255, 255, 0.85);
-        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+        border: 5px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
         background: #15803D;
-        min-height: 430px;
+        min-height: 480px;
         display: flex;
       }
       #${MODAL_ID} #moliTurboCanvas {

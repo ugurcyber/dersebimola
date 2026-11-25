@@ -435,7 +435,7 @@
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const cssSize = 520;
+    const cssSize = 560;
     if (canvas.width !== cssSize * dpr || canvas.height !== cssSize * dpr) {
       canvas.width = cssSize * dpr;
       canvas.height = cssSize * dpr;
@@ -455,16 +455,16 @@
     ctx.beginPath();
     ctx.arc(cx, cy, outerRadius, 0, Math.PI * 2);
     ctx.fillStyle = '#1E293B';
-    ctx.shadowColor = 'rgba(15, 23, 42, 0.28)';
-    ctx.shadowBlur = 18;
-    ctx.shadowOffsetY = 6;
+    ctx.shadowColor = 'rgba(15, 23, 42, 0.35)';
+    ctx.shadowBlur = 22;
+    ctx.shadowOffsetY = 8;
     ctx.fill();
     ctx.restore();
 
     // Altın / Beyaz Dış Çember Halkası
     ctx.beginPath();
     ctx.arc(cx, cy, outerRadius - 3, 0, Math.PI * 2);
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 6;
     ctx.strokeStyle = '#F59E0B';
     ctx.stroke();
 
@@ -496,21 +496,21 @@
       // Seçili / Okun gösterdiği dilime parlak iç vurgu
       if (!wheelState.isSpinning && wheelState.selectedItem && i === pointedIdx) {
         ctx.save();
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 6;
         ctx.strokeStyle = pal.accent;
         ctx.stroke();
         ctx.restore();
       }
 
       // Dilim ayırıcı çizgi
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 3;
       ctx.strokeStyle = '#FFFFFF';
       ctx.stroke();
 
       // Dilim dış kenar renkli şerit
       ctx.beginPath();
       ctx.arc(cx, cy, sliceRadius - 3, startAngle, endAngle);
-      ctx.lineWidth = 6;
+      ctx.lineWidth = 7;
       ctx.strokeStyle = pal.accent;
       ctx.stroke();
 
@@ -522,17 +522,17 @@
       ctx.textBaseline = 'middle';
 
       const textStr = String(slice.label || '');
-      let fontSize = 24;
-      if (count <= 6) fontSize = 28;
-      if (textStr.length >= 7) fontSize = 20;
-      if (textStr.length >= 9) fontSize = 18;
+      let fontSize = 29;
+      if (count <= 6) fontSize = 33;
+      if (textStr.length >= 7) fontSize = 25;
+      if (textStr.length >= 9) fontSize = 22;
 
-      ctx.font = `800 ${fontSize}px "Fredoka", "Nunito", sans-serif`;
+      ctx.font = `900 ${fontSize}px "Fredoka", "Nunito", sans-serif`;
       ctx.fillStyle = pal.text;
       ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 5;
       ctx.lineJoin = 'round';
-      const textRadius = sliceRadius - 24;
+      const textRadius = sliceRadius - 26;
       ctx.strokeText(textStr, textRadius, 0);
       ctx.fillText(textStr, textRadius, 0);
       ctx.restore();
@@ -544,10 +544,10 @@
       const px = cx + Math.cos(pegAngle) * (sliceRadius + 2);
       const py = cy + Math.sin(pegAngle) * (sliceRadius + 2);
       ctx.beginPath();
-      ctx.arc(px, py, 5.5, 0, Math.PI * 2);
+      ctx.arc(px, py, 6.5, 0, Math.PI * 2);
       ctx.fillStyle = '#FFFFFF';
       ctx.fill();
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
       ctx.strokeStyle = '#F59E0B';
       ctx.stroke();
     }
@@ -555,20 +555,20 @@
     // Merkez Göbek (Dokunulabilir Çevir Göbeği)
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, 48, 0, Math.PI * 2);
-    const hubGrad = ctx.createRadialGradient(cx - 10, cy - 10, 6, cx, cy, 48);
+    ctx.arc(cx, cy, 56, 0, Math.PI * 2);
+    const hubGrad = ctx.createRadialGradient(cx - 12, cy - 12, 8, cx, cy, 56);
     hubGrad.addColorStop(0, '#F59E0B');
     hubGrad.addColorStop(1, '#D97706');
     ctx.fillStyle = hubGrad;
-    ctx.shadowColor = 'rgba(15, 23, 42, 0.32)';
-    ctx.shadowBlur = 12;
+    ctx.shadowColor = 'rgba(15, 23, 42, 0.38)';
+    ctx.shadowBlur = 16;
     ctx.fill();
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 6;
     ctx.strokeStyle = '#FFFFFF';
     ctx.stroke();
 
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = '800 15px "Fredoka", "Nunito", sans-serif';
+    ctx.font = '900 18px "Fredoka", "Nunito", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(wheelState.isSpinning ? '🎡' : 'ÇEVİR', cx, cy);
@@ -819,14 +819,23 @@
     style.textContent = `
       #${MODAL_ID} {
         position: fixed;
-        inset: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 96vw;
+        height: 94vh;
+        max-width: 1400px;
         z-index: 99999;
         display: none;
         flex-direction: column;
-        background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 55%, #1E293B 100%);
+        background: linear-gradient(135deg, #1E1B4B 0%, #312E81 45%, #0F172A 100%);
         color: #0F172A;
         font-family: 'Nunito', 'Fredoka', sans-serif;
+        border-radius: 28px;
+        border: 4px solid rgba(255, 255, 255, 0.28);
+        box-shadow: 0 0 0 100vmax rgba(2, 6, 23, 0.78), 0 32px 80px rgba(0, 0, 0, 0.75);
         overflow-y: auto;
+        overflow-x: hidden;
         box-sizing: border-box;
         user-select: none;
         -webkit-user-select: none;
@@ -843,40 +852,40 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
-        padding: 12px 22px;
-        background: rgba(255, 255, 255, 0.96);
-        border-bottom: 4px solid #CBD5E1;
-        box-shadow: 0 8px 25px rgba(15, 23, 42, 0.25);
+        gap: 12px;
+        padding: 8px 20px;
+        background: rgba(255, 255, 255, 0.97);
+        border-bottom: 3px solid #CBD5E1;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mwg-brand {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
       }
       #${MODAL_ID} .mwg-brand-icon {
-        width: 46px;
-        height: 46px;
-        border-radius: 14px;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
         background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.65rem;
-        box-shadow: 0 5px 14px rgba(234, 88, 12, 0.35);
+        font-size: 1.45rem;
+        box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mwg-brand-title {
         margin: 0;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.15rem, 2vw, 1.5rem);
+        font-size: clamp(1.1rem, 1.8vw, 1.38rem);
         font-weight: 700;
         color: #1E1B4B;
       }
       #${MODAL_ID} .mwg-brand-sub {
         margin: 0;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 800;
         color: #64748B;
       }
@@ -885,10 +894,10 @@
         border: 2px solid #FCA5A5;
         border-bottom: 4px solid #EF4444;
         color: #B91C1C;
-        border-radius: 14px;
-        padding: 10px 18px;
+        border-radius: 12px;
+        padding: 7px 16px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 700;
         cursor: pointer;
         flex-shrink: 0;
@@ -900,34 +909,36 @@
         transform: translateY(-1px);
       }
 
-      /* 5 Konu Sekmesi Barı */
+      /* 5 Konu Sekmesi Barı (İnce ve Tek Satır) */
       #${MODAL_ID} .mwg-topics-bar {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 12px 20px;
-        background: rgba(15, 23, 42, 0.45);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+        padding: 6px 16px;
+        background: rgba(15, 23, 42, 0.52);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
         flex-shrink: 0;
       }
       #${MODAL_ID} .mwg-topic-tab {
-        padding: 11px 18px;
-        border-radius: 16px;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-bottom: 4px solid rgba(15, 23, 42, 0.4);
-        background: rgba(255, 255, 255, 0.92);
+        padding: 7px 14px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.22);
+        border-bottom: 3px solid rgba(15, 23, 42, 0.45);
+        background: rgba(255, 255, 255, 0.94);
         color: #1E293B;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(0.92rem, 1.3vw, 1.08rem);
+        font-size: clamp(0.86rem, 1.15vw, 1rem);
         font-weight: 700;
+        white-space: nowrap;
         cursor: pointer;
         touch-action: manipulation;
         transition: all 0.15s ease;
       }
       #${MODAL_ID} .mwg-topic-tab:hover {
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         background: #FFFFFF;
       }
       #${MODAL_ID} .mwg-topic-tab.is-active {
@@ -935,38 +946,39 @@
         border-color: #FDE047;
         border-bottom-color: #9A3412;
         color: #FFFFFF;
-        box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
-        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.45);
+        transform: translateY(-1px);
       }
 
-      /* Ana Sahne: Sol/Merkez Çark + Sağ Sonuç Kartı */
+      /* Ana Sahne: Sol/Merkez Büyük Çark + Sağ Sonuç Kartı */
       #${MODAL_ID} .mwg-stage {
         flex: 1;
         display: grid;
-        grid-template-columns: minmax(340px, 580px) minmax(320px, 520px);
+        grid-template-columns: minmax(480px, 620px) minmax(380px, 580px);
         align-items: center;
         justify-content: center;
-        gap: 28px;
-        padding: 18px 28px 24px;
-        max-width: 1240px;
+        gap: 32px;
+        padding: 14px 28px 18px;
+        max-width: 1360px;
         width: 100%;
         margin: 0 auto;
       }
 
-      /* Sol/Merkez: Canvas Çark Bölümü */
+      /* Sol/Merkez: Canvas Çark Bölümü (Ekranın yarısını kaplayan 560px dev çark) */
       #${MODAL_ID} .mwg-wheel-column {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
       }
       #${MODAL_ID} .mwg-wheel-frame {
         position: relative;
-        width: min(88vw, 500px);
-        height: min(88vw, 500px);
+        width: min(86vw, 560px);
+        height: min(86vw, 560px);
         display: flex;
         align-items: center;
         justify-content: center;
+        filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.5));
       }
       #${MODAL_ID} #moliWheelCanvas {
         width: 100%;
@@ -979,15 +991,15 @@
       /* Sağ Kenarda Sabit Büyük Ok İmleci */
       #${MODAL_ID} .mwg-wheel-pointer {
         position: absolute;
-        right: -18px;
+        right: -22px;
         top: 50%;
         transform: translateY(-50%);
-        width: 58px;
-        height: 54px;
+        width: 68px;
+        height: 62px;
         display: flex;
         align-items: center;
         justify-content: center;
-        filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.45));
+        filter: drop-shadow(0 8px 16px rgba(15, 23, 42, 0.55));
         z-index: 5;
         pointer-events: none;
         transform-origin: right center;
@@ -1011,15 +1023,15 @@
       }
       #${MODAL_ID} .mwg-spin-btn {
         width: 100%;
-        max-width: 360px;
-        padding: 15px 28px;
-        border-radius: 20px;
+        max-width: 420px;
+        padding: 16px 32px;
+        border-radius: 22px;
         border: 3px solid #FDE047;
         border-bottom: 6px solid #B45309;
         background: linear-gradient(180deg, #F59E0B 0%, #EA580C 100%);
         color: #FFFFFF;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.2rem, 2vw, 1.45rem);
+        font-size: clamp(1.3rem, 2.2vw, 1.6rem);
         font-weight: 700;
         letter-spacing: 0.03em;
         cursor: pointer;
@@ -1027,7 +1039,7 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-        box-shadow: 0 10px 26px rgba(234, 88, 12, 0.45);
+        box-shadow: 0 12px 30px rgba(234, 88, 12, 0.5);
         touch-action: manipulation;
         transition: transform 0.14s ease, box-shadow 0.14s ease;
       }
@@ -1052,25 +1064,25 @@
         gap: 8px;
         padding: 8px 14px;
         border-radius: 14px;
-        background: rgba(255, 255, 255, 0.92);
+        background: rgba(255, 255, 255, 0.94);
         color: #1E293B;
-        font-size: 0.92rem;
+        font-size: 0.95rem;
         font-weight: 800;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
       }
       #${MODAL_ID} .mwg-remove-check-label input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
+        width: 19px;
+        height: 19px;
         accent-color: #EA580C;
         cursor: pointer;
       }
       #${MODAL_ID} .mwg-slice-badge {
-        padding: 8px 12px;
+        padding: 8px 14px;
         border-radius: 12px;
-        background: rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.18);
         color: #F8FAFC;
-        font-size: 0.88rem;
+        font-size: 0.92rem;
         font-weight: 800;
       }
       #${MODAL_ID} .mwg-reset-slices-btn {
@@ -1080,20 +1092,20 @@
         background: #E0F2FE;
         color: #0369A1;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 0.88rem;
+        font-size: 0.92rem;
         font-weight: 700;
         cursor: pointer;
       }
 
-      /* Sağ Sütun: Sonuç Kartı */
+      /* Sağ Sütun: Büyütülmüş Sonuç Kartı */
       #${MODAL_ID} .mwg-result-card {
-        background: #FFFFFF;
+        background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
         border: 4px solid #E2E8F0;
-        border-bottom: 8px solid #CBD5E1;
-        border-radius: 28px;
-        padding: 24px;
-        box-shadow: 0 22px 55px rgba(15, 23, 42, 0.35);
-        min-height: 410px;
+        border-bottom: 10px solid #CBD5E1;
+        border-radius: 32px;
+        padding: 30px;
+        box-shadow: 0 26px 65px rgba(15, 23, 42, 0.45);
+        min-height: 480px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1107,21 +1119,21 @@
       }
       #${MODAL_ID} .mwg-result-empty {
         text-align: center;
-        padding: 18px 10px;
+        padding: 24px 12px;
       }
       #${MODAL_ID} .mwg-empty-wheel-icon {
-        font-size: 4rem;
-        margin-bottom: 10px;
+        font-size: 4.8rem;
+        margin-bottom: 12px;
       }
       #${MODAL_ID} .mwg-empty-title {
-        margin: 12px 0 8px;
+        margin: 14px 0 10px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1.55rem;
+        font-size: 1.85rem;
         color: #1E1B4B;
       }
       #${MODAL_ID} .mwg-empty-desc {
         margin: 0;
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         font-weight: 700;
         color: #475569;
         line-height: 1.55;
@@ -1132,94 +1144,94 @@
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 10px;
+        gap: 10px;
+        margin-bottom: 12px;
       }
       #${MODAL_ID} .mwg-topic-badge {
         display: inline-block;
-        padding: 6px 12px;
+        padding: 7px 14px;
         border-radius: 999px;
         background: #EEF2FF;
         color: #4338CA;
-        font-size: 0.86rem;
+        font-size: 0.94rem;
         font-weight: 800;
       }
       #${MODAL_ID} .mwg-selected-tag {
-        padding: 5px 12px;
+        padding: 6px 14px;
         border-radius: 999px;
         border: 2px solid;
-        font-size: 0.85rem;
+        font-size: 0.92rem;
         font-weight: 800;
       }
       #${MODAL_ID} .mwg-prompt-text {
-        margin: 4px 0 14px;
-        font-size: 1.05rem;
+        margin: 4px 0 16px;
+        font-size: 1.2rem;
         font-weight: 800;
         color: #334155;
       }
 
       #${MODAL_ID} .mwg-picked-display {
-        border: 4px solid;
-        border-radius: 24px;
-        padding: 22px 16px;
+        border: 5px solid;
+        border-radius: 26px;
+        padding: 28px 20px;
         text-align: center;
-        margin-bottom: 14px;
-        box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.7);
+        margin-bottom: 16px;
+        box-shadow: inset 0 2px 12px rgba(255, 255, 255, 0.75), 0 12px 26px rgba(15, 23, 42, 0.14);
       }
       #${MODAL_ID} .mwg-picked-value {
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-size: clamp(3rem, 5.8vw, 4.8rem);
         font-weight: 700;
         line-height: 1.1;
         letter-spacing: 0.03em;
       }
 
       #${MODAL_ID} .mwg-removed-pill {
-        margin-bottom: 12px;
-        padding: 7px 12px;
+        margin-bottom: 14px;
+        padding: 8px 14px;
         border-radius: 12px;
         background: #FFF7ED;
         border: 1.5px solid #FDBA74;
         color: #C2410C;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         font-weight: 800;
         text-align: center;
       }
 
       #${MODAL_ID} .mwg-answer-panel {
-        padding: 16px;
-        border-radius: 18px;
+        padding: 20px;
+        border-radius: 20px;
         background: #F8FAFC;
-        border: 2.5px dashed #CBD5E1;
+        border: 3px dashed #CBD5E1;
         text-align: center;
-        margin-bottom: 16px;
+        margin-bottom: 18px;
       }
       #${MODAL_ID} .mwg-answer-panel.is-revealed {
         background: linear-gradient(135deg, #ECFDF5 0%, #FEFCE8 100%);
-        border: 3px solid #22C55E;
-        box-shadow: 0 8px 22px rgba(34, 197, 94, 0.18);
+        border: 3.5px solid #22C55E;
+        box-shadow: 0 10px 26px rgba(34, 197, 94, 0.22);
       }
       #${MODAL_ID} .mwg-answer-hidden {
-        font-size: 0.98rem;
+        font-size: 1.08rem;
         font-weight: 700;
         color: #64748B;
       }
       #${MODAL_ID} .mwg-answer-title {
-        font-size: 0.86rem;
+        font-size: 0.95rem;
         font-weight: 800;
         color: #15803D;
         letter-spacing: 0.05em;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
       }
       #${MODAL_ID} .mwg-answer-main {
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.6rem, 3vw, 2.35rem);
+        font-size: clamp(1.9rem, 3.5vw, 2.85rem);
         font-weight: 700;
         color: #166534;
       }
       #${MODAL_ID} .mwg-answer-detail {
-        margin-top: 4px;
-        font-size: 0.94rem;
+        margin-top: 6px;
+        font-size: 1.05rem;
         font-weight: 800;
         color: #0F766E;
       }
@@ -1227,13 +1239,13 @@
       #${MODAL_ID} .mwg-result-actions {
         display: grid;
         grid-template-columns: 1fr 1.35fr;
-        gap: 12px;
+        gap: 14px;
       }
       #${MODAL_ID} .mwg-action-btn {
-        padding: 14px 16px;
-        border-radius: 16px;
+        padding: 16px 20px;
+        border-radius: 18px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1.08rem;
+        font-size: 1.2rem;
         font-weight: 700;
         cursor: pointer;
         display: inline-flex;
@@ -1249,16 +1261,16 @@
       #${MODAL_ID} .mwg-btn-listen {
         background: linear-gradient(180deg, #0EA5E9 0%, #0284C7 100%);
         border: 2px solid #0284C7;
-        border-bottom: 4px solid #0369A1;
+        border-bottom: 5px solid #0369A1;
         color: #FFFFFF;
-        box-shadow: 0 6px 16px rgba(2, 132, 199, 0.28);
+        box-shadow: 0 8px 20px rgba(2, 132, 199, 0.32);
       }
       #${MODAL_ID} .mwg-btn-reveal {
         background: linear-gradient(180deg, #10B981 0%, #059669 100%);
         border: 2px solid #059669;
-        border-bottom: 4px solid #047857;
+        border-bottom: 5px solid #047857;
         color: #FFFFFF;
-        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.28);
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.32);
       }
       #${MODAL_ID} .mwg-btn-reveal.is-active {
         background: linear-gradient(180deg, #64748B 0%, #475569 100%);
@@ -1266,15 +1278,15 @@
         border-bottom-color: #334155;
       }
 
-      @media (max-width: 960px) {
+      @media (max-width: 1024px) {
         #${MODAL_ID} .mwg-stage {
           grid-template-columns: 1fr;
           padding: 14px;
           gap: 18px;
         }
         #${MODAL_ID} .mwg-wheel-frame {
-          width: min(82vw, 390px);
-          height: min(82vw, 390px);
+          width: min(84vw, 440px);
+          height: min(84vw, 440px);
         }
         #${MODAL_ID} .mwg-result-card {
           min-height: auto;
@@ -1323,10 +1335,10 @@
       <div class="mwg-stage">
         <div class="mwg-wheel-column">
           <div class="mwg-wheel-frame">
-            <canvas id="moliWheelCanvas" width="520" height="520" title="Çarkı çevirmek için dokunun"></canvas>
+            <canvas id="moliWheelCanvas" width="560" height="560" title="Çarkı çevirmek için dokunun"></canvas>
             <!-- Sağ Kenarda Sabit Büyük Ok İmleci -->
             <div class="mwg-wheel-pointer" id="moliWheelPointer" aria-hidden="true">
-              <svg width="58" height="54" viewBox="0 0 58 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="68" height="62" viewBox="0 0 58 54" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4 27L46 5V49L4 27Z" fill="#EF4444" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
                 <circle cx="44" cy="27" r="7" fill="#FDE047" stroke="#FFFFFF" stroke-width="3"/>
               </svg>
