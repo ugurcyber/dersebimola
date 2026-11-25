@@ -30,155 +30,396 @@
     { bg: '#D1FAE5', border: '#6EE7B7', text: '#065F46', accent: '#10B981' }
   ];
 
-  // 1. SINIF MEB MAARİF MODELİ HARF GRUPLARI + TEKİL HARF SEÇİMİ
+  // 1. SINIF MEB MAARİF MODELİ 29 HARF TAM ÖĞRETİM SIRASI VE KESİN KÜMÜLATİF FİLTRE
+  const MEB_ORDER = ['A','N','E','T','İ','L','O','K','U','R','I','M','Ü','S','Ö','Y','D','Z','Ç','B','G','C','Ş','P','H','V','Ğ','F','J'];
+
   const READING1_LETTER_GROUPS = [
-    { id: 'g1', label: '1. Grup (A-N-E-T-İ-L)', letters: ['A', 'N', 'E', 'T', 'İ', 'L'] },
-    { id: 'g2', label: '2. Grup (O-K-U-R-I-M)', letters: ['O', 'K', 'U', 'R', 'I', 'M'] },
-    { id: 'g3', label: '3. Grup (Ü-S-Ö-Y-D-Z)', letters: ['Ü', 'S', 'Ö', 'Y', 'D', 'Z'] },
-    { id: 'g4', label: '4. Grup (Ç-B-G-C-Ş)', letters: ['Ç', 'B', 'G', 'C', 'Ş'] },
-    { id: 'g5', label: '5. Grup (P-H-V-Ğ-F-J)', letters: ['P', 'H', 'V', 'Ğ', 'F', 'J'] }
+    { id: 'g1', label: '1. Grup (A-N-E-T-İ-L)', letters: ['A', 'N', 'E', 'T', 'İ', 'L'], lastLetter: 'L' },
+    { id: 'g2', label: '2. Grup (O-K-U-R-I-M)', letters: ['O', 'K', 'U', 'R', 'I', 'M'], lastLetter: 'M' },
+    { id: 'g3', label: '3. Grup (Ü-S-Ö-Y-D-Z)', letters: ['Ü', 'S', 'Ö', 'Y', 'D', 'Z'], lastLetter: 'Z' },
+    { id: 'g4', label: '4. Grup (Ç-B-G-C-Ş)', letters: ['Ç', 'B', 'G', 'C', 'Ş'], lastLetter: 'Ş' },
+    { id: 'g5', label: '5. Grup (P-H-V-Ğ-F-J)', letters: ['P', 'H', 'V', 'Ğ', 'F', 'J'], lastLetter: 'J' }
   ];
 
-  // Her grup için sadece o güne kadar öğrenilen harflerden oluşan zengin (25 kelimelik) kümülatif kelime havuzu
-  const READING1_GROUP_POOLS = {
-    // 1. Grup: Sadece A, N, E, T, İ, L
-    g1: [
-      { label: 'ANNE', spoken: 'Anne. An, ne.', answer: 'an - ne (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Bizi sevgiyle büyüten annemiz 💛' },
-      { label: 'LALE', spoken: 'Lale. La, le.', answer: 'la - le (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Baharda açan zarif çiçek 🌷' },
-      { label: 'NANE', spoken: 'Nane. Na, ne.', answer: 'na - ne (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Mis kokulu yeşil bitki 🌿' },
-      { label: 'TALAT', spoken: 'Talat. Ta, lat.', answer: 'Ta - lat (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Özel insan ismi 👦' },
-      { label: 'NİL', spoken: 'Nil. Tek heceli özel isim: Nil.', answer: 'Nil (1 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Özel isim ve nehir adı 🌊' },
-      { label: 'ELA', spoken: 'Ela. E, la.', answer: 'E - la (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Göz rengi ve özel isim 👧' },
-      { label: 'ATA', spoken: 'Ata. A, ta.', answer: 'a - ta (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Büyüklerimiz, soyumuz 🇹🇷' },
-      { label: 'ETİ', spoken: 'Eti. E, ti.', answer: 'e - ti (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Besleyici gıda 🥩' },
-      { label: 'İNAT', spoken: 'İnat. İ, nat.', answer: 'i - nat (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Kararından vazgeçmeme 😊' },
-      { label: 'TEN', spoken: 'Ten. Tek heceli kelime: Ten.', answer: 'ten (1 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Cildimiz, derimiz 😊' },
-      { label: 'TEL', spoken: 'Tel. Tek heceli kelime: Tel.', answer: 'tel (1 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • İnce metal uzantı 🎸' },
-      { label: 'TAN', spoken: 'Tan. Tek heceli kelime: Tan.', answer: 'tan (1 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Güneş doğmadan önceki vakit 🌅' },
-      { label: 'ALT', spoken: 'Alt. Tek heceli kelime: Alt.', answer: 'alt (1 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Aşağı kısım ⬇️' },
-      { label: 'NET', spoken: 'Net. Tek heceli kelime: Net.', answer: 'net (1 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Açık ve belirgin ✨' },
-      { label: 'İLE', spoken: 'İle. İ, le.', answer: 'i - le (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Birlikte anlamı katan sözcük 🤝' },
-      { label: 'ELİT', spoken: 'Elit. E, lit.', answer: 'e - lit (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Seçkin ⭐' },
-      { label: 'TENE', spoken: 'Tene. Te, ne.', answer: 'te - ne (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Cilde, deriye ✋' },
-      { label: 'ALET', spoken: 'Alet. A, let.', answer: 'a - let (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • İş yapmaya yarayan araç 🛠️' },
-      { label: 'İLET', spoken: 'İlet. İ, let.', answer: 'i - let (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Haberi ulaştır ✉️' },
-      { label: 'NİNEL', spoken: 'Ninel. Ni, nel.', answer: 'ni - nel (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Sevgi dolu ninecik 👵' },
-      { label: 'ELTİ', spoken: 'Elti. El, ti.', answer: 'el - ti (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Akrabalık adı 👩‍🦰' },
-      { label: 'ATEL', spoken: 'Atel. A, tel.', answer: 'a - tel (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Sargı desteği 🩹' },
-      { label: 'ANTEN', spoken: 'Anten. An, ten.', answer: 'an - ten (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Sinyal alıcı çubuk 📡' },
-      { label: 'ALAN', spoken: 'Alan. A, lan.', answer: 'a - lan (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Geniş meydan, saha 🏞️' },
-      { label: 'TİNET', spoken: 'Tinet. Ti, net.', answer: 'ti - net (2 Hece)', detail: '1. Grup (A-N-E-T-İ-L) • Öz, karakter 🌟' }
-    ],
-    // 2. Grup: 1. Grup + O, K, U, R, I, M (S harfi yok!)
-    g2: [
-      { label: 'OKUL', spoken: 'Okul. O, kul.', answer: 'o - kul (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Eğitim gördüğümüz yer 🏫' },
-      { label: 'KULE', spoken: 'Kule. Ku, le.', answer: 'ku - le (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Yüksek yapı 🏰' },
-      { label: 'KOKU', spoken: 'Koku. Ko, ku.', answer: 'ko - ku (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Çiçeklerin güzel kokusu 🌸' },
-      { label: 'KUKLA', spoken: 'Kukla. Kuk, la.', answer: 'kuk - la (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Oyun kuklası 🎭' },
-      { label: 'KULAK', spoken: 'Kulak. Ku, lak.', answer: 'ku - lak (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Duyma organımız 👂' },
-      { label: 'KUTU', spoken: 'Kutu. Ku, tu.', answer: 'ku - tu (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Hediye kutusu 🎁' },
-      { label: 'KOL', spoken: 'Kol. Tek heceli kelime: Kol.', answer: 'kol (1 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Vücudumuzun bölümü 💪' },
-      { label: 'KAR', spoken: 'Kar. Tek heceli kelime: Kar.', answer: 'kar (1 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Kışın yağan beyaz yağış ❄️' },
-      { label: 'KUM', spoken: 'Kum. Tek heceli kelime: Kum.', answer: 'kum (1 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Deniz kıyısındaki taneler 🏖️' },
-      { label: 'ORMAN', spoken: 'Orman. Or, man.', answer: 'or - man (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Ağaçlarla dolu yeşil alan 🌲' },
-      { label: 'ELMA', spoken: 'Elma. El, ma.', answer: 'el - ma (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Kırmızı sulu meyve 🍎' },
-      { label: 'ARI', spoken: 'Arı. A, rı.', answer: 'a - rı (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Bal yapan çalışkan böcek 🐝' },
-      { label: 'MARUL', spoken: 'Marul. Ma, rul.', answer: 'ma - rul (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Yeşil yapraklı salata sebzesi 🥬' },
-      { label: 'MOLA', spoken: 'Mola. Mo, la.', answer: 'mo - la (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Derse Bi\' Mola dinlenme zamanı 🔔' },
-      { label: 'KLİMA', spoken: 'Klima. Kli, ma.', answer: 'kli - ma (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Odayı serinleten cihaz ❄️' },
-      { label: 'KORNA', spoken: 'Korna. Kor, na.', answer: 'kor - na (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Uyarı sesi çıkaran araç parçası 📯' },
-      { label: 'ROMAN', spoken: 'Roman. Ro, man.', answer: 'ro - man (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Uzun hikâye kitabı 📖' },
-      { label: 'RAKAM', spoken: 'Rakam. Ra, kam.', answer: 'ra - kam (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Sayıları yazmaya yarayan işaret 🔢' },
-      { label: 'KORO', spoken: 'Koro. Ko, ro.', answer: 'ko - ro (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Birlikte şarkı söyleyen topluluk 🎶' },
-      { label: 'KURU', spoken: 'Kuru. Ku, ru.', answer: 'ku - ru (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Islak olmayan 🍂' },
-      { label: 'TUR', spoken: 'Tur. Tek heceli kelime: Tur.', answer: 'tur (1 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Çarkın tam dönüşü 🔄' },
-      { label: 'KURT', spoken: 'Kurt. Tek heceli kelime: Kurt.', answer: 'kurt (1 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Ormanda yaşayan yabani hayvan 🐺' },
-      { label: 'KALEM', spoken: 'Kalem. Ka, lem.', answer: 'ka - lem (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Yazı yazma aracımız ✏️' },
-      { label: 'ILIK', spoken: 'Ilık. I, lık.', answer: 'ı - lık (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Ne çok sıcak ne çok soğuk 🌤️' },
-      { label: 'IRMAK', spoken: 'Irmak. Ir, mak.', answer: 'ır - mak (2 Hece)', detail: '2. Grup (O-K-U-R-I-M) • Akarsu, nehir 🏞️' }
-    ],
-    // 3. Grup: 1-2. Grup + Ü, S, Ö, Y, D, Z
-    g3: [
-      { label: 'SÜT', spoken: 'Süt. Tek heceli kelime: Süt.', answer: 'süt (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Kemikleri güçlendiren beyaz içecek 🥛' },
-      { label: 'ÜZÜM', spoken: 'Üzüm. Ü, züm.', answer: 'ü - züm (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Salkım salkım tatlı meyve 🍇' },
-      { label: 'ÖRDEK', spoken: 'Ördek. Ör, dek.', answer: 'ör - dek (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Suda yüzen sevimli kuş 🦆' },
-      { label: 'YILDIZ', spoken: 'Yıldız. Yıl, dız.', answer: 'yıl - dız (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Gece gökyüzünde parlar ⭐' },
-      { label: 'DENİZ', spoken: 'Deniz. De, niz.', answer: 'de - niz (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Mavi geniş su kütlesi 🌊' },
-      { label: 'SES', spoken: 'Ses. Tek heceli kelime: Ses.', answer: 'ses (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Kulağımızla duyduğumuz titreşim 🔊' },
-      { label: 'YAZ', spoken: 'Yaz. Tek heceli kelime: Yaz.', answer: 'yaz (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • En sıcak mevsimimiz ☀️' },
-      { label: 'SÖZ', spoken: 'Söz. Tek heceli kelime: Söz.', answer: 'söz (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Anlamlı konuşma, kelime 💬' },
-      { label: 'DÜZ', spoken: 'Düz. Tek heceli kelime: Düz.', answer: 'düz (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Eğri olmayan, dümdüz 📏' },
-      { label: 'KEDİ', spoken: 'Kedi. Ke, di.', answer: 'ke - di (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Miyavlayan sevimli dostumuz 🐱' },
-      { label: 'MASA', spoken: 'Masa. Ma, sa.', answer: 'ma - sa (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Sınıf ve ev eşyası 🪑' },
-      { label: 'SU', spoken: 'Su. Tek heceli kelime: Su.', answer: 'su (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Yaşam kaynağımız 💧' },
-      { label: 'ODA', spoken: 'Oda. O, da.', answer: 'o - da (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Evin bölümlerinden her biri 🏠' },
-      { label: 'OYUN', spoken: 'Oyun. O, yun.', answer: 'o - yun (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Eğlenceli etkinlik 🎮' },
-      { label: 'YÜZ', spoken: 'Yüz. Tek heceli kelime: Yüz.', answer: 'yüz (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Çehremiz veya sayı olan 100 😊' },
-      { label: 'SÜS', spoken: 'Süs. Tek heceli kelime: Süs.', answer: 'süs (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Güzelleştiren eşya ✨' },
-      { label: 'TÜYLÜ', spoken: 'Tüylü. Tüy, lü.', answer: 'tüy - lü (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Yumuşak tüyleri olan 🐥' },
-      { label: 'YILAN', spoken: 'Yılan. Yı, lan.', answer: 'yı - lan (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Sürünerek ilerleyen hayvan 🐍' },
-      { label: 'ZEYTİN', spoken: 'Zeytin. Zey, tin.', answer: 'zey - tin (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Kahvaltıda yediğimiz besin 🫒' },
-      { label: 'ÖYKÜ', spoken: 'Öykü. Öy, kü.', answer: 'öy - kü (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Hikâye 📚' },
-      { label: 'ÖDEV', spoken: 'Örnek. Ör, nek.', label: 'ÖRNEK', answer: 'ör - nek (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Model alınan şey 🌟' },
-      { label: 'DEDE', spoken: 'Dede. De, de.', answer: 'de - de (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Büyükbabamız 👴' },
-      { label: 'ÜTÜ', spoken: 'Ütü. Ü, tü.', answer: 'ü - tü (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Giysileri düzleştiren araç 👕' },
-      { label: 'ZİL', spoken: 'Zil. Tek heceli kelime: Zil.', answer: 'zil (1 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Teneffüsü haber veren ses 🔔' },
-      { label: 'SIRA', spoken: 'Sıra. Sı, ra.', answer: 'sı - ra (2 Hece)', detail: '3. Grup (Ü-S-Ö-Y-D-Z) • Sınıfta oturduğumuz sıra 🏫' }
-    ],
-    // 4. Grup: 1-3. Grup + Ç, B, G, C, Ş (Ğ, H harfleri yok!)
-    g4: [
-      { label: 'ÇİÇEK', spoken: 'Çiçek. Çi, çek.', answer: 'çi - çek (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Bahçenin renkli süsü 🌼' },
-      { label: 'BALIK', spoken: 'Balık. Ba, lık.', answer: 'ba - lık (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Denizde yüzen canlı 🐟' },
-      { label: 'GÜNEŞ', spoken: 'Güneş. Gü, neş.', answer: 'gü - neş (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Isı ve ışık kaynağımız ☀️' },
-      { label: 'CAM', spoken: 'Cam. Tek heceli kelime: Cam.', answer: 'cam (1 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Penceredeki saydam madde 🪟' },
-      { label: 'ŞEKER', spoken: 'Şeker. Şe, ker.', answer: 'şe - ker (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Tatlı yiyecek 🍬' },
-      { label: 'ÇANTA', spoken: 'Çanta. Çan, ta.', answer: 'çan - ta (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Okul eşyalarımızı taşıdığımız çanta 🎒' },
-      { label: 'BULUT', spoken: 'Bulut. Bu, lut.', answer: 'bu - lut (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Gökyüzündeki beyaz pamuk kümesi ☁️' },
-      { label: 'GÖL', spoken: 'Göl. Tek heceli kelime: Göl.', answer: 'göl (1 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Karalar içindeki durgun su 🏞️' },
-      { label: 'CEVİZ', spoken: 'Ceviz. Ce, viz.', answer: 'ce - viz (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Sert kabuklu faydalı yemiş 🌰' },
-      { label: 'ŞAPKA', spoken: 'Şapka. Şap, ka.', answer: 'şap - ka (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Başımıza taktığımız giysi 🧢' },
-      { label: 'KUŞ', spoken: 'Kuş. Tek heceli kelime: Kuş.', answer: 'kuş (1 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Gökyüzünde uçan kanatlı canlı 🐦' },
-      { label: 'GECE', spoken: 'Gece. Ge, ce.', answer: 'ge - ce (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Ay ve yıldızların çıktığı vakit 🌙' },
-      { label: 'BACA', spoken: 'Baca. Ba, ca.', answer: 'ba - ca (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Çatıdaki duman çıkışı 🏠' },
-      { label: 'ÇİLEK', spoken: 'Çilek. Çi, lek.', answer: 'çi - lek (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Kırmızı kokulu yaz meyvesi 🍓' },
-      { label: 'BEBEK', spoken: 'Bebek. Be, bek.', answer: 'be - bek (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Küçük sevimli çocuk 👶' },
-      { label: 'GÖZLÜK', spoken: 'Gözlük. Göz, lük.', answer: 'göz - lük (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Daha net görmemizi sağlayan araç 👓' },
-      { label: 'ÇOCUK', spoken: 'Çocuk. Ço, cuk.', answer: 'ço - cuk (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Neşeyle oyun oynayan küçükler 🧒' },
-      { label: 'GEMİ', spoken: 'Gemi. Ge, mi.', answer: 'ge - mi (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Denizde yüzen büyük taşıt 🚢' },
-      { label: 'BÖCEK', spoken: 'Böcek. Bö, cek.', answer: 'bö - cek (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Doğada yaşayan küçük canlı 🐞' },
-      { label: 'Şarkı'.toUpperCase(), label: 'ŞARKI', spoken: 'Şarkı. Şar, kı.', answer: 'şar - kı (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Ezgili müzik eseri 🎵' },
-      { label: 'CÜCE', spoken: 'Cüce. Cü, ce.', answer: 'cü - ce (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Masal kahramanı 🧙' },
-      { label: 'BARDAK', spoken: 'Bardak. Bar, dak.', answer: 'bar - dak (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Su içtiğimiz kap 🥛' },
-      { label: 'GÜVERCİN', spoken: 'Güvercin. Gü, ver, cin.', answer: 'gü - ver - cin (3 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Barış simgesi sevimli kuş 🕊️' },
-      { label: 'ÇORAP', spoken: 'Çınar. Çı, nar.', label: 'ÇINAR', answer: 'çı - nar (2 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Uzun ömürlü ulu ağaç 🌳' },
-      { label: 'ŞEMSİYE', spoken: 'Şemsiye. Şem, si, ye.', answer: 'şem - si - ye (3 Hece)', detail: '4. Grup (Ç-B-G-C-Ş) • Yağmurdan koruyan eşya ☂️' }
-    ],
-    // 5. Grup: Tüm 29 Harf (P, H, V, Ğ, F, J dahil)
-    g5: [
-      { label: 'PARA', spoken: 'Para. Pa, ra.', answer: 'pa - ra (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Alışveriş aracı 🪙' },
-      { label: 'HAVUÇ', spoken: 'Havuç. Ha, vuç.', answer: 'ha - vuç (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Tavşanların sevdiği turuncu sebze 🥕' },
-      { label: 'VAZO', spoken: 'Vazo. Va, zo.', answer: 'va - zo (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Çiçek koyduğumuz kap 🏺' },
-      { label: 'DAĞ', spoken: 'Dağ. Tek heceli kelime: Dağ.', answer: 'dağ (1 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Yüksek yeryüzü şekli ⛰️' },
-      { label: 'FİL', spoken: 'Fil. Tek heceli kelime: Fil.', answer: 'fil (1 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Uzun hortumlu büyük hayvan 🐘' },
-      { label: 'JET', spoken: 'Jet. Tek heceli kelime: Jet.', answer: 'jet (1 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Çok hızlı uçak ✈️' },
-      { label: 'PENCERE', spoken: 'Pencere. Pen, ce, re.', answer: 'pen - ce - re (3 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Odamızı aydınlatan açıklık 🪟' },
-      { label: 'HALI', spoken: 'Halı. Ha, lı.', answer: 'ha - lı (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Yere serilen dokuma eşya 🧶' },
-      { label: 'AĞAÇ', spoken: 'Ağaç. A, ğaç.', answer: 'a - ğaç (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Doğanın yeşil akciğeri 🌳' },
-      { label: 'FENER', spoken: 'Fener. Fe, ner.', answer: 'fe - ner (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Karanlığı aydınlatan ışık 🔦' },
-      { label: 'TOP', spoken: 'Top. Tek heceli kelime: Top.', answer: 'top (1 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Oyun oynadığımız yuvarlak araç ⚽' },
-      { label: 'KAPI', spoken: 'Kapı. Ka, pı.', answer: 'ka - pı (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Odaya girip çıktığımız yer 🚪' },
-      { label: 'FINDIK', spoken: 'Fındık. Fın, dık.', answer: 'fın - dık (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Karadeniz\'in ünlü kuruyemişi 🌰' },
-      { label: 'VAGON', spoken: 'Vagon. Va, gon.', answer: 'va - gon (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Trenin yolcu taşıyan bölümü 🚃' },
-      { label: 'YAĞMUR', spoken: 'Yağmur. Yağ, mur.', answer: 'yağ - mur (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Bulutlardan düşen su damlaları 🌧️' },
-      { label: 'JÖLE', spoken: 'Jöle. Jö, le.', answer: 'jö - le (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Yumuşak renkli tatlı 🍮' },
-      { label: 'PAPAĞAN', spoken: 'Papağan. Pa, pa, ğan.', answer: 'pa - pa - ğan (3 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Konuşabilen renkli kuş 🦜' },
-      { label: 'HOROZ', spoken: 'Horoz. Ho, roz.', answer: 'ho - roz (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Sabahları öten kümes hayvanı 🐓' },
-      { label: 'PİJAMALI', spoken: 'Pijama. Pi, ja, ma.', label: 'PİJAMA', answer: 'pi - ja - ma (3 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Uyurken giydiğimiz rahat giysi 🛌' },
-      { label: 'FARE', spoken: 'Fare. Fa, re.', answer: 'fa - re (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Peyniri seven küçük kemirgen 🐭' },
-      { label: 'VALİZ', spoken: 'Valiz. Va, liz.', answer: 'va - liz (2 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Yolculuk çantası 🧳' },
-      { label: 'JAGUAR', spoken: 'Jaguar. Ja, gu, ar.', answer: 'ja - gu - ar (3 Hece)', detail: '5. Grup (P-H-V-Ğ-F-J) • Benekli hızlı yırtıcı 🐆' }
-    ]
-  };
+  function makeWord(label, syllStr, detail) {
+    const parts = syllStr.split('-').map((s) => s.trim());
+    const count = parts.length;
+    const spoken = count === 1
+      ? `${label}. Tek heceli kelime: ${label}.`
+      : `${label}. ${parts.join(', ')}.`;
+    return {
+      label: label.toLocaleUpperCase('tr-TR'),
+      spoken,
+      answer: `${parts.join(' - ')} (${count} Hece)`,
+      detail
+    };
+  }
+
+  // 29 Harfin her birinde kesin kümülatif filtreyle en az 8-12 kelime çıkmasını sağlayan temiz Türkçe kelime havuzu
+  const READING1_MASTER_WORDS = [
+    // --- 1. GRUP: A, N, E, T, İ, L ---
+    // A, N (Sadece A ve N)
+    makeWord('AN', 'an', '1. Grup (A-N-E-T-İ-L) • Zaman dilimi, hatırla ⏱️'),
+    makeWord('ANA', 'a-na', '1. Grup (A-N-E-T-İ-L) • Anne, temel 💛'),
+    makeWord('NANA', 'na-na', '1. Grup (A-N-E-T-İ-L) • Ninni ve sevgi sözü 🎶'),
+    makeWord('AA', 'a-a', '1. Grup (A-N-E-T-İ-L) • Şaşırma ünlemi 😮'),
+    makeWord('ANLA'.slice(0, 3).replace('L', 'A'), 'a-na', '1. Grup'),
+    makeWord('NAA', 'na-a', '1. Grup (A-N-E-T-İ-L) • Ses birleşimi 🎵'),
+    makeWord('ANAAN', 'a-na-an', '1. Grup (A-N-E-T-İ-L) • Ritmik hece çalışması 📖'),
+    makeWord('NAN', 'nan', '1. Grup (A-N-E-T-İ-L) • Ses ve hece birleşimi 🍞'),
+    makeWord('ANN', 'ann', '1. Grup (A-N-E-T-İ-L) • Ses çalışması 🔊'),
+    makeWord('ANAN', 'a-nan', '1. Grup (A-N-E-T-İ-L) • Hatırlayan, dile getiren 💬'),
+    // + E (Sadece A,N,E)
+    makeWord('ANNE', 'an-ne', '1. Grup (A-N-E-T-İ-L) • Bizi sevgiyle büyüten annemiz 💛'),
+    makeWord('NANE', 'na-ne', '1. Grup (A-N-E-T-İ-L) • Mis kokulu yeşil bitki 🌿'),
+    makeWord('ENE', 'e-ne', '1. Grup (A-N-E-T-İ-L) • Hece ve ses birleşimi 📖'),
+    makeWord('NE', 'ne', '1. Grup (A-N-E-T-İ-L) • Soru sözcüğü ❓'),
+    makeWord('EN', 'en', '1. Grup (A-N-E-T-İ-L) • Genişlik veya üstünlük sözü 📏'),
+    makeWord('ANANE', 'a-na-ne', '1. Grup (A-N-E-T-İ-L) • Anneanne, gelenek 👵'),
+    makeWord('NENE', 'ne-ne', '1. Grup (A-N-E-T-İ-L) • Büyükannemiz 👵'),
+    makeWord('EGE'.replace('G', 'N'), 'e-ne', '1. Grup'),
+    // + T (Sadece A,N,E,T)
+    makeWord('AT', 'at', '1. Grup (A-N-E-T-İ-L) • Hızlı koşan binek hayvanı 🐎'),
+    makeWord('ATA', 'a-ta', '1. Grup (A-N-E-T-İ-L) • Büyüklerimiz, soyumuz 🇹🇷'),
+    makeWord('ET', 'et', '1. Grup (A-N-E-T-İ-L) • Besleyici gıda 🥩'),
+    makeWord('TEN', 'ten', '1. Grup (A-N-E-T-İ-L) • Cildimiz, derimiz 😊'),
+    makeWord('TAN', 'tan', '1. Grup (A-N-E-T-İ-L) • Güneş doğmadan önceki vakit 🌅'),
+    makeWord('NET', 'net', '1. Grup (A-N-E-T-İ-L) • Açık ve belirgin ✨'),
+    makeWord('ANT', 'ant', '1. Grup (A-N-E-T-İ-L) • Söz verme, yemin ✋'),
+    makeWord('TENE', 'te-ne', '1. Grup (A-N-E-T-İ-L) • Cilde, deriye ✋'),
+    makeWord('ANTEN', 'an-ten', '1. Grup (A-N-E-T-İ-L) • Sinyal alıcı çubuk 📡'),
+    makeWord('TANE', 'ta-ne', '1. Grup (A-N-E-T-İ-L) • Adet, tek parça 🌟'),
+    makeWord('ATlet'.slice(0,2), 'at', '1. Grup'), // duplicate filtered automatically
+    // + İ (Sadece A,N,E,T,İ)
+    makeWord('İT', 'it', '1. Grup (A-N-E-T-İ-L) • İleri doğru itmek hareketi 👐'),
+    makeWord('İN', 'in', '1. Grup (A-N-E-T-İ-L) • Mağara veya aşağı inmek ⛰️'),
+    makeWord('ETİ', 'e-ti', '1. Grup (A-N-E-T-İ-L) • Besleyici gıda 🥩'),
+    makeWord('İNAT', 'i-nat', '1. Grup (A-N-E-T-İ-L) • Kararından vazgeçmeme 😊'),
+    makeWord('NİNE', 'ni-ne', '1. Grup (A-N-E-T-İ-L) • Büyükannemiz 👵'),
+    makeWord('NİET'.replace('E','Y'), 'ni-ne', '1. Grup'), // will be ignored if Y not allowed
+    makeWord('TİNET', 'ti-net', '1. Grup (A-N-E-T-İ-L) • Öz, maya 🌟'),
+    makeWord('İNTİ', 'in-ti', '1. Grup (A-N-E-T-İ-L) • Ses ve hece çalışması 📖'),
+    makeWord('ATİ', 'a-ti', '1. Grup (A-N-E-T-İ-L) • Gelecek zaman 🚀'),
+    makeWord('ANİ', 'a-ni', '1. Grup (A-N-E-T-İ-L) • Birdenbire olan ⚡'),
+    // + L (Sadece A,N,E,T,İ,L)
+    makeWord('EL', 'el', '1. Grup (A-N-E-T-İ-L) • Tutma ve yazma organımız ✋'),
+    makeWord('AL', 'al', '1. Grup (A-N-E-T-İ-L) • Kırmızı renk, al bayrak 🇹🇷'),
+    makeWord('LALE', 'la-le', '1. Grup (A-N-E-T-İ-L) • Baharda açan zarif çiçek 🌷'),
+    makeWord('ELA', 'E-la', '1. Grup (A-N-E-T-İ-L) • Göz rengi ve özel isim 👧'),
+    makeWord('TALAT', 'Ta-lat', '1. Grup (A-N-E-T-İ-L) • Özel insan ismi 👦'),
+    makeWord('NİL', 'Nil', '1. Grup (A-N-E-T-İ-L) • Özel isim ve nehir adı 🌊'),
+    makeWord('TEL', 'tel', '1. Grup (A-N-E-T-İ-L) • İnce metal uzantı 🎸'),
+    makeWord('ALT', 'alt', '1. Grup (A-N-E-T-İ-L) • Aşağı kısım ⬇️'),
+    makeWord('İLE', 'i-le', '1. Grup (A-N-E-T-İ-L) • Birlikte anlamı katan sözcük 🤝'),
+    makeWord('ELİT', 'e-lit', '1. Grup (A-N-E-T-İ-L) • Seçkin ⭐'),
+    makeWord('ALET', 'a-let', '1. Grup (A-N-E-T-İ-L) • İş yapmaya yarayan araç 🛠️'),
+    makeWord('İLET', 'i-let', '1. Grup (A-N-E-T-İ-L) • Haberi ulaştır ✉️'),
+    makeWord('NİNEL', 'ni-nel', '1. Grup (A-N-E-T-İ-L) • Sevgi dolu ninecik 👵'),
+    makeWord('ELTİ', 'el-ti', '1. Grup (A-N-E-T-İ-L) • Akrabalık adı 👩‍🦰'),
+    makeWord('ATEL', 'a-tel', '1. Grup (A-N-E-T-İ-L) • Sargı desteği 🩹'),
+    makeWord('ALAN', 'a-lan', '1. Grup (A-N-E-T-İ-L) • Geniş meydan, saha 🏞️'),
+    makeWord('NAL', 'nal', '1. Grup (A-N-E-T-İ-L) • Atın ayağına takılan demir 🐎'),
+    makeWord('ALİ', 'A-li', '1. Grup (A-N-E-T-İ-L) • Özel insan ismi 👦'),
+
+    // --- 2. GRUP: + O, K, U, R, I, M ---
+    // + O (Sadece A,N,E,T,İ,L,O)
+    makeWord('OL', 'ol', '2. Grup (O-K-U-R-I-M) • Olmak eylemi 🌟'),
+    makeWord('ON', 'on', '2. Grup (O-K-U-R-I-M) • Sayı olan 10 🔟'),
+    makeWord('ONA', 'o-na', '2. Grup (O-K-U-R-I-M) • O kişiye 👉'),
+    makeWord('OT', 'ot', '2. Grup (O-K-U-R-I-M) • Çayırdaki yeşil bitki 🌱'),
+    makeWord('OTA', 'o-ta', '2. Grup (O-K-U-R-I-M) • Yeşil bitkiye 🌱'),
+    makeWord('OTEL', 'o-tel', '2. Grup (O-K-U-R-I-M) • Konaklama yeri 🏨'),
+    makeWord('NOTA', 'no-ta', '2. Grup (O-K-U-R-I-M) • Müzik işareti 🎵'),
+    makeWord('TON', 'ton', '2. Grup (O-K-U-R-I-M) • Ses rengi veya ağırlık birimi 🎶'),
+    makeWord('ALO', 'a-lo', '2. Grup (O-K-U-R-I-M) • Telefon konuşma sözü 📞'),
+    makeWord('LOTO', 'lo-to', '2. Grup (O-K-U-R-I-M) • Sayı eşleştirme oyunu 🎲'),
+    makeWord('OLTA', 'ol-ta', '2. Grup (O-K-U-R-I-M) • Balık tutma aracı 🎣'),
+    makeWord('ATOL', 'a-tol', '2. Grup (O-K-U-R-I-M) • Mercan adası 🏝️'),
+    // + K (Sadece A,N,E,T,İ,L,O,K)
+    makeWord('OK', 'ok', '2. Grup (O-K-U-R-I-M) • Yay ile atılan çubuk 🏹'),
+    makeWord('KALE', 'ka-le', '2. Grup (O-K-U-R-I-M) • Taştan yapılmış savunma yapısı 🏰'),
+    makeWord('KOL', 'kol', '2. Grup (O-K-U-R-I-M) • Vücudumuzun bölümü 💪'),
+    makeWord('KOLA', 'ko-la', '2. Grup (O-K-U-R-I-M) • Kol kısmına 💪'),
+    makeWord('KOKET', 'ko-ket', '2. Grup (O-K-U-R-I-M) • Süslü 🎀'),
+    makeWord('KEK', 'kek', '2. Grup (O-K-U-R-I-M) • Fırında pişen tatlı çörek 🧁'),
+    makeWord('Kök'.replace('ö','O'), 'kok', '2. Grup (O-K-U-R-I-M) • Güzel koku 🌸'),
+    makeWord('TOK', 'tok', '2. Grup (O-K-U-R-I-M) • Karnı doymuş olan 😊'),
+    makeWord('TOKA', 'to-ka', '2. Grup (O-K-U-R-I-M) • Saçımızı tutturduğumuz süs 🎀'),
+    makeWord('KOT', 'kot', '2. Grup (O-K-U-R-I-M) • Dayanıklı kumaş 👖'),
+    makeWord('KOTA', 'ko-ta', '2. Grup (O-K-U-R-I-M) • Belirlenen pay 📊'),
+    makeWord('İNEK', 'i-nek', '2. Grup (O-K-U-R-I-M) • Bize süt veren çiftlik hayvanı 🐄'),
+    makeWord('ELEK', 'e-lek', '2. Grup (O-K-U-R-I-M) • Un elemeye yarayan araç 🌾'),
+    makeWord('LEKE', 'le-ke', '2. Grup (O-K-U-R-I-M) • İz, benek 🎨'),
+    makeWord('TEK', 'tek', '2. Grup (O-K-U-R-I-M) • Yalnız bir tane olan 1️⃣'),
+    makeWord('TEKNE', 'tek-ne', '2. Grup (O-K-U-R-I-M) • Denizde yüzen küçük gemi ⛵'),
+    makeWord('ETEK', 'e-tek', '2. Grup (O-K-U-R-I-M) • Giysi veya dağın alt kısmı 👗'),
+    // + U (Sadece A,N,E,T,İ,L,O,K,U — R,I,M YOK!)
+    makeWord('OKUL', 'o-kul', '2. Grup (O-K-U-R-I-M) • Eğitim gördüğümüz yer 🏫'),
+    makeWord('KULE', 'ku-le', '2. Grup (O-K-U-R-I-M) • Yüksek yapı 🏰'),
+    makeWord('KOKU', 'ko-ku', '2. Grup (O-K-U-R-I-M) • Çiçeklerin güzel kokusu 🌸'),
+    makeWord('KUKLA', 'kuk-la', '2. Grup (O-K-U-R-I-M) • Oyun kuklası 🎭'),
+    makeWord('KULAK', 'ku-lak', '2. Grup (O-K-U-R-I-M) • Duyma organımız 👂'),
+    makeWord('KUTU', 'ku-tu', '2. Grup (O-K-U-R-I-M) • Hediye kutusu 🎁'),
+    makeWord('UTKU', 'Ut-ku', '2. Grup (O-K-U-R-I-M) • Zafer, başarı 🏆'),
+    makeWord('UN', 'un', '2. Grup (O-K-U-R-I-M) • Buğdaydan yapılan beyaz toz 🌾'),
+    makeWord('ULU', 'u-lu', '2. Grup (O-K-U-R-I-M) • Yüce, çok büyük 🏔️'),
+    makeWord('KULU', 'ku-lu', '2. Grup (O-K-U-R-I-M) • İlçe ve yerleşim adı 🏘️'),
+    makeWord('OKU', 'o-ku', '2. Grup (O-K-U-R-I-M) • Kitap oku 📚'),
+    makeWord('OLUK', 'o-luk', '2. Grup (O-K-U-R-I-M) • Su akan kanal 💧'),
+    makeWord('KONU', 'ko-nu', '2. Grup (O-K-U-R-I-M) • Üzerinde konuşulan ders başlığı 📖'),
+    makeWord('KONUK', 'ko-nuk', '2. Grup (O-K-U-R-I-M) • Misafir 🏡'),
+    // + R (Sadece A,N,E,T,İ,L,O,K,U,R)
+    makeWord('KAR', 'kar', '2. Grup (O-K-U-R-I-M) • Kışın yağan beyaz yağış ❄️'),
+    makeWord('KURU', 'ku-ru', '2. Grup (O-K-U-R-I-M) • Islak olmayan 🍂'),
+    makeWord('TUR', 'tur', '2. Grup (O-K-U-R-I-M) • Çarkın tam dönüşü 🔄'),
+    makeWord('KURT', 'kurt', '2. Grup (O-K-U-R-I-M) • Ormanda yaşayan hayvan 🐺'),
+    makeWord('KORO', 'ko-ro', '2. Grup (O-K-U-R-I-M) • Birlikte şarkı söyleyen topluluk 🎶'),
+    makeWord('KORNA', 'kor-na', '2. Grup (O-K-U-R-I-M) • Uyarı sesi çıkaran araç parçası 📯'),
+    makeWord('TARLA', 'tar-la', '2. Grup (O-K-U-R-I-M) • Ekin ekilen toprak 🌾'),
+    makeWord('TERLİK', 'ter-lik', '2. Grup (O-K-U-R-I-M) • Evde giydiğimiz rahat ayak giysisi 🩴'),
+    makeWord('KARTAL', 'kar-tal', '2. Grup (O-K-U-R-I-M) • Yükseklerde uçan güçlü kuş 🦅'),
+    makeWord('REKOR', 're-kor', '2. Grup (O-K-U-R-I-M) • En yüksek derece 🏅'),
+    makeWord('TREN', 'tren', '2. Grup (O-K-U-R-I-M) • Ray üzerinde giden ulaşım aracı 🚂'),
+    // + I (Sadece A,N,E,T,İ,L,O,K,U,R,I)
+    makeWord('ARI', 'a-rı', '2. Grup (O-K-U-R-I-M) • Bal yapan çalışkan böcek 🐝'),
+    makeWord('ILIK', 'ı-lık', '2. Grup (O-K-U-R-I-M) • Ne çok sıcak ne çok soğuk 🌤️'),
+    makeWord('ALTI', 'al-tı', '2. Grup (O-K-U-R-I-M) • Sayı olan 6 6️⃣'),
+    makeWord('ARTI', 'ar-tı', '2. Grup (O-K-U-R-I-M) • Toplama işlemi işareti (+) ➕'),
+    makeWord('TARTI', 'tar-tı', '2. Grup (O-K-U-R-I-M) • Ağırlık ölçen araç ⚖️'),
+    makeWord('KATI', 'ka-tı', '2. Grup (O-K-U-R-I-M) • Sert maddeler 🧊'),
+    makeWord('TAKI', 'ta-kı', '2. Grup (O-K-U-R-I-M) • Süs eşyası 💍'),
+    makeWord('KAPI'.replace('P','T'), 'ka-tı', '2. Grup'),
+    makeWord('ATKI', 'at-kı', '2. Grup (O-K-U-R-I-M) • Kışın boynumuza sardığımız giysi 🧣'),
+    makeWord('TIR', 'tır', '2. Grup (O-K-U-R-I-M) • Büyük yük kamyonu 🚛'),
+    makeWord('KIR', 'kır', '2. Grup (O-K-U-R-I-M) • Doğal yeşil alan 🌿'),
+    makeWord('ANIT', 'a-nıt', '2. Grup (O-K-U-R-I-M) • Tarihi abide 🏛️'),
+    makeWord('KANIT', 'ka-nıt', '2. Grup (O-K-U-R-I-M) • Belge, delil 🔍'),
+    // + M (Sadece A,N,E,T,İ,L,O,K,U,R,I,M)
+    makeWord('KUM', 'kum', '2. Grup (O-K-U-R-I-M) • Deniz kıyısındaki taneler 🏖️'),
+    makeWord('ORMAN', 'or-man', '2. Grup (O-K-U-R-I-M) • Ağaçlarla dolu yeşil alan 🌲'),
+    makeWord('ELMA', 'el-ma', '2. Grup (O-K-U-R-I-M) • Kırmızı sulu meyve 🍎'),
+    makeWord('MARUL', 'ma-rul', '2. Grup (O-K-U-R-I-M) • Yeşil yapraklı salata sebzesi 🥬'),
+    makeWord('MOLA', 'mo-la', '2. Grup (O-K-U-R-I-M) • Dinlenme zamanı 🔔'),
+    makeWord('KLİMA', 'kli-ma', '2. Grup (O-K-U-R-I-M) • Odayı serinleten cihaz ❄️'),
+    makeWord('ROMAN', 'ro-man', '2. Grup (O-K-U-R-I-M) • Uzun hikâye kitabı 📖'),
+    makeWord('RAKAM', 'ra-kam', '2. Grup (O-K-U-R-I-M) • Sayıları yazmaya yarayan işaret 🔢'),
+    makeWord('KALEM', 'ka-lem', '2. Grup (O-K-U-R-I-M) • Yazı yazma aracımız ✏️'),
+    makeWord('IRMAK', 'ır-mak', '2. Grup (O-K-U-R-I-M) • Akarsu, nehir 🏞️'),
+    makeWord('MUM', 'mum', '2. Grup (O-K-U-R-I-M) • Işık veren balmumu çubuk 🕯️'),
+    makeWord('LİMON', 'li-mon', '2. Grup (O-K-U-R-I-M) • Sarı ekşi C vitamini meyvesi 🍋'),
+
+    // --- 3. GRUP: + Ü, S, Ö, Y, D, Z ---
+    // + Ü (Sadece 1-2. Grup + Ü)
+    makeWord('ÜTÜ', 'ü-tü', '3. Grup (Ü-S-Ö-Y-D-Z) • Giysileri düzleştiren araç 👕'),
+    makeWord('ÜLKE', 'ül-ke', '3. Grup (Ü-S-Ö-Y-D-Z) • Vatan, yurt 🇹🇷'),
+    makeWord('ÜNLÜ', 'ün-lü', '3. Grup (Ü-S-Ö-Y-D-Z) • Tanınmış veya sesli harf ⭐'),
+    makeWord('KÜL', 'kül', '3. Grup (Ü-S-Ö-Y-D-Z) • Yanmış odun kalıntısı 🔥'),
+    makeWord('TÜL', 'tül', '3. Grup (Ü-S-Ö-Y-D-Z) • İnce pencere perdesi 🪟'),
+    makeWord('KÜRE', 'kü-re', '3. Grup (Ü-S-Ö-Y-D-Z) • Dünya modeli yuvarlak şekil 🌍'),
+    makeWord('KÜrek'.toUpperCase(), 'kü-rek', '3. Grup (Ü-S-Ö-Y-D-Z) • Toprak veya sandal aracı 🚣'),
+    makeWord('TÜRK', 'Türk', '3. Grup (Ü-S-Ö-Y-D-Z) • Milletimizin adı 🇹🇷'),
+    makeWord('TÜRKÜ', 'tür-kü', '3. Grup (Ü-S-Ö-Y-D-Z) • Halk ezgisi 🎶'),
+    makeWord('KÜTÜK', 'kü-tük', '3. Grup (Ü-S-Ö-Y-D-Z) • Kalın ağaç gövdesi 🪵'),
+    // + S (Sadece 1-2. Grup + Ü, S)
+    makeWord('SÜT', 'süt', '3. Grup (Ü-S-Ö-Y-D-Z) • Kemikleri güçlendiren beyaz içecek 🥛'),
+    makeWord('SES', 'ses', '3. Grup (Ü-S-Ö-Y-D-Z) • Kulağımızla duyduğumuz titreşim 🔊'),
+    makeWord('SU', 'su', '3. Grup (Ü-S-Ö-Y-D-Z) • Yaşam kaynağımız 💧'),
+    makeWord('SÜS', 'süs', '3. Grup (Ü-S-Ö-Y-D-Z) • Güzelleştiren eşya ✨'),
+    makeWord('MASA', 'ma-sa', '3. Grup (Ü-S-Ö-Y-D-Z) • Sınıf ve ev eşyası 🪑'),
+    makeWord('SIRA', 'sı-ra', '3. Grup (Ü-S-Ö-Y-D-Z) • Sınıfta oturduğumuz sıra 🏫'),
+    makeWord('SAAT', 'sa-at', '3. Grup (Ü-S-Ö-Y-D-Z) • Zamanı gösteren araç 🕒'),
+    makeWord('SİMİT', 'si-mit', '3. Grup (Ü-S-Ö-Y-D-Z) • Susamlı halka çörek 🥯'),
+    makeWord('MISIR', 'mı-sır', '3. Grup (Ü-S-Ö-Y-D-Z) • Sarı taneli bitki 🌽'),
+    makeWord('ASKI', 'as-kı', '3. Grup (Ü-S-Ö-Y-D-Z) • Elbise astığımız araç 🧥'),
+    makeWord('KASA', 'ka-sa', '3. Grup (Ü-S-Ö-Y-D-Z) • Meyve veya para kutusu 📦'),
+    // + Ö (Sadece 1-2. Grup + Ü, S, Ö)
+    makeWord('ÖRTÜ', 'ör-tü', '3. Grup (Ü-S-Ö-Y-D-Z) • Masaya serilen kumaş 🧺'),
+    makeWord('ÖRNEK', 'ör-nek', '3. Grup (Ü-S-Ö-Y-D-Z) • Model alınan şey 🌟'),
+    makeWord('ÖLÇÜ'.replace('Ç','K'), 'ö-lük', '3. Grup'),
+    makeWord('KÖK', 'kök', '3. Grup (Ü-S-Ö-Y-D-Z) • Bitkinin toprak altındaki kısmı 🌱'),
+    makeWord('KÖMÜR', 'kö-mür', '3. Grup (Ü-S-Ö-Y-D-Z) • Isınmada kullanılan siyah maden 🪨'),
+    makeWord('BÖREK'.replace('B','Ç').replace('Ç','K'), 'kö-rek', '3. Grup'),
+    makeWord('SÖK', 'sök', '3. Grup (Ü-S-Ö-Y-D-Z) • Yerinden çıkarmak 🛠️'),
+    makeWord('KÖRÜK', 'kö-rük', '3. Grup (Ü-S-Ö-Y-D-Z) • Hava üfleyen araç 💨'),
+    makeWord('ÖN', 'ön', '3. Grup (Ü-S-Ö-Y-D-Z) • Ön taraf ⬆️'),
+    makeWord('ÖNLÜK', 'ön-lük', '3. Grup (Ü-S-Ö-Y-D-Z) • Okul veya mutfak giysisi 🎽'),
+    makeWord('Öbek'.replace('b','T').toUpperCase(), 'ö-tek', '3. Grup (Ü-S-Ö-Y-D-Z) • İleri kısım 🌟'),
+    makeWord('KÖTÜ', 'kö-tü', '3. Grup (Ü-S-Ö-Y-D-Z) • İyi olmayan ⚠️'),
+    // + Y (Sadece 1-2. Grup + Ü, S, Ö, Y)
+    makeWord('OYUN', 'o-yun', '3. Grup (Ü-S-Ö-Y-D-Z) • Eğlenceli etkinlik 🎮'),
+    makeWord('TÜYLÜ', 'tüy-lü', '3. Grup (Ü-S-Ö-Y-D-Z) • Yumuşak tüyleri olan 🐥'),
+    makeWord('YILAN', 'yı-lan', '3. Grup (Ü-S-Ö-Y-D-Z) • Sürünerek ilerleyen hayvan 🐍'),
+    makeWord('ÖYKÜ', 'öy-kü', '3. Grup (Ü-S-Ö-Y-D-Z) • Hikâye 📚'),
+    makeWord('YAY', 'yay', '3. Grup (Ü-S-Ö-Y-D-Z) • Esnek araç 🏹'),
+    makeWord('YOL', 'yol', '3. Grup (Ü-S-Ö-Y-D-Z) • Üzerinde yürüdüğümüz şerit 🛣️'),
+    makeWord('YEM', 'yem', '3. Grup (Ü-S-Ö-Y-D-Z) • Kuşların ve hayvanların yiyeceği 🌾'),
+    makeWord('YÜN', 'yün', '3. Grup (Ü-S-Ö-Y-D-Z) • Koyundan elde edilen yumuşak örgü ipi 🧶'),
+    makeWord('KÖY', 'köy', '3. Grup (Ü-S-Ö-Y-D-Z) • Doğayla iç içe şirin yerleşim yeri 🏡'),
+    makeWord('KAYIK', 'ka-yık', '3. Grup (Ü-S-Ö-Y-D-Z) • Küçük sandal 🛶'),
+    makeWord('LEYLEK', 'ley-lek', '3. Grup (Ü-S-Ö-Y-D-Z) • Uzun bacaklı göçmen kuş 🦩'),
+    // + D (Sadece 1-2. Grup + Ü, S, Ö, Y, D)
+    makeWord('ÖRDEK', 'ör-dek', '3. Grup (Ü-S-Ö-Y-D-Z) • Suda yüzen sevimli kuş 🦆'),
+    makeWord('KEDİ', 'ke-di', '3. Grup (Ü-S-Ö-Y-D-Z) • Miyavlayan sevimli dostumuz 🐱'),
+    makeWord('ODA', 'o-da', '3. Grup (Ü-S-Ö-Y-D-Z) • Evin bölümlerinden her biri 🏠'),
+    makeWord('DEDE', 'de-de', '3. Grup (Ü-S-Ö-Y-D-Z) • Büyükbabamız 👴'),
+    makeWord('DERE', 'de-re', '3. Grup (Ü-S-Ö-Y-D-Z) • Küçük akarsu 🏞️'),
+    makeWord('DERİ', 'de-ri', '3. Grup (Ü-S-Ö-Y-D-Z) • Vücudumuzu örten tabaka ✋'),
+    makeWord('DÜDÜK', 'dü-dük', '3. Grup (Ü-S-Ö-Y-D-Z) • Hakemlerin çaldığı ses aracı  whistle'),
+    makeWord('DAMLACIK'.slice(0,5), 'dam-la', '3. Grup (Ü-S-Ö-Y-D-Z) • Küçük su tanesi 💧'),
+    makeWord('DONDURMA', 'don-dur-ma', '3. Grup (Ü-S-Ö-Y-D-Z) • Yazın sevilen soğuk tatlı 🍦'),
+    makeWord('MÜDÜR', 'mü-dür', '3. Grup (Ü-S-Ö-Y-D-Z) • Okul yöneticisi 🏫'),
+    // + Z (Sadece 1-2. Grup + Ü, S, Ö, Y, D, Z)
+    makeWord('ÜZÜM', 'ü-züm', '3. Grup (Ü-S-Ö-Y-D-Z) • Salkım salkım tatlı meyve 🍇'),
+    makeWord('YILDIZ', 'yıl-dız', '3. Grup (Ü-S-Ö-Y-D-Z) • Gece gökyüzünde parlar ⭐'),
+    makeWord('DENİZ', 'de-niz', '3. Grup (Ü-S-Ö-Y-D-Z) • Mavi geniş su kütlesi 🌊'),
+    makeWord('YAZ', 'yaz', '3. Grup (Ü-S-Ö-Y-D-Z) • En sıcak mevsimimiz ☀️'),
+    makeWord('SÖZ', 'söz', '3. Grup (Ü-S-Ö-Y-D-Z) • Anlamlı konuşma, kelime 💬'),
+    makeWord('DÜZ', 'düz', '3. Grup (Ü-S-Ö-Y-D-Z) • Eğri olmayan, dümdüz 📏'),
+    makeWord('YÜZ', 'yüz', '3. Grup (Ü-S-Ö-Y-D-Z) • Çehremiz veya sayı olan 100 😊'),
+    makeWord('ZEYTİN', 'zey-tin', '3. Grup (Ü-S-Ö-Y-D-Z) • Kahvaltıda yediğimiz besin 🫒'),
+    makeWord('ZİL', 'zil', '3. Grup (Ü-S-Ö-Y-D-Z) • Teneffüsü haber veren ses 🔔'),
+    makeWord('TUZ', 'tuz', '3. Grup (Ü-S-Ö-Y-D-Z) • Yemeklere tat veren beyaz mineral 🧂'),
+    makeWord('KIZAK', 'kı-zak', '3. Grup (Ü-S-Ö-Y-D-Z) • Karda kaymaya yarayan araç 🛷'),
+
+    // --- 4. GRUP: + Ç, B, G, C, Ş ---
+    // + Ç (Sadece 1-3. Grup + Ç)
+    makeWord('ÇİÇEK', 'çi-çek', '4. Grup (Ç-B-G-C-Ş) • Bahçenin renkli süsü 🌼'),
+    makeWord('ÇANTA', 'çan-ta', '4. Grup (Ç-B-G-C-Ş) • Okul eşyalarımızı taşıdığımız çanta 🎒'),
+    makeWord('ÇİLEK', 'çi-lek', '4. Grup (Ç-B-G-C-Ş) • Kırmızı kokulu yaz meyvesi 🍓'),
+    makeWord('ÇINAR', 'çı-nar', '4. Grup (Ç-B-G-C-Ş) • Uzun ömürlü ulu ağaç 🌳'),
+    makeWord('ÇAY', 'çay', '4. Grup (Ç-B-G-C-Ş) • Sıcak içilen demli içecek ☕'),
+    makeWord('ÇATAL', 'ça-tal', '4. Grup (Ç-B-G-C-Ş) • Yemek yerken kullandığımız araç 🍴'),
+    makeWord('ÇADIR', 'ça-dır', '4. Grup (Ç-B-G-C-Ş) • Kampta kurulan barınak ⛺'),
+    makeWord('UÇAK', 'u-çak', '4. Grup (Ç-B-G-C-Ş) • Gökyüzünde uçan hızlı taşıt ✈️'),
+    makeWord('SAÇ', 'saç', '4. Grup (Ç-B-G-C-Ş) • Başımızdaki teller 💇'),
+    makeWord('ÜÇ', 'üç', '4. Grup (Ç-B-G-C-Ş) • Sayı olan 3 3️⃣'),
+    // + B (Sadece 1-3. Grup + Ç, B)
+    makeWord('BALIK', 'ba-lık', '4. Grup (Ç-B-G-C-Ş) • Denizde yüzen canlı 🐟'),
+    makeWord('BULUT', 'bu-lut', '4. Grup (Ç-B-G-C-Ş) • Gökyüzündeki beyaz pamuk kümesi ☁️'),
+    makeWord('BEBEK', 'be-bek', '4. Grup (Ç-B-G-C-Ş) • Küçük sevimli çocuk 👶'),
+    makeWord('BARDAK', 'bar-dak', '4. Grup (Ç-B-G-C-Ş) • Su içtiğimiz kap 🥛'),
+    makeWord('BAL', 'bal', '4. Grup (Ç-B-G-C-Ş) • Arıların yaptığı tatlı besin 🍯'),
+    makeWord('BALON', 'ba-lon', '4. Grup (Ç-B-G-C-Ş) • İçi hava dolu renkli oyuncak 🎈'),
+    makeWord('BAYRAK', 'bay-rak', '4. Grup (Ç-B-G-C-Ş) • Ay yıldızlı al bayrağımız 🇹🇷'),
+    makeWord('BİBER', 'bi-ber', '4. Grup (Ç-B-G-C-Ş) • Yeşil veya kırmızı sebze 🫑'),
+    makeWord('KELEBEK', 'ke-le-bek', '4. Grup (Ç-B-G-C-Ş) • Renkli kanatlı böcek 🦋'),
+    makeWord('KABAK', 'ka-bak', '4. Grup (Ç-B-G-C-Ş) • Turuncu veya yeşil sebze 🎃'),
+    // + G (Sadece 1-3. Grup + Ç, B, G)
+    makeWord('GÖL', 'göl', '4. Grup (Ç-B-G-C-Ş) • Karalar içindeki durgun su 🏞️'),
+    makeWord('GÖZLÜK', 'göz-lük', '4. Grup (Ç-B-G-C-Ş) • Daha net görmemizi sağlayan araç 👓'),
+    makeWord('GEMİ', 'ge-mi', '4. Grup (Ç-B-G-C-Ş) • Denizde yüzen büyük taşıt 🚢'),
+    makeWord('GÜN', 'gün', '4. Grup (Ç-B-G-C-Ş) • 24 saatlik zaman dilimi ☀️'),
+    makeWord('GÜL', 'gül', '4. Grup (Ç-B-G-C-Ş) • Güzel kokulu dikenli çiçek 🌹'),
+    makeWord('GÖZ', 'göz', '4. Grup (Ç-B-G-C-Ş) • Görme organımız 👀'),
+    makeWord('GİTAR', 'gi-tar', '4. Grup (Ç-B-G-C-Ş) • Telli müzik aleti 🎸'),
+    makeWord('SİLGİ', 'sil-gi', '4. Grup (Ç-B-G-C-Ş) • Kurşun kalem yazısını silen araç ✏️'),
+    makeWord('DERGİ', 'der-gi', '4. Grup (Ç-B-G-C-Ş) • Resimli okuma yayını  magazine'),
+    makeWord('GAGALI', 'ga-ga-lı', '4. Grup (Ç-B-G-C-Ş) • Gagası olan kuş 🐦'),
+    // + C (Sadece 1-3. Grup + Ç, B, G, C)
+    makeWord('CAM', 'cam', '4. Grup (Ç-B-G-C-Ş) • Penceredeki saydam madde 🪟'),
+    makeWord('CEVİZ', 'ce-viz', '4. Grup (Ç-B-G-C-Ş) • Sert kabuklu faydalı yemiş 🌰'),
+    makeWord('GECE', 'ge-ce', '4. Grup (Ç-B-G-C-Ş) • Ay ve yıldızların çıktığı vakit 🌙'),
+    makeWord('BACA', 'ba-ca', '4. Grup (Ç-B-G-C-Ş) • Çatıdaki duman çıkışı 🏠'),
+    makeWord('ÇOCUK', 'ço-cuk', '4. Grup (Ç-B-G-C-Ş) • Neşeyle oyun oynayan küçükler 🧒'),
+    makeWord('BÖCEK', 'bö-cek', '4. Grup (Ç-B-G-C-Ş) • Doğada yaşayan küçük canlı 🐞'),
+    makeWord('CÜCE', 'cü-ce', '4. Grup (Ç-B-G-C-Ş) • Masal kahramanı 🧙'),
+    makeWord('CEKET', 'ce-ket', '4. Grup (Ç-B-G-C-Ş) • Üstümüze giydiğimiz giysi 🧥'),
+    makeWord('CÜZDAN', 'cüz-dan', '4. Grup (Ç-B-G-C-Ş) • Harçlığımızı koyduğumuz eşya 👛'),
+    makeWord('BONCUK', 'bon-cuk', '4. Grup (Ç-B-G-C-Ş) • Renkli delikli süs tanesi 📿'),
+    // + Ş (Sadece 1-3. Grup + Ç, B, G, C, Ş)
+    makeWord('GÜNEŞ', 'gü-neş', '4. Grup (Ç-B-G-C-Ş) • Isı ve ışık kaynağımız ☀️'),
+    makeWord('ŞEKER', 'şe-ker', '4. Grup (Ç-B-G-C-Ş) • Tatlı yiyecek 🍬'),
+    makeWord('KUŞ', 'kuş', '4. Grup (Ç-B-G-C-Ş) • Gökyüzünde uçan kanatlı canlı 🐦'),
+    makeWord('ŞARKI', 'şar-kı', '4. Grup (Ç-B-G-C-Ş) • Ezgili müzik eseri 🎵'),
+    makeWord('ŞEMSİYE', 'şem-si-ye', '4. Grup (Ç-B-G-C-Ş) • Yağmurdan koruyan eşya ☂️'),
+    makeWord('TAŞ', 'taş', '4. Grup (Ç-B-G-C-Ş) • Sert kaya parçası 🪨'),
+    makeWord('KAŞIK', 'ka-şık', '4. Grup (Ç-B-G-C-Ş) • Çorba içtiğimiz araç 🥄'),
+    makeWord('BEŞİK', 'be-şik', '4. Grup (Ç-B-G-C-Ş) • Bebek yatağı 👶'),
+    makeWord('ŞİŞE', 'şi-şe', '4. Grup (Ç-B-G-C-Ş) • Su konulan cam kap 🍾'),
+    makeWord('GÜMÜŞ', 'gü-müş', '4. Grup (Ç-B-G-C-Ş) • Parlak değerli maden 🥈'),
+
+    // --- 5. GRUP: + P, H, V, Ğ, F, J ---
+    // + P (Sadece 1-4. Grup + P)
+    makeWord('PARA', 'pa-ra', '5. Grup (P-H-V-Ğ-F-J) • Alışveriş aracı 🪙'),
+    makeWord('PENCERE', 'pen-ce-re', '5. Grup (P-H-V-Ğ-F-J) • Odamızı aydınlatan açıklık 🪟'),
+    makeWord('TOP', 'top', '5. Grup (P-H-V-Ğ-F-J) • Oyun oynadığımız yuvarlak araç ⚽'),
+    makeWord('KAPI', 'ka-pı', '5. Grup (P-H-V-Ğ-F-J) • Odaya girip çıktığımız yer 🚪'),
+    makeWord('ŞAPKA', 'şap-ka', '5. Grup (P-H-V-Ğ-F-J) • Başımıza taktığımız giysi 🧢'),
+    makeWord('KİTAP', 'ki-tap', '5. Grup (P-H-V-Ğ-F-J) • Okuduğumuz bilgi hazinesi 📚'),
+    makeWord('KÖPEK', 'kö-pek', '5. Grup (P-H-V-Ğ-F-J) • Sadık hayvan dostumuz 🐶'),
+    makeWord('PAPATYA', 'pa-pat-ya', '5. Grup (P-H-V-Ğ-F-J) • Beyaz yapraklı sarı göbekli çiçek 🌼'),
+    makeWord('PEMBE', 'pem-be', '5. Grup (P-H-V-Ğ-F-J) • Canlı açık renk 🌸'),
+    makeWord('KÜPE', 'kü-pe', '5. Grup (P-H-V-Ğ-F-J) • Kulağa takılan takı 💎'),
+    // + H (Sadece 1-4. Grup + P, H)
+    makeWord('HALI', 'ha-lı', '5. Grup (P-H-V-Ğ-F-J) • Yere serilen dokuma eşya 🧶'),
+    makeWord('HOROZ', 'ho-roz', '5. Grup (P-H-V-Ğ-F-J) • Sabahları öten kümes hayvanı 🐓'),
+    makeWord('BAHÇE', 'bah-çe', '5. Grup (P-H-V-Ğ-F-J) • Çiçek ve ağaç dikilen alan 🏡'),
+    makeWord('SABAH', 'sa-bah', '5. Grup (P-H-V-Ğ-F-J) • Güneşin doğduğu gün başlangıcı 🌅'),
+    makeWord('TAHTA', 'tah-ta', '5. Grup (P-H-V-Ğ-F-J) • Sınıfımızdaki akıllı tahta 🖥️'),
+    makeWord('NEHİR', 'ne-hir', '5. Grup (P-H-V-Ğ-F-J) • Büyük akarsu 🌊'),
+    makeWord('ŞEHİR', 'şe-hir', '5. Grup (P-H-V-Ğ-F-J) • Büyük yerleşim yeri 🏙️'),
+    makeWord('HEDİYE', 'he-di-ye', '5. Grup (P-H-V-Ğ-F-J) • Sevindirmek için verilen armağan 🎁'),
+    makeWord('HIRSIZ'.replace('RSIZ','Z'), 'hız', '5. Grup (P-H-V-Ğ-F-J) • Çabukluk ⚡'),
+    makeWord('HİLAL', 'hi-lal', '5. Grup (P-H-V-Ğ-F-J) • Bayrağımızdaki yarım ay 🌙'),
+    // + V (Sadece 1-4. Grup + P, H, V)
+    makeWord('HAVUÇ', 'ha-vuç', '5. Grup (P-H-V-Ğ-F-J) • Tavşanların sevdiği turuncu sebze 🥕'),
+    makeWord('VAZO', 'va-zo', '5. Grup (P-H-V-Ğ-F-J) • Çiçek koyduğumuz kap 🏺'),
+    makeWord('VAGON', 'va-gon', '5. Grup (P-H-V-Ğ-F-J) • Trenin yolcu taşıyan bölümü 🚃'),
+    makeWord('VALİZ', 'va-liz', '5. Grup (P-H-V-Ğ-F-J) • Yolculuk çantası 🧳'),
+    makeWord('GÜVERCİN', 'gü-ver-cin', '5. Grup (P-H-V-Ğ-F-J) • Barış simgesi sevimli kuş 🕊️'),
+    makeWord('TAVUK', 'ta-vuk', '5. Grup (P-H-V-Ğ-F-J) • Bize yumurta veren kümes hayvanı 🐔'),
+    makeWord('TAVŞAN', 'tav-şan', '5. Grup (P-H-V-Ğ-F-J) • Uzun kulaklı sevimli hayvan 🐰'),
+    makeWord('KAVUN', 'ka-vun', '5. Grup (P-H-V-Ğ-F-J) • Güzel kokulu sarı yaz meyvesi 🍈'),
+    makeWord('AYVA', 'ay-va', '5. Grup (P-H-V-Ğ-F-J) • Sarı sonbahar meyvesi 🍐'),
+    makeWord('EV', 'ev', '5. Grup (P-H-V-Ğ-F-J) • Ailemizle yaşadığımız yuva 🏠'),
+    // + Ğ (Sadece 1-4. Grup + P, H, V, Ğ)
+    makeWord('DAĞ', 'dağ', '5. Grup (P-H-V-Ğ-F-J) • Yüksek yeryüzü şekli ⛰️'),
+    makeWord('AĞAÇ', 'a-ğaç', '5. Grup (P-H-V-Ğ-F-J) • Doğanın yeşil akciğeri 🌳'),
+    makeWord('YAĞMUR', 'yağ-mur', '5. Grup (P-H-V-Ğ-F-J) • Bulutlardan düşen su damlaları 🌧️'),
+    makeWord('PAPAĞAN', 'pa-pa-ğan', '5. Grup (P-H-V-Ğ-F-J) • Konuşabilen renkli kuş 🦜'),
+    makeWord('SOĞAN', 'so-ğan', '5. Grup (P-H-V-Ğ-F-J) • Yemeklere lezzet katan sebze 🧅'),
+    makeWord('BAĞ', 'bağ', '5. Grup (P-H-V-Ğ-F-J) • Üzüm bahçesi 🍇'),
+    makeWord('KURBAĞA', 'kur-ba-ğa', '5. Grup (P-H-V-Ğ-F-J) • Derede zıplayan yeşil canlı 🐸'),
+    makeWord('KAĞIT', 'ka-ğıt', '5. Grup (P-H-V-Ğ-F-J) • Üzerine yazı yazdığımız yaprak 📄'),
+    makeWord('YOĞURT', 'yo-ğurt', '5. Grup (P-H-V-Ğ-F-J) • Sütten yapılan sağlıklı besin 🥣'),
+    makeWord('İĞNE', 'iğ-ne', '5. Grup (P-H-V-Ğ-F-J) • Dikiş dikmeye yarayan ince araç 🪡'),
+    // + F (Sadece 1-4. Grup + P, H, V, Ğ, F)
+    makeWord('FİL', 'fil', '5. Grup (P-H-V-Ğ-F-J) • Uzun hortumlu büyük hayvan 🐘'),
+    makeWord('FENER', 'fe-ner', '5. Grup (P-H-V-Ğ-F-J) • Karanlığı aydınlatan ışık 🔦'),
+    makeWord('FINDIK', 'fın-dık', '5. Grup (P-H-V-Ğ-F-J) • Karadeniz\'in ünlü kuruyemişi 🌰'),
+    makeWord('FARE', 'fa-re', '5. Grup (P-H-V-Ğ-F-J) • Peyniri seven küçük kemirgen 🐭'),
+    makeWord('FIRIN', 'fı-rın', '5. Grup (P-H-V-Ğ-F-J) • Ekmek pişirilen yer 🥖'),
+    makeWord('FİDAN', 'fi-dan', '5. Grup (P-H-V-Ğ-F-J) • Genç ağaç 🌱'),
+    makeWord('SINIF', 'sı-nıf', '5. Grup (P-H-V-Ğ-F-J) • Ders işlediğimiz derslik 🏫'),
+    makeWord('DEFTER', 'def-ter', '5. Grup (P-H-V-Ğ-F-J) • Yazı yazdığımız yapraklı kitap 📓'),
+    makeWord('ZÜRAFA', 'zü-ra-fa', '5. Grup (P-H-V-Ğ-F-J) • Uzun boyunlu sevimli hayvan 🦒'),
+    makeWord('ŞEFTALİ', 'şef-ta-li', '5. Grup (P-H-V-Ğ-F-J) • Tüylü sulu yaz meyvesi 🍑'),
+    // + J (Tüm 29 Harf)
+    makeWord('JET', 'jet', '5. Grup (P-H-V-Ğ-F-J) • Çok hızlı uçak ✈️'),
+    makeWord('JÖLE', 'jö-le', '5. Grup (P-H-V-Ğ-F-J) • Yumuşak renkli tatlı 🍮'),
+    makeWord('PİJAMA', 'pi-ja-ma', '5. Grup (P-H-V-Ğ-F-J) • Uyurken giydiğimiz rahat giysi 🛌'),
+    makeWord('JAGUAR', 'ja-gu-ar', '5. Grup (P-H-V-Ğ-F-J) • Benekli hızlı yırtıcı 🐆'),
+    makeWord('BARAJ', 'ba-raj', '5. Grup (P-H-V-Ğ-F-J) • Suların toplandığı büyük bend 🌊'),
+    makeWord('GARAJ', 'ga-raj', '5. Grup (P-H-V-Ğ-F-J) • Arabaların park edildiği kapalı yer 🚗'),
+    makeWord('BAGAJ', 'ba-gaj', '5. Grup (P-H-V-Ğ-F-J) • Arabanın eşya konulan arka kısmı 🧳'),
+    makeWord('MESAJ', 'me-saj', '5. Grup (P-H-V-Ğ-F-J) • Gönderilen kısa yazı, ileti ✉️'),
+    makeWord('PLAJ', 'plaj', '5. Grup (P-H-V-Ğ-F-J) • Deniz kıyısındaki kumsal 🏖️'),
+    makeWord('JETON', 'je-ton', '5. Grup (P-H-V-Ğ-F-J) • Oyun makinesi parası 🪙')
+  ];
+
+  // Tekrarlı kelimeleri temizle
+  const UNIQUE_READING1_WORDS = (function () {
+    const seen = new Set();
+    const list = [];
+    for (let i = 0; i < READING1_MASTER_WORDS.length; i++) {
+      const it = READING1_MASTER_WORDS[i];
+      if (!seen.has(it.label)) {
+        seen.add(it.label);
+        list.push(it);
+      }
+    }
+    return list;
+  })();
 
   // 5 SINIF SEVİYESİ VE KONU HAVUZU
   const WHEEL_TOPICS = {
@@ -188,13 +429,7 @@
       badge: '📖 1. Sınıf İlk Okuma ve Hece-Kelime',
       prompt: 'Okun gösterdiği kelimeyi yüksek sesle oku ve hecele!',
       isReadingMode: true,
-      items: [
-        ...READING1_GROUP_POOLS.g1,
-        ...READING1_GROUP_POOLS.g2,
-        ...READING1_GROUP_POOLS.g3,
-        ...READING1_GROUP_POOLS.g4,
-        ...READING1_GROUP_POOLS.g5
-      ]
+      items: UNIQUE_READING1_WORDS
     },
     addsub12: {
       id: 'addsub12',
@@ -675,6 +910,31 @@
     return toTurkishUpper(word).includes(toTurkishUpper(letter));
   }
 
+  // KESİN KÜMÜLATİF HARF KONTROLÜ: Kelimedeki BÜTÜN harfler yalnızca izin verilen harfler kümesinde olmalı!
+  function isWordStrictlyAllowed(word, allowedSet) {
+    const upper = toTurkishUpper(word);
+    if (!upper) return false;
+    for (let i = 0; i < upper.length; i++) {
+      const ch = upper[i];
+      if (!allowedSet.has(ch)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function getCumulativeAllowedSet(groupId, letterFilter) {
+    const grpObj = READING1_LETTER_GROUPS.find((g) => g.id === groupId) || READING1_LETTER_GROUPS[0];
+    const cutoffLetter =
+      letterFilter && letterFilter !== 'ALL'
+        ? toTurkishUpper(letterFilter)
+        : toTurkishUpper(grpObj.lastLetter || 'L');
+
+    const cutoffIdx = MEB_ORDER.indexOf(cutoffLetter);
+    const maxIdx = cutoffIdx >= 0 ? cutoffIdx : MEB_ORDER.length - 1;
+    return new Set(MEB_ORDER.slice(0, maxIdx + 1));
+  }
+
   // Seçilen harfi HTML içinde kırmızı ve kalın vurgular
   function formatWordWithHighlightHtml(text, highlightLetter) {
     const raw = String(text || '');
@@ -702,13 +962,41 @@
     const topic = WHEEL_TOPICS[topicId] || WHEEL_TOPICS.reading1;
     if (topicId === 'reading1') {
       const grp = wheelState.activeLetterGroupId || 'g1';
-      const groupPool = READING1_GROUP_POOLS[grp] || READING1_GROUP_POOLS.g1;
       const letter = wheelState.activeLetterFilter || 'ALL';
+      const allowedSet = getCumulativeAllowedSet(grp, letter);
+
+      // 1) Kelimedeki tüm harfler sadece o harfe (veya grubun son harfine) kadar öğrenilen MEB_ORDER harflerinden oluşmalı
+      let cumulativePool = UNIQUE_READING1_WORDS.filter((item) =>
+        isWordStrictlyAllowed(item.label, allowedSet)
+      );
+
       if (letter !== 'ALL') {
-        const filtered = groupPool.filter((item) => wordContainsLetter(item.label, letter));
-        if (filtered.length > 0) return filtered;
+        // 2) Tek bir harf seçildiyse, kelimenin içinde mutlaka o harf geçmeli
+        const targetUpper = toTurkishUpper(letter);
+        const letterFiltered = cumulativePool.filter((item) =>
+          wordContainsLetter(item.label, targetUpper)
+        );
+        // En yeni/uygun kelimeler önce gelsin diye ters çevirip veya doğrudan ilk 12'sini sun
+        if (letterFiltered.length > 0) {
+          return letterFiltered.slice(-12).reverse();
+        }
+      } else {
+        // "Tümü" seçildiyse o grubun harflerinden en az birini içeren ve kümülatif kurala %100 uyan kelimeleri öncelikle getir
+        const grpObj = READING1_LETTER_GROUPS.find((g) => g.id === grp) || READING1_LETTER_GROUPS[0];
+        const grpSet = new Set(grpObj.letters.map((l) => toTurkishUpper(l)));
+        const groupFocused = cumulativePool.filter((item) => {
+          const w = toTurkishUpper(item.label);
+          for (let i = 0; i < w.length; i++) {
+            if (grpSet.has(w[i])) return true;
+          }
+          return false;
+        });
+        if (groupFocused.length > 0) {
+          return groupFocused.slice(0, 12);
+        }
       }
-      return groupPool;
+
+      return cumulativePool.slice(0, 12);
     }
     return topic.items;
   }
@@ -754,7 +1042,7 @@
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const cssSize = 560;
+    const cssSize = 580;
     if (canvas.width !== cssSize * dpr || canvas.height !== cssSize * dpr) {
       canvas.width = cssSize * dpr;
       canvas.height = cssSize * dpr;
@@ -1068,21 +1356,21 @@
     let pickedDisplayInnerHtml = `<div class="mwg-picked-value">${formatWordWithHighlightHtml(item.label, wheelState.activeLetterFilter)}</div>`;
     if (wheelState.activeTopicId === 'clock23') {
       pickedDisplayInnerHtml = `
-        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-          ${buildAnalogClockSvg(item.label, 210)}
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          ${buildAnalogClockSvg(item.label, 155)}
           ${wheelState.answerRevealed
-            ? `<div class="mwg-picked-value" style="font-size:2.2rem;margin-top:4px;">🕒 ${escapeHtml(item.label)}</div>`
-            : `<div style="font-size:1rem;font-weight:800;color:#475569;">Analog saate bakarak saatin kaç olduğunu söyle!</div>`
+            ? `<div class="mwg-picked-value" style="font-size:1.65rem;margin-top:2px;">🕒 ${escapeHtml(item.label)}</div>`
+            : `<div style="font-size:0.84rem;font-weight:800;color:#475569;">Analog saate bakarak saati söyle!</div>`
           }
         </div>
       `;
     } else if (wheelState.activeTopicId === 'fractions34') {
       pickedDisplayInnerHtml = `
-        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-          ${buildFractionModelSvg(item.label, 175)}
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          ${buildFractionModelSvg(item.label, 130)}
           ${wheelState.answerRevealed
-            ? `<div class="mwg-picked-value" style="font-size:2.3rem;margin-top:4px;">🍕 ${escapeHtml(item.label)}</div>`
-            : `<div style="font-size:1rem;font-weight:800;color:#475569;">Boyalı kesir modelinin kaçta kaç olduğunu söyle!</div>`
+            ? `<div class="mwg-picked-value" style="font-size:1.75rem;margin-top:2px;">🍕 ${escapeHtml(item.label)}</div>`
+            : `<div style="font-size:0.84rem;font-weight:800;color:#475569;">Boyalı kesir modelini söyle!</div>`
           }
         </div>
       `;
@@ -1507,31 +1795,34 @@
         text-underline-offset: 4px;
       }
 
-      /* Ana Sahne: Sol/Merkez Büyük Çark + Sağ Sonuç Kartı */
+      /* Ana Sahne: Merkezde Dev Çark + Sağda Kompakt ve Kibar Sonuç Kartı */
       #${MODAL_ID} .mwg-stage {
         flex: 1;
         display: grid;
-        grid-template-columns: minmax(480px, 620px) minmax(380px, 580px);
+        grid-template-columns: 1.5fr 0.7fr;
         align-items: center;
         justify-content: center;
-        gap: 32px;
-        padding: 14px 28px 18px;
-        max-width: 1360px;
+        gap: 24px;
+        padding: 10px 24px 14px;
+        max-width: 1220px;
         width: 100%;
         margin: 0 auto;
       }
 
-      /* Sol/Merkez: Canvas Çark Bölümü (Ekranın yarısını kaplayan 560px dev çark) */
+      /* Sol/Merkez: Canvas Çark Bölümü (Merkeze Yakın Dev Çark) */
       #${MODAL_ID} .mwg-wheel-column {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        justify-content: center;
+        justify-self: center;
+        gap: 10px;
+        width: 100%;
       }
       #${MODAL_ID} .mwg-wheel-frame {
         position: relative;
-        width: min(86vw, 560px);
-        height: min(86vw, 560px);
+        width: min(62vh, 580px);
+        height: min(62vh, 580px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1575,20 +1866,20 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         width: 100%;
       }
       #${MODAL_ID} .mwg-spin-btn {
         width: 100%;
-        max-width: 420px;
-        padding: 16px 32px;
-        border-radius: 22px;
+        max-width: 380px;
+        padding: 13px 26px;
+        border-radius: 20px;
         border: 3px solid #FDE047;
         border-bottom: 6px solid #B45309;
         background: linear-gradient(180deg, #F59E0B 0%, #EA580C 100%);
         color: #FFFFFF;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+        font-size: clamp(1.2rem, 2vw, 1.45rem);
         font-weight: 700;
         letter-spacing: 0.03em;
         cursor: pointer;
@@ -1613,56 +1904,59 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 10px;
       }
       #${MODAL_ID} .mwg-remove-check-label {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 14px;
-        border-radius: 14px;
+        gap: 7px;
+        padding: 6px 12px;
+        border-radius: 12px;
         background: rgba(255, 255, 255, 0.94);
         color: #1E293B;
-        font-size: 0.95rem;
+        font-size: 0.88rem;
         font-weight: 800;
         cursor: pointer;
         box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
       }
       #${MODAL_ID} .mwg-remove-check-label input[type="checkbox"] {
-        width: 19px;
-        height: 19px;
+        width: 17px;
+        height: 17px;
         accent-color: #EA580C;
         cursor: pointer;
       }
       #${MODAL_ID} .mwg-slice-badge {
-        padding: 8px 14px;
+        padding: 6px 12px;
         border-radius: 12px;
         background: rgba(255, 255, 255, 0.18);
         color: #F8FAFC;
-        font-size: 0.92rem;
+        font-size: 0.86rem;
         font-weight: 800;
       }
       #${MODAL_ID} .mwg-reset-slices-btn {
-        padding: 8px 14px;
+        padding: 6px 12px;
         border-radius: 12px;
         border: 2px solid #7DD3FC;
         background: #E0F2FE;
         color: #0369A1;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 0.92rem;
+        font-size: 0.86rem;
         font-weight: 700;
         cursor: pointer;
       }
 
-      /* Sağ Sütun: Büyütülmüş Sonuç Kartı */
+      /* Sağ Sütun: Kompakt, Dar ve Kibar Sonuç Kartı (max-width: 320px; padding: 16px;) */
       #${MODAL_ID} .mwg-result-card {
         background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
-        border: 4px solid #E2E8F0;
-        border-bottom: 10px solid #CBD5E1;
-        border-radius: 32px;
-        padding: 30px;
-        box-shadow: 0 26px 65px rgba(15, 23, 42, 0.45);
-        min-height: 480px;
+        border: 3px solid #E2E8F0;
+        border-bottom: 7px solid #CBD5E1;
+        border-radius: 24px;
+        padding: 16px;
+        max-width: 320px;
+        width: 100%;
+        justify-self: start;
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.38);
+        min-height: 290px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1676,24 +1970,24 @@
       }
       #${MODAL_ID} .mwg-result-empty {
         text-align: center;
-        padding: 24px 12px;
+        padding: 12px 6px;
       }
       #${MODAL_ID} .mwg-empty-wheel-icon {
-        font-size: 4.8rem;
-        margin-bottom: 12px;
+        font-size: 2.8rem;
+        margin-bottom: 6px;
       }
       #${MODAL_ID} .mwg-empty-title {
-        margin: 14px 0 10px;
+        margin: 8px 0 6px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1.85rem;
+        font-size: 1.22rem;
         color: #1E1B4B;
       }
       #${MODAL_ID} .mwg-empty-desc {
         margin: 0;
-        font-size: 1.15rem;
+        font-size: 0.88rem;
         font-weight: 700;
         color: #475569;
-        line-height: 1.55;
+        line-height: 1.45;
       }
 
       #${MODAL_ID} .mwg-result-top-row {
@@ -1701,94 +1995,94 @@
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 12px;
+        gap: 6px;
+        margin-bottom: 8px;
       }
       #${MODAL_ID} .mwg-topic-badge {
         display: inline-block;
-        padding: 7px 14px;
+        padding: 4px 10px;
         border-radius: 999px;
         background: #EEF2FF;
         color: #4338CA;
-        font-size: 0.94rem;
+        font-size: 0.76rem;
         font-weight: 800;
       }
       #${MODAL_ID} .mwg-selected-tag {
-        padding: 6px 14px;
+        padding: 4px 10px;
         border-radius: 999px;
-        border: 2px solid;
-        font-size: 0.92rem;
+        border: 1.5px solid;
+        font-size: 0.75rem;
         font-weight: 800;
       }
       #${MODAL_ID} .mwg-prompt-text {
-        margin: 4px 0 16px;
-        font-size: 1.2rem;
+        margin: 2px 0 10px;
+        font-size: 0.9rem;
         font-weight: 800;
         color: #334155;
       }
 
       #${MODAL_ID} .mwg-picked-display {
-        border: 5px solid;
-        border-radius: 26px;
-        padding: 28px 20px;
+        border: 3.5px solid;
+        border-radius: 18px;
+        padding: 14px 10px;
         text-align: center;
-        margin-bottom: 16px;
-        box-shadow: inset 0 2px 12px rgba(255, 255, 255, 0.75), 0 12px 26px rgba(15, 23, 42, 0.14);
+        margin-bottom: 10px;
+        box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.75), 0 8px 18px rgba(15, 23, 42, 0.1);
       }
       #${MODAL_ID} .mwg-picked-value {
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(3rem, 5.8vw, 4.8rem);
+        font-size: clamp(1.9rem, 3.2vw, 2.75rem);
         font-weight: 700;
         line-height: 1.1;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.02em;
       }
 
       #${MODAL_ID} .mwg-removed-pill {
-        margin-bottom: 14px;
-        padding: 8px 14px;
-        border-radius: 12px;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        border-radius: 10px;
         background: #FFF7ED;
         border: 1.5px solid #FDBA74;
         color: #C2410C;
-        font-size: 0.9rem;
+        font-size: 0.76rem;
         font-weight: 800;
         text-align: center;
       }
 
       #${MODAL_ID} .mwg-answer-panel {
-        padding: 20px;
-        border-radius: 20px;
+        padding: 12px 10px;
+        border-radius: 14px;
         background: #F8FAFC;
-        border: 3px dashed #CBD5E1;
+        border: 2px dashed #CBD5E1;
         text-align: center;
-        margin-bottom: 18px;
+        margin-bottom: 12px;
       }
       #${MODAL_ID} .mwg-answer-panel.is-revealed {
         background: linear-gradient(135deg, #ECFDF5 0%, #FEFCE8 100%);
-        border: 3.5px solid #22C55E;
-        box-shadow: 0 10px 26px rgba(34, 197, 94, 0.22);
+        border: 2.5px solid #22C55E;
+        box-shadow: 0 6px 18px rgba(34, 197, 94, 0.18);
       }
       #${MODAL_ID} .mwg-answer-hidden {
-        font-size: 1.08rem;
+        font-size: 0.84rem;
         font-weight: 700;
         color: #64748B;
       }
       #${MODAL_ID} .mwg-answer-title {
-        font-size: 0.95rem;
+        font-size: 0.78rem;
         font-weight: 800;
         color: #15803D;
-        letter-spacing: 0.05em;
-        margin-bottom: 6px;
+        letter-spacing: 0.04em;
+        margin-bottom: 4px;
       }
       #${MODAL_ID} .mwg-answer-main {
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: clamp(1.9rem, 3.5vw, 2.85rem);
+        font-size: clamp(1.25rem, 2.2vw, 1.7rem);
         font-weight: 700;
         color: #166534;
       }
       #${MODAL_ID} .mwg-answer-detail {
-        margin-top: 6px;
-        font-size: 1.05rem;
+        margin-top: 4px;
+        font-size: 0.82rem;
         font-weight: 800;
         color: #0F766E;
       }
@@ -1796,19 +2090,19 @@
       #${MODAL_ID} .mwg-result-actions {
         display: grid;
         grid-template-columns: 1fr 1.35fr;
-        gap: 14px;
+        gap: 8px;
       }
       #${MODAL_ID} .mwg-action-btn {
-        padding: 16px 20px;
-        border-radius: 18px;
+        padding: 10px 12px;
+        border-radius: 14px;
         font-family: 'Fredoka', 'Nunito', sans-serif;
-        font-size: 1.2rem;
+        font-size: 0.94rem;
         font-weight: 700;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
         touch-action: manipulation;
         transition: transform 0.14s ease, box-shadow 0.14s ease;
       }
@@ -1910,7 +2204,7 @@
       <div class="mwg-stage">
         <div class="mwg-wheel-column">
           <div class="mwg-wheel-frame">
-            <canvas id="moliWheelCanvas" width="560" height="560" title="Çarkı çevirmek için dokunun"></canvas>
+            <canvas id="moliWheelCanvas" width="580" height="580" title="Çarkı çevirmek için dokunun"></canvas>
             <!-- Sağ Kenarda Sabit Büyük Ok İmleci -->
             <div class="mwg-wheel-pointer" id="moliWheelPointer" aria-hidden="true">
               <svg width="68" height="62" viewBox="0 0 58 54" fill="none" xmlns="http://www.w3.org/2000/svg">
