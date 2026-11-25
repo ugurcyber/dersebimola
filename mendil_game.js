@@ -16,88 +16,339 @@
   const TARGET_SCORE = 5;
   const PENALTY_LOCK_MS = 1500;
 
-  // 1. SINIF MEB MAARİF MODELİ HARF GRUPLARI (ANETİL, OKURIM, ÜSÖYDZ, ÇBGCŞ, PHVĞFJ)
+  // 1. SINIF MEB MAARİF MODELİ 29 HARF TAM ÖĞRETİM SIRASI VE KESİN KÜMÜLATİF FİLTRE
+  const MEB_ORDER = ['A','N','E','T','İ','L','O','K','U','R','I','M','Ü','S','Ö','Y','D','Z','Ç','B','G','C','Ş','P','H','V','Ğ','F','J'];
+
   const READING1_LETTER_GROUPS = [
-    { id: 'g1', label: '1. Grup (ANETİL)' },
-    { id: 'g2', label: '2. Grup (OKURIM)' },
-    { id: 'g3', label: '3. Grup (ÜSÖYDZ)' },
-    { id: 'g4', label: '4. Grup (ÇBGCŞ)' },
-    { id: 'g5', label: '5. Grup (PHVĞFJ)' },
-    { id: 'all', label: '🌟 Tümü' }
+    { id: 'g1', label: '1. Grup (A-N-E-T-İ-L)', letters: ['A', 'N', 'E', 'T', 'İ', 'L'], lastLetter: 'L' },
+    { id: 'g2', label: '2. Grup (O-K-U-R-I-M)', letters: ['O', 'K', 'U', 'R', 'I', 'M'], lastLetter: 'M' },
+    { id: 'g3', label: '3. Grup (Ü-S-Ö-Y-D-Z)', letters: ['Ü', 'S', 'Ö', 'Y', 'D', 'Z'], lastLetter: 'Z' },
+    { id: 'g4', label: '4. Grup (Ç-B-G-C-Ş)', letters: ['Ç', 'B', 'G', 'C', 'Ş'], lastLetter: 'Ş' },
+    { id: 'g5', label: '5. Grup (P-H-V-Ğ-F-J)', letters: ['P', 'H', 'V', 'Ğ', 'F', 'J'], lastLetter: 'J' }
   ];
 
-  const READING1_GROUP_QUESTIONS = {
-    g1: [
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Anne! An, ne.', answer: 'ANNE', distractors: ['NANE', 'ALAN'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'El! Tek heceli kelime: El.', answer: 'EL', distractors: ['AL', 'ET'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Al! Tek heceli kelime: Al.', answer: 'AL', distractors: ['AT', 'EL'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'At! Tek heceli kelime: At.', answer: 'AT', distractors: ['AL', 'İT'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Nil! Tek heceli özel isim: Nil.', answer: 'NİL', distractors: ['TEN', 'LALE'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Talat! Ta, lat.', answer: 'TALAT', distractors: ['ALAN', 'LALE'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Nane! Na, ne.', answer: 'NANE', distractors: ['ANNE', 'LALE'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Et! Tek heceli kelime: Et.', answer: 'ET', distractors: ['İT', 'EL'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'İt! Tek heceli kelime: İt.', answer: 'İT', distractors: ['ET', 'AT'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'İnek! İ, nek.', answer: 'İNEK', distractors: ['NANE', 'TEN'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Alan! A, lan.', answer: 'ALAN', distractors: ['TALAT', 'ANNE'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ten! Tek heceli kelime: Ten.', answer: 'TEN', distractors: ['NİL', 'ET'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Lale! La, le.', answer: 'LALE', distractors: ['NANE', 'ANNE'] }
-    ],
-    g2: [
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Okul! O, kul.', answer: 'OKUL', distractors: ['KULE', 'KOL'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kule! Ku, le.', answer: 'KULE', distractors: ['OKUL', 'KUTU'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Koku! Ko, ku.', answer: 'KOKU', distractors: ['KUTU', 'KOL'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kukla! Kuk, la.', answer: 'KUKLA', distractors: ['KULAK', 'KULE'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kulak! Ku, lak.', answer: 'KULAK', distractors: ['KUKLA', 'KUTU'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kutu! Ku, tu.', answer: 'KUTU', distractors: ['KOKU', 'KULE'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kol! Tek heceli kelime: Kol.', answer: 'KOL', distractors: ['KAR', 'KUM'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kar! Tek heceli kelime: Kar.', answer: 'KAR', distractors: ['KOL', 'KUM'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kum! Tek heceli kelime: Kum.', answer: 'KUM', distractors: ['KOL', 'KAR'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Orman! Or, man.', answer: 'ORMAN', distractors: ['OKUL', 'MASA'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Elma! El, ma.', answer: 'ELMA', distractors: ['MASA', 'ARI'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Arı! A, rı.', answer: 'ARI', distractors: ['KAR', 'ELMA'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Masa! Ma, sa.', answer: 'MASA', distractors: ['ELMA', 'KASA'] }
-    ],
-    g3: [
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Süt! Tek heceli kelime: Süt.', answer: 'SÜT', distractors: ['SES', 'SÖZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Üzüm! Ü, züm.', answer: 'ÜZÜM', distractors: ['ÖRDEK', 'DÜZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ördek! Ör, dek.', answer: 'ÖRDEK', distractors: ['ÜZÜM', 'KEDİ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Yıldız! Yıl, dız.', answer: 'YILDIZ', distractors: ['DENİZ', 'YAZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Deniz! De, niz.', answer: 'DENİZ', distractors: ['YILDIZ', 'KEDİ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ses! Tek heceli kelime: Ses.', answer: 'SES', distractors: ['SÖZ', 'SÜT'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Yaz! Tek heceli kelime: Yaz.', answer: 'YAZ', distractors: ['DÜZ', 'SÖZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Söz! Tek heceli kelime: Söz.', answer: 'SÖZ', distractors: ['SES', 'DÜZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Düz! Tek heceli kelime: Düz.', answer: 'DÜZ', distractors: ['SÖZ', 'YAZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kedi! Ke, di.', answer: 'KEDİ', distractors: ['DENİZ', 'MASA'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Masa! Ma, sa.', answer: 'MASA', distractors: ['KEDİ', 'YAZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Su! Tek heceli kelime: Su.', answer: 'SU', distractors: ['SÜT', 'SES'] }
-    ],
-    g4: [
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Çiçek! Çi, çek.', answer: 'ÇİÇEK', distractors: ['ÇANTA', 'ŞEKER'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Balık! Ba, lık.', answer: 'BALIK', distractors: ['BULUT', 'ÇİÇEK'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Güneş! Gü, neş.', answer: 'GÜNEŞ', distractors: ['ŞEKER', 'GÖL'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Cam! Tek heceli kelime: Cam.', answer: 'CAM', distractors: ['GÖL', 'KUŞ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Şeker! Şe, ker.', answer: 'ŞEKER', distractors: ['ŞAPKA', 'GÜNEŞ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Çanta! Çan, ta.', answer: 'ÇANTA', distractors: ['ŞAPKA', 'ÇİÇEK'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Bulut! Bu, lut.', answer: 'BULUT', distractors: ['BALIK', 'CEVİZ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Göl! Tek heceli kelime: Göl.', answer: 'GÖL', distractors: ['KUŞ', 'CAM'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ceviz! Ce, viz.', answer: 'CEVİZ', distractors: ['ÇİÇEK', 'BULUT'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Şapka! Şap, ka.', answer: 'ŞAPKA', distractors: ['ÇANTA', 'ŞEKER'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Kuş! Tek heceli kelime: Kuş.', answer: 'KUŞ', distractors: ['GÖL', 'CAM'] }
-    ],
-    g5: [
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Para! Pa, ra.', answer: 'PARA', distractors: ['HALI', 'VAZO'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Havuç! Ha, vuç.', answer: 'HAVUÇ', distractors: ['HALI', 'AĞAÇ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Vazo! Va, zo.', answer: 'VAZO', distractors: ['PARA', 'HALI'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Dağ! Tek heceli kelime: Dağ.', answer: 'DAĞ', distractors: ['TOP', 'FİL'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Fil! Tek heceli kelime: Fil.', answer: 'FİL', distractors: ['JET', 'TOP'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Jet! Tek heceli kelime: Jet.', answer: 'JET', distractors: ['FİL', 'TOP'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Pencere! Pen, ce, re.', answer: 'PENCERE', distractors: ['FENER', 'PARA'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Halı! Ha, lı.', answer: 'HALI', distractors: ['HAVUÇ', 'PARA'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Ağaç! A, ğaç.', answer: 'AĞAÇ', distractors: ['HAVUÇ', 'DAĞ'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Fener! Fe, ner.', answer: 'FENER', distractors: ['PENCERE', 'VAZO'] },
-      { promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!', spokenText: 'Top! Tek heceli kelime: Top.', answer: 'TOP', distractors: ['DAĞ', 'JET'] }
-    ]
-  };
+  function makeReadingEntry(word, syllStr) {
+    const parts = syllStr.split('-').map((s) => s.trim());
+    const upper = word.toLocaleUpperCase('tr-TR');
+    const spoken = parts.length === 1
+      ? `${word}! Tek heceli kelime: ${word}.`
+      : `${word}! ${parts.join(', ')}.`;
+    return {
+      word: upper,
+      syllables: parts,
+      spokenText: spoken
+    };
+  }
+
+  // 29 Harfin tamamı için kesin kümülatif filtreye uyumlu zengin Türkçe kelime havuzu
+  const READING1_MASTER_WORDS = [
+    // --- 1. GRUP: A, N, E, T, İ, L ---
+    makeReadingEntry('AN', 'an'),
+    makeReadingEntry('ANA', 'a-na'),
+    makeReadingEntry('NANA', 'na-na'),
+    makeReadingEntry('ANAN', 'a-nan'),
+    makeReadingEntry('NAN', 'nan'),
+    makeReadingEntry('NAA', 'na-a'),
+    makeReadingEntry('ANNE', 'an-ne'),
+    makeReadingEntry('NANE', 'na-ne'),
+    makeReadingEntry('ENE', 'e-ne'),
+    makeReadingEntry('NE', 'ne'),
+    makeReadingEntry('EN', 'en'),
+    makeReadingEntry('ANANE', 'a-na-ne'),
+    makeReadingEntry('NENE', 'ne-ne'),
+    makeReadingEntry('AT', 'at'),
+    makeReadingEntry('ATA', 'a-ta'),
+    makeReadingEntry('ET', 'et'),
+    makeReadingEntry('TEN', 'ten'),
+    makeReadingEntry('TAN', 'tan'),
+    makeReadingEntry('NET', 'net'),
+    makeReadingEntry('ANT', 'ant'),
+    makeReadingEntry('TENE', 'te-ne'),
+    makeReadingEntry('ANTEN', 'an-ten'),
+    makeReadingEntry('TANE', 'ta-ne'),
+    makeReadingEntry('İT', 'it'),
+    makeReadingEntry('İN', 'in'),
+    makeReadingEntry('ETİ', 'e-ti'),
+    makeReadingEntry('İNAT', 'i-nat'),
+    makeReadingEntry('NİNE', 'ni-ne'),
+    makeReadingEntry('TİNET', 'ti-net'),
+    makeReadingEntry('ATİ', 'a-ti'),
+    makeReadingEntry('ANİ', 'a-ni'),
+    makeReadingEntry('EL', 'el'),
+    makeReadingEntry('AL', 'al'),
+    makeReadingEntry('LALE', 'la-le'),
+    makeReadingEntry('ELA', 'e-la'),
+    makeReadingEntry('TALAT', 'ta-lat'),
+    makeReadingEntry('NİL', 'nil'),
+    makeReadingEntry('TEL', 'tel'),
+    makeReadingEntry('ALT', 'alt'),
+    makeReadingEntry('İLE', 'i-le'),
+    makeReadingEntry('ELİT', 'e-lit'),
+    makeReadingEntry('ALET', 'a-let'),
+    makeReadingEntry('İLET', 'i-let'),
+    makeReadingEntry('NİNEL', 'ni-nel'),
+    makeReadingEntry('ELTİ', 'el-ti'),
+    makeReadingEntry('ATEL', 'a-tel'),
+    makeReadingEntry('ALAN', 'a-lan'),
+    makeReadingEntry('NAL', 'nal'),
+    makeReadingEntry('ALİ', 'a-li'),
+
+    // --- 2. GRUP: + O, K, U, R, I, M ---
+    makeReadingEntry('OL', 'ol'),
+    makeReadingEntry('ON', 'on'),
+    makeReadingEntry('ONA', 'o-na'),
+    makeReadingEntry('OT', 'ot'),
+    makeReadingEntry('OTA', 'o-ta'),
+    makeReadingEntry('OTEL', 'o-tel'),
+    makeReadingEntry('NOTA', 'no-ta'),
+    makeReadingEntry('TON', 'ton'),
+    makeReadingEntry('ALO', 'a-lo'),
+    makeReadingEntry('LOTO', 'lo-to'),
+    makeReadingEntry('OLTA', 'ol-ta'),
+    makeReadingEntry('ATOL', 'a-tol'),
+    makeReadingEntry('OK', 'ok'),
+    makeReadingEntry('KALE', 'ka-le'),
+    makeReadingEntry('KOL', 'kol'),
+    makeReadingEntry('KOLA', 'ko-la'),
+    makeReadingEntry('KEK', 'kek'),
+    makeReadingEntry('TOK', 'tok'),
+    makeReadingEntry('TOKA', 'to-ka'),
+    makeReadingEntry('KOT', 'kot'),
+    makeReadingEntry('KOTA', 'ko-ta'),
+    makeReadingEntry('İNEK', 'i-nek'),
+    makeReadingEntry('ELEK', 'e-lek'),
+    makeReadingEntry('LEKE', 'le-ke'),
+    makeReadingEntry('TEK', 'tek'),
+    makeReadingEntry('TEKNE', 'tek-ne'),
+    makeReadingEntry('ETEK', 'e-tek'),
+    makeReadingEntry('OKUL', 'o-kul'),
+    makeReadingEntry('KULE', 'ku-le'),
+    makeReadingEntry('KOKU', 'ko-ku'),
+    makeReadingEntry('KUKLA', 'kuk-la'),
+    makeReadingEntry('KULAK', 'ku-lak'),
+    makeReadingEntry('KUTU', 'ku-tu'),
+    makeReadingEntry('UTKU', 'ut-ku'),
+    makeReadingEntry('UN', 'un'),
+    makeReadingEntry('ULU', 'u-lu'),
+    makeReadingEntry('KULU', 'ku-lu'),
+    makeReadingEntry('OKU', 'o-ku'),
+    makeReadingEntry('OLUK', 'o-luk'),
+    makeReadingEntry('KONU', 'ko-nu'),
+    makeReadingEntry('KONUK', 'ko-nuk'),
+    makeReadingEntry('KAR', 'kar'),
+    makeReadingEntry('KURU', 'ku-ru'),
+    makeReadingEntry('TUR', 'tur'),
+    makeReadingEntry('KURT', 'kurt'),
+    makeReadingEntry('KORO', 'ko-ro'),
+    makeReadingEntry('KORNA', 'kor-na'),
+    makeReadingEntry('TARLA', 'tar-la'),
+    makeReadingEntry('TERLİK', 'ter-lik'),
+    makeReadingEntry('KARTAL', 'kar-tal'),
+    makeReadingEntry('REKOR', 're-kor'),
+    makeReadingEntry('TREN', 'tren'),
+    makeReadingEntry('ARI', 'a-rı'),
+    makeReadingEntry('ILIK', 'ı-lık'),
+    makeReadingEntry('ALTI', 'al-tı'),
+    makeReadingEntry('ARTI', 'ar-tı'),
+    makeReadingEntry('TARTI', 'tar-tı'),
+    makeReadingEntry('KATI', 'ka-tı'),
+    makeReadingEntry('TAKI', 'ta-kı'),
+    makeReadingEntry('ATKI', 'at-kı'),
+    makeReadingEntry('TIR', 'tır'),
+    makeReadingEntry('KIR', 'kır'),
+    makeReadingEntry('ANIT', 'a-nıt'),
+    makeReadingEntry('KANIT', 'ka-nıt'),
+    makeReadingEntry('KUM', 'kum'),
+    makeReadingEntry('ORMAN', 'or-man'),
+    makeReadingEntry('ELMA', 'el-ma'),
+    makeReadingEntry('MARUL', 'ma-rul'),
+    makeReadingEntry('MOLA', 'mo-la'),
+    makeReadingEntry('KLİMA', 'kli-ma'),
+    makeReadingEntry('ROMAN', 'ro-man'),
+    makeReadingEntry('RAKAM', 'ra-kam'),
+    makeReadingEntry('KALEM', 'ka-lem'),
+    makeReadingEntry('IRMAK', 'ır-mak'),
+    makeReadingEntry('MUM', 'mum'),
+    makeReadingEntry('LİMON', 'li-mon'),
+
+    // --- 3. GRUP: + Ü, S, Ö, Y, D, Z ---
+    makeReadingEntry('ÜTÜ', 'ü-tü'),
+    makeReadingEntry('ÜLKE', 'ül-ke'),
+    makeReadingEntry('ÜNLÜ', 'ün-lü'),
+    makeReadingEntry('KÜL', 'kül'),
+    makeReadingEntry('TÜL', 'tül'),
+    makeReadingEntry('KÜRE', 'kü-re'),
+    makeReadingEntry('KÜREK', 'kü-rek'),
+    makeReadingEntry('TÜRK', 'türk'),
+    makeReadingEntry('TÜRKÜ', 'tür-kü'),
+    makeReadingEntry('KÜTÜK', 'kü-tük'),
+    makeReadingEntry('SÜT', 'süt'),
+    makeReadingEntry('SES', 'ses'),
+    makeReadingEntry('SU', 'su'),
+    makeReadingEntry('SÜS', 'süs'),
+    makeReadingEntry('MASA', 'ma-sa'),
+    makeReadingEntry('SIRA', 'sı-ra'),
+    makeReadingEntry('SAAT', 'sa-at'),
+    makeReadingEntry('SİMİT', 'si-mit'),
+    makeReadingEntry('MISIR', 'mı-sır'),
+    makeReadingEntry('ASKI', 'as-kı'),
+    makeReadingEntry('KASA', 'ka-sa'),
+    makeReadingEntry('ÖRTÜ', 'ör-tü'),
+    makeReadingEntry('ÖRNEK', 'ör-nek'),
+    makeReadingEntry('KÖK', 'kök'),
+    makeReadingEntry('KÖMÜR', 'kö-mür'),
+    makeReadingEntry('SÖK', 'sök'),
+    makeReadingEntry('KÖRÜK', 'kö-rük'),
+    makeReadingEntry('ÖN', 'ön'),
+    makeReadingEntry('ÖNLÜK', 'ön-lük'),
+    makeReadingEntry('KÖTÜ', 'kö-tü'),
+    makeReadingEntry('OYUN', 'o-yun'),
+    makeReadingEntry('TÜYLÜ', 'tüy-lü'),
+    makeReadingEntry('YILAN', 'yı-lan'),
+    makeReadingEntry('ÖYKÜ', 'öy-kü'),
+    makeReadingEntry('YAY', 'yay'),
+    makeReadingEntry('YOL', 'yol'),
+    makeReadingEntry('YEM', 'yem'),
+    makeReadingEntry('YÜN', 'yün'),
+    makeReadingEntry('KÖY', 'köy'),
+    makeReadingEntry('KAYIK', 'ka-yık'),
+    makeReadingEntry('LEYLEK', 'ley-lek'),
+    makeReadingEntry('ÖRDEK', 'ör-dek'),
+    makeReadingEntry('KEDİ', 'ke-di'),
+    makeReadingEntry('ODA', 'o-da'),
+    makeReadingEntry('DEDE', 'de-de'),
+    makeReadingEntry('DERE', 'de-re'),
+    makeReadingEntry('DERİ', 'de-ri'),
+    makeReadingEntry('DÜDÜK', 'dü-dük'),
+    makeReadingEntry('DAMLA', 'dam-la'),
+    makeReadingEntry('DONDURMA', 'don-dur-ma'),
+    makeReadingEntry('MÜDÜR', 'mü-dür'),
+    makeReadingEntry('ÜZÜM', 'ü-züm'),
+    makeReadingEntry('YILDIZ', 'yıl-dız'),
+    makeReadingEntry('DENİZ', 'de-niz'),
+    makeReadingEntry('YAZ', 'yaz'),
+    makeReadingEntry('SÖZ', 'söz'),
+    makeReadingEntry('DÜZ', 'düz'),
+    makeReadingEntry('YÜZ', 'yüz'),
+    makeReadingEntry('ZEYTİN', 'zey-tin'),
+    makeReadingEntry('ZİL', 'zil'),
+    makeReadingEntry('TUZ', 'tuz'),
+    makeReadingEntry('KIZAK', 'kı-zak'),
+
+    // --- 4. GRUP: + Ç, B, G, C, Ş ---
+    makeReadingEntry('ÇİÇEK', 'çi-çek'),
+    makeReadingEntry('ÇANTA', 'çan-ta'),
+    makeReadingEntry('ÇİLEK', 'çi-lek'),
+    makeReadingEntry('ÇINAR', 'çı-nar'),
+    makeReadingEntry('ÇAY', 'çay'),
+    makeReadingEntry('ÇATAL', 'ça-tal'),
+    makeReadingEntry('ÇADIR', 'ça-dır'),
+    makeReadingEntry('UÇAK', 'u-çak'),
+    makeReadingEntry('SAÇ', 'saç'),
+    makeReadingEntry('ÜÇ', 'üç'),
+    makeReadingEntry('BALIK', 'ba-lık'),
+    makeReadingEntry('BULUT', 'bu-lut'),
+    makeReadingEntry('BEBEK', 'be-bek'),
+    makeReadingEntry('BARDAK', 'bar-dak'),
+    makeReadingEntry('BAL', 'bal'),
+    makeReadingEntry('BALON', 'ba-lon'),
+    makeReadingEntry('BAYRAK', 'bay-rak'),
+    makeReadingEntry('BİBER', 'bi-ber'),
+    makeReadingEntry('KELEBEK', 'ke-le-bek'),
+    makeReadingEntry('KABAK', 'ka-bak'),
+    makeReadingEntry('GÖL', 'göl'),
+    makeReadingEntry('GÖZLÜK', 'göz-lük'),
+    makeReadingEntry('GEMİ', 'ge-mi'),
+    makeReadingEntry('GÜN', 'gün'),
+    makeReadingEntry('GÜL', 'gül'),
+    makeReadingEntry('GÖZ', 'göz'),
+    makeReadingEntry('GİTAR', 'gi-tar'),
+    makeReadingEntry('SİLGİ', 'sil-gi'),
+    makeReadingEntry('DERGİ', 'der-gi'),
+    makeReadingEntry('GAGALI', 'ga-ga-lı'),
+    makeReadingEntry('CAM', 'cam'),
+    makeReadingEntry('CEVİZ', 'ce-viz'),
+    makeReadingEntry('GECE', 'ge-ce'),
+    makeReadingEntry('BACA', 'ba-ca'),
+    makeReadingEntry('ÇOCUK', 'ço-cuk'),
+    makeReadingEntry('BÖCEK', 'bö-cek'),
+    makeReadingEntry('CÜCE', 'cü-ce'),
+    makeReadingEntry('CEKET', 'ce-ket'),
+    makeReadingEntry('CÜZDAN', 'cüz-dan'),
+    makeReadingEntry('BONCUK', 'bon-cuk'),
+    makeReadingEntry('GÜNEŞ', 'gü-neş'),
+    makeReadingEntry('ŞEKER', 'şe-ker'),
+    makeReadingEntry('KUŞ', 'kuş'),
+    makeReadingEntry('ŞARKI', 'şar-kı'),
+    makeReadingEntry('ŞEMSİYE', 'şem-si-ye'),
+    makeReadingEntry('TAŞ', 'taş'),
+    makeReadingEntry('KAŞIK', 'ka-şık'),
+    makeReadingEntry('BEŞİK', 'be-şik'),
+    makeReadingEntry('ŞİŞE', 'şi-şe'),
+    makeReadingEntry('GÜMÜŞ', 'gü-müş'),
+
+    // --- 5. GRUP: + P, H, V, Ğ, F, J ---
+    makeReadingEntry('PARA', 'pa-ra'),
+    makeReadingEntry('PENCERE', 'pen-ce-re'),
+    makeReadingEntry('TOP', 'top'),
+    makeReadingEntry('KAPI', 'ka-pı'),
+    makeReadingEntry('ŞAPKA', 'şap-ka'),
+    makeReadingEntry('KİTAP', 'ki-tap'),
+    makeReadingEntry('KÖPEK', 'kö-pek'),
+    makeReadingEntry('PAPATYA', 'pa-pat-ya'),
+    makeReadingEntry('PEMBE', 'pem-be'),
+    makeReadingEntry('KÜPE', 'kü-pe'),
+    makeReadingEntry('HALI', 'ha-lı'),
+    makeReadingEntry('HOROZ', 'ho-roz'),
+    makeReadingEntry('BAHÇE', 'bah-çe'),
+    makeReadingEntry('SABAH', 'sa-bah'),
+    makeReadingEntry('TAHTA', 'tah-ta'),
+    makeReadingEntry('NEHİR', 'ne-hir'),
+    makeReadingEntry('ŞEHİR', 'şe-hir'),
+    makeReadingEntry('HEDİYE', 'he-di-ye'),
+    makeReadingEntry('HIZ', 'hız'),
+    makeReadingEntry('HİLAL', 'hi-lal'),
+    makeReadingEntry('HAVUÇ', 'ha-vuç'),
+    makeReadingEntry('VAZO', 'va-zo'),
+    makeReadingEntry('VAGON', 'va-gon'),
+    makeReadingEntry('VALİZ', 'va-liz'),
+    makeReadingEntry('GÜVERCİN', 'gü-ver-cin'),
+    makeReadingEntry('TAVUK', 'ta-vuk'),
+    makeReadingEntry('TAVŞAN', 'tav-şan'),
+    makeReadingEntry('KAVUN', 'ka-vun'),
+    makeReadingEntry('AYVA', 'ay-va'),
+    makeReadingEntry('EV', 'ev'),
+    makeReadingEntry('DAĞ', 'dağ'),
+    makeReadingEntry('AĞAÇ', 'a-ğaç'),
+    makeReadingEntry('YAĞMUR', 'yağ-mur'),
+    makeReadingEntry('PAPAĞAN', 'pa-pa-ğan'),
+    makeReadingEntry('SOĞAN', 'so-ğan'),
+    makeReadingEntry('BAĞ', 'bağ'),
+    makeReadingEntry('KURBAĞA', 'kur-ba-ğa'),
+    makeReadingEntry('KAĞIT', 'ka-ğıt'),
+    makeReadingEntry('YOĞURT', 'yo-ğurt'),
+    makeReadingEntry('İĞNE', 'iğ-ne'),
+    makeReadingEntry('FİL', 'fil'),
+    makeReadingEntry('FENER', 'fe-ner'),
+    makeReadingEntry('FINDIK', 'fın-dık'),
+    makeReadingEntry('FARE', 'fa-re'),
+    makeReadingEntry('FIRIN', 'fı-rın'),
+    makeReadingEntry('FİDAN', 'fi-dan'),
+    makeReadingEntry('SINIF', 'sı-nıf'),
+    makeReadingEntry('DEFTER', 'def-ter'),
+    makeReadingEntry('ZÜRAFA', 'zü-ra-fa'),
+    makeReadingEntry('ŞEFTALİ', 'şef-ta-li'),
+    makeReadingEntry('JET', 'jet'),
+    makeReadingEntry('JÖLE', 'jö-le'),
+    makeReadingEntry('PİJAMA', 'pi-ja-ma'),
+    makeReadingEntry('JAGUAR', 'ja-gu-ar'),
+    makeReadingEntry('BARAJ', 'ba-raj'),
+    makeReadingEntry('GARAJ', 'ga-raj'),
+    makeReadingEntry('BAGAJ', 'ba-gaj'),
+    makeReadingEntry('MESAJ', 'me-saj'),
+    makeReadingEntry('PLAJ', 'plaj'),
+    makeReadingEntry('JETON', 'je-ton')
+  ];
 
   // 5 SINIF SEVİYESİ VE KONU HAVUZU
   const MENDIL_TOPICS = {
@@ -106,13 +357,7 @@
       tabLabel: '📖 1. Sınıf Okuma',
       badge: '📖 1. Sınıf Dinle & Doğru Kelimeyi Kap',
       isListeningOnlyPrompt: true,
-      questions: [
-        ...READING1_GROUP_QUESTIONS.g1,
-        ...READING1_GROUP_QUESTIONS.g2,
-        ...READING1_GROUP_QUESTIONS.g3,
-        ...READING1_GROUP_QUESTIONS.g4,
-        ...READING1_GROUP_QUESTIONS.g5
-      ]
+      questions: []
     },
     addsub12: {
       id: 'addsub12',
@@ -212,6 +457,7 @@
   const state = {
     activeTopicId: 'reading1',
     activeLetterGroupId: 'g1',
+    activeLetterFilter: 'ALL',
     bagByTopic: {},
     currentQuestion: null,
     leftOptions: [],
@@ -569,28 +815,102 @@
     }
   }
 
+  function toTurkishUpper(str) {
+    return String(str || '').toLocaleUpperCase('tr-TR');
+  }
+
+  function wordContainsLetter(word, letter) {
+    if (!letter || letter === 'ALL') return true;
+    return toTurkishUpper(word).includes(toTurkishUpper(letter));
+  }
+
+  function isWordStrictlyAllowed(word, allowedSet) {
+    const upper = toTurkishUpper(word);
+    if (!upper) return false;
+    for (let i = 0; i < upper.length; i++) {
+      if (!allowedSet.has(upper[i])) return false;
+    }
+    return true;
+  }
+
+  function getCumulativeAllowedSet(groupId, letterFilter) {
+    const grpObj = READING1_LETTER_GROUPS.find((g) => g.id === groupId) || READING1_LETTER_GROUPS[0];
+    const cutoffLetter =
+      letterFilter && letterFilter !== 'ALL'
+        ? toTurkishUpper(letterFilter)
+        : toTurkishUpper(grpObj.lastLetter || 'L');
+    const cutoffIdx = MEB_ORDER.indexOf(cutoffLetter);
+    const maxIdx = cutoffIdx >= 0 ? cutoffIdx : MEB_ORDER.length - 1;
+    return new Set(MEB_ORDER.slice(0, maxIdx + 1));
+  }
+
+  function buildDynamicReading1Questions() {
+    const grp = state.activeLetterGroupId || 'g1';
+    const letter = state.activeLetterFilter || 'ALL';
+    const allowedSet = getCumulativeAllowedSet(grp, letter);
+
+    // 1) Sadece izin verilen MEB_ORDER harflerinden oluşan kelimeler
+    const cumulativeEntries = READING1_MASTER_WORDS.filter((it) =>
+      isWordStrictlyAllowed(it.word, allowedSet)
+    );
+
+    let targetEntries = [];
+    if (letter !== 'ALL') {
+      const targetUpper = toTurkishUpper(letter);
+      targetEntries = cumulativeEntries.filter((it) =>
+        wordContainsLetter(it.word, targetUpper)
+      );
+    } else {
+      const grpObj = READING1_LETTER_GROUPS.find((g) => g.id === grp) || READING1_LETTER_GROUPS[0];
+      const grpSet = new Set(grpObj.letters.map((l) => toTurkishUpper(l)));
+      targetEntries = cumulativeEntries.filter((it) => {
+        const w = toTurkishUpper(it.word);
+        for (let i = 0; i < w.length; i++) {
+          if (grpSet.has(w[i])) return true;
+        }
+        return false;
+      });
+    }
+
+    if (targetEntries.length < 3) {
+      targetEntries = cumulativeEntries.slice();
+    }
+
+    // Hem doğru cevap hem çeldiriciler yalnızca bu kümülatif ve harf filtreli havuzdan seçilir!
+    const allCandidateWords = targetEntries.map((it) => it.word);
+    return targetEntries.map((entry) => {
+      const others = shuffleArray(allCandidateWords.filter((w) => w !== entry.word));
+      const d1 = others[0] || 'AN';
+      const d2 = others[1] || 'ANA';
+      return {
+        promptText: '🎧 Dinle ve Doğru Kelimeyi Kap!',
+        spokenText: entry.spokenText,
+        answer: entry.word,
+        distractors: [d1, d2]
+      };
+    });
+  }
+
   function getActiveTopicQuestions(topicId) {
     const topic = MENDIL_TOPICS[topicId] || MENDIL_TOPICS.reading1;
     if (topicId === 'reading1') {
-      const grp = state.activeLetterGroupId || 'g1';
-      if (grp !== 'all' && READING1_GROUP_QUESTIONS[grp]) {
-        return READING1_GROUP_QUESTIONS[grp];
-      }
-      return topic.questions;
+      return buildDynamicReading1Questions();
     }
     return topic.questions;
   }
 
   function drawNextQuestionFromBag(topicId) {
     const pool = getActiveTopicQuestions(topicId);
-    const bagKey = topicId === 'reading1' ? `reading1_${state.activeLetterGroupId}` : topicId;
+    const bagKey = topicId === 'reading1'
+      ? `reading1_${state.activeLetterGroupId}_${state.activeLetterFilter}`
+      : topicId;
     let bag = state.bagByTopic[bagKey];
     if (!bag || bag.length === 0) {
       bag = shuffleArray(pool.map((_, idx) => idx));
       state.bagByTopic[bagKey] = bag;
     }
     const qIdx = bag.pop();
-    return pool[qIdx];
+    return pool[qIdx] || pool[0];
   }
 
   function clearRoundTimers() {
@@ -607,22 +927,55 @@
     });
   }
 
+  function renderSingleLettersRow() {
+    const row = document.getElementById('moliMendilSingleLettersRow');
+    if (!row) return;
+    const grpObj = READING1_LETTER_GROUPS.find((g) => g.id === state.activeLetterGroupId) || READING1_LETTER_GROUPS[0];
+    const allActive = state.activeLetterFilter === 'ALL';
+
+    const btns = [
+      `<button class="mmg-single-letter-btn ${allActive ? 'is-active' : ''}" type="button" data-letter="ALL" aria-pressed="${allActive ? 'true' : 'false'}">🌟 Tümü</button>`
+    ].concat(
+      grpObj.letters.map((l) => {
+        const active = state.activeLetterFilter === l;
+        return `<button class="mmg-single-letter-btn ${active ? 'is-active' : ''}" type="button" data-letter="${escapeHtml(l)}" aria-pressed="${active ? 'true' : 'false'}">${escapeHtml(l)}</button>`;
+      })
+    );
+
+    row.innerHTML = `<span class="mmg-letter-group-label">🎯 Harf Seç:</span>${btns.join('')}`;
+    row.querySelectorAll('.mmg-single-letter-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const letter = btn.getAttribute('data-letter') || 'ALL';
+        switchSingleLetterFilter(letter);
+      });
+    });
+  }
+
   function syncLetterGroupsBarUI() {
-    const bar = document.getElementById('moliMendilLetterGroupsBar');
-    if (bar) {
-      bar.style.display = state.activeTopicId === 'reading1' ? 'flex' : 'none';
+    const wrap = document.getElementById('moliMendilReadingSelectorWrap');
+    if (wrap) {
+      wrap.style.display = state.activeTopicId === 'reading1' ? 'flex' : 'none';
     }
     document.querySelectorAll(`#${MODAL_ID} .mmg-letter-group-btn`).forEach((btn) => {
       const active = btn.getAttribute('data-group-id') === state.activeLetterGroupId;
       btn.classList.toggle('is-active', active);
       btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
+    renderSingleLettersRow();
+  }
+
+  function switchSingleLetterFilter(letter) {
+    state.activeLetterFilter = letter || 'ALL';
+    state.bagByTopic[`reading1_${state.activeLetterGroupId}_${state.activeLetterFilter}`] = [];
+    syncLetterGroupsBarUI();
+    startNewMatch('reading1');
   }
 
   function switchLetterGroup(groupId) {
     if (!READING1_LETTER_GROUPS.some((g) => g.id === groupId)) return;
     state.activeLetterGroupId = groupId;
-    state.bagByTopic[`reading1_${groupId}`] = [];
+    state.activeLetterFilter = 'ALL';
+    state.bagByTopic[`reading1_${groupId}_ALL`] = [];
     syncLetterGroupsBarUI();
     startNewMatch('reading1');
   }
@@ -1105,8 +1458,16 @@
         transform: translateY(-1px);
       }
 
-      /* 1. Sınıf MEB Harf Grubu Seçici Alt Barı */
-      #${MODAL_ID} .mmg-letter-groups-bar {
+      /* 1. Sınıf MEB 2 Satırlı Grup + Tekil Harf Seçici */
+      #${MODAL_ID} .mmg-reading-selector-wrap {
+        display: flex;
+        flex-direction: column;
+        background: rgba(15, 23, 42, 0.76);
+        border-bottom: 1px solid rgba(110, 231, 183, 0.28);
+        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mmg-letter-groups-bar,
+      #${MODAL_ID} .mmg-single-letters-bar {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1114,9 +1475,11 @@
         overflow-x: auto;
         gap: 6px;
         padding: 5px 14px;
-        background: rgba(15, 23, 42, 0.72);
-        border-bottom: 1px solid rgba(110, 231, 183, 0.28);
-        flex-shrink: 0;
+      }
+      #${MODAL_ID} .mmg-single-letters-bar {
+        background: rgba(2, 6, 23, 0.45);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 5px 14px 6px;
       }
       #${MODAL_ID} .mmg-letter-group-label {
         font-size: 0.78rem;
@@ -1147,6 +1510,30 @@
         border-color: #BAE6FD;
         color: #FFFFFF;
         box-shadow: 0 3px 10px rgba(14, 165, 233, 0.45);
+      }
+      #${MODAL_ID} .mmg-single-letter-btn {
+        min-width: 36px;
+        height: 30px;
+        padding: 0 11px;
+        border-radius: 9px;
+        border: 2px solid rgba(255, 255, 255, 0.28);
+        border-bottom: 3px solid rgba(15, 23, 42, 0.5);
+        background: rgba(255, 255, 255, 0.92);
+        color: #1E293B;
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: 0.92rem;
+        font-weight: 800;
+        cursor: pointer;
+        touch-action: manipulation;
+        transition: all 0.12s ease;
+      }
+      #${MODAL_ID} .mmg-single-letter-btn.is-active {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        border-color: #FEF08A;
+        border-bottom-color: #991B1B;
+        color: #FFFFFF;
+        box-shadow: 0 4px 10px rgba(239, 68, 68, 0.45);
+        transform: translateY(-1px);
       }
 
       /* Skor Tabelası */
@@ -1631,9 +2018,12 @@
         ${tabsHtml}
       </nav>
 
-      <div class="mmg-letter-groups-bar" id="moliMendilLetterGroupsBar" role="toolbar" aria-label="1. Sınıf MEB Harf Grubu Seçimi">
-        <span class="mmg-letter-group-label">🔤 Harf Grubu:</span>
-        ${letterGroupsHtml}
+      <div class="mmg-reading-selector-wrap" id="moliMendilReadingSelectorWrap">
+        <div class="mmg-letter-groups-bar" id="moliMendilLetterGroupsBar" role="toolbar" aria-label="1. Sınıf MEB Harf Grubu Seçimi">
+          <span class="mmg-letter-group-label">🔤 Harf Grubu:</span>
+          ${letterGroupsHtml}
+        </div>
+        <div class="mmg-single-letters-bar" id="moliMendilSingleLettersRow" role="toolbar" aria-label="Tekil Harf Seçimi"></div>
       </div>
 
       <div class="mmg-scoreboard" id="moliMendilScoreboard"></div>
